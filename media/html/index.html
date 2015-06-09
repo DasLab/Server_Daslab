@@ -1,0 +1,46 @@
+{% extends "media/html/_framework.html" %}
+
+{% block header %}
+  <div id="animation">
+    <div id="researchBTN">
+      <a href="http://daslab.stanford.edu/das_research.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;researchBTN&#39;,&#39;&#39;,&#39;/site_media/images/home/homeBTNover.png&#39;,1)">
+        <img src="/site_media/images/home/homeBTN-DLX.png" name="researchBTN" width="53" height="201" border="0" id="researchBTN2">
+      </a>
+    </div>
+    <div id="apDiv1">
+      <img src="/site_media/images/INVISIBLE.png" width="175" height="100" border="0" usemap="#Map2">
+      <map name="Map2" id="Map2">
+        <area shape="rect" coords="4,3,173,99" href="http://daslab.stanford.edu/das_news.html">
+      </map>
+    </div>
+    <object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1022" height="355" style="visibility: inherit;">
+      <param name="movie" value="animation/DAS.swf">
+      <param name="quality" value="high">
+      <param name="wmode" value="opaque">
+      <param name="swfversion" value="6.0.65.0">
+      <!-- This param tag prompts users with Flash Player 6.0 r65 and higher to download the latest version of Flash Player. Delete it if you don’t want users to see the prompt. -->
+      <param name="expressinstall" value="Scripts/expressInstall.swf">
+      <!-- Next object tag is for non-IE browsers. So hide it from IE using IECC. -->
+      <!--[if !IE]>-->
+      <object type="application/x-shockwave-flash" data="http://daslab.stanford.edu/animation/DAS.swf" width="1022" height="355">
+        <!--<![endif]-->
+        <param name="quality" value="high">
+        <param name="wmode" value="opaque">
+        <param name="swfversion" value="6.0.65.0">
+        <param name="expressinstall" value="Scripts/expressInstall.swf">
+        <!-- The browser displays the following alternative content for users with Flash Player 6.0 and older. -->
+        <div>
+      	  <img src="/site_media/images/frontpage_alt.png" width="1022" border="0">
+        </div>
+      </object>
+    </object>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div id="whatWeDo"><img src="/site_media/images/home/whatWeDo-DLX.png" width="119" height="70"></div>
+  <div id="weStrive"><img src="/site_media/images/home/homeTEXT2-dlx.png" width="207" height="95"></div>
+  <div class="homeTEXT" id="homeTEXT">
+    Our lab seeks an agile and predictive understanding of RNAs code for information processing and replication in living systems. We are creating new computational and chemical tools to enable the precise modeling and design of these RNAs.
+  </div>
+{% endblock %}
