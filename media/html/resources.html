@@ -1,0 +1,214 @@
+{% extends "media/html/_framework.html" %}
+
+{% block header %}
+  <link href="/site_media/css/resources.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#main").addClass("DASresources");
+      $("#resources").attr("src", "/site_media/images/nav_resources_hover.png");
+    });
+  </script>
+{% endblock %}
+
+
+{% block content %}
+  <div id="animation">
+    <div id="header">
+      <img src="/site_media/images/resources/icon_resources.png" width="349" height="111">
+    </div>
+    <img src="/site_media/images/resources/logo_resources.jpg" width="973" height="221"> 
+  </div>
+
+  <div class="homeTEXT" id="researchBODY">
+    <table width="855" height="131" border="0">
+      <tbody>
+        <tr>
+          <td width="184" height="110" align="left" valign="top">
+            <br>
+            <img src="/site_media/images/resources/side_1.png" width="165.15" height="67.95">
+          </td>
+          <td height="110" width="50" align="left" valign="middle" class="homeTEXT">
+            <b>For citizen scientists:</b> Join us! Create RNAs for nanomedicine at EteRNA.   
+            <br>
+          </td>
+          <td height="110" align="center" valign="middle">
+            <a href="http://eternagame.org/" target="_blank">
+  	         <img src="/site_media/images/resources/logo_citizen.jpg" alt="/site_media/images/research/side_3_img.png" width="207">
+            </a>
+        	</td>
+        </tr>
+        <tr>
+          <td height="20" align="left" valign="top">&nbsp;</td>
+          <td height="20" colspan="2" align="left" valign="middle" class="homeTEXT"><div class="divisionLine"></div></td>
+        </tr>
+
+        <tr>
+          <td height="110" align="left" valign="top">&nbsp;</td>
+          <td height="110" align="left" valign="middle" class="homeTEXT">
+            <b>For RNA experimentalists:</b> Tools for designing primers (Primerize), analyzing raw data from multidimensional chemical mapping experiments (HiTRACE and MAPseeker), and browsing data sets and more, are served at the RNA Mapping Database.
+            <a href="http://rmdb.stanford.edu/tools/" target="_blank">here</a>
+            <br>
+          </td>
+          <td height="110" align="middle" valign="center">
+            <a href="http://rmdb.stanford.edu/tools/" target="_blank">
+              <img src="/site_media/images/resources/logo_rmdb.png" width="175">
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td height="20" align="left" valign="top">&nbsp;</td>
+          <td height="20" colspan="2" align="left" valign="middle" class="homeTEXT"><div class="divisionLine"></div></td>
+        </tr>
+
+        <tr>
+          <td height="110" align="left" valign="top">&nbsp;</td>
+          <td width="441" height="110" align="left" valign="top" class="homeTEXT">
+            <br>
+        	  <b>For computational modelers:</b> Our high-resolution RNA modeling tools are available through Rosetta servers and software download.
+          </td>
+          <td width="216" height="110" align="middle" valign="top">
+        	  <a href="http://rosie.rosettacommons.org/" target="_blank">
+          	  <img src="/site_media/images/resources/logo_model.jpg" width="125" height="125">
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td height="20" align="left" valign="top">&nbsp;</td>
+          <td height="20" colspan="2" align="left" valign="middle" class="homeTEXT"><div class="divisionLine"></div></td>
+        </tr>
+
+        <tr>
+          <td height="110" align="left" valign="top">&nbsp;</td>
+          <td width="441" height="110" align="left" valign="top" class="homeTEXT">
+            <br>
+        	  <b>For RNA engineers:</b> Our newer high resolution design tools are coming online! 
+          </td>
+          <td width="216" height="110" align="middle" valign="top">
+        	  <a href="http://rnaredesign.stanford.edu/" target="_blank">
+        	    <img src="/site_media/images/resources/logo_redesign.png" width="180" alt="Das LOGO">
+        	  </a>
+        	</td>
+        </tr>
+        <tr>
+          <td height="30" colspan="3" align="left" valign="top"><div class="divisionLine"></div></td>
+        </tr>
+
+      <!--######################################################################
+      Protocols
+      ##########################################################################-->
+<!--
+      <tr>
+        <td height="411" align="left" valign="top"><img src="images/Protocols_new.png" width="166.14" height="43.65" /></td>
+        <td height="411" align="left" valign="top" class="homeTEXT">We are developing information-rich biochemical methods <br />
+          to solve the structures of noncoding RNAs. Current efforts <br />
+          focus on applying these experimental methods to basic <br />
+          mysteries in RNA behavior, including the extent of RNA <br />
+        structure inside cells and viruses.<br />
+        <br />
+        <p><span class="ContactH2">Making the RNA</span><br />
+          <a href="pdf/OrderingoligosforassemblyPCRandinvitrotranscription.pdf" target="_blank"><strong>• Designing oligos for DNA templates</strong></a><br />
+          <strong><a href="pdf/DNAPCRandpurification.pdf" target="_blank">• DNA: PCR, polymerization, and purification</a></strong><br />
+          <strong><a href="pdf/RNAtranscriptionandpurification.pdf" target="_blank">• Transcribing and purifying RNA</a></strong><br />
+          <strong><a href="pdf/Nanodrop.pdf" target="_blank">• Using the Nanodrop to get concentrations</a></strong><br />
+          <strong><a href="pdf/4agarosegels.pdf" target="_blank">• Confirmation of DNA/RNA synthesis, agarose gels</a></strong><br />
+        </p>
+        <p><span class="ContactH2">Chemical Structure Mapping</span><br />
+          <strong><a href="pdf/RNAqualitycheckbyRTase.pdf" target="_blank">• Confirmation of RNA: Quality Check</a></strong><br />
+          <strong><a href="pdf/CouplingofDNAprimerstofluorescen....pdf">• Coupling DNA primers to fluorescent dyes</a></strong><br />
+          <a href="pdf/HighThroughputStructureMapping.pdf" target="_blank"><strong>• High-throughput structure mapping</strong></a><br />
+          <a href="pdf/3100GeneticAnalyzerABIUserGuide.pdf" target="_blank"><strong>• How to use our ABI3100 16-capillary sequencer</strong></a><br />
+          <strong><a href="pdf/Howtoanalyzestructuremappingdata-HiTRACE2013.pdf" target="_blank">• Analyzing the chemical structure mapping data</a></strong></p></td>
+        <td height="411" align="left" valign="top">&nbsp;</td>
+      </tr>
+      <tr align="left" valign="top">
+        <td height="30" colspan="3"><div class="divisionLine"></div></td>
+      </tr>
+-->
+
+      <!--######################################################################
+      Software
+      ##########################################################################-->
+        <tr>
+          <td width="184" height="110" align="left" valign="top">
+            <br>         
+            <img src="/site_media/images/resources/side_2.png" width="153.72" height="41.94">
+          </td>
+          <td height="110" align="left" valign="middle" class="homeTEXT">
+            <b>HelixMC</b> is a software package for Monte-Carlo (MC) 
+            <br> simulations of DNA/RNA helices using base-pair level 
+            <br> models.  
+            <a href="https://github.com/fcchou/HelixMC" target="_blank">Github |</a>
+            <a href="http://helixmc.readthedocs.org/" target="_blank"> Documentation</a>
+          </td>
+          <td width="163" height="32" align="middle" valign="center">
+            <a href="http://helixmc.readthedocs.org/" target="_blank">
+              <img src="/site_media/images/resources/logo_helixmc.png" width="110.5" height="154">
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td height="20" align="left" valign="top">&nbsp;</td>
+          <td height="20" colspan="2" align="left" valign="middle" class="homeTEXT"><div class="divisionLine"></div></td>
+        </tr>
+
+        <tr>
+          <td height="110" align="left" valign="top">&nbsp;</td>
+          <td height="110" align="left" valign="middle" class="homeTEXT">
+            Run Pymol in styles used by our lab with <a href="https://github.com/DasLab/pymol_daslab" target="_blank">this script</a>. Example 
+            <br>
+            images and basic documentation available <a href="/site_data/docs_pymol_rhiju.pdf" target="_blank">here</a>.
+          </td>
+          <td width="163" height="32" align="middle" valign="center">
+            <a href="https://github.com/DasLab/pymol_daslab" target="_blank">
+              <img src="/site_media/images/resources/logo_pymol.jpg" width="110" height="98">
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td height="20" align="left" valign="top">&nbsp;</td>
+          <td height="20" colspan="2" align="left" valign="middle" class="homeTEXT"><div class="divisionLine"></div></td>
+        </tr>
+
+        <tr>
+          <td height="110" align="left" valign="top">&nbsp;</td>
+          <td width="241" align="left" valign="top" class="homeTEXT">
+            <br>
+            <b>Rosetta:</b> Our high-resolution RNA modeling and design algorithms 
+            <br>
+            are in the Rosetta codebase, freely available to academic users <a href="https://www.rosettacommons.org/" target="_blank">here</a>.
+          </td>
+          <td width="103" align="middle" valign="center">
+            <a href="https://www.rosettacommons.org/" target="_blank">
+              <img width="200" src="/site_media/images/resources/logo_rosettacommon.png">
+            </a>
+            </td>
+        </tr>
+        <tr>
+          <td height="30" colspan="3" align="left" valign="top"><div class="divisionLine"></div></td>
+        </tr>
+
+      <!--######################################################################
+      Data Sets
+      ##########################################################################  <tr>
+        <td height="650" align="left" valign="top"><img src="images/Datasets_new.png" width="91.8" height="74.7" /></td>
+        <td height="650" align="left" valign="top"><p><span class="contactH1">FARFAR/Rosetta models</span> of kink-turns in the glycine <br /> riboswitch 
+          available <a href="documents/3P49_kt_ChouDas(1).tgz">here</a>.</p>
+          <p><span class="contactH1">High resolution models produced by Fragment <br />Assembly of RNA and Full Atom Refinement </br> (FARFAR)</span>: Five cluster centers and experimental structures <br/> of 32 motifs in the <a href="pdf/DasKaranicolasBaker2010ALL.pdf" target="_blank">FARFAR benchmark</a> are available in one big gzipped file <a href="documents/farfar_models_das2010.tgz">here</a>.<br />
+          </p>
+          <p><span class="contactH1">Low resolution decoys by Fragment Assembly of RNA (FARNA)</span><br />
+            Decoys produced for the <a href="http://www.pnas.org/content/104/37/14664.full" target="_blank">FARNA study</a> are available in one big <br />
+            gzipped file <a href="documents/farna_decoys.tgz">here</a>.<br />
+          </p>
+        <td height="650" align="left" valign="top"><br />
+          <br />
+          <br />
+          <br />
+        <br />
+      </tr>
+-->
+      </tbody>
+    </table>
+  </div>
+
+  <div id="DasFOOTER"><img src="/site_media/images/footer_other.jpg" width="855" height="39"></div>
+{% endblock %}

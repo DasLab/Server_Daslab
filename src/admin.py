@@ -27,3 +27,10 @@ from django.contrib import admin
 # admin.site.register(Publication, PublicationAdmin)
 # admin.site.register(Organism, OrganismAdmin)
 
+class NewsItemAdmin(admin.ModelAdmin):
+    list_display = ('date', 'title')
+admin.site.register(NewsItem, NewsItemAdmin)
+
+class CurrentMemberAdmin(admin.ModelAdmin):
+    list_display = ('name', 'role', 'department', 'more_info', 'image', 'joint_lab', 'joint_link', 'description')
+admin.site.register(CurrentMember, CurrentMemberAdmin)

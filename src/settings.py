@@ -27,11 +27,12 @@ TEMPLATE_DEBUG = DEBUG
 MEDIA_URL = ''
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_URL = '/static/'
-if T47_DEV:
-    STATIC_URL = '/home/ubuntu/Files/'
+STATIC_URL = '/site_data/'
+STATIC_ROOT = ''
+if os.path.exists('/home/ubuntu/Files/'):
+    STATICFILES_DIRS = ('/home/ubuntu/Files/', )
 else:
-    STATIC_ROOT = MEDIA_ROOT + '/files/'
+    STATICFILES_DIRS = (MEDIA_ROOT + '/files/', )
 ADMIN_MEDIA_PREFIX = '/admin/'
 
 ADMINS = (
@@ -112,7 +113,7 @@ WSGI_APPLICATION = 'src.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'rmdb',                      # Or path to database file if using sqlite3.
+        'NAME': 'daslab',                      # Or path to database file if using sqlite3.
         'USER': 'root',                      # Not used with sqlite3.
         'PASSWORD': 'beckman',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -141,6 +142,7 @@ class SYS_PATH:
         self.HTML_PATH = {
             'index': MEDIA_ROOT + '/media/html/index.html',
             'research': MEDIA_ROOT + '/media/html/research.html',
+            'resources': MEDIA_ROOT + '/media/html/resources.html',
             'contact': MEDIA_ROOT + '/media/html/contact.html',
 
             '404': MEDIA_ROOT + '/media/html/_404.html',
@@ -148,10 +150,7 @@ class SYS_PATH:
         }
 
         self.DATA_DIR = {
-            'CONSTRUCT_IMG_DIR': MEDIA_ROOT + '/data/construct_img/',
-            'CONSTRUCT_THMB_DIR': MEDIA_ROOT + '/data/thumbs/',
-            'RDAT_FILE_DIR': MEDIA_ROOT + '/data/files/',
-            'ISATAB_FILE_DIR': MEDIA_ROOT + '/data/files/',
+            'MEMBER_IMG_DIR': STATICFILES_DIRS[0] + '/ppl_img/',
             'TMPDIR': MEDIA_ROOT + '/temp/',
 
         }

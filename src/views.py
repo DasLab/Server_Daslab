@@ -24,6 +24,8 @@ def index(request):
 	return render_to_response(PATH.HTML_PATH['index'], {}, context_instance=RequestContext(request))
 def research(request):
 	return render_to_response(PATH.HTML_PATH['research'], {}, context_instance=RequestContext(request))
+def resources(request):
+	return render_to_response(PATH.HTML_PATH['resources'], {}, context_instance=RequestContext(request))
 def contact(request):
 	return render_to_response(PATH.HTML_PATH['contact'], {}, context_instance=RequestContext(request))
 
