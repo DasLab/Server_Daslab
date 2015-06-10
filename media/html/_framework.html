@@ -4,11 +4,9 @@
   <head>
     <title>DAS LAB + Stanford Biochemistry Department + Stanford University</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" href="/site_media/images/icon_daslab.png">
 
-    <link rel="icon" href="/site_media/images/daslab_icon.png">
-    <link href="/site_media/css/DasStyle.css" rel="stylesheet" type="text/css">
-    <style type="text/css" media="screen">#FlashID {visibility:hidden}</style>
-
+    <script src="/site_media/js/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="/site_media/js/swfobject_modified.js" type="text/javascript"></script>
     <script type="text/javascript">
       function MM_swapImgRestore() { //v3.0
@@ -33,9 +31,13 @@
          if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
       }
     </script>
+
+    <link href="/site_media/css/DasStyle.css" rel="stylesheet" type="text/css">
+    {% block header %}{% endblock %}
+    <style type="text/css" media="screen">#FlashID {visibility:hidden}</style>
   </head>
 
-  <body onload="MM_preloadImages(&#39;/site_media/images/researchDLXover.png&#39;,&#39;/site_media/images/newsDLXover.png&#39;,&#39;/site_media/images/peopleDLXover.png&#39;,&#39;/site_media/images/pubDLXover.png&#39;,&#39;/site_media/images/resourcesDLXover.png&#39;,&#39;/site_media/images/contactDLXover.png&#39;,&#39;/site_media/images/home/homeBTNover.png&#39;)">
+  <body onload="MM_preloadImages(&#39;/site_media/images/nav_research_hover.png&#39;,&#39;/site_media/images/nav_news_hover.png&#39;,&#39;/site_media/images/nav_people_hover.png&#39;,&#39;/site_media/images/nav_publications_hover.png&#39;,&#39;/site_media/images/nav_resources_hover.png&#39;,&#39;/site_media/images/nav_contact_hover.png&#39;,&#39;/site_media/images/nav_home_hover.png&#39;)">
     <div id="StayFocusd-infobar" style="display:none;">
       <img src="chrome-extension://laankejkbhbdhmipfmgcngdelahlfoji/common/img/eye_19x19_red.png">
       <span id="StayFocusd-infobar-msg"></span>
@@ -44,43 +46,47 @@
           <a id="StayFocusd-infobar-hide">hide once</a>
       </span>
     </div>
-    <div class="DAShome">
+    <div id="main">
       <div id="dasLOGO">
-        <img src="/site_media/images/DasLOGO.jpg" width="141" height="82">
+        <img src="/site_media/images/logo_das.jpg" width="141" height="82">
       </div>
       <div id="DasNAV">
         <table width="750" height="34" border="0">
           <tbody>
             <tr>
-              <td width="73" align="left" valign="top"><img src="/site_media/images/home/homeDLXover.png" width="40" height="20"></td>
+              <td width="73" align="left" valign="top">
+                <a href="/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;dasHOME&#39;,&#39;&#39;,&#39;/site_media/images/nav_home_hover.png&#39;,1)">
+                  <img src="/site_media/images/nav_home.png" name="dasHOME" width="43" height="20" border="0" id="dasHOME">
+                </a>
+              </td>
               <td width="117" align="left" valign="top">
-                <a href="http://daslab.stanford.edu/das_research.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;research&#39;,&#39;&#39;,&#39;/site_media/images/researchDLXover.png&#39;,1)">
-                  <img src="/site_media/images/researchDLX.png" name="research" width="83" height="20" border="0" id="research">
+                <a href="/research" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;research&#39;,&#39;&#39;,&#39;/site_media/images/nav_research_hover.png&#39;,1)">
+                  <img src="/site_media/images/nav_research.png" name="research" width="83" height="20" border="0" id="research">
                 </a>
               </td>
               <td width="73" align="left" valign="top">
-                <a href="http://daslab.stanford.edu/das_news.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;news&#39;,&#39;&#39;,&#39;/site_media/images/newsDLXover.png&#39;,1)">
-                  <img src="/site_media/images/newsDLX.png" name="news" width="39" height="19" border="0" id="news">
+                <a href="/news" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;news&#39;,&#39;&#39;,&#39;/site_media/images/nav_news_hover.png&#39;,1)">
+                  <img src="/site_media/images/nav_news.png" name="news" width="39" height="19" border="0" id="news">
                 </a>
               </td>
               <td width="94" align="left" valign="top">
-                <a href="http://daslab.stanford.edu/das_people.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;people&#39;,&#39;&#39;,&#39;/site_media/images/peopleDLXover.png&#39;,1)">
-                  <img src="/site_media/images/peopleDLX.png" name="people" width="61" height="20" border="0" id="people">
+                <a href="/people" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;people&#39;,&#39;&#39;,&#39;/site_media/images/nav_people_hover.png&#39;,1)">
+                  <img src="/site_media/images/nav_people.png" name="people" width="61" height="20" border="0" id="people">
                 </a>
               </td>
               <td width="159" align="left" valign="top">
-                <a href="http://daslab.stanford.edu/das_publications.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;publications&#39;,&#39;&#39;,&#39;/site_media/images/pubDLXover.png&#39;,1)">
-                  <img src="/site_media/images/pubDLX.png" name="publications" width="126" height="20" border="0" id="publications">
+                <a href="/publications" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;publications&#39;,&#39;&#39;,&#39;/site_media/images/nav_publications_hover.png&#39;,1)">
+                  <img src="/site_media/images/nav_publications.png" name="publications" width="126" height="20" border="0" id="publications">
                 </a>
               </td>
               <td width="127" align="left" valign="top">
-                <a href="http://daslab.stanford.edu/das_resources.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;resources&#39;,&#39;&#39;,&#39;/site_media/images/resourcesDLXover.png&#39;,1)">
-                  <img src="/site_media/images/resourcesDLX.png" name="resources" width="94" height="20" border="0" id="resources">
+                <a href="/resources" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;resources&#39;,&#39;&#39;,&#39;/site_media/images/nav_resources_hover.png&#39;,1)">
+                  <img src="/site_media/images/nav_resources.png" name="resources" width="94" height="20" border="0" id="resources">
                 </a>
               </td>
               <td width="77" align="left" valign="top">
-                <a href="http://daslab.stanford.edu/das_contact.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;contact&#39;,&#39;&#39;,&#39;/site_media/images/contactDLXover.png&#39;,1)">
-                  <img src="/site_media/images/contactDLX.png" name="contact" width="73" height="20" border="0" id="contact">
+                <a href="/contact" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;contact&#39;,&#39;&#39;,&#39;/site_media/images/nav_contact_hover.png&#39;,1)">
+                  <img src="/site_media/images/nav_contact.png" name="contact" width="73" height="20" border="0" id="contact">
                 </a>
               </td>
             </tr>
@@ -88,25 +94,22 @@
         </table>
       </div>
 
-      {% block header %}{% endblock %}
+      {% block content %}{% endblock %}
 
-      <div id="divisionBar"><img src="/site_media/images/home/homeBAR-DLX.png" width="855" height="38"></div>
-        <div id="icons"><img src="/site_media/images/home/homeICONS-DLX.jpg" width="729" height="54" border="0" usemap="#Map">
-          <map name="Map" id="Map">
-            <area shape="rect" coords="0,9,204,34" href="http://biochem.stanford.edu/" target="_blank">
-            <area shape="rect" coords="226,9,381,46" href="http://med.stanford.edu/" target="_blank">
-            <area shape="rect" coords="405,5,583,49" href="https://physics.stanford.edu/" target="_blank">
-            <area shape="rect" coords="604,4,713,42" href="http://bioxgames.stanford.edu/index.html" target="_blank">
-          </map>
-        </div>
-        {% block content %}{% endblock %}
+      <div id="icons">
+        <img src="/site_media/images/footer_link.jpg" width="729" height="54" border="0" usemap="#Map">
+        <map name="Map" id="Map">
+          <area shape="rect" coords="0,9,204,34" href="http://biochem.stanford.edu/" target="_blank">
+          <area shape="rect" coords="226,9,381,46" href="http://med.stanford.edu/" target="_blank">
+          <area shape="rect" coords="405,5,583,49" href="https://physics.stanford.edu/" target="_blank">
+          <area shape="rect" coords="604,4,713,42" href="http://bioxgames.stanford.edu/index.html" target="_blank">
+        </map>
       </div>
     </div>
 
-      <script type="text/javascript">
-        swfobject.registerObject("FlashID");
-      </script>
-
-
+    <script type="text/javascript">
+      swfobject.registerObject("FlashID");
+    </script>
   </body>
 </html>
+

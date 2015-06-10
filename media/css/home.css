@@ -1,0 +1,80 @@
+#dasLOGO {
+	position:absolute;
+	left:6px;
+	top:1px;
+	width:156px;
+	height:83px;
+	z-index:1;
+}
+#DasNAV {
+	position:absolute;
+	left:225px;
+	top:30px;
+	width:750px;
+	height:31px;
+	z-index:2;
+}
+#animation {
+	position:absolute;
+	left:2px;
+	top:100px;
+	width:1012px;
+	height:355px;
+	z-index:3;
+}
+#divisionBar {
+	position:absolute;
+	left:56px;
+	top:459px;
+	width:855px;
+	height:38px;
+	z-index:4;
+}
+#icons {
+	position:absolute;
+	left:93px;
+	top:673px;
+	width:729px;
+	height:54px;
+	z-index:5;
+}
+#whatWeDo {
+	position:absolute;
+	left:67px;
+	top:520px;
+	width:129px;
+	height:86px;
+	z-index:6;
+}
+#weStrive {
+	position:absolute;
+	left:679px;
+	top:518px;
+	width:226px;
+	height:103px;
+	z-index:7;
+}
+#homeTEXT {
+	position:absolute;
+	left:212px;
+	top:519px;
+	width:436px;
+	height:110px;
+	z-index:8;
+}
+#researchBTN {
+	position:absolute;
+	left:-52px;
+	top:119px;
+	width:51px;
+	height:205px;
+	z-index:1;
+}
+#apDiv1 {
+	position:absolute;
+	left:816px;
+	top:22px;
+	width:175px;
+	height:100px;
+	z-index:2;
+}

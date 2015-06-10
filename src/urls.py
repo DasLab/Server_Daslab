@@ -9,6 +9,11 @@ from src import views
 
 urlpatterns = patterns('',
     (r'^$', views.index),
+    (r'^index/$', views.index),
+    (r'^home/$', views.index),
+    (r'^research/$', views.research),
+
+    (r'^contact/$', views.contact),
 
     # (r'^login/$', views.user_login),
     # (r'^register/$', views.register),

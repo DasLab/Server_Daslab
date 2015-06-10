@@ -1,189 +1,61 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- saved from url=(0043)http://daslab.stanford.edu/das_contact.html -->
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="icon" href="http://daslab.stanford.edu/daslab_icon.png">
+{% extends "media/html/_framework.html" %}
+
+{% block header %}
+  <link href="/site_media/css/contact.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#main").addClass("DAScontact");
+      $("#contact").attr("src", "/site_media/images/nav_contact_hover.png");
+    });
+  </script>
+{% endblock %}
 
 
-<title>DAS LAB + Stanford Biochemistry Department + Stanford University</title>
-<style type="text/css">
-body {
-	margin-left: 0px;
-	margin-top: 50px;
-}
-</style>
-<link href="./contact_files/DasStyle.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-#dasLOGO {
-	position:absolute;
-	left:6px;
-	top:1px;
-	width:156px;
-	height:83px;
-	z-index:1;
-}
-#DasNAV {
-	position:absolute;
-	left:225px;
-	top:30px;
-	width:750px;
-	height:31px;
-	z-index:2;
-}
-#animation {
-	position:absolute;
-	left:2px;
-	top:100px;
-	width:973px;
-	height:221px;
-	z-index:3;
-}
-#divisionBar {
-	position:absolute;
-	left:56px;
-	top:360px;
-	width:855px;
-	height:96px;
-	z-index:4;
-}
-#icons {
-	position:absolute;
-	left:125px;
-	top:1068px;
-	width:729px;
-	height:54px;
-	z-index:5;
-}
-#whatWeDo {
-	position:absolute;
-	left:67px;
-	top:520px;
-	width:129px;
-	height:86px;
-	z-index:6;
-}
-#weStrive {
-	position:absolute;
-	left:679px;
-	top:518px;
-	width:226px;
-	height:103px;
-	z-index:7;
-}
-#researchBODY {
-	position:absolute;
-	left:56px;
-	top:360px;
-	width:856px;
-	height:529px;
-	z-index:8;
-}
-#researchBTN {
-	position:absolute;
-	left:-53px;
-	top:119px;
-	width:51px;
-	height:205px;
-	z-index:1;
-}
-#header {
-	position:absolute;
-	left:673px;
-	top:25px;
-	width:352px;
-	height:114px;
-	z-index:1;
-}
-#DasFOOTER {
-	position:absolute;
-	left:56px;
-	top:1013px;
-	width:859px;
-	height:53px;
-	z-index:9;
-}
-</style>
-<script type="text/javascript">
-function MM_swapImgRestore() { //v3.0
-  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
-}
-function MM_preloadImages() { //v3.0
-  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
-    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
-    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
-}
-
-function MM_findObj(n, d) { //v4.01
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
-  if(!x && d.getElementById) x=d.getElementById(n); return x;
-}
-
-function MM_swapImage() { //v3.0
-  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-}
-</script>
-</head>
-
-<body onload="MM_preloadImages(&#39;images/resourcesDLXover.png&#39;,&#39;images/homeDLXover.png&#39;,&#39;images/researchDLXover.png&#39;,&#39;images/newsDLXover.png&#39;,&#39;images/peopleDLXover.png&#39;,&#39;images/pubDLXover.png&#39;,&#39;images/DAS_mapOVER.jpg&#39;)"><div id="StayFocusd-infobar" style="display:none;">
-    <img src="chrome-extension://laankejkbhbdhmipfmgcngdelahlfoji/common/img/eye_19x19_red.png">
-    <span id="StayFocusd-infobar-msg"></span>
-    <span id="StayFocusd-infobar-links">
-        <a id="StayFocusd-infobar-never-show">hide forever</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-        <a id="StayFocusd-infobar-hide">hide once</a>
-    </span>
-</div>
-<div class="DASresearch">
-  <div id="dasLOGO"><a href="http://daslab.stanford.edu/index.html"><img src="./contact_files/DasLOGO.jpg" width="141" height="82" border="0"></a></div>
-  <div id="DasNAV">
-    <table width="750" height="34" border="0">
-      <tbody><tr>
-        <td width="73" align="left" valign="top"><a href="http://daslab.stanford.edu/index.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;dasHOME&#39;,&#39;&#39;,&#39;images/homeDLXover.png&#39;,1)"><img src="./contact_files/homeDLX.png" name="dasHOME" width="40" height="20" border="0" id="dasHOME"></a></td>
-        <td width="117" align="left" valign="top"><a href="http://daslab.stanford.edu/das_research.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;research&#39;,&#39;&#39;,&#39;images/researchDLXover.png&#39;,1)"><img src="./contact_files/researchDLX.png" name="research" width="83" height="20" border="0" id="research"></a></td>
-        <td width="73" align="left" valign="top"><a href="http://daslab.stanford.edu/das_news.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;news&#39;,&#39;&#39;,&#39;images/newsDLXover.png&#39;,1)"><img src="./contact_files/newsDLX.png" name="news" width="39" height="19" border="0" id="news"></a></td>
-        <td width="94" align="left" valign="top"><a href="http://daslab.stanford.edu/das_people.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;people&#39;,&#39;&#39;,&#39;images/peopleDLXover.png&#39;,1)"><img src="./contact_files/peopleDLX.png" name="people" width="61" height="20" border="0" id="people"></a></td>
-        <td width="159" align="left" valign="top"><a href="http://daslab.stanford.edu/das_publications.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;publications&#39;,&#39;&#39;,&#39;images/pubDLXover.png&#39;,1)"><img src="./contact_files/pubDLX.png" name="publications" width="126" height="20" border="0" id="publications"></a></td>
-        <td width="127" align="left" valign="top"><a href="http://daslab.stanford.edu/das_resources.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;resources&#39;,&#39;&#39;,&#39;images/resourcesDLXover.png&#39;,1)"><img src="./contact_files/resourcesDLX.png" name="resources" width="94" height="20" border="0" id="resources"></a></td>
-        <td width="77" align="left" valign="top"><img src="./contact_files/contactDLXover.png" width="73" height="20"></td>
-      </tr>
-    </tbody></table>
-  </div>
+{% block content %}
   <div id="animation">
-    <div id="header"><img src="./contact_files/contactIMG_header.png" width="349" height="111"></div>
-  <img src="./contact_files/contactIMG_dlx.jpg" width="973" height="221"> </div>
-  <div id="icons"><img src="./contact_files/homeICONS-DLX.jpg" width="729" height="54" border="0" usemap="#Map">
-    <map name="Map" id="Map">
-      <area shape="rect" coords="0,9,204,34" href="http://biochem.stanford.edu/">
-      <area shape="rect" coords="226,9,381,46" href="http://med.stanford.edu/">
-      <area shape="rect" coords="405,5,583,49" href="https://physics.stanford.edu/">
-      <area shape="rect" coords="604,4,713,42" href="http://bioxgames.stanford.edu/index.html" target="_blank">
-    </map>
+    <div id="header">
+    	<img src="/site_media/images/contact/icon_contact.png" width="349" height="111">
+    </div>
+  	<img src="/site_media/images/contact/logo_contact.jpg" width="973" height="221">
   </div>
+
   <div class="homeTEXT" id="researchBODY">
     <table width="855" height="" border="0">
-      <tbody><tr>
-        <td width="220" rowspan="2" align="left" valign="top"><img src="./contact_files/ConnectH1.png" width="184" height="62"></td>
-        <td width="625" height="256" align="left" valign="top" class="homeTEXT">
-
-        	<span class="contactH1">Rhiju Das is in B421A</span> (office) which is embedded in our <br>
-          home lab B419 in the Beckman Center at Stanford University.
-          <p><span class="ContactH2">Office</span>&nbsp;&nbsp;  <span class="peopleH2">650.723.5976</span><br>
-            <span class="ContactH2">Lab</span> &nbsp;  &nbsp;&nbsp;  &nbsp;   &nbsp;<span class="peopleH2">650.723.7310</span><br>
-            <span class="ContactH2">Admin</span> &nbsp;<span class="peopleH2">650.498.5118</span></p>
-         <p><span class="ContactH2">E-mail</span> rhiju [at] stanford.edu</p>
-          <p><strong><span class="contactH1">Administrative assistant: </span></strong><br>
-        <span class="peopleTEXT">Tesfa Habebo</span>, thabebo [at] stanford.edu</p></td>
-
-      </tr>
-
-      <tr>
-        <td align="left" valign="top" class="homeTEXT"><a href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=279+Campus+Dr+W,+Stanford,+CA+94305&sll=37.425704,-122.181918&sspn=0.006586,0.013937&ie=UTF8&hq=&hnear=279+Campus+Dr+W,+Stanford,+Santa+Clara,+California+94305&z=17" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;das map&#39;,&#39;&#39;,&#39;images/DAS_mapOVER.jpg&#39;,1)"><img src="./contact_files/DAS_map.jpg" name="das map" width="541" height="264" border="0" id="das map"></a></td>
-      </tr>
-    </tbody></table>
+      	<tbody>
+	      	<tr>
+		        <td width="220" rowspan="2" align="left" valign="top">
+		        	<img src="/site_media/images/contact/connect_with_us.png" width="184" height="62">
+		        </td>
+		        <td width="625" height="256" align="left" valign="top" class="homeTEXT">
+		        	<span class="contactH1">Rhiju Das is in B421A</span> (office) which is embedded in our
+		        	<br>
+			        home lab B419 in the Beckman Center at Stanford University.
+		          	<p>
+		          		<span class="ContactH2">Office</span>&nbsp;&nbsp;  <span class="peopleH2">650.723.5976</span>
+		          		<br>
+			            <span class="ContactH2">Lab</span> &nbsp;  &nbsp;&nbsp;  &nbsp;   &nbsp;<span class="peopleH2">650.723.7310</span>
+			            <br>
+			            <span class="ContactH2">Admin</span> &nbsp;<span class="peopleH2">650.498.5118</span>
+			        </p>
+			        <p><span class="ContactH2">E-mail</span> rhiju [at] stanford.edu</p>
+			        <p>
+			        	<strong><span class="contactH1">Administrative assistant: </span></strong>
+			        	<br>
+				        <span class="peopleTEXT">Tesfa Habebo</span>, thabebo [at] stanford.edu
+				    </p>
+				</td>
+		    </tr>
+			<tr>
+	        	<td align="left" valign="top" class="homeTEXT">
+	        		<a href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=279+Campus+Dr+W,+Stanford,+CA+94305&sll=37.425704,-122.181918&sspn=0.006586,0.013937&ie=UTF8&hq=&hnear=279+Campus+Dr+W,+Stanford,+Santa+Clara,+California+94305&z=17" target="_blank" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;das map&#39;,&#39;&#39;,&#39;/site_media/images/contact/map_hover.jpg&#39;,1)">
+	        			<img src="/site_media/images/contact/map.jpg" name="das map" width="541" height="264" border="0" id="das map">
+	        		</a>
+	        	</td>
+		    </tr>
+	    </tbody>
+	</table>
   </div>
-  <div id="DasFOOTER"><img src="./contact_files/Das_Footer.jpg" width="855" height="39"></div>
-</div>
 
+  <div id="DasFOOTER"><img src="/site_media/images/footer_other.jpg" width="855" height="39"></div>
+{% endblock %}
 
-</body></html>
