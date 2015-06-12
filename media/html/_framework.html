@@ -95,6 +95,9 @@
       </div>
 
       {% block content %}{% endblock %}
+      <a href="#" id="top" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('top','','/site_media/images/nav_top_hover.png',1)">
+        <img style="position:fixed;display:block;right:5%;bottom:5%;opacity:0.85;" src="/site_media/images/nav_top.png" name="top" height="60"/>
+      </a>
 
       <div id="icons">
         <img src="/site_media/images/footer_link.jpg" width="729" height="54" border="0" usemap="#Map">
@@ -109,6 +112,22 @@
 
     <script type="text/javascript">
       swfobject.registerObject("FlashID");
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#top").on("click", function () {
+          $("html, body").stop().animate({scrollTop: 0}, 500);
+        });
+        $("#top").hide();
+      });
+  
+      $(window).on("scroll", function () {
+        if ($(this).scrollTop() > $(window).height()/2) {
+          $('#top').fadeIn();
+        } else {
+          $('#top').fadeOut();
+        }
+      });
     </script>
     {% block script %}{% endblock %}
 
