@@ -29,6 +29,11 @@ def resources(request):
 def contact(request):
 	return render_to_response(PATH.HTML_PATH['contact'], {}, context_instance=RequestContext(request))
 
+def people(request):
+	alumni = PastMember.objects.order_by('finish_year', 'start_year', 'full_name')
+
+	return render_to_response(PATH.HTML_PATH['people'], {'past_member':alumni}, context_instance=RequestContext(request))
+
 
 # def url_redirect(request, path):
 # 	if 'detail/' in path:

@@ -142,6 +142,7 @@ class SYS_PATH:
         self.HTML_PATH = {
             'index': MEDIA_ROOT + '/media/html/index.html',
             'research': MEDIA_ROOT + '/media/html/research.html',
+            'people': MEDIA_ROOT + '/media/html/people.html',
             'resources': MEDIA_ROOT + '/media/html/resources.html',
             'contact': MEDIA_ROOT + '/media/html/contact.html',
 

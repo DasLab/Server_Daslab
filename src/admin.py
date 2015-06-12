@@ -32,5 +32,10 @@ class NewsItemAdmin(admin.ModelAdmin):
 admin.site.register(NewsItem, NewsItemAdmin)
 
 class CurrentMemberAdmin(admin.ModelAdmin):
-    list_display = ('name', 'role', 'department', 'more_info', 'image', 'joint_lab', 'joint_link', 'description')
+    list_display = ('first_name', 'last_name', 'role')
 admin.site.register(CurrentMember, CurrentMemberAdmin)
+
+class PastMemberAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'finish_year', 'role')
+admin.site.register(PastMember, PastMemberAdmin)
+

@@ -8,7 +8,9 @@ import os
 
 
 def get_member_image(instance, filename):
-    return PATH.DATA_DIR['MEMBER_IMG_DIR'] + '%s' % instance.image
+    name = instance.first_name + instance.last_name[0]
+    ext = filename[filename.rfind('.'):]
+    return PATH.DATA_DIR['MEMBER_IMG_DIR'] + '%s%s' % (name,ext)
 
 
 class NewsItem(models.Model):
@@ -17,13 +19,21 @@ class NewsItem(models.Model):
     date = models.DateField()
 
 class CurrentMember(models.Model):
-    name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     role = models.CharField(max_length=255)
     department = models.CharField(max_length=255)
     more_info = models.CharField(max_length=255)
-    image = models.FileField(upload_to=get_member_image, blank=True, null=True)
-    joint_lab = models.CharField(max_length=31)
+    image = models.ImageField(upload_to=get_member_image, blank=True, null=True)
+    joint_lab = models.CharField(max_length=255)
     joint_link = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
+
+class PastMember(models.Model):
+    full_name = models.CharField(max_length=255)
+    role = models.CharField(max_length=255)
+    start_year = models.PositiveSmallIntegerField()
+    finish_year = models.PositiveSmallIntegerField()
+    
 
 

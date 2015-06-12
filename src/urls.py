@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     (r'^index/$', views.index),
     (r'^home/$', views.index),
     (r'^research/$', views.research),
+    (r'^people/$', views.people),
 
     (r'^resources/$', views.resources),
     (r'^contact/$', views.contact),
