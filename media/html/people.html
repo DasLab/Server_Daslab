@@ -22,7 +22,9 @@
       <tbody>
         {% for ppl in current_member %}
         <tr>
-          <td height="175" align="left" valign="middle"><img src="/site_data/ppl_img/{{ppl.image_link}}" width="119"></td>
+          <td height="175" align="left" valign="middle">
+            {% if ppl.image %} <img src="/site_data/ppl_img/{{ppl.image_link}}" width="119"> {% endif %}
+          </td>
           <td height="175" align="left" valign="middle">
             <p class="peopleH2">{{ppl.first_name}} {{ppl.last_name}}</p>
             <p class="peopleTEXT">{{ppl.role}}
@@ -80,7 +82,7 @@
             <p>&nbsp;</p>
             <p>
               {% for ppl in past_member %}
-              <span class="peopleH2">{{ppl.full_name}}</span>
+              <span class="peopleH2">{{ppl.first_name}} {{ppl.last_name}}</span>
               <br>
               {{ppl.role}}, 
               {% if ppl.start_year != ppl.finish_year %}

@@ -31,13 +31,9 @@ class NewsItemAdmin(admin.ModelAdmin):
     list_display = ('date', 'title')
 admin.site.register(NewsItem, NewsItemAdmin)
 
-class CurrentMemberAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'role')
-admin.site.register(CurrentMember, CurrentMemberAdmin)
-
-class PastMemberAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'finish_year', 'role')
-admin.site.register(PastMember, PastMemberAdmin)
+class MemberAdmin(admin.ModelAdmin):
+    list_display = ('alumni', 'first_name', 'last_name', 'role', 'department', 'start_year', 'finish_year')
+admin.site.register(Member, MemberAdmin)
 
 class PublicationAdmin(admin.ModelAdmin):
     list_display = ('year', 'journal', 'authors', 'title', 'link')
