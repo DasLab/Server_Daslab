@@ -33,7 +33,7 @@
 #icons {
 	position:absolute;
 	left:126px;
-	top:3425px;
+	top:2000px;
 	width:729px;
 	height:54px;
 	z-index:5;
@@ -59,7 +59,7 @@
 	left:56px;
 	top:360px;
 	width:957px;
-	height:2968px;
+	height:2000px;
 	z-index:8;
 }
 #researchBTN {
@@ -81,7 +81,7 @@
 #DasFOOTER {
 	position:absolute;
 	left:57px;
-	top:3370px;
+	top:2300px;
 	width:859px;
 	height:53px;
 	z-index:9;

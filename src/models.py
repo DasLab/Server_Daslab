@@ -23,11 +23,11 @@ class CurrentMember(models.Model):
     last_name = models.CharField(max_length=255)
     role = models.CharField(max_length=255)
     department = models.CharField(max_length=255)
-    more_info = models.CharField(max_length=255)
-    image = models.ImageField(upload_to=get_member_image, blank=True, null=True)
-    joint_lab = models.CharField(max_length=255)
-    joint_link = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    more_info = models.CharField(max_length=255, blank=True)
+    image = models.ImageField(upload_to=get_member_image, blank=True, max_length=255)
+    joint_lab = models.CharField(max_length=255, blank=True)
+    joint_link = models.CharField(max_length=255, blank=True)
+    description = models.CharField(max_length=255, blank=True)
 
 class PastMember(models.Model):
     full_name = models.CharField(max_length=255)

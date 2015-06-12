@@ -30,9 +30,11 @@ def contact(request):
 	return render_to_response(PATH.HTML_PATH['contact'], {}, context_instance=RequestContext(request))
 
 def people(request):
+	member = CurrentMember.objects.order_by('last_name', 'first_name')
+	for ppl in member:
+		ppl.image_link = ppl.image.url.replace(PATH.DATA_DIR['MEMBER_IMG_DIR'], '')
 	alumni = PastMember.objects.order_by('finish_year', 'start_year', 'full_name')
-
-	return render_to_response(PATH.HTML_PATH['people'], {'past_member':alumni}, context_instance=RequestContext(request))
+	return render_to_response(PATH.HTML_PATH['people'], {'current_member':member, 'past_member':alumni}, context_instance=RequestContext(request))
 
 
 # def url_redirect(request, path):

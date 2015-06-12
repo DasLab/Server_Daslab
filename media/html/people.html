@@ -18,146 +18,96 @@
   </div>
 
   <div class="homeTEXT" id="researchBODY">
-    <table width="591" height="2195" border="0">
+    <table width="591" border="0">
       <tbody>
+        {% for ppl in current_member %}
         <tr>
-        <td height="175" align="left" valign="middle"><img src="./people_files/JohanAndreasson.jpg" width="119" height="157"></td>
-        <td height="175" align="left" valign="middle"><p class="peopleH2">Johan Andreasson</p>
-          <p class="peopleTEXT">Postdoc Associate<br>
-            Genetics<br>
-        Joint: <a href="http://greenleaf.stanford.edu/index.html">Greenleaf lab</a></p></td>
-        <td height="175" align="right" valign="bottom"><a href="http://daslab.stanford.edu/das_people.html#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;more info24&#39;,&#39;&#39;,&#39;/site_media/images/people/more_info_hover.png&#39;,1)"><img src="/site_media/images/people/more_info.png" name="more info24" width="121" height="32" border="0" id="more info24"></a></td>
-      </tr>
-      <tr>
-        <td height="20" colspan="3" align="left" valign="middle"><div class="divisionLine"></div></td>
-      </tr>
+          <td height="175" align="left" valign="middle"><img src="/site_data/ppl_img/{{ppl.image_link}}" width="119"></td>
+          <td height="175" align="left" valign="middle">
+            <p class="peopleH2">{{ppl.first_name}} {{ppl.last_name}}</p>
+            <p class="peopleTEXT">{{ppl.role}}
+              <br>
+              {{ppl.department}}
+              <br>
+              {% if ppl.joint_lab %}
+              Joint: <a href="{{ppl.joint_link}}">{{ppl.joint_lab}} Lab</a>
+              <br>
+              {% endif %}
+              {% if ppl.description %}
+              {{ppl.description}}
+              <br>
+              {% endif %}
+            </p>
+          </td>
+          <td height="175" align="right" valign="bottom">
+            <a href="{{ppl.more_info}}" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;more info24&#39;,&#39;&#39;,&#39;/site_media/images/people/more_info_hover.png&#39;,1)">
+              <img src="/site_media/images/people/more_info.png" name="more info24" width="121" height="32" border="0" id="more info24">
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td height="20" colspan="3" align="left" valign="middle"><div class="divisionLine"></div></td>
+        </tr>
+        {% endfor %}
 
 
-      <tr>
-        <td width="175" align="left" valign="middle"><img src="./people_files/Cheng_20140406.png" width="119"></td>
-        <td width="213" height="175" align="left" valign="middle" class="homeTEXT"><p class="peopleH2">Clarence Cheng</p>
-          <p class="peopleTEXT">Ph.D. Student<br>
-        Biochemistry</p></td>
-        <td width="189" height="175" align="right" valign="bottom"><a href="https://med.stanford.edu/profiles/clarence-cheng" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;more info&#39;,&#39;&#39;,&#39;/site_media/images/people/more_info_hover.png&#39;,1)"><img src="/site_media/images/people/more_info.png" name="more info" width="121" height="32" border="0" id="more info"></a></td>
-      </tr>
-      <tr align="left" valign="middle">
-        <td height="20" colspan="3"><div class="divisionLine"></div></td>
-      </tr>
-      <tr>
-        <td height="175" align="left" valign="middle"><img src="./people_files/DLpeople5.jpg" width="119" height="157"></td>
-        <td height="175" align="left" valign="middle" nowrap="nowrap" class="homeTEXT"><p class="peopleH2">Fang-Chieh Chou</p>
-          <p class="peopleTEXT">Ph.D. Student<br>
-        Biochemistry</p></td>
-        <td height="175" align="right" valign="bottom"><a href="http://daslab.stanford.edu/das_people.html#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;more info21&#39;,&#39;&#39;,&#39;/site_media/images/people/more_info_hover.png&#39;,1)"><img src="/site_media/images/people/more_info.png" name="more info21" width="121" height="32" border="0" id="more info21"></a></td>
-      </tr>
-      <tr>
-        <td height="20" colspan="3" align="left" valign="middle"><div class="divisionLine"></div></td>
-      </tr>
-      <tr>
-        <td height="175" align="left" valign="middle"><img src="./people_files/photo.jpg" alt="images/DLpeople7.jpg" width="119"></td>
-        <td height="175" align="left" valign="middle"><p class="peopleH2">Pablo Cordero</p>
-          <p class="peopleTEXT">Ph.D. Student<br>
-            Biomedical Informatics<br>
-        Joint: <a href="http://ashleylab.stanford.edu/">Ashley lab</a></p></td>
-        <td height="175" align="right" valign="bottom"><a href="http://daslab.stanford.edu/das_people.html#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;more info24&#39;,&#39;&#39;,&#39;/site_media/images/people/more_info_hover.png&#39;,1)"><img src="/site_media/images/people/more_info.png" name="more info24" width="121" height="32" border="0" id="more info24"></a></td>
-      </tr>
-      <tr>
-        <td height="20" colspan="3" align="left" valign="middle"><div class="divisionLine"></div></td>
-      </tr>
-      <tr>
-        <td height="175" align="left" valign="middle"><img src="./people_files/DLpeople8.jpg" width="119" height="157"></td>
-        <td height="175" align="left" valign="middle"><p class="peopleH2">Ann Kladwang</p>
-          <p class="peopleTEXT">Research Associate<br>
-        Biochemistry<br>
-        Experimental lead, EteRNA</p></td>
-        <td height="175" align="right" valign="bottom"><a href="http://daslab.stanford.edu/das_people.html#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;more info25&#39;,&#39;&#39;,&#39;/site_media/images/people/more_info_hover.png&#39;,1)"><img src="/site_media/images/people/more_info.png" name="more info25" width="121" height="32" border="0" id="more info25"></a></td>
-      </tr>
-      <tr>
-        <td height="20" colspan="3" align="left" valign="middle"><div class="divisionLine"></div></td>
-      </tr>
+        <tr>
+          <td height="175" align="left" valign="middle"><img src="/site_data/ppl_img/RhijuD.jpg" width="119" height="157"></td>
+          <td height="175" align="left" valign="middle">
+            <p class="peopleH2">Rhiju Das</p>
+            <p class="peopleTEXT">
+              <strong>Principal Investigator</strong>
+              <br>
+              <a href="https://dl.dropboxusercontent.com/u/21569020/RhijuDas_CurriculumVitae.pdf">Curriculum Vitae</a>
+              <br>
+              <a href="http://eterna.stanford.edu/web/blog/">Eterna Blog</a>
+            </p>
+          </td>
+          <td height="175" align="right" valign="bottom">
+            <a href="http://daslab.stanford.edu/das_people.html#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;more info210&#39;,&#39;&#39;,&#39;/site_media/images/people/more_info_hover.png&#39;,1)"><img src="/site_media/images/people/more_info.png" name="more info210" width="121" height="32" border="0" id="more info210"></a>
+          </td>
+        </tr>
+        <tr>
+          <td height="20" colspan="3" align="left" valign="middle"><div class="divisionLine"></div></td>
+        </tr>
 
-      <tr>
-        <td height="175" align="left" valign="middle"><img src="./people_files/CalebGeniesse.jpg" width="119" height="157"></td>
-        <td height="175" align="left" valign="middle"><p class="peopleH2">Caleb Geniesse<br>
-            <br>
-            <span class="peopleTEXT">Research Data Analyst<br>
-Biochemistry</span></p></td>
-        <td height="175" align="right" valign="bottom"><a href="http://daslab.stanford.edu/das_people.html#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;more info29&#39;,&#39;&#39;,&#39;/site_media/images/people/more_info_hover.png&#39;,1)"><img src="/site_media/images/people/more_info.png" name="more info29" width="121" height="32" border="0" id="more info29"></a></td>
-      </tr>
-
-
-      <tr>
-        <td height="20" colspan="3" align="left" valign="middle"><div class="divisionLine"></div></td>
-      </tr>
-      <tr>
-        <td height="175" align="left" valign="middle"><img src="./people_files/DLpeople12.jpg" width="119" height="157"></td>
-        <td height="175" align="left" valign="middle"><p class="peopleH2">Siqi Tian<br>
-            <br>
-            <span class="peopleTEXT">Ph.D. Student<br>
-Biochemistry</span></p></td>
-        <td height="175" align="right" valign="bottom"><a href="http://daslab.stanford.edu/das_people.html#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;more info29&#39;,&#39;&#39;,&#39;/site_media/images/people/more_info_hover.png&#39;,1)"><img src="/site_media/images/people/more_info.png" name="more info29" width="121" height="32" border="0" id="more info29"></a></td>
-      </tr>
-      <tr>
-        <td height="20" colspan="3" align="left" valign="middle"><div class="divisionLine"></div></td>
-      </tr>
-      <tr>
-        <td height="175" align="left" valign="middle"><img src="./people_files/DLpeople13.jpg" width="119" height="157"></td>
-        <td height="175" align="left" valign="middle"><p class="peopleH2">Joseph Yesselman</p>
-          <p class="peopleTEXT">Postdoctoral Associate<br>
-        Biochemistry</p></td>
-        <td height="175" align="right" valign="bottom"><a href="http://daslab.stanford.edu/das_people.html#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;more info26&#39;,&#39;&#39;,&#39;/site_media/images/people/more_info_hover.png&#39;,1)"><img src="/site_media/images/people/more_info.png" name="more info26" width="121" height="32" border="0" id="more info26"></a></td>
-      </tr>
-
-
-      <tr>
-        <td height="20" colspan="3" align="left" valign="middle"><div class="divisionLine"></div></td>
-      </tr>
-
-
-      <tr>
-        <td height="175" align="left" valign="middle"><img src="/site_data/ppl_img/RhijuD.jpg" width="119" height="157"></td>
-        <td height="175" align="left" valign="middle">
-          <p class="peopleH2">Rhiju Das</p>
-          <p class="peopleTEXT">
-            <strong>Principal Investigator</strong>
-            <br>
-            <a href="https://dl.dropboxusercontent.com/u/21569020/RhijuDas_CurriculumVitae.pdf">Curriculum Vitae</a>
-            <br>
-            <a href="http://eterna.stanford.edu/web/blog/">Eterna Blog</a>
-          </p>
-        </td>
-        <td height="175" align="right" valign="bottom">
-          <a href="http://daslab.stanford.edu/das_people.html#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;more info210&#39;,&#39;&#39;,&#39;/site_media/images/people/more_info_hover.png&#39;,1)"><img src="/site_media/images/people/more_info.png" name="more info210" width="121" height="32" border="0" id="more info210"></a>
-        </td>
-      </tr>
-      <tr>
-        <td height="20" colspan="3" align="left" valign="middle"><div class="divisionLine"></div></td>
-      </tr>
-
-      <tr>
-        <td height="400" align="left" valign="top">
-          <br><br>
-          <img src="/site_media/images/people/alumni.png" width="140" height="36">
-        </td>
-        <td height="400" colspan="2" align="left" valign="top">
-          <p>&nbsp;</p>
-          <p>
-            {% for ppl in past_member %}
-            <span class="peopleH2">{{ppl.full_name}}</span>
-            <br>
-            {{ppl.role}}, 
-            {% if ppl.start_year != ppl.finish_year %}
-              {{ppl.start_year}}-{{ppl.finish_year}}
-            {% else %}
-              {{ppl.start_year}}
-            {% endif %}
+        <tr>
+          <td align="left" valign="top">
             <br><br>
-            {% endfor %}
-      	  </p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            <img src="/site_media/images/people/alumni.png" width="140" height="36">
+          </td>
+          <td colspan="2" align="left" valign="top">
+            <p>&nbsp;</p>
+            <p>
+              {% for ppl in past_member %}
+              <span class="peopleH2">{{ppl.full_name}}</span>
+              <br>
+              {{ppl.role}}, 
+              {% if ppl.start_year != ppl.finish_year %}
+                {{ppl.start_year}}-{{ppl.finish_year}}
+              {% else %}
+                {{ppl.start_year}}
+              {% endif %}
+              <br><br>
+              {% endfor %}
+        	  </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div id="DasFOOTER"><img src="/site_media/images/footer_other.jpg" width="855" height="39"></div>
 {% endblock %}
+
+
+{% block script %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#DasFOOTER").css("top", 700 + {{past_member|length}} * 60 + {{current_member|length}} * 200);
+      $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
+      $(".DASpeople").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+    });
+  </script>
+{% endblock %}
+
