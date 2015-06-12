@@ -42,12 +42,12 @@
               {% endif %}
 
               {% if pub.feature %}
-                <table width="888" height="200" border="0" cellpadding="0" cellspacing="0">
+                <table width="800" height="200" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
-                      <td width="130" align="center" valign="top">
+                      <td width="80" align="center" valign="top">
                         {% if pub.year_tag %}
-                          <span class="teal1"><strong>{{pub.year}}</strong></span>
+                          <span class="teal2">{{pub.year}}</span>
                         {% endif %}
                       </td>
                       <td width="130" align="center" valign="middle" bgcolor="#CCDFE0">
@@ -90,12 +90,12 @@
                   </tbody>
                 </table>
               {% else %}
-                <table width="888" border="0" cellpadding="0" cellspacing="0">
+                <table width="800" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
-                      <td width="130" align="center" valign="top">
+                      <td width="80" align="center" valign="top">
                         {% if pub.year_tag %}
-                          <span class="teal1"><strong>{{pub.year}}</strong></span>
+                          <span class="teal2">{{pub.year}}</span>
                         {% endif %}
                       </td>
                       <td width="386" align="center" valign="top" >
@@ -145,9 +145,9 @@
 {% block script %}
   <script type="text/javascript">
     $(document).ready(function() {
-      // $("#DasFOOTER").css("top", 700 + {{past_member|length}} * 60 + {{current_member|length}} * 200);
+      $("#DasFOOTER").css("top", parseInt($("#DasFOOTER").css("top")) + 100);
       $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
-      $(".DASpeople").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+      $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
     });
   </script>
 {% endblock %}
