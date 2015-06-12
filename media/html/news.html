@@ -2,12 +2,6 @@
 
 {% block header %}
   <link href="/site_media/css/news.css" rel="stylesheet" type="text/css">
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#main").addClass("DASresearch");
-      $("#news").attr("src", "/site_media/images/nav_news_hover.png");
-    });
-  </script>
 {% endblock %}
 
 
@@ -19,7 +13,7 @@
     <img src="/site_media/images/news/logo_news.jpg" width="973" height="221">
   </div>
 
-  <div class="homeTEXT" id="researchBODY">
+  <div class="homeTEXT" id="newsBODY">
     <table width="855" height="820" border="0">
       <tbody>
 
@@ -67,10 +61,13 @@
 {% block script %}
   <script type="text/javascript">
     $(document).ready(function() {
+      $("#main").addClass("DASnews");
+      $("#news").attr("src", "/site_media/images/nav_news_hover.png");
+
       $("tr.previous").hide();
       $("#DasFOOTER").css("top", 2500);
       $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
-      $(".DASresearch").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+      $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
 
       $("#arrow").on("click", function () {
         $("tr.previous").show();
@@ -78,7 +75,7 @@
 
         $("#DasFOOTER").css("top", 500 + 200 * {{news_list|length}});
         $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
-        $(".DASresearch").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+        $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
       });
     });
   </script>

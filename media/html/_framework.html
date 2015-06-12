@@ -6,7 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="icon" href="/site_media/images/icon_daslab.png">
 
-    <script src="/site_media/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <link href="/site_media/css/DasStyle.css" rel="stylesheet" type="text/css">
+    {% block header %}{% endblock %}
+
     <script src="/site_media/js/swfobject_modified.js" type="text/javascript"></script>
     <script type="text/javascript">
       function MM_swapImgRestore() { //v3.0
@@ -32,8 +34,6 @@
       }
     </script>
 
-    <link href="/site_media/css/DasStyle.css" rel="stylesheet" type="text/css">
-    {% block header %}{% endblock %}
     <style type="text/css" media="screen">#FlashID {visibility:hidden}</style>
   </head>
 
@@ -48,7 +48,7 @@
     </div>
     <div id="main">
       <div id="dasLOGO">
-        <img src="/site_media/images/logo_das.jpg" width="141" height="82">
+        <a href="/"><img src="/site_media/images/logo_das.jpg" width="141" height="82"></a>
       </div>
       <div id="DasNAV">
         <table width="750" height="34" border="0">
@@ -113,6 +113,7 @@
     <script type="text/javascript">
       swfobject.registerObject("FlashID");
     </script>
+    <script src="/site_media/js/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script type="text/javascript">
       $(document).ready(function () {
         $("#top").on("click", function () {

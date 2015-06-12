@@ -2,12 +2,6 @@
 
 {% block header %}
   <link href="/site_media/css/publications.css" rel="stylesheet" type="text/css">
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#main").addClass("DASpub");
-      $("#publications").attr("src", "/site_media/images/nav_publications_hover.png");
-    });
-  </script>
 {% endblock %}
 
 
@@ -17,7 +11,7 @@
     <img src="/site_media/images/publications/logo_publications.jpg" width="973" height="221">
   </div>
 
-  <div class="homeTEXT" id="researchBODY">
+  <div class="homeTEXT" id="pubBODY">
     <table width="855" height="3107" border="0">
       <tbody>
         <tr>
@@ -145,6 +139,9 @@
 {% block script %}
   <script type="text/javascript">
     $(document).ready(function() {
+      $("#main").addClass("DASpub");
+      $("#publications").attr("src", "/site_media/images/nav_publications_hover.png");
+
       $("#DasFOOTER").css("top", parseInt($("#DasFOOTER").css("top")) + 100);
       $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
       $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);

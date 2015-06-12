@@ -2,12 +2,6 @@
 
 {% block header %}
   <link href="/site_media/css/home.css" rel="stylesheet" type="text/css">
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#main").addClass("DAShome");
-      $("#dasHOME").attr("src", "/site_media/images/nav_home_hover.png");
-    });
-  </script>
 {% endblock %}
 
 {% block content %}
@@ -55,3 +49,12 @@
 
 {% endblock %}
 
+
+{% block script %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#main").addClass("DAShome");
+      $("#dasHOME").attr("src", "/site_media/images/nav_home_hover.png");
+    });
+  </script>
+{% endblock %}

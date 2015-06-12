@@ -2,12 +2,6 @@
 
 {% block header %}
   <link href="/site_media/css/contact.css" rel="stylesheet" type="text/css">
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#main").addClass("DAScontact");
-      $("#contact").attr("src", "/site_media/images/nav_contact_hover.png");
-    });
-  </script>
 {% endblock %}
 
 
@@ -19,7 +13,7 @@
   	<img src="/site_media/images/contact/logo_contact.jpg" width="973" height="221">
   </div>
 
-  <div class="homeTEXT" id="researchBODY">
+  <div class="homeTEXT" id="contactBODY">
     <table width="855" height="" border="0">
       	<tbody>
 	      	<tr>
@@ -57,5 +51,15 @@
   </div>
 
   <div id="DasFOOTER"><img src="/site_media/images/footer_other.jpg" width="855" height="39"></div>
+{% endblock %}
+
+
+{% block script %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#main").addClass("DAScontact");
+      $("#contact").attr("src", "/site_media/images/nav_contact_hover.png");
+    });
+  </script>
 {% endblock %}
 

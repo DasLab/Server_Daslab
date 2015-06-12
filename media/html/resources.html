@@ -2,12 +2,6 @@
 
 {% block header %}
   <link href="/site_media/css/resources.css" rel="stylesheet" type="text/css">
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#main").addClass("DASresources");
-      $("#resources").attr("src", "/site_media/images/nav_resources_hover.png");
-    });
-  </script>
 {% endblock %}
 
 
@@ -19,7 +13,7 @@
     <img src="/site_media/images/resources/logo_resources.jpg" width="973" height="221"> 
   </div>
 
-  <div class="homeTEXT" id="researchBODY">
+  <div class="homeTEXT" id="resourcesBODY">
     <table width="855" height="131" border="0">
       <tbody>
         <tr>
@@ -212,3 +206,14 @@
 
   <div id="DasFOOTER"><img src="/site_media/images/footer_other.jpg" width="855" height="39"></div>
 {% endblock %}
+
+
+{% block script%}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#main").addClass("DASresources");
+      $("#resources").attr("src", "/site_media/images/nav_resources_hover.png");
+    });
+  </script>
+{% endblock %}
+
