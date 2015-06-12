@@ -28,7 +28,13 @@ from django.contrib import admin
 # admin.site.register(Organism, OrganismAdmin)
 
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ('date', 'title')
+    list_display = ('date', 'content', 'link')
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(NewsAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['content'].widget.attrs['style'] = 'width: 75em; height: 8em;'
+        form.base_fields['link'].widget.attrs['style'] = 'width: 75em;'
+        return form
 admin.site.register(News, NewsAdmin)
 
 class MemberAdmin(admin.ModelAdmin):

@@ -21,11 +21,16 @@ def get_pub_image(instance, filename):
 def get_pub_data(instance, filename):
     return PATH.DATA_DIR['PUB_DAT_DIR'] + '%s' % filename
 
+def get_news_image(instance, filename):
+    return PATH.DATA_DIR['NEWS_IMG_DIR'] + '%s' % filename
+
 
 class News(models.Model):
-    title = models.CharField(max_length=255)
-    content = models.CharField(max_length=1023, blank=True)
     date = models.DateField()
+    content = models.TextField(blank=True)
+    link = models.CharField(max_length=255, blank=True)
+    image = models.ImageField(upload_to=get_news_image, blank=True, null=True, max_length=255)
+    video = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta():
         verbose_name = 'News Item'

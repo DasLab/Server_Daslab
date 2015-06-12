@@ -1,333 +1,86 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- saved from url=(0040)http://daslab.stanford.edu/das_news.html -->
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="icon" href="http://daslab.stanford.edu/daslab_icon.png">
+{% extends "media/html/_framework.html" %}
+
+{% block header %}
+  <link href="/site_media/css/news.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#main").addClass("DASresearch");
+      $("#news").attr("src", "/site_media/images/nav_news_hover.png");
+    });
+  </script>
+{% endblock %}
 
 
-
-<title>DAS LAB + Stanford Biochemistry Department + Stanford University</title>
-<style type="text/css">
-body {
-	margin-left: 0px;
-	margin-top: 50px;
-}
-</style>
-<link href="./news_files/DasStyle.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-#dasLOGO {
-	position:absolute;
-	left:6px;
-	top:1px;
-	width:156px;
-	height:83px;
-	z-index:1;
-}
-#DasNAV {
-	position:absolute;
-	left:225px;
-	top:30px;
-	width:750px;
-	height:31px;
-	z-index:2;
-}
-#animation {
-	position:absolute;
-	left:2px;
-	top:100px;
-	width:973px;
-	height:221px;
-	z-index:3;
-}
-#divisionBar {
-	position:absolute;
-	left:56px;
-	top:360px;
-	width:855px;
-	height:96px;
-	z-index:4;
-}
-#icons {
-	position:absolute;
-	left:125px;
-	top:3018px;
-	width:729px;
-	height:54px;
-	z-index:5;
-}
-#whatWeDo {
-	position:absolute;
-	left:67px;
-	top:520px;
-	width:129px;
-	height:86px;
-	z-index:6;
-}
-#weStrive {
-	position:absolute;
-	left:679px;
-	top:518px;
-	width:226px;
-	height:103px;
-	z-index:7;
-}
-#researchBODY {
-	position:absolute;
-	left:56px;
-	top:350px;
-	width:856px;
-	height:830px;
-	z-index:8;
-}
-#researchBTN {
-	position:absolute;
-	left:-53px;
-	top:119px;
-	width:51px;
-	height:205px;
-	z-index:1;
-}
-#header {
-	position:absolute;
-	left:673px;
-	top:25px;
-	width:352px;
-	height:114px;
-	z-index:1;
-}
-#DasFOOTER {
-	position:absolute;
-	left:56px;
-	top:2963px;
-	width:859px;
-	height:53px;
-	z-index:9;
-}
-</style>
-<script type="text/javascript">
-function MM_swapImgRestore() { //v3.0
-  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
-}
-function MM_preloadImages() { //v3.0
-  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
-    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
-    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
-}
-
-function MM_findObj(n, d) { //v4.01
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
-  if(!x && d.getElementById) x=d.getElementById(n); return x;
-}
-
-function MM_swapImage() { //v3.0
-  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-}
-</script>
-</head>
-
-<body onload="MM_preloadImages(&#39;images/peopleDLXover.png&#39;,&#39;images/pubDLXover.png&#39;,&#39;images/resourcesDLXover.png&#39;,&#39;images/contactDLXover.png&#39;,&#39;images/homeDLXover.png&#39;,&#39;images/researchDLXover.png&#39;,&#39;images/readMoreDLXover.png&#39;)"><div id="StayFocusd-infobar" style="display:none;">
-    <img src="chrome-extension://laankejkbhbdhmipfmgcngdelahlfoji/common/img/eye_19x19_red.png">
-    <span id="StayFocusd-infobar-msg"></span>
-    <span id="StayFocusd-infobar-links">
-        <a id="StayFocusd-infobar-never-show">hide forever</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-        <a id="StayFocusd-infobar-hide">hide once</a>
-    </span>
-</div>
-<div class="DASresearch">
-  <div id="dasLOGO"><a href="http://daslab.stanford.edu/index.html"><img src="./news_files/DasLOGO.jpg" width="141" height="82" border="0"></a></div>
-  <div id="DasNAV">
-    <table width="750" height="34" border="0">
-      <tbody><tr>
-        <td width="73" align="left" valign="top"><a href="http://daslab.stanford.edu/index.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;dasHOME&#39;,&#39;&#39;,&#39;images/homeDLXover.png&#39;,1)"><img src="./news_files/homeDLX.png" name="dasHOME" width="40" height="20" border="0" id="dasHOME"></a></td>
-        <td width="117" align="left" valign="top"><a href="http://daslab.stanford.edu/das_research.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;research&#39;,&#39;&#39;,&#39;images/researchDLXover.png&#39;,1)"><img src="./news_files/researchDLX.png" name="research" width="83" height="20" border="0" id="research"></a></td>
-        <td width="73" align="left" valign="top"><img src="./news_files/newsDLXover.png" width="39" height="19"></td>
-        <td width="94" align="left" valign="top"><a href="http://daslab.stanford.edu/das_people.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;people&#39;,&#39;&#39;,&#39;images/peopleDLXover.png&#39;,1)"><img src="./news_files/peopleDLX.png" name="people" width="61" height="20" border="0" id="people"></a></td>
-        <td width="159" align="left" valign="top"><a href="http://daslab.stanford.edu/das_publications.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;publications&#39;,&#39;&#39;,&#39;images/pubDLXover.png&#39;,1)"><img src="./news_files/pubDLX.png" name="publications" width="126" height="20" border="0" id="publications"></a></td>
-        <td width="127" align="left" valign="top"><a href="http://daslab.stanford.edu/das_resources.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;resources&#39;,&#39;&#39;,&#39;images/resourcesDLXover.png&#39;,1)"><img src="./news_files/resourcesDLX.png" name="resources" width="94" height="20" border="0" id="resources"></a></td>
-        <td width="77" align="left" valign="top"><a href="http://daslab.stanford.edu/das_contact.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;contact&#39;,&#39;&#39;,&#39;images/contactDLXover.png&#39;,1)"><img src="./news_files/contactDLX.png" name="contact" width="73" height="20" border="0" id="contact"></a></td>
-      </tr>
-    </tbody></table>
-  </div>
+{% block content %}
   <div id="animation">
-    <div id="header"><img src="./news_files/newsIMG_header.png" width="349" height="111"></div>
-  <img src="./news_files/newsIMG_dlx.jpg" width="973" height="221"> </div>
-  <div id="icons"><img src="./news_files/homeICONS-DLX.jpg" width="729" height="54" border="0" usemap="#Map">
-    <map name="Map" id="Map">
-      <area shape="rect" coords="0,9,204,34" href="http://biochem.stanford.edu/">
-      <area shape="rect" coords="226,9,381,46" href="http://med.stanford.edu/">
-      <area shape="rect" coords="405,5,583,49" href="https://physics.stanford.edu/">
-      <area shape="rect" coords="604,4,713,42" href="http://bioxgames.stanford.edu/index.html" target="_blank">
-    </map>
+    <div id="header">
+      <img src="/site_media/images/news/icon_news.png" width="349" height="111">
+    </div>
+    <img src="/site_media/images/news/logo_news.jpg" width="973" height="221">
   </div>
+
   <div class="homeTEXT" id="researchBODY">
     <table width="855" height="820" border="0">
+      <tbody>
 
+        {% for news in news_list %}
+        <tr {% if forloop.counter <= 10 %} class="current" {% else %} class="previous" {% endif %}>
+          <td width="225" align="middle" valign="left">
+            {% if news.image %} <img src="/site_data/news_img/{{news.image_link}}" width="190"> {% endif %}
+            {% if news.video %} <iframe title="YouTube video player" class="youtube-player" type="text/html" width="160" src="{{news.video}}" frameborder="0" allowFullScreen></iframe> {% endif %}
+          </td>
+          <td width="500" align="left" valign="top" class="homeTEXT">
+            <p class="teal1"><i>{{news.date}}</i></p>
+            <p>
+              <br>
+              {% autoescape off %}{{news.content}}{% endautoescape %}
+            </p>
+          </td>
+          <td height="160" align="right" valign="bottom">
+            {% if news.link %}
+            <a href="{{news.link}}" target="_blank" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('read more2{{forloop.counter}}','','/site_media/images/news/read_more_hover.png',1)">
+              <img src="/site_media/images/news/read_more.png" name="read more2{{forloop.counter}}" width="121" height="32" border="0" id="read more2{{forloop.counter}}">
+            {% endif %}
+            </a>
+          </td>
+        </tr>
+        <tr {% if forloop.counter <= 10 %} class="current" {% else %} class="previous" {% endif %}>
+          <td height="20" colspan="3"><div class="divisionLine"></div></td>
+        </tr>
+        {% endfor %}
 
-<tbody><tr>
-         <td height="160" align="middle" valign="left"><img src="./news_files/logo_eternacon.png" width="190" alt="Das LOGO"></td>
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>July 11-12, 2015</p>
-          <p><br>
-The first ever EteRNAcon is happening! Join us at Stanford University on July 11-12 in person or virtually.  
-  </p></td><td height="160" align="right" valign="bottom"><a href="https://sites.google.com/site/eternacon2015/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;read more21&#39;,&#39;&#39;,&#39;images/readMoreDLXover.png&#39;,1)"><img src="./news_files/readMoreDLX.png" name="read more21" width="121" height="32" border="0" id="read more21"></a></td>
-      </tr>
-
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-      
-      </tr><tr>
-        <td height="160" align="middle" valign="left"><img src="./news_files/PabloDefenseJPG.jpg" alt="Das LOGO" height="140"></td>
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>June 2, 2015</p>
-          <p><br>
-	    Pablo Cordero gave his final thesis talk on "Using factorization methods to find structure in RNA molecules and networks. Congratulations, Pablo!
-	  </p></td>
-	</tr>
-
-
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-</tr><tr>
-         <td height="160" align="middle" valign="left"><img src="./news_files/bigdata.png" width="201" alt="Das LOGO"></td>
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>May 22, 2015</p>
-          <p><br>
-Rhiju speaks at 'Computers &amp; Crowdsourcing' session at Big Data in Biomedicine conference. Some info <a href="http://scopeblog.stanford.edu/2015/05/22/behind-big-data-in-biomedicine-computers-crowds-and-trackers/">here</a>, with videos coming soon.  
-  </p></td><td height="160" align="right" valign="bottom"><a href="http://scopeblog.stanford.edu/2015/05/22/behind-big-data-in-biomedicine-computers-crowds-and-trackers/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;read more21&#39;,&#39;&#39;,&#39;images/readMoreDLXover.png&#39;,1)"><img src="./news_files/readMoreDLX.png" name="read more21" width="121" height="32" border="0" id="read more21"></a></td>
-      </tr>
-      
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-      </tr><tr>
-         <td height="160" align="middle" valign="left"><img src="./news_files/logo_primerize_2.png" width="180" alt="Das LOGO"></td>
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>May 25, 2015</p>
-          <p><br>
-        Want to make an RNA domain fast? Use <a href="http://primerize.stanford.edu/">Primerize</a> to design primers that you can use to assemble templates for in vitro transription.     </p></td>
-        <td height="160" align="right" valign="bottom"><a href="http://dx.doi.org/10.1093/nar/gkv538" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;read more21&#39;,&#39;&#39;,&#39;images/readMoreDLXover.png&#39;,1)"><img src="./news_files/readMoreDLX.png" name="read more21" width="121" height="32" border="0" id="read more21"></a></td>
-      </tr>
-
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-      </tr><tr>
-         <td height="160" align="middle" valign="left"><img src="./news_files/rna_redesign_logo.png" width="180" alt="Das LOGO"></td>
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>May 25, 2015</p>
-          <p><br>
-        Our first RNA design server has been launched, and <a href="http://dx.doi.org/10.1093/nar/gkv465">published</a>. Want to know what sequence best fits a given phosphate backbone? Come try our <a href="http://rnaredesign.stanford.edu/">server</a> and submit any RNA in PDB format.
-        </p></td>        <td height="160" align="right" valign="bottom"><a href="http://dx.doi.org/10.1093/nar/gkv465" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;read more21&#39;,&#39;&#39;,&#39;images/readMoreDLXover.png&#39;,1)"><img src="./news_files/readMoreDLX.png" name="read more21" width="121" height="32" border="0" id="read more21"></a></td>
-      </tr>
-
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-</tr><tr>
-         <td height="160" align="middle" valign="left">
-
-<iframe title="YouTube video player" class="youtube-player" type="text/html" width="160" src="./news_files/Lp_KozzV5Po.html" frameborder="0" allowfullscreen=""></iframe>
-
-<!--<img src="images/eterna_logo.png" width="201" alt="Das LOGO" /> -->
-
-</td>
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>May 5th, 2015</p>
-          <p><br>
-Joe Yesselman presented an EteRNA open group meeting on new tools for RNA 3D design, on June 5, 2015. Tune into our eterna YouTube channel for this and previous talks. 
-  </p></td><td height="160" align="right" valign="bottom"><a href="https://www.youtube.com/channel/UCt811OXJqe35TDhe9hPYzJg" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;read more21&#39;,&#39;&#39;,&#39;images/readMoreDLXover.png&#39;,1)"><img src="./news_files/readMoreDLX.png" name="read more21" width="121" height="32" border="0" id="read more21"></a></td>
-      </tr>
-
-
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-<td height="20" colspan="3"><div class="divisionLine"></div></td>
-      
-      </tr><tr>
-         <td height="160" align="middle" valign="left"><img src="./news_files/fang_celebration.png" alt="Das LOGO" width="115" height="117"></td>
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>May 21, 2015</p>
-          <p><br>
-Fang-Chieh Chou defended his thesis on "Advancing high resolution predictions of RNA structure and energetics. Congratulations, Fang!
-
- 
-</p></td></tr>
-
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-
-      </tr><tr>
-
-        <td height="160" align="middle" valign="left">
-	  <iframe title="YouTube video player" class="youtube-player" type="text/html" width="160" src="./news_files/rf0vyox3Tc8.html" frameborder="0" allowfullscreen=""></iframe>
-	  <!-- <img src="images/ebbe_cody.png" width="201" alt="Das LOGO" /> --> 
-	</td> 
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>Jan. 12, 2015</p>
-          <p><br>
-Pop up talk from Ebbe Anderson and Cody Geary -- Cartoon Guide to RNA nanotech --   to the Das Lab and EteRNA Community! Broadcast &amp; chatlog available at <a href="http://eternagame.org/web/news/5474894/">Eterna</a> and on <a href="https://www.youtube.com/watch?v=rf0vyox3Tc8">YouTube</a>. 
-  </p></td><td height="160" align="right" valign="bottom"><a href="https://www.youtube.com/watch?v=rf0vyox3Tc8" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;read more21&#39;,&#39;&#39;,&#39;images/readMoreDLXover.png&#39;,1)"><img src="./news_files/readMoreDLX.png" name="read more21" width="121" height="32" border="0" id="read more21"></a></td>
-      </tr>
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-
-
-      </tr><tr>
-         <td height="160" align="middle" valign="left"><img src="./news_files/CompLogo.png" width="201" alt="Das LOGO"></td>
-
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>Jan. 5, 2015</p>
-          <p><br>
-Rhiju to receive 2015 OpenEye Outstanding Junior Faculty Award in Computational Chemistry!
-  </p></td><td height="160" align="right" valign="bottom"><a href="http://web2011.acscomp.org/awards/the-comp-acs-outstanding-junior-faculty-award" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;read more21&#39;,&#39;&#39;,&#39;images/readMoreDLXover.png&#39;,1)"><img src="./news_files/readMoreDLX.png" name="read more21" width="121" height="32" border="0" id="read more21"></a></td>
-      </tr>
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-
-
-      </tr><tr>
-        <td height="160" align="middle" valign="left"><img src="./news_files/DNA20_logo.png" width="140" alt="Das LOGO"></td>
-
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>September 23, 2014</p>
-          <p><br>
-Rhiju will give a keynote at DNA20, the 20th international conference on DNA computing and molecular programming, in Kyoto, Japan.   </p></td><td height="160" align="right" valign="bottom"><a href="http://dna20.molecular-robotics.org/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;read more21&#39;,&#39;&#39;,&#39;images/readMoreDLXover.png&#39;,1)"><img src="./news_files/readMoreDLX.png" name="read more21" width="121" height="32" border="0" id="read more21"></a></td>
-      </tr>
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-
-      </tr><tr>
-        <td height="160" align="middle" valign="left"><img src="./news_files/clashbusters.png" width="140" alt="Das LOGO"></td>
-
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>July 30, 2014</p>
-          <p><br>
-Rhiju &amp; Fang recognized with the CLASHBUSTERS! award from the lab of Jane &amp; Dave Richardson at the RNA/protein session of RosettaCon 2014. And Joe Yesselman won best poster of the conference for "Towards Automated Design of 3D RNA Structure"!    </p></td><td height="160" align="right" valign="bottom"><a href="http://www.nature.com/nmeth/journal/v10/n1/abs/nmeth.2262.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;read more21&#39;,&#39;&#39;,&#39;images/readMoreDLXover.png&#39;,1)"><img src="./news_files/readMoreDLX.png" name="read more21" width="121" height="32" border="0" id="read more21"></a></td>
-      </tr>
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-
-      </tr><tr>
-        <td height="160" align="middle" valign="left"><img src="./news_files/rna_emblem.gif" width="140" alt="Das LOGO"></td>
-
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>June, 2014</p>
-Clarence Cheng presented a new technology for solving RNA 3D folds through multiplexed hydroxyl radical cleavage analysis (MOHCA-seq) at the international RNA society meeting on June 3-8, 2014 in Quebec City, Canada. Congratulations to Clarence for being selected to give a talk in the High Throughput methods session. Rhiju also presented on EteRNA at the Bioinformatics Workshop at the meeting. 
-
-        </td><td height="160" align="right" valign="bottom"><a href="http://www.youtube.com/channel/UCt811OXJqe35TDhe9hPYzJg" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;read more21&#39;,&#39;&#39;,&#39;images/readMoreDLXover.png&#39;,1)"><img src="./news_files/readMoreDLX.png" name="read more21" width="121" height="32" border="0" id="read more21"></a></td>
-      </tr>
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-
-      </tr><tr>
-        <td height="160" align="middle" valign="left"><img src="./news_files/pseudobaeospora_wipapatiae.png" width="201" alt="Das LOGO"></td>
-
-        <td height="160" align="left" valign="top" class="homeTEXT"><p>May, 2014</p>
-          <p><br>
-Newly discovered mushroom named after lab member! Congratulations to Wipapat (Ann) Kladwang for co-discovering <i>Pseudobaeospora wipapatiae</i>, described in "A ruby-colored Pseudobaeospora species is described as new from material collected on the island of Hawaii", in the newest issue of <i>Mycologia</i>. 
-
-        </p></td><td height="160" align="right" valign="bottom"><a href="http://www.mycologia.org/content/106/3/456" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;read more21&#39;,&#39;&#39;,&#39;images/readMoreDLXover.png&#39;,1)"><img src="./news_files/readMoreDLX.png" name="read more21" width="121" height="32" border="0" id="read more21"></a></td>
-      </tr>
-
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-      </tr><tr>
-        <td width="38" height="15" align="left" valign="middle" class="PubH1"><a href="http://daslab.stanford.edu/das_news_archive.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage(&#39;arrow&#39;,&#39;&#39;,&#39;images/arrowDLXover.png&#39;,1)"><img src="./news_files/arrowDLX.png" name="arrow" width="28" height="28" border="0" id="arrow"></a></td>
-        <td height="15" align="left" valign="middle" class="PubH1">Previous news from the Das Lab.</td>
-      </tr>
-
-      <tr><td height="20" colspan="3"><div class="divisionLine"></div></td>
-
-    </tr></tbody></table>
+        <tr class="switch">
+          <td width="38" height="15" align="left" valign="middle" class="PubH1"><a onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('arrow','','/site_media/images/publications/arrow_hover.png',1)"><img src="/site_media/images/publications/arrow.png" name="arrow" width="28" height="28" border="0" id="arrow" /></a></td>
+          <td height="15" align="left" valign="middle" class="PubH1">Previous news from the Das Lab.</strong></td>
+        </tr>
+        <tr class="switch">
+          <td height="20" colspan="3"><div class="divisionLine"></div></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <div id="DasFOOTER"><img src="./news_files/Das_Footer.jpg" width="855" height="39"></div>
-</div>
+
+  <div id="DasFOOTER"><img src="/site_media/images/footer_other.jpg" width="855" height="39"></div>
+{% endblock %}
 
 
-</body></html>
+{% block script %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("tr.previous").hide();
+      $("#DasFOOTER").css("top", 2500);
+      $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
+      $(".DASresearch").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+
+      $("#arrow").on("click", function () {
+        $("tr.previous").show();
+        $("tr.switch").hide();
+
+        $("#DasFOOTER").css("top", 500 + 200 * {{news_list|length}});
+        $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
+        $(".DASresearch").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+      });
+    });
+  </script>
+{% endblock %}
+

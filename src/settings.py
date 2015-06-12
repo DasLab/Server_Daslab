@@ -157,6 +157,7 @@ class SYS_PATH:
             'PUB_PDF_DIR': STATICFILES_DIRS[0] + '/pub_pdf/',
             'PUB_IMG_DIR': STATICFILES_DIRS[0] + '/pub_img/',
             'PUB_DAT_DIR': STATICFILES_DIRS[0] + '/pub_data/',
+            'NEWS_IMG_DIR': STATICFILES_DIRS[0] + '/news_img/',
             'TMPDIR': MEDIA_ROOT + '/temp/',
 
         }

@@ -30,7 +30,11 @@ def contact(request):
 	return render_to_response(PATH.HTML_PATH['contact'], {}, context_instance=RequestContext(request))
 
 def news(request):
-	return render_to_response(PATH.HTML_PATH['news'], {}, context_instance=RequestContext(request))
+	news_list = News.objects.order_by('-date')
+	for news in news_list:
+		if news.image:
+			news.image_link = news.image.url.replace(PATH.DATA_DIR['NEWS_IMG_DIR'], '')
+	return render_to_response(PATH.HTML_PATH['news'], {'news_list':news_list}, context_instance=RequestContext(request))
 
 def people(request):
 	member = Member.objects.filter(alumni=0).order_by('last_name', 'first_name')
@@ -61,7 +65,7 @@ def publications(request):
 
 def ping_test(request):
 	return HttpResponse(content="", status=200)
-	
+
 
 # def url_redirect(request, path):
 # 	if 'detail/' in path:
