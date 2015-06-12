@@ -22,10 +22,15 @@ def get_pub_data(instance, filename):
     return PATH.DATA_DIR['PUB_DAT_DIR'] + '%s' % filename
 
 
-class NewsItem(models.Model):
+class News(models.Model):
     title = models.CharField(max_length=255)
     content = models.CharField(max_length=1023, blank=True)
     date = models.DateField()
+
+    class Meta():
+        verbose_name = 'News Item'
+        verbose_name_plural = 'News Items'
+
 
 class Member(models.Model):
     first_name = models.CharField(max_length=255)
@@ -41,6 +46,10 @@ class Member(models.Model):
     alumni = models.BooleanField(default=False)
     start_year = models.PositiveSmallIntegerField(blank=True, null=True)
     finish_year = models.PositiveSmallIntegerField(blank=True, null=True)
+
+    class Meta():
+        verbose_name = 'Member'
+        verbose_name_plural = 'Member Management'
 
 
 class Publication(models.Model):
@@ -68,6 +77,9 @@ class Publication(models.Model):
     feature = models.BooleanField(default=False)
     image = models.ImageField(upload_to=get_pub_image, blank=True, max_length=255)
 
+    class Meta():
+        verbose_name = 'Publication Entry'
+        verbose_name_plural = 'Publication Entries'
 
 
 

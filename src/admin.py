@@ -27,9 +27,9 @@ from django.contrib import admin
 # admin.site.register(Publication, PublicationAdmin)
 # admin.site.register(Organism, OrganismAdmin)
 
-class NewsItemAdmin(admin.ModelAdmin):
+class NewsAdmin(admin.ModelAdmin):
     list_display = ('date', 'title')
-admin.site.register(NewsItem, NewsItemAdmin)
+admin.site.register(News, NewsAdmin)
 
 class MemberAdmin(admin.ModelAdmin):
     list_display = ('alumni', 'first_name', 'last_name', 'role', 'department', 'start_year', 'finish_year')

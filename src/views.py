@@ -56,6 +56,13 @@ def publications(request):
 	return render_to_response(PATH.HTML_PATH['publications'], {'pub_list':pub_list}, context_instance=RequestContext(request))
 
 
+
+
+
+def ping_test(request):
+	return HttpResponse(content="", status=200)
+	
+
 # def url_redirect(request, path):
 # 	if 'detail/' in path:
 # 		path = path.rstrip('/')
