@@ -142,7 +142,9 @@ class SYS_PATH:
         self.HTML_PATH = {
             'index': MEDIA_ROOT + '/media/html/index.html',
             'research': MEDIA_ROOT + '/media/html/research.html',
+            'news': MEDIA_ROOT + '/media/html/news.html',
             'people': MEDIA_ROOT + '/media/html/people.html',
+            'publications': MEDIA_ROOT + '/media/html/publications.html',
             'resources': MEDIA_ROOT + '/media/html/resources.html',
             'contact': MEDIA_ROOT + '/media/html/contact.html',
 
@@ -152,6 +154,9 @@ class SYS_PATH:
 
         self.DATA_DIR = {
             'MEMBER_IMG_DIR': STATICFILES_DIRS[0] + '/ppl_img/',
+            'PUB_PDF_DIR': STATICFILES_DIRS[0] + '/pub_pdf/',
+            'PUB_IMG_DIR': STATICFILES_DIRS[0] + '/pub_img/',
+            'PUB_DAT_DIR': STATICFILES_DIRS[0] + '/pub_data/',
             'TMPDIR': MEDIA_ROOT + '/temp/',
 
         }

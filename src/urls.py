@@ -12,9 +12,10 @@ urlpatterns = patterns('',
     (r'^$', views.index),
     (r'^index/$', views.index),
     (r'^home/$', views.index),
+    (r'^news/$', views.news),
     (r'^research/$', views.research),
     (r'^people/$', views.people),
-
+    (r'^publications/$', views.publications),
     (r'^resources/$', views.resources),
     (r'^contact/$', views.contact),
 

@@ -39,3 +39,18 @@ class PastMemberAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'finish_year', 'role')
 admin.site.register(PastMember, PastMemberAdmin)
 
+class PublicationAdmin(admin.ModelAdmin):
+    list_display = ('year', 'journal', 'authors', 'title', 'link')
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(PublicationAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['authors'].widget.attrs['style'] = 'width: 75em; height: 8em;'
+        form.base_fields['title'].widget.attrs['style'] = 'width: 75em; height: 5em;'
+        form.base_fields['journal'].widget.attrs['style'] = 'width: 75em;'
+        form.base_fields['link'].widget.attrs['style'] = 'width: 75em;'
+        form.base_fields['extra_link'].widget.attrs['style'] = 'width: 75em;'
+        form.base_fields['extra_link_2'].widget.attrs['style'] = 'width: 75em;'
+        form.base_fields['image'].widget.attrs['style'] = 'width: 75em;'
+        return form    
+admin.site.register(Publication, PublicationAdmin)
+

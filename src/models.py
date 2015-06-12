@@ -12,6 +12,15 @@ def get_member_image(instance, filename):
     ext = filename[filename.rfind('.'):]
     return PATH.DATA_DIR['MEMBER_IMG_DIR'] + '%s%s' % (name,ext)
 
+def get_pub_pdf(instance, filename):
+    return PATH.DATA_DIR['PUB_PDF_DIR'] + '%s' % filename
+
+def get_pub_image(instance, filename):
+    return PATH.DATA_DIR['PUB_IMG_DIR'] + '%s' % filename
+
+def get_pub_data(instance, filename):
+    return PATH.DATA_DIR['PUB_DAT_DIR'] + '%s' % filename
+
 
 class NewsItem(models.Model):
     title = models.CharField(max_length=255)
@@ -34,6 +43,32 @@ class PastMember(models.Model):
     role = models.CharField(max_length=255)
     start_year = models.PositiveSmallIntegerField()
     finish_year = models.PositiveSmallIntegerField()
-    
+
+class Publication(models.Model):
+    authors = models.TextField()
+    year = models.PositiveSmallIntegerField()
+    display_date = models.DateField()
+    title = models.TextField()
+    journal = models.CharField(max_length=255, blank=True, null=True)
+    volume = models.CharField(max_length=31, blank=True, null=True)
+    issue = models.CharField(max_length=31, blank=True, null=True)
+    begin_page = models.CharField(max_length=31, blank=True, null=True)
+    end_page = models.CharField(max_length=31, blank=True, null=True)
+
+    pdf = models.FileField(upload_to=get_pub_pdf, blank=True, max_length=255)
+    preprint = models.BooleanField(default=False)
+    link = models.CharField(max_length=255, blank=True)
+
+    extra_field = models.CharField(max_length=255, blank=True)
+    extra_link = models.CharField(max_length=255, blank=True)
+    extra_field_2 = models.CharField(max_length=255, blank=True)
+    extra_link_2 = models.CharField(max_length=255, blank=True)
+    extra_field_3 = models.CharField(max_length=255, blank=True)
+    extra_file = models.FileField(upload_to=get_pub_data, blank=True, max_length=255)
+
+    feature = models.BooleanField(default=False)
+    image = models.ImageField(upload_to=get_pub_image, blank=True, max_length=255)
+
+
 
 

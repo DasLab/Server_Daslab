@@ -29,12 +29,30 @@ def resources(request):
 def contact(request):
 	return render_to_response(PATH.HTML_PATH['contact'], {}, context_instance=RequestContext(request))
 
+def news(request):
+	return render_to_response(PATH.HTML_PATH['news'], {}, context_instance=RequestContext(request))
+
 def people(request):
 	member = CurrentMember.objects.order_by('last_name', 'first_name')
 	for ppl in member:
 		ppl.image_link = ppl.image.url.replace(PATH.DATA_DIR['MEMBER_IMG_DIR'], '')
 	alumni = PastMember.objects.order_by('finish_year', 'start_year', 'full_name')
 	return render_to_response(PATH.HTML_PATH['people'], {'current_member':member, 'past_member':alumni}, context_instance=RequestContext(request))
+
+def publications(request):
+	pub_list = Publication.objects.order_by('-display_date')
+	for i, pub in enumerate(pub_list):
+		if pub.image:
+			pub.image_link = pub.image.url.replace(PATH.DATA_DIR['PUB_IMG_DIR'], '')
+		if pub.pdf:
+			pub.pdf_link = pub.pdf.url.replace(PATH.DATA_DIR['PUB_PDF_DIR'], '')
+		if pub.extra_file:
+			pub.file_link = pub.extra_file.url.replace(PATH.DATA_DIR['PUB_DAT_DIR'], '')
+		if i == 0 or pub_list[i-1].year != pub.year:
+			pub.year_tag = True
+		if pub.year == 2009 and pub_list[i-1].year == 2010:
+			pub.previous = True
+	return render_to_response(PATH.HTML_PATH['publications'], {'pub_list':pub_list}, context_instance=RequestContext(request))
 
 
 # def url_redirect(request, path):
