@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="stylesheet" href="/site_media/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/site_media/css/theme.css" />
+    <link rel="stylesheet" href="/site_media/css/palette.css" />
+
+    <link rel="shortcut icon" href="/site_media/images/ico_rmdb_3.gif" />
+    <link rel="icon" type-"image/gif" href="/site_media/images/ico_rmdb_3.gif" />
+    <title>Das Lab: Group Member Website</title>
+ 
+    <script type="text/javascript" src="/site_media/js/jquery-1.11.3.min.js"></script> 
+    <script type="text/javascript" src="/site_media/js/d3.min.js"></script>
+    <script type="text/javascript" src="/site_media/js/bootstrap.min.js"></script> 
+
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+	<div id="wait" class="modal"></div>
+	<script type="text/javascript">
+		$("#wait").fadeIn(500);
+	</script>
+
+	<div class="navbar navbar-fixed-top" id="nav_load">
+		<div class="container">
+			<div class="navbar-header clickable">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/group" id="nav_logo">&nbsp;&nbsp;<span>Das Lab</span>&nbsp;&nbsp;</a>
+			</div>
+
+			<div class="navbar-collapse collapse" >
+				<ul class="nav navbar-nav">
+					<li class=" clickable" id="nav_meetings">
+						<a href="/group/meetings"  class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-expanded="false">
+							Meetings
+						</a>
+					</li>
+					<li class=" clickable" id="nav_calendar">
+						<a href="/group/calendar"  class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-expanded="false">
+							Calendar
+						</a>
+					</li>
+					<li class=" clickable" id="nav_resources">
+						<a href="/group/resources"  class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-expanded="false">
+							Resources
+						</a>
+					</li>
+					<li class=" clickable" id="nav_misc">
+						<a href="/group/misc"  class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-expanded="false">
+							Misc
+						</a>
+					</li>
+				</ul>
+
+				<div class="pull-right row">
+					<ul class="nav navbar-nav">
+						<li class="dropdown">
+							<button class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color: #ffffff;background-color: #5496d7; border-color: #7495c9;">
+								Sign Out
+							</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% block content %}{% endblock %}
+	
+	<hr/>
+	<div class="container starter-template" id="footer">
+
+	</div>
+    <a href="#" id="up"><img style="position:fixed;display:block;right:5%;bottom:5%;opacity:0.85;" src="/site_media/images/fg_top.png" height="60"/></a>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("#wait").fadeOut(500);
+			$("#footer").load("/site_media/html/_footer.html", function () {
+				var today = new Date();
+				$("#cp_year").text(today.getFullYear());
+			});
+
+			$(".dropdown-toggle").dropdown();
+			$(".dropdown").hover(
+	            function(){ $(this).addClass("open") },
+    	        function(){ $(this).removeClass("open") }
+        	);
+            $("[data-toggle='popover']").popover({trigger: "hover"});
+			$("[data-toggle='tooltip']").tooltip();
+
+			$("#up").on("click", function () {
+				$("html, body").stop().animate({scrollTop: 0}, 500);
+			});
+			$("#up").hide();
+
+			$(".clickable").on("click", function () {
+				if ($("#buttonAll").length && $(this).attr("id") == "nav_browse") {
+					$("#wait").hide();
+				} else {
+					$("#wait").fadeIn(500);
+				}
+			});
+		});
+
+		$(window).on("beforeunload", function () {
+			$("#wait").fadeIn(500);
+		});
+		$(window).on("scroll", function () {
+			if ($(this).scrollTop() > $(window).height()/2) {
+				$('#up').fadeIn();
+			} else {
+				$('#up').fadeOut();
+			}
+		});
+	</script>
+
+	{% block script %}{% endblock %}
+    <script type="text/javascript">
+		// var _gaq = _gaq || [];
+		// 	_gaq.push(["_setAccount", "UA-36037648-1"]);
+		// 	_gaq.push(["_trackPageview"]);
+
+		// (function() {
+		// 	var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
+		// 	ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+		// 	var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+		// })();
+	</script>
+</body>
+</html>

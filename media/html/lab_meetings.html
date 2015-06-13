@@ -1,0 +1,35 @@
+{% extends "media/html/_internal.html" %}
+{% block content %}
+<div class="starter-template">
+	<div class="container">
+
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				<h2 class="panel-title"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Meeting Schedule</h2>
+			</div>
+			<div class="panel-body" id="main">
+				<div class="row">
+					<div class="col-md-12">
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.dropdown-toggle').removeClass("active");
+			$("#nav_meetings").addClass("active");
+	    	$("#nav_logo").css("text-decoration","none");
+
+		});
+	</script>
+
+{% endblock %}

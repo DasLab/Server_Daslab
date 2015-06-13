@@ -61,7 +61,23 @@ def publications(request):
 	return render_to_response(PATH.HTML_PATH['publications'], {'pub_list':pub_list}, context_instance=RequestContext(request))
 
 
+############################################################################################################################################
 
+@login_required
+def lab_meetings(request):
+	return render_to_response(PATH.HTML_PATH['lab_meetings'], {}, context_instance=RequestContext(request))
+
+@login_required
+def lab_calendar(request):
+	return render_to_response(PATH.HTML_PATH['lab_calendar'], {}, context_instance=RequestContext(request))
+
+@login_required
+def lab_resources(request):
+	return render_to_response(PATH.HTML_PATH['lab_resources'], {}, context_instance=RequestContext(request))
+
+@login_required
+def lab_misc(request):
+	return render_to_response(PATH.HTML_PATH['lab_misc'], {}, context_instance=RequestContext(request))
 
 
 def ping_test(request):

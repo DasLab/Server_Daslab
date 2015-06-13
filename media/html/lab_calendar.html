@@ -1,0 +1,36 @@
+{% extends "media/html/_internal.html" %}
+{% block content %}
+<div class="starter-template">
+	<div class="container">
+
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<h2 class="panel-title"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Google Group Calendar</h2>
+			</div>
+			<div class="panel-body" id="main">
+				<div class="row">
+					<div class="col-md-12">
+						<iframe src="https://www.google.com/calendar/embed?src=a53lhn4i0fgrkcs9c6i85fdmdo%40group.calendar.google.com&ctz=America/Los_Angeles" style="border: 0" width="800" height="600" frameborder="0" scrolling="auto" seamless="true" id="iframe" class="well center-block"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.dropdown-toggle').removeClass("active");
+			$("#nav_calendar").addClass("active");
+	    	$("#nav_logo").css("text-decoration","none");
+
+	    	$("#iframe").css("width", parseInt($("#main").css("width")) - 50);
+		});
+	</script>
+
+{% endblock %}

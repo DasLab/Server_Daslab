@@ -27,9 +27,11 @@ urlpatterns = patterns('',
     (r'^das_resources\.html$', RedirectView.as_view(url='/resources/', permanent=True)),
     (r'^das_contact\.html$', RedirectView.as_view(url='/contact/', permanent=True)),
 
-    # (r'^login/$', views.user_login),
-    # (r'^register/$', views.register),
-    # (r'^logout/$', views.user_logout),
+    (r'^group/meetings/$', views.lab_meetings),
+    (r'^group/calendar/$', views.lab_calendar),
+    (r'^group/resources/$', views.lab_resources),
+    (r'^group/misc/$', views.lab_misc),
+    (r'^group/$', RedirectView.as_view(url='/group/meetings/', permanent=True)),
 
     (r'^ping_test/$', views.ping_test),
 
