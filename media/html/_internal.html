@@ -32,7 +32,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/group" id="nav_logo">&nbsp;&nbsp;<span>Das Lab</span>&nbsp;&nbsp;</a>
+				<a class="navbar-brand" href="/" id="nav_logo">&nbsp;&nbsp;<span>Das Lab</span>&nbsp;&nbsp;</a>
 			</div>
 
 			<div class="navbar-collapse collapse" >
@@ -72,13 +72,28 @@
 		</div>
 	</div>
 
+	<div class="container">
+		<div class="jumbotron">
+			<div class="row">
+				<div class="col-md-12">
+					<a href="/group">
+						<img src="/site_media/images/nav_group.gif" style="max-width:100%;" class="center-block"/>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+    <hr/>
+
 	{% block content %}{% endblock %}
 	
 	<hr/>
 	<div class="container starter-template" id="footer">
 
 	</div>
-    <a href="#" id="up"><img style="position:fixed;display:block;right:5%;bottom:5%;opacity:0.85;" src="/site_media/images/fg_top.png" height="60"/></a>
+	<a href="#" id="top">
+		<img style="position:fixed;display:block;right:5%;bottom:5%;opacity:0.85;" src="/site_media/images/nav_top.png" name="top" height="60"/>
+	</a>
 
 	<script type="text/javascript">
 		$(document).ready(function () {
@@ -96,10 +111,16 @@
             $("[data-toggle='popover']").popover({trigger: "hover"});
 			$("[data-toggle='tooltip']").tooltip();
 
-			$("#up").on("click", function () {
+			$("#top").on("click", function () {
 				$("html, body").stop().animate({scrollTop: 0}, 500);
 			});
-			$("#up").hide();
+			$("#top").on("mouseover", function () {
+				$("#top>img").attr("src", "/site_media/images/nav_top_hover.png");
+			});
+			$("#top").on("mouseout", function () {
+				$("#top>img").attr("src", "/site_media/images/nav_top.png");
+			});
+			$("#top").hide();
 
 			$(".clickable").on("click", function () {
 				if ($("#buttonAll").length && $(this).attr("id") == "nav_browse") {
@@ -115,9 +136,9 @@
 		});
 		$(window).on("scroll", function () {
 			if ($(this).scrollTop() > $(window).height()/2) {
-				$('#up').fadeIn();
+				$('#top').fadeIn();
 			} else {
-				$('#up').fadeOut();
+				$('#top').fadeOut();
 			}
 		});
 	</script>

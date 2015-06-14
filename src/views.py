@@ -65,7 +65,14 @@ def publications(request):
 
 @login_required
 def lab_meetings(request):
-	return render_to_response(PATH.HTML_PATH['lab_meetings'], {}, context_instance=RequestContext(request))
+	eterna_list = EternaYoutube.objects.order_by('-date')
+	rot_list = RotationStudent.objects.order_by('-date')
+	for rot in rot_list:
+		if rot.ppt:
+			rot.ppt_link = rot.ppt.url.replace(PATH.DATA_DIR['ROT_PPT_DIR'], '')
+		if rot.data:
+			rot.dat_link = rot.data.url.replace(PATH.DATA_DIR['ROT_DAT_DIR'], '')
+	return render_to_response(PATH.HTML_PATH['lab_meetings'], {'eterna_list':eterna_list, 'rot_list':rot_list}, context_instance=RequestContext(request))
 
 @login_required
 def lab_calendar(request):

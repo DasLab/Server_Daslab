@@ -24,6 +24,19 @@ def get_pub_data(instance, filename):
 def get_news_image(instance, filename):
     return PATH.DATA_DIR['NEWS_IMG_DIR'] + '%s' % filename
 
+def get_rot_ppt(instance, filename):
+    name = instance.date.strftime('%Y%m%d') + '_' + instance.full_name.replace(' ','')
+    ext = filename[filename.rfind('.'):]
+    return PATH.DATA_DIR['ROT_PPT_DIR'] + '%s%s' % (name,ext)
+
+def get_rot_data(instance, filename):
+    name = instance.date.strftime('%Y%m%d') + '_' + instance.full_name.replace(' ','')
+    ext = filename[filename.rfind('.'):]
+    return PATH.DATA_DIR['ROT_DAT_DIR'] + '%s%s' % (name,ext)
+
+def get_spe_ppt(instance, filename):
+    return PATH.DATA_DIR['SPE_PPT_DIR'] + '%s' % filename
+
 
 class News(models.Model):
     date = models.DateField()
@@ -86,5 +99,50 @@ class Publication(models.Model):
         verbose_name = 'Publication Entry'
         verbose_name_plural = 'Publication Entries'
 
+
+############################################################################################################################################
+
+class FlashSlide(models.Model):
+    date = models.DateField()
+    link = models.CharField(max_length=255, blank=True)
+
+    class Meta():
+        verbose_name = 'Flash Slide'
+        verbose_name_plural = 'Flash Slides'
+
+
+class RotationStudent(models.Model):
+    date = models.DateField()
+    full_name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    ppt = models.FileField(upload_to=get_rot_ppt, blank=True, max_length=255)
+    data = models.FileField(upload_to=get_rot_data, blank=True, max_length=255)
+
+    class Meta():
+        verbose_name = 'Rotation Presentation'
+        verbose_name_plural = 'Rotation Presentations'
+
+
+class EternaYoutube(models.Model):
+    date = models.DateField()
+    presenter = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    link = models.CharField(max_length=255, blank=True)
+
+    class Meta():
+        verbose_name = 'EteRNA Open Group Meeting'
+        verbose_name_plural = 'EteRNA Open Group Meetings'
+
+
+class Presentation(models.Model):
+    date = models.DateField()
+    presenter = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    ppt = models.FileField(upload_to=get_spe_ppt, blank=True, max_length=255)
+    link = models.CharField(max_length=255, blank=True)
+
+    class Meta():
+        verbose_name = 'Archived Presentation'
+        verbose_name_plural = 'Archived Presentations'
 
 

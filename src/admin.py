@@ -56,3 +56,46 @@ class PublicationAdmin(admin.ModelAdmin):
         return form    
 admin.site.register(Publication, PublicationAdmin)
 
+
+############################################################################################################################################
+
+class FlashSlideAdmin(admin.ModelAdmin):
+    list_display = ('date', 'link')
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(FlashSlideAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['link'].widget.attrs['style'] = 'width: 75em;'
+        return form
+admin.site.register(FlashSlide, FlashSlideAdmin)
+
+class RotationStudentAdmin(admin.ModelAdmin):
+    list_display = ('date', 'full_name', 'title')
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(RotationStudentAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['title'].widget.attrs['style'] = 'width: 75em;'
+        return form
+admin.site.register(RotationStudent, RotationStudentAdmin)
+
+class EternaYoutubeAdmin(admin.ModelAdmin):
+    list_display = ('date', 'presenter', 'title', 'link')
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(EternaYoutubeAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['title'].widget.attrs['style'] = 'width: 75em;'
+        form.base_fields['link'].widget.attrs['style'] = 'width: 75em;'
+        return form
+admin.site.register(EternaYoutube, EternaYoutubeAdmin)
+
+class PresentationAdmin(admin.ModelAdmin):
+    list_display = ('date', 'presenter', 'title')
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(PresentationAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['presenter'].widget.attrs['style'] = 'width: 75em;'
+        form.base_fields['title'].widget.attrs['style'] = 'width: 75em;'
+        form.base_fields['link'].widget.attrs['style'] = 'width: 75em;'
+        return form
+admin.site.register(Presentation, PresentationAdmin)
+
+

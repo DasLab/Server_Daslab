@@ -2,21 +2,181 @@
 {% block content %}
 <div class="starter-template">
 	<div class="container">
-
-		<div class="panel panel-warning">
-			<div class="panel-heading">
-				<h2 class="panel-title"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Meeting Schedule</h2>
-			</div>
-			<div class="panel-body" id="main">
-				<div class="row">
-					<div class="col-md-12">
-
+		<div class="row">
+			<div class="col-md-3">
+				<div class="panel panel-default" id="sidebar">
+					<div class="panel-heading">
+						<h2 class="panel-title"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;&nbsp;Sections</h2>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<ul class="nav" role="tablist" id="scroll_nav">
+									<li class="li-warning">
+										<a id="tab_1" href="#schedule">
+											<span class="glyphicon glyphicon-time"></span><b>&nbsp;&nbsp;Meeting Schedule</b>
+										</a>
+									</li>
+									<li class="li-success">
+										<a id="tab_2" href="#flash_slides">
+											<span class="glyphicon glyphicon-duplicate"></span><b>&nbsp;&nbsp;Flash Slides</b>
+										</a>
+									</li>
+									<li class="li-danger">
+										<a id="tab_3" href="#eterna">
+											<span class="glyphicon glyphicon-facetime-video"></span><b>&nbsp;&nbsp;Open Group Meeting</b>
+										</a>
+									</li>
+									<li class="li-info">
+										<a id="tab_4" href="#rotation">
+											<span class="glyphicon glyphicon-retweet"></span><b>&nbsp;&nbsp;Rotation Student</b>
+										</a>
+									</li>
+									<li class="li-violet">
+										<a id="tab_5" href="#presentation">
+											<span class="glyphicon glyphicon-cd"></span><b>&nbsp;&nbsp;Presentation Archive</b>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
+
+			<div class="col-md-9" id="main">
+
+				<div class="panel panel-warning" id="schedule">
+					<div class="panel-heading">
+						<h2 class="panel-title"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Meeting Schedule</h2>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<h3>
+									&nbsp;&nbsp;Google Spreadsheet: 
+									<span class="lead">
+										<a href="https://docs.google.com/spreadsheets/d/1GWOBc8rRhLNMEsf8pQMUXkqqgRiYTLo22t1eKP83p80/edit#gid=1" target="_blank">Das Group Meeting Schedule&nbsp;<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+									</span>
+								</h3>
+								<br/>
+								<iframe src="https://docs.google.com/spreadsheets/d/1GWOBc8rRhLNMEsf8pQMUXkqqgRiYTLo22t1eKP83p80/pubhtml?widget=true&amp;headers=false" width="800" height="600" frameborder="0" scrolling="auto" seamless="true" id="iframe" class="well center-block"></iframe>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="panel panel-success" id="flash_slides">
+					<div class="panel-heading">
+						<h2 class="panel-title"><span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>&nbsp;&nbsp;Flash Slides</h2>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-danger" id="eterna">
+					<div class="panel-heading">
+						<h2 class="panel-title"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>&nbsp;&nbsp;Open Group Meeting</h2>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<h3>
+									&nbsp;&nbsp;<span class="label" style="color:#000;">You</span><span class="label label-danger">Tube</span> Channel: 
+									<span class="lead">
+										<a href="https://www.youtube.com/channel/UCt811OXJqe35TDhe9hPYzJg" target="_blank">Eterna Dev&nbsp;<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+									</span>
+								</h3>
+								<br/>
+								
+								<table class="table table-hover">
+									<thead>
+										<tr class="active">
+											<th class="col-md-2">Date</th>
+											<th class="col-md-3">Presenter</th>
+											<th class="col-md-6">Title</th>
+											<th class="col-md-1">Link</th>
+										</tr>
+									</thead>
+									<tbody>
+									{% for gp in eterna_list %}
+										<tr {% if forloop.counter|divisibleby:2 %} class="active" {% endif %}>
+											<td><i>{{gp.date|date:"b d Y"|title}}</i></td>
+											<td><b>{{gp.presenter}}</b></td>
+											<td>{{gp.title}}</td>
+											<td><a href="{{gp.link}}" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+										</tr>
+									{% endfor %}
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-info" id="rotation">
+					<div class="panel-heading">
+						<h2 class="panel-title"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>&nbsp;&nbsp;Rotation Student</h2>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<table class="table table-hover">
+									<thead>
+										<tr class="active">
+											<th class="col-md-2">Date</th>
+											<th class="col-md-3">Student</th>
+											<th class="col-md-5">Title</th>
+											<th class="col-md-1">Presentation</th>
+											<th class="col-md-1">Extra</th>
+										</tr>
+									</thead>
+									<tbody>
+									{% for rot in rot_list %}
+										<tr {% if forloop.counter|divisibleby:2 %} class="active" {% endif %}>
+											<td><i>{{rot.date|date:"b d Y"|title}}</i></td>
+											<td><b>{{rot.full_name}}</b></td>
+											<td>{{rot.title}}</td>
+											<td>
+												{% if rot.ppt %} <a href="/site_data/rot_ppt/{{rot.ppt_link}}" target="_blank"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a> {% endif %}
+											</td>
+											<td>
+												{% if rot.data %} <a href="/site_data/rot_data/{{rot.dat_link}}" target="_blank"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span></a> {% endif %}
+											</td>
+										</tr>
+									{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-violet" id="presentation">
+					<div class="panel-heading">
+						<h2 class="panel-title"><span class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp;&nbsp;Presentation Archive</h2>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
 		</div>
-
-
 	</div>
 </div>
 {% endblock %}
@@ -28,6 +188,15 @@
 			$('.dropdown-toggle').removeClass("active");
 			$("#nav_meetings").addClass("active");
 	    	$("#nav_logo").css("text-decoration","none");
+
+	    	$("#iframe").css("width", parseInt($("#schedule").css("width")) - 50);
+
+		    $("#sidebar").attr("data-spy","affix").affix( { offset: { top: $("#main").position().top} } );
+	    	$("#sidebar").css("width", $("#sidebar").width());
+
+			$('[id^=tab_], #top').on('click', function () {
+				$('html, body').stop().animate({scrollTop: $($(this).attr("href")).offset().top - 75}, 500);
+			});
 
 		});
 	</script>

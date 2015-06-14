@@ -38,16 +38,15 @@ User-agent: Yahoo-MMCrawler
 Disallow: /src/
 
 # Files
-Disallow: /__init__.py
-Disallow: /manage.py
-Disallow: /README.md
-Disallow: /LICENSE.md
+Disallow: /*.py
+Disallow: /*.pyc
+Disallow: /*.md
 
 # Paths (clean URLs)
+Disallow: /group/
 Disallow: /admin/
 Disallow: /cgi-bin/
 
 # Paths (no clean URLs)
-#Disallow: /site_media/rdat_files/
 
 Crawl-delay: 600
