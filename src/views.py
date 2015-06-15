@@ -115,20 +115,27 @@ def user_login(request):
 	if request.method == 'POST':
 		username = request.POST['username']
 		password = request.POST['password']
+		flag = request.POST['flag']
 		user = authenticate(username=username, password=password)
 
 		if user is not None:
 			if user.is_active:
 				login(request, user)
-				return HttpResponseRedirect('/group')
+				if flag == "Admin":
+					return HttpResponseRedirect('/admin')
+				else:
+					return HttpResponseRedirect('/group')
 			else:
 				messages = 'Inactive/disabled account. Please contact us.'
 		else:
 			messages = 'Invalid username and/or password. Please try again.'
-		
-		return render_to_response(PATH.HTML_PATH['login'], {'messages':messages}, context_instance=RequestContext(request))
+		return render_to_response(PATH.HTML_PATH['login'], {'messages':messages, 'flag':flag}, context_instance=RequestContext(request))
 	else:
-		return render_to_response(PATH.HTML_PATH['login'], {'messages':''}, context_instance=RequestContext(request))
+		if 'admin' in request.GET['next']:
+			flag = 'Admin'
+		else:
+			flag = 'Member'
+		return render_to_response(PATH.HTML_PATH['login'], {'messages':'', 'flag':flag}, context_instance=RequestContext(request))
 
 def user_logout(request):
 	logout(request)

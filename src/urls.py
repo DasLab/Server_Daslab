@@ -9,6 +9,11 @@ from django.views.generic import RedirectView
 from settings import MEDIA_ROOT, STATIC_ROOT, STATIC_URL
 from src import views
 
+admin.autodiscover()
+admin.site.login = views.user_login
+admin.site.logout = views.user_logout
+
+
 urlpatterns = patterns('',
     (r'^$', views.index),
     (r'^index/$', views.index),

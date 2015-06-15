@@ -1,31 +1,16 @@
-from src.models import *
 from django.contrib import admin
+from django.contrib.admin import AdminSite
 
-# class ConstructInLine(admin.StackedInline):
-#     model = ConstructSection
-#     extra = 0
+from src.models import *
+# from .models import MyModel
+# from src.settings import PATH
 
-# class EntryAnnotationInLine(admin.TabularInline):
-#     model = EntryAnnotation
-#     extra = 1
+# class MyAdminSite(AdminSite):
+#     login_template = PATH.HTML_PATH['login']
+#     site_header = 'Das Lab Website Administration'
 
-# class EntryAdmin(admin.ModelAdmin):
-#     inlines = [EntryAnnotationInLine, ConstructInLine]
-#     list_display = ('id', 'rmdb_id', 'version', 'short_description', 'revision_status')
-
-# class PublicationAdmin(admin.ModelAdmin):
-#     list_display = ('pubmed_id', 'title', 'authors')
-
-# class OrganismAdmin(admin.ModelAdmin):
-#     list_display = ('taxonomy_id', 'name')
-
-# class NewsItemAdmin(admin.ModelAdmin):
-#     list_display = ('date', 'title')
-
-# admin.site.register(RMDBEntry, EntryAdmin)
-# admin.site.register(NewsItem, NewsItemAdmin)
-# admin.site.register(Publication, PublicationAdmin)
-# admin.site.register(Organism, OrganismAdmin)
+# admin_site = MyAdminSite(name='myadmin')
+# admin_site.register(MyModel)
 
 class NewsAdmin(admin.ModelAdmin):
     list_display = ('date', 'content', 'link')

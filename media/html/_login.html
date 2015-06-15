@@ -40,12 +40,12 @@
 		<div class="container">
 
 			<div class="dialog modal-lg center-block">
-				<div class="modal-content panel-success">
+				<div class="modal-content panel-{% if flag == 'Member' %}success{% else %}primary{% endif %}">
 					<div class="modal-header panel-heading">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						<h4 class="modal-title" id="myModalLabel">
-							<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
-							&nbsp;&nbsp;Das Lab Member Login
+							<span class="glyphicon glyphicon-{% if flag == 'Member' %}credit-card{% else %}tower{% endif %}" aria-hidden="true"></span>
+							&nbsp;&nbsp;Das Lab {{flag}} Login
 						</h4>
 					</div>
 					<form enctype="multipart/form-data" action="/login/" method="post">
@@ -55,7 +55,11 @@
 								<div class="col-md-1"></div>
 								<div class="col-md-10">
 				    				<h2><span class="label label-danger">Authorization Required</span></h2>
-						  			<p>This site is for Das Lab member only.</p>
+				    				{% if flag == 'Member' %}
+							  			<p>This site is for internal use. Das Lab member only.</p>
+						  			{% else %}
+						  				<p>This site is for internal administration.</p>
+						  			{% endif %}
 			                        <div class="form-group">
 			                        	<br><br>
 			                            <div class="row">
@@ -109,6 +113,7 @@
 						</div>
 						<div class="modal-footer panel-footer">
 							<div class="row">
+								<input class="form-control" type="password" id="flag" name="flag" style="display:none;" value="{{flag}}"/>
 								<span class="pull-right">
 									<input type="submit" value="&nbsp;&nbsp;Sign In&nbsp;&nbsp;" class="btn btn-primary clickable"/>
 									&nbsp;&nbsp;
