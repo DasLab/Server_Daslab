@@ -65,6 +65,25 @@ def publications(request):
 
 @login_required
 def lab_meetings(request):
+	colors = ('brown', 'dark-red', 'danger', 'orange', 'warning', 'green', 'success', 'light-blue', 'info', 'primary', 'dark-blue', 'violet')
+	flash_list = FlashSlide.objects.order_by('-date')
+	for i, gp in enumerate(flash_list):
+		if i == 0 or flash_list[i-1].date.year != gp.date.year:
+			gp.year_start = True
+			gp.row_start = True
+		if i == len(flash_list)-1 or flash_list[i+1].date.year != gp.date.year:
+			gp.year_end = True
+			gp.row_end = True
+		if i == 0 or flash_list[i-1].date.month != gp.date.month:
+			gp.month_start = True
+			gp.label = colors[gp.date.month-1]
+			if gp.date.month in (4,8,12):
+				gp.row_start = True
+		if i == len(flash_list)-1 or flash_list[i+1].date.month != gp.date.month:
+			gp.month_end = True 
+			if gp.date.month in (1,5,9):
+				gp.row_end = True
+
 	eterna_list = EternaYoutube.objects.order_by('-date')
 	rot_list = RotationStudent.objects.order_by('-date')
 	for rot in rot_list:
@@ -72,16 +91,18 @@ def lab_meetings(request):
 			rot.ppt_link = rot.ppt.url.replace(PATH.DATA_DIR['ROT_PPT_DIR'], '')
 		if rot.data:
 			rot.dat_link = rot.data.url.replace(PATH.DATA_DIR['ROT_DAT_DIR'], '')
-	return render_to_response(PATH.HTML_PATH['lab_meetings'], {'eterna_list':eterna_list, 'rot_list':rot_list}, context_instance=RequestContext(request))
+	arv_list = Presentation.objects.order_by('-date')
+	for arv in arv_list:
+		if arv.ppt:
+			arv.ppt_link = arv.ppt.url.replace(PATH.DATA_DIR['SPE_PPT_DIR'], '')
+	return render_to_response(PATH.HTML_PATH['lab_meetings'], {'flash_list':flash_list, 'eterna_list':eterna_list, 'rot_list':rot_list, 'arv_list':arv_list}, context_instance=RequestContext(request))
 
 @login_required
 def lab_calendar(request):
 	return render_to_response(PATH.HTML_PATH['lab_calendar'], {}, context_instance=RequestContext(request))
-
 @login_required
 def lab_resources(request):
 	return render_to_response(PATH.HTML_PATH['lab_resources'], {}, context_instance=RequestContext(request))
-
 @login_required
 def lab_misc(request):
 	return render_to_response(PATH.HTML_PATH['lab_misc'], {}, context_instance=RequestContext(request))

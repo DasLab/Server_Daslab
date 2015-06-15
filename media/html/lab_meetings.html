@@ -73,9 +73,53 @@
 					</div>
 					<div class="panel-body">
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-12" id="flash_list">
+								{% for ppt in flash_list %}
+									{% if ppt.year_start %}
+										<div class="panel panel-default subpanel">
+											<div id="heading{{ppt.date.year}}" class="panel-heading" role="tab" data-toggle="collapse" data-parent="#category{{ppt.date.year}}" href="#{{ppt.date.year}}" aria-expanded="true" aria-controls="{{ppt.date.year}}">
+												<h3 class="panel-title"><span class="icon glyphicon glyphicon-chevron-right" aria-hidden="true"></span>&nbsp;&nbsp;<span>{{ppt.date.year}}</span>
+												</h3>
+											</div>
+											<div id="{{ppt.date.year}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ppt.date.year}}">
+												<div class="panel-body">
+									{% endif %}
 
+									{% if ppt.month_start %}
+										{% if ppt.row_start %}
+													<div class="row">
+										{% endif %}
+														<div class="col-md-3">
+															<div class="panel panel-{{ppt.label}}">
+												            	<div class="panel-heading">
+												            		<h3 class="panel-title"><b>{{ppt.date|date:"F"}}</b></h3>
+												            	</div>
+												            	<div class="well">
+									{% endif %}
 
+																	<p>
+																		<a href="{{ppt.link}}" target="_blank">
+																			{{ppt.date|date:"b d"|title}}<sup>{{ppt.date|date:"S"}}</sup>
+																			<i>{{ppt.date|date:"(D)"|title}}</i>
+																		</a>
+																	</p>
+
+									{% if ppt.month_end %}
+																</div>
+												            </div>
+												        </div>
+										{% if ppt.row_end %}
+													</div>
+										{% endif %}
+									{% endif %}
+
+									{% if ppt.year_end %}
+												</div>
+											</div>
+										</div>
+									{% endif %}
+
+								{% endfor %}
 							</div>
 						</div>
 					</div>
@@ -167,7 +211,29 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-md-12">
-
+								<table class="table table-hover">
+									<thead>
+										<tr class="active">
+											<th class="col-md-2">Date</th>
+											<th class="col-md-3">Presenter</th>
+											<th class="col-md-6">Title</th>
+											<th class="col-md-2">Link</th>
+										</tr>
+									</thead>
+									<tbody>
+									{% for arv in arv_list %}
+										<tr {% if forloop.counter|divisibleby:2 %} class="active" {% endif %}>
+											<td><i>{{arv.date|date:"b d Y"|title}}</i></td>
+											<td><b>{{arv.presenter}}</b></td>
+											<td>{{arv.title}}</td>
+											<td>
+												{% if arv.ppt %} <a href="/site_data/spe_ppt/{{arv.ppt_link}}" target="_blank"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a> {% endif %}
+												{% if arv.link %} <a href="{{arv.link}}" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a> {% endif %}
+											</td>
+										</tr>
+									{% endfor %}
+									</tbody>
+								</table>
 
 							</div>
 						</div>
@@ -198,6 +264,21 @@
 				$('html, body').stop().animate({scrollTop: $($(this).attr("href")).offset().top - 75}, 500);
 			});
 
+			$("#flash_list").find(".subpanel:first>.panel-collapse").collapse("show");
+			$("#flash_list").find(".subpanel:first>.panel-collapse").siblings().find(".panel-title>.icon")
+				.removeClass("glyphicon-chevron-right")
+				.addClass("glyphicon-chevron-down");
+
+			$('.panel-collapse').on('show.bs.collapse', function () {
+				$(this).siblings().find(".panel-title>.icon")
+					.removeClass("glyphicon-chevron-right")
+					.addClass("glyphicon-chevron-down");
+			});
+			$('.panel-collapse').on('hidden.bs.collapse', function () {
+				$(this).siblings().find(".panel-title>.icon")
+					.removeClass("glyphicon-chevron-down")
+					.addClass("glyphicon-chevron-right");
+			});
 		});
 	</script>
 
