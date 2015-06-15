@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url, handler404, handler500
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.views import login
 # from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
 # admin.autodiscover()
@@ -27,6 +28,8 @@ urlpatterns = patterns('',
     (r'^das_resources\.html$', RedirectView.as_view(url='/resources/', permanent=True)),
     (r'^das_contact\.html$', RedirectView.as_view(url='/contact/', permanent=True)),
 
+    (r'^login/$', views.user_login),
+    (r'^logout/$', views.user_logout),
     (r'^group/meetings/$', views.lab_meetings),
     (r'^group/calendar/$', views.lab_calendar),
     (r'^group/resources/$', views.lab_resources),

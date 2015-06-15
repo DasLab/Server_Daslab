@@ -108,6 +108,33 @@ def lab_misc(request):
 	return render_to_response(PATH.HTML_PATH['lab_misc'], {}, context_instance=RequestContext(request))
 
 
+def user_login(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/group')
+
+	if request.method == 'POST':
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username=username, password=password)
+
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				return HttpResponseRedirect('/group')
+			else:
+				messages = 'Inactive/disabled account. Please contact us.'
+		else:
+			messages = 'Invalid username and/or password. Please try again.'
+		
+		return render_to_response(PATH.HTML_PATH['login'], {'messages':messages}, context_instance=RequestContext(request))
+	else:
+		return render_to_response(PATH.HTML_PATH['login'], {'messages':''}, context_instance=RequestContext(request))
+
+def user_logout(request):
+	logout(request)
+	return HttpResponseRedirect("/")
+
+
 def ping_test(request):
 	return HttpResponse(content="", status=200)
 

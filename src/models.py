@@ -98,7 +98,7 @@ class Publication(models.Model):
     class Meta():
         verbose_name = 'Publication Entry'
         verbose_name_plural = 'Publication Entries'
-
+        
 
 ############################################################################################################################################
 

@@ -37,33 +37,23 @@
 			<div class="navbar-collapse collapse" >
 				<ul class="nav navbar-nav">
 					<li class=" clickable" id="nav_meetings">
-						<a href="/group/meetings"  class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-expanded="false">
-							Meetings
-						</a>
+						<a href="/group/meetings" >Meetings</a>
 					</li>
 					<li class=" clickable" id="nav_calendar">
-						<a href="/group/calendar"  class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-expanded="false">
-							Calendar
-						</a>
+						<a href="/group/calendar" >Calendar</a>
 					</li>
 					<li class=" clickable" id="nav_resources">
-						<a href="/group/resources"  class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-expanded="false">
-							Resources
-						</a>
+						<a href="/group/resources" >Resources</a>
 					</li>
 					<li class=" clickable" id="nav_misc">
-						<a href="/group/misc"  class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-expanded="false">
-							Misc
-						</a>
+						<a href="/group/misc" >Misc</a>
 					</li>
 				</ul>
 
 				<div class="pull-right row">
 					<ul class="nav navbar-nav">
 						<li class="dropdown">
-							<button class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color: #ffffff;background-color: #5496d7; border-color: #7495c9;">
-								Sign Out
-							</button>
+							<button class="btn btn-info navbar-btn" style="color: #ffffff;background-color: #5496d7; border-color: #7495c9;" onclick="location.href='/logout'">Sign Out</button>
 						</li>
 					</ul>
 				</div>
@@ -72,7 +62,7 @@
 	</div>
 
 	<div class="container">
-		<div class="jumbotron">
+		<div class="jumbotron" id="jumbotron">
 			<div class="row">
 				<div class="col-md-12">
 					<a href="/group">

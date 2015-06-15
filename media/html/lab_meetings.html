@@ -90,7 +90,7 @@
 													<div class="row">
 										{% endif %}
 														<div class="col-md-3">
-															<div class="panel panel-{{ppt.label}}">
+															<div class="panel panel-{{ppt.label}} month">
 												            	<div class="panel-heading">
 												            		<h3 class="panel-title"><b>{{ppt.date|date:"F"}}</b></h3>
 												            	</div>
@@ -260,8 +260,15 @@
 		    $("#sidebar").attr("data-spy","affix").affix( { offset: { top: $("#main").position().top} } );
 	    	$("#sidebar").css("width", $("#sidebar").width());
 
-			$('[id^=tab_], #top').on('click', function () {
-				$('html, body').stop().animate({scrollTop: $($(this).attr("href")).offset().top - 75}, 500);
+
+	    	$("[id^=tab_]").on('click', function () {
+				$('html, body').stop().animate({scrollTop: $("#jumbotron").offset().top - 75}, 500);
+				$("#main").find(".panel").not(".subpanel").not(".month").hide();
+				$($(this).attr("href")).show();
+	    	})
+
+			$('#top').on('click', function () {
+				$('html, body').stop().animate({scrollTop: $("#main").offset().top - 75}, 500);
 			});
 
 			$("#flash_list").find(".subpanel:first>.panel-collapse").collapse("show");

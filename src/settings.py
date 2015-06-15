@@ -120,6 +120,7 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+LOGIN_URL = '/login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -148,6 +149,7 @@ class SYS_PATH:
             'resources': MEDIA_ROOT + '/media/html/resources.html',
             'contact': MEDIA_ROOT + '/media/html/contact.html',
 
+            'login': MEDIA_ROOT + '/media/html/_login.html',
             'lab_meetings': MEDIA_ROOT + '/media/html/lab_meetings.html',
             'lab_calendar': MEDIA_ROOT + '/media/html/lab_calendar.html',
             'lab_resources': MEDIA_ROOT + '/media/html/contact.html',
