@@ -12,12 +12,16 @@
   </div>
 
   <div class="homeTEXT" id="pplBODY">
-    <table width="591" border="0">
+    <table width="691" border="0" style="padding-left:100px;">
       <tbody>
         {% for ppl in current_member %}
         <tr>
           <td height="175" align="left" valign="middle">
-            {% if ppl.image %} <img src="/site_data/ppl_img/{{ppl.image_link}}" width="119"> {% endif %}
+            {% if ppl.image %}
+              <img src="/site_data/ppl_img/{{ppl.image_link}}" width="119"> 
+            {% else %}
+              <img src="/site_media/images/icon_default_avatar.png" width="119"> 
+            {% endif %}
           </td>
           <td height="175" align="left" valign="middle">
             <p class="peopleH2">{{ppl.first_name}} {{ppl.last_name}}</p>
