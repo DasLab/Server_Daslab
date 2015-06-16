@@ -139,7 +139,6 @@ def user_login(request):
 
 @login_required
 def user_password(request):
-
 	if request.method == 'POST':
 		password_old = request.POST['password_old']
 		password_new = request.POST['password_new']

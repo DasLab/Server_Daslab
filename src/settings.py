@@ -151,11 +151,11 @@ class SYS_PATH:
 
             'login': MEDIA_ROOT + '/media/html/_login.html',
             'password': MEDIA_ROOT + '/media/html/_password.html',
-            
+
             'lab_meetings': MEDIA_ROOT + '/media/html/lab_meetings.html',
             'lab_calendar': MEDIA_ROOT + '/media/html/lab_calendar.html',
-            'lab_resources': MEDIA_ROOT + '/media/html/contact.html',
-            'lab_misc': MEDIA_ROOT + '/media/html/contact.html',
+            'lab_resources': MEDIA_ROOT + '/media/html/lab_resources.html',
+            'lab_misc': MEDIA_ROOT + '/media/html/lab_misc.html',
 
             '404': MEDIA_ROOT + '/media/html/_404.html',
             '500': MEDIA_ROOT + '/media/html/_500.html',

@@ -9,6 +9,7 @@ from django.views.generic import RedirectView
 from settings import MEDIA_ROOT, STATIC_ROOT, STATIC_URL
 from src import views
 
+admin.site.index_title = 'Das Lab Website Administration'
 admin.autodiscover()
 admin.site.login = views.user_login
 admin.site.logout = views.user_logout
@@ -36,6 +37,7 @@ urlpatterns = patterns('',
     (r'^login/$', views.user_login),
     (r'^password/$', views.user_password),
     (r'^logout/$', views.user_logout),
+    
     (r'^group/meetings/$', views.lab_meetings),
     (r'^group/calendar/$', views.lab_calendar),
     (r'^group/resources/$', views.lab_resources),
