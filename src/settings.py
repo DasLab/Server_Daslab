@@ -28,6 +28,7 @@ MEDIA_URL = ''
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 STATIC_URL = '/site_data/'
+STATIC_URL = '/static/'
 STATIC_ROOT = ''
 if os.path.exists('/home/ubuntu/Files/'):
     STATICFILES_DIRS = ('/home/ubuntu/Files/', )
