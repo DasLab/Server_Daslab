@@ -27,13 +27,12 @@ TEMPLATE_DEBUG = DEBUG
 MEDIA_URL = ''
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_URL = '/site_data/'
 STATIC_URL = '/static/'
 STATIC_ROOT = ''
 if os.path.exists('/home/ubuntu/Files/'):
-    STATICFILES_DIRS = ('/home/ubuntu/Files/', )
+    STATICFILES_DIRS = ('/home/ubuntu/Files', MEDIA_ROOT+'/media')
 else:
-    STATICFILES_DIRS = (MEDIA_ROOT + '/files/', )
+    STATICFILES_DIRS = (MEDIA_ROOT + '/files', MEDIA_ROOT+'/media')
 ADMIN_MEDIA_PREFIX = '/admin/'
 
 ADMINS = (
