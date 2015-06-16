@@ -129,7 +129,7 @@ def user_login(request):
 			messages = 'Invalid username and/or password. Please try again.'
 		return render_to_response(PATH.HTML_PATH['login'], {'messages':messages, 'flag':flag}, context_instance=RequestContext(request))
 	else:
-		if 'admin' in request.GET['next']:
+		if request.GET.has_key('next') and 'admin' in request.GET['next']:
 			flag = 'Admin'
 		else:
 			flag = 'Member'

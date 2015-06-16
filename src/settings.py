@@ -29,15 +29,11 @@ MEDIA_URL = ''
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = ''
-# if os.path.exists('/home/ubuntu/'):
-#     STATICFILES_DIRS = ('/home/ubuntu/Files', MEDIA_ROOT+'/media')
-# else:
 STATICFILES_DIRS = (MEDIA_ROOT + '/data', MEDIA_ROOT+'/media')
 ADMIN_MEDIA_PREFIX = '/admin/'
 
 ADMINS = (
     ('Siqi Tian', 't47@stanford.edu'),
-    # ('Pablo Cordero', 'tsuname@stanford.edu'),
 )
 MANAGERS = ADMINS
 EMAIL_NOTIFY = ADMINS[0][1]
