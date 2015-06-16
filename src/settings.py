@@ -150,6 +150,8 @@ class SYS_PATH:
             'contact': MEDIA_ROOT + '/media/html/contact.html',
 
             'login': MEDIA_ROOT + '/media/html/_login.html',
+            'password': MEDIA_ROOT + '/media/html/_password.html',
+            
             'lab_meetings': MEDIA_ROOT + '/media/html/lab_meetings.html',
             'lab_calendar': MEDIA_ROOT + '/media/html/lab_calendar.html',
             'lab_resources': MEDIA_ROOT + '/media/html/contact.html',

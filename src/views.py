@@ -137,6 +137,31 @@ def user_login(request):
 			flag = 'Member'
 		return render_to_response(PATH.HTML_PATH['login'], {'messages':'', 'flag':flag}, context_instance=RequestContext(request))
 
+@login_required
+def user_password(request):
+
+	if request.method == 'POST':
+		password_old = request.POST['password_old']
+		password_new = request.POST['password_new']
+		password_new_rep = request.POST['password_new_rep']
+		if password_new != password_new_rep:
+			return render_to_response(PATH.HTML_PATH['password'], {'messages':'New password does not match. Please try again.'}, context_instance=RequestContext(request))
+		if password_new != password_old:
+			return render_to_response(PATH.HTML_PATH['password'], {'messages':'New password is the same as current. Please try again.'}, context_instance=RequestContext(request))
+
+		user = authenticate(username=request.user, password=password_old)
+		if user is not None:
+			u = User.objects.get(username=request.user)
+			u.set_password(password_new)
+			u.save()
+			logout(request)
+			return render_to_response(PATH.HTML_PATH['password'], {'notices':'Password change successful. Please sign in using new credentials.'}, context_instance=RequestContext(request))
+		else:
+			return render_to_response(PATH.HTML_PATH['password'], {'messages':'Invalid username and/or password. Please try again.'}, context_instance=RequestContext(request))
+	else:
+		return render_to_response(PATH.HTML_PATH['password'], {'messages':''}, context_instance=RequestContext(request))
+
+
 def user_logout(request):
 	logout(request)
 	return HttpResponseRedirect("/")

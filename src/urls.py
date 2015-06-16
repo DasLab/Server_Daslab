@@ -34,6 +34,7 @@ urlpatterns = patterns('',
     (r'^das_contact\.html$', RedirectView.as_view(url='/contact/', permanent=True)),
 
     (r'^login/$', views.user_login),
+    (r'^password/$', views.user_password),
     (r'^logout/$', views.user_logout),
     (r'^group/meetings/$', views.lab_meetings),
     (r'^group/calendar/$', views.lab_calendar),
