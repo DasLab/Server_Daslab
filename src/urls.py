@@ -46,14 +46,14 @@ urlpatterns = patterns('',
 
     (r'^ping_test/$', views.ping_test),
 
-    (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT+'/media'}),
-    # (r'^site_data/(?P<path>.*)$', 'django.views.static.serve', {'document_root': STATIC_ROOT}),
+    (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT + '/media'}),
+    (r'^site_data/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT + '/data'}),
 
     url(r'^admin/', include(admin.site.urls)),
     # (r'^static/admin/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT+'/media/admin'}),
     url(r'^(?:robots.txt)?$', 'django.views.static.serve', kwargs={'path': 'robots.txt', 'document_root': MEDIA_ROOT}),
-) + static(STATIC_URL, document_root=STATIC_ROOT)
+) #+ static(STATIC_URL, document_root=STATIC_ROOT)
 
-# handler404 = views.error404
-# handler500 = views.error500
+handler404 = views.error404
+handler500 = views.error500
 

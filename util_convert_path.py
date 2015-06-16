@@ -10,6 +10,9 @@ from src.settings import *
 from src.models import *
 
 
+dev = '/MATLAB_Code/Daslab_server/data/'
+release = '/home/ubuntu/Files/'
+
 if len(sys.argv) != 2:
 	print('Usage:')
 	print('    %s <flag>' % sys.argv[0])
@@ -17,8 +20,6 @@ if len(sys.argv) != 2:
 	exit()
 
 target = sys.argv[1]
-dev = '/MATLAB_Code/Daslab_server/files/'
-release = '/home/ubuntu/Files/'
 if target == 'dev':
 	old = release
 	new = dev

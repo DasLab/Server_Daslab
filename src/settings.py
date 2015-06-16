@@ -29,10 +29,10 @@ MEDIA_URL = ''
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = ''
-if os.path.exists('/home/ubuntu/Files/'):
-    STATICFILES_DIRS = ('/home/ubuntu/Files', MEDIA_ROOT+'/media')
-else:
-    STATICFILES_DIRS = (MEDIA_ROOT + '/files', MEDIA_ROOT+'/media')
+# if os.path.exists('/home/ubuntu/'):
+#     STATICFILES_DIRS = ('/home/ubuntu/Files', MEDIA_ROOT+'/media')
+# else:
+STATICFILES_DIRS = (MEDIA_ROOT + '/data', MEDIA_ROOT+'/media')
 ADMIN_MEDIA_PREFIX = '/admin/'
 
 ADMINS = (
@@ -163,15 +163,15 @@ class SYS_PATH:
         }
 
         self.DATA_DIR = {
-            'MEMBER_IMG_DIR': STATICFILES_DIRS[0] + '/ppl_img/',
-            'PUB_PDF_DIR': STATICFILES_DIRS[0] + '/pub_pdf/',
-            'PUB_IMG_DIR': STATICFILES_DIRS[0] + '/pub_img/',
-            'PUB_DAT_DIR': STATICFILES_DIRS[0] + '/pub_data/',
-            'NEWS_IMG_DIR': STATICFILES_DIRS[0] + '/news_img/',
+            'MEMBER_IMG_DIR': MEDIA_ROOT + '/data/ppl_img/',
+            'PUB_PDF_DIR': MEDIA_ROOT + '/data/pub_pdf/',
+            'PUB_IMG_DIR': MEDIA_ROOT + '/data/pub_img/',
+            'PUB_DAT_DIR': MEDIA_ROOT + '/data/pub_data/',
+            'NEWS_IMG_DIR': MEDIA_ROOT + '/data/news_img/',
 
-            'ROT_PPT_DIR': STATICFILES_DIRS[0] + '/rot_ppt/',
-            'ROT_DAT_DIR': STATICFILES_DIRS[0] + '/rot_data/',
-            'SPE_PPT_DIR': STATICFILES_DIRS[0] + '/spe_ppt/',
+            'ROT_PPT_DIR': MEDIA_ROOT + '/data/rot_ppt/',
+            'ROT_DAT_DIR': MEDIA_ROOT + '/data/rot_data/',
+            'SPE_PPT_DIR': MEDIA_ROOT + '/data/spe_ppt/',
 
             'TMPDIR': MEDIA_ROOT + '/temp/',
 

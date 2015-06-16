@@ -1,6 +1,6 @@
-from django.http import Http404, HttpResponseRedirect, HttpResponse, HttpResponsePermanentRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.template import RequestContext#, Template
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -14,9 +14,7 @@ from src.models import *
 from src.settings import *
 
 import datetime
-import simplejson
 import sys
-import time
 import traceback
 # from sys import stderr
 
@@ -34,7 +32,7 @@ def news(request):
 	news_list = News.objects.order_by('-date')
 	for news in news_list:
 		if news.image:
-			news.image_link = news.image.url.replace(PATH.DATA_DIR['NEWS_IMG_DIR'], '')
+			news.image_link = os.path.basename(news.image.name)
 	return render_to_response(PATH.HTML_PATH['news'], {'news_list':news_list}, context_instance=RequestContext(request))
 
 def people(request):
@@ -42,18 +40,18 @@ def people(request):
 	almuni = Member.objects.filter(alumni=1).order_by('finish_year', 'start_year')
 	for ppl in member:
 		if ppl.image:
-			ppl.image_link = ppl.image.url.replace(PATH.DATA_DIR['MEMBER_IMG_DIR'], '')
+			ppl.image_link = os.path.basename(ppl.image.name)
 	return render_to_response(PATH.HTML_PATH['people'], {'current_member':member, 'past_member':almuni}, context_instance=RequestContext(request))
 
 def publications(request):
 	pub_list = Publication.objects.order_by('-display_date')
 	for i, pub in enumerate(pub_list):
 		if pub.image:
-			pub.image_link = pub.image.url.replace(PATH.DATA_DIR['PUB_IMG_DIR'], '')
+			pub.image_link = os.path.basename(pub.image.name)
 		if pub.pdf:
-			pub.pdf_link = pub.pdf.url.replace(PATH.DATA_DIR['PUB_PDF_DIR'], '')
+			pub.pdf_link = os.path.basename(pub.pdf.name)
 		if pub.extra_file:
-			pub.file_link = pub.extra_file.url.replace(PATH.DATA_DIR['PUB_DAT_DIR'], '')
+			pub.file_link = os.path.basename(pub.extra_file.name)
 		if i == 0 or pub_list[i-1].year != pub.year:
 			pub.year_tag = True
 		if pub.year == 2009 and pub_list[i-1].year == 2010:
@@ -88,13 +86,13 @@ def lab_meetings(request):
 	rot_list = RotationStudent.objects.order_by('-date')
 	for rot in rot_list:
 		if rot.ppt:
-			rot.ppt_link = rot.ppt.url.replace(PATH.DATA_DIR['ROT_PPT_DIR'], '')
+			rot.ppt_link = os.path.basename(rot.ppt.name)
 		if rot.data:
-			rot.dat_link = rot.data.url.replace(PATH.DATA_DIR['ROT_DAT_DIR'], '')
+			rot.dat_link = os.path.basename(rot.data.name)
 	arv_list = Presentation.objects.order_by('-date')
 	for arv in arv_list:
 		if arv.ppt:
-			arv.ppt_link = arv.ppt.url.replace(PATH.DATA_DIR['SPE_PPT_DIR'], '')
+			arv.ppt_link = os.path.basename(arv.ppt.name)
 	return render_to_response(PATH.HTML_PATH['lab_meetings'], {'flash_list':flash_list, 'eterna_list':eterna_list, 'rot_list':rot_list, 'arv_list':arv_list}, context_instance=RequestContext(request))
 
 @login_required
@@ -177,14 +175,11 @@ def ping_test(request):
 # 		path = path + '?searchtext=' + request.GET.get('searchtext')
 # 	return HttpResponsePermanentRedirect("/%s" % path)
 
-# def error404(request):
-# 	return render_to_response(PATH.HTML_PATH['404'], {}, context_instance=RequestContext(request))
+def error404(request):
+	return render_to_response(PATH.HTML_PATH['404'], {}, context_instance=RequestContext(request))
 
-# def error500(request):
-# 	# exc_type, exc_value, exc_tb = sys.exc_info()
-# 	# body = '%s\n%s\n%s\n' % (exc_value, exc_type, traceback.format_exception(exc_type, exc_value, exc_tb))
-# 	# send_mail('Subject', body, EMAIL_HOST_USER, [EMAIL_NOTIFY])
-# 	return render_to_response(PATH.HTML_PATH['500'], {}, context_instance=RequestContext(request))
+def error500(request):
+	return render_to_response(PATH.HTML_PATH['500'], {}, context_instance=RequestContext(request))
 
 
 
