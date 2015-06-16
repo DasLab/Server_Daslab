@@ -36,6 +36,7 @@ User-agent: Yahoo-MMCrawler
 
 # Directories
 Disallow: /src/
+Disallow: /data/
 
 # Files
 Disallow: /*.py
@@ -43,9 +44,21 @@ Disallow: /*.pyc
 Disallow: /*.md
 
 # Paths (clean URLs)
+Disallow: /login/
+Disallow: /password/
+Disallow: /logout/
 Disallow: /group/
 Disallow: /admin/
+Disallow: /site_data/_old/
+Disallow: /site_data/pub_data/
+Disallow: /site_data/rot_data/
+Disallow: /site_data/rot_ppt/
+Disallow: /site_data/spe_ppt/
+
+Disallow: /ping_test/
 Disallow: /cgi-bin/
+
+Disallow: /server-status/
 
 # Paths (no clean URLs)
 
