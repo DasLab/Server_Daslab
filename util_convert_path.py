@@ -11,7 +11,7 @@ from src.models import *
 
 
 dev = '/MATLAB_Code/Daslab_server/data/'
-release = '/home/ubuntu/Files/'
+release = '/home/ubuntu/Server_DasLab/data/'
 
 if len(sys.argv) != 2:
 	print('Usage:')
