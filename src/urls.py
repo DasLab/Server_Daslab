@@ -10,6 +10,7 @@ from settings import MEDIA_ROOT, STATIC_ROOT, STATIC_URL
 from src import views
 
 admin.site.index_title = 'Das Lab Website Administration'
+# admin.site.index_template = 'admin/index.html'
 admin.autodiscover()
 admin.site.login = views.user_login
 admin.site.logout = views.user_logout

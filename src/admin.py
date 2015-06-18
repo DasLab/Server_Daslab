@@ -1,44 +1,77 @@
 from django.contrib import admin
-from django.contrib.admin import AdminSite
+from django.forms import ModelForm, widgets
+# from django.contrib.admin import AdminSite
+
+# from suit.widgets import AutosizedTextarea
+from suit.widgets import EnclosedInput, SuitDateWidget
 
 from src.models import *
-# from .models import MyModel
-# from src.settings import PATH
 
-# class MyAdminSite(AdminSite):
-#     login_template = PATH.HTML_PATH['login']
-#     site_header = 'Das Lab Website Administration'
-
-# admin_site = MyAdminSite(name='myadmin')
-# admin_site.register(MyModel)
+class NewsForm(ModelForm):
+    class Meta:
+        widgets = {
+            'date': SuitDateWidget,
+            'content': widgets.Textarea(attrs={'style':'width: 90%','rows':'6' }),
+            'link': widgets.TextInput(attrs={'style':'width: 90%' }),
+            # 'link': EnclosedInput(prepend='icon-user', attrs={'style':'width: 90%' }),
+            'video': widgets.TextInput(attrs={'style':'width: 90%' }),
+        }
 
 class NewsAdmin(admin.ModelAdmin):
     list_display = ('date', 'content', 'link')
+    form = NewsForm
+    readonly_fields = ('image_tag',)
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(NewsAdmin, self).get_form(request, obj, **kwargs)
-        form.base_fields['content'].widget.attrs['style'] = 'width: 75em; height: 8em;'
-        form.base_fields['link'].widget.attrs['style'] = 'width: 75em;'
-        return form
+    fieldsets = [
+        ('Contents', {'fields': ['date', 'content', ('image', 'image_tag')]}),
+        ('Links', {'fields': ['link', 'video']}),
+    ]
 admin.site.register(News, NewsAdmin)
+
+
+class MemberForm(ModelForm):
+    class Meta:
+        widgets = {
+            'role': widgets.TextInput(attrs={'style':'width: 90%' }),
+            'more_info': widgets.TextInput(attrs={'style':'width: 90%' }),
+            'description': widgets.TextInput(attrs={'style':'width: 90%' }),
+            'department': widgets.TextInput(attrs={'style':'width: 90%' }),
+        }
 
 class MemberAdmin(admin.ModelAdmin):
     list_display = ('alumni', 'first_name', 'last_name', 'role', 'department', 'start_year', 'finish_year')
+    form = MemberForm
+    readonly_fields = ('image_tag',)
+
+    fieldsets = [
+        ('Personal Information', {'fields': [('first_name', 'last_name'), 'role', ('image', 'image_tag'), 'description', 'more_info']}),
+        ('Affiliation', {'fields': ['department', ('joint_lab', 'joint_link')]}),
+        ('Alumni Information', {'fields': ['alumni', ('start_year', 'finish_year')]}),
+    ]
 admin.site.register(Member, MemberAdmin)
+
+
+class PublicationForm(ModelForm):
+    class Meta:
+        widgets = {
+            'display_date': SuitDateWidget,
+            'authors': widgets.Textarea(attrs={'style':'width: 90%','rows':'4' }),
+            'title': widgets.Textarea(attrs={'style':'width: 90%','rows':'4' }),
+            'journal': widgets.TextInput(attrs={'style':'width: 90%' }),
+            'link': widgets.TextInput(attrs={'style':'width: 90%' }),
+            'extra_link': widgets.TextInput(attrs={'style':'width: 90%' }),
+            'extra_link_2': widgets.TextInput(attrs={'style':'width: 90%' }),
+        }
 
 class PublicationAdmin(admin.ModelAdmin):
     list_display = ('year', 'journal', 'authors', 'title', 'link')
+    form = PublicationForm
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(PublicationAdmin, self).get_form(request, obj, **kwargs)
-        form.base_fields['authors'].widget.attrs['style'] = 'width: 75em; height: 8em;'
-        form.base_fields['title'].widget.attrs['style'] = 'width: 75em; height: 5em;'
-        form.base_fields['journal'].widget.attrs['style'] = 'width: 75em;'
-        form.base_fields['link'].widget.attrs['style'] = 'width: 75em;'
-        form.base_fields['extra_link'].widget.attrs['style'] = 'width: 75em;'
-        form.base_fields['extra_link_2'].widget.attrs['style'] = 'width: 75em;'
-        form.base_fields['image'].widget.attrs['style'] = 'width: 75em;'
-        return form    
+    fieldsets = [
+        ('Citation', {'fields': ['title', ('year', 'display_date'), 'authors', 'journal', ('volume', 'issue'), ('begin_page', 'end_page')]}),
+        ('Media', {'fields': ['pdf', 'preprint', 'feature', 'image']}),
+        ('Link', {'fields': ['link', 'extra_field', 'extra_link', 'extra_field_2', 'extra_link_2', 'extra_field_3', 'extra_file']}),
+    ]
 admin.site.register(Publication, PublicationAdmin)
 
 

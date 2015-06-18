@@ -15,6 +15,7 @@ MEDIA_ROOT = BASE_DIR
 # MEDIA_ROOT = os.path.join(os.path.abspath("."))
 
 from django.utils.translation import ugettext_lazy as _
+from django.contrib import messages
 
 from t47_dev import *
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -48,14 +49,17 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = (
+    'suit',
+    # 'bootstrap_admin',
+    # 'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.sites',
+    # 'django.contrib.sites',
     'django.contrib.staticfiles',
-    'django.contrib.flatpages',
+    # 'django.contrib.flatpages',
     'django.contrib.humanize',
 
     'src',
@@ -69,7 +73,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
-
 )
 gettext = lambda s: s
 CMS_TEMPLATES = (
@@ -86,7 +89,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    # 'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
 # List of callables that know how to import templates from various sources.
@@ -101,6 +104,32 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+SUIT_CONFIG = {
+    # header
+    'ADMIN_NAME': 'Das Lab Website',
+    'HEADER_DATE_FORMAT': 'M d, Y (D)',
+    'HEADER_TIME_FORMAT': 'h:i a (e)',
+
+    # forms
+    'SHOW_REQUIRED_ASTERISK': True,  # Default True
+    'CONFIRM_UNSAVED_CHANGES': True, # Default True
+
+    # menu
+    # 'SEARCH_URL': '/admin/auth/user/',
+    'MENU_OPEN_FIRST_CHILD': True, # Default True
+    'MENU': (
+        'sites',
+        {'app': 'auth', 'label': 'Authorization', 'icon':'icon-lock'},
+        {'label': 'Global Site', 'icon':'icon-globe', 'models': ('src.news', 'src.member', 'src.publication')},
+        {'label': 'Internal Site', 'icon':'icon-inbox', 'models': ('src.flashslide', 'src.eternayoutube', 'src.rotationstudent', 'src.presentation')},
+        '-',
+        {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
+    ),
+
+    # misc
+    # 'LIST_PER_PAGE': 15
+}
 
 ROOT_URLCONF = 'src.urls'
 WSGI_APPLICATION = 'src.wsgi.application'
