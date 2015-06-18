@@ -24,7 +24,7 @@
             {% if news.video %} <iframe title="YouTube video player" class="youtube-player" type="text/html" width="160" src="{{news.video}}" frameborder="0" allowFullScreen></iframe> {% endif %}
           </td>
           <td width="500" align="left" valign="top" class="homeTEXT">
-            <p class="teal1"><i>{{news.date|date:"b d Y"|title}}</i></p>
+            <p class="teal1"><i>{{news.date|date:"F d, Y"|title}}</i></p>
             <p>
               <br>
               {% autoescape off %}{{news.content}}{% endautoescape %}

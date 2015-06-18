@@ -49,6 +49,10 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = (
+    # 'filer',
+    # 'mptt',
+    # 'easy_thumbnails',    
+
     'suit',
     # 'bootstrap_admin',
     # 'django_admin_bootstrapped',
@@ -120,19 +124,20 @@ SUIT_CONFIG = {
     'MENU_OPEN_FIRST_CHILD': True, # Default True
     'MENU': (
         'sites',
-        {'label': 'Dashboard', 'icon':'icon-off', 'url': '/support/'},
-        {'label': 'Directory', 'icon':'icon-folder-open', 'url': '/support/'},
+        {'label': 'Dashboard', 'icon':'icon-off', 'url': ''},
+        {'label': 'Directory', 'icon':'icon-folder-open', 'url': ''},
         '-',
         {'app': 'auth', 'label': 'Authorization', 'icon':'icon-lock'},
         {'label': 'Global Site', 'icon':'icon-globe', 'models': ('src.news', 'src.member', 'src.publication')},
         {'label': 'Internal Site', 'icon':'icon-inbox', 'models': ('src.flashslide', 'src.eternayoutube', 'src.rotationstudent', 'src.presentation')},
         '-',
-        {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
+        {'label': 'Support', 'icon':'icon-question-sign', 'url': ''},
     ),
 
     # misc
     'LIST_PER_PAGE': 25
 }
+
 
 ROOT_URLCONF = 'src.urls'
 WSGI_APPLICATION = 'src.wsgi.application'

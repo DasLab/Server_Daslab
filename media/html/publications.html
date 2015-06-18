@@ -26,12 +26,19 @@
         </tr>
 
         <tr>
-          <td height="2500" colspan="2" align="left" valign="top" class="PubH1">
+          <td colspan="2" align="left" valign="top" class="PubH1 table-body">
             <p class="homeTEXT">&nbsp;</p>
             {% for pub in pub_list %}
               {% if pub.previous %}
                 <br>
-                <span class="pubH2">Previous work by R. Das </span>
+                <table>
+                  <tbody>
+                    <tr class="switch">
+                      <td width="38" height="15" align="left" valign="middle" class="PubH1"><a onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('arrow2','','/site_media/images/publications/arrow_hover.png',1)"><img src="/site_media/images/publications/arrow.png" name="arrow" width="28" height="28" border="0" id="arrow2" /></a></td>
+                      <td height="15" align="left" valign="middle" class="pubH2" id="expand"><strong>Previous work by R. Das</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
                 <br><br><br>
               {% endif %}
 
@@ -39,7 +46,7 @@
                 <table width="800" height="200" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
-                      <td width="100" align="center" valign="top">
+                      <td width="100" align="center" valign="top" style="padding-top:10px;">
                         {% if pub.year_tag %}
                           <span class="teal2" id="{{pub.year}}">{{pub.year}}</span>
                         {% endif %}
@@ -84,11 +91,12 @@
                   </tbody>
                 </table>
               {% else %}
-                <table width="800" border="0" cellpadding="0" cellspacing="0">
+                <table width="800" border="0" cellpadding="0" cellspacing="0" {% if pub.year <= 2009 %} class="previous" {% endif %}>
                   <tbody>
                     <tr>
                       <td width="80" align="center" valign="top">
                         {% if pub.year_tag %}
+                          <br>
                           <span class="teal2">{{pub.year}}</span>
                         {% endif %}
                       </td>
@@ -124,7 +132,7 @@
                   </tbody>
                 </table>
               {% endif %}
-              <br>
+              <br {% if pub.year <= 2009 %} class="previous" {% endif %}>
             {% endfor %}
           </td>
         </tr>
@@ -142,9 +150,23 @@
       $("#main").addClass("DASpub");
       $("#publications").attr("src", "/site_media/images/nav_publications_hover.png");
 
-      $("#DasFOOTER").css("top", parseInt($("#DasFOOTER").css("top")) + 100);
+      $("table.previous").hide();
+      $("br.previous").hide();
+
+      $("#DasFOOTER").css("top", parseInt($("#arrow2").offset().top) + 100);
       $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
       $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+
+      $("#arrow2").on("click", function () {
+        $("table.previous").toggle();
+        $("br.previous").toggle();
+        var flag = Math.sign(($("table.previous").css("display") == "none") - 0.5);
+
+        $("#DasFOOTER").css("top", parseInt($("#DasFOOTER").css("top")) - 3450 * flag);
+        $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
+        $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+      });
+
     });
   </script>
 {% endblock %}

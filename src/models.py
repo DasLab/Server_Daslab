@@ -62,7 +62,7 @@ class Member(models.Model):
     last_name = models.CharField(max_length=255, verbose_name='Last Name')
     role = models.CharField(max_length=255, verbose_name='Role / Title', help_text='<i class="icon-user"></i> Shows up as 1<sup>st</sup> field for title.')
     department = models.CharField(max_length=255, blank=True, verbose_name='Department Affiliation', help_text='<i class="icon-bookmark"></i> Shows up as 2<sup>nd</sup> field for title.')
-    more_info = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<i class="icon-globe"></i> For the "more info" link. Use SoM CAP link.')
+    more_info = models.CharField(max_length=255, blank=True, null=True, verbose_name='URL', help_text='<i class="icon-globe"></i> For the "more info" link. Use SoM CAP link.')
     image = models.ImageField(upload_to=get_member_image, blank=True, max_length=255, verbose_name='Avatar Image', help_text='<i class="icon-picture"></i> Displayed as avatar. Use <span class="label label-info">png/jpg</span> format, low resolution (<span class="label label-important">NO</span> larger than <span class="label label-inverse">200x300 72dpi</span>). If empty, default avatar will be used.')
     joint_lab = models.CharField(max_length=255, blank=True, verbose_name='Joint Lab', help_text='<i class="icon-thumbs-up"></i> P.I.\'s name. <span class="label label-important">NO</span> need to add "lab".')
     joint_link = models.CharField(max_length=255, blank=True, verbose_name='Joint Lab URL', help_text='<i class="icon-globe"></i> Link to the joint lab website.')
