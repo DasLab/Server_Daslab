@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django import forms
+from django.utils.html import format_html
 
 from src.settings import *
 
@@ -51,7 +52,7 @@ class News(models.Model):
 
     def image_tag(self):
         if self.image: 
-            return u'<img class="well" src="/site_data/news_img/%s" width=120/>' % os.path.basename(self.image.url)
+            return u'<img class="well" src="/site_data/news_img/%s" width=150/>' % os.path.basename(self.image.url)
     image_tag.short_description = 'Preview'
     image_tag.allow_tags = True
 
@@ -75,6 +76,22 @@ class Member(models.Model):
         verbose_name = 'Member'
         verbose_name_plural = 'Member Management'
 
+    def full_name(self):
+        return '%s %s' % (self.first_name, self.last_name)
+    full_name.short_description = 'Full Name'
+    def affiliation(self):
+        return '%s @ %s' % (self.role, self.department)
+    def year(self): 
+        if self.alumni:
+            string = '<span class="label label-important">Alumni</span>'
+        else:
+            string = '<span class="label label-success">Current</span>'
+        if self.finish_year:
+            y = self.finish_year
+        else:
+            y = ''
+        return format_html('%s %s-%s' % (string, self.start_year, y))
+
     def image_tag(self):
         if self.image: 
             return u'<img class="well" src="/site_data/ppl_img/%s" width=120/>' % os.path.basename(self.image.url)
@@ -87,7 +104,7 @@ class Publication(models.Model):
     year = models.PositiveSmallIntegerField()
     display_date = models.DateField(verbose_name='Display Date', help_text='<i class="icon-random"></i> For display ordering within each year. Assign a virtual date as used when sorting.')
     title = models.TextField(help_text='<i class="icon-bullhorn"></i> Only use upper-case for the first word.')
-    journal = models.CharField(max_length=255, blank=True, null=True)
+    journal = models.CharField(max_length=255, blank=True, null=True, help_text='<i class="icon-home"></i> Use journal <span class="label label-important">full</span> name. Capitalize each word.')
     volume = models.CharField(max_length=31, blank=True, null=True, help_text='<i class="icon-book"></i> Use <span class="label label-inverse">in press, epub available.</span> if not printed yet.')
     issue = models.CharField(max_length=31, blank=True, null=True)
     begin_page = models.CharField(max_length=31, blank=True, null=True, verbose_name='Start Page')
@@ -97,26 +114,32 @@ class Publication(models.Model):
     preprint = models.BooleanField(default=False, verbose_name='Is Preprint?', help_text='<i class="icon-tag"></i> Check if this publication is the provided link is to ArXiv, meaning with <b>"Preprint"</b> instead of <b>"Paper"</b> link.')
     link = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<i class="icon-globe"></i> Shows as <b>"Link"</b> to redirect to journal website.')
 
-    extra_field = models.CharField(max_length=255, blank=True)
-    extra_link = models.CharField(max_length=255, blank=True)
-    extra_field_2 = models.CharField(max_length=255, blank=True)
-    extra_link_2 = models.CharField(max_length=255, blank=True)
-    extra_field_3 = models.CharField(max_length=255, blank=True)
-    extra_file = models.FileField(upload_to=get_pub_data, blank=True, max_length=255)
+    extra_field = models.CharField(max_length=255, blank=True, verbose_name='Extra Field #1', help_text='<i class="icon-edit"></i> Name for extra field for external link. <span class="label label-success">Example</span>: Server.')
+    extra_link = models.CharField(max_length=255, blank=True, verbose_name='Extra Link #1', help_text='<i class="icon-globe"></i> Link for extra field for external link.')
+    extra_field_2 = models.CharField(max_length=255, blank=True, verbose_name='Extra Field #2', help_text='<i class="icon-edit"></i> Name for extra field for external link. <span class="label label-success">Example</span>: Software.')
+    extra_link_2 = models.CharField(max_length=255, blank=True, verbose_name='Extra Link #2', help_text='<i class="icon-globe"></i> Link for extra field for external link.')
+    extra_field_3 = models.CharField(max_length=255, blank=True, verbose_name='Extra Field #3', help_text='<i class="icon-edit"></i> Name for extra field for upload file. <span class="label label-success">Example</span>: Data.')
+    extra_file = models.FileField(upload_to=get_pub_data, blank=True, max_length=255, verbose_name='Extra File', help_text='<i class="icon-file"></i> For extra file on server.')
 
     feature = models.BooleanField(default=False, verbose_name='Is Featured?', help_text='<i class="icon-flag"></i> Check if this publication is <b>"featured"</b>, meaning with teal background and thumbnail.')
-    image = models.ImageField(upload_to=get_pub_image, blank=True, max_length=255, verbose_name='Feature Image', help_text='<i class="icon-picture"></i> For featured publications only.')
+    image = models.ImageField(upload_to=get_pub_image, blank=True, max_length=255, verbose_name='Feature Image', help_text='<i class="icon-picture"></i> For featured publications only. Use <span class="label label-info">png/jpg</span> format, low resolution (<span class="label label-important">NO</span> larger than <span class="label label-inverse">200x300 72dpi</span>). Use the <span class="label label-important">SAME</span> name as <b>pdf</b> file.')
 
     class Meta():
         verbose_name = 'Publication Entry'
         verbose_name_plural = 'Publication Entries'
+
+    def image_tag(self):
+        if self.image: 
+            return u'<img class="well" src="/site_data/pub_img/%s" width=150/>' % os.path.basename(self.image.url)
+    image_tag.short_description = 'Preview'
+    image_tag.allow_tags = True
 
 
 ############################################################################################################################################
 
 class FlashSlide(models.Model):
     date = models.DateField()
-    link = models.CharField(max_length=255, blank=True)
+    link = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<i class="icon-globe"></i> Link to Google Doc Slides.')
 
     class Meta():
         verbose_name = 'Flash Slide'
@@ -124,11 +147,11 @@ class FlashSlide(models.Model):
 
 
 class RotationStudent(models.Model):
-    date = models.DateField()
-    full_name = models.CharField(max_length=255)
-    title = models.CharField(max_length=255)
-    ppt = models.FileField(upload_to=get_rot_ppt, blank=True, max_length=255)
-    data = models.FileField(upload_to=get_rot_data, blank=True, max_length=255)
+    date = models.DateField(verbose_name='Presentation Date')
+    full_name = models.CharField(max_length=255, verbose_name='Full Name')
+    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<i class="icon-bullhorn"></i> Only use upper-case for the first word.')
+    ppt = models.FileField(upload_to=get_rot_ppt, blank=True, max_length=255, verbose_name='Slides Upload', help_text='<i class="icon-film"></i> Link to slides on server. Use file name format <span class="label label-inverse">DATE_FULLNAME.pptx</span>: date in 8-digits(yyyymmdd), full name (no space). <span class="label label-success">Exampe</span>: 20120321_SiqiTian.pptx.')
+    data = models.FileField(upload_to=get_rot_data, blank=True, max_length=255, verbose_name='Extra Data', help_text='<i class="icon-hdd"></i> Link to extra data file.')
 
     class Meta():
         verbose_name = 'Rotation Presentation'
@@ -136,10 +159,10 @@ class RotationStudent(models.Model):
 
 
 class EternaYoutube(models.Model):
-    date = models.DateField()
+    date = models.DateField(verbose_name='Presentation Date')
     presenter = models.CharField(max_length=255)
-    title = models.CharField(max_length=255)
-    link = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<i class="icon-bullhorn"></i> Only use upper-case for the first word.')
+    link = models.CharField(max_length=255, blank=True, verbose_name='YouTube URL', help_text='<i class="icon-facetime-video"></i> Shows as <b>"Link"</b> to redirect to youtube. <span class="label label-success">Example</span>: <u>https://www.youtube.com/watch?v=Lp_KozzV5Po</u>.')
 
     class Meta():
         verbose_name = 'EteRNA Open Group Meeting'
@@ -147,11 +170,11 @@ class EternaYoutube(models.Model):
 
 
 class Presentation(models.Model):
-    date = models.DateField()
+    date = models.DateField(verbose_name='Presentation Date')
     presenter = models.CharField(max_length=255)
-    title = models.CharField(max_length=255)
-    ppt = models.FileField(upload_to=get_spe_ppt, blank=True, max_length=255)
-    link = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<i class="icon-bullhorn"></i> Only use upper-case for the first word.')
+    ppt = models.FileField(upload_to=get_spe_ppt, blank=True, max_length=255, verbose_name='Slides Upload', help_text='<i class="icon-film"></i> Link to slides on server. <span class="label label-important">NO</span> spaces in file name.')
+    link = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<i class="icon-globe"></i> Link to Google Doc Slides.')
 
     class Meta():
         verbose_name = 'Archived Presentation'

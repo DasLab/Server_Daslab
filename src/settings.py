@@ -120,6 +120,9 @@ SUIT_CONFIG = {
     'MENU_OPEN_FIRST_CHILD': True, # Default True
     'MENU': (
         'sites',
+        {'label': 'Dashboard', 'icon':'icon-off', 'url': '/support/'},
+        {'label': 'Directory', 'icon':'icon-folder-open', 'url': '/support/'},
+        '-',
         {'app': 'auth', 'label': 'Authorization', 'icon':'icon-lock'},
         {'label': 'Global Site', 'icon':'icon-globe', 'models': ('src.news', 'src.member', 'src.publication')},
         {'label': 'Internal Site', 'icon':'icon-inbox', 'models': ('src.flashslide', 'src.eternayoutube', 'src.rotationstudent', 'src.presentation')},
@@ -128,7 +131,7 @@ SUIT_CONFIG = {
     ),
 
     # misc
-    # 'LIST_PER_PAGE': 15
+    'LIST_PER_PAGE': 25
 }
 
 ROOT_URLCONF = 'src.urls'

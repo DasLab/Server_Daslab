@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.forms import ModelForm, widgets
+from django.utils.html import format_html
 # from django.contrib.admin import AdminSite
 
 # from suit.widgets import AutosizedTextarea
@@ -23,9 +24,12 @@ class NewsAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
     fieldsets = [
-        ('Contents', {'fields': ['date', 'content', ('image', 'image_tag')]}),
-        ('Links', {'fields': ['link', 'video']}),
+        (format_html('<i class="icon-comment"></i> Contents'), {'fields': ['date', 'content', ('image', 'image_tag')]}),
+        (format_html('<i class="icon-share"></i> Links'), {'fields': ['link', 'video']}),
     ]
+
+    class Media:
+        js = ('admin/tables.js',)
 admin.site.register(News, NewsAdmin)
 
 
@@ -39,15 +43,18 @@ class MemberForm(ModelForm):
         }
 
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ('alumni', 'first_name', 'last_name', 'role', 'department', 'start_year', 'finish_year')
+    list_display = ('full_name', 'year', 'joint_lab', 'affiliation')
     form = MemberForm
     readonly_fields = ('image_tag',)
 
     fieldsets = [
-        ('Personal Information', {'fields': [('first_name', 'last_name'), 'role', ('image', 'image_tag'), 'description', 'more_info']}),
-        ('Affiliation', {'fields': ['department', ('joint_lab', 'joint_link')]}),
-        ('Alumni Information', {'fields': ['alumni', ('start_year', 'finish_year')]}),
+        (format_html('<i class="icon-user"></i> Personal Information'), {'fields': [('first_name', 'last_name'), 'role', ('image', 'image_tag'), 'description', 'more_info']}),
+        (format_html('<i class="icon-home"></i> Affiliation'), {'fields': ['department', ('joint_lab', 'joint_link')]}),
+        (format_html('<i class="icon-road"></i> Alumni Information'), {'fields': ['alumni', ('start_year', 'finish_year')]}),
     ]
+
+    class Media:
+        js = ('admin/tables.js',)
 admin.site.register(Member, MemberAdmin)
 
 
@@ -66,54 +73,101 @@ class PublicationForm(ModelForm):
 class PublicationAdmin(admin.ModelAdmin):
     list_display = ('year', 'journal', 'authors', 'title', 'link')
     form = PublicationForm
+    readonly_fields = ('image_tag',)
 
     fieldsets = [
-        ('Citation', {'fields': ['title', ('year', 'display_date'), 'authors', 'journal', ('volume', 'issue'), ('begin_page', 'end_page')]}),
-        ('Media', {'fields': ['pdf', 'preprint', 'feature', 'image']}),
-        ('Link', {'fields': ['link', 'extra_field', 'extra_link', 'extra_field_2', 'extra_link_2', 'extra_field_3', 'extra_file']}),
+        (format_html('<i class="icon-book"></i> Citation'), {'fields': ['title', ('year', 'display_date'), 'authors', 'journal', ('volume', 'issue'), ('begin_page', 'end_page')]}),
+        (format_html('<i class="icon-th-large"></i> Media'), {'fields': ['pdf', 'preprint', 'feature', ('image', 'image_tag')]}),
+        (format_html('<i class="icon-share"></i> Links'), {'fields': ['link', 'extra_field', 'extra_link', 'extra_field_2', 'extra_link_2', 'extra_field_3', 'extra_file']}),
     ]
+
+    class Media:
+        js = ('admin/tables.js',)
 admin.site.register(Publication, PublicationAdmin)
 
 
 ############################################################################################################################################
 
+class FlashSlideForm(ModelForm):
+    class Meta:
+        widgets = {
+            'date': SuitDateWidget,
+            'link': widgets.TextInput(attrs={'style':'width: 90%' }),
+        }
+
 class FlashSlideAdmin(admin.ModelAdmin):
     list_display = ('date', 'link')
+    form = FlashSlideForm
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(FlashSlideAdmin, self).get_form(request, obj, **kwargs)
-        form.base_fields['link'].widget.attrs['style'] = 'width: 75em;'
-        return form
+    fieldsets = [
+        (format_html('<i class="icon-share"></i> Links'), {'fields': ['date', 'link']}),
+    ]
+
+    class Media:
+        js = ('admin/tables.js',)
 admin.site.register(FlashSlide, FlashSlideAdmin)
+
+
+class RotationStudentForm(ModelForm):
+    class Meta:
+        widgets = {
+            'date': SuitDateWidget,
+            'title': widgets.TextInput(attrs={'style':'width: 90%' }),
+        }
 
 class RotationStudentAdmin(admin.ModelAdmin):
     list_display = ('date', 'full_name', 'title')
+    form = RotationStudentForm
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(RotationStudentAdmin, self).get_form(request, obj, **kwargs)
-        form.base_fields['title'].widget.attrs['style'] = 'width: 75em;'
-        return form
+    fieldsets = [
+        (format_html('<i class="icon-user"></i> Personal Information'), {'fields': ['date', 'full_name', 'title']}),
+        (format_html('<i class="icon-share"></i> Links'), {'fields': ['ppt', 'data']}),
+    ]
+
+    class Media:
+        js = ('admin/tables.js',)
 admin.site.register(RotationStudent, RotationStudentAdmin)
+
+
+class EternaYoutubeForm(ModelForm):
+    class Meta:
+        widgets = {
+            'date': SuitDateWidget,
+            'link': widgets.TextInput(attrs={'style':'width: 90%' }),
+            'title': widgets.TextInput(attrs={'style':'width: 90%' }),
+        }
 
 class EternaYoutubeAdmin(admin.ModelAdmin):
     list_display = ('date', 'presenter', 'title', 'link')
+    form = EternaYoutubeForm
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(EternaYoutubeAdmin, self).get_form(request, obj, **kwargs)
-        form.base_fields['title'].widget.attrs['style'] = 'width: 75em;'
-        form.base_fields['link'].widget.attrs['style'] = 'width: 75em;'
-        return form
+    fieldsets = [
+        (format_html('<i class="icon-share"></i> Links'), {'fields': ['date', 'presenter', 'title', 'link']}),
+    ]
+
+    class Media:
+        js = ('admin/tables.js',)
 admin.site.register(EternaYoutube, EternaYoutubeAdmin)
+
+
+class PresentationForm(ModelForm):
+    class Meta:
+        widgets = {
+            'date': SuitDateWidget,
+            'link': widgets.TextInput(attrs={'style':'width: 90%' }),
+            'title': widgets.TextInput(attrs={'style':'width: 90%' }),
+        }
 
 class PresentationAdmin(admin.ModelAdmin):
     list_display = ('date', 'presenter', 'title')
+    form = PresentationForm
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(PresentationAdmin, self).get_form(request, obj, **kwargs)
-        form.base_fields['presenter'].widget.attrs['style'] = 'width: 75em;'
-        form.base_fields['title'].widget.attrs['style'] = 'width: 75em;'
-        form.base_fields['link'].widget.attrs['style'] = 'width: 75em;'
-        return form
+    fieldsets = [
+        (format_html('<i class="icon-share"></i> Links'), {'fields': ['date', 'presenter', 'title', 'ppt', 'link']}),
+    ]
+
+    class Media:
+        js = ('admin/tables.js',)
 admin.site.register(Presentation, PresentationAdmin)
 
 
