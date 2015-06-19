@@ -232,7 +232,7 @@ def sys_stat(request):
     ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, 'data/spe_ppt/'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
 
 
-    f = open('data/sys_ver.txt', 'w')
+    f = open(os.path.join(MEDIA_ROOT, 'data/sys_ver.txt'), 'w')
     f.write(ver)
     f.close()
     subprocess.Popen('rm temp.txt', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
