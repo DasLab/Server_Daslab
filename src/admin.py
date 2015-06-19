@@ -175,12 +175,18 @@ class PresentationAdmin(admin.ModelAdmin):
 admin.site.register(Presentation, PresentationAdmin)
 
 
+############################################################################################################################################
 
-def apache(request, *args, **kwargs):
+def apache(request):
     return render_to_response(PATH.HTML_PATH['admin_apache'], {}, context_instance=RequestContext(request))
 admin.site.register_view('apache', view=apache, visible=False)
 
-def dashboard(request, *args, **kwargs):
+def dashboard(request):
     return render_to_response(PATH.HTML_PATH['admin_dash'], {}, context_instance=RequestContext(request))
 admin.site.register_view('dashboard', view=dashboard, visible=False)
+
+def doc(request):
+    return render_to_response(PATH.HTML_PATH['admin_doc'], {}, context_instance=RequestContext(request))
+admin.site.register_view('doc', view=doc, visible=False)
+
 

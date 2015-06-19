@@ -1,21 +1,36 @@
-{% extends "admin/base_site.html" %}
+{% extends "admin/base.html" %}
 {% load i18n admin_static %}
 
-{% block extrastyle %}
-  {{ block.super }}
-{% endblock %}
+{% block title %}Das Lab Website Administration{% endblock %}
 
-{% block coltype %}colMS{% endblock %}
+{% block extrastyle %}
+  	<link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />
+    <link rel="icon" type-"image/gif" href="/site_media/images/icon_daslab.png" />
+{% endblock %}
 
 {% block bodyclass %}dashboard{% endblock %}
 
-{% block breadcrumbs %}{% endblock %}
-
 {% block content %}
-  <div id="content-main">
-      xxx
+	<div id="content-main">
+		<table class="table-overview applist">
+			<tr>
+                <th scope="row"><b><i class="icon-globe"></i> Link</th>
+                <td><a href="/server-status/" class="addlink icon">http://daslab.stanford.edu/server-status/</a></td>
+                <td><i class="icon-lock"></i> Apache Autherization Required</td>
+              </tr>
+		</table>
+		
+		
+	</div>
 
-  </div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			// $("#iframe").css("width", parseInt($("#content").css("width")) - 50);
+			// $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
+			$("ul.breadcrumb>li").append('<span class="divider">»</span>');
+			$("ul.breadcrumb").append('<li class="active"><a href="/admin/dashboard">System Status</a></li>');
+		});
+	</script>
 {% endblock %}
 
 

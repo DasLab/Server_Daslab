@@ -113,7 +113,7 @@ TEMPLATE_DIRS = (
 SUIT_CONFIG = {
     # header
     'ADMIN_NAME': 'Das Lab Website',
-    'HEADER_DATE_FORMAT': 'M d, Y (D)',
+    'HEADER_DATE_FORMAT': 'F d, Y (l)',
     'HEADER_TIME_FORMAT': 'h:i a (e)',
 
     # forms
@@ -133,7 +133,7 @@ SUIT_CONFIG = {
         {'label': 'Global Site', 'icon':'icon-globe', 'models': ('src.news', 'src.member', 'src.publication')},
         {'label': 'Internal Site', 'icon':'icon-inbox', 'models': ('src.flashslide', 'src.eternayoutube', 'src.rotationstudent', 'src.presentation')},
         '-',
-        {'label': 'Support', 'icon':'icon-question-sign', 'url': ''},
+        {'label': 'Documentation', 'icon':'icon-book', 'url': '/admin/doc'},
     ),
 
     # misc
@@ -195,6 +195,7 @@ class SYS_PATH:
 
             'admin_apache': MEDIA_ROOT + '/media/html/admin_apache.html',
             'admin_dash': MEDIA_ROOT + '/media/html/admin_dashboard.html',
+            'admin_doc': MEDIA_ROOT + '/media/html/admin_documentation.html',
 
             '404': MEDIA_ROOT + '/media/html/_404.html',
             '500': MEDIA_ROOT + '/media/html/_500.html',
