@@ -34,7 +34,7 @@
                 <table>
                   <tbody>
                     <tr class="switch">
-                      <td width="38" height="15" align="left" valign="middle" class="PubH1"><a onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('arrow2','','/site_media/images/publications/arrow_hover.png',1)"><img src="/site_media/images/publications/arrow.png" name="arrow" width="28" height="28" border="0" id="arrow2" /></a></td>
+                      <td width="38" height="15" align="left" valign="middle" class="PubH1"><a><img src="/site_media/images/publications/arrow.png" name="arrow" width="28" height="28" border="0" id="arrow2" /></a></td>
                       <td height="15" align="left" valign="middle" class="pubH2" id="expand"><strong>Previous work by R. Das</strong></td>
                     </tr>
                   </tbody>
@@ -152,6 +152,8 @@
 
       $("table.previous").hide();
       $("br.previous").hide();
+      $("#arrow2").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/arrow_hover.png");} );
+      $("#arrow2").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/arrow.png");} );
 
       $("#DasFOOTER").css("top", parseInt($("#arrow2").offset().top) + 100);
       $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
@@ -165,8 +167,17 @@
         $("#DasFOOTER").css("top", parseInt($("#DasFOOTER").css("top")) - 3450 * flag);
         $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
         $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+  
+        if (flag == -1) {
+          $("#arrow2").attr("src", "/site_media/images/publications/collapse_hover.png");
+          $("#arrow2").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/collapse.png");} );
+          $("#arrow2").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/collapse_hover.png");} );
+        } else {
+          $("#arrow2").attr("src", "/site_media/images/publications/arrow.png");
+          $("#arrow2").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/arrow_hover.png");} );
+          $("#arrow2").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/arrow.png");} );
+        }
       });
-
     });
   </script>
 {% endblock %}

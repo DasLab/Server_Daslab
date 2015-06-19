@@ -41,15 +41,19 @@
         <tr {% if forloop.counter <= 10 %} class="current" {% else %} class="previous" {% endif %}>
           <td height="20" colspan="3"><div class="divisionLine"></div></td>
         </tr>
+
+        {% if forloop.counter == 10 %}
+          <tr class="switch">
+            <td width="38" height="15" align="left" valign="middle" class="PubH1"><a><img src="/site_media/images/publications/arrow.png" name="arrow" width="28" height="28" border="0" id="arrow" /></a></td>
+            <td height="15" align="left" valign="middle" class="PubH1">Previous news from the Das Lab.</strong></td>
+          </tr>
+          <tr class="switch">
+            <td height="20" colspan="3"><div class="divisionLine"></div></td>
+          </tr>
+        {% endif %}
+
         {% endfor %}
 
-        <tr class="switch">
-          <td width="38" height="15" align="left" valign="middle" class="PubH1"><a onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('arrow','','/site_media/images/publications/arrow_hover.png',1)"><img src="/site_media/images/publications/arrow.png" name="arrow" width="28" height="28" border="0" id="arrow" /></a></td>
-          <td height="15" align="left" valign="middle" class="PubH1">Previous news from the Das Lab.</strong></td>
-        </tr>
-        <tr class="switch">
-          <td height="20" colspan="3"><div class="divisionLine"></div></td>
-        </tr>
       </tbody>
     </table>
   </div>
@@ -65,18 +69,41 @@
       $("#news").attr("src", "/site_media/images/nav_news_hover.png");
 
       $("tr.previous").hide();
+      $("#arrow").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/arrow_hover.png");} );
+      $("#arrow").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/arrow.png");} );
+
       $("#DasFOOTER").css("top", 2500);
       $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
       $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
 
       $("#arrow").on("click", function () {
-        $("tr.previous").show();
-        $("tr.switch").hide();
+        $("tr.previous").toggle();
+        var flag = Math.sign(($("tr.previous").css("display") == "none") - 0.5);
 
-        $("#DasFOOTER").css("top", 500 + 200 * {{news_list|length}});
+        $("#DasFOOTER").css("top", parseInt($("#DasFOOTER").css("top")) - 200 * ({{news_list|length}} - 10) * flag);
         $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
-        $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+        $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+  
+        if (flag == -1) {
+          $("#arrow").attr("src", "/site_media/images/publications/collapse_hover.png");
+          $("#arrow").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/collapse.png");} );
+          $("#arrow").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/collapse_hover.png");} );
+        } else {
+          $("#arrow").attr("src", "/site_media/images/publications/arrow.png");
+          $("#arrow").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/arrow_hover.png");} );
+          $("#arrow").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/arrow.png");} );
+        }
       });
+
+
+      // $("#arrow").on("click", function () {
+      //   $("tr.previous").show();
+      //   // $("tr.switch").hide();
+
+      //   $("#DasFOOTER").css("top", 500 + 200 * {{news_list|length}});
+      //   $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
+      //   $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+      // });
     });
   </script>
 {% endblock %}
