@@ -79,8 +79,12 @@ class Member(models.Model):
     def full_name(self):
         return '%s %s' % (self.first_name, self.last_name)
     full_name.short_description = 'Full Name'
+    full_name.admin_order_field = 'first_name'
+
     def affiliation(self):
         return '%s @ %s' % (self.role, self.department)
+    affiliation.admin_order_field = 'role'
+
     def year(self): 
         if self.alumni:
             string = '<span class="label label-important">Alumni</span>'
@@ -91,6 +95,7 @@ class Member(models.Model):
         else:
             y = ''
         return format_html('%s %s-%s' % (string, self.start_year, y))
+    year.admin_order_field = 'alumni'
 
     def image_tag(self):
         if self.image: 

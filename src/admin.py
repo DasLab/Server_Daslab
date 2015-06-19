@@ -4,6 +4,8 @@ from django.utils.html import format_html
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 # from django.contrib.admin import AdminSite
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 
 # from suit.widgets import AutosizedTextarea
 from suit.widgets import EnclosedInput, SuitDateWidget
@@ -11,6 +13,12 @@ from suit.widgets import EnclosedInput, SuitDateWidget
 from src.models import *
 from src.settings import PATH
 
+
+
+UserAdmin.list_display = ('username', 'email', 'last_login', 'is_active', 'is_staff', 'is_superuser')
+UserAdmin.ordering = ('-is_superuser', '-is_staff', 'username')
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
 
 class NewsForm(ModelForm):
     class Meta:
@@ -23,7 +31,8 @@ class NewsForm(ModelForm):
         }
 
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ('date', 'content', 'link')
+    list_display = ('date', 'content', 'link',)
+    ordering = ('-date',)
     form = NewsForm
     readonly_fields = ('image_tag',)
 
@@ -44,7 +53,8 @@ class MemberForm(ModelForm):
         }
 
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'year', 'joint_lab', 'affiliation')
+    list_display = ('full_name', 'year', 'joint_lab', 'affiliation',)
+    ordering = ('alumni', 'last_name', 'role',)
     form = MemberForm
     readonly_fields = ('image_tag',)
 
@@ -69,7 +79,8 @@ class PublicationForm(ModelForm):
         }
 
 class PublicationAdmin(admin.ModelAdmin):
-    list_display = ('year', 'journal', 'authors', 'title', 'link')
+    list_display = ('year', 'journal', 'authors', 'title', 'link',)
+    ordering = ('-display_date',)
     form = PublicationForm
     readonly_fields = ('image_tag',)
 
@@ -91,7 +102,8 @@ class FlashSlideForm(ModelForm):
         }
 
 class FlashSlideAdmin(admin.ModelAdmin):
-    list_display = ('date', 'link')
+    list_display = ('date', 'link',)
+    ordering = ('-date',)
     form = FlashSlideForm
 
     fieldsets = [
@@ -108,7 +120,8 @@ class RotationStudentForm(ModelForm):
         }
 
 class RotationStudentAdmin(admin.ModelAdmin):
-    list_display = ('date', 'full_name', 'title')
+    list_display = ('date', 'full_name', 'title',)
+    ordering = ('-date',)
     form = RotationStudentForm
 
     fieldsets = [
@@ -127,7 +140,8 @@ class EternaYoutubeForm(ModelForm):
         }
 
 class EternaYoutubeAdmin(admin.ModelAdmin):
-    list_display = ('date', 'presenter', 'title', 'link')
+    list_display = ('date', 'presenter', 'title', 'link',)
+    ordering = ('-date',)
     form = EternaYoutubeForm
 
     fieldsets = [
@@ -145,7 +159,8 @@ class PresentationForm(ModelForm):
         }
 
 class PresentationAdmin(admin.ModelAdmin):
-    list_display = ('date', 'presenter', 'title')
+    list_display = ('date', 'presenter', 'title',)
+    ordering = ('-date',)
     form = PresentationForm
 
     fieldsets = [

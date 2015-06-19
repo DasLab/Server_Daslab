@@ -126,8 +126,7 @@ SUIT_CONFIG = {
     'MENU_OPEN_FIRST_CHILD': True, # Default True
     'MENU': (
         'sites',
-        {'label': 'Dashboard', 'icon':'icon-off', 'url': '/admin/dashboard'},
-        {'label': 'Apache', 'icon':'icon-cog', 'url': '/admin/apache'},
+        {'label': 'Apache', 'icon':'icon-off', 'url': '/admin/apache'},
         {'label': 'Directory', 'icon':'icon-folder-open', 'url': ''},
         '-',
         {'label': 'Authorization', 'icon':'icon-lock', 'models': ('auth.user', 'auth.group')},
@@ -161,7 +160,7 @@ LOGIN_URL = '/login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Los_Angeles'
 LANGUAGE_CODE = 'en-us'
 LANGUAGES = (
     ('en', _('English')),
@@ -194,9 +193,8 @@ class SYS_PATH:
             'lab_resources': MEDIA_ROOT + '/media/html/lab_resources.html',
             'lab_misc': MEDIA_ROOT + '/media/html/lab_misc.html',
 
-            'admin_apache': MEDIA_ROOT + '/media/html/admin_apache.html',
-            'admin_dash': MEDIA_ROOT + '/media/html/admin_dashboard.html',
-            'admin_doc': MEDIA_ROOT + '/media/html/admin_documentation.html',
+            'admin_apache': MEDIA_ROOT + '/media/admin/_apache.html',
+            'admin_doc': MEDIA_ROOT + '/media/admin/_doc.html',
 
             '404': MEDIA_ROOT + '/media/html/_404.html',
             '500': MEDIA_ROOT + '/media/html/_500.html',
