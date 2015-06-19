@@ -5,6 +5,7 @@
 {% block extrastyle %}
     <link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />
     <link rel="icon" type-"image/gif" href="/site_media/images/icon_daslab.png" />
+
 {% endblock %}
 {% block bodyclass %}dashboard{% endblock %}
 
@@ -12,7 +13,14 @@
   <div id="content-main" class="span9">
     <div class="row">
       <div class="span12">
-        <h4 class="italic-title"><i class="icon-off"></i> {% trans 'System Status' %}</h4>
+        <div class="row">
+          <div class="span8">
+            <h4 class="italic-title">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-off"></i> {% trans 'System Status' %}</h4>
+          </div>
+          <div class="span4">
+            <a href="/admin/sys_stat" target="_blank" class="btn btn-warning pull-right">Refresh</a>            
+          </div>
+        </div>
         <table class="table">
           <thead>
             <tr>
@@ -23,34 +31,34 @@
           </thead>
           <tbody>
             <tr>
-              <td><span class="label label-info">linux</span></td><td></td>
-              <td><span class="label label-warning">jquery</span> (group)</td><td></td>
-              <td><span class="label label-important">apache</span></td><td></td>
+              <td><span class="label label-info">linux</span></td><td id="id_linux"></td>
+              <td><span class="label label-warning">jquery</span> (group)</td><td id="id_jquery_group"></td>
+              <td><span class="label label-important">apache</span></td><td id="id_apache"></td>
             </tr>
             <tr>
-              <td><span class="label label-info">python</span></td><td></td>
-              <td><span class="label label-warning">jquery</span> (admin)</td><td></td>
-              <td><span class="label label-important">webauth</span></td><td></td>
+              <td><span class="label label-info">python</span></td><td id="id_python"></td>
+              <td><span class="label label-warning">jquery</span> (admin)</td><td id="id_jquery_admin"></td>
+              <td><span class="label label-important">webauth</span></td><td id="id_webauth"></td>
             </tr>
             <tr>
-              <td><span class="label label-success">django</span></td><td></td>
-              <td><span class="label label-warning">bootstrap</span> (group)</td><td></td>
-              <td><span class="label label-inverse">ssh</span></td><td></td>
+              <td><span class="label label-success">django</span></td><td id="id_django"></td>
+              <td><span class="label label-warning">bootstrap</span> (group)</td><td id="id_bootstrap_group"></td>
+              <td><span class="label label-inverse">ssh</span></td><td id="id_ssh"></td>
             </tr>
             <tr>
-              <td><span class="label label-success">django-suit</span></td><td></td>
-              <td><span class="label label-warning">bootstrap</span> (admin)</td><td></td>
-              <td><span class="label label-inverse">git</span></td><td></td>
+              <td><span class="label label-success">django-suit</span></td><td id="id_django_suit"></td>
+              <td><span class="label label-warning">bootstrap</span> (admin)</td><td id="id_bootstrap_admin"></td>
+              <td><span class="label label-inverse">git</span></td><td id="id_git"></td>
             </tr>
             <tr>
-              <td><span class="label label-success">django-filer</span></td><td></td>
+              <td><span class="label label-success">django-filer</span></td><td id="id_django_filer"></td>
               <td></td><td></td>
-              <td><span class="label label-default">pip</span></td><td></td>
+              <td><span class="label label-default">pip</span></td><td id="id_pip"></td>
             </tr>
             <tr>
-              <td><span class="label label-success">django-adminplus</span></td><td></td>
-              <td><span class="label label-info">mysql</span></td><td></td>
-              <td><span class="label label-default">virtualenv</span></td><td></td>
+              <td><span class="label label-success">django-adminplus</span></td><td id="id_django_adminplus"></td>
+              <td><span class="label label-info">mysql</span></td><td id="id_mysql"></td>
+              <td><span class="label label-default">virtualenv</span></td><td id="id_virtualenv"></td>
             </tr>
           </tbody>
         </table>
@@ -67,15 +75,12 @@
           </thead>
           <tbody>
             <tr>
-              <td><i class="icon-hdd"></i> Disk Space</td>
-              <td></td>
+              <td><i class="icon-hdd"></i> Disk Space</td><td id="id_disk_space"></td>
             </tr>
             <tr>
-              <td><i class="icon-road"></i> Memory</td>
-              <td></td>
+              <td><i class="icon-road"></i> Memory</td><td id="id_memory"></td>
             <tr>
-              <td><i class="icon-adjust"></i> Database Backup</td>
-              <td></td>
+              <td><i class="icon-adjust"></i> Database Backup</td><td id="id_db_backup"></td>
             </tr>
           </tbody>
         </table>
@@ -88,8 +93,7 @@
           </thead>
           <tbody>
             <tr>
-              <td><i class="icon-heart"></i> CPU</td>
-              <td></td>
+              <td><i class="icon-heart"></i> CPU</td><td id="id_cpu"></td>
             </tr>
           </tbody>
         </table>
@@ -105,19 +109,19 @@
           </thead>
           <tbody>
             <tr>
-              <td><i class="icon-picture"></i> News Items</td><td></td><td></td>
+              <td><i class="icon-picture"></i> News Items</td><td id="id_news_n"></td><td id="id_news_s"></td>
             </tr>
             <tr>
-              <td><i class="icon-user"></i> Members</td><td></td><td></td>
+              <td><i class="icon-user"></i> Members</td><td id="id_member_n"></td><td id="id_member_s"></td>
             </tr>
             <tr>
-              <td><i class="icon-file"></i> Publication PDFs</td><td></td><td></td>
+              <td><i class="icon-file"></i> Publication PDFs</td><td id="id_pub_n"></td><td id="id_pub_s"></td>
             </tr>
             <tr>
-              <td><i class="icon-retweet"></i> Rotation Students</td><td></td><td></td>
+              <td><i class="icon-retweet"></i> Rotation Students</td><td id="id_rot_n"></td><td id="id_rot_s"></td>
             </tr>
             <tr>
-                <td><i class="icon-bookmark"></i> Archived Presentations</td><td></td><td></td>
+                <td><i class="icon-bookmark"></i> Archived Presentations</td><td id="id_spe_n"></td><td id="id_spe_s"></td>
           </tbody>
         </table>
       </div>
@@ -125,14 +129,7 @@
 
   </div>
 
-
-  <script type="text/javascript">
-    $(document).ready(function() {
-      // $("#iframe").css("width", parseInt($("#content").css("width")) - 50);
-      // $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
-      $("ul.breadcrumb>li.active").text("System Dashboard");
-    });
-  </script>
+  <script type="text/javascript" src="/site_media/js/dashboard.js"></script>
 
 {% endblock %}
 
