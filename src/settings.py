@@ -126,7 +126,7 @@ SUIT_CONFIG = {
     'MENU_OPEN_FIRST_CHILD': True, # Default True
     'MENU': (
         'sites',
-        {'label': 'Apache', 'icon':'icon-off', 'url': '/admin/apache'},
+        {'label': 'Apache', 'icon':'icon-cog', 'url': '/admin/apache'},
         {'label': 'Directory', 'icon':'icon-folder-open', 'url': ''},
         '-',
         {'label': 'Authorization', 'icon':'icon-lock', 'models': ('auth.user', 'auth.group')},

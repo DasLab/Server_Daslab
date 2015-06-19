@@ -9,8 +9,120 @@
 {% block bodyclass %}dashboard{% endblock %}
 
 {% block content %}
-  <div id="content-main">
-    <span style="color:#65ff3f;"><i class="icon-ok-sign"></i></span>
+  <div id="content-main" class="span9">
+    <div class="row">
+      <div class="span12">
+        <h4 class="italic-title"><i class="icon-off"></i> {% trans 'System Status' %}</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="span2"><i class="icon-tasks"></i> Back End</th><th class="span2"></th>
+              <th class="span2"><i class="icon-refresh"></i> Front End</th><th class="span2"></th>
+              <th class="span2"><i class="icon-inbox"></i> Utility</th><th class="span2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="label label-info">linux</span></td><td></td>
+              <td><span class="label label-warning">jquery</span> (group)</td><td></td>
+              <td><span class="label label-important">apache</span></td><td></td>
+            </tr>
+            <tr>
+              <td><span class="label label-info">python</span></td><td></td>
+              <td><span class="label label-warning">jquery</span> (admin)</td><td></td>
+              <td><span class="label label-important">webauth</span></td><td></td>
+            </tr>
+            <tr>
+              <td><span class="label label-success">django</span></td><td></td>
+              <td><span class="label label-warning">bootstrap</span> (group)</td><td></td>
+              <td><span class="label label-inverse">ssh</span></td><td></td>
+            </tr>
+            <tr>
+              <td><span class="label label-success">django-suit</span></td><td></td>
+              <td><span class="label label-warning">bootstrap</span> (admin)</td><td></td>
+              <td><span class="label label-inverse">git</span></td><td></td>
+            </tr>
+            <tr>
+              <td><span class="label label-success">django-filer</span></td><td></td>
+              <td></td><td></td>
+              <td><span class="label label-default">pip</span></td><td></td>
+            </tr>
+            <tr>
+              <td><span class="label label-success">django-adminplus</span></td><td></td>
+              <td><span class="label label-info">mysql</span></td><td></td>
+              <td><span class="label label-default">virtualenv</span></td><td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span6">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="span6"></th>
+              <th class="span6"><i class="icon-fullscreen"></i> Size (Available / Used)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><i class="icon-hdd"></i> Disk Space</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><i class="icon-road"></i> Memory</td>
+              <td></td>
+            <tr>
+              <td><i class="icon-adjust"></i> Database Backup</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="span6"></th>
+              <th class="span6"><i class="icon-fire"></i> Usage (1 / 5 / 15 min)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><i class="icon-heart"></i> CPU</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="span6">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="span6"></th>
+              <th class="span3"><i class="icon-th"></i> # of Files</th>
+              <th class="span3"><i class="icon-share"></i> Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><i class="icon-picture"></i> News Items</td><td></td><td></td>
+            </tr>
+            <tr>
+              <td><i class="icon-user"></i> Members</td><td></td><td></td>
+            </tr>
+            <tr>
+              <td><i class="icon-file"></i> Publication PDFs</td><td></td><td></td>
+            </tr>
+            <tr>
+              <td><i class="icon-retweet"></i> Rotation Students</td><td></td><td></td>
+            </tr>
+            <tr>
+                <td><i class="icon-bookmark"></i> Archived Presentations</td><td></td><td></td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 
 
@@ -28,7 +140,7 @@
 {% block sidebar %}
   <div id="content-related">
     <div class="module" id="recent-actions-module">
-      <h4 class="italic-title">{% trans 'My Actions' %}</h4>
+      <h4 class="italic-title"><i class="icon-repeat"></i> {% trans 'My Actions' %}</h4>
 
       {% load log %}
       {% get_admin_log 10 as admin_log for_user user %}
@@ -39,7 +151,7 @@
           {% for entry in admin_log %}
             <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}text-error{% endif %}">
 
-              <i class="{% if entry.is_addition %}icon-plus{% endif %}{% if entry.is_change %}icon-pencil{% endif %}{% if entry.is_deletion %}icon-trash{% endif %} icon-alpha5"></i>
+              <i class="{% if entry.is_addition %}icon-plus-sign{% endif %}{% if entry.is_change %}icon-edit{% endif %}{% if entry.is_deletion %}icon-trash{% endif %} icon-alpha5"></i>
 
               {% spaceless %}
                 {% if entry.is_addition %}{% trans 'added'|capfirst %}{% endif %}
