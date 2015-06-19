@@ -143,7 +143,7 @@ def user_password(request):
 		password_new_rep = request.POST['password_new_rep']
 		if password_new != password_new_rep:
 			return render_to_response(PATH.HTML_PATH['password'], {'messages':'New password does not match. Please try again.'}, context_instance=RequestContext(request))
-		if password_new != password_old:
+		if password_new == password_old:
 			return render_to_response(PATH.HTML_PATH['password'], {'messages':'New password is the same as current. Please try again.'}, context_instance=RequestContext(request))
 
 		user = authenticate(username=request.user, password=password_old)
