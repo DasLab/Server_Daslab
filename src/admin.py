@@ -1,12 +1,16 @@
 from django.contrib import admin
 from django.forms import ModelForm, widgets
 from django.utils.html import format_html
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 # from django.contrib.admin import AdminSite
 
 # from suit.widgets import AutosizedTextarea
 from suit.widgets import EnclosedInput, SuitDateWidget
 
 from src.models import *
+from src.settings import PATH
+
 
 class NewsForm(ModelForm):
     class Meta:
@@ -29,7 +33,7 @@ class NewsAdmin(admin.ModelAdmin):
     ]
 
     class Media:
-        js = ('admin/tables.js',)
+        js = ('js/tables.js',)
 admin.site.register(News, NewsAdmin)
 
 
@@ -54,7 +58,7 @@ class MemberAdmin(admin.ModelAdmin):
     ]
 
     class Media:
-        js = ('admin/tables.js',)
+        js = ('js/tables.js',)
 admin.site.register(Member, MemberAdmin)
 
 
@@ -82,7 +86,7 @@ class PublicationAdmin(admin.ModelAdmin):
     ]
 
     class Media:
-        js = ('admin/tables.js',)
+        js = ('js/tables.js',)
 admin.site.register(Publication, PublicationAdmin)
 
 
@@ -104,7 +108,7 @@ class FlashSlideAdmin(admin.ModelAdmin):
     ]
 
     class Media:
-        js = ('admin/tables.js',)
+        js = ('js/tables.js',)
 admin.site.register(FlashSlide, FlashSlideAdmin)
 
 
@@ -125,7 +129,7 @@ class RotationStudentAdmin(admin.ModelAdmin):
     ]
 
     class Media:
-        js = ('admin/tables.js',)
+        js = ('js/tables.js',)
 admin.site.register(RotationStudent, RotationStudentAdmin)
 
 
@@ -146,7 +150,7 @@ class EternaYoutubeAdmin(admin.ModelAdmin):
     ]
 
     class Media:
-        js = ('admin/tables.js',)
+        js = ('js/tables.js',)
 admin.site.register(EternaYoutube, EternaYoutubeAdmin)
 
 
@@ -167,7 +171,16 @@ class PresentationAdmin(admin.ModelAdmin):
     ]
 
     class Media:
-        js = ('admin/tables.js',)
+        js = ('js/tables.js',)
 admin.site.register(Presentation, PresentationAdmin)
 
+
+
+def apache(request, *args, **kwargs):
+    return render_to_response(PATH.HTML_PATH['admin_apache'], {}, context_instance=RequestContext(request))
+admin.site.register_view('apache', view=apache, visible=False)
+
+def dashboard(request, *args, **kwargs):
+    return render_to_response(PATH.HTML_PATH['admin_dash'], {}, context_instance=RequestContext(request))
+admin.site.register_view('dashboard', view=dashboard, visible=False)
 

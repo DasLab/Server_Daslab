@@ -4,13 +4,14 @@ from django.contrib import admin
 from django.contrib.auth.views import login
 # from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
-# admin.autodiscover()
+
+from adminplus.sites import AdminSitePlus
 
 from settings import MEDIA_ROOT, STATIC_ROOT, STATIC_URL
 from src import views
 
+admin.site = AdminSitePlus()
 admin.site.index_title = 'Das Lab Website Administration'
-# admin.site.index_template = 'admin/index.html'
 admin.autodiscover()
 admin.site.login = views.user_login
 admin.site.logout = views.user_logout
@@ -51,7 +52,6 @@ urlpatterns = patterns('',
     (r'^site_data/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT + '/data'}),
 
     url(r'^admin/', include(admin.site.urls)),
-    # (r'^static/admin/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT+'/media/admin'}),
     url(r'^(?:robots.txt)?$', 'django.views.static.serve', kwargs={'path': 'robots.txt', 'document_root': MEDIA_ROOT}),
 
 ) #+ static(STATIC_URL, document_root=STATIC_ROOT)

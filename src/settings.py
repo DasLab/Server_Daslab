@@ -29,9 +29,9 @@ MEDIA_URL = ''
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_ROOT = MEDIA_ROOT + '/static/'
-# STATICFILES_DIRS = (MEDIA_ROOT + '/data', MEDIA_ROOT+'/media')
-ADMIN_MEDIA_PREFIX = '/admin/'
+STATIC_ROOT = '' #MEDIA_ROOT + '/media/'
+STATICFILES_DIRS = (MEDIA_ROOT + '/data', MEDIA_ROOT+'/media')
+# ADMIN_MEDIA_PREFIX = '/admin/'
 
 ADMINS = (
     ('Siqi Tian', 't47@stanford.edu'),
@@ -53,10 +53,11 @@ INSTALLED_APPS = (
     # 'mptt',
     # 'easy_thumbnails',    
 
+    'adminplus',
     'suit',
     # 'bootstrap_admin',
     # 'django_admin_bootstrapped',
-    'django.contrib.admin',
+    'django.contrib.admin.apps.SimpleAdminConfig', #'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -124,10 +125,11 @@ SUIT_CONFIG = {
     'MENU_OPEN_FIRST_CHILD': True, # Default True
     'MENU': (
         'sites',
-        {'label': 'Dashboard', 'icon':'icon-off', 'url': ''},
+        {'label': 'Dashboard', 'icon':'icon-off', 'url': '/admin/dashboard'},
+        {'label': 'Apache', 'icon':'icon-cog', 'url': '/admin/apache'},
         {'label': 'Directory', 'icon':'icon-folder-open', 'url': ''},
         '-',
-        {'app': 'auth', 'label': 'Authorization', 'icon':'icon-lock'},
+        {'label': 'Authorization', 'icon':'icon-lock', 'models': ('auth.user', 'auth.group')},
         {'label': 'Global Site', 'icon':'icon-globe', 'models': ('src.news', 'src.member', 'src.publication')},
         {'label': 'Internal Site', 'icon':'icon-inbox', 'models': ('src.flashslide', 'src.eternayoutube', 'src.rotationstudent', 'src.presentation')},
         '-',
@@ -190,6 +192,9 @@ class SYS_PATH:
             'lab_calendar': MEDIA_ROOT + '/media/html/lab_calendar.html',
             'lab_resources': MEDIA_ROOT + '/media/html/lab_resources.html',
             'lab_misc': MEDIA_ROOT + '/media/html/lab_misc.html',
+
+            'admin_apache': MEDIA_ROOT + '/media/html/admin_apache.html',
+            'admin_dash': MEDIA_ROOT + '/media/html/admin_dashboard.html',
 
             '404': MEDIA_ROOT + '/media/html/_404.html',
             '500': MEDIA_ROOT + '/media/html/_500.html',
