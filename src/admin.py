@@ -31,9 +31,6 @@ class NewsAdmin(admin.ModelAdmin):
         (format_html('<i class="icon-comment"></i> Contents'), {'fields': ['date', 'content', ('image', 'image_tag')]}),
         (format_html('<i class="icon-share"></i> Links'), {'fields': ['link', 'video']}),
     ]
-
-    class Media:
-        js = ('js/tables.js',)
 admin.site.register(News, NewsAdmin)
 
 
@@ -56,9 +53,6 @@ class MemberAdmin(admin.ModelAdmin):
         (format_html('<i class="icon-home"></i> Affiliation'), {'fields': ['department', ('joint_lab', 'joint_link')]}),
         (format_html('<i class="icon-road"></i> Alumni Information'), {'fields': ['alumni', ('start_year', 'finish_year')]}),
     ]
-
-    class Media:
-        js = ('js/tables.js',)
 admin.site.register(Member, MemberAdmin)
 
 
@@ -84,9 +78,6 @@ class PublicationAdmin(admin.ModelAdmin):
         (format_html('<i class="icon-th-large"></i> Media'), {'fields': ['pdf', 'preprint', 'feature', ('image', 'image_tag')]}),
         (format_html('<i class="icon-share"></i> Links'), {'fields': ['link', 'extra_field', 'extra_link', 'extra_field_2', 'extra_link_2', 'extra_field_3', 'extra_file']}),
     ]
-
-    class Media:
-        js = ('js/tables.js',)
 admin.site.register(Publication, PublicationAdmin)
 
 
@@ -106,9 +97,6 @@ class FlashSlideAdmin(admin.ModelAdmin):
     fieldsets = [
         (format_html('<i class="icon-share"></i> Links'), {'fields': ['date', 'link']}),
     ]
-
-    class Media:
-        js = ('js/tables.js',)
 admin.site.register(FlashSlide, FlashSlideAdmin)
 
 
@@ -127,9 +115,6 @@ class RotationStudentAdmin(admin.ModelAdmin):
         (format_html('<i class="icon-user"></i> Personal Information'), {'fields': ['date', 'full_name', 'title']}),
         (format_html('<i class="icon-share"></i> Links'), {'fields': ['ppt', 'data']}),
     ]
-
-    class Media:
-        js = ('js/tables.js',)
 admin.site.register(RotationStudent, RotationStudentAdmin)
 
 
@@ -148,9 +133,6 @@ class EternaYoutubeAdmin(admin.ModelAdmin):
     fieldsets = [
         (format_html('<i class="icon-share"></i> Links'), {'fields': ['date', 'presenter', 'title', 'link']}),
     ]
-
-    class Media:
-        js = ('js/tables.js',)
 admin.site.register(EternaYoutube, EternaYoutubeAdmin)
 
 
@@ -169,9 +151,6 @@ class PresentationAdmin(admin.ModelAdmin):
     fieldsets = [
         (format_html('<i class="icon-share"></i> Links'), {'fields': ['date', 'presenter', 'title', 'ppt', 'link']}),
     ]
-
-    class Media:
-        js = ('js/tables.js',)
 admin.site.register(Presentation, PresentationAdmin)
 
 

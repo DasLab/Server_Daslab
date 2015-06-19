@@ -2,12 +2,9 @@ $(document).ready(function () {
 
 	$("a.deletelink").addClass("btn btn-danger");
 	$("a.deletelink").css("box-sizing", "border-box");
-
 	$("label.required").css("font-weight", "bold");
 
-	// $("#left-nav>ul>li>ul").css("display", "block");
-	// $("#left-nav>ul>li").unbind("mouseover");
-	// $("#left-nav>ul>li").off("mouseover");
+	$("#left-nav>ul>li>ul").css("display", "block");
 
     if ($(location).attr("href").indexOf("admin/src/news") != -1) {
 		$("th.column-date").addClass("span2");
