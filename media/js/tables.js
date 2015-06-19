@@ -67,7 +67,26 @@ $(document).ready(function () {
 
 		$("td.field-presenter").css("font-weight", "bold");
 
-	}
+	} else if ($(location).attr("href").indexOf("admin/auth/user") != -1) {
+		$("th.column-username").addClass("span3");
+		$("th.column-email").addClass("span3");
+		$("th.column-last_login").addClass("span3");
+		$("th.column-is_active").addClass("span1");
+		$("th.column-is_staff").addClass("span1");
+		$("th.column-is_superuser").addClass("span1");
 
+		$("th.field-username").css("font-style", "italic");
+		$("td.field-email").css("text-decoration", "underline");
+
+		$("img[src$='/static/admin/img/icon-yes.gif']").each(function() {
+			var newElem = $('<span class="label label-success"><i class="icon-ok-sign icon-white"></i>');
+			$(this).replaceWith(newElem);
+		});
+		$("img[src$='/static/admin/img/icon-no.gif']").each(function() {
+			var newElem = $('<span class="label label-important"><i class="icon-remove-sign icon-white"></i>');
+			$(this).replaceWith(newElem);
+		});
+	
+	}
 
 });

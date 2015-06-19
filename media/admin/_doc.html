@@ -2,12 +2,10 @@
 {% load i18n admin_static %}
 
 {% block title %}Das Lab Website Administration{% endblock %}
-
 {% block extrastyle %}
   	<link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />
     <link rel="icon" type-"image/gif" href="/site_media/images/icon_daslab.png" />
 {% endblock %}
-
 {% block bodyclass %}dashboard{% endblock %}
 
 {% block content %}
@@ -28,7 +26,7 @@
 			// $("#iframe").css("width", parseInt($("#content").css("width")) - 50);
 			// $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
 			$("ul.breadcrumb>li").append('<span class="divider">»</span>');
-			$("ul.breadcrumb").append('<li class="active"><a href="/admin/dashboard">System Status</a></li>');
+			$("ul.breadcrumb").append('<li class="active"><a href="/admin/doc">Site Documentation</a></li>');
 		});
 	</script>
 {% endblock %}

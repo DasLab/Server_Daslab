@@ -70,7 +70,7 @@
 
             {% if user.is_active and user.is_staff %}
               <div id="user-tools">
-                {% trans 'Welcome,' %}
+                <em>{% trans 'Welcome,' %}</em>
                 <strong style="color:#ff0;">
                   {% filter force_escape %}
                     {% firstof user.first_name user.username %}{% endfilter %}</strong>.
@@ -81,9 +81,9 @@
                     <a href="{{ docsroot }}">{% trans 'Documentation' %}</a>
                     <span class="separator">|</span>
                   {% endif %}
-                  <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a>
+                  <a href="{% url 'admin:password_change' %}">{% trans 'Change Password' %}</a>
                   <span class="separator">|</span>
-                  <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+                  <a href="{% url 'admin:logout' %}">{% trans 'Log Out' %}</a>
                 {% endblock %}
                 </span>
               </div>

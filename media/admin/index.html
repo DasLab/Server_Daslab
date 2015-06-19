@@ -1,50 +1,27 @@
-{% extends "admin/base_site.html" %}
+{% extends "admin/base.html" %}
 {% load i18n admin_static %}
 
+{% block title %}Das Lab Website Administration{% endblock %}
 {% block extrastyle %}
-  {{ block.super }}
+    <link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />
+    <link rel="icon" type-"image/gif" href="/site_media/images/icon_daslab.png" />
 {% endblock %}
-
-{% block coltype %}colMS{% endblock %}
-
 {% block bodyclass %}dashboard{% endblock %}
-
-{% block breadcrumbs %}{% endblock %}
 
 {% block content %}
   <div id="content-main">
-    {% if app_list %}
-      {% for app in app_list %}
-        <div class="module">
-          <table class="table-overview applist" summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}">
-            <caption><a href="{{ app.app_url }}" class="section">{% trans app.name %}</a></caption>
-            {% for model in app.models %}
-              <tr>
-                <th scope="row">{{ model.name }}</th>
-                {% if model.admin_url %}
-                  <td>
-                    <a href="{{ model.admin_url }}" class="changelink icon">{% trans 'Change' %}</a>
-                  </td>
-                {% else %}
-                  <td>&nbsp;</td>
-                {% endif %}
-
-                {% if model.add_url %}
-                  <td><a href="{{ model.add_url }}" class="addlink icon"><i
-                          class="icon-plus-sign icon-alpha75"></i>{% trans 'Add' %}
-                  </a></td>
-                {% else %}
-                  <td>&nbsp;</td>
-                {% endif %}
-              </tr>
-            {% endfor %}
-          </table>
-        </div>
-      {% endfor %}
-    {% else %}
-      <p>{% trans "You don't have permission to edit anything." %}</p>
-    {% endif %}
+    <span style="color:#65ff3f;"><i class="icon-ok-sign"></i></span>
   </div>
+
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      // $("#iframe").css("width", parseInt($("#content").css("width")) - 50);
+      // $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
+      $("ul.breadcrumb>li.active").text("System Dashboard");
+    });
+  </script>
+
 {% endblock %}
 
 
