@@ -91,7 +91,7 @@
                   </tbody>
                 </table>
               {% else %}
-                <table width="800" border="0" cellpadding="0" cellspacing="0" {% if pub.year <= 2009 %} class="previous" {% endif %}>
+                <table width="800" border="0" cellpadding="0" cellspacing="0" {% if pub.year <= 2009 %} class="previous" {% else %} class="current" {% endif %}>
                   <tbody>
                     <tr>
                       <td width="80" align="center" valign="top">
@@ -157,7 +157,7 @@
       $("#arrow2").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/arrow_hover.png");} );
       $("#arrow2").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/arrow.png");} );
 
-      $("#DasFOOTER").css("top", parseInt($("#arrow2").offset().top) + 100);
+      $("#DasFOOTER").css("top", $("table.current:last").offset().top + 200);
       $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
       $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
 
@@ -166,19 +166,19 @@
         $("br.previous").toggle();
         var flag = sign(($("table.previous").css("display") == "none") - 0.5);
 
-        $("#DasFOOTER").css("top", parseInt($("#DasFOOTER").css("top")) - 3450 * flag);
-        $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
-        $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
-  
         if (flag == -1) {
           $("#arrow2").attr("src", "/site_media/images/publications/collapse_hover.png");
           $("#arrow2").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/collapse.png");} );
           $("#arrow2").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/collapse_hover.png");} );
+          $("#DasFOOTER").css("top", $("table.previous:last").offset().top + 200);
         } else {
           $("#arrow2").attr("src", "/site_media/images/publications/arrow.png");
           $("#arrow2").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/arrow_hover.png");} );
           $("#arrow2").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/arrow.png");} );
+          $("#DasFOOTER").css("top", $("table.current:last").offset().top + 200);
         }
+        $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
+        $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
       });
     });
   </script>

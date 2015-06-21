@@ -4,6 +4,7 @@
 body {
 	margin-left: 0px;
 	margin-top: 50px;
+	 -webkit-text-size-adjust: none;
 }
 
 .DAShome {
@@ -14,6 +15,14 @@ body {
 	position: relative;
 }
 .homeTEXT {
+	font-family: Gill Sans, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 19px;
+	font-weight: normal;
+	color: #555;
+	text-align: justify;
+}
+.newsTEXT {
 	font-family: Gill Sans, Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	line-height: 19px;

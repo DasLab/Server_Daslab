@@ -84,12 +84,14 @@
               {% for ppl in past_member %}
               <span class="peopleH2">{{ppl.first_name}} {{ppl.last_name}}</span>
               <br>
+              <span class="peopleTEXT">
               {{ppl.role}}, 
               {% if ppl.start_year != ppl.finish_year %}
                 {{ppl.start_year}}-{{ppl.finish_year}}
               {% else %}
                 {{ppl.start_year}}
               {% endif %}
+              </span>
               <br><br>
               {% endfor %}
         	  </p>
@@ -112,6 +114,7 @@
       $("#DasFOOTER").css("top", 700 + {{past_member|length}} * 60 + {{current_member|length}} * 200);
       $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
       $(".DASpeople").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+
     });
   </script>
 {% endblock %}

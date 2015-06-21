@@ -25,8 +25,7 @@
           </td>
           <td width="500" align="left" valign="top" class="homeTEXT">
             <p class="teal1"><i>{{news.date|date:"F d, Y"|title}}</i></p>
-            <p>
-              <br>
+            <p class="newsTEXT">
               {% autoescape off %}{{news.content}}{% endautoescape %}
             </p>
           </td>
@@ -38,10 +37,9 @@
             </a>
           </td>
         </tr>
-        <tr {% if forloop.counter <= 10 %} class="current" {% else %} class="previous" {% endif %}>
+        <tr {% if forloop.counter == news_list|length %} class="last previous" {% elif forloop.counter == 10 %} class="middle current" {% elif forloop.counter < 10 %} class="current" {% else %} class="previous" {% endif %}>
           <td height="20" colspan="3"><div class="divisionLine"></div></td>
         </tr>
-
         {% if forloop.counter == 10 %}
           <tr class="switch">
             <td width="38" height="15" align="left" valign="middle" class="PubH1"><a><img src="/site_media/images/publications/arrow.png" name="arrow" width="28" height="28" border="0" id="arrow" /></a></td>
@@ -74,7 +72,7 @@
       $("#arrow").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/arrow_hover.png");} );
       $("#arrow").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/arrow.png");} );
 
-      $("#DasFOOTER").css("top", 2500);
+      $("#DasFOOTER").css("top", $("tr.middle").offset().top + 200);
       $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
       $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
 
@@ -82,32 +80,21 @@
         $("tr.previous").toggle();
         var flag = sign(($("tr.previous").css("display") == "none") - 0.5);
 
-        console.log($("#DasFOOTER").css("top"));
-        $("#DasFOOTER").css("top", parseInt($("#DasFOOTER").css("top")) - 200 * ({{news_list|length}} - 10) * flag);
-        $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
-        $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
-        console.log($("#DasFOOTER").css("top"));
-  
         if (flag == -1) {
           $("#arrow").attr("src", "/site_media/images/publications/collapse_hover.png");
           $("#arrow").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/collapse.png");} );
           $("#arrow").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/collapse_hover.png");} );
+          $("#DasFOOTER").css("top", $("tr.last").offset().top + 200);
         } else {
           $("#arrow").attr("src", "/site_media/images/publications/arrow.png");
           $("#arrow").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/arrow_hover.png");} );
           $("#arrow").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/arrow.png");} );
+          $("#DasFOOTER").css("top", $("tr.middle").offset().top + 200);
         }
+        $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
+        $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
       });
 
-
-      // $("#arrow").on("click", function () {
-      //   $("tr.previous").show();
-      //   // $("tr.switch").hide();
-
-      //   $("#DasFOOTER").css("top", 500 + 200 * {{news_list|length}});
-      //   $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
-      //   $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
-      // });
     });
   </script>
 {% endblock %}
