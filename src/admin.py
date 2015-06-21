@@ -179,7 +179,7 @@ def sys_stat(request):
 
     ver = subprocess.Popen('uname -r | sed %s' % "'s/[a-z\-]//g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
     ver += '%s.%s.%s\t' % (sys.version_info.major, sys.version_info.minor, sys.version_info.micro)
-    ver += subprocess.Popen('python -c "import django, suit, filer, adminplus; print %s"' % "django.__version__, '\t', suit.VERSION, '\t', filer.__version__, '\t', adminplus.__version__", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
+    ver += subprocess.Popen('python -c "import django, suit, adminplus; print %s"' % "django.__version__, '\t', suit.VERSION, '\t', adminplus.__version__", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
 
     ver += subprocess.Popen('ls %s' % os.path.join(MEDIA_ROOT, 'media/js/jquery-*.min.js'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].replace(os.path.join(MEDIA_ROOT, 'media/js/jquery-'), '').replace('.min.js', '').strip() + '\t'
     ver += subprocess.Popen('ls %s' % os.path.join(MEDIA_ROOT, 'media/suit/js/jquery-*.min.js'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].replace(os.path.join(MEDIA_ROOT, 'media/suit/js/jquery-'), '').replace('.min.js', '').strip() + '\t'
@@ -247,6 +247,10 @@ admin.site.register_view('sys_stat', view=sys_stat, visible=False)
 def apache(request):
     return render_to_response(PATH.HTML_PATH['admin_apache'], {}, context_instance=RequestContext(request))
 admin.site.register_view('apache', view=apache, visible=False)
+
+def dir(request):
+    return render_to_response(PATH.HTML_PATH['admin_dir'], {}, context_instance=RequestContext(request))
+admin.site.register_view('dir', view=dir, visible=False)
 
 def doc(request):
     return render_to_response(PATH.HTML_PATH['admin_doc'], {}, context_instance=RequestContext(request))

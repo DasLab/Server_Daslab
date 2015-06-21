@@ -1,6 +1,6 @@
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.template import RequestContext#, Template
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -9,6 +9,8 @@ from django.db import IntegrityError
 # from django.core.mail import send_mail
 from django.shortcuts import render, render_to_response, redirect
 # from django import forms
+
+from filemanager import FileManager
 
 from src.models import *
 from src.settings import *
@@ -162,6 +164,12 @@ def user_password(request):
 def user_logout(request):
 	logout(request)
 	return HttpResponseRedirect("/")
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def browse(request, path):
+	fm = FileManager(MEDIA_ROOT + '/data')
+	return fm.render(request, path)
 
 
 def ping_test(request):

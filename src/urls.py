@@ -6,6 +6,7 @@ from django.contrib.auth.views import login
 from django.views.generic import RedirectView
 
 from adminplus.sites import AdminSitePlus
+from filemanager import path_end
 
 from settings import MEDIA_ROOT, STATIC_ROOT, STATIC_URL
 from src import views
@@ -51,6 +52,7 @@ urlpatterns = patterns('',
     (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT + '/media'}),
     (r'^site_data/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT + '/data'}),
 
+    (r'^admin/browse/' + path_end, views.browse),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^(?:robots.txt)?$', 'django.views.static.serve', kwargs={'path': 'robots.txt', 'document_root': MEDIA_ROOT}),
 

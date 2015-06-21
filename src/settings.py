@@ -49,10 +49,7 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = (
-    # 'filer',
-    # 'mptt',
-    # 'easy_thumbnails',    
-
+    'filemanager',
     'adminplus',
     'suit',
     # 'bootstrap_admin',
@@ -127,7 +124,7 @@ SUIT_CONFIG = {
     'MENU': (
         'sites',
         {'label': 'Apache', 'icon':'icon-cog', 'url': '/admin/apache'},
-        {'label': 'Directory', 'icon':'icon-folder-open', 'url': ''},
+        {'label': 'Directory', 'icon':'icon-folder-open', 'url': '/admin/dir'},
         '-',
         {'label': 'Authorization', 'icon':'icon-lock', 'models': ('auth.user', 'auth.group')},
         {'label': 'Global Site', 'icon':'icon-globe', 'models': ('src.news', 'src.member', 'src.publication')},
@@ -194,6 +191,7 @@ class SYS_PATH:
             'lab_misc': MEDIA_ROOT + '/media/html/lab_misc.html',
 
             'admin_apache': MEDIA_ROOT + '/media/admin/_apache.html',
+            'admin_dir': MEDIA_ROOT + '/media/admin/_dir.html',
             'admin_doc': MEDIA_ROOT + '/media/admin/_doc.html',
 
             '404': MEDIA_ROOT + '/media/html/_404.html',
