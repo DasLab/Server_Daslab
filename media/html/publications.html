@@ -146,6 +146,8 @@
 
 {% block script %}
   <script type="text/javascript">
+    function sign(x){return x>0?1:x<0?-1:x;}
+
     $(document).ready(function() {
       $("#main").addClass("DASpub");
       $("#publications").attr("src", "/site_media/images/nav_publications_hover.png");
@@ -162,7 +164,7 @@
       $("#arrow2").on("click", function () {
         $("table.previous").toggle();
         $("br.previous").toggle();
-        var flag = Math.sign(($("table.previous").css("display") == "none") - 0.5);
+        var flag = sign(($("table.previous").css("display") == "none") - 0.5);
 
         $("#DasFOOTER").css("top", parseInt($("#DasFOOTER").css("top")) - 3450 * flag);
         $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);

@@ -64,6 +64,8 @@
 
 {% block script %}
   <script type="text/javascript">
+    function sign(x){return x>0?1:x<0?-1:x;}
+
     $(document).ready(function() {
       $("#main").addClass("DASnews");
       $("#news").attr("src", "/site_media/images/nav_news_hover.png");
@@ -78,11 +80,13 @@
 
       $("#arrow").on("click", function () {
         $("tr.previous").toggle();
-        var flag = Math.sign(($("tr.previous").css("display") == "none") - 0.5);
+        var flag = sign(($("tr.previous").css("display") == "none") - 0.5);
 
+        console.log($("#DasFOOTER").css("top"));
         $("#DasFOOTER").css("top", parseInt($("#DasFOOTER").css("top")) - 200 * ({{news_list|length}} - 10) * flag);
         $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
         $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+        console.log($("#DasFOOTER").css("top"));
   
         if (flag == -1) {
           $("#arrow").attr("src", "/site_media/images/publications/collapse_hover.png");
