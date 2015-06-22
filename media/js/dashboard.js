@@ -9,6 +9,11 @@
 $(document).ready(function() {
   $("ul.breadcrumb>li.active").text("System Dashboard");
 
+  $("#content").addClass("row").removeClass("row-fluid").removeClass("colM");
+  $("#content>h2.content-title").remove();
+  $("span.divider").remove();
+  $("lspan").remove();
+
   $.ajax({
         url : "/site_data/sys_ver.txt",
         dataType: "text",

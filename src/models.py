@@ -42,9 +42,9 @@ def get_spe_ppt(instance, filename):
 class News(models.Model):
     date = models.DateField(verbose_name='Display Date')
     content = models.TextField(blank=True, verbose_name='Main Text Content')
-    link = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<i class="icon-globe"></i> For the "read more" link.')
-    image = models.ImageField(upload_to=get_news_image, blank=True, null=True, max_length=255, verbose_name='Display Image', help_text='<i class="icon-picture"></i> For non-EteRNA news displayed as thumbnail. Use <span class="label label-info">png/jpg</span> format, low resolution (<span class="label label-important">NO</span> larger than <span class="label label-inverse">200x300 72dpi</span>).')
-    video = models.CharField(max_length=255, blank=True, null=True, verbose_name='YouTube Video Link', help_text='<i class="icon-facetime-video"></i> For EteRNA news displayed as thumbnail. <span class="label label-success">Example</span>: <u>https://www.youtube.com<b>/embed/</b>Lp_KozzV5Po</u>; <span class="label label-important">NOT</span>&nbsp;<b>/channel/</b>.')
+    link = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp;For the "read more" link.')
+    image = models.ImageField(upload_to=get_news_image, blank=True, null=True, max_length=255, verbose_name='Display Image', help_text='<span class="glyphicon glyphicon-picture"></span>&nbsp; For non-EteRNA news displayed as thumbnail. Use <span class="label label-info">png/jpg</span> format, low resolution (<span class="label label-danger">NO</span> larger than <span class="label label-inverse">200x300 72dpi</span>).')
+    video = models.CharField(max_length=255, blank=True, null=True, verbose_name='YouTube Video Link', help_text='<span class="glyphicon glyphicon-facetime-video"></span>&nbsp;For EteRNA news displayed as thumbnail. <span class="label label-success">Example</span>: <u>https://www.youtube.com<b>/embed/</b>Lp_KozzV5Po</u>; <span class="label label-danger">NOT</span>&nbsp;<b>/channel/</b>.')
 
     class Meta():
         verbose_name = 'News Item'
@@ -60,17 +60,17 @@ class News(models.Model):
 class Member(models.Model):
     first_name = models.CharField(max_length=255, verbose_name='First Name')
     last_name = models.CharField(max_length=255, verbose_name='Last Name')
-    role = models.CharField(max_length=255, verbose_name='Role / Title', help_text='<i class="icon-user"></i> Shows up as 1<sup>st</sup> field for title.')
-    department = models.CharField(max_length=255, blank=True, verbose_name='Department Affiliation', help_text='<i class="icon-bookmark"></i> Shows up as 2<sup>nd</sup> field for title.')
-    more_info = models.CharField(max_length=255, blank=True, null=True, verbose_name='URL', help_text='<i class="icon-globe"></i> For the "more info" link. Use SoM CAP link.')
-    image = models.ImageField(upload_to=get_member_image, blank=True, max_length=255, verbose_name='Avatar Image', help_text='<i class="icon-picture"></i> Displayed as avatar. Use <span class="label label-info">png/jpg</span> format, low resolution (<span class="label label-important">NO</span> larger than <span class="label label-inverse">200x300 72dpi</span>). If empty, default avatar will be used.')
-    joint_lab = models.CharField(max_length=255, blank=True, verbose_name='Joint Lab', help_text='<i class="icon-thumbs-up"></i> P.I.\'s name. <span class="label label-important">NO</span> need to add "lab".')
-    joint_link = models.CharField(max_length=255, blank=True, verbose_name='Joint Lab URL', help_text='<i class="icon-globe"></i> Link to the joint lab website.')
-    description = models.CharField(max_length=255, blank=True, verbose_name='Additional Title', help_text='<i class="icon-pencil"></i> Shows up as a 3<sup>rd</sup> field for title.')
+    role = models.CharField(max_length=255, verbose_name='Role / Title', help_text='<span class="glyphicon glyphicon-user"></span>&nbsp; Shows up as 1<sup>st</sup> field for title.')
+    department = models.CharField(max_length=255, blank=True, verbose_name='Department Affiliation', help_text='<span class="glyphicon glyphicon-bookmark"></span>&nbsp; Shows up as 2<sup>nd</sup> field for title.')
+    more_info = models.CharField(max_length=255, blank=True, null=True, verbose_name='URL', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp; For the "more info" link. Use SoM CAP link.')
+    image = models.ImageField(upload_to=get_member_image, blank=True, max_length=255, verbose_name='Avatar Image', help_text='<span class="glyphicon glyphicon-picture"></span>&nbsp; Displayed as avatar. Use <span class="label label-info">png/jpg</span> format, low resolution (<span class="label label-danger">NO</span> larger than <span class="label label-inverse">200x300 72dpi</span>). If empty, default avatar will be used.')
+    joint_lab = models.CharField(max_length=255, blank=True, verbose_name='Joint Lab', help_text='<span class="glyphicon glyphicon-thumbs-up"></span>&nbsp; P.I.\'s name. <span class="label label-danger">NO</span> need to add "lab".')
+    joint_link = models.CharField(max_length=255, blank=True, verbose_name='Joint Lab URL', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp; Link to the joint lab website.')
+    description = models.CharField(max_length=255, blank=True, verbose_name='Additional Title', help_text='<span class="glyphicon glyphicon-pencil"></span>&nbsp; Shows up as a 3<sup>rd</sup> field for title.')
 
-    alumni = models.BooleanField(default=False, verbose_name='Is Alumni?', help_text='<i class="icon-check"></i> Check for alumni members.')
-    start_year = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name='Start Year', help_text='<i class="icon-play"></i> For alumni display only.')
-    finish_year = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name='Finish Year', help_text='<i class="icon-stop"></i> For alumni display only.')
+    alumni = models.BooleanField(default=False, verbose_name='Is Alumni?', help_text='<span class="glyphicon glyphicon-check"></span>&nbsp; Check for alumni members.')
+    start_year = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name='Start Year', help_text='<span class="glyphicon glyphicon-play"></span>&nbsp; For alumni display only.')
+    finish_year = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name='Finish Year', help_text='<span class="glyphicon glyphicon-stop"></span>&nbsp; For alumni display only.')
 
     class Meta():
         verbose_name = 'Member'
@@ -87,7 +87,7 @@ class Member(models.Model):
 
     def year(self): 
         if self.alumni:
-            string = '<span class="label label-important">Alumni</span>'
+            string = '<span class="label label-danger">Alumni</span>'
         else:
             string = '<span class="label label-success">Current</span>'
         if self.finish_year:
@@ -105,29 +105,29 @@ class Member(models.Model):
 
 
 class Publication(models.Model):
-    authors = models.TextField(help_text='<i class="icon-user"></i> Follow the format seen on the website: <span class="label label-inverse">Das, R.,</span>.')
+    authors = models.TextField(help_text='<span class="glyphicon glyphicon-user"></span>&nbsp; Follow the format seen on the website: <span class="label label-inverse">Das, R.,</span>.')
     year = models.PositiveSmallIntegerField()
-    display_date = models.DateField(verbose_name='Display Date', help_text='<i class="icon-random"></i> For display ordering within each year. Assign a virtual date as used when sorting.')
+    display_date = models.DateField(verbose_name='Display Date', help_text='<span class="glyphicon glyphicon-random"></span>&nbsp; For display ordering within each year. Assign a virtual date as used when sorting.')
     title = models.TextField(help_text='<i class="icon-bullhorn"></i> Only use upper-case for the first word.')
-    journal = models.CharField(max_length=255, blank=True, null=True, help_text='<i class="icon-home"></i> Use journal <span class="label label-important">full</span> name. Capitalize each word.')
-    volume = models.CharField(max_length=31, blank=True, null=True, help_text='<i class="icon-book"></i> Use <span class="label label-inverse">in press, epub available.</span> if not printed yet.')
+    journal = models.CharField(max_length=255, blank=True, null=True, help_text='<span class="glyphicon glyphicon-home"></span>&nbsp; Use journal <span class="label label-danger">full</span> name. Capitalize each word.')
+    volume = models.CharField(max_length=31, blank=True, null=True, help_text='<span class="glyphicon glyphicon-book"></span>&nbsp; Use <span class="label label-inverse">in press, epub available.</span> if not printed yet.')
     issue = models.CharField(max_length=31, blank=True, null=True)
     begin_page = models.CharField(max_length=31, blank=True, null=True, verbose_name='Start Page')
     end_page = models.CharField(max_length=31, blank=True, null=True, verbose_name='End Page')
 
-    pdf = models.FileField(upload_to=get_pub_pdf, blank=True, max_length=255, verbose_name='PDF File', help_text='<i class="icon-file"></i> Shows as <b>"Paper"</b> link. Use file name format <span class="label label-inverse">YEAR_LASTNAME_JOURNAL.pdf</span>: year in 4-digits, first author\'s lat name (no space) and journal name in short form. <span class="label label-success">Example</span>: 2012_Kladwang_NatChem.pdf.')
-    preprint = models.BooleanField(default=False, verbose_name='Is Preprint?', help_text='<i class="icon-tag"></i> Check if this publication is the provided link is to ArXiv, meaning with <b>"Preprint"</b> instead of <b>"Paper"</b> link.')
-    link = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<i class="icon-globe"></i> Shows as <b>"Link"</b> to redirect to journal website.')
+    pdf = models.FileField(upload_to=get_pub_pdf, blank=True, max_length=255, verbose_name='PDF File', help_text='<span class="glyphicon glyphicon-file"></span>&nbsp; Shows as <b>"Paper"</b> link. Use file name format <span class="label label-inverse">YEAR_LASTNAME_JOURNAL.pdf</span>: year in 4-digits, first author\'s lat name (no space) and journal name in short form. <span class="label label-success">Example</span>: 2012_Kladwang_NatChem.pdf.')
+    preprint = models.BooleanField(default=False, verbose_name='Is Preprint?', help_text='<span class="glyphicon glyphicon-tag"></span>&nbsp; Check if this publication is the provided link is to ArXiv, meaning with <b>"Preprint"</b> instead of <b>"Paper"</b> link.')
+    link = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp; Shows as <b>"Link"</b> to redirect to journal website.')
 
-    extra_field = models.CharField(max_length=255, blank=True, verbose_name='Extra Field #1', help_text='<i class="icon-edit"></i> Name for extra field for external link. <span class="label label-success">Example</span>: Server.')
-    extra_link = models.CharField(max_length=255, blank=True, verbose_name='Extra Link #1', help_text='<i class="icon-globe"></i> Link for extra field for external link.')
-    extra_field_2 = models.CharField(max_length=255, blank=True, verbose_name='Extra Field #2', help_text='<i class="icon-edit"></i> Name for extra field for external link. <span class="label label-success">Example</span>: Software.')
-    extra_link_2 = models.CharField(max_length=255, blank=True, verbose_name='Extra Link #2', help_text='<i class="icon-globe"></i> Link for extra field for external link.')
-    extra_field_3 = models.CharField(max_length=255, blank=True, verbose_name='Extra Field #3', help_text='<i class="icon-edit"></i> Name for extra field for upload file. <span class="label label-success">Example</span>: Data.')
-    extra_file = models.FileField(upload_to=get_pub_data, blank=True, max_length=255, verbose_name='Extra File', help_text='<i class="icon-file"></i> For extra file on server.')
+    extra_field = models.CharField(max_length=255, blank=True, verbose_name='Extra Field #1', help_text='<span class="glyphicon glyphicon-edit"></span>&nbsp; Name for extra field for external link. <span class="label label-success">Example</span>: Server.')
+    extra_link = models.CharField(max_length=255, blank=True, verbose_name='Extra Link #1', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp; Link for extra field for external link.')
+    extra_field_2 = models.CharField(max_length=255, blank=True, verbose_name='Extra Field #2', help_text='<span class="glyphicon glyphicon-edit"></span>&nbsp; Name for extra field for external link. <span class="label label-success">Example</span>: Software.')
+    extra_link_2 = models.CharField(max_length=255, blank=True, verbose_name='Extra Link #2', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp; Link for extra field for external link.')
+    extra_field_3 = models.CharField(max_length=255, blank=True, verbose_name='Extra Field #3', help_text='<span class="glyphicon glyphicon-edit"></span>&nbsp; Name for extra field for upload file. <span class="label label-success">Example</span>: Data.')
+    extra_file = models.FileField(upload_to=get_pub_data, blank=True, max_length=255, verbose_name='Extra File', help_text='<span class="glyphicon glyphicon-file"></span>&nbsp; For extra file on server.')
 
-    feature = models.BooleanField(default=False, verbose_name='Is Featured?', help_text='<i class="icon-flag"></i> Check if this publication is <b>"featured"</b>, meaning with teal background and thumbnail.')
-    image = models.ImageField(upload_to=get_pub_image, blank=True, max_length=255, verbose_name='Feature Image', help_text='<i class="icon-picture"></i> For featured publications only. Use <span class="label label-info">png/jpg</span> format, low resolution (<span class="label label-important">NO</span> larger than <span class="label label-inverse">200x300 72dpi</span>). Use the <span class="label label-important">SAME</span> name as <b>pdf</b> file.')
+    feature = models.BooleanField(default=False, verbose_name='Is Featured?', help_text='<span class="glyphicon glyphicon-flag"></span>&nbsp; Check if this publication is <b>"featured"</b>, meaning with teal background and thumbnail.')
+    image = models.ImageField(upload_to=get_pub_image, blank=True, max_length=255, verbose_name='Feature Image', help_text='<span class="glyphicon glyphicon-picture"></span>&nbsp; For featured publications only. Use <span class="label label-info">png/jpg</span> format, low resolution (<span class="label label-danger">NO</span> larger than <span class="label label-inverse">200x300 72dpi</span>). Use the <span class="label label-danger">SAME</span> name as <b>pdf</b> file.')
 
     class Meta():
         verbose_name = 'Publication Entry'
@@ -144,7 +144,7 @@ class Publication(models.Model):
 
 class FlashSlide(models.Model):
     date = models.DateField()
-    link = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<i class="icon-globe"></i> Link to Google Doc Slides.')
+    link = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp; Link to Google Doc Slides.')
 
     class Meta():
         verbose_name = 'Flash Slide'
@@ -154,9 +154,9 @@ class FlashSlide(models.Model):
 class RotationStudent(models.Model):
     date = models.DateField(verbose_name='Presentation Date')
     full_name = models.CharField(max_length=255, verbose_name='Full Name')
-    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<i class="icon-bullhorn"></i> Only use upper-case for the first word.')
-    ppt = models.FileField(upload_to=get_rot_ppt, blank=True, max_length=255, verbose_name='Slides Upload', help_text='<i class="icon-film"></i> Link to slides on server. Use file name format <span class="label label-inverse">DATE_FULLNAME.pptx</span>: date in 8-digits(yyyymmdd), full name (no space). <span class="label label-success">Exampe</span>: 20120321_SiqiTian.pptx.')
-    data = models.FileField(upload_to=get_rot_data, blank=True, max_length=255, verbose_name='Extra Data', help_text='<i class="icon-hdd"></i> Link to extra data file.')
+    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Only use upper-case for the first word.')
+    ppt = models.FileField(upload_to=get_rot_ppt, blank=True, max_length=255, verbose_name='Slides Upload', help_text='<span class="glyphicon glyphicon-film"></span>&nbsp; Link to slides on server. Use file name format <span class="label label-inverse">DATE_FULLNAME.pptx</span>: date in 8-digits(yyyymmdd), full name (no space). <span class="label label-success">Exampe</span>: 20120321_SiqiTian.pptx.')
+    data = models.FileField(upload_to=get_rot_data, blank=True, max_length=255, verbose_name='Extra Data', help_text='<span class="glyphicon glyphicon-hdd"></span>&nbsp; Link to extra data file.')
 
     class Meta():
         verbose_name = 'Rotation Presentation'
@@ -166,8 +166,8 @@ class RotationStudent(models.Model):
 class EternaYoutube(models.Model):
     date = models.DateField(verbose_name='Presentation Date')
     presenter = models.CharField(max_length=255)
-    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<i class="icon-bullhorn"></i> Only use upper-case for the first word.')
-    link = models.CharField(max_length=255, blank=True, verbose_name='YouTube URL', help_text='<i class="icon-facetime-video"></i> Shows as <b>"Link"</b> to redirect to youtube. <span class="label label-success">Example</span>: <u>https://www.youtube.com/watch?v=Lp_KozzV5Po</u>.')
+    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Only use upper-case for the first word.')
+    link = models.CharField(max_length=255, blank=True, verbose_name='YouTube URL', help_text='<span class="glyphicon glyphicon-facetime-video"></span>&nbsp; Shows as <b>"Link"</b> to redirect to youtube. <span class="label label-success">Example</span>: <u>https://www.youtube.com/watch?v=Lp_KozzV5Po</u>.')
 
     class Meta():
         verbose_name = 'EteRNA Open Group Meeting'
@@ -177,9 +177,9 @@ class EternaYoutube(models.Model):
 class Presentation(models.Model):
     date = models.DateField(verbose_name='Presentation Date')
     presenter = models.CharField(max_length=255)
-    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<i class="icon-bullhorn"></i> Only use upper-case for the first word.')
-    ppt = models.FileField(upload_to=get_spe_ppt, blank=True, max_length=255, verbose_name='Slides Upload', help_text='<i class="icon-film"></i> Link to slides on server. <span class="label label-important">NO</span> spaces in file name.')
-    link = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<i class="icon-globe"></i> Link to Google Doc Slides.')
+    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Only use upper-case for the first word.')
+    ppt = models.FileField(upload_to=get_spe_ppt, blank=True, max_length=255, verbose_name='Slides Upload', help_text='<span class="glyphicon glyphicon-film"></span>&nbsp; Link to slides on server. <span class="label label-danger">NO</span> spaces in file name.')
+    link = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp; Link to Google Doc Slides.')
 
     class Meta():
         verbose_name = 'Archived Presentation'

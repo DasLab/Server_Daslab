@@ -11,7 +11,7 @@
         {% endif %}
     {% endfor %}
 &nbsp;
-    <button type="submit" class="btn" title="{% trans "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">{% trans "Go" %}</button>
+    <button type="submit" class="btn btn-info" title="{% trans "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}"><span class="glyphicon glyphicon-play-circle"></span>&nbsp;{% trans "Go" %}</button>
     &nbsp;
     {% if actions_selection_counter %}
         <script type="text/javascript">var _actions_icnt = "{{ cl.result_list|length|default:"0" }}";</script>

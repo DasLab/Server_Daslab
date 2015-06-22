@@ -2,43 +2,44 @@
 {% load i18n admin_static %}
 
 {% block title %}Das Lab Website Administration{% endblock %}
-{% block extrastyle %}
+{% block extrahead %}
     <link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />
     <link rel="icon" type-"image/gif" href="/site_media/images/icon_daslab.png" />
 
+  <script type="text/javascript" src="/site_media/js/dashboard.js"></script>
 {% endblock %}
 {% block bodyclass %}dashboard{% endblock %}
 
 {% block content %}
-  <div id="content-main" class="span9">
+  <div id="content-main" class="col-md-9">
     <div class="row">
-      <div class="span12">
+      <div class="col-md-12">
         <div class="row">
-          <div class="span8">
-            <h4 class="italic-title">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-off"></i> {% trans 'System Status' %}</h4>
+          <div class="col-md-8">
+            <h4 class="italic-title"><span class="glyphicon glyphicon-off"></span> {% trans 'System Status' %}</h4>
           </div>
-          <div class="span4">
+          <div class="col-md-4">
             <a href="/admin/sys_stat" target="_blank" class="btn btn-warning pull-right">Refresh</a>            
           </div>
         </div>
         <table class="table">
           <thead>
             <tr>
-              <th class="span2"><i class="icon-tasks"></i> Back End</th><th class="span2"></th>
-              <th class="span2"><i class="icon-refresh"></i> Front End</th><th class="span2"></th>
-              <th class="span2"><i class="icon-inbox"></i> Utility</th><th class="span2"></th>
+              <th class="col-md-2"><span class="glyphicon glyphicon-tasks"></span> Back End</th><th class="col-md-2"></th>
+              <th class="col-md-2"><span class="glyphicon glyphicon-refresh"></span> Front End</th><th class="col-md-2"></th>
+              <th class="col-md-2"><span class="glyphicon glyphicon-inbox"></span> Utility</th><th class="col-md-2"></th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><span class="label label-info">linux</span></td><td id="id_linux"></td>
               <td><span class="label label-warning">jquery</span> (group)</td><td id="id_jquery_group"></td>
-              <td><span class="label label-important">apache</span></td><td id="id_apache"></td>
+              <td><span class="label label-danger">apache</span></td><td id="id_apache"></td>
             </tr>
             <tr>
               <td><span class="label label-info">python</span></td><td id="id_python"></td>
               <td><span class="label label-warning">jquery</span> (admin)</td><td id="id_jquery_admin"></td>
-              <td><span class="label label-important">webauth</span></td><td id="id_webauth"></td>
+              <td><span class="label label-danger">webauth</span></td><td id="id_webauth"></td>
             </tr>
             <tr>
               <td><span class="label label-success">django</span></td><td id="id_django"></td>
@@ -65,63 +66,63 @@
       </div>
     </div>
     <div class="row">
-      <div class="span6">
+      <div class="col-md-6">
         <table class="table">
           <thead>
             <tr>
-              <th class="span6"></th>
-              <th class="span6"><i class="icon-fullscreen"></i> Size (Available / Used)</th>
+              <th class="col-md-6"></th>
+              <th class="col-md-6"><span class="glyphicon glyphicon-fullscreen"></span> Size (Available / Used)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><i class="icon-hdd"></i> Disk Space</td><td id="id_disk_space"></td>
+              <td><span class="glyphicon glyphicon-hdd"></span> Disk Space</td><td id="id_disk_space"></td>
             </tr>
             <tr>
-              <td><i class="icon-road"></i> Memory</td><td id="id_memory"></td>
+              <td><span class="glyphicon glyphicon-road"></span> Memory</td><td id="id_memory"></td>
             <tr>
-              <td><i class="icon-adjust"></i> Database Backup</td><td id="id_db_backup"></td>
+              <td><span class="glyphicon glyphicon-adjust"></span> Database Backup</td><td id="id_db_backup"></td>
             </tr>
           </tbody>
         </table>
         <table class="table">
           <thead>
             <tr>
-              <th class="span6"></th>
-              <th class="span6"><i class="icon-fire"></i> Usage (1 / 5 / 15 min)</th>
+              <th class="col-md-6"></th>
+              <th class="col-md-6"><span class="glyphicon glyphicon-fire"></span> Usage (1 / 5 / 15 min)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><i class="icon-heart"></i> CPU</td><td id="id_cpu"></td>
+              <td><span class="glyphicon glyphicon-heart"></span> CPU</td><td id="id_cpu"></td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="span6">
+      <div class="col-md-6">
         <table class="table">
           <thead>
             <tr>
-              <th class="span6"></th>
-              <th class="span3"><i class="icon-th"></i> # of Files</th>
-              <th class="span3"><i class="icon-share"></i> Size</th>
+              <th class="col-md-6"></th>
+              <th class="col-md-3"><span class="glyphicon glyphicon-th"></span> # of Files</th>
+              <th class="col-md-3"><span class="glyphicon glyphicon-share"></span> Size</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><i class="icon-picture"></i> News Items</td><td id="id_news_n"></td><td id="id_news_s"></td>
+              <td><span class="glyphicon glyphicon-picture"></span> News Items</td><td id="id_news_n"></td><td id="id_news_s"></td>
             </tr>
             <tr>
-              <td><i class="icon-user"></i> Members</td><td id="id_member_n"></td><td id="id_member_s"></td>
+              <td><span class="glyphicon glyphicon-user"></span> Members</td><td id="id_member_n"></td><td id="id_member_s"></td>
             </tr>
             <tr>
-              <td><i class="icon-file"></i> Publication PDFs</td><td id="id_pub_n"></td><td id="id_pub_s"></td>
+              <td><span class="glyphicon glyphicon-file"></span> Publication PDFs</td><td id="id_pub_n"></td><td id="id_pub_s"></td>
             </tr>
             <tr>
-              <td><i class="icon-retweet"></i> Rotation Students</td><td id="id_rot_n"></td><td id="id_rot_s"></td>
+              <td><span class="glyphicon glyphicon-retweet"></span> Rotation Students</td><td id="id_rot_n"></td><td id="id_rot_s"></td>
             </tr>
             <tr>
-                <td><i class="icon-bookmark"></i> Archived Presentations</td><td id="id_spe_n"></td><td id="id_spe_s"></td>
+                <td><span class="glyphicon glyphicon-cd"></span> Archived Presentations</td><td id="id_spe_n"></td><td id="id_spe_s"></td>
           </tbody>
         </table>
       </div>
@@ -129,26 +130,24 @@
 
   </div>
 
-  <script type="text/javascript" src="/site_media/js/dashboard.js"></script>
-
 {% endblock %}
 
 
 {% block sidebar %}
-  <div id="content-related">
+  <div id="content-related" class="col-md-3">
     <div class="module" id="recent-actions-module">
-      <h4 class="italic-title"><i class="icon-repeat"></i> {% trans 'My Actions' %}</h4>
+      <h4 class="italic-title"><span class="glyphicon glyphicon-repeat"></span> {% trans 'My Actions' %}</h4>
 
       {% load log %}
       {% get_admin_log 10 as admin_log for_user user %}
       {% if not admin_log %}
         <p>{% trans 'None available' %}</p>
       {% else %}
-        <ul class="actionlist">
+        <ul class="list-group">
           {% for entry in admin_log %}
-            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}text-error{% endif %}">
+            <li class="list-group-item {% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}text-error{% endif %}">
 
-              <i class="{% if entry.is_addition %}icon-plus-sign{% endif %}{% if entry.is_change %}icon-edit{% endif %}{% if entry.is_deletion %}icon-trash{% endif %} icon-alpha5"></i>
+              <span class="label label-{% if entry.is_addition %}success{% endif %}{% if entry.is_change %}primary{% endif %}{% if entry.is_deletion %}danger{% endif %}"><span class="glyphicon glyph{% if entry.is_addition %}icon-plus-sign{% endif %}{% if entry.is_change %}icon-edit{% endif %}{% if entry.is_deletion %}icon-trash{% endif %}"></span></span>
 
               {% spaceless %}
                 {% if entry.is_addition %}{% trans 'added'|capfirst %}{% endif %}
@@ -175,3 +174,5 @@
     </div>
   </div>
 {% endblock %}
+
+

@@ -40,10 +40,10 @@
   {% block breadcrumbs %}
     <ul class="breadcrumb">
       <li><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-        <span class="divider">&raquo;</span></li>
+        <!-- <span class="divider">&raquo;</span> -->
       <li>
         <a href="{% url 'admin:app_list' app_label=cl.opts.app_label %}">{% firstof cl.opts.app_config.verbose_name app_label|capfirst|escape %}</a>
-        <span class="divider">&raquo;</span></li>
+        <!-- <span class="divider">&raquo;</span> -->
       <li class="active">{{ cl.opts.verbose_name_plural|capfirst }}</li>
     </ul>
   {% endblock %}
@@ -62,15 +62,15 @@
 
           {% block object-tools %}
           <div class="row">
-            <div class="span6">
+            <div class="col-md-6">
               <h2 class="legend">&nbsp;&nbsp;{{ cl.opts.verbose_name_plural|capfirst }}</h2>
             </div>
-            <div class="span6">  
+            <div class="col-md-6">  
             {% if has_add_permission %}
               <div class="object-tools">
                 {% block object-tools-items %}
                   <a href="{% url cl.opts|admin_urlname:'add' %}{% if is_popup %}?_popup=1{% endif %}" class="btn btn-success">
-                    <i class="icon-plus-sign icon-white"></i>&nbsp;
+                    <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
                     {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
                   </a>
                 {% endblock %}

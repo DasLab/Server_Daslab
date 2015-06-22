@@ -40,8 +40,8 @@ class NewsAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
     fieldsets = [
-        (format_html('<i class="icon-comment"></i> Contents'), {'fields': ['date', 'content', ('image', 'image_tag')]}),
-        (format_html('<i class="icon-share"></i> Links'), {'fields': ['link', 'video']}),
+        (format_html('<span class="glyphicon glyphicon-comment"></span>&nbsp;Contents'), {'fields': ['date', 'content', ('image', 'image_tag')]}),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['link', 'video']}),
     ]
 admin.site.register(News, NewsAdmin)
 
@@ -62,9 +62,9 @@ class MemberAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
     fieldsets = [
-        (format_html('<i class="icon-user"></i> Personal Information'), {'fields': [('first_name', 'last_name'), 'role', ('image', 'image_tag'), 'description', 'more_info']}),
-        (format_html('<i class="icon-home"></i> Affiliation'), {'fields': ['department', ('joint_lab', 'joint_link')]}),
-        (format_html('<i class="icon-road"></i> Alumni Information'), {'fields': ['alumni', ('start_year', 'finish_year')]}),
+        (format_html('<span class="glyphicon glyphicon-user"></span>&nbsp;Personal Information'), {'fields': [('first_name', 'last_name'), 'role', ('image', 'image_tag'), 'description', 'more_info']}),
+        (format_html('<span class="glyphicon glyphicon-home"></span>&nbsp;Affiliation'), {'fields': ['department', ('joint_lab', 'joint_link')]}),
+        (format_html('<span class="glyphicon glyphicon-road"></span>&nbsp;Alumni Information'), {'fields': ['alumni', ('start_year', 'finish_year')]}),
     ]
 admin.site.register(Member, MemberAdmin)
 
@@ -88,9 +88,9 @@ class PublicationAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
     fieldsets = [
-        (format_html('<i class="icon-book"></i> Citation'), {'fields': ['title', ('year', 'display_date'), 'authors', 'journal', ('volume', 'issue'), ('begin_page', 'end_page')]}),
-        (format_html('<i class="icon-th-large"></i> Media'), {'fields': ['pdf', 'preprint', 'feature', ('image', 'image_tag')]}),
-        (format_html('<i class="icon-share"></i> Links'), {'fields': ['link', 'extra_field', 'extra_link', 'extra_field_2', 'extra_link_2', 'extra_field_3', 'extra_file']}),
+        (format_html('<span class="glyphicon glyphicon-book"></span>&nbsp;Citation'), {'fields': ['title', ('year', 'display_date'), 'authors', 'journal', ('volume', 'issue'), ('begin_page', 'end_page')]}),
+        (format_html('<span class="glyphicon glyphicon-th-large"></span>&nbsp;Media'), {'fields': ['pdf', 'preprint', 'feature', ('image', 'image_tag')]}),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['link', 'extra_field', 'extra_link', 'extra_field_2', 'extra_link_2', 'extra_field_3', 'extra_file']}),
     ]
 admin.site.register(Publication, PublicationAdmin)
 
@@ -110,7 +110,7 @@ class FlashSlideAdmin(admin.ModelAdmin):
     form = FlashSlideForm
 
     fieldsets = [
-        (format_html('<i class="icon-share"></i> Links'), {'fields': ['date', 'link']}),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'link']}),
     ]
 admin.site.register(FlashSlide, FlashSlideAdmin)
 
@@ -128,8 +128,8 @@ class RotationStudentAdmin(admin.ModelAdmin):
     form = RotationStudentForm
 
     fieldsets = [
-        (format_html('<i class="icon-user"></i> Personal Information'), {'fields': ['date', 'full_name', 'title']}),
-        (format_html('<i class="icon-share"></i> Links'), {'fields': ['ppt', 'data']}),
+        (format_html('<span class="glyphicon glyphicon-user"></span>&nbsp;Personal Information'), {'fields': ['date', 'full_name', 'title']}),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['ppt', 'data']}),
     ]
 admin.site.register(RotationStudent, RotationStudentAdmin)
 
@@ -148,7 +148,7 @@ class EternaYoutubeAdmin(admin.ModelAdmin):
     form = EternaYoutubeForm
 
     fieldsets = [
-        (format_html('<i class="icon-share"></i> Links'), {'fields': ['date', 'presenter', 'title', 'link']}),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'presenter', 'title', 'link']}),
     ]
 admin.site.register(EternaYoutube, EternaYoutubeAdmin)
 
@@ -167,7 +167,7 @@ class PresentationAdmin(admin.ModelAdmin):
     form = PresentationForm
 
     fieldsets = [
-        (format_html('<i class="icon-share"></i> Links'), {'fields': ['date', 'presenter', 'title', 'ppt', 'link']}),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'presenter', 'title', 'ppt', 'link']}),
     ]
 admin.site.register(Presentation, PresentationAdmin)
 

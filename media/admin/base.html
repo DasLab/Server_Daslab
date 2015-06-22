@@ -2,14 +2,17 @@
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{% block title %}{{ title }} | {{ 'ADMIN_NAME'|suit_conf }}{% endblock %}</title>
+  <title>{% block title %}Das Lab Website Administration{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}"/>
-  <link rel="stylesheet" type="text/css" href="{% static 'suit/bootstrap/css/bootstrap.min.css' %}" media="all"/>
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'suit/bootstrap/css/bootstrap.min.css' %}" media="all"/> -->
+  <link rel="stylesheet" type="text/css" href="/site_media/css/bootstrap.min.css" media="all"/>
+  <link rel="stylesheet" type="text/css" href="/site_media/css/palette.css" media="all"/>
   <link rel="stylesheet" type="text/css" href="{% static 'suit/css/suit.css' %}" media="all">
   {% block extrastyle %}{% endblock %}
   {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}"/>{% endif %}
   <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
-  <script src="{% static 'suit/js/jquery-1.8.3.min.js' %}"></script>
+  <!-- <script src="{% static 'suit/js/jquery-1.8.3.min.js' %}"></script> -->
+  <script src="/site_media/js/jquery-1.11.3.min.js"></script>
   <script type="text/javascript">var Suit = { $: $.noConflict() }; if (!$) $ = Suit.$; </script>
   <script src="{% static 'suit/bootstrap/js/bootstrap.min.js' %}"></script>
   {% if 'SHOW_REQUIRED_ASTERISK'|suit_conf %}
@@ -21,6 +24,9 @@
 
   <!-- <link rel="stylesheet" type="text/css" href="/site_media/css/sidebar.css" media="all"> -->
   <script type="text/javascript" src="/site_media/js/tables.js"></script>
+
+  <link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />
+  <link rel="icon" type-"image/gif" href="/site_media/images/icon_daslab.png" />
 
 </head>
 {% load i18n %}
@@ -48,7 +54,8 @@
             {% block header_time %}
             <div class="header-content header-content-first">
               <div class="header-column icon">
-                <i class="icon-time"></i>
+                <span class="glyphicon glyphicon-calendar"></span>&nbsp;<br>
+                <span class="glyphicon glyphicon-time"></span>&nbsp;
               </div>
               <div class="header-column">
                 <span class="date" style="color:#92d1ee;"> {% suit_date %}</span><br>
@@ -60,7 +67,7 @@
             {% block header_content %}
 <!--               <div class="header-content">
                 <div class="header-column icon">
-                  <i class="icon-comment"></i>
+                  <span class="glyphicon glyphicon-comment"></i>
                 </div>
                 <div class="header-column">
                   <a href="" class="grey"><b>2</b> new messages</a>
@@ -107,7 +114,7 @@
                     {% if title %}
                       <span class="divider">&raquo;</span>
                       </li>
-                      <li class="active">
+                      <lspan class="glyphicon glyphactive">
                       {{ title }}
                     {% endif %}
                     </li>
@@ -154,7 +161,7 @@
                   {% if search_url %}
                     <form class="form-search nav-quick-search" autocomplete="off" action="{% if '/' in search_url %}{{ search_url }}{% else %}{% url search_url %}{% endif %}" method="GET">
                       <input type="text" name="q" class="input-medium search-query" id="quick-search">
-                      <i class="input-icon icon-search"></i>
+                      <span class="glyphicon glyphinput-icon icon-search"></span>
                       <input type="submit" class="submit" value="">
                     </form>
                   {% endif %}
@@ -184,9 +191,9 @@
     <div class="content">
       <div class="tools">
         {% block footer_links %}
-          <a href="http://djangosuit.com/support/" target="_blank" class="icon"><i class="icon-question-sign"></i>Support</a>
-          <a href="http://djangosuit.com/pricing/" target="_blank" class="icon"><i class="icon-bookmark"></i>Licence</a>
-          <a href="http://github.com/darklow/django-suit/issues" target="_blank" class="icon"><i class="icon-comment"></i>Report a bug</a>
+          <a href="http://djangosuit.com/support/" target="_blank" class="icon"><span class="glyphicon glyphicon-question-sign"></span>&nbsp;Support</a>
+          <a href="http://djangosuit.com/pricing/" target="_blank" class="icon"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;Licence</a>
+          <a href="http://github.com/darklow/django-suit/issues" target="_blank" class="icon"><span class="glyphicon glyphicon-comment"></span>&nbsp;Report a bug</a>
         {% endblock %}
       </div>
 
