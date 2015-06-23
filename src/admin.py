@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from suit.widgets import EnclosedInput, SuitDateWidget
 
 from src.models import *
-from src.settings import PATH
+from src.settings import PATH, MEDIA_ROOT
 
 import subprocess
 import sys
@@ -157,6 +157,7 @@ def sys_stat(request):
     ver += str(int(subprocess.Popen('ls -l %s | wc -l' % os.path.join(MEDIA_ROOT, 'data/spe_ppt/'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()) - 1) + '\t'
     ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, 'data/spe_ppt/'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
 
+    ver += '%s\t%s\t%s\t' % (MEDIA_ROOT, MEDIA_ROOT + '/data', MEDIA_ROOT + '/media')
 
     f = open(os.path.join(MEDIA_ROOT, 'data/sys_ver.txt'), 'w')
     f.write(ver)

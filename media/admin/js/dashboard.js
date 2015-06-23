@@ -47,6 +47,10 @@ $(document).ready(function() {
         	$("#id_rot_s").html('<span style="color:#00f;">' + txt[25] + '</span>');
         	$("#id_spe_n").html('<i>' + txt[26] + '</i>');
         	$("#id_spe_s").html('<span style="color:#00f;">' + txt[27] + '</span>');
+
+            $("#id_base_dir").html('<code>' + txt[28] + '</code>');
+            $("#id_media_root").html('<code>' + txt[29] + '</code>');
+            $("#id_static_root").html('<code>' + txt[30] + '</code>');
     	}
     });
 

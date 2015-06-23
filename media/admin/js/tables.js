@@ -189,6 +189,7 @@ $(document).ready(function () {
 	$(".form-search>input.submit").attr("id", "search_submit");
 	$("#search_submit").replaceWith("<button type='submit' class='submit form-control' id='search_submit' style='border:none;'><span class='glyphicon glyphicon-search'></span>&nbsp;</button>");
 
+
 });
 
 
