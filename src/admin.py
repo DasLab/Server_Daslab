@@ -111,16 +111,10 @@ def sys_stat(request):
     ver += subprocess.Popen('python -c "import django, suit, adminplus; print %s"' % "django.__version__, '\t', suit.VERSION, '\t', adminplus.__version__", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
 
     ver += subprocess.Popen('ls %s' % os.path.join(MEDIA_ROOT, 'media/js/jquery-*.min.js'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].replace(os.path.join(MEDIA_ROOT, 'media/js/jquery-'), '').replace('.min.js', '').strip() + '\t'
-    ver += subprocess.Popen('ls %s' % os.path.join(MEDIA_ROOT, 'media/suit/js/jquery-*.min.js'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].replace(os.path.join(MEDIA_ROOT, 'media/suit/js/jquery-'), '').replace('.min.js', '').strip() + '\t'
     f = open(os.path.join(MEDIA_ROOT, 'media/js/bootstrap.min.js'))
     f.readline()
     ver_bootstrap = f.readline()
     ver += ver_bootstrap[ver_bootstrap.find('v')+1: ver_bootstrap.find('(')].strip() + '\t'
-    f.close()
-    f = open(os.path.join(MEDIA_ROOT, 'media/suit/bootstrap/css/bootstrap.min.css'))
-    f.readline()
-    ver_bootstrap = f.readline()
-    ver += ver_bootstrap[ver_bootstrap.find('v')+1: ].strip() + '\t'
     f.close()
 
     ver += subprocess.Popen('mysql --version | sed %s | sed %s' % ("'s/,.*//g'", "'s/.*Distrib //g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
