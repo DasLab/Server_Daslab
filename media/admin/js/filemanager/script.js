@@ -20,8 +20,8 @@ function get_human_string(val)
 function size(){
   $('#main').height($(window).height()-47);
   $('#left').height($(window).height()-69);
-  $('#right').height($(window).height()-49);
-  $('#content').height($(window).height()-100);
+  $('#right').height($(window).height()-69);
+  $('#content').height($(window).height()-122);
 }
 
 function onload(){
@@ -31,13 +31,13 @@ function onload(){
   $('body').bind('click',function(e){$('#dir-menu').hide();$('#file-menu').hide();});
   if(messages.length>0){
     $('#message').html(messages[0]);
-    setTimeout("$('#message').html('Hint : Use right click to add, rename or delete files and folders');",10000);
+    setTimeout("$('#message').html('Hint : Use <span class=\"label label-primary\">right click</span> to <span class=\"label label-success\">add</span>, <span class=\"label label-warning\">rename</span> or <span class=\"label label-danger\">delete</span> files and folders.');",10000);
   }
   else
-     $('#message').html('Hint : Use right click to add,rename or delete files and folders');
+     $('#message').html('Hint : Use <span class=\"label label-primary\">right click</span> to <span class=\"label label-success\">add</span>, <span class=\"label label-warning\">rename</span> or <span class=\"label label-danger\">delete</span> files and folders.');
   $('#ufile').change(function(){form_submit('upload','file');});
   if($.browser.mozilla) {
-    moz_major_ver = (+($.browser.version.split(".")[0]))
+    moz_major_ver = (+($.browser.version.split(".")[0]));
     if(moz_major_ver < 23){
       // https://bugzilla.mozilla.org/show_bug.cgi?id=701353 should be fixed in 23
       $('#upload-label').click(function(){
@@ -81,7 +81,7 @@ function get_path(id,ds,basepath)
  for(d in ds)
  { if(ds[d]['id']==id)
    { path=d+'/';
-     break
+     break;
    }
    var pq = get_path(id,ds[d]['dirs'],d+'/');
    if(pq != null)
@@ -126,17 +126,17 @@ function show_files(id)
   $('#content').html('');
   for(d in dirs)
   {
-    $('#content').append("<div class='file' title='"+dirs[d]['name']+"'"+
+    $('#content').append("<div class='col-md-3' title='"+dirs[d]['name']+"'"+
        "onmousedown='rightclick_handle(event,\""+dirs[d]['id']+"\",\"dir\");' ondblclick=\"show_files("+dirs[d]['id']+")\"><div class='thumbnail'>"+
-       "<div style=\"background-image:url('"+static_url+"filemanager/images/folder_big.png');\" width='100%' height='100%' ></div></div>"+
-       "<div class='filename'>"+dirs[d]['name']+"</div></div>\n");
+       "<img src='/site_media/admin/img/filemanager/folder.png'/>"+
+       "<div class='caption'><p class='text-center' style='word-wrap: break-word; font-weight: bold;'>"+dirs[d]['name']+"</p></div></div></div>\n");
   }
   for(f in files)
   { var ext = files[f].split('.')[(files[f].split('.').length-1)];
-    $('#content').append("<div class='file' title='"+files[f]+"'"+
+    $('#content').append("<div class='col-md-3' title='"+files[f]+"'"+
        "onmousedown='rightclick_handle(event,\""+files[f]+"\",\"file\");'><div class='thumbnail'>"+
-       "<div style=\"background-image:url('"+get_path(id).substr(1)+files[f]+"');\" width='100%' height='100%' ></div></div>"+
-       "<div class='filename'>"+files[f]+"</div></div>\n");
+       "<img src='"+get_path(id).substr(1)+files[f]+"'/>"+
+       "<div class='caption'><p class='text-center' style='word-wrap: break-word;'>"+files[f]+"</p></div></div></div>\n");
   }
   $('#status').html(get_path(id))
   $('.current_directory').removeClass('current_directory');
@@ -146,8 +146,8 @@ function show_files(id)
 function show_directories(ds)
 { var html = "";
   for(d in ds)
-  {  var image = (ds[d]['open']=='yes'?'opened_folder.png':'folder.png');
-     if(d=='')image = 'home_folder.png';
+  {  var image = (ds[d]['open']=='yes'?'folder-open':'folder-close');
+     if(d=='')image = 'home';
      var id = ds[d]['id'];
      var sign;
      sign = (ds[d]['open']=='yes'?'[-]':'[+]');
@@ -156,8 +156,7 @@ function show_directories(ds)
      if(empty)sign = '';
      html+="<div class='directory "+(id==dir_id?'current_directory':'')+"' id='"+id+"'><div class='directory-sign' onclick='change_sign("+id+")'>"+sign+"</div>"+
            "<div class='directory-image-name' onclick='show_files("+id+")' onmousedown='rightclick_handle(event,"+id+",\"dir\");'>"+
-           "<img class='directory-image' src='"+static_url+"filemanager/images/"+image+"'/>"+
-           "<div class='directory-name' >"+(d==''?'root':d)+"</div></div></div>\n";
+           "<span class='glyphicon glyphicon-"+image+"'></span>&nbsp;&nbsp;"+(d==''?'root':d)+"</div></div>\n";
      if(ds[d]['open']=='yes')
        html+="<div style='padding-left:15px'>"+show_directories(ds[d]['dirs'])+"</div>\n";
   }
@@ -192,12 +191,10 @@ function rightclick_handle(e,id,type)
     if(clipboard['empty'])
     {
       $('#paste-dir').hide();
-      $('#paste-dir').next().hide();
     }
     else
     {
       $('#paste-dir').show();
-      $('#paste-dir').next().show();
     }
     $('#dir-menu').show();
     }
@@ -211,7 +208,7 @@ function rightclick_handle(e,id,type)
     if(!zclip){
       zclip = true;
       $('#copy-public-link-file').zclip({
-        path: static_url+'filemanager/js/jquery/zclip/ZeroClipboard.swf',
+        path: '/site_media/admin/js/filemanager/ZeroClipboard.swf',
         copy: function(){
           var public_link = public_url_base+get_path(dir_id)+selected_file;
           return public_link;
@@ -284,6 +281,13 @@ function do_action(act,t)
         form_submit(action,type,value);
      }
    });
+ $('#pop_submit').click(
+    function() {
+      var value=$('#input').val();
+      $('#input').val('');
+      $('#popup').hide();
+      form_submit(action,type,value);
+    });
 }
 
 function form_submit(action,type,value){

@@ -175,7 +175,17 @@
       {% load log %}
       {% get_admin_log 10 as admin_log for_user user %}
       {% if not admin_log %}
-        <p>{% trans 'None available' %}</p>
+        <!-- <p>{% trans 'None available' %}</p> -->
+        <div class="alert alert-danger">
+          <p class="lead" style="font-weight:bold;">
+            Your login account <span class="label label-warning">{{user}}</span> lacks the <span class="label label-success">superuser</span> permission.
+            <br>
+          </p>
+          <p class="lead">You do not have access to site content editing.</p>
+        </div>
+        <div class="alert alert-success">
+          <p class="lead" style="font-weight:bold;">Please use the <span class="label label-warning">daslab</span> shared account for administrative tasks.</p>
+        </div>
       {% else %}
         <ul class="list-group">
           {% for entry in admin_log %}
