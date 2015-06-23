@@ -22,7 +22,10 @@
 
 {% block extrahead %}
   {{ block.super }}
-  {{ media.js }}
+  {# {{ media.js }} #}
+{% endblock %}
+
+{% block extratail %}
   {% if action_form %}{% if actions_on_top or actions_on_bottom %}
     <script type="text/javascript">
       (function ($) {

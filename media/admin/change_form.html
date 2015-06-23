@@ -6,7 +6,15 @@
   {% url 'admin:jsi18n' as jsi18nurl %}
   <script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
 
-  {{ media }}
+  {# {{ media }} #}
+
+{% endblock %}
+
+{% block extratail %}
+  <script type="text/javascript" src="/site_media/admin/js/calendar.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/related-widget-wrapper.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/SelectBox.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/SelectFilter2.js"></script>
 
 {% endblock %}
 
@@ -16,7 +24,7 @@
 
   {% if 'CONFIRM_UNSAVED_CHANGES'|suit_conf %}
     <!-- Warn on leaving unsaved form -->
-    <script src="/site_media/js/suit-form-confirm.js"></script>
+    <script src="/site_media/admin/js/suit-form-confirm.js"></script>
     <script type="text/javascript">
       confirmExitIfModified('{{ opts.module_name }}_form', '{% trans 'You have unsaved changes' %}.');
     </script>

@@ -5,7 +5,7 @@
   <title>{% block title %}Das Lab Website Administration{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}"/>
 
-  <link rel="stylesheet" type="text/css" href="/site_media/css/suit.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/site_media/admin/css/suit.css" media="all">
   <link rel="stylesheet" type="text/css" href="/site_media/css/bootstrap.min.css" media="all"/>
   <link rel="stylesheet" type="text/css" href="/site_media/css/theme.css" media="all"/>
   <link rel="stylesheet" type="text/css" href="/site_media/css/palette.css" media="all"/>
@@ -15,15 +15,21 @@
   {% endif %}
   
   <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
-  <script src="/site_media/js/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="/site_media/js/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="/site_media/js/bootstrap.min.js"></script>
   <script type="text/javascript">var Suit = { $: $.noConflict() }; if (!$) $ = Suit.$; </script>
-  <script src="/site_media/js/bootstrap.min.js"></script>
 
   {% if 'SHOW_REQUIRED_ASTERISK'|suit_conf %}
   <style type="text/css">.required:after { content: '*'; margin: 0 0 0 5px; position: absolute; color: #ccc;}</style>
   {% endif %}
 
   {% block extrahead %}{% endblock %}
+  <script type="text/javascript" src="/site_media/admin/js/core.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/RelatedObjectLookups.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/jquery.init.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/actions.min.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/DateTimeShortcuts.js"></script>
+  {% block extratail %}{% endblock %}
 
   {% block blockbots %}
   <meta name="robots" content="NONE,NOARCHIVE"/>
@@ -181,8 +187,8 @@
 
 {% endblock %}
 
-  <script src="/site_media/js/suit.js"></script>
-  <script type="text/javascript" src="/site_media/js/tables.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/suit.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/tables.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
       $("#footer").load("/site_media/html/_footer.html", function () {

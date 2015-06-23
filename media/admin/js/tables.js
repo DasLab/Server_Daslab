@@ -1,7 +1,9 @@
+var $ = django.jQuery;
+
 $(document).ready(function () {
 	// $('script[src="/static/admin/js/admin/DateTimeShortcuts.js"]').remove();
-	$('script[src="/static/admin/js/jquery.js"]').remove();
-	$('script[src="/static/admin/js/jquery.init.js"]').remove();
+	// $('script[src="/static/admin/js/jquery.js"]').remove();
+	// $('script[src="/static/admin/js/jquery.init.js"]').remove();
 
 	$("label.required").css("font-weight", "bold");
 	$("#left-nav>ul>li>ul").css("display", "block");

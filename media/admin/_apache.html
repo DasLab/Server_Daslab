@@ -18,13 +18,17 @@
 		<iframe src="/server-status/" class="well" id="iframe"></iframe>
 	</div>
 
+{% endblock %}
+
+
+{% block extrajs %}
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#iframe").css("width", parseInt($("#content").css("width")) - 50);
-			$("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
+			$("#iframe").css("height", 600);
+			// $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
 			$("ul.breadcrumb").append('<li class="active"><a href="/admin/apache">Apache Status</a></li>');
 		});
 	</script>
 {% endblock %}
-
 

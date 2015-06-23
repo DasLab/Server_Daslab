@@ -3,7 +3,7 @@
 
 {% block title %}Das Lab Website Administration{% endblock %}
 {% block extrajs %}
-  <script type="text/javascript" src="/site_media/js/dashboard.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/dashboard.js"></script>
 {% endblock %}
 {% block bodyclass %}dashboard{% endblock %}
 
@@ -29,34 +29,34 @@
           </thead>
           <tbody>
             <tr>
-              <td><span class="label label-info">linux</span></td><td id="id_linux"></td>
-              <td><span class="label label-warning">jquery</span> (group)</td><td id="id_jquery_group"></td>
-              <td><span class="label label-danger">apache</span></td><td id="id_apache"></td>
+              <td><span class="label label-primary">linux</span></td><td id="id_linux"></td>
+              <td><span class="label label-warning">jquery</span></td><td id="id_jquery"></td>
+              <td><span class="label label-dark-red">webauth</span></td><td id="id_webauth"></td>
             </tr>
             <tr>
               <td><span class="label label-info">python</span></td><td id="id_python"></td>
-              <td><span class="label label-warning">jquery</span> (admin)</td><td id="id_jquery_admin"></td>
-              <td><span class="label label-danger">webauth</span></td><td id="id_webauth"></td>
-            </tr>
-            <tr>
-              <td><span class="label label-success">django</span></td><td id="id_django"></td>
-              <td><span class="label label-warning">bootstrap</span> (group)</td><td id="id_bootstrap_group"></td>
+              <td><span class="label label-orange">bootstrap</span></td><td id="id_bootstrap"></td>
               <td><span class="label label-inverse">ssh</span></td><td id="id_ssh"></td>
             </tr>
             <tr>
-              <td><span class="label label-success">django-suit</span></td><td id="id_django_suit"></td>
-              <td><span class="label label-warning">bootstrap</span> (admin)</td><td id="id_bootstrap_admin"></td>
+              <td><span class="label label-success">django</span></td><td id="id_django"></td>
+              <td><span class="label label-green">django-suit</span></td><td id="id_django_suit"></td>
               <td><span class="label label-inverse">git</span></td><td id="id_git"></td>
             </tr>
             <tr>
-              <td><span class="label label-success">django-adminplus</span></td><td id="id_django_adminplus"></td>
-              <td></td><td></td>
+              <td><span class="label label-violet">mysql</span></td><td id="id_mysql"></td>
+              <td><span class="label label-teal">django-adminplus</span></td><td id="id_django_adminplus"></td>
               <td><span class="label label-default">pip</span></td><td id="id_pip"></td>
             </tr>
             <tr>
-              <td><span class="label label-info">mysql</span></td><td id="id_mysql"></td>
+              <td><span class="label label-danger">apache</span></td><td id="id_apache"></td>
               <td></td><td></td>
               <td><span class="label label-default">virtualenv</span></td><td id="id_virtualenv"></td>
+            </tr>
+            <tr>
+              <td></td><td></td>
+              <td></td><td></td>
+              <td></td><td></td>
             </tr>
           </tbody>
         </table>
@@ -80,6 +80,9 @@
             <tr>
               <td><span class="glyphicon glyphicon-adjust"></span> Database Backup</td><td id="id_db_backup"></td>
             </tr>
+            <tr>
+              <td></td><td></td>
+            </tr>
           </tbody>
         </table>
         <table class="table">
@@ -92,6 +95,9 @@
           <tbody>
             <tr>
               <td><span class="glyphicon glyphicon-heart"></span> CPU</td><td id="id_cpu"></td>
+            </tr>
+            <tr>
+              <td></td><td></td>
             </tr>
           </tbody>
         </table>
@@ -119,7 +125,12 @@
               <td><span class="glyphicon glyphicon-retweet"></span> Rotation Students</td><td id="id_rot_n"></td><td id="id_rot_s"></td>
             </tr>
             <tr>
-                <td><span class="glyphicon glyphicon-cd"></span> Archived Presentations</td><td id="id_spe_n"></td><td id="id_spe_s"></td>
+              <td><span class="glyphicon glyphicon-cd"></span> Archived Presentations</td><td id="id_spe_n"></td><td id="id_spe_s"></td>
+            </tr>
+            <tr>
+              <td></td><td></td><td></td>
+            </tr>
+
           </tbody>
         </table>
       </div>
