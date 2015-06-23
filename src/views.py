@@ -110,6 +110,8 @@ def lab_misc(request):
 
 def user_login(request):
 	if request.user.is_authenticated():
+		if 'admin' in request.GET['next']:
+			return render_to_response(PATH.HTML_PATH['403'], {}, context_instance=RequestContext(request))
 		return HttpResponseRedirect('/group')
 
 	if request.method == 'POST':

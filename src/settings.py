@@ -195,6 +195,7 @@ class SYS_PATH:
             'admin_dir': MEDIA_ROOT + '/media/admin/_dir.html',
             'admin_doc': MEDIA_ROOT + '/media/admin/_doc.html',
 
+            '403': MEDIA_ROOT + '/media/html/_403.html',
             '404': MEDIA_ROOT + '/media/html/_404.html',
             '500': MEDIA_ROOT + '/media/html/_500.html',
         }

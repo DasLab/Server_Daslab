@@ -37,19 +37,26 @@
   <div class="starter-template">
     <div class="container theme-showcase" role="main">
       <div class="row bgimg2">
-        <div class="col-md-6" id="panel_left">
-          <img src="/site_media/images/bg_500.png" height=300/>
-        </div>
-        <div class="col-md-6" id="panel_right">
+        <div class="col-md-12" id="panel_right">
           <h1>
-            <span class="label label-danger">INTERNAL&nbsp;&nbsp;SERVER&nbsp;&nbsp;ERROR</span>
+            <span class="label label-danger">Permission Denied</span>
           </h1>
           <br/>
-          <h2><code>Sorry!</code> </h2>
-          <p class="lead">
-            The server encountered an internal error and was unable to complete your request. The admin has been noticed and will look into it. Please come back and try again later.
-          </p>
-          <a href="/" class="btn btn-primary pull-right">&nbsp;&nbsp;Home&nbsp;&nbsp;</a>
+            <p class="lead" style="font-weight:bold;">
+              This page is for site <span class="label label-success">admin</span> only.
+              <br>
+              Your login account <span class="label label-warning">{{user}}</span> lacks the required permission.
+              <br>
+              <span class="glyphicon glyphicon-qrcode pull-right" style="font-size:36px;"></span>
+            </p>
+            <p class="lead">The server could not verify that you are authorized to access the document requested. Either you supplied the wrong credentials (e.g., bad password), or your browser doesn't understand how to supply the credentials required.</p>
+            <p class="lead">Please contact the site <span class="label label-success">admin</span> for administrative tasks (<a href="mailto:t47@stanford.edu" target="_blank">&nbsp;<u>t47@stanford.edu</u>&nbsp;&nbsp;<span class="glyphicon glyphicon-envelope"></span>&nbsp;</a>).</p>
+            <p class="lead" style="font-weight:bold;">For emergency, please use the <span class="label label-warning">daslab</span> shared account.</p>
+            <p class="pull-right">
+              <a href="/group" class="btn btn-warning">&nbsp;&nbsp;Group Site&nbsp;&nbsp;</a>
+              &nbsp;&nbsp;
+              <a href="/" class="btn btn-primary">&nbsp;&nbsp;Home&nbsp;&nbsp;</a>
+            </p>
         </div>
 
       </div>
@@ -71,6 +78,17 @@
     $(window).on("beforeunload", function () {
       $("#wait").fadeIn(500);
     });
+  </script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-36037648-3', 'auto');
+    ga('send', 'pageview');
+
   </script>
 
   </body>

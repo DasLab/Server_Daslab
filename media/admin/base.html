@@ -45,6 +45,12 @@
 
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
 
+
+  <div id="wait" class="modal"></div>
+  <script type="text/javascript">
+    django.jQuery("#wait").fadeIn(500);
+  </script>
+
 <!-- Sticky footer wrap -->
 <div id="wrap">
 
@@ -187,15 +193,20 @@
 
 {% endblock %}
 
-  <script type="text/javascript" src="/site_media/admin/js/suit.js"></script>
-  <script type="text/javascript" src="/site_media/admin/js/tables.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/suit/suit.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/custom/tables.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
+      $("#wait").fadeOut(500);
       $("#footer").load("/site_media/html/_footer.html", function () {
         var today = new Date();
         $("#cp_year").text(today.getFullYear());
       });
 
+    });
+
+    $(window).on("beforeunload", function () {
+      $("#wait").fadeIn(500);
     });
   </script>
   {% block extrajs %}{% endblock %}
