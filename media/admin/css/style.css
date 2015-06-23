@@ -209,7 +209,7 @@ body{
  background: none repeat scroll 0 0 #FFFFD0;
  border: 1px solid #DDDDB0;
  border-radius: 2px 2px 2px 2px;
- padding: 0 2px 0 3px;
+ padding: 0 5px 0 3px;
 }
 /* progress bar */
 .progress {

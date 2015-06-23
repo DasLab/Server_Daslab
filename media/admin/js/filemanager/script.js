@@ -150,13 +150,13 @@ function show_directories(ds)
      if(d=='')image = 'home';
      var id = ds[d]['id'];
      var sign;
-     sign = (ds[d]['open']=='yes'?'[-]':'[+]');
+     sign = (ds[d]['open']=='yes'?'<span class="glyphicon glyphicon-chevron-down"></span>':'<span class="glyphicon glyphicon-chevron-right"></span>');
      var empty = true;
      for(i in ds[d]['dirs']){empty=false;break;}
      if(empty)sign = '';
      html+="<div class='directory "+(id==dir_id?'current_directory':'')+"' id='"+id+"'><div class='directory-sign' onclick='change_sign("+id+")'>"+sign+"</div>"+
            "<div class='directory-image-name' onclick='show_files("+id+")' onmousedown='rightclick_handle(event,"+id+",\"dir\");'>"+
-           "<span class='glyphicon glyphicon-"+image+"'></span>&nbsp;&nbsp;"+(d==''?'root':d)+"</div></div>\n";
+           "<span class='glyphicon glyphicon-"+image+"'></span>&nbsp;&nbsp;"+(d==''?'<span class="label label-info">STATIC_ROOT</span>':d)+"</div></div>\n";
      if(ds[d]['open']=='yes')
        html+="<div style='padding-left:15px'>"+show_directories(ds[d]['dirs'])+"</div>\n";
   }

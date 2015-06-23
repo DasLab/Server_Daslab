@@ -5,7 +5,7 @@
 
 {% block content %}
 	<div id="content-main">
-		<iframe src="/admin/browse" class="well" id="iframe"></iframe>
+		<iframe src="/admin/browse" class="well" id="iframe" scrolling="no"></iframe>
 		
 	</div>
 {% endblock %}
@@ -15,7 +15,8 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#iframe").css("width", parseInt($("#content").css("width")) - 50);
-			$("#iframe").css("height", 600);
+			// $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
+			$("#iframe").css("height", 800);
 			$("ul.breadcrumb").append('<li class="active"><a href="/admin/doc">Directory Browser</a></li>');
 		});
 	</script>

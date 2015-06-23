@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 MEDIA_ROOT = BASE_DIR
+FILEMANAGER_STATIC_ROOT = MEDIA_ROOT + '/media/admin/'
 # MEDIA_ROOT = os.path.join(os.path.abspath("."))
 
 from django.utils.translation import ugettext_lazy as _
