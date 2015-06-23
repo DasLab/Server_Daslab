@@ -5,6 +5,8 @@ $(document).ready(function () {
 
 	$("label.required").css("font-weight", "bold");
 	$("#left-nav>ul>li>ul").css("display", "block");
+	$("table").addClass("table-hover").removeClass("table-bordered table-condensed");
+	$('[scope="col"]').addClass("info");
 
 	$("a.deletelink").css("box-sizing", "border-box");
 	$("input").addClass("form-control");
@@ -17,19 +19,20 @@ $(document).ready(function () {
 		if ($(this).next().is("label")) {
 			$(this).prependTo($(this).next());
 		} else {
-			$(this).parent().removeClass("checkbox")
-			$(this).removeClass("form-control")
-			$(this).next().css("padding-left", "10px")
+			$(this).parent().removeClass("checkbox");
+			$(this).removeClass("form-control");
+			$(this).next().css("padding-left", "10px");
 		}
 	});
 	$('p.file-upload>a').each(function() {
-		$(this).replaceWith('<div class="form-inline"><label>Current:</label><input class="form-control" disabled="disabled" style="cursor:text;" value="' + $(this).attr("href") + '">&nbsp;&nbsp;<a href="'+ $(this).attr("href") + '" class="btn btn-default" target="_blank">View</a></div>');
+		$(this).replaceWith('<div class="form-inline"><label>Current:&nbsp;&nbsp;</label><input class="form-control" disabled="disabled" style="cursor:text;" value="' + $(this).attr("href") + '">&nbsp;&nbsp;<a href="'+ $(this).attr("href") + '" class="btn btn-default" target="_blank">View</a></div>');
 	});
 	$('.clearable-file-input').each(function() {
-		$(this).appendTo($(this).prev())
-	})
+		$(this).appendTo($(this).prev());
+		$(this).children().contents().filter(function () {return this.data === "Clear";}).replaceWith("&nbsp;&nbsp;<span class='glyphicon glyphicon-remove-sign'></span>&nbsp;Clear");
+	});
 	$('input[type="file"').each(function() {
-		$('<div class="form-inline"><label>Change:</label><input id="' + $(this).attr("id") + '_disp" class="form-control" placeholder="No file chosen" disabled="disabled" style="cursor:text;"/>&nbsp;&nbsp;<div id="' + $(this).attr("id") + '_btn" class="fileUpload btn btn-info"><span>&nbsp;&nbsp;Browse&nbsp;&nbsp;</span></div>').insertAfter(this);
+		$('<div class="form-inline"><label>Change:&nbsp;&nbsp;</label><input id="' + $(this).attr("id") + '_disp" class="form-control" placeholder="No file chosen" disabled="disabled" style="cursor:text;"/>&nbsp;&nbsp;<div id="' + $(this).attr("id") + '_btn" class="fileUpload btn btn-info"><span>&nbsp;&nbsp;Browse&nbsp;&nbsp;</span></div>').insertAfter(this);
 		$(this).detach().appendTo('#' + $(this).attr("id") + '_btn');
 
         $(this).on("change", function () {
@@ -157,7 +160,7 @@ $(document).ready(function () {
 		$("th.column-is_superuser>div.text>a").html('<span class="glyphicon glyphicon-king"></span>&nbsp;Admin');
 
 		$("img[src$='/static/admin/img/icon-yes.gif']").each(function() {
-			var newElem = $('<span class="label label-success"><span class="glyphicon glyphicon-ok-sign"></span></span>');
+			var newElem = $('<span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span>');
 			$(this).replaceWith(newElem);
 		});
 		$("img[src$='/static/admin/img/icon-no.gif']").each(function() {
@@ -167,12 +170,25 @@ $(document).ready(function () {
 	
 	}
 
+	$(".left-nav>ul").addClass("nav nav-pills nav-stacked");
+	$(".left-nav>ul>li.active>a").css("background-color", "#5496d7");
+	$(".left-nav>ul>li.active>a").css("font-size", 20);
+	$(".left-nav>ul>li>ul>li.active>a").css("color", "#fff");
+	$(".left-nav>ul>li>ul>li.active>a").css("background-color", "#ff912e");
+
+	$('i[class^="icon"]').each(function() {
+		$(this).replaceWith('<span class="glyphicon glyph' + $(this).attr("class") + '"></span>&nbsp;&nbsp;');
+	});
+	$(".form-search>span.glyphicon").remove();
+	$(".form-search>input.submit").attr("id", "search_submit");
+	$("#search_submit").replaceWith("<button type='submit' class='submit form-control' id='search_submit' style='border:none;'><span class='glyphicon glyphicon-search'></span>&nbsp;</button>");
+
 });
 
 
 $(window).load(function () {
 	setTimeout(function() {
-	    if ($(location).attr("href").indexOf("admin/auth/user") == -1) {
+		if ($(location).attr("href").indexOf("admin/auth/user") == -1) {
 			$(".vDateField").each(function () {
 				$(this).next().detach().appendTo($(this).parent());
 				$(this).removeAttr("size");
@@ -180,19 +196,26 @@ $(window).load(function () {
 				$(this).parent().addClass("input-group").removeClass("");
 				$('<div class="input-group-btn"><a class="btn btn-default" id="' + $(this).attr("id") + '_cal"><span class="glyphicon glyphicon-calendar"></span></a></div><div class="input-group-btn"><a class="btn btn-primary" id="' + $(this).attr("id") + '_today">Today</a></div>').insertAfter($(this));
 				$(this).css("width", "auto");
-				$('#' + $(this).attr("id") + '_cal').attr("href", $(this).parent().next().children().last().attr("href"));
+
+				if ($(this).parent().next().hasClass("datetimeshortcuts")) {
+					var elem = $(this).parent().next();
+				} else {
+					$('<br><br>').insertBefore($(this).parent().next());
+					var elem = $(this).siblings().last();
+				}
+				$('#' + $(this).attr("id") + '_cal').attr("href", elem.children().last().attr("href"));
 				$('#' + $(this).attr("id") + '_cal').on("click", function() {
 					var self = $(this);
 					setTimeout(function () {
 						$(".calendarbox.module").css("left", self.offset().left);
 						$(".calendarbox.module").css("top", self.offset().top + 50);
-					}, 50)
-				})
-				$('#' + $(this).attr("id") + '_today').attr("href", $(this).parent().next().children().first().attr("href"));
+					}, 50);
+				});
+				$('#' + $(this).attr("id") + '_today').attr("href", elem.children().first().attr("href"));
 
-				$(this).parent().next().css("display", "none");
+				elem.css("display", "none");
 			});
 		}
 	}, 50);
 
-})
+});

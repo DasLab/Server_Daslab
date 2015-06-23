@@ -5,13 +5,15 @@
 
 {% block content %}
 	<div id="content-main">
-		<table class="table-overview applist">
-			<tr>
-                <th scope="row"><b><span class="glyphicon glyphicon-globe"></span> Link</th>
-                <td><a href="/server-status/" class="addlink icon">http://daslab.stanford.edu/server-status/</a></td>
-                <td><span class="glyphicon glyphicon-lock"></span> Apache Autherization Required</td>
-              </tr>
-		</table>
+		<div class="col-md-6">
+			<table class="table table-overview applist">
+				<tr>
+	                <th scope="row"><b><span class="glyphicon glyphicon-globe"></span> Link</th>
+	                <td class="active"><a href="/server-status/" class="addlink icon">http://daslab.stanford.edu/server-status/</a></td>
+	                <td class="active"><span class="glyphicon glyphicon-lock"></span> Apache Autherization Required</td>
+	              </tr>
+			</table>
+		</div>
 		
 		<iframe src="/server-status/" class="well" id="iframe"></iframe>
 	</div>

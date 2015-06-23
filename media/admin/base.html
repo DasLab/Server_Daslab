@@ -5,10 +5,10 @@
   <title>{% block title %}Das Lab Website Administration{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}"/>
 
+  <link rel="stylesheet" type="text/css" href="/site_media/css/suit.css" media="all">
   <link rel="stylesheet" type="text/css" href="/site_media/css/bootstrap.min.css" media="all"/>
   <link rel="stylesheet" type="text/css" href="/site_media/css/theme.css" media="all"/>
   <link rel="stylesheet" type="text/css" href="/site_media/css/palette.css" media="all"/>
-  <link rel="stylesheet" type="text/css" href="/site_media/css/suit.css" media="all">
   {% block extrastyle %}{% endblock %}
   {% if LANGUAGE_BIDI %}
   <link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}"/>
