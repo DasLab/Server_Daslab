@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.forms import ModelForm, widgets
+from django.forms import ModelForm, widgets, DateField, DateInput
 from django.utils.html import format_html
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -23,20 +23,11 @@ UserAdmin.ordering = ('-is_superuser', '-is_staff', 'username')
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
-class NewsForm(ModelForm):
-    class Meta:
-        widgets = {
-            'date': SuitDateWidget,
-            'content': widgets.Textarea(attrs={'style':'width: 90%','rows':'6' }),
-            'link': widgets.TextInput(attrs={'style':'width: 90%' }),
-            # 'link': EnclosedInput(prepend='icon-user', attrs={'style':'width: 90%' }),
-            'video': widgets.TextInput(attrs={'style':'width: 90%' }),
-        }
 
 class NewsAdmin(admin.ModelAdmin):
     list_display = ('date', 'content', 'link',)
     ordering = ('-date',)
-    form = NewsForm
+    # form = NewsForm
     readonly_fields = ('image_tag',)
 
     fieldsets = [
@@ -45,20 +36,9 @@ class NewsAdmin(admin.ModelAdmin):
     ]
 admin.site.register(News, NewsAdmin)
 
-
-class MemberForm(ModelForm):
-    class Meta:
-        widgets = {
-            'role': widgets.TextInput(attrs={'style':'width: 90%' }),
-            'more_info': widgets.TextInput(attrs={'style':'width: 90%' }),
-            'description': widgets.TextInput(attrs={'style':'width: 90%' }),
-            'department': widgets.TextInput(attrs={'style':'width: 90%' }),
-        }
-
 class MemberAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'year', 'joint_lab', 'affiliation',)
     ordering = ('alumni', 'last_name', 'role',)
-    form = MemberForm
     readonly_fields = ('image_tag',)
 
     fieldsets = [
@@ -68,23 +48,9 @@ class MemberAdmin(admin.ModelAdmin):
     ]
 admin.site.register(Member, MemberAdmin)
 
-
-class PublicationForm(ModelForm):
-    class Meta:
-        widgets = {
-            'display_date': SuitDateWidget,
-            'authors': widgets.Textarea(attrs={'style':'width: 90%','rows':'4' }),
-            'title': widgets.Textarea(attrs={'style':'width: 90%','rows':'4' }),
-            'journal': widgets.TextInput(attrs={'style':'width: 90%' }),
-            'link': widgets.TextInput(attrs={'style':'width: 90%' }),
-            'extra_link': widgets.TextInput(attrs={'style':'width: 90%' }),
-            'extra_link_2': widgets.TextInput(attrs={'style':'width: 90%' }),
-        }
-
 class PublicationAdmin(admin.ModelAdmin):
     list_display = ('year', 'journal', 'authors', 'title', 'link',)
     ordering = ('-display_date',)
-    form = PublicationForm
     readonly_fields = ('image_tag',)
 
     fieldsets = [
@@ -97,35 +63,18 @@ admin.site.register(Publication, PublicationAdmin)
 
 ############################################################################################################################################
 
-class FlashSlideForm(ModelForm):
-    class Meta:
-        widgets = {
-            'date': SuitDateWidget,
-            'link': widgets.TextInput(attrs={'style':'width: 90%' }),
-        }
-
 class FlashSlideAdmin(admin.ModelAdmin):
     list_display = ('date', 'link',)
     ordering = ('-date',)
-    form = FlashSlideForm
 
     fieldsets = [
         (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'link']}),
     ]
 admin.site.register(FlashSlide, FlashSlideAdmin)
 
-
-class RotationStudentForm(ModelForm):
-    class Meta:
-        widgets = {
-            'date': SuitDateWidget,
-            'title': widgets.TextInput(attrs={'style':'width: 90%' }),
-        }
-
 class RotationStudentAdmin(admin.ModelAdmin):
     list_display = ('date', 'full_name', 'title',)
     ordering = ('-date',)
-    form = RotationStudentForm
 
     fieldsets = [
         (format_html('<span class="glyphicon glyphicon-user"></span>&nbsp;Personal Information'), {'fields': ['date', 'full_name', 'title']}),
@@ -133,38 +82,18 @@ class RotationStudentAdmin(admin.ModelAdmin):
     ]
 admin.site.register(RotationStudent, RotationStudentAdmin)
 
-
-class EternaYoutubeForm(ModelForm):
-    class Meta:
-        widgets = {
-            'date': SuitDateWidget,
-            'link': widgets.TextInput(attrs={'style':'width: 90%' }),
-            'title': widgets.TextInput(attrs={'style':'width: 90%' }),
-        }
-
 class EternaYoutubeAdmin(admin.ModelAdmin):
     list_display = ('date', 'presenter', 'title', 'link',)
     ordering = ('-date',)
-    form = EternaYoutubeForm
 
     fieldsets = [
         (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'presenter', 'title', 'link']}),
     ]
 admin.site.register(EternaYoutube, EternaYoutubeAdmin)
 
-
-class PresentationForm(ModelForm):
-    class Meta:
-        widgets = {
-            'date': SuitDateWidget,
-            'link': widgets.TextInput(attrs={'style':'width: 90%' }),
-            'title': widgets.TextInput(attrs={'style':'width: 90%' }),
-        }
-
 class PresentationAdmin(admin.ModelAdmin):
     list_display = ('date', 'presenter', 'title',)
     ordering = ('-date',)
-    form = PresentationForm
 
     fieldsets = [
         (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'presenter', 'title', 'ppt', 'link']}),

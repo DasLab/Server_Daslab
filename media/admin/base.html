@@ -4,26 +4,32 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>{% block title %}Das Lab Website Administration{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}"/>
-  <!-- <link rel="stylesheet" type="text/css" href="{% static 'suit/bootstrap/css/bootstrap.min.css' %}" media="all"/> -->
+
   <link rel="stylesheet" type="text/css" href="/site_media/css/bootstrap.min.css" media="all"/>
+  <link rel="stylesheet" type="text/css" href="/site_media/css/theme.css" media="all"/>
   <link rel="stylesheet" type="text/css" href="/site_media/css/palette.css" media="all"/>
-  <link rel="stylesheet" type="text/css" href="{% static 'suit/css/suit.css' %}" media="all">
+  <link rel="stylesheet" type="text/css" href="/site_media/css/suit.css" media="all">
   {% block extrastyle %}{% endblock %}
-  {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}"/>{% endif %}
+  {% if LANGUAGE_BIDI %}
+  <link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}"/>
+  {% endif %}
+  
   <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
-  <!-- <script src="{% static 'suit/js/jquery-1.8.3.min.js' %}"></script> -->
   <script src="/site_media/js/jquery-1.11.3.min.js"></script>
   <script type="text/javascript">var Suit = { $: $.noConflict() }; if (!$) $ = Suit.$; </script>
-  <script src="{% static 'suit/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="/site_media/js/bootstrap.min.js"></script>
+
   {% if 'SHOW_REQUIRED_ASTERISK'|suit_conf %}
   <style type="text/css">.required:after { content: '*'; margin: 0 0 0 5px; position: absolute; color: #ccc;}</style>
   {% endif %}
+
   {% block extrahead %}{% endblock %}
+
   {% block blockbots %}
-    <meta name="robots" content="NONE,NOARCHIVE"/>{% endblock %}
+  <meta name="robots" content="NONE,NOARCHIVE"/>
+  {% endblock %}
 
   <!-- <link rel="stylesheet" type="text/css" href="/site_media/css/sidebar.css" media="all"> -->
-  <script type="text/javascript" src="/site_media/js/tables.js"></script>
 
   <link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />
   <link rel="icon" type-"image/gif" href="/site_media/images/icon_daslab.png" />
@@ -38,70 +44,54 @@
 
   <!-- Container -->
   {% block container %}
-    <div id="container">
 
-      {% block header %}
-        {% if not is_popup %}
-          <!-- Header -->
-          <div id="header" class="header">
-            <div id="branding">
-              <a href="{% url 'admin:index' %}">
-                <h1 id="site-name" style="color:#29be92;">{% block branding %}{{ 'ADMIN_NAME'|suit_conf }}{% endblock %}
-                <span style="color:#ff5c2b;">Administration</span></h1>
-            </a>
-            </div>
+  <div class="navbar navbar-fixed-top" id="nav_load">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/admin" id="nav_logo">
+          &nbsp;&nbsp;<span id="site-name" style="color:#29be92;">{% block branding %}{{ 'ADMIN_NAME'|suit_conf }}{% endblock %}</span>&nbsp;
+          <span style="color:#ff5c2b;">Administration</span>&nbsp;&nbsp;
+        </a>
+      </div>
 
-            {% block header_time %}
-            <div class="header-content header-content-first">
-              <div class="header-column icon">
-                <span class="glyphicon glyphicon-calendar"></span>&nbsp;<br>
+      <div class="navbar-collapse collapse" >
+        <ul class="nav navbar-nav">
+          <li  id="nav_meetings">
+            <a style="text-decoration:none;">
+              <span style="color:#92d1ee;">
+                <span class="glyphicon glyphicon-calendar"></span>&nbsp;
+                <span class="date"> {% suit_date %}</span>&nbsp;&nbsp;
+              </span>
+              <span style="color:#fff; font-weight:bold;">
                 <span class="glyphicon glyphicon-time"></span>&nbsp;
-              </div>
-              <div class="header-column">
-                <span class="date" style="color:#92d1ee;"> {% suit_date %}</span><br>
                 <span class="time" id="clock">{% suit_time %}</span>
-              </div>
-            </div>
-            {% endblock %}
+              </span>
+            </a>
+          </li>
+        </ul>
 
-            {% block header_content %}
-<!--               <div class="header-content">
-                <div class="header-column icon">
-                  <span class="glyphicon glyphicon-comment"></i>
-                </div>
-                <div class="header-column">
-                  <a href="" class="grey"><b>2</b> new messages</a>
-                </div>
-              </div> -->
-            {% endblock %}
+        <div class="pull-right">
+          <ul class="nav navbar-nav">
+            <li class="clickable">
+              <span class="lead"><span class="label label-warning"><i><samp><small style="font-weight:normal;">{{user}}</small></samp></i></span></span>
+              &nbsp;&nbsp;
+              <button class="btn btn-success navbar-btn" style="color: #ffffff;" onclick="location.href='/password'">Change Password</button>
+              
+              <button class="btn btn-info navbar-btn" style="color: #ffffff;background-color: #5496d7; border-color: #7495c9;" onclick="location.href='/logout'">Sign Out</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            {% if user.is_active and user.is_staff %}
-              <div id="user-tools">
-                <em>{% trans 'Welcome,' %}</em>
-                <strong style="color:#ff0;">
-                  {% filter force_escape %}
-                    {% firstof user.first_name user.username %}{% endfilter %}</strong>.
-                <span class="user-links">
-                {% block userlinks %}
-                  {% url 'django-admindocs-docroot' as docsroot %}
-                  {% if docsroot %}
-                    <a href="{{ docsroot }}">{% trans 'Documentation' %}</a>
-                    <span class="separator">|</span>
-                  {% endif %}
-                  <a href="{% url 'admin:password_change' %}">{% trans 'Change Password' %}</a>
-                  <span class="separator">|</span>
-                  <a href="{% url 'admin:logout' %}">{% trans 'Log Out' %}</a>
-                {% endblock %}
-                </span>
-              </div>
-            {% endif %}
-            {% block nav-global %}{% endblock %}
-          </div>
-        {% endif %}
-        <!-- END Header -->
-      {% endblock %}
-
-
+    
       <div class="suit-columns {{ is_popup|yesno:'one-column,two-columns' }}">
 
         {% block content-center %}
@@ -186,37 +176,22 @@
 </div>
 
 {% block footer %}
-  {% if not is_popup %}
-  <div id="footer" class="footer">
-    <div class="content">
-      <div class="tools">
-        {% block footer_links %}
-          <a href="http://djangosuit.com/support/" target="_blank" class="icon"><span class="glyphicon glyphicon-question-sign"></span>&nbsp;Support</a>
-          <a href="http://djangosuit.com/pricing/" target="_blank" class="icon"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;Licence</a>
-          <a href="http://github.com/darklow/django-suit/issues" target="_blank" class="icon"><span class="glyphicon glyphicon-comment"></span>&nbsp;Report a bug</a>
-        {% endblock %}
-      </div>
+  <hr/>
+  <div class="container starter-template" id="footer">
 
-      <div class="copyright">
-        {% block copyright %}
-          Copyright &copy; 2013 DjangoSuit.com<br>Developed by <a href="http://djangosuit.com" target="_blank">DjangoSuit.com</a>
-        {% endblock %}
-      </div>
-
-      <div class="branding">{% block footer_branding %}
-        {% with 'ADMIN_NAME'|suit_conf as admin_name %}
-          <h2>{{ admin_name }}</h2>
-          {% if admin_name == 'Django Suit' %}
-            v{{ 'VERSION'|suit_conf }}
-          {% endif %}
-        {% endwith %}
-      {% endblock %}</div>
-    </div>
-  </div>
-  {% endif %}
 {% endblock %}
 
-  <script src="{% static 'suit/js/suit.js' %}"></script>
+  <script src="/site_media/js/suit.js"></script>
+  <script type="text/javascript" src="/site_media/js/tables.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#footer").load("/site_media/html/_footer.html", function () {
+        var today = new Date();
+        $("#cp_year").text(today.getFullYear());
+      });
+
+    });
+  </script>
   {% block extrajs %}{% endblock %}
 
 </body>

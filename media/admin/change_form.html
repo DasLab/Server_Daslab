@@ -16,7 +16,7 @@
 
   {% if 'CONFIRM_UNSAVED_CHANGES'|suit_conf %}
     <!-- Warn on leaving unsaved form -->
-    <script src="{% static 'suit/js/suit-form-confirm.js' %}"></script>
+    <script src="/site_media/js/suit-form-confirm.js"></script>
     <script type="text/javascript">
       confirmExitIfModified('{{ opts.module_name }}_form', '{% trans 'You have unsaved changes' %}.');
     </script>

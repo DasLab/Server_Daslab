@@ -1,4 +1,7 @@
 $(document).ready(function () {
+	// $('script[src="/static/admin/js/admin/DateTimeShortcuts.js"]').remove();
+	$('script[src="/static/admin/js/jquery.js"]').remove();
+	$('script[src="/static/admin/js/jquery.init.js"]').remove();
 
 	$("label.required").css("font-weight", "bold");
 	$("#left-nav>ul>li>ul").css("display", "block");
@@ -6,6 +9,42 @@ $(document).ready(function () {
 	$("a.deletelink").css("box-sizing", "border-box");
 	$("input").addClass("form-control");
 	$("select").addClass("form-control");
+	$("textarea").addClass("form-control");
+	$("span.add-on").html('<span class="glyphicon glyphicon-calendar"></span>').addClass("input-group-addon").removeClass("add-on");
+
+	$('input[type="checkbox"]').each(function() {
+		$(this).parent().addClass("checkbox");
+		if ($(this).next().is("label")) {
+			$(this).prependTo($(this).next());
+		} else {
+			$(this).parent().removeClass("checkbox")
+			$(this).removeClass("form-control")
+			$(this).next().css("padding-left", "10px")
+		}
+	});
+	$('p.file-upload>a').each(function() {
+		$(this).replaceWith('<div class="form-inline"><label>Current:</label><input class="form-control" disabled="disabled" style="cursor:text;" value="' + $(this).attr("href") + '">&nbsp;&nbsp;<a href="'+ $(this).attr("href") + '" class="btn btn-default" target="_blank">View</a></div>');
+	});
+	$('.clearable-file-input').each(function() {
+		$(this).appendTo($(this).prev())
+	})
+	$('input[type="file"').each(function() {
+		$('<div class="form-inline"><label>Change:</label><input id="' + $(this).attr("id") + '_disp" class="form-control" placeholder="No file chosen" disabled="disabled" style="cursor:text;"/>&nbsp;&nbsp;<div id="' + $(this).attr("id") + '_btn" class="fileUpload btn btn-info"><span>&nbsp;&nbsp;Browse&nbsp;&nbsp;</span></div>').insertAfter(this);
+		$(this).detach().appendTo('#' + $(this).attr("id") + '_btn');
+
+        $(this).on("change", function () {
+            $('#' + $(this).attr("id") + '_disp').val($(this).val().replace("C:\\fakepath\\", ""));
+        });
+		$('.file-upload').contents().filter(function () {return this.data === "Change: " | this.data === "Currently: ";}).remove();
+	});
+	$('input[disabled="disabled"]').each(function() {
+		$(this).width($(this).width()*3);
+	});
+
+	$(".toggle.descending").html('<span class="glyphicon glyphicon-chevron-up"></span>');
+	$(".toggle.ascending").html('<span class="glyphicon glyphicon-chevron-down"></span>');
+	$(".sortremove").html('<span class="glyphicon glyphicon-remove"></span>');
+	$(".sortoptions").addClass("pull-right").removeClass("sortoptions");
 
     if ($(location).attr("href").indexOf("admin/src/news") != -1) {
 		$("th.column-date").addClass("col-md-2");
@@ -129,3 +168,31 @@ $(document).ready(function () {
 	}
 
 });
+
+
+$(window).load(function () {
+	setTimeout(function() {
+	    if ($(location).attr("href").indexOf("admin/auth/user") == -1) {
+			$(".vDateField").each(function () {
+				$(this).next().detach().appendTo($(this).parent());
+				$(this).removeAttr("size");
+				$(this).next().detach().insertAfter($(this).parent());
+				$(this).parent().addClass("input-group").removeClass("");
+				$('<div class="input-group-btn"><a class="btn btn-default" id="' + $(this).attr("id") + '_cal"><span class="glyphicon glyphicon-calendar"></span></a></div><div class="input-group-btn"><a class="btn btn-primary" id="' + $(this).attr("id") + '_today">Today</a></div>').insertAfter($(this));
+				$(this).css("width", "auto");
+				$('#' + $(this).attr("id") + '_cal').attr("href", $(this).parent().next().children().last().attr("href"));
+				$('#' + $(this).attr("id") + '_cal').on("click", function() {
+					var self = $(this);
+					setTimeout(function () {
+						$(".calendarbox.module").css("left", self.offset().left);
+						$(".calendarbox.module").css("top", self.offset().top + 50);
+					}, 50)
+				})
+				$('#' + $(this).attr("id") + '_today').attr("href", $(this).parent().next().children().first().attr("href"));
+
+				$(this).parent().next().css("display", "none");
+			});
+		}
+	}, 50);
+
+})
