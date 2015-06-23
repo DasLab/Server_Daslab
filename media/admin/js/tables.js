@@ -1,5 +1,9 @@
 var $ = django.jQuery;
 
+function replace_path(string) {
+	return string.replace('/home/ubuntu/Server_DasLab/data/', '/site_data').replace('/MATLAB_Code/Daslab_server/data', '/site_data')
+}
+
 $(document).ready(function () {
 	// $('script[src="/static/admin/js/admin/DateTimeShortcuts.js"]').remove();
 	// $('script[src="/static/admin/js/jquery.js"]').remove();
@@ -27,14 +31,14 @@ $(document).ready(function () {
 		}
 	});
 	$('p.file-upload>a').each(function() {
-		$(this).replaceWith('<div class="form-inline"><label>Current:&nbsp;&nbsp;</label><input class="form-control" disabled="disabled" style="cursor:text;" value="' + $(this).attr("href") + '">&nbsp;&nbsp;<a href="'+ $(this).attr("href") + '" class="btn btn-default" target="_blank">View</a></div>');
+		$(this).replaceWith('<div class="form-inline"><label>Current:&nbsp;&nbsp;</label><input class="form-control" disabled="disabled" style="cursor:text;" value="' + $(this).attr("href") + '">&nbsp;&nbsp;<a href="'+ replace_path($(this).attr("href")) + '" class="btn btn-default" target="_blank"><span class="glyphicon glyphicon-download"></span>&nbsp;&nbsp;View&nbsp;&nbsp;</a></div>');
 	});
 	$('.clearable-file-input').each(function() {
 		$(this).appendTo($(this).prev());
 		$(this).children().contents().filter(function () {return this.data === "Clear";}).replaceWith("&nbsp;&nbsp;<span class='glyphicon glyphicon-remove-sign'></span>&nbsp;Clear");
 	});
 	$('input[type="file"').each(function() {
-		$('<div class="form-inline"><label>Change:&nbsp;&nbsp;</label><input id="' + $(this).attr("id") + '_disp" class="form-control" placeholder="No file chosen" disabled="disabled" style="cursor:text;"/>&nbsp;&nbsp;<div id="' + $(this).attr("id") + '_btn" class="fileUpload btn btn-info"><span>&nbsp;&nbsp;Browse&nbsp;&nbsp;</span></div>').insertAfter(this);
+		$('<div class="form-inline"><label>Change:&nbsp;&nbsp;</label><input id="' + $(this).attr("id") + '_disp" class="form-control" placeholder="No file chosen" disabled="disabled" style="cursor:text;"/>&nbsp;&nbsp;<div id="' + $(this).attr("id") + '_btn" class="fileUpload btn btn-info"><span><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Browse&nbsp;&nbsp;</span></div>').insertAfter(this);
 		$(this).detach().appendTo('#' + $(this).attr("id") + '_btn');
 
         $(this).on("change", function () {
@@ -43,7 +47,7 @@ $(document).ready(function () {
 		$('.file-upload').contents().filter(function () {return this.data === "Change: " | this.data === "Currently: ";}).remove();
 	});
 	$('input[disabled="disabled"]').each(function() {
-		$(this).width($(this).width()*3);
+		$(this).width($(this).width()*2.5);
 	});
 
 	$(".toggle.descending").html('<span class="glyphicon glyphicon-chevron-up"></span>');
@@ -196,13 +200,14 @@ $(window).load(function () {
 				$(this).removeAttr("size");
 				$(this).next().detach().insertAfter($(this).parent());
 				$(this).parent().addClass("input-group").removeClass("");
-				$('<div class="input-group-btn"><a class="btn btn-default" id="' + $(this).attr("id") + '_cal"><span class="glyphicon glyphicon-calendar"></span></a></div><div class="input-group-btn"><a class="btn btn-primary" id="' + $(this).attr("id") + '_today">Today</a></div>').insertAfter($(this));
+				$('<div class="input-group-btn"><a class="btn btn-default" id="' + $(this).attr("id") + '_cal"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Calendar&nbsp;&nbsp;</a></div><div class="input-group-btn"><a class="btn btn-primary" id="' + $(this).attr("id") + '_today"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Today&nbsp;&nbsp;</a></div>').insertAfter($(this));
 				$(this).css("width", "auto");
 
 				if ($(this).parent().next().hasClass("datetimeshortcuts")) {
 					var elem = $(this).parent().next();
 				} else {
-					$('<br><br>').insertBefore($(this).parent().next());
+					// $('<br><br>').insertBefore($(this).parent().next());
+					$(this).parent().next().css("display", "block")
 					var elem = $(this).siblings().last();
 				}
 				$('#' + $(this).attr("id") + '_cal').attr("href", elem.children().last().attr("href"));
