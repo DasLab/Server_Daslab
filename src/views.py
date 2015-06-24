@@ -162,6 +162,26 @@ def user_password(request):
 	else:
 		return render_to_response(PATH.HTML_PATH['password'], {'messages':''}, context_instance=RequestContext(request))
 
+def user_profile(request):
+	profile = Member.objects.filter(last_name=User.objects.get(username=request.user).last_name)
+	if len(profile) > 1:
+		profile = profile.filter(first_name=User.objects.get(username=request.user).first_name)
+	if len(profile) == 1:
+		profile = profile[0]
+		profile.image_link = os.path.basename(profile.image.name)
+		if not profile.description: profile.description = '(N/A)'
+		if not profile.department: profile.department = '(N/A)'
+		if not profile.more_info: profile.more_info = '(N/A)'
+		if not profile.joint_lab: profile.joint_lab = '(N/A)'
+		if not profile.start_year: profile.start_year = '(N/A)'
+		if not profile.finish_year: profile.finish_year = '(N/A)'
+		if profile.alumni:
+			profile.alumni = '<span class="label label-danger">Almuni</span>'
+		else:
+			profile.alumni = '<span class="label label-success">Current</span>'
+	else:
+		profile = []
+	return render_to_response(PATH.HTML_PATH['profile'], {'profile':profile}, context_instance=RequestContext(request))
 
 def user_logout(request):
 	logout(request)

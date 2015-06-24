@@ -1,0 +1,165 @@
+{% extends "media/html/_internal.html" %}
+{% block content %}
+<div class="starter-template">
+	<div class="container">
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h2 class="panel-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;Member Profile</h2>
+			</div>
+			<div class="panel-body" id="main">
+				<div class="row">
+					<div class="col-md-12">
+						<p class="lead">For profile changes, please contact site <span class="label label-success">admin</span>.</p>
+					</div>
+				</div>
+                <div class="row">
+                	<div class="col-md-4">
+                		{% if profile %}
+                		<img class="well center-block" src="/site_data/ppl_img/{{profile.image_link}}"/>
+                		{% else %}
+                		<div class="alert alert-danger">
+                			Your profile is not available in the <b>Member</b> database.
+                		</div>
+
+                		{% endif %}
+
+						<div id="nav_username" style="width:250px;" class="nav-list">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;
+							<kbd>{{ user.username }}</kbd>
+							<br/><br/>
+							<p>
+								<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;
+								Last Login: {{ user.last_login|date:"SHORT_DATE_FORMAT" }}
+							</p>
+							<p>
+								<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
+								Status:
+								<span class="label label-{% if user.is_active %}green{% else %}default{% endif %}">
+									<span class="glyphicon glyphicon-pawn" aria-hidden="true"></span>&nbsp;&nbsp;
+									Active
+								</span>
+							</p>
+							<p>
+								<span style="color:#fff;">
+									<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
+									Status:
+								</span>
+								<span class="label label-{% if user.is_staff %}violet{% else %}default{% endif %}">
+									<span class="glyphicon glyphicon-queen" aria-hidden="true"></span>&nbsp;&nbsp;
+									Staff
+								</span>
+							</p>
+							<p>
+								<span style="color:#fff;">
+									<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
+									Status:
+								</span>
+								<span class="label label-{% if user.is_superuser %}orange{% else %}default{% endif %}">
+									<span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;
+									Admin
+								</span>
+							</p>
+						</div>
+                	</div>
+                	<div class="col-md-8">
+                		<div class="row">
+		                    <div class="col-md-2"><b>First Name</b>: </div>
+		                    <div class="col-md-4"><input class="form-control" type="text" disabled value="{{profile.first_name}}" /></div>
+		                    <div class="col-md-2"><b>Last Name</b>: </div>
+		                    <div class="col-md-4"><input class="form-control" type="text" disabled value="{{profile.last_name}}" /></div>
+		                </div>
+		                <br>
+                		<div class="row">
+		                    <div class="col-md-2">
+		                    	<p><b>1<sup>st</sup> Title:</b> <br><i>(Role)</i></p>
+		                    </div>
+		                    <div class="col-md-10">
+		                    	<input class="form-control" type="text" disabled value="{{profile.role}}" />
+		                    </div>
+		                </div>
+		                <br>
+                		<div class="row">
+		                    <div class="col-md-2">
+		                    	<p><b>2<sup>nd</sup> Title:</b> <br><i>(Department)</i></p>
+		                    </div>
+		                    <div class="col-md-10">
+		                    	<input class="form-control" type="text" disabled value="{{profile.department}}" />
+		                    </div>
+		                </div>
+		                <br>
+                		<div class="row">
+		                    <div class="col-md-2">
+		                    	<p><b>3<sup>rd</sup> Title:</b> <br><i>(Additional)</i></p>
+		                    </div>
+		                    <div class="col-md-10">
+		                    	<input class="form-control" type="text" disabled value="{{profile.description}}" />
+		                    </div>
+		                </div>
+		                <hr>
+                		<div class="row">
+		                    <div class="col-md-2">
+		                    	<b>More Info:</b>
+		                    </div>
+		                    <div class="col-md-10">
+		                    	<div class="input-group">
+			                    	<input class="form-control" type="text" disabled value="{{profile.more_info}}" />
+									<span class="input-group-btn">
+										{% if profile.more_info %}
+										<button class="btn btn-inverse" type="button" onclick="window.open('{{profile.more_info}}')"><span class="glyphicon glyphicon-new-window"></span>&nbsp;</button>
+										{% else %}
+										<button class="btn btn-default" type="button" disabled><span class="glyphicon glyphicon-new-window"></span>&nbsp;</button>
+										{% endif %}
+									</span>
+								</div>
+		                    </div>
+		                </div>
+		                <br>
+                		<div class="row">
+		                    <div class="col-md-2"><b>Joint Lab</b>: </div>
+		                    <div class="col-md-4">
+		                    	<div class="input-group">
+			                    	<input class="form-control" type="text" disabled value="{{profile.joint_lab}}" />
+									<span class="input-group-btn">
+										{% if profile.joint_link %}
+										<button class="btn btn-inverse" type="button" onclick="window.open('{{profile.joint_link}}')"><span class="glyphicon glyphicon-new-window"></span>&nbsp;</button>
+										{% else %}
+										<button class="btn btn-default" type="button" disabled><span class="glyphicon glyphicon-new-window"></span>&nbsp;</button>
+										{% endif %}
+									</span>
+								</div>
+		                    </div>
+		                    <div class="col-md-2"><b>Alumni</b>: </div>
+		                    <div class="col-md-4"><span class="form-control" style="background-color:#eee;"> {% autoescape off %}{{profile.alumni}}{% endautoescape %}</span></div>
+		                </div>
+		                <br>
+                		<div class="row">
+		                    <div class="col-md-2"><b>Stary Year</b>: </div>
+		                    <div class="col-md-4"><input class="form-control" type="text" disabled value="{{profile.start_year}}" /></div>
+		                    <div class="col-md-2"><b>Finish Year</b>: </div>
+		                    <div class="col-md-4"><input class="form-control" type="text" disabled value="{{profile.finish_year}}" /></div>
+		                </div>
+		                <br>
+                	</div>
+                </div>
+
+			</div>
+		</div>
+
+
+	</div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.dropdown-toggle').removeClass("active");
+			// $("#nav_calendar").addClass("active");
+	    	$("#nav_logo").css("text-decoration","none");
+
+		});
+	</script>
+
+{% endblock %}

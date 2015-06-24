@@ -186,6 +186,7 @@ class SYS_PATH:
 
             'login': MEDIA_ROOT + '/media/html/_login.html',
             'password': MEDIA_ROOT + '/media/html/_password.html',
+            'profile': MEDIA_ROOT + '/media/html/_profile.html',
 
             'lab_meetings': MEDIA_ROOT + '/media/html/lab_meetings.html',
             'lab_calendar': MEDIA_ROOT + '/media/html/lab_calendar.html',

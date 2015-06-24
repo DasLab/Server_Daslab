@@ -39,6 +39,7 @@ urlpatterns = patterns('',
 
     (r'^login/$', views.user_login),
     (r'^password/$', views.user_password),
+    (r'^profile/$', views.user_profile),
     (r'^logout/$', views.user_logout),
     
     (r'^group/meetings/$', views.lab_meetings),

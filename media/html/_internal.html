@@ -50,17 +50,79 @@
 					</li>
 				</ul>
 
-				<div class="pull-right">
+				<div class="pull-right row">
 					<ul class="nav navbar-nav">
-						<li class="clickable">
-							<span class="lead"><span class="label label-warning"><i><samp><small style="font-weight:normal;">{{user}}</small></samp></i></span></span>
-							&nbsp;&nbsp;
-							<button class="btn btn-success navbar-btn" style="color: #ffffff;" onclick="location.href='/password'">Change Password</button>
-							
-							<button class="btn btn-info navbar-btn" style="color: #ffffff;background-color: #5496d7; border-color: #7495c9;" onclick="location.href='/logout'">Sign Out</button>
+						<li class="dropdown">
+							<button class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color: #ffffff;background-color: #5496d7; border-color: #7495c9;">
+								Account&nbsp;
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-right nav nav-pills nav-stacked" role="menu" id="nav_user">
+								<li class="nav-list">
+									<br/>
+									<p><span style="text-decoration:underline; color:gray;">Signed In As:</span></p>
+								</li>
+								<li id="nav_username" style="width:225px;" class="nav-list">
+									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;
+									<b>{{ user.first_name }} {{ user.last_name }}</b>
+									<br/>
+									<span class="glyphicon glyphicon-user" aria-hidden="true" style="color:#fff;"></span>&nbsp;&nbsp;
+									<kbd>{{ user.username }}</kbd>
+									<br/><br/>
+									<p>
+										<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;
+										Last Login: {{ user.last_login|date:"SHORT_DATE_FORMAT" }}
+									</p>
+									<p>
+										<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
+										Status:
+										<span class="label label-{% if user.is_active %}green{% else %}default{% endif %}">
+											<span class="glyphicon glyphicon-pawn" aria-hidden="true"></span>&nbsp;&nbsp;
+											Active
+										</span>
+									</p>
+									<p>
+										<span style="color:#fff;">
+											<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
+											Status:
+										</span>
+										<span class="label label-{% if user.is_staff %}violet{% else %}default{% endif %}">
+											<span class="glyphicon glyphicon-queen" aria-hidden="true"></span>&nbsp;&nbsp;
+											Staff
+										</span>
+									</p>
+									<p>
+										<span style="color:#fff;">
+											<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
+											Status:
+										</span>
+										<span class="label label-{% if user.is_superuser %}orange{% else %}default{% endif %}">
+											<span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;
+											Admin
+										</span>
+									</p>
+								</li>
+								<li class="divider"></li>
+								<li><a class="" href="/profile">
+									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
+									View Profile</a>
+								</li>
+								<li><a class="" href="/password">
+									<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;&nbsp;
+									Change Password</a>
+								</li>
+								<li class="divider"></li>
+								<li><a class="" href="/logout">
+									<span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;&nbsp;
+									Sign Out</a>
+								</li>
+
+							</ul>
 						</li>
 					</ul>
 				</div>
+
+	
 			</div>
 		</div>
 	</div>
