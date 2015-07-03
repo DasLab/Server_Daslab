@@ -21,10 +21,10 @@ def get_date_time(keyword):
 def backup_weekly():
 	os.popen('cd %s && python util_backup.py' % MEDIA_ROOT)
 	(t_cron, d_cron, t_now) = get_date_time('backup')
-	send_notify_emails('[System] {daslab.stanford.edu} Weekly Backup Notice', 'This is an automatic email notification for the success of scheduled weekly backup of the DasLab Website database and static contents.\n\nThe crontab job is scheduled at %s on every %sday.\n\nThe last system backup was performed at %s.\n\n' % (t_cron, d_cron, t_now))
+	send_notify_emails('[System] {daslab.stanford.edu} Weekly Backup Notice', 'This is an automatic email notification for the success of scheduled weekly backup of the DasLab Website database and static contents.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n' % (t_cron, d_cron, t_now))
 
 def grive_weekly():
 	os.popen('cd %s && python util_gdrive_sync.py' % MEDIA_ROOT)
 	(t_cron, d_cron, t_now) = get_date_time('grive')
-	send_notify_emails('[System] {daslab.stanford.edu} Weekly Sync Notice', 'This is an automatic email notification for the success of scheduled weekly sync of the DasLab Website backup contents to Google Drive account.\n\nThe crontab job is scheduled at %s on every %sday.\n\nThe last system backup was performed at %s.\n\n' % (t_cron, d_cron, t_now))
+	send_notify_emails('[System] {daslab.stanford.edu} Weekly Sync Notice', 'This is an automatic email notification for the success of scheduled weekly sync of the DasLab Website backup contents to Google Drive account.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n' % (t_cron, d_cron, t_now))
 
