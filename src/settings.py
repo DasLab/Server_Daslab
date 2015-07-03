@@ -226,6 +226,7 @@ CRONJOBS = [
     ('30 23 * * 5', 'src.cron.grive_weekly'),
 ]
 CRONTAB_LOCK_JOBS = True
+KEEP_BACKUP = 60
 
 LOGGING = {
     'version': 1,

@@ -11,9 +11,9 @@ print "#1: Backing up MySQL database..."
 os.popen('mysqldump --quick daslab -u root -pbeckman | gzip > %s/../mysql_dump.gz' % MEDIA_ROOT)
 print "    \033[92mSUCCESS\033[0m: \033[94mMySQL\033[0m database dumped."
 
-print "#2: Backing up all data files..."
+print "#2: Backing up static files..."
 os.popen('cd %s && tar zcf ../data_backup.tgz data/' % MEDIA_ROOT)
-print "    \033[92mSUCCESS\033[0m: all \033[94mdata\033[0m files synced."
+print "    \033[92mSUCCESS\033[0m: \033[94mstatic\033[0m files synced."
 
 print "#3: Backing up apache2 settings..."
 os.popen('cp -r /etc/apache2 %s' % MEDIA_ROOT)
