@@ -22,7 +22,7 @@ from t47_dev import *
 root = environ.Path(os.path.dirname(os.path.dirname(__file__)))
 MEDIA_ROOT = root()
 # MEDIA_ROOT = os.path.join(os.path.abspath("."))
-FILEMANAGER_STATIC_ROOT = root('media/admin')
+FILEMANAGER_STATIC_ROOT = root('media/admin') + '/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
