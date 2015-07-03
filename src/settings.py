@@ -50,6 +50,7 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = (
+    # 'sslserver',
     'django_crontab',
 
     'filemanager',
@@ -86,6 +87,8 @@ CMS_TEMPLATES = (
 )
 
 MIDDLEWARE_CLASSES = (
+    # 'sslify.middleware.SSLifyMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -244,6 +247,13 @@ LOGGING = {
         },
     },
 }
+
+
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!9g7%50idfw-=(ii6mr3kmt@a*&-b%32q^!a!tkrwt%%+p^iu#'
