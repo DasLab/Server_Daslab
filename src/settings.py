@@ -9,19 +9,20 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import environ
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-MEDIA_ROOT = BASE_DIR
-FILEMANAGER_STATIC_ROOT = MEDIA_ROOT + '/media/admin/'
-# MEDIA_ROOT = os.path.join(os.path.abspath("."))
 
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
 
+from src.path import SYS_PATH
 from t47_dev import *
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = T47_DEV
-TEMPLATE_DEBUG = DEBUG
+
+
+root = environ.Path(os.path.dirname(os.path.dirname(__file__)))
+MEDIA_ROOT = root()
+# MEDIA_ROOT = os.path.join(os.path.abspath("."))
+FILEMANAGER_STATIC_ROOT = root('media/admin')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -30,23 +31,28 @@ MEDIA_URL = ''
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_ROOT = '' #MEDIA_ROOT + '/media/'
-STATICFILES_DIRS = (MEDIA_ROOT + '/data', MEDIA_ROOT+'/media')
-# ADMIN_MEDIA_PREFIX = '/admin/'
+STATIC_ROOT = '' # MEDIA_ROOT + '/media/'
+STATICFILES_DIRS = (root('data'), root('media'))
 
-ADMINS = (
+
+# SECURITY WARNING: don't run with debug turned on in production!
+TEMPLATE_DEBUG = DEBUG = T47_DEV
+
+env = environ.Env(DEBUG=DEBUG,) # set default values and casting
+environ.Env.read_env('%s/env.conf' % MEDIA_ROOT) # reading .env file
+
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env('SECRET_KEY')
+
+MANAGERS = ADMINS = (
     ('Siqi Tian', 't47@stanford.edu'),
 )
-MANAGERS = ADMINS
+
 EMAIL_NOTIFY = ADMINS[0][1]
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'daslabsu@gmail.com'
-EMAIL_HOST_PASSWORD = 'l4bd4s2014'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+(EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_USE_TLS, EMAIL_PORT, EMAIL_HOST) = [v for k, v in env.email_url().items() if k in ['EMAIL_HOST_PASSWORD', 'EMAIL_HOST_USER', 'EMAIL_USE_TLS', 'EMAIL_PORT', 'EMAIL_HOST']]
 EMAIL_SUBJECT_PREFIX = '[Django] {daslab.stanford.edu}'
 
-ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = (
@@ -81,10 +87,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
 )
-gettext = lambda s: s
-CMS_TEMPLATES = (
-    ('default.html', gettext('default')),
-)
 
 MIDDLEWARE_CLASSES = (
     # 'sslify.middleware.SSLifyMiddleware',
@@ -108,8 +110,8 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 TEMPLATE_DIRS = (
-    MEDIA_ROOT + '/media/',
-    MEDIA_ROOT,
+    root('media'),
+    root(),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -151,14 +153,7 @@ WSGI_APPLICATION = 'src.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'daslab',                      # Or path to database file if using sqlite3.
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': 'beckman',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
+    'default': env.db_url(),
 }
 LOGIN_URL = '/login'
 
@@ -177,50 +172,6 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/"
-
-class SYS_PATH:
-    def __init__(self):
-        self.HTML_PATH = {
-            'index': MEDIA_ROOT + '/media/html/index.html',
-            'research': MEDIA_ROOT + '/media/html/research.html',
-            'news': MEDIA_ROOT + '/media/html/news.html',
-            'people': MEDIA_ROOT + '/media/html/people.html',
-            'publications': MEDIA_ROOT + '/media/html/publications.html',
-            'resources': MEDIA_ROOT + '/media/html/resources.html',
-            'contact': MEDIA_ROOT + '/media/html/contact.html',
-
-            'login': MEDIA_ROOT + '/media/html/_login.html',
-            'password': MEDIA_ROOT + '/media/html/_password.html',
-            'profile': MEDIA_ROOT + '/media/html/_profile.html',
-
-            'lab_meetings': MEDIA_ROOT + '/media/html/lab_meetings.html',
-            'lab_calendar': MEDIA_ROOT + '/media/html/lab_calendar.html',
-            'lab_resources': MEDIA_ROOT + '/media/html/lab_resources.html',
-            'lab_misc': MEDIA_ROOT + '/media/html/lab_misc.html',
-
-            'admin_apache': MEDIA_ROOT + '/media/admin/_apache.html',
-            'admin_dir': MEDIA_ROOT + '/media/admin/_dir.html',
-            'admin_doc': MEDIA_ROOT + '/media/admin/_doc.html',
-
-            '403': MEDIA_ROOT + '/media/html/_403.html',
-            '404': MEDIA_ROOT + '/media/html/_404.html',
-            '500': MEDIA_ROOT + '/media/html/_500.html',
-        }
-
-        self.DATA_DIR = {
-            'MEMBER_IMG_DIR': MEDIA_ROOT + '/data/ppl_img/',
-            'PUB_PDF_DIR': MEDIA_ROOT + '/data/pub_pdf/',
-            'PUB_IMG_DIR': MEDIA_ROOT + '/data/pub_img/',
-            'PUB_DAT_DIR': MEDIA_ROOT + '/data/pub_data/',
-            'NEWS_IMG_DIR': MEDIA_ROOT + '/data/news_img/',
-
-            'ROT_PPT_DIR': MEDIA_ROOT + '/data/rot_ppt/',
-            'ROT_DAT_DIR': MEDIA_ROOT + '/data/rot_data/',
-            'SPE_PPT_DIR': MEDIA_ROOT + '/data/spe_ppt/',
-
-            'TMPDIR': MEDIA_ROOT + '/temp/',
-
-        }
 PATH = SYS_PATH()
 
 
@@ -253,8 +204,3 @@ LOGGING = {
 # CSRF_COOKIE_SECURE = True
 # SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!9g7%50idfw-=(ii6mr3kmt@a*&-b%32q^!a!tkrwt%%+p^iu#'
-

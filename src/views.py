@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db import IntegrityError
 # from django.core.urlresolvers import reverse
-# from django.core.mail import send_mail
+from django.core.mail import send_mail
 from django.shortcuts import render, render_to_response, redirect
 # from django import forms
 
@@ -212,4 +212,7 @@ def error500(request):
 	return render_to_response(PATH.HTML_PATH['500'], {}, context_instance=RequestContext(request))
 
 
+def test(request):
+	send_mail('text', 'test', EMAIL_HOST_USER, [EMAIL_NOTIFY])
+	return HttpResponse(content="", status=200)
 
