@@ -222,8 +222,27 @@ PATH = SYS_PATH()
 
 
 CRONJOBS = [
-    ('*/1 * * * *', 'src.cron.backup_weekly')
+    ('0 23 * * 5', 'src.cron.backup_weekly'),
+    ('30 23 * * 5', 'src.cron.grive_weekly'),
 ]
+CRONTAB_LOCK_JOBS = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django_crontab.crontab': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!9g7%50idfw-=(ii6mr3kmt@a*&-b%32q^!a!tkrwt%%+p^iu#'
