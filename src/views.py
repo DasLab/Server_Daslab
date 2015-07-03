@@ -213,6 +213,7 @@ def error500(request):
 
 
 def test(request):
-	send_mail('text', 'test', EMAIL_HOST_USER, [EMAIL_NOTIFY])
+	raise ValueError
+	# send_mail('text', 'test', EMAIL_HOST_USER, [EMAIL_NOTIFY])
 	return HttpResponse(content="", status=200)
 

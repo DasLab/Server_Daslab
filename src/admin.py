@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from suit.widgets import EnclosedInput, SuitDateWidget
 
 from src.models import *
-from src.settings import PATH, MEDIA_ROOT
+from src.settings import PATH, MEDIA_ROOT, env
 
 import subprocess
 import sys
@@ -169,7 +169,7 @@ admin.site.register_view('sys_stat', view=sys_stat, visible=False)
 
 
 def apache(request):
-    return render_to_response(PATH.HTML_PATH['admin_apache'], {}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_apache'], {'cred':'%s:%s' % (env('APACHE_USER'), env('APACHE_PASSWORD'))}, context_instance=RequestContext(request))
 admin.site.register_view('apache', view=apache, visible=False)
 
 def dir(request):

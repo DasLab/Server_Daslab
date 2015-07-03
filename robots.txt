@@ -42,6 +42,7 @@ Disallow: /data/
 Disallow: /*.py
 Disallow: /*.pyc
 Disallow: /*.md
+Disallow: /*.conf
 
 # Paths (clean URLs)
 Disallow: /login/
