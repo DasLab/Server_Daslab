@@ -108,7 +108,7 @@ class Publication(models.Model):
     authors = models.TextField(help_text='<span class="glyphicon glyphicon-user"></span>&nbsp; Follow the format seen on the website: <span class="label label-inverse">Das, R.,</span>.')
     year = models.PositiveSmallIntegerField()
     display_date = models.DateField(verbose_name='Display Date', help_text='<span class="glyphicon glyphicon-random"></span>&nbsp; For display ordering within each year. Assign a virtual date as used when sorting.')
-    title = models.TextField(help_text='<i class="icon-bullhorn"></i> Only use upper-case for the first word.')
+    title = models.TextField(help_text='<i class="icon-bullhorn"></i> Do <span class="label label-danger">NOT</span> use "CamelCase / InterCaps / CapWords". Only capitalize the first word.')
     journal = models.CharField(max_length=255, blank=True, null=True, help_text='<span class="glyphicon glyphicon-home"></span>&nbsp; Use journal <span class="label label-danger">full</span> name. Capitalize each word.')
     volume = models.CharField(max_length=31, blank=True, null=True, help_text='<span class="glyphicon glyphicon-book"></span>&nbsp; Use <span class="label label-inverse">in press, epub available.</span> if not printed yet.')
     issue = models.CharField(max_length=31, blank=True, null=True)
@@ -154,7 +154,7 @@ class FlashSlide(models.Model):
 class RotationStudent(models.Model):
     date = models.DateField(verbose_name='Presentation Date')
     full_name = models.CharField(max_length=255, verbose_name='Full Name')
-    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Only use upper-case for the first word.')
+    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Do <span class="label label-danger">NOT</span> use "CamelCase / InterCaps / CapWords". Only capitalize the first word.')
     ppt = models.FileField(upload_to=get_rot_ppt, blank=True, max_length=255, verbose_name='Slides Upload', help_text='<span class="glyphicon glyphicon-film"></span>&nbsp; Link to slides on server. Use file name format <span class="label label-inverse">DATE_FULLNAME.pptx</span>: date in 8-digits(yyyymmdd), full name (no space). <span class="label label-success">Exampe</span>: 20120321_SiqiTian.pptx.')
     data = models.FileField(upload_to=get_rot_data, blank=True, max_length=255, verbose_name='Extra Data', help_text='<span class="glyphicon glyphicon-hdd"></span>&nbsp; Link to extra data file.')
 
@@ -166,7 +166,7 @@ class RotationStudent(models.Model):
 class EternaYoutube(models.Model):
     date = models.DateField(verbose_name='Presentation Date')
     presenter = models.CharField(max_length=255)
-    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Only use upper-case for the first word.')
+    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Do <span class="label label-danger">NOT</span> use "CamelCase / InterCaps / CapWords". Only capitalize the first word.')
     link = models.CharField(max_length=255, blank=True, verbose_name='YouTube URL', help_text='<span class="glyphicon glyphicon-facetime-video"></span>&nbsp; Shows as <b>"Link"</b> to redirect to youtube. <span class="label label-success">Example</span>: <u>https://www.youtube.com/watch?v=Lp_KozzV5Po</u>.')
 
     class Meta():
@@ -177,7 +177,7 @@ class EternaYoutube(models.Model):
 class Presentation(models.Model):
     date = models.DateField(verbose_name='Presentation Date')
     presenter = models.CharField(max_length=255)
-    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Only use upper-case for the first word.')
+    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Do <span class="label label-danger">NOT</span> use "CamelCase / InterCaps / CapWords". Only capitalize the first word.')
     ppt = models.FileField(upload_to=get_spe_ppt, blank=True, max_length=255, verbose_name='Slides Upload', help_text='<span class="glyphicon glyphicon-film"></span>&nbsp; Link to slides on server. <span class="label label-danger">NO</span> spaces in file name.')
     link = models.CharField(max_length=255, blank=True, verbose_name='URL', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp; Link to Google Doc Slides.')
 
