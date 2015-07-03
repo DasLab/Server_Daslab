@@ -50,6 +50,8 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = (
+    'django_crontab',
+
     'filemanager',
     'adminplus',
     'suit',
@@ -218,6 +220,10 @@ class SYS_PATH:
         }
 PATH = SYS_PATH()
 
+
+CRONJOBS = [
+    ('*/1 * * * *', 'src.cron.backup_weekly')
+]
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!9g7%50idfw-=(ii6mr3kmt@a*&-b%32q^!a!tkrwt%%+p^iu#'
