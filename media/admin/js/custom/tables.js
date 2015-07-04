@@ -10,7 +10,6 @@ $(document).ready(function () {
 	// $('script[src="/static/admin/js/jquery.init.js"]').remove();
 
 	$("label.required").css("font-weight", "bold");
-	$("#left-nav>ul>li>ul").css("display", "block");
 	$("table").addClass("table-hover").removeClass("table-bordered table-condensed");
 	$('[scope="col"]').addClass("info");
 
@@ -175,20 +174,6 @@ $(document).ready(function () {
 		});
 	
 	}
-
-	$(".left-nav>ul").addClass("nav nav-pills nav-stacked");
-	$(".left-nav>ul>li.active>a").css("background-color", "#5496d7");
-	$(".left-nav>ul>li.active>a").css("font-size", 20);
-	$(".left-nav>ul>li>ul>li.active>a").css("color", "#fff");
-	$(".left-nav>ul>li>ul>li.active>a").css("background-color", "#ff912e");
-
-	$('i[class^="icon"]').each(function() {
-		$(this).replaceWith('<span class="glyphicon glyph' + $(this).attr("class") + '"></span>&nbsp;&nbsp;');
-	});
-	$(".form-search>span.glyphicon").remove();
-	$(".form-search>input.submit").attr("id", "search_submit");
-	$("#search_submit").replaceWith("<button type='submit' class='submit form-control' id='search_submit' style='border:none;'><span class='glyphicon glyphicon-search'></span>&nbsp;</button>");
-
 
 });
 

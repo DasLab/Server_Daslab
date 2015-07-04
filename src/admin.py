@@ -170,14 +170,14 @@ admin.site.register_view('sys_stat', view=sys_stat, visible=False)
 
 def apache(request):
     return render_to_response(PATH.HTML_PATH['admin_apache'], {'cred':'%s:%s' % (env('APACHE_USER'), env('APACHE_PASSWORD'))}, context_instance=RequestContext(request))
-admin.site.register_view('apache', view=apache, visible=False)
+admin.site.register_view('apache/', view=apache, visible=False)
 
 def dir(request):
     return render_to_response(PATH.HTML_PATH['admin_dir'], {}, context_instance=RequestContext(request))
-admin.site.register_view('dir', view=dir, visible=False)
+admin.site.register_view('dir/', view=dir, visible=False)
 
 def doc(request):
     return render_to_response(PATH.HTML_PATH['admin_doc'], {}, context_instance=RequestContext(request))
-admin.site.register_view('doc', view=doc, visible=False)
+admin.site.register_view('doc/', view=doc, visible=False)
 
 

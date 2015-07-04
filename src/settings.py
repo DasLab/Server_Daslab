@@ -132,14 +132,21 @@ SUIT_CONFIG = {
     'MENU_OPEN_FIRST_CHILD': True, # Default True
     'MENU': (
         'sites',
-        {'label': 'Apache', 'icon':'icon-cog', 'url': '/admin/apache'},
-        {'label': 'Directory', 'icon':'icon-folder-open', 'url': '/admin/dir'},
+        {'label': 'System', 'icon':'icon-cog', 'models': [
+            {'label': 'Apache', 'icon':'icon-cog', 'url': '/admin/apache/'},
+            {'label': 'AWS', 'icon':'icon-cog', 'url': '/admin/aws/'},
+            {'label': 'GA', 'icon':'icon-cog', 'url': '/admin/ga/'},
+            {'label': 'Directory', 'icon':'icon-folder-open', 'url': '/admin/dir/'},
+            {'label': 'Backup', 'icon':'icon-cog', 'url': '/admin/backup/'},
+        ]},
         '-',
-        {'label': 'Authorization', 'icon':'icon-lock', 'models': ('auth.user', 'auth.group')},
-        {'label': 'Global Site', 'icon':'icon-globe', 'models': ('src.news', 'src.member', 'src.publication')},
-        {'label': 'Internal Site', 'icon':'icon-inbox', 'models': ('src.flashslide', 'src.eternayoutube', 'src.rotationstudent', 'src.presentation')},
+        {'label': 'Global Site', 'icon':'icon-globe', 'models': [
+            'src.news', 'src.member', 'src.publication',
+            {'label': 'Export', 'icon':'icon-cog', 'url': '/admin/export/'},
+        ]},
+        {'label': 'Internal Site', 'icon':'icon-inbox', 'models': ('auth.user', 'src.flashslide', 'src.eternayoutube', 'src.rotationstudent', 'src.presentation')},
         '-',
-        {'label': 'Documentation', 'icon':'icon-book', 'url': '/admin/doc'},
+        {'label': 'Documentation', 'icon':'icon-book', 'url': '/admin/doc/'},
     ),
 
     # misc
