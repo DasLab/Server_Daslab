@@ -9,7 +9,7 @@ $(document).ready(function() {
   $("lspan").remove();
 
   $.ajax({
-        url : "/site_data/sys_ver.txt",
+        url : "/site_data/stat_sys.txt",
         dataType: "text",
         success : function (data) {
         	var txt = data.split(/\t/);
@@ -41,20 +41,9 @@ $(document).ready(function() {
         	var cpu = txt[21].split(/\//);
         	$("#id_cpu").html('<span style="color:#f00;">' + cpu[0] + '</span> / <span style="color:#080;">' + cpu[1] + '</span> / <span style="color:#00f;">' + cpu[2] + '</span>');
 
-        	$("#id_news_n").html('<i>' + txt[22] + '</i>');
-        	$("#id_news_s").html('<span style="color:#00f;">' + txt[23] + '</span>');
-        	$("#id_member_n").html('<i>' + txt[24] + '</i>');
-        	$("#id_member_s").html('<span style="color:#00f;">' + txt[25] + '</span>');
-        	$("#id_pub_n").html('<i>' + txt[26] + '</i>');
-        	$("#id_pub_s").html('<span style="color:#00f;">' + txt[27] + '</span>');
-        	$("#id_rot_n").html('<i>' + txt[28] + '</i>');
-        	$("#id_rot_s").html('<span style="color:#00f;">' + txt[29] + '</span>');
-        	$("#id_spe_n").html('<i>' + txt[30] + '</i>');
-        	$("#id_spe_s").html('<span style="color:#00f;">' + txt[31] + '</span>');
-
-            $("#id_base_dir").html('<code>' + txt[32] + '</code>');
-            $("#id_media_root").html('<code>' + txt[33] + '</code>');
-            $("#id_static_root").html('<code>' + txt[34] + '</code>');
+            $("#id_base_dir").html('<code>' + txt[22] + '</code>');
+            $("#id_media_root").html('<code>' + txt[23] + '</code>');
+            $("#id_static_root").html('<code>' + txt[24] + '</code>');
     	}
     });
 

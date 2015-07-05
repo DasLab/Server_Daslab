@@ -1,8 +1,12 @@
 import os
+import simplejson
 import subprocess
 import sys
 
+from django.core.management import call_command
+
 from src.settings import MEDIA_ROOT
+from src.models import BackupForm
 
 
 def get_sys_stat():
@@ -56,7 +60,16 @@ def get_sys_stat():
     ver += subprocess.Popen('du -h --total %s | tail -1' % os.path.join(MEDIA_ROOT, '../*.*gz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
     ver += cpu + '\t'
 
-    ver += str(int(subprocess.Popen('ls -l %s | wc -l' % os.path.join(MEDIA_ROOT, 'data/news_img/'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()) - 1) + '\t'
+    ver += '%s\t%s\t%s\t' % (MEDIA_ROOT, MEDIA_ROOT + '/data', MEDIA_ROOT + '/media')
+
+    f = open(os.path.join(MEDIA_ROOT, 'data/stat_sys.txt'), 'w')
+    f.write(ver)
+    f.close()
+    subprocess.Popen('rm %s' % os.path.join(MEDIA_ROOT, 'data/temp.txt'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+
+def get_backup_stat():
+    ver = str(int(subprocess.Popen('ls -l %s | wc -l' % os.path.join(MEDIA_ROOT, 'data/news_img/'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()) - 1) + '\t'
     ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, 'data/news_img/'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
     ver += str(int(subprocess.Popen('ls -l %s | wc -l' % os.path.join(MEDIA_ROOT, 'data/ppl_img/'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()) - 1) + '\t'
     ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, 'data/ppl_img/'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
@@ -70,11 +83,59 @@ def get_sys_stat():
     ver += str(int(subprocess.Popen('ls -l %s | wc -l' % os.path.join(MEDIA_ROOT, 'data/spe_ppt/'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()) - 1) + '\t'
     ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, 'data/spe_ppt/'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
 
-    ver += '%s\t%s\t%s\t' % (MEDIA_ROOT, MEDIA_ROOT + '/data', MEDIA_ROOT + '/media')
+    ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, '../mysql_dump.gz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
+    ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, '../data_backup.tgz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
+    ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, '../apache2_backup.tgz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
+    ver += '%s\t%s\t%s\t' % (os.path.join(os.path.dirname(MEDIA_ROOT), 'mysql_dump.gz'), os.path.join(os.path.dirname(MEDIA_ROOT), 'data_backup.tgz'), os.path.join(os.path.dirname(MEDIA_ROOT), 'apache2_backup.tgz'))
 
-    f = open(os.path.join(MEDIA_ROOT, 'data/sys_ver.txt'), 'w')
+
+
+    f = open(os.path.join(MEDIA_ROOT, 'data/stat_backup.txt'), 'w')
     f.write(ver)
     f.close()
     subprocess.Popen('rm %s' % os.path.join(MEDIA_ROOT, 'data/temp.txt'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+
+def get_backup_form():
+    cron = subprocess.Popen('crontab -l | cut -d" " -f1-5', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()
+    day_backup = cron[4]
+    day_upload = cron[9]
+    time_backup = '%02d:%02d' % (int(cron[1]), int(cron[0]))
+    time_upload = '%02d:%02d' % (int(cron[6]), int(cron[5]))
+
+    json = {'day_backup':day_backup, 'day_upload':day_upload, 'time_backup':time_backup, 'time_upload':time_upload}
+    return simplejson.dumps(json)
+
+
+def set_backup_form(request):
+    time_backup = request.POST['time_backup'].split(':')
+    time_upload = request.POST['time_upload'].split(':')
+    day_backup = request.POST['day_backup']
+    day_upload = request.POST['day_upload']
+
+    cron_backup = '%s %s * * %s' % (time_backup[1], time_backup[0], day_backup)
+    cron_upload = '%s %s * * %s' % (time_upload[1], time_upload[0], day_upload)
+
+    f = open('%s/cron.conf' % MEDIA_ROOT, 'r')
+    lines = f.readlines()
+    f.close()
+
+    index =  [i for i, line in enumerate(lines) if 'src.cron.backup_weekly' in line or 'src.cron.gdrive_weekly' in line or 'KEEP_BACKUP' in line]
+    lines[index[0]] = '\t\t["%s", "src.cron.backup_weekly"],\n' % cron_backup
+    lines[index[1]] = '\t\t["%s", "src.cron.gdrive_weekly"]\n' % cron_upload
+    lines[index[2]] = '\t"KEEP_BACKUP": %s\n' % request.POST['keep']
+
+    f = open('%s/cron.conf' % MEDIA_ROOT, 'w')
+    f.writelines(lines)
+    f.close()
+    # try:
+    os.popen('crontab -r')
+    os.popen('cd %s && python manage.py crontab add' % MEDIA_ROOT)
+        # call_command('crontab', 'add')
+        # call_command('crontab', 'add')
+        # call_command('crontab', 'add')
+        # call_command('crontab', 'add')
+    # except:
+        # pass
 
 

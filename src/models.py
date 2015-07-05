@@ -186,3 +186,26 @@ class Presentation(models.Model):
         verbose_name_plural = 'Archived Presentations'
 
 
+############################################################################################################################################
+
+
+WEEKDAY_CHOICES = (
+    ('0', 'Sunday'),
+    ('1', 'Monday'),
+    ('2', 'Tuesday'),
+    ('3', 'Wednesday'),
+    ('4', 'Thursday'),
+    ('5', 'Friday'),
+    ('6', 'Saturday'),
+)
+
+class BackupForm(forms.Form):
+    # is_backup = forms.BooleanField()
+    # is_upload = forms.BooleanField()
+    time_backup = forms.TimeField(required=True)
+    time_upload = forms.TimeField(required=True)
+    day_backup = forms.ChoiceField(choices=WEEKDAY_CHOICES)
+    day_upload = forms.ChoiceField(choices=WEEKDAY_CHOICES)
+    keep = forms.IntegerField()
+
+

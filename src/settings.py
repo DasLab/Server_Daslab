@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import environ
 import os
+import simplejson
 
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
@@ -181,13 +182,10 @@ USE_TZ = True
 # Example: "/home/media/media.lawrence.com/"
 PATH = SYS_PATH()
 
-
-CRONJOBS = [
-    ('0 23 * * 5', 'src.cron.backup_weekly'),
-    ('30 23 * * 5', 'src.cron.grive_weekly'),
-]
-CRONTAB_LOCK_JOBS = True
-KEEP_BACKUP = 60
+env_cron = simplejson.load(open('%s/cron.conf' % MEDIA_ROOT))
+CRONJOBS = env_cron['CRONJOBS']
+CRONTAB_LOCK_JOBS = env_cron['CRONTAB_LOCK_JOBS']
+KEEP_BACKUP = env_cron['KEEP_BACKUP']
 
 LOGGING = {
     'version': 1,

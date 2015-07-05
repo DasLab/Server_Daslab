@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 # from suit.widgets import EnclosedInput, SuitDateWidget
 
 from src.models import *
-from src.settings import PATH, env
+from src.settings import PATH, CRONJOBS, env
 from src.console import *
 
 
@@ -106,9 +106,36 @@ def sys_stat(request):
     return HttpResponse('<html><body onLoad="window.close()"></body></html>')
 admin.site.register_view('sys_stat', view=sys_stat, visible=False)
 
+def backup_stat(request):
+    get_backup_stat()
+    return HttpResponse('<html><body onLoad="window.close()"></body></html>')
+admin.site.register_view('backup_stat', view=backup_stat, visible=False)
+
+def backup_form(request):
+    json = get_backup_form()
+    return HttpResponse(json, content_type='application/json')
+
+admin.site.register_view('backup_form', view=backup_form, visible=False)
+
+
 def apache(request):
     return render_to_response(PATH.HTML_PATH['admin_apache'], {'cred':'%s:%s' % (env('APACHE_USER'), env('APACHE_PASSWORD'))}, context_instance=RequestContext(request))
 admin.site.register_view('apache/', view=apache, visible=False)
+
+def backup(request):
+    flag = 0
+    if request.method == 'POST':
+        set_backup_form(request)
+        flag = 1
+
+    f = open('%s/cron.conf' % MEDIA_ROOT, 'r')
+    lines = f.readlines()
+    f.close()
+
+    index =  [i for i, line in enumerate(lines) if 'KEEP_BACKUP' in line][0]
+    keep = int(lines[index].split(':')[1])
+    return render_to_response(PATH.HTML_PATH['admin_backup'], {'form':BackupForm(), 'flag':flag, 'keep':keep}, context_instance=RequestContext(request))
+admin.site.register_view('backup/', view=backup, visible=False)
 
 def dir(request):
     return render_to_response(PATH.HTML_PATH['admin_dir'], {}, context_instance=RequestContext(request))

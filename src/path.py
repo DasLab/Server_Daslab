@@ -23,6 +23,7 @@ class SYS_PATH:
             'lab_misc': MEDIA_ROOT + '/media/html/lab_misc.html',
 
             'admin_apache': MEDIA_ROOT + '/media/admin/_apache.html',
+            'admin_backup': MEDIA_ROOT + '/media/admin/_backup.html',
             'admin_dir': MEDIA_ROOT + '/media/admin/_dir.html',
             'admin_doc': MEDIA_ROOT + '/media/admin/_doc.html',
 
