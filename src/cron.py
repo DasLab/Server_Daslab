@@ -1,5 +1,6 @@
 import datetime
 import os
+import subprocess
 
 from django.core.mail import send_mail
 
@@ -24,6 +25,8 @@ def backup_weekly():
 	send_notify_emails('[System] {daslab.stanford.edu} Weekly Backup Notice', 'This is an automatic email notification for the success of scheduled weekly backup of the DasLab Website database and static contents.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n' % (t_cron, d_cron, t_now))
 
 def gdrive_weekly():
+#	cron = subprocess.Popen('cd /var/www && drive', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0]
+#	raise ValueError
 	os.popen('cd %s && python util_gdrive_sync.py' % MEDIA_ROOT)
 	(t_cron, d_cron, t_now) = get_date_time('gdrive')
 	send_notify_emails('[System] {daslab.stanford.edu} Weekly Sync Notice', 'This is an automatic email notification for the success of scheduled weekly sync of the DasLab Website backup contents to Google Drive account.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n' % (t_cron, d_cron, t_now))
