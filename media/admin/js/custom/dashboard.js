@@ -1,4 +1,5 @@
 var $ = django.jQuery;
+var weekdayNames = new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
 
 $(document).ready(function() {
   $("ul.breadcrumb>li.active").text("System Dashboard");
@@ -47,6 +48,25 @@ $(document).ready(function() {
     	}
     });
 
+    $.ajax({
+        url : "/admin/backup_form",
+        dataType: "json",
+        success : function (data) {
+            $("#id_week_backup").html($("#id_week_backup").html() + '<br/>On <span class="label label-primary">' + data.time_backup + '</span> every <span class="label label-inverse">' + weekdayNames[data.day_backup] + '</span> (UTC)');
+            $("#id_week_upload").html($("#id_week_upload").html() + '<br/>On <span class="label label-primary">' + data.time_upload + '</span> every <span class="label label-inverse">' + weekdayNames[data.day_upload] + '</span> (UTC)');
+
+            if (data.time_backup) {
+                $("#id_week_backup_stat").html('<p class="lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></p>');
+            } else {
+                $("#id_week_backup_stat").html('<p class="lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></p>');
+            }
+            if (data.time_upload) {
+                $("#id_week_upload_stat").html('<p class="lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></p>');
+            } else {
+                $("#id_week_upload_stat").html('<p class="lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></p>');
+            }
+        }
+    });
 
 });
 

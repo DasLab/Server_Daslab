@@ -57,7 +57,7 @@ def get_sys_stat():
         mem_avail = [x for x in mem_str[2].split(' ') if x][-1]
         mem_used = [x for x in mem_str[2].split(' ') if x][-2]
     ver += '%s / %s' % (mem_avail, mem_used) + '\t'
-    ver += subprocess.Popen('du -h --total %s | tail -1' % os.path.join(MEDIA_ROOT, '../*.*gz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
+    ver += subprocess.Popen('du -h --total %s | tail -1' % os.path.join(MEDIA_ROOT, '../backup_*.*gz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
     ver += cpu + '\t'
 
     ver += '%s\t%s\t%s\t' % (MEDIA_ROOT, MEDIA_ROOT + '/data', MEDIA_ROOT + '/media')
@@ -83,12 +83,12 @@ def get_backup_stat():
     ver += str(int(subprocess.Popen('ls -l %s | wc -l' % os.path.join(MEDIA_ROOT, 'data/spe_ppt/'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()) - 1) + '\t'
     ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, 'data/spe_ppt/'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
 
-    ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, '../mysql_dump.gz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
-    ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, '../data_backup.tgz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
-    ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, '../apache2_backup.tgz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
-    ver += '%s\t%s\t%s\t' % (os.path.join(os.path.dirname(MEDIA_ROOT), 'mysql_dump.gz'), os.path.join(os.path.dirname(MEDIA_ROOT), 'data_backup.tgz'), os.path.join(os.path.dirname(MEDIA_ROOT), 'apache2_backup.tgz'))
+    ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, '../backup_mysql.gz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
+    ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, '../backup_static.tgz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
+    ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, '../backup_apache.tgz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
+    ver += '%s\t%s\t%s\t' % (os.path.join(os.path.dirname(MEDIA_ROOT), 'backup_mysql.gz'), os.path.join(os.path.dirname(MEDIA_ROOT), 'backup_static.tgz'), os.path.join(os.path.dirname(MEDIA_ROOT), 'backup_apache.tgz'))
 
-
+    ver += '~|~'.join(subprocess.Popen("drive list -q \"title contains 'DasLab_'\"", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:])
 
     f = open(os.path.join(MEDIA_ROOT, 'data/stat_backup.txt'), 'w')
     f.write(ver)

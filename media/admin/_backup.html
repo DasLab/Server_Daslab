@@ -13,7 +13,7 @@
             <h4 class="italic-title"><span class="glyphicon glyphicon-hdd"></span> {% trans 'Directory Status' %}</h4>
           </div>
           <div class="col-md-4">
-            <a href="/admin/backup_stat" target="_blank" class="btn btn-warning pull-right"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Refresh&nbsp;&nbsp;</a>            
+            <a href="/admin/backup_stat" class="btn btn-warning pull-right"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Refresh</a>            
           </div>
         </div>
       </div>
@@ -68,29 +68,37 @@
             <tr>
               <td id="id_apache_p"><span class="glyphicon glyphicon-grain"></span> Apache Setting</td><td id="id_apache_s"></td>
             </tr>
-            <tr class="active">
-              <th class="col-md-6"><span class="glyphicon glyphicon-time"></span> Last Activity</th>
-              <th class="col-md-6"><span class="glyphicon glyphicon-flag"></span> Status</th>
-            </tr>
-            <tr>
-              <td id="id_last_backup"><span class="glyphicon glyphicon-floppy-saved"></span> Weekly Backup</td>
-              <td><span class="label label-success"><span class="glyphicon glyphicon-ok-sign"></span></span></td>
-            </tr>
-            <tr>
-              <td id="id_last_sync"><span class="glyphicon glyphicon-floppy-open"></span> Sync to Google Drive</td>
-              <td><span class="label label-success"><span class="glyphicon glyphicon-ok-sign"></span></span></td>
-            </tr>
             <tr>
               <td></td><td></td>
             </tr>
           </tbody>
+        </table>
+
+        <h4 class="italic-title">
+          <span class="glyphicon glyphicon-cloud"></span> {% trans 'Google Drive' %}
+          <span class="pull-right">
+            <a href="http://drive.google.com" target="_blank" class="btn btn-warning">
+              <span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Google Drive
+            </a>
+          </span>
+        </h4>
+        <p>The <u>{{email}}</u> account is used for sync.</p>
+        <table class="table">
+          <thead>
+            <tr class="active">
+              <th class="col-md-6"><span class="glyphicon glyphicon-file"></span> File</th>
+              <th class="col-md-4"><span class="glyphicon glyphicon-time"></span> Time</th>
+              <th class="col-md-2"><span class="glyphicon glyphicon-share"></span> Size</th>
+            </tr>
+          </thead>
+          <tbody id="gdrive_list"></tbody>
         </table>
       </div>
 
       <div class="col-md-6">
         <br/>
         <h4 class="italic-title"><span class="glyphicon glyphicon-wrench"></span> {% trans 'Settings' %}</h4>
-        <div class="thumbnail">
+        <div class="thumbnail" style="margin-bottom:0px;">
           <form enctype="multipart/form-data" action="/admin/backup/" method="post">
             {% csrf_token %}
             <div class="form-group" style="padding:10px;margin-bottom:0px;">
@@ -190,9 +198,9 @@
             </div>
             <div class="row">
               <span class="pull-right">
-                <button type="submit" class="btn btn-info"/>&nbsp;&nbsp;Save&nbsp;&nbsp;</button>
+                <button type="submit" class="btn btn-info"/><span class="glyphicon glyphicon-ok-circle"></span>&nbsp;&nbsp;Save</button>
                 &nbsp;&nbsp;
-                <button type="button" class="btn btn-default" onclick="location.href='/'">&nbsp;&nbsp;Reset&nbsp;&nbsp;</button>
+                <button type="button" class="btn btn-default" onclick="location.href='/admin/backup'"><span class="glyphicon glyphicon-ban-circle"></span>&nbsp;&nbsp;Reset</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </span>
             </div>
@@ -200,6 +208,24 @@
 
           </form>
         </div>
+
+        <br/>
+        <div class="well">
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+              <p><b>Note</b>: This may take 1-2 minutes to complete.</p>
+            </div>
+            <div class="col-md-7">
+              <span class="pull-right">
+                <a href="/admin/backup_now" class="btn btn-danger"/><span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;&nbsp;Backup Now</a>
+                &nbsp;&nbsp;
+                <a href="/admin/upload_now" class="btn btn-blue"><span class="glyphicon glyphicon-floppy-open"></span>&nbsp;&nbsp;Upload Now</a>
+              </span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 

@@ -1,8 +1,7 @@
 var $ = django.jQuery;
+var weekdayNames = new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
 
 $(document).ready(function() {
-    var weekdayNames = new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-
     $("ul.breadcrumb>li.active").text("System Dashboard");
 
     $("#content").addClass("row").removeClass("row-fluid").removeClass("colM");
@@ -33,6 +32,20 @@ $(document).ready(function() {
             $("#id_mysql_p").html($("#id_mysql_p").html() + ':<code>' + txt[13] + '</code>');
             $("#id_static_p").html($("#id_static_p").html() + ':<code>' + txt[14] + '</code>');
             $("#id_apache_p").html($("#id_apache_p").html() + ':<code>' + txt[15] + '</code>');
+
+            var gdrive = txt[16].split(/~|~/);
+            var names = [], sizes = [], times = [];
+            for (var i = 0; i < gdrive.length; i += 12) {
+                names.push(gdrive[i+2]);
+                sizes.push(gdrive[i+4] + ' ' + gdrive[i+6]);
+                times.push(gdrive[i+8] + ' ' + gdrive[i+10]);
+            }
+            var html = '';
+            for (var i = 0; i < names.length; i++) {
+                html += '<tr><td><code>' + names[i] + '</code></td><td><span class="label label-primary">' + times[i] + '</span></td><td><span style="color:#00f;">' + sizes[i] + '</span></td></tr>'
+            }
+            html += '<tr><td></td><td></td><td></td></tr>'
+            $("#gdrive_list").html(html);
 
         }
     });

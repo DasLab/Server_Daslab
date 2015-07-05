@@ -16,7 +16,7 @@
             <h4 class="italic-title"><span class="glyphicon glyphicon-off"></span> {% trans 'System Status' %}</h4>
           </div>
           <div class="col-md-4">
-            <a href="/admin/sys_stat" target="_blank" class="btn btn-warning pull-right"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Refresh&nbsp;&nbsp;</a>            
+            <a href="/admin/sys_stat" class="btn btn-warning pull-right"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Refresh&nbsp;&nbsp;</a>            
           </div>
         </div>
         <table class="table">
@@ -111,10 +111,12 @@
               <th class="col-md-3"><span class="glyphicon glyphicon-scale"></span> Status</th>
             </tr>
             <tr>
-              <td><span class="glyphicon glyphicon-floppy-saved"></span> Weekly Backup</td><td id="id_week"></td>
+              <td id="id_week_backup"><span class="glyphicon glyphicon-floppy-saved"></span> Weekly Backup</td>
+              <td id="id_week_backup_stat"></td>
             </tr>
             <tr>
-              <td><span class="glyphicon glyphicon-floppy-open"></span> Sync to Google Drive</td><td id="id_gdrive"></td>
+              <td id="id_week_upload"><span class="glyphicon glyphicon-floppy-open"></span> Sync to Google Drive</td>
+              <td id="id_week_upload_stat"></td>
             </tr>
             <tr>
               <td></td><td></td>

@@ -3,7 +3,7 @@ from django.forms import ModelForm, widgets, DateField, DateInput
 from django.utils.html import format_html
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 # from django.contrib.admin import AdminSite
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -12,8 +12,9 @@ from django.contrib.auth.models import User
 # from suit.widgets import EnclosedInput, SuitDateWidget
 
 from src.models import *
-from src.settings import PATH, CRONJOBS, env
+from src.settings import PATH, CRONJOBS, EMAIL_HOST_USER, env
 from src.console import *
+from src.cron import *
 
 
 UserAdmin.list_display = ('username', 'email', 'last_login', 'is_active', 'is_staff', 'is_superuser')
@@ -103,12 +104,12 @@ admin.site.register(Presentation, PresentationAdmin)
 
 def sys_stat(request):
     get_sys_stat()
-    return HttpResponse('<html><body onLoad="window.close()"></body></html>')
+    return HttpResponseRedirect('/admin')
 admin.site.register_view('sys_stat', view=sys_stat, visible=False)
 
 def backup_stat(request):
     get_backup_stat()
-    return HttpResponse('<html><body onLoad="window.close()"></body></html>')
+    return HttpResponseRedirect('/admin/backup')
 admin.site.register_view('backup_stat', view=backup_stat, visible=False)
 
 def backup_form(request):
@@ -116,6 +117,17 @@ def backup_form(request):
     return HttpResponse(json, content_type='application/json')
 
 admin.site.register_view('backup_form', view=backup_form, visible=False)
+
+def backup_now(request):
+    backup_weekly()
+    return backup_stat(request)
+admin.site.register_view('backup_now', view=backup_now, visible=False)
+
+def upload_now(request):
+    gdrive_weekly()
+    return backup_stat(request)
+admin.site.register_view('upload_now', view=upload_now, visible=False)
+
 
 
 def apache(request):
@@ -134,7 +146,7 @@ def backup(request):
 
     index =  [i for i, line in enumerate(lines) if 'KEEP_BACKUP' in line][0]
     keep = int(lines[index].split(':')[1])
-    return render_to_response(PATH.HTML_PATH['admin_backup'], {'form':BackupForm(), 'flag':flag, 'keep':keep}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_backup'], {'form':BackupForm(), 'flag':flag, 'keep':keep, 'email':EMAIL_HOST_USER}, context_instance=RequestContext(request))
 admin.site.register_view('backup/', view=backup, visible=False)
 
 def dir(request):
