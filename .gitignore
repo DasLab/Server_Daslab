@@ -2,7 +2,6 @@ data/
 backup/
 *.pyc
 
-t47_dev.py
-env.conf
-cron.conf
+config/t47_dev.py
+config/*.conf
 

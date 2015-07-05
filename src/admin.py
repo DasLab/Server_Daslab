@@ -140,7 +140,7 @@ def backup(request):
         set_backup_form(request)
         flag = 1
 
-    f = open('%s/cron.conf' % MEDIA_ROOT, 'r')
+    f = open('%s/config/cron.conf' % MEDIA_ROOT, 'r')
     lines = f.readlines()
     f.close()
 

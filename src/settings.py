@@ -17,7 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
 
 from src.path import SYS_PATH
-from t47_dev import *
+from config.t47_dev import *
 
 
 root = environ.Path(os.path.dirname(os.path.dirname(__file__)))
@@ -40,7 +40,7 @@ STATICFILES_DIRS = (root('data'), root('media'))
 TEMPLATE_DEBUG = DEBUG = T47_DEV
 
 env = environ.Env(DEBUG=DEBUG,) # set default values and casting
-environ.Env.read_env('%s/env.conf' % MEDIA_ROOT) # reading .env file
+environ.Env.read_env('%s/config/env.conf' % MEDIA_ROOT) # reading .env file
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -182,7 +182,7 @@ USE_TZ = True
 # Example: "/home/media/media.lawrence.com/"
 PATH = SYS_PATH()
 
-env_cron = simplejson.load(open('%s/cron.conf' % MEDIA_ROOT))
+env_cron = simplejson.load(open('%s/config/cron.conf' % MEDIA_ROOT))
 CRONJOBS = env_cron['CRONJOBS']
 CRONTAB_LOCK_JOBS = env_cron['CRONTAB_LOCK_JOBS']
 KEEP_BACKUP = env_cron['KEEP_BACKUP']

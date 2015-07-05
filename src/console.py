@@ -8,6 +8,7 @@ from django.core.management import call_command
 from src.settings import MEDIA_ROOT, DEBUG
 from src.models import BackupForm
 
+
 def get_sys_stat():
     cpu = subprocess.Popen("uptime | sed 's/.*: //g' | sed 's/,/ \//g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
 
@@ -117,7 +118,7 @@ def set_backup_form(request):
     cron_backup = '%s %s * * %s' % (time_backup[1], time_backup[0], day_backup)
     cron_upload = '%s %s * * %s' % (time_upload[1], time_upload[0], day_upload)
 
-    f = open('%s/cron.conf' % MEDIA_ROOT, 'r')
+    f = open('%s/config/cron.conf' % MEDIA_ROOT, 'r')
     lines = f.readlines()
     f.close()
 
@@ -126,7 +127,7 @@ def set_backup_form(request):
     lines[index[1]] = '\t\t["%s", "src.cron.gdrive_weekly"]\n' % cron_upload
     lines[index[2]] = '\t"KEEP_BACKUP": %s\n' % request.POST['keep']
 
-    f = open('%s/cron.conf' % MEDIA_ROOT, 'w')
+    f = open('%s/config/cron.conf' % MEDIA_ROOT, 'w')
     f.writelines(lines)
     f.close()
     # try:
