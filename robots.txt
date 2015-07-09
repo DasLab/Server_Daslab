@@ -43,8 +43,7 @@ Disallow: /config/
 Disallow: /*.py
 Disallow: /*.pyc
 Disallow: /*.md
-Disallow: /*.conf
-Disallow: /*.example
+Disallow: /*.sh
 
 # Paths (clean URLs)
 Disallow: /login/
