@@ -1,8 +1,9 @@
+sudo chgrp -R www-data *
 sudo chown -R ubuntu *.py *.md *.txt src media config
 sudo chown -R www-data backup data
 
-sudo chmod 644 src/*.py* src/templatetags/*
-sudo chmod 755 src src/templatetags
+sudo chmod 640 src/*.py* src/templatetags/*
+sudo chmod 740 src src/templatetags
 sudo chmod 644 media/css/* media/fonts/* media/html/* media/js/* media/_old/* media/swf/*
 sudo chmod 755 media/css media/fonts media/html media/js media/_old media/swf
 sudo chmod 644 media/images/*.jpg media/images/*.png media/images/contact/* media/images/group/* media/images/home/* media/images/news/* media/images/people/* media/images/publications/* media/images/research/* media/images/resources/*
@@ -15,3 +16,7 @@ sudo chmod 755 backup
 sudo chmod 644 data/*.txt data/*.pdf data/news_img/* data/_old/* data/ppl_img/* data/pub_data/* data/pub_img/* data/pub_pdf/* data/rot_data/* data/rot_ppt/* data/spe_ppt/*
 sudo chmod 755 data data/news_img data/_old data/ppl_img data/pub_data data/pub_img data/pub_pdf data/rot_data data/rot_ppt data/spe_ppt
 
+sudo chmod 644 config/*.py* config/*.example
+sudo chmod 664 config/*.conf
+sudo chgrp www-data config/*.conf
+sudo chmod 755 config
