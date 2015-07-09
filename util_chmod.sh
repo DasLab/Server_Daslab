@@ -2,10 +2,6 @@ sudo chgrp -R www-data *
 sudo chown -R ubuntu *.py *.md *.txt src media config
 sudo chown -R www-data backup data
 
-sudo chgrp -R ubuntu *.sh
-sudo chown -R ubuntu *.sh
-sudo chmod -R 700 *.sh
-
 sudo chmod 640 *.py* *.md *.txt
 sudo chmod 640 src/*.py* src/templatetags/*
 sudo chmod 750 src src/templatetags
@@ -24,3 +20,7 @@ sudo chmod 750 data data/news_img data/_old data/ppl_img data/pub_data data/pub_
 sudo chmod 640 config/*.py* config/*.example config/*.conf
 sudo chown www-data config/*.conf 
 sudo chmod 750 config
+
+sudo chgrp -R ubuntu *.sh
+sudo chown -R ubuntu *.sh
+sudo chmod -R 700 *.sh
