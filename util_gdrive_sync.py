@@ -10,7 +10,7 @@ from src.settings import *
 
 t = datetime.datetime.now().strftime('%Y%m%d')
 gdrive_dir = 'echo'
-if not DEBUG: gdrive_dir = 'cd /var/www'
+if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
 prefix = ''
 if DEBUG: prefix = '_DEBUG'
 
