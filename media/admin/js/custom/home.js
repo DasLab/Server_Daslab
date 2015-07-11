@@ -35,12 +35,12 @@ $(document).ready(function() {
         	$("#id_virtualenv").html(txt[17]);
 
         	var disk_sp = txt[18].split(/\//);
-        	$("#id_disk_space").html('<span style="color:#080;">' + disk_sp[0] + '</span> / <span style="color:#f00;">' + disk_sp[1] + '</span>');
+        	$("#id_disk_space").html('<span style="color:#080;">' + disk_sp[0] + '</span> | <span style="color:#f00;">' + disk_sp[1] + '</span>');
         	var mem_sp = txt[19].split(/\//);
-        	$("#id_memory").html('<span style="color:#080;">' + mem_sp[0] + '</span> / <span style="color:#f00;">' + mem_sp[1] + '</span>');
+        	$("#id_memory").html('<span style="color:#080;">' + mem_sp[0] + '</span> | <span style="color:#f00;">' + mem_sp[1] + '</span>');
         	$("#id_backup").html('<span style="color:#00f;">' + txt[20] + '</span>');
         	var cpu = txt[21].split(/\//);
-        	$("#id_cpu").html('<span style="color:#f00;">' + cpu[0] + '</span> / <span style="color:#080;">' + cpu[1] + '</span> / <span style="color:#00f;">' + cpu[2] + '</span>');
+        	$("#id_cpu").html('<span style="color:#f00;">' + cpu[0] + '</span> | <span style="color:#080;">' + cpu[1] + '</span> | <span style="color:#00f;">' + cpu[2] + '</span>');
 
             $("#id_base_dir").html('<code>' + txt[22] + '</code>');
             $("#id_media_root").html('<code>' + txt[23] + '</code>');
