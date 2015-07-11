@@ -1,3 +1,5 @@
+sudo usermod -a -G www-data ubuntu
+
 sudo chgrp -R www-data *
 sudo chown -R ubuntu *.py *.md *.txt src media config
 sudo chown -R www-data backup data
