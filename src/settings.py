@@ -35,6 +35,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '' # MEDIA_ROOT + '/media/'
 STATICFILES_DIRS = (root('data'), root('media'))
 
+APACHE_ROOT = '/var/www'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 TEMPLATE_DEBUG = DEBUG = T47_DEV

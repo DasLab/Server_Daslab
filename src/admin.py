@@ -131,7 +131,8 @@ admin.site.register_view('upload_now', view=upload_now, visible=False)
 
 
 def apache(request):
-    return render_to_response(PATH.HTML_PATH['admin_apache'], {'cred':'%s:%s' % (env('APACHE_USER'), env('APACHE_PASSWORD'))}, context_instance=RequestContext(request))
+    table = restyle_apache()
+    return render_to_response(PATH.HTML_PATH['admin_apache'], {}, context_instance=RequestContext(request))
 admin.site.register_view('apache/', view=apache, visible=False)
 
 def backup(request):

@@ -2,10 +2,11 @@ import os
 import simplejson
 import subprocess
 import sys
+import urllib2
 
 from django.core.management import call_command
 
-from src.settings import MEDIA_ROOT, DEBUG
+from src.settings import MEDIA_ROOT, DEBUG, APACHE_ROOT, env
 from src.models import BackupForm
 
 
@@ -89,7 +90,7 @@ def get_backup_stat():
     ver += '%s\t%s\t%s\t' % (os.path.join(os.path.dirname(MEDIA_ROOT), 'backup/backup_mysql.gz'), os.path.join(os.path.dirname(MEDIA_ROOT), 'backup/backup_static.tgz'), os.path.join(os.path.dirname(MEDIA_ROOT), 'backup/backup_apache.tgz'))
 
     gdrive_dir = 'echo'
-    if not DEBUG: gdrive_dir = 'cd /var/www'
+    if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
     ver += '~|~'.join(subprocess.Popen("%s && drive list -q \"title contains 'DasLab_'\"" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:])
 
     f = open(os.path.join(MEDIA_ROOT, 'data/stat_backup.txt'), 'w')
@@ -139,5 +140,21 @@ def set_backup_form(request):
         # call_command('crontab', 'add')
     # except:
         # pass
+
+
+def restyle_apache():
+    password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
+    apache_url = "http://daslab.stanford.edu/server-status/"
+    password_mgr.add_password(None, apache_url, env('APACHE_USER'), env('APACHE_PASSWORD'))
+    handler = urllib2.HTTPBasicAuthHandler(password_mgr)
+    opener = urllib2.build_opener(handler)
+    urllib2.install_opener(opener)
+
+    request = urllib2.urlopen(apache_url)
+    response = request.read()
+
+    return 0
+    
+
 
 

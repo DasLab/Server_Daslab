@@ -4,7 +4,8 @@ import subprocess
 
 from django.core.mail import send_mail
 
-from src.settings import MEDIA_ROOT, CRONJOBS, EMAIL_NOTIFY, EMAIL_HOST_USER, DEBUG
+from src.settings import MEDIA_ROOT, CRONJOBS, EMAIL_NOTIFY, EMAIL_HOST_USER, DEBUG, APACHE_ROOT
+from src.console import *
 
 
 def send_notify_emails(msg_subject, msg_content):
@@ -31,6 +32,7 @@ def backup_weekly():
             html += '%s\t\t%s %s, %s\t\t%s\n' % (local_list[i+7], local_list[i+4], local_list[i+5], local_list[i+6], local_list[i+3])
 
         send_notify_emails('[System] {daslab.stanford.edu} Weekly Backup Notice', 'This is an automatic email notification for the success of scheduled weekly backup of the DasLab Website database and static contents.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n%s\n\nDasLab Website Admin\n' % (t_cron, d_cron, t_now, html))
+    get_backup_stat()
 
 
 def gdrive_weekly():
@@ -41,11 +43,12 @@ def gdrive_weekly():
         print "\033[94m Uploaded to Google Drive. \033[0m"
     else:
         gdrive_dir = 'echo'
-        if not DEBUG: gdrive_dir = 'cd /var/www'
+        if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
         gdrive_list = subprocess.Popen("%s && drive list -q \"title contains 'DasLab_'\"" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:]
         html = 'File\t\t\t\tTime\t\t\t\tSize\n\n'
         for i in range(0, len(gdrive_list), 6):
             html += '%s\t\t%s %s\t\t%s %s\n' % (gdrive_list[i+1], gdrive_list[i+4], gdrive_list[i+5], gdrive_list[i+2], gdrive_list[i+3])
 
         send_notify_emails('[System] {daslab.stanford.edu} Weekly Sync Notice', 'This is an automatic email notification for the success of scheduled weekly sync of the DasLab Website backup contents to Google Drive account.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n%s\n\nDasLab Website Admin\n' % (t_cron, d_cron, t_now, html))
+    get_backup_stat()
 
