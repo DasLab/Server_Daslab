@@ -1,7 +1,9 @@
+from datetime import datetime
 import os
 import simplejson
 import subprocess
 import sys
+import textwrap
 import urllib2
 
 from django.core.management import call_command
@@ -101,10 +103,13 @@ def get_backup_stat():
 
 def get_backup_form():
     cron = subprocess.Popen('crontab -l | cut -d" " -f1-5', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()
-    day_backup = cron[4]
-    day_upload = cron[9]
-    time_backup = '%02d:%02d' % (int(cron[1]), int(cron[0]))
-    time_upload = '%02d:%02d' % (int(cron[6]), int(cron[5]))
+    try:
+        day_backup = cron[4]
+        day_upload = cron[9]
+        time_backup = '%02d:%02d' % (int(cron[1]), int(cron[0]))
+        time_upload = '%02d:%02d' % (int(cron[6]), int(cron[5]))
+    except:
+        time_backup = time_upload = day_backup = day_upload = ''
 
     json = {'day_backup':day_backup, 'day_upload':day_upload, 'time_backup':time_backup, 'time_upload':time_upload}
     return simplejson.dumps(json)
@@ -151,9 +156,31 @@ def restyle_apache():
     urllib2.install_opener(opener)
 
     request = urllib2.urlopen(apache_url)
-    response = request.read()
+    response = request.read().split('\n')
 
-    return 0
+    title = 'Apache Server Status for <code>daslab.stanford.edu</code> (via <kbd>%s</kbd> )' % response[4].replace(')</h1>', '')[-13:]
+    ver = response[6].replace('<dl><dt>Server Version: Apache/', '').replace('(Ubuntu) mod_wsgi/', '').replace('Python/', '').replace('</dt>', '').split()
+    mpm = response[7].replace('<dt>Server MPM: ', '').replace('</dt>', '')
+    time_build = datetime.strftime(datetime.strptime(response[8].replace('<dt>Server Built: ', ''), '%b %d %Y %H:%M:%S'), '%Y-%m-%d (%A) %I:%M:%S %p (PDT)')
+    time_current = datetime.strftime(datetime.strptime(response[10].replace('<dt>Current Time: ', '').replace('</dt>', ''), '%A, %d-%b-%Y %H:%M:%S %Z'), '%Y-%m-%d (%A) %I:%M:%S %p (PDT)')
+    time_restart = datetime.strftime(datetime.strptime(response[11].replace('<dt>Restart Time: ', '').replace('</dt>', ''), '%A, %d-%b-%Y %H:%M:%S %Z'), '%Y-%m-%d (%A) %I:%M:%S %p (PDT)')
+    time_up = response[14].replace('<dt>Server uptime:  ', '').replace('</dt>', '').replace('hours', '<i>h</i>').replace('hour', '<i>h</i>').replace('minutes', '<i>min</i>').replace('minute', '<i>min</i>').replace('seconds', '<i>s</i>').replace('second', '<i>s</i>')
+
+    server_load = response[15].replace('<dt>Server load: ', '').replace('</dt>', '').replace(' ', ' / ')
+    total = response[16].replace('<dt>Total accesses: ', '').replace(' - Total Traffic:', '').replace('</dt>', '').split()
+    cpu = response[17].replace('<dt>CPU Usage: ', '').replace('% CPU load</dt>', '').replace(' -', '').split()
+    cpu_usage = '%.2f / %.2f / %.2f / %.2f' % (float(cpu[0][1:]), float(cpu[1][1:]), float(cpu[2][2:]), float(cpu[3][2:]))
+    cpu_load = '%1.4f' % float(cpu[4])
+    traffic = response[18].replace('<dt>', '').replace('kB/request</dt>', '').replace('requests/sec -', '').replace('B/second - ', '').split()
+    traffic = '%1.4f / %d / %.1f' % (float(traffic[0]), int(traffic[1]), float(traffic[2]))
+    workers = response[19].replace('<dt>', '').replace('requests currently being processed, ', '').replace('idle workers</dt>', '').split()
+    worker = '<p style="margin-bottom:0px;">' + '</p><p style="margin-bottom:0px;">'.join(textwrap.wrap(''.join(response[20:22]).replace('</dl><pre>', '').replace('</pre>', ''), 30)).replace('.', '<span class="label label-primary">.</span>').replace('_', '<span class="label label-inverse">_</span>').replace('S', '<span class="label label-default">S</span>').replace('R', '<span class="label label-violet">R</span>').replace('W', '<span class="label label-info">W</span>').replace('K', '<span class="label label-success">K</span>').replace('D', '<span class="label label-warning">D</span>').replace('C', '<span class="label label-danger">C</span>').replace('L', '<span class="label label-orange">L</span>').replace('G', '<span class="label label-green">G</span>').replace('I', '<span class="label label-brown">I</span>') + '</p>'
+
+    table = ''.join(response[40:len(response)-17]).replace('<td>.</td>', '<td><span class="label label-primary">.</span></td>').replace('<td>_</td>', '<td><span class="label label-inverse">_</span></td>').replace('<td><b>S</b></td>', '<td><span class="label label-default">S</span></td>').replace('<td><b>R</b></td>', '<td><span class="label label-violet">R</span></td>').replace('<td><b>W</b></td>', '<td><span class="label label-info">W</span></td>').replace('<td><b>K</b></td>', '<td><span class="label label-success">K</span></td>').replace('<td><b>D</b></td>', '<td><span class="label label-warning">D</span></td>').replace('<td><b>C</b></td>', '<td><span class="label label-danger">C</span></td>').replace('<td><b>L</b></td>', '<td><span class="label label-orange">L</span></td>').replace('<td><b>G</b></td>', '<td><span class="label label-green">G</span></td>').replace('<td><b>I</b></td>', '<td><span class="label label-brown">I</span></td>')
+    port = response[len(response)-3].replace('</address>', '')[-3:]
+
+    json = {'title':title, 'ver_apache':ver[0], 'ver_wsgi':ver[1], 'ver_python':ver[2], 'mpm':mpm, 'time_build':time_build, 'time_current':time_current, 'time_restart':time_restart, 'time_up':time_up, 'server_load':server_load, 'total_access':total[0], 'total_traffic':'%s %s' % (total[1], total[2]), 'cpu_load':cpu_load, 'cpu_usage':cpu_usage, 'traffic':traffic, 'idle':workers[1], 'processing':workers[0], 'worker':worker, 'table':table, 'port':port}
+    return simplejson.dumps(json)
     
 
 

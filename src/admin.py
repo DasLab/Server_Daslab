@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 # from suit.widgets import EnclosedInput, SuitDateWidget
 
 from src.models import *
-from src.settings import PATH, CRONJOBS, EMAIL_HOST_USER, env
+from src.settings import *
 from src.console import *
 from src.cron import *
 
@@ -128,12 +128,24 @@ def upload_now(request):
     return backup_stat(request)
 admin.site.register_view('upload_now', view=upload_now, visible=False)
 
+def apache_stat(request):
+    json = restyle_apache()
+    return HttpResponse(json, content_type='application/json')
+admin.site.register_view('apache_stat', view=apache_stat, visible=False)
 
 
 def apache(request):
-    table = restyle_apache()
     return render_to_response(PATH.HTML_PATH['admin_apache'], {}, context_instance=RequestContext(request))
 admin.site.register_view('apache/', view=apache, visible=False)
+
+def ga(request):
+    access_token = subprocess.Popen('curl --request POST "https://www.googleapis.com/oauth2/v3/token" --data "refresh_token=%s" --data "client_id=%s" --data "client_secret=%s" --data "grant_type=refresh_token"' % (REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+    access_token = access_token[access_token.find('\"access_token\": \"')+17:]
+    access_token = access_token[:access_token.find('"')]
+
+    return render_to_response(PATH.HTML_PATH['admin_ga'], {'access_token':access_token, 'client_id':CLIENT_ID}, context_instance=RequestContext(request))
+admin.site.register_view('ga/', view=ga, visible=False)
+
 
 def backup(request):
     flag = 0
