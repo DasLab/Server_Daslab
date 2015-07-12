@@ -20,7 +20,7 @@ sudo chmod 640 data/*.txt data/*.pdf data/news_img/* data/_old/* data/ppl_img/* 
 sudo chmod 750 data data/news_img data/_old data/ppl_img data/pub_data data/pub_img data/pub_pdf data/rot_data data/rot_ppt data/spe_ppt
 
 sudo chmod 640 config/*.py* config/*.example config/*.conf
-sudo chown www-data config/*.conf 
+sudo chown www-data config/cron.conf 
 sudo chmod 750 config
 
 sudo chgrp -R ubuntu *.sh
