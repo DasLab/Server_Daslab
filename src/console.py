@@ -1,14 +1,15 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import simplejson
 import subprocess
 import sys
 import textwrap
+import urllib
 import urllib2
 
 from django.core.management import call_command
 
-from src.settings import MEDIA_ROOT, DEBUG, APACHE_ROOT, env
+from src.settings import *
 from src.models import BackupForm
 
 
@@ -182,6 +183,26 @@ def restyle_apache():
     json = {'title':title, 'ver_apache':ver[0], 'ver_wsgi':ver[1], 'ver_python':ver[2], 'mpm':mpm, 'time_build':time_build, 'time_current':time_current, 'time_restart':time_restart, 'time_up':time_up, 'server_load':server_load, 'total_access':total[0], 'total_traffic':'%s %s' % (total[1], total[2]), 'cpu_load':cpu_load, 'cpu_usage':cpu_usage, 'traffic':traffic, 'idle':workers[1], 'processing':workers[0], 'worker':worker, 'table':table, 'port':port}
     return simplejson.dumps(json)
     
+
+def ga_stats():
+    access_token = subprocess.Popen('curl --silent --request POST "https://www.googleapis.com/oauth2/v3/token" --data "refresh_token=%s" --data "client_id=%s" --data "client_secret=%s" --data "grant_type=refresh_token"' % (REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+    access_token = simplejson.loads(access_token)['access_token']
+
+    stats = {'access_token':access_token}
+    for i in ('sessionDuration', 'bounceRate', 'pageviewsPerSession', 'pageviews', 'sessions', 'users'):
+        temp = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), GA_ID, urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+        temp = simplejson.loads(temp)['rows'][0][0]
+        if i in ('bounceRate', 'pageviewsPerSession'):
+            temp = '%.2f' % float(temp)
+        elif i == 'sessionDuration':
+            temp = str(timedelta(seconds=int(float(temp) / 1000)))
+        else:
+            temp = '%d' % int(temp)
+
+        stats[i] = temp
+    return stats
+
+
 
 
 

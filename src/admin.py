@@ -139,11 +139,9 @@ def apache(request):
 admin.site.register_view('apache/', view=apache, visible=False)
 
 def ga(request):
-    access_token = subprocess.Popen('curl --request POST "https://www.googleapis.com/oauth2/v3/token" --data "refresh_token=%s" --data "client_id=%s" --data "client_secret=%s" --data "grant_type=refresh_token"' % (REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-    access_token = access_token[access_token.find('\"access_token\": \"')+17:]
-    access_token = access_token[:access_token.find('"')]
-
-    return render_to_response(PATH.HTML_PATH['admin_ga'], {'access_token':access_token, 'client_id':CLIENT_ID}, context_instance=RequestContext(request))
+    stats = ga_stats()
+    stats['client_id'] = CLIENT_ID
+    return render_to_response(PATH.HTML_PATH['admin_ga'], stats, context_instance=RequestContext(request))
 admin.site.register_view('ga/', view=ga, visible=False)
 
 

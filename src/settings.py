@@ -48,6 +48,7 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 SECRET_KEY = env('SECRET_KEY')
 
 env_ga = simplejson.load(open('%s/config/ga.conf' % MEDIA_ROOT))
+GA_ID = env_ga['GA_ID']
 CLIENT_ID = env_ga['CLIENT_ID']
 CLIENT_SECRET = env_ga['CLIENT_SECRET']
 REFRESH_TOKEN = env_ga['REFRESH_TOKEN']

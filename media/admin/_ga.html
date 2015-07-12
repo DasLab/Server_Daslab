@@ -5,17 +5,59 @@
 
 {% block content %}
 	<div id="content-main">
-		<table class="table-overview applist">
-			<tr>
-                <th scope="row"><b><i class="icon-globe"></i> Link</th>
-                <td><a href="/server-status/" class="addlink icon">http://daslab.stanford.edu/server-status/</a></td>
-                <td><i class="icon-lock"></i> Apache Autherization Required</td>
-              </tr>
-		</table>
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<table class="table table-overview applist">
+				<tr>
+	                <th scope="row"><b><span class="glyphicon glyphicon-globe"></span> Link</th>
+	                <td class="active"><a href="/server-status/" class="addlink icon">https://www.google.com/analytics/web/?hl=en#report/visitors-overview/a36037648w100053524p103952031/</a></td>
+	                <td class="active"><span class="glyphicon glyphicon-lock"></span> Google Analytics Authorization Required</td>
+	              </tr>
+			</table>
+		</div>
 
 
 		<div class="row">
 			<div class="col-md-7">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="thumbnail" style="padding:10px 20px;">
+							<p class="label label-primary">Bounce Rate</p>
+							<p class="lead text-right" style="margin-bottom:0px;">{{bounceRate}} %</p>
+						</div>
+						<div class="thumbnail" style="padding:10px 20px;">
+							<p>
+								<span class="label label-primary">User</span>
+								<span class="lead pull-right">{{users}}</span>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="thumbnail" style="padding:10px 20px;">
+							<p class="label label-inverse">Session Duration</p>
+							<p class="lead text-right" style="margin-bottom:0px;">{{sessionDuration}}</p>
+						</div>
+						<div class="thumbnail" style="padding:10px 20px;">
+							<p>
+								<span class="label label-inverse">Session</span>
+								<span class="lead pull-right">{{sessions}}</span>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="thumbnail" style="padding:10px 20px;">
+							<p class="label label-success">Page View / Session</p>
+							<p class="lead text-right" style="margin-bottom:0px;">{{pageviewsPerSession}}</p>
+						</div>
+						<div class="thumbnail" style="padding:10px 20px;">
+							<p>
+								<span class="label label-success">Page View</span>
+								<span class="lead pull-right">{{pageviews}}</span>
+							</p>
+						</div>
+					</div>
+				</div>
+
 				<div class="row">
 					<div class="col-md-6">
 						<div id="chart_24h" class="thumbnail" style="padding:20px;"></div>
@@ -52,7 +94,6 @@
 {% endblock %}
 
 {% block extrajs %}
-  <script type="text/javascript" src="/site_media/webcomponents.min.js"></script>
 	<script type="text/javascript">
 		(function(w,d,s,g,js,fs){
 		  g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(f){this.q.push(f);}};
@@ -227,9 +268,6 @@
 		      dimensions: 'ga:userType',
 		      'start-date': '30daysAgo',
 		      'end-date': 'yesterday',
-		      // filters: 'ga:browser=@Firefox,ga:browser=@Chrome,ga:browser=@Safari,ga:browser=@Internet Explorer',
-		      // 'sort': 'ga:browser',
-		      // 'max-results': 4,
 		    },
 		    chart: {
 		      container: 'pie_pageview',
