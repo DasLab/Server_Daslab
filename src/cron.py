@@ -4,7 +4,7 @@ import subprocess
 
 from django.core.mail import send_mail
 
-from src.settings import MEDIA_ROOT, CRONJOBS, EMAIL_NOTIFY, EMAIL_HOST_USER, DEBUG, APACHE_ROOT
+from src.settings import *
 from src.console import *
 
 
@@ -26,7 +26,7 @@ def backup_weekly():
     if DEBUG:
         print "\033[94m Backed up locally. \033[0m"
     else:
-    	local_list = subprocess.Popen('ls -gh %s/backup/*.*gz' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()
+        local_list = subprocess.Popen('ls -gh %s/backup/*.*gz' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()
         html = 'File\t\t\t\tTime\t\t\t\tSize\n\n'
         for i in range(0, len(local_list), 8):
             html += '%s\t\t%s %s, %s\t\t%s\n' % (local_list[i+7], local_list[i+4], local_list[i+5], local_list[i+6], local_list[i+3])
