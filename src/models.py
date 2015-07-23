@@ -238,7 +238,7 @@ class ExportForm(forms.Form):
 
     order_number = forms.BooleanField(initial=True)
     quote_title = forms.BooleanField(initial=True)
-    double_space = forms.BooleanField(initial=True)
+    double_space = forms.BooleanField(initial=False)
     include_preprint = forms.BooleanField(initial=True)
 
 

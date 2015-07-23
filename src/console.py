@@ -251,10 +251,53 @@ def export_citation(request):
         is_italic_journal = 'italic_journal' in request.POST
         is_bold_volume = 'bold_volume' in request.POST
 
+        html = ''
+        for i, pub in enumerate(publications):
+            order = ''
+            if is_order_number: 
+                if number_order:
+                    order = '%d. ' % (len(publications) - i)
+                else:
+                    order = '%d. ' % (i + 1)
+
+            authors = pub.authors
+            if is_bold_author: authors = authors.replace('Das, R.', '<b>Das, R.</b>').replace('Das R.', '<b>Das, R.</b>')
+            year = pub.year
+            if is_bold_year: year = '<b>%s</b>' % year
+            title = pub.title
+            if is_underline_title: title = '<u>%s</u>' % title
+            if is_quote_title: title = '&quot;%s&quot;' % title
+            journal = pub.journal
+            if is_italic_journal: journal = '<i>%s</i>' % journal
+            number = pub.volume
+            if is_bold_volume: number = '<b>%s</b>' % number
+            if pub.issue: number += '(%s)' % pub.issue
+            page = ''
+            if pub.begin_page: page += ': %s' % pub.begin_page
+            if pub.end_page: page += '-%s' % pub.end_page 
+            double_space = ''
+            if is_double_space: double_space = '<br/>'
+            html += '<p>%s%s (%s) %s %s %s%s</p>%s' % (order, authors, year, title, journal, number, page, double_space)
+
+        response = HttpResponse(html, content_type='text/html')
         
 
     if request.POST['action'] == 'save':
-        response["Content-Disposition"]= "attachment; filename=export_citation.txt"
+        if text_type == '0':
+            response["Content-Disposition"] = "attachment; filename=export_citation.txt"
+        else:
+            f = open(os.path.join(MEDIA_ROOT, 'data/export_citation.html'), 'w')
+            f.write(html.encode('UTF-8'))
+            f.close()
+
+            os.popen('cd %s/data && pandoc -f html -t docx -o export_citation.docx export_citation.html' % MEDIA_ROOT)
+
+            f = open(os.path.join(MEDIA_ROOT, 'data/export_citation.docx'), 'r')
+            lines = f.readlines()
+            f.close()
+
+            response = HttpResponse(lines, content_type='application/msword')
+            response["Content-Disposition"] = "attachment; filename=export_citation.docx"
     return response
 
 
