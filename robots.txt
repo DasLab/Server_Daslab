@@ -40,12 +40,14 @@ Disallow: /data/
 Disallow: /config/
 Disallow: /media/admin/
 Disallow: /media/_old/
+Disallow: /.git/
 
 # Files
 Disallow: /*.py
 Disallow: /*.pyc
 Disallow: /*.md
 Disallow: /*.sh
+Disallow: /.gitignore
 
 # Paths (clean URLs)
 Disallow: /login/

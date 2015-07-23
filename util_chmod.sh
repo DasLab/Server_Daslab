@@ -1,10 +1,10 @@
 sudo usermod -a -G www-data ubuntu
 
 sudo chgrp -R www-data *
-sudo chown -R ubuntu *.py *.md *.txt src media config
+sudo chown -R ubuntu *.py *.md *.txt src media config .gitignore
 sudo chown -R www-data backup data
 
-sudo chmod 640 *.py* *.md *.txt
+sudo chmod 640 *.py* *.md *.txt .gitignore
 sudo chmod 640 src/*.py* src/templatetags/*
 sudo chmod 750 src src/templatetags
 sudo chmod 640 media/css/* media/fonts/* media/html/* media/js/* media/_old/* media/swf/*

@@ -49,7 +49,7 @@ urlpatterns = patterns('',
     (r'^group/$', RedirectView.as_view(url='/group/meetings/', permanent=True)),
 
     (r'^ping_test/$', views.ping_test),
-    (r'^test/$', views.test),
+    # (r'^test/$', views.test),
 
     (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT + '/media'}),
     (r'^site_data/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT + '/data'}),
