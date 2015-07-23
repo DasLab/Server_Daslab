@@ -38,6 +38,8 @@ User-agent: Yahoo-MMCrawler
 Disallow: /src/
 Disallow: /data/
 Disallow: /config/
+Disallow: /media/admin/
+Disallow: /media/_old/
 
 # Files
 Disallow: /*.py
