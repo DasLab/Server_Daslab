@@ -8,9 +8,10 @@ import urllib
 import urllib2
 
 from django.core.management import call_command
+from django.http import HttpResponse
 
 from src.settings import *
-from src.models import BackupForm
+from src.models import BackupForm, Publication
 
 
 def get_sys_stat():
@@ -206,6 +207,55 @@ def ga_stats():
     return stats
 
 
+def export_citation(request):
+    is_order_number = 'order_number' in request.POST
+    is_quote_title = 'quote_title' in request.POST
+    is_double_space = 'double_space' in request.POST
+    is_include_preprint = 'include_preprint' in request.POST
+
+    text_type = request.POST['text_type']
+    year_start = int(request.POST['year_start'])
+    number_order = (request.POST['number_order'] == '1')
+    sort_order = 'display_date'
+    if request.POST['sort_order'] == '1': sort_order = '-' + sort_order
+
+    publications = Publication.objects.filter(year__gte=year_start).order_by(sort_order)
+    if not is_include_preprint: publications = publications.filter(preprint=False)
+
+    if text_type == '0':
+        txt = ''
+        for i, pub in enumerate(publications):
+            order = ''
+            if is_order_number: 
+                if number_order:
+                    order = '%d. ' % (len(publications) - i)
+                else:
+                    order = '%d. ' % (i + 1)
+            
+            title = pub.title
+            if is_quote_title: title = '"%s"' % title
+            number = pub.volume
+            if pub.issue: number += '(%s)' % pub.issue
+            page = ''
+            if pub.begin_page: page += ': %s' % pub.begin_page
+            if pub.end_page: page += '-%s' % pub.end_page 
+            double_space = ''
+            if is_double_space: double_space = '\n'
+            txt += '%s%s (%s) %s %s %s%s\n%s' % (order, pub.authors, pub.year, title, pub.journal, number, page, double_space)
+
+        response = HttpResponse(txt, content_type='text/plain')
+    else:
+        is_bold_author = 'bold_author' in request.POST
+        is_bold_year = 'bold_year' in request.POST
+        is_underline_title = 'underline_title' in request.POST
+        is_italic_journal = 'italic_journal' in request.POST
+        is_bold_volume = 'bold_volume' in request.POST
+
+        
+
+    if request.POST['action'] == 'save':
+        response["Content-Disposition"]= "attachment; filename=export_citation.txt"
+    return response
 
 
 

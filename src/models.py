@@ -210,28 +210,36 @@ class BackupForm(forms.Form):
 
 
 TEXT_TYPE_CHOICES = (
-    (0, 'Plain Text'),
-    (1, 'Word Document'),
+    (0, ' Plain Text'),
+    (1, ' Word Document'),
 )
 
 SORT_ORDER_CHOICES = (
-    (0, 'Ascending'),
-    (1, 'Descending'),
+    (0, ' Year Ascending'),
+    (1, ' Year Descending'),
+)
+
+NUMBER_ORDER_CHOICES = (
+    (0, ' Incremental'),
+    (1, ' Decremental'),
 )
 
 class ExportForm(forms.Form):
     text_type = forms.ChoiceField(choices=TEXT_TYPE_CHOICES, widget=forms.RadioSelect(), initial=1)
     year_start = forms.IntegerField(initial=1996)
     sort_order = forms.ChoiceField(choices=SORT_ORDER_CHOICES, widget=forms.RadioSelect(), initial=1)
+    number_order = forms.ChoiceField(choices=NUMBER_ORDER_CHOICES, widget=forms.RadioSelect(), initial=1)
 
-    order_number = forms.BooleanField(initial=True)
     bold_author = forms.BooleanField(initial=True)
     bold_year = forms.BooleanField(initial=True)
-    quote_title = forms.BooleanField(initial=True)
     underline_title = forms.BooleanField(initial=True)
     italic_journal = forms.BooleanField(initial=True)
     bold_volume = forms.BooleanField(initial=True)
 
+    order_number = forms.BooleanField(initial=True)
+    quote_title = forms.BooleanField(initial=True)
+    double_space = forms.BooleanField(initial=True)
+    include_preprint = forms.BooleanField(initial=True)
 
 
 

@@ -6,7 +6,7 @@
 {% block content %}
 	<div id="content-main">
 		<div class="row">
-			<form enctype="multipart/form-data" action="/admin/export/" method="post">
+			<form enctype="multipart/form-data" action="/admin/export/" method="post" target="_blank">
 				{% csrf_token %}
 				<div class="col-md-10">
 					<div class="thumbnail" style="padding:10px 20px;">
@@ -16,16 +16,33 @@
 								<h4><span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>&nbsp;&nbsp;Output Format Type</h4>
 								{{form.text_type}}
 								<br/>
-								<h4><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Year Range</h4>
+								<h4><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Year Range <small>(Inclusive)</small></h4>
 								<div class="row">
 									<div class="col-md-5">{{form.year_start}}</div>
 									<div class="col-md-1">To:</div>
 									<div class="col-md-5"><input value="Current" type="input" disabled></div>
 									<div class="col-md-1"></div>
 								</div>  
+								<ul>
+									<div class="checkbox">
+										<label>
+											{{form.include_preprint}}
+											Include Preprint Items
+										</label>
+									</div>
+								</ul>
+
 								<br/>
-								<h4><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>&nbsp;&nbsp;Sorting Order</h4>
-								{{form.sort_order}}
+								<div class="row">
+									<div class="col-md-6">
+										<h4><span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>&nbsp;&nbsp;Sorting Order</h4>
+										{{form.sort_order}}
+									</div>
+									<div class="col-md-6">
+										<h4><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>&nbsp;&nbsp;Numbering Order</h4>
+										{{form.number_order}}
+									</div>
+								</div>
 							</div>
 
 							<div class="col-md-6">
@@ -79,13 +96,21 @@
 											Mark Publication Title with "Quotes"
 										</label>
 									</div>
+									<div class="checkbox">
+										<label>
+											{{form.double_space}}
+											Double Space between Items
+										</label>
+									</div>
 								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-2">
-					<button type="submit" class="btn btn-primary form-control" disabled><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Export</button>
+					<button type="submit" class="btn btn-primary form-control" name="action" id="export_save" value="save"><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Export</button>
+					<br/><br/>
+					<button type="submit" class="btn btn-warning form-control" name="action" id="export_view" value="view"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;&nbsp;View</button>
 					<br/><br/>
 					<a href="" class="btn btn-default form-control"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Reset</a>
 				</div>
@@ -148,21 +173,35 @@
 					if ($(this).attr("id").indexOf("_0") != -1) {
 						$("#prv_item_1").detach().insertAfter($("#prv_item_3"));
 						$("#prv_item_2").detach().insertAfter($("#prv_item_3"));
-						$("#prv_item_1>span.item_num").html("3.");
-						$("#prv_item_3>span.item_num").html("1.");
+						$("[id^=id_number_order]").trigger("change");
 					} else {
 						$("#prv_item_1").detach().insertBefore($("#prv_item_3"));
 						$("#prv_item_2").detach().insertBefore($("#prv_item_3"));
-						$("#prv_item_3>span.item_num").html("3.");
-						$("#prv_item_1>span.item_num").html("1.");
+						$("[id^=id_number_order]").trigger("change");
 
 					}
 				}
 			});
-
+			$("[id^=id_number_order]").on("change", function() {
+				if ($(this).is(":checked") && $("#id_order_number").is(":checked")) {
+					if ($(this).attr("id").indexOf("_0") != -1) {
+						var list = $("[id^=prv_item_]>span.item_num");
+						for (var i = 0; i < list.length; i++) {
+							$(list[i]).html((i + 1).toString() + '.');
+						}
+					} else {
+						var list = $("[id^=prv_item_]>span.item_num");
+						for (var i = 0; i < list.length; i++) {
+							$(list[i]).html((list.length - i).toString() + '.');
+						}
+					}
+				}
+			});
 			$("#id_order_number").on("change", function() {
 				$(".item_num").toggle();
+				$("[id^=id_number_order]").trigger("change");
 			});
+			$("[id^=id_number_order]").trigger("change");
 
 			$(".item_das").css("font-weight", "bold");
 			$("#id_bold_author").on("change", function() {
@@ -212,6 +251,9 @@
 					$(".item_volume").css("font-weight", "normal");
 				}
 			});
+
+			$("#export_save, #export_view").on("click", function() {$(window).unbind();});
+
 
 		});
 	</script>
