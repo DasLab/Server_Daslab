@@ -169,3 +169,10 @@ def doc(request):
 admin.site.register_view('doc/', view=doc, visible=False)
 
 
+def export(request):
+    if request.method == 'POST':
+        pass
+    else:
+        return render_to_response(PATH.HTML_PATH['admin_export'], {'form':ExportForm()}, context_instance=RequestContext(request))
+admin.site.register_view('export/', view=export, visible=False)
+

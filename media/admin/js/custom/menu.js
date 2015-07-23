@@ -36,6 +36,5 @@ $(document).ready(function () {
 
 
 	$('.left-nav>ul>li>ul>li>a[href="/admin/aws/"]').attr("disabled", "disabled").css("text-decoration", "line-through").attr("href", "");
-	$('.left-nav>ul>li>ul>li>a[href="/admin/export/"]').attr("disabled", "disabled").css("text-decoration", "line-through").attr("href", "");
 
 });

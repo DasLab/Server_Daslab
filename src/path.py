@@ -28,6 +28,7 @@ class SYS_PATH:
             'admin_backup': MEDIA_ROOT + '/media/admin/_backup.html',
             'admin_dir': MEDIA_ROOT + '/media/admin/_dir.html',
             'admin_doc': MEDIA_ROOT + '/media/admin/_doc.html',
+            'admin_export': MEDIA_ROOT + '/media/admin/_export.html',
 
             '403': MEDIA_ROOT + '/media/html/_403.html',
             '404': MEDIA_ROOT + '/media/html/_404.html',

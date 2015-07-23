@@ -19,7 +19,7 @@ $(document).ready(function () {
 	$("textarea").addClass("form-control");
 	$("span.add-on").html('<span class="glyphicon glyphicon-calendar"></span>').addClass("input-group-addon").removeClass("add-on");
 
-	$('input[type="checkbox"]').each(function() {
+	$('input[type="checkbox"],input[type="radio"]').each(function() {
 		$(this).parent().addClass("checkbox");
 		if ($(this).next().is("label")) {
 			$(this).prependTo($(this).next());
@@ -36,7 +36,7 @@ $(document).ready(function () {
 		$(this).appendTo($(this).prev());
 		$(this).children().contents().filter(function () {return this.data === "Clear";}).replaceWith("&nbsp;&nbsp;<span class='glyphicon glyphicon-remove-sign'></span>&nbsp;Clear");
 	});
-	$('input[type="file"').each(function() {
+	$('input[type="file"]').each(function() {
 		$('<div class="form-inline"><label>Change:&nbsp;&nbsp;</label><input id="' + $(this).attr("id") + '_disp" class="form-control" placeholder="No file chosen" disabled="disabled" style="cursor:text;"/>&nbsp;&nbsp;<div id="' + $(this).attr("id") + '_btn" class="fileUpload btn btn-info"><span><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Browse&nbsp;&nbsp;</span></div>').insertAfter(this);
 		$(this).detach().appendTo('#' + $(this).attr("id") + '_btn');
 

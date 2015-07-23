@@ -1,0 +1,220 @@
+{% extends "admin/base.html" %}
+{% load i18n admin_static %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block content %}
+	<div id="content-main">
+		<div class="row">
+			<form enctype="multipart/form-data" action="/admin/export/" method="post">
+				{% csrf_token %}
+				<div class="col-md-10">
+					<div class="thumbnail" style="padding:10px 20px;">
+						<div class="row">
+							<div class="col-md-6">
+								<br/>
+								<h4><span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>&nbsp;&nbsp;Output Format Type</h4>
+								{{form.text_type}}
+								<br/>
+								<h4><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Year Range</h4>
+								<div class="row">
+									<div class="col-md-5">{{form.year_start}}</div>
+									<div class="col-md-1">To:</div>
+									<div class="col-md-5"><input value="Current" type="input" disabled></div>
+									<div class="col-md-1"></div>
+								</div>  
+								<br/>
+								<h4><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>&nbsp;&nbsp;Sorting Order</h4>
+								{{form.sort_order}}
+							</div>
+
+							<div class="col-md-6">
+								<br/>
+								<h4><span class="glyphicon glyphicon-check" aria-hidden="true"></span>&nbsp;&nbsp;Rich Format Options</h4>
+								<ul>
+									<div class="checkbox">
+										<label>
+											{{form.bold_author}}
+											Mark Corresponding Author as <b>Bold</b>
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											{{form.bold_year}}
+											Mark Publication Year as <b>Bold</b>
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											{{form.underline_title}}
+											Mark Publication Title with <u>Underline</u>
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											{{form.italic_journal}}
+											Mark Journal Name as <i>Italic</i>
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											{{form.bold_volume}}
+											Mark Volume Number as <b>Bold</b>
+										</label>
+									</div>
+								</ul>
+
+								<br/>
+								<h4><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;Text Format Options</h4>
+								<ul>
+									<div class="checkbox">
+										<label>
+											{{form.order_number}}
+											Show Item Numbering
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											{{form.quote_title}}
+											Mark Publication Title with "Quotes"
+										</label>
+									</div>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<button type="submit" class="btn btn-primary form-control"><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Export</button>
+					<br/><br/>
+					<a href="" class="btn btn-default form-control"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Reset</a>
+				</div>
+			</form>
+		</div>
+
+		<h4><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</h4>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="well" style="margin-bottom:0px;">
+					<p id="prv_item_1">
+						<span class="item_num">1.</span>
+						Cheng, C., Chou, F.-C., Kladwang, W., Tian, S., Cordero, P. and <span class="item_das">Das, R.</span> (<span class="item_year">2015</span>) 
+						<span class="item_quote">"</span><span class="item_title">Consistent global structures of complex RNA states through multidimensional chemical mapping.</span><span class="item_quote">"</span> 
+						<span class="item_journal">eLife</span> <span class="item_volume">4</span> : e07600 
+					</p>
+
+					<p id="prv_item_2">
+						<span class="item_num">2.</span>
+						Lee, J., Kladwang, W., Lee, M., Cantu, D., Azizyan, M., Kim, H., Limpaecher, A., Yoon, S., Treuille, A., <span class="item_das">Das, R.</span>, and EteRNA Participants (<span class="item_year">2014</span>) 
+						<span class="item_quote">"</span><span class="item_title">RNA design rules from a massive open laboratory.</span><span class="item_quote">"</span> 
+						<span class="item_journal">Proceedings of the National Academy of Sciences U.S.A.</span> <span class="item_volume">111</span>(6) : 2122 - 2127  
+					</p>
+
+					<p id="prv_item_3">
+						<span class="item_num">3.</span>
+						Kladwang, W., VanLang, C.C., Cordero P., and <span class="item_das">Das, R.</span> (<span class="item_year">2011</span>) 
+						<span class="item_quote">"</span><span class="item_title">A two-dimensional mutate-and-map strategy for non-coding RNA structure.</span><span class="item_quote">"</span> 
+						<span class="item_journal">Nature Chemistry</span> <span class="item_volume">3</span> : 954 - 962 
+					</p>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+{% endblock %}
+
+{% block extrajs %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			// $("#iframe").css("width", parseInt($("#content").css("width")) - 50);
+			// $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
+			$("ul.breadcrumb").append('<li class="active"><a href="/admin/export/">Publication Export</a></li>');
+			$("ul[id^=id_]").css("list-style-type", "none");
+
+			$("[id^=id_text_type]").on("change", function() {
+				if ($(this).is(":checked")) {
+					if ($(this).attr("id").indexOf("_0") != -1) {
+						$("#id_bold_author, #id_bold_year, #id_underline_title, #id_italic_journal, #id_bold_volume").attr("disabled", "disabled");
+						$("[class^=item_]").css({"font-weight":"normal", "font-style":"normal", "text-decoration":"none"})
+					} else {
+						$("#id_bold_author, #id_bold_year, #id_underline_title, #id_italic_journal, #id_bold_volume").removeAttr("disabled");
+						$("#id_bold_author, #id_bold_year, #id_underline_title, #id_italic_journal, #id_bold_volume").trigger("change");
+					}
+				}
+			});
+
+			$("[id^=id_sort_order]").on("change", function() {
+				if ($(this).is(":checked")) {
+					if ($(this).attr("id").indexOf("_0") != -1) {
+						$("#prv_item_1").detach().insertAfter($("#prv_item_3"));
+						$("#prv_item_2").detach().insertAfter($("#prv_item_3"));
+						$("#prv_item_1>span.item_num").html("3.");
+						$("#prv_item_3>span.item_num").html("1.");
+					} else {
+						$("#prv_item_1").detach().insertBefore($("#prv_item_3"));
+						$("#prv_item_2").detach().insertBefore($("#prv_item_3"));
+						$("#prv_item_3>span.item_num").html("3.");
+						$("#prv_item_1>span.item_num").html("1.");
+
+					}
+				}
+			});
+
+			$("#id_order_number").on("change", function() {
+				$(".item_num").toggle();
+			});
+
+			$(".item_das").css("font-weight", "bold");
+			$("#id_bold_author").on("change", function() {
+				if ($("#id_bold_author").is(":checked")) {
+					$(".item_das").css("font-weight", "bold");
+				} else {
+					$(".item_das").css("font-weight", "normal");
+				}
+			});
+			$(".item_year").css("font-weight", "bold");
+			$("#id_bold_year").on("change", function() {
+				if ($("#id_bold_year").is(":checked")) {
+					$(".item_year").css("font-weight", "bold");
+				} else {
+					$(".item_year").css("font-weight", "normal");
+				}
+			});
+			$(".item_quote").css("display", "inline-block");
+			$("#id_quote_title").on("change", function() {
+				if ($("#id_quote_title").is(":checked")) {
+					$(".item_quote").css("display", "inline-block");
+				} else {
+					$(".item_quote").css("display", "none");
+				}
+			});
+			$(".item_title").css("text-decoration", "underline");
+			$("#id_underline_title").on("change", function() {
+				if ($("#id_underline_title").is(":checked")) {
+					$(".item_title").css("text-decoration", "underline");
+				} else {
+					$(".item_title").css("text-decoration", "none");
+				}
+			});
+			$(".item_journal").css("font-style", "italic");
+			$("#id_italic_journal").on("change", function() {
+				if ($("#id_italic_journal").is(":checked")) {
+					$(".item_journal").css("font-style", "italic");
+				} else {
+					$(".item_journal").css("font-style", "normal");
+				}
+			});
+			$(".item_volume").css("font-weight", "bold");
+			$("#id_bold_volume").on("change", function() {
+				if ($("#id_bold_volume").is(":checked")) {
+					$(".item_volume").css("font-weight", "bold");
+				} else {
+					$(".item_volume").css("font-weight", "normal");
+				}
+			});
+
+		});
+	</script>
+
+{% endblock %}
+
