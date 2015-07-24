@@ -196,14 +196,20 @@ def ga_stats():
     for i in ('sessionDuration', 'bounceRate', 'pageviewsPerSession', 'pageviews', 'sessions', 'users'):
         temp = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), GA_ID, urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
         temp = simplejson.loads(temp)['rows'][0][0]
+        temp_prev = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=60daysAgo&end-date=30daysAgo&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), GA_ID, urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+        temp_prev = simplejson.loads(temp_prev)['rows'][0][0]
+
         if i in ('bounceRate', 'pageviewsPerSession'):
+            temp_prev = '%.2f' % (float(temp) - float(temp_prev))
             temp = '%.2f' % float(temp)
         elif i == 'sessionDuration':
+            temp_prev = str(timedelta(seconds=(int(float(temp) / 1000) - int(float(temp_prev) / 1000))))
             temp = str(timedelta(seconds=int(float(temp) / 1000)))
         else:
+            temp_prev = '%d' % (int(temp) - int(temp_prev))
             temp = '%d' % int(temp)
-
         stats[i] = temp
+        stats[i + '_prev'] = temp_prev
     return stats
 
 

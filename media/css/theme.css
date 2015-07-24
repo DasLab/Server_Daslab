@@ -208,6 +208,16 @@ h1.section>span.num {
     opacity:0.8;
 }
 
+.place_holder {
+  height: 200px;
+  background-size: 96px;
+  opacity: 0.5;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-image: url("/site_media/images/group/fg_load_2.gif");  
+  background-position: center;
+}
+
 #wait.modal {
   display:    none;
   position:   fixed;
