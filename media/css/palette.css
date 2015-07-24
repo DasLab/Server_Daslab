@@ -265,6 +265,9 @@ p.cap:first-letter {
 .label-teal {
 	background-color: #008080;
 }
+.label-magenta {
+	background-color: #ff69bc;
+}
 
 .alert-orange {
 	border-bottom: 5px solid #ff912e !important;
