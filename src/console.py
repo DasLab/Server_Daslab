@@ -160,7 +160,7 @@ def restyle_apache():
     request = urllib2.urlopen(apache_url)
     response = request.read().split('\n')
 
-    title = 'Apache Server Status for <code>daslab.stanford.edu</code> (via <kbd>%s</kbd> )' % response[4].replace(')</h1>', '')[-13:]
+    title = 'Apache Server Status for <code>daslab.stanford.edu</code> (via <kbd>%s</kbd> )' % response[4].replace(')</h1>', '')[-13:].replace('via ', '')
     ver = response[6].replace('<dl><dt>Server Version: Apache/', '').replace('(Ubuntu) mod_wsgi/', '').replace('Python/', '').replace('</dt>', '').split()
     mpm = response[7].replace('<dt>Server MPM: ', '').replace('</dt>', '')
     time_build = datetime.strftime(datetime.strptime(response[8].replace('<dt>Server Built: ', ''), '%b %d %Y %H:%M:%S'), '%Y-%m-%d (%A) %I:%M:%S %p (PDT)')
