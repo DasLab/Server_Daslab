@@ -1,7 +1,8 @@
 {
 	"CRONJOBS": [
 		[“cron_string”, “backup_job”],
-		[“cron_string”, “upload_job”]
+		[“cron_string”, “upload_job”],
+		["cron_string", "sys_ver_job"]
 	],
 	"CRONTAB_LOCK_JOBS": true,
 	"KEEP_BACKUP": 60

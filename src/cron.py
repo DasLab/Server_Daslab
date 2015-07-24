@@ -52,3 +52,8 @@ def gdrive_weekly():
         send_notify_emails('[System] {daslab.stanford.edu} Weekly Sync Notice', 'This is an automatic email notification for the success of scheduled weekly sync of the DasLab Website backup contents to Google Drive account.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n%s\n\nDasLab Website Admin\n' % (t_cron, d_cron, t_now, html))
     get_backup_stat()
 
+
+def sys_ver_weekly():
+    get_sys_stat()
+
+    

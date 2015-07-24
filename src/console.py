@@ -48,6 +48,8 @@ def get_sys_stat():
     ver += subprocess.Popen('sed %s %s | sed %s | sed %s | sed %s' % ("'s/^OpenSSH\_//g'", os.path.join(MEDIA_ROOT, 'data/temp.txt'), "'s/U.*//'", "'s/,.*//g'", "'s/[a-z]/./g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
     ver += subprocess.Popen("git --version | sed 's/.*version //g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
     ver += subprocess.Popen("drive -v | sed 's/.*v//g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
+    ver += subprocess.Popen("pandoc --version | head -1 | sed 's/.*pandoc //g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
+    ver += subprocess.Popen("curl --version | head -1 | sed 's/.*curl //g' | sed 's/ (.*//g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
 
     ver += subprocess.Popen('python -c "import virtualenv, pip; print %s"' % "pip.__version__, '\t', virtualenv.__version__", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
     
@@ -132,7 +134,7 @@ def set_backup_form(request):
 
     index =  [i for i, line in enumerate(lines) if 'src.cron.backup_weekly' in line or 'src.cron.gdrive_weekly' in line or 'KEEP_BACKUP' in line]
     lines[index[0]] = '\t\t["%s", "src.cron.backup_weekly"],\n' % cron_backup
-    lines[index[1]] = '\t\t["%s", "src.cron.gdrive_weekly"]\n' % cron_upload
+    lines[index[1]] = '\t\t["%s", "src.cron.gdrive_weekly"],\n' % cron_upload
     lines[index[2]] = '\t"KEEP_BACKUP": %s\n' % request.POST['keep']
 
     f = open('%s/config/cron.conf' % MEDIA_ROOT, 'w')
@@ -257,7 +259,7 @@ def export_citation(request):
         is_italic_journal = 'italic_journal' in request.POST
         is_bold_volume = 'bold_volume' in request.POST
 
-        html = ''
+        html = '<html><body>'
         for i, pub in enumerate(publications):
             order = ''
             if is_order_number: 
@@ -285,6 +287,7 @@ def export_citation(request):
             if is_double_space: double_space = '<br/>'
             html += '<p>%s%s (%s) %s %s %s%s</p>%s' % (order, authors, year, title, journal, number, page, double_space)
 
+        html += '</body></html>'
         response = HttpResponse(html, content_type='text/html')
         
 
