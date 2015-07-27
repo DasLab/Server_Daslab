@@ -180,34 +180,95 @@ $(document).ready(function () {
 
 $(window).load(function () {
 	setTimeout(function() {
-		if ($(location).attr("href").indexOf("admin/auth/user") == -1) {
-			$(".vDateField").each(function () {
-				$(this).next().detach().appendTo($(this).parent());
-				$(this).removeAttr("size");
-				$(this).next().detach().insertAfter($(this).parent());
-				$(this).parent().addClass("input-group").removeClass("");
-				$('<div class="input-group-btn"><a class="btn btn-default" id="' + $(this).attr("id") + '_cal"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Calendar&nbsp;&nbsp;</a></div><div class="input-group-btn"><a class="btn btn-primary" id="' + $(this).attr("id") + '_today"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Today&nbsp;&nbsp;</a></div>').insertAfter($(this));
-				$(this).css("width", "auto");
+		$(".vDateField").each(function () {
+			$(this).next().detach().appendTo($(this).parent());
+			$(this).removeAttr("size");
+			$(this).next().detach().insertAfter($(this).parent());
+			$(this).parent().addClass("input-group").removeClass("");
 
-				if ($(this).parent().next().hasClass("datetimeshortcuts")) {
-					var elem = $(this).parent().next();
-				} else {
-					// $('<br><br>').insertBefore($(this).parent().next());
-					$(this).parent().next().css("display", "block")
-					var elem = $(this).siblings().last();
-				}
-				$('#' + $(this).attr("id") + '_cal').attr("href", elem.children().last().attr("href"));
-				$('#' + $(this).attr("id") + '_cal').on("click", function() {
-					var self = $(this);
-					setTimeout(function () {
-						$(".calendarbox.module").css("left", self.offset().left);
-						$(".calendarbox.module").css("top", self.offset().top + 50);
-					}, 50);
-				});
-				$('#' + $(this).attr("id") + '_today').attr("href", elem.children().first().attr("href"));
+			$('<div class="input-group-btn"><a class="btn btn-default" id="' + $(this).attr("id") + '_cal"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Calendar&nbsp;&nbsp;</a><a class="btn btn-primary" id="' + $(this).attr("id") + '_today"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Today&nbsp;&nbsp;</a></div>').insertAfter($(this));
+			$(this).css("width", "auto");
 
-				elem.css("display", "none");
+			if ($(this).parent().next().hasClass("datetimeshortcuts")) {
+				var elem = $(this).parent().next();
+			} else {
+				// $('<br><br>').insertBefore($(this).parent().next());
+				$(this).parent().next().css("display", "block");
+				var elem = $(this).siblings().last();
+			}
+			$('#' + $(this).attr("id") + '_cal').attr("href", elem.children().last().attr("href"));
+			$('#' + $(this).attr("id") + '_cal').on("click", function() {
+				var self = $(this);
+				setTimeout(function () {
+					$(".calendarbox.module").css("left", self.offset().left);
+					$(".calendarbox.module").css("top", self.offset().top + 50);
+				}, 50);
 			});
+			$('#' + $(this).attr("id") + '_today').attr("href", elem.children().first().attr("href"));
+
+			elem.css("display", "none");
+		});
+
+		$(".vTimeField").each(function () {
+			$(this).next().detach().appendTo($(this).parent());
+			$(this).removeAttr("size");
+			$(this).next().detach().insertAfter($(this).parent());
+			$(this).parent().addClass("input-group").removeClass("");
+
+			$('<div class="input-group-btn"><a class="btn btn-default" id="' + $(this).attr("id") + '_clk"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Clock&nbsp;&nbsp;</a><a class="btn btn-primary" id="' + $(this).attr("id") + '_now"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Now&nbsp;&nbsp;</a></div>').insertAfter($(this));
+			$(this).css("width", "auto");
+
+			if ($(this).parent().next().hasClass("datetimeshortcuts")) {
+				var elem = $(this).siblings().last();
+			} else {
+				// $('<br><br>').insertBefore($(this).parent().next());
+				$(this).parent().next().css("display", "block");
+				var elem = $(this).siblings().last();
+			}
+			$('#' + $(this).attr("id") + '_clk').attr("href", elem.children().last().attr("href"));
+			$('#' + $(this).attr("id") + '_clk').on("click", function() {
+				var self = $(this);
+				setTimeout(function () {
+					$(".clockbox.module").css("left", self.offset().left);
+					$(".clockbox.module").css("top", self.offset().top + 50);
+				}, 50);
+			});
+			$('#' + $(this).attr("id") + '_now').attr("href", elem.children().first().attr("href"));
+
+			elem.css("display", "none");
+		});
+
+
+		if ($(location).attr("href").indexOf("admin/auth/user") != -1) {
+			$(".vDateField").each(function () {
+				$(this).parent().contents().filter(function () {return this.data === "Date: ";}).replaceWith("");
+			});
+			$(".vTimeField").each(function () {
+				$(this).parent().contents().filter(function () {return this.data === "Time: ";}).replaceWith("");
+				$('<br/><p class="datetime datetime2 input-group"></p>').insertAfter($(this).parent());
+				$(this).next().detach().appendTo($(this).parent().next().next());
+				$(this).next().detach().insertAfter($(this).parent().next().next());
+				var datetime2 = $(this).parent().next().next();
+				$(this).detach().prependTo(datetime2);
+			});
+
+
+			$("select").addClass("form-control").removeClass("filtered");
+			$("input[placeholder='Filter']").addClass("form-control").parent().addClass("input-group");
+			$("<br/>").insertAfter($("input[placeholder='Filter']").parent())
+			$('<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>').insertAfter($("input[placeholder='Filter']"))
+			$("img[src='/static/admin/img/selector-search.gif']").parent().remove();
+			$('<span class="glyphicon glyphicon-question-sign"></span>').insertAfter($("img[src='/static/admin/img/icon-unknown.gif']"))
+			$("img[src='/static/admin/img/icon-unknown.gif']").remove();
+
+			$("a.selector-add").addClass("btn btn-inverse").html('<span class="glyphicon glyphicon-circle-arrow-right"></span>')
+			$("a.selector-remove").addClass("btn btn-default").html('<span class="glyphicon glyphicon-circle-arrow-left"></span>')
+			$("a.add-related").addClass("btn btn-blue").html('<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;Add Group')
+			$("<br/>").insertBefore($("a.selector-chooseall"));
+			$("a.selector-chooseall").addClass("btn btn-info").html('<span class="glyphicon glyphicon-ok-sign"></span>&nbsp;&nbsp;Choose All');
+			$("<br/>").insertBefore($("a.selector-clearall"));
+			$("a.selector-clearall").addClass("btn btn-default").html('<span class="glyphicon glyphicon-remove-sign"></span>&nbsp;&nbsp;Remove All');
+
 		}
 	}, 50);
 
