@@ -17,7 +17,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<!-- <iframe src="https://www.google.com/calendar/embed?src=a53lhn4i0fgrkcs9c6i85fdmdo%40group.calendar.google.com&ctz=America/Los_Angeles" style="border-width:0" width="800" height="600" frameborder="0" scrolling="auto" seamless="true" id="iframe" class="well center-block"></iframe> -->
-						<div id="calendar" style="padding:10px;"></div>
+						<div id="calendar" style="padding:10px;" class="place_holder"></div>
 					</div>
 				</div>
 			</div>
@@ -46,12 +46,18 @@
 				dataType: "json",
 				success : function (data) {
 					$('#calendar').fullCalendar({ events: data });
+					$("#calendar").removeClass("place_holder");
 		
 					$(".fc-today").css({"background-color": "#fec78a", "color": "#ff5c2b", "font-weight": "bold"});
 					$("th.fc-day-header").css({"background-color": "#ddd", "padding": "10px"});
-					$("button.fc-prev-button").removeClass("fc-button fc-state-default fc-corner-left").addClass("btn btn-blue").html('<span class="glyphicon glyphicon-backward"></span>&nbsp;');
-					$("button.fc-next-button").removeClass("fc-button fc-state-default fc-corner-left").addClass("btn btn-blue").html('&nbsp;<span class="glyphicon glyphicon-forward"></span>');
+					$("button.fc-prev-button").removeClass("fc-button fc-state-default fc-corner-left fc-corner-right").addClass("btn btn-blue").html('<span class="glyphicon glyphicon-backward"></span>&nbsp;');
+					$("button.fc-next-button").removeClass("fc-button fc-state-default fc-corner-left fc-corner-right").addClass("btn btn-blue").html('&nbsp;<span class="glyphicon glyphicon-forward"></span>');
 					$("button.fc-today-button").removeClass("fc-button fc-state-default fc-corner-left fc-corner-right").addClass("btn btn-inverse").html('<span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbspToday');
+
+					$(".fc-prev-button, .fc-next-button, .fc-today-button").bind("click", function() {
+						$(".fc-today").css({"background-color": "#fec78a", "color": "#ff5c2b", "font-weight": "bold"});
+						$("th.fc-day-header").css({"background-color": "#ddd", "padding": "10px"});
+					});
 				}
 			});
 		});
