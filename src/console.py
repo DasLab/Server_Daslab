@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
+from icalendar import Calendar
 import os
 import simplejson
 import subprocess
@@ -194,14 +196,16 @@ def restyle_apache():
     
 
 def ga_stats():
-    access_token = subprocess.Popen('curl --silent --request POST "https://www.googleapis.com/oauth2/v3/token" --data "refresh_token=%s" --data "client_id=%s" --data "client_secret=%s" --data "grant_type=refresh_token"' % (REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+    access_token = subprocess.Popen('curl --silent --request POST "https://www.googleapis.com/oauth2/v3/token" --data "refresh_token=%s" --data "client_id=%s" --data "client_secret=%s" --data "grant_type=refresh_token"' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET']), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
     access_token = simplejson.loads(access_token)['access_token']
 
     stats = {'access_token':access_token}
     for i in ('sessionDuration', 'bounceRate', 'pageviewsPerSession', 'pageviews', 'sessions', 'users'):
-        temp = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), GA_ID, urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+        temp = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), GA[
+            'ID'], urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
         temp = simplejson.loads(temp)['rows'][0][0]
-        temp_prev = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=60daysAgo&end-date=30daysAgo&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), GA_ID, urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+        temp_prev = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=60daysAgo&end-date=30daysAgo&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), GA[
+            'ID'], urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
         temp_prev = simplejson.loads(temp_prev)['rows'][0][0]
 
         if i in ('bounceRate', 'pageviewsPerSession'):
@@ -311,6 +315,62 @@ def export_citation(request):
             response = HttpResponse(lines, content_type='application/msword')
             response["Content-Disposition"] = "attachment; filename=export_citation.docx"
     return response
+
+
+def get_cal():
+    ics = subprocess.Popen('curl --silent --request GET "%s"' % GCAL['ICS'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+    cal = Calendar.from_ical(ics)
+    data = []
+
+    format_UTC = "%Y-%m-%d %H:%M:%S"
+    for event in cal.walk('vevent'):
+        title = event.get('SUMMARY')
+        start = event.get('DTSTART').dt
+        end = event.get('DTEND').dt
+
+        all_day = (not isinstance(start, datetime))
+        if all_day:
+            color = "#29be92"
+        else:
+            color = "#5496d7"
+        if ("group meeting" in title.lower()) or ("das lab group" in title.lower()): color = "#ff912e"
+        if "BD" in title: color = "#c28fdd"
+        data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
+
+        if event.has_key('RRULE') and event.get('RRULE').has_key('FREQ'):
+            rrule = event.get('RRULE')
+            while True:
+                if 'YEARLY' in rrule['FREQ']:
+                    start += relativedelta(years=1)
+                    end += relativedelta(years=1)
+                elif 'MONTHLY' in rrule['FREQ']:
+                    start += relativedelta(months=1)
+                    end += relativedelta(months=1)
+                elif 'WEEKLY' in rrule['FREQ']:
+                    start += timedelta(days=7)
+                    end += timedelta(days=7)
+                elif 'DAILY' in rrule['FREQ']:
+                    start += timedelta(days=1)
+                    end += timedelta(days=1)
+                else:
+                    break
+
+                until = (datetime.today() + relativedelta(years=2)).date()
+                if rrule.has_key('UNTIL'): 
+                    until = rrule['UNTIL'][0]
+                    if isinstance(until, datetime): until = until.date()
+
+                if all_day:
+                    if start > until: break
+                else:
+                    if start.date() > until: break
+
+                data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
+
+    return simplejson.dumps(data)
+
+
+
 
 
 

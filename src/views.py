@@ -12,10 +12,12 @@ from django.shortcuts import render, render_to_response, redirect
 
 from filemanager import FileManager
 
+from src.console import *
 from src.models import *
 from src.settings import *
 
 import datetime
+import subprocess
 import sys
 import traceback
 # from sys import stderr

@@ -47,11 +47,9 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
-env_ga = simplejson.load(open('%s/config/ga.conf' % MEDIA_ROOT))
-GA_ID = env_ga['GA_ID']
-CLIENT_ID = env_ga['CLIENT_ID']
-CLIENT_SECRET = env_ga['CLIENT_SECRET']
-REFRESH_TOKEN = env_ga['REFRESH_TOKEN']
+env_gapi = simplejson.load(open('%s/config/gapi.conf' % MEDIA_ROOT))
+GA = env_gapi['GA']
+GCAL = env_gapi['CAL']
 
 
 MANAGERS = ADMINS = (

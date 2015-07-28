@@ -140,7 +140,7 @@ admin.site.register_view('apache/', view=apache, visible=False)
 
 def ga(request):
     stats = ga_stats()
-    stats['client_id'] = CLIENT_ID
+    stats['client_id'] = GA['CLIENT_ID']
     return render_to_response(PATH.HTML_PATH['admin_ga'], stats, context_instance=RequestContext(request))
 admin.site.register_view('ga/', view=ga, visible=False)
 
@@ -175,4 +175,11 @@ def export(request):
     else:
         return render_to_response(PATH.HTML_PATH['admin_export'], {'form':ExportForm()}, context_instance=RequestContext(request))
 admin.site.register_view('export/', view=export, visible=False)
+
+
+def gcal(request):
+    json = get_cal()
+    return HttpResponse(json, content_type='application/json')
+admin.site.register_view('gcal/', view=gcal, visible=False)
+
 
