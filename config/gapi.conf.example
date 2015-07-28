@@ -1,0 +1,21 @@
+
+{
+	"GA": {
+		"ID": "ids",
+
+		"CLIENT_ID": "client_id",
+		"CLIENT_SECRET": "client_secret",
+
+		"REFRESH_TOKEN": "refresh_token"
+	},
+
+	"CAL": {
+		"ICS": "private_ics_url",
+
+		"CLIENT_ID": "client_id",
+		"CLIENT_SECRET": "client_secret",
+
+		"REFRESH_TOKEN": "refresh_token"
+	}
+}
+
