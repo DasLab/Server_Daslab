@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import os
 import subprocess
 
@@ -15,13 +15,13 @@ def send_notify_emails(msg_subject, msg_content):
 def get_date_time(keyword):
     t_cron = [c[0] for c in CRONJOBS if c[1].find(keyword) != -1][0]
     d_cron = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur'][int(t_cron.split(' ')[-1])]
-    t_cron = datetime.datetime.strptime(' '.join(t_cron.split(' ')[0:2]),'%M %H').strftime('%I:%M%p')
-    t_now = datetime.datetime.now().strftime('%b %d %Y (%a) @ %H:%M:%S')
+    t_cron = datetime.strptime(' '.join(t_cron.split(' ')[0:2]),'%M %H').strftime('%I:%M%p')
+    t_now = datetime.now().strftime('%b %d %Y (%a) @ %H:%M:%S')
     return(t_cron, d_cron, t_now)
 
 
 def backup_weekly():
-    os.popen('cd %s && python util_backup.py' % MEDIA_ROOT)
+    # os.popen('cd %s && python util_backup.py' % MEDIA_ROOT)
     (t_cron, d_cron, t_now) = get_date_time('backup')
     if DEBUG:
         print "\033[94m Backed up locally. \033[0m"
@@ -36,7 +36,7 @@ def backup_weekly():
 
 
 def gdrive_weekly():
-    os.popen('cd %s && python util_gdrive_sync.py' % MEDIA_ROOT)
+    # os.popen('cd %s && python util_gdrive_sync.py' % MEDIA_ROOT)
     (t_cron, d_cron, t_now) = get_date_time('gdrive')
 
     if DEBUG:

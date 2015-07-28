@@ -48,12 +48,17 @@
 					<li class=" clickable" id="nav_misc">
 						<a href="/group/misc" >Misc</a>
 					</li>
+					{% if user.is_superuser %}
+					<li class=" clickable" id="nav_admin">
+						<a href="/admin" style="color:#ff5c2b">Admin</a>
+					</li>
+					{% endif %}
 				</ul>
 
 				<div class="pull-right row">
 					<ul class="nav navbar-nav">
 						<li class="dropdown">
-							<button class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color: #ffffff;background-color: #5496d7; border-color: #7495c9;">
+							<button class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color: #fff;background-color: #5496d7; border-color: #7495c9;">
 								Account&nbsp;
 								<span class="caret"></span>
 							</button>

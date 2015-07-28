@@ -55,7 +55,6 @@ GCAL = env_gapi['CAL']
 MANAGERS = ADMINS = (
     ('Siqi Tian', 't47@stanford.edu'),
 )
-
 EMAIL_NOTIFY = ADMINS[0][1]
 (EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_USE_TLS, EMAIL_PORT, EMAIL_HOST) = [v for k, v in env.email_url().items() if k in ['EMAIL_HOST_PASSWORD', 'EMAIL_HOST_USER', 'EMAIL_USE_TLS', 'EMAIL_PORT', 'EMAIL_HOST']]
 EMAIL_SUBJECT_PREFIX = '[Django] {daslab.stanford.edu}'
