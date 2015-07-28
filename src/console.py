@@ -39,6 +39,16 @@ def get_sys_stat():
     ver_bootstrap = f.readline()
     ver += ver_bootstrap[ver_bootstrap.find('v')+1: ver_bootstrap.find('(')].strip() + '\t'
     f.close()
+    f = open(os.path.join(MEDIA_ROOT, 'media/js/fullcalendar.min.js'))
+    f.readline()
+    ver_fullcall = f.readline()
+    ver += ver_fullcall[ver_fullcall.find('v')+1:].strip() + '\t'
+    f.close()
+    f = open(os.path.join(MEDIA_ROOT, 'media/js/moment.min.js'))
+    f.readline()
+    ver_moment = f.readline()
+    ver += ver_moment[ver_moment.find(':')+2:].strip() + '\t'
+    f.close()
 
     ver += subprocess.Popen('mysql --version | sed %s | sed %s' % ("'s/,.*//g'", "'s/.*Distrib //g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
     ver += subprocess.Popen('apachectl -v | head -1 | sed %s | sed %s' % ("'s/.*\///g'", "'s/[a-zA-Z \(\)]//g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
