@@ -1,7 +1,10 @@
+import datetime
 import os
 import subprocess
 import sys
-import datetime
+import time
+
+t0 = time.time()
 
 sys.path.append(os.path.abspath('.'))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.settings") 
@@ -9,14 +12,14 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.settings")
 from src.settings import *
 
 
-flag = False
-
 t = datetime.datetime.now().strftime('%Y%m%d')
 gdrive_dir = 'echo'
 if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
 prefix = ''
 if DEBUG: prefix = '_DEBUG'
 
+flag = False
+t = time.time()
 print "#1: Uploading MySQL database..."
 try:
 	subprocess.check_call('%s && drive upload -f %s/backup/backup_mysql.gz -t DasLab_%s_mysql%s.gz' % (gdrive_dir, MEDIA_ROOT, t, prefix), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -25,7 +28,9 @@ except subprocess.CalledProcessError:
 	flag = True
 else:
 	print "    \033[92mSUCCESS\033[0m: \033[94mMySQL\033[0m database uploaded."
+print "Time elapsed: %.1f s." % (time.time() - t)
 
+t = time.time()
 print "#2: Uploading static files..."
 try:
 	subprocess.check_call('%s && drive upload -f %s/backup/backup_static.tgz -t DasLab_%s_static%s.tgz' % (gdrive_dir, MEDIA_ROOT, t, prefix), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -34,7 +39,9 @@ except subprocess.CalledProcessError:
 	flag = True
 else:
 	print "    \033[92mSUCCESS\033[0m: \033[94mstatic\033[0m files uploaded."
+print "Time elapsed: %.1f s." % (time.time() - t)
 
+t = time.time()
 print "#3: Uploading apache2 settings..."
 try:
 	subprocess.check_call('%s && drive upload -f %s/backup/backup_apache.tgz -t DasLab_%s_apache%s.tgz' % (gdrive_dir, MEDIA_ROOT, t, prefix), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -43,8 +50,10 @@ except subprocess.CalledProcessError:
 	flag = True
 else:
 	print "    \033[92mSUCCESS\033[0m: \033[94mapache2\033[0m settings uploaded."
+print "Time elapsed: %.1f s." % (time.time() - t)
 
 
+t = time.time()
 print "#4: Removing obsolete backups..."
 old = (datetime.date.today() - datetime.timedelta(days=KEEP_BACKUP)).strftime('%Y-%m-%dT00:00:00')
 
@@ -63,12 +72,15 @@ for id in list_all:
 		flag = True
 
 if not flag: print "    \033[92mSUCCESS\033[0m: \033[94m%s\033[0m obsolete backup files removed." % len(list_all)
-
+print "Time elapsed: %.1f s." % (time.time() - t)
+print
 
 if flag:
 	print "Finished with errors!"
+	print "Time elapsed: %.1f s." % (time.time() - t0)
 	sys.exit(1)
 else:
 	print "All done successfully!"
+	print "Time elapsed: %.1f s." % (time.time() - t0)
 	sys.exit(0)
 
