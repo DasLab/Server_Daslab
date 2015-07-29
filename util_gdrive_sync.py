@@ -3,6 +3,7 @@ import os
 import subprocess
 import sys
 import time
+import traceback
 
 t0 = time.time()
 
@@ -25,6 +26,7 @@ try:
 	subprocess.check_call('%s && drive upload -f %s/backup/backup_mysql.gz -t DasLab_%s_mysql%s.gz' % (gdrive_dir, MEDIA_ROOT, t, prefix), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 except subprocess.CalledProcessError:
 	print "    \033[41mERROR\033[0m: Failed to upload \033[94mMySQL\033[0m database."
+    print traceback.format_exc()
 	flag = True
 else:
 	print "    \033[92mSUCCESS\033[0m: \033[94mMySQL\033[0m database uploaded."
@@ -36,6 +38,7 @@ try:
 	subprocess.check_call('%s && drive upload -f %s/backup/backup_static.tgz -t DasLab_%s_static%s.tgz' % (gdrive_dir, MEDIA_ROOT, t, prefix), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 except subprocess.CalledProcessError:
 	print "    \033[41mERROR\033[0m: Failed to upload \033[94mstatic\033[0m files."
+    print traceback.format_exc()
 	flag = True
 else:
 	print "    \033[92mSUCCESS\033[0m: \033[94mstatic\033[0m files uploaded."
@@ -47,6 +50,7 @@ try:
 	subprocess.check_call('%s && drive upload -f %s/backup/backup_apache.tgz -t DasLab_%s_apache%s.tgz' % (gdrive_dir, MEDIA_ROOT, t, prefix), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 except subprocess.CalledProcessError:
 	print "    \033[41mERROR\033[0m: Failed to upload \033[94mapache2\033[0m settings."
+    print traceback.format_exc()
 	flag = True
 else:
 	print "    \033[92mSUCCESS\033[0m: \033[94mapache2\033[0m settings uploaded."
@@ -69,6 +73,7 @@ for id in list_all:
 		subprocess.check_call('%s && drive delete -i %s' % (gdrive_dir, id), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	except subprocess.CalledProcessError:
 		print "    \033[41mERROR\033[0m: Failed to remove obsolete \033[94mbackup\033[0m files."
+        print traceback.format_exc()
 		flag = True
 
 if not flag: print "    \033[92mSUCCESS\033[0m: \033[94m%s\033[0m obsolete backup files removed." % len(list_all)

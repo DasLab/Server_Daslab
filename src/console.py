@@ -6,6 +6,7 @@ import simplejson
 import subprocess
 import sys
 import textwrap
+import traceback
 import urllib
 import urllib2
 
@@ -156,10 +157,14 @@ def set_backup_form(request):
     f.writelines(lines)
     f.close()
     try:
-        subprocess.check_call('crontab -r', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        subprocess.check_call('cd %s && python manage.py crontab add' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        cron = subprocess.Popen('crontab -l | cut -d" " -f1-5', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()
+        if len(cron) > 9:
+            subprocess.check_call('crontab -r', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        subprocess.check_output('cd %s && python manage.py crontab add' % MEDIA_ROOT, shell=True, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
         print "    \033[41mERROR\033[0m: Failed to reset \033[94mcrontab\033[0m schedules."
+        print traceback.format_exc()
+        raise Exception('Error with setting crontab scheduled jobs.')
         # call_command('crontab', 'add')
         # call_command('crontab', 'add')
         # call_command('crontab', 'add')
@@ -322,6 +327,7 @@ def export_citation(request):
                 subprocess.check_call('cd %s/data && pandoc -f html -t docx -o export_citation.docx export_citation.html' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             except subprocess.CalledProcessError:
                 print "    \033[41mERROR\033[0m: Failed to export \033[94mcitation\033[0m as DOCX file."
+                print traceback.format_exc()
                 raise Exception('Error with pandoc converting html source file to docx output.')
 
             f = open(os.path.join(MEDIA_ROOT, 'data/export_citation.docx'), 'r')
