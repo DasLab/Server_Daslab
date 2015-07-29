@@ -155,9 +155,11 @@ def set_backup_form(request):
     f = open('%s/config/cron.conf' % MEDIA_ROOT, 'w')
     f.writelines(lines)
     f.close()
-    # try:
-    os.popen('crontab -r')
-    os.popen('cd %s && python manage.py crontab add' % MEDIA_ROOT)
+    try:
+        subprocess.check_call('crontab -r', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        subprocess.check_call('cd %s && python manage.py crontab add' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError:
+        print "    \033[41mERROR\033[0m: Failed to reset \033[94mcrontab\033[0m schedules."
         # call_command('crontab', 'add')
         # call_command('crontab', 'add')
         # call_command('crontab', 'add')
@@ -316,7 +318,11 @@ def export_citation(request):
             f.write(html.encode('UTF-8'))
             f.close()
 
-            os.popen('cd %s/data && pandoc -f html -t docx -o export_citation.docx export_citation.html' % MEDIA_ROOT)
+            try:
+                subprocess.check_call('cd %s/data && pandoc -f html -t docx -o export_citation.docx export_citation.html' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            except subprocess.CalledProcessError:
+                print "    \033[41mERROR\033[0m: Failed to export \033[94mcitation\033[0m as DOCX file."
+                raise Exception('Error with pandoc converting html source file to docx output.')
 
             f = open(os.path.join(MEDIA_ROOT, 'data/export_citation.docx'), 'r')
             lines = f.readlines()
