@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %}
+{% load i18n admin_static %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block content %}
+	<div id="content-main">
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<table class="table table-overview applist">
+					<tr>
+		                <th scope="row"><b><span class="glyphicon glyphicon-globe"></span> Link</th>
+		                <td class="active"><a href="https://github.com/DasLab/Server_DasLab" target="_blank" class="addlink icon">https://github.com/DasLab/Server_DasLab</a></td>
+		                <td class="active"><span class="glyphicon glyphicon-lock"></span> GitHub Authorization Required</td>
+		              </tr>
+				</table>
+			</div>
+		</div>
+		<iframe src="/admin/git_inspector" class="well" id="iframe" frameborder="0" scrolling="no" seamless="true"></iframe>
+	</div>
+
+{% endblock %}
+
+{% block extrajs %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#view-selector-container").hide();
+			$("ul.breadcrumb").append('<li class="active"><a href="/admin/ga/">Google Analytics</a></li>');
+
+			$("#iframe").css("width", parseInt($("#content").css("width")) - 50);
+			// $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
+			// $("#iframe").css("height", 800);
+			$('#iframe').on("load", function() {
+				$(this).css("height", $(this).contents().outerHeight());
+			});
+		});
+	</script>
+{% endblock %}
+

@@ -142,6 +142,7 @@ SUIT_CONFIG = {
             {'label': 'Apache', 'icon':'icon-cog', 'url': '/admin/apache/'},
             {'label': 'AWS', 'icon':'icon-cog', 'url': '/admin/aws/'},
             {'label': 'GA', 'icon':'icon-cog', 'url': '/admin/ga/'},
+            {'label': 'Git', 'icon':'icon-cog', 'url': '/admin/git/'},
             {'label': 'Directory', 'icon':'icon-folder-open', 'url': '/admin/dir/'},
             {'label': 'Backup', 'icon':'icon-cog', 'url': '/admin/backup/'},
         ]},

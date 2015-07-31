@@ -20,6 +20,7 @@ $(document).ready(function () {
 	$('.left-nav>ul>li>ul>li>a[href="/admin/apache/"]').html('<span class="glyphicon glyphicon-grain"></span>&nbsp;&nbsp;Apache Status');
 	$('.left-nav>ul>li>ul>li>a[href="/admin/aws/"]').html('<span class="glyphicon glyphicon-text-background"></span>&nbsp;&nbsp;AWS Console');
 	$('.left-nav>ul>li>ul>li>a[href="/admin/ga/"]').html('<span class="glyphicon glyphicon-signal"></span>&nbsp;&nbsp;Google Analytics');
+	$('.left-nav>ul>li>ul>li>a[href="/admin/git/"]').html('<span class="glyphicon glyphicon-compressed"></span>&nbsp;&nbsp;Github Repository');
 	$('.left-nav>ul>li>ul>li>a[href="/admin/dir/"]').html('<span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Directory');
 	$('.left-nav>ul>li>ul>li>a[href="/admin/backup/"]').html('<span class="glyphicon glyphicon-floppy-open"></span>&nbsp;&nbsp;Backup Schedule');
 

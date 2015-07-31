@@ -239,6 +239,18 @@ def ga_stats():
     return stats
 
 
+def git_stats():
+    gdrive_dir = 'echo'
+    if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
+
+    try:
+        subprocess.check_call('%s && gitinspector -wHlmrT %s -F html > %s/data/stat_git.html' % (gdrive_dir, MEDIA_ROOT, MEDIA_ROOT), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError:
+        print "    \033[41mERROR\033[0m: Failed to generate \033[94mgitinspector\033[0m stats."
+        print traceback.format_exc()
+        raise Exception('Error with generating gitinsepctor stats.')
+
+
 def export_citation(request):
     is_order_number = 'order_number' in request.POST
     is_quote_title = 'quote_title' in request.POST
