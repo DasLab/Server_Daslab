@@ -16,7 +16,7 @@ sudo chmod 750 media/admin media/admin/css media/admin/img media/admin/img/gis m
 
 sudo chmod 640 backup/*
 sudo chmod 750 backup
-sudo chmod 640 data/*.txt data/*.pdf data/news_img/* data/_old/* data/ppl_img/* data/pub_data/* data/pub_img/* data/pub_pdf/* data/rot_data/* data/rot_ppt/* data/spe_ppt/*
+sudo chmod 640 data/*.txt data/*.log data/*.pdf data/news_img/* data/_old/* data/ppl_img/* data/pub_data/* data/pub_img/* data/pub_pdf/* data/rot_data/* data/rot_ppt/* data/spe_ppt/*
 sudo chmod 750 data data/news_img data/_old data/ppl_img data/pub_data data/pub_img data/pub_pdf data/rot_data data/rot_ppt data/spe_ppt
 
 sudo chmod 640 config/*.py* config/*.example config/*.conf

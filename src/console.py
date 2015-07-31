@@ -149,8 +149,8 @@ def set_backup_form(request):
     f.close()
 
     index =  [i for i, line in enumerate(lines) if 'src.cron.backup_weekly' in line or 'src.cron.gdrive_weekly' in line or 'KEEP_BACKUP' in line]
-    lines[index[0]] = '\t\t["%s", "src.cron.backup_weekly"],\n' % cron_backup
-    lines[index[1]] = '\t\t["%s", "src.cron.gdrive_weekly"],\n' % cron_upload
+    lines[index[0]] = '\t\t["%s", "src.cron.backup_weekly", ">> %s/data/log_cron.log"],\n' % (cron_backup, MEDIA_ROOT)
+    lines[index[1]] = '\t\t["%s", "src.cron.gdrive_weekly", ">> %s/data/log_cron.log"],\n' % (cron_upload, MEDIA_ROOT)
     lines[index[2]] = '\t"KEEP_BACKUP": %s\n' % request.POST['keep']
 
     f = open('%s/config/cron.conf' % MEDIA_ROOT, 'w')
