@@ -9,7 +9,7 @@
 			</span>
 		</h3>
 		<br/>
-		<div class="panel panel-danger">
+		<div class="panel panel-orange">
 			<div class="panel-heading">
 				<h2 class="panel-title"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Google Group Calendar</h2>
 			</div>
@@ -20,10 +20,32 @@
 						<div id="calendar" style="padding:10px;" class="place_holder"></div>
 					</div>
 				</div>
+				<br/>
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-3">
+						<p class="lead">Legend</p>
+						<span class="label label-success">GREEN</span> <span class="pull-right">All-day Events</span>
+						<br/>
+						<span class="label label-primary">BLUE</span> <span class="pull-right">Time-span Events</span>
+						<br/>
+						<span class="label label-danger">RED</span> <span class="pull-right">Group Meeting Recurrence</span>
+						<br/>
+						<span class="label label-violet">VIOLET</span> <span class="pull-right">Member Birthdays</span>
+						<br/>
+					</div>
+					<div class="col-md-1"><b>Note:</b></div>
+					<div class="col-md-7">
+						This page is using custom rendering library <code>fullcalendar.js</code> for the calendar view instead of Google Caldendar <code>&lt;iframe&gt;</code> embedding.
+						<br/>
+						This is a walk-around for making the calendar contents <kbd>public</kbd>, which would be searchable by anyone via Google.
+						<br/>
+						Our Lab calendar is still <kbd>private</kbd>. This page is for viewing only.
+					</div>
+				</div>
+				<br/>
 			</div>
 		</div>
-
-
 	</div>
 </div>
 {% endblock %}
@@ -45,17 +67,20 @@
 				url : "/admin/gcal",
 				dataType: "json",
 				success : function (data) {
-					$('#calendar').fullCalendar({ events: data });
+					$('#calendar').fullCalendar({ 
+						events: data,
+						timeFormat: ' h:mmt \n'
+					});
 					$("#calendar").removeClass("place_holder");
 		
-					$(".fc-today").css({"background-color": "#fec78a", "color": "#ff5c2b", "font-weight": "bold"});
+					$(".fc-today").css({"background-color": "#000", "color": "#fef159", "font-weight": "bold"});
 					$("th.fc-day-header").css({"background-color": "#ddd", "padding": "10px"});
 					$("button.fc-prev-button").removeClass("fc-button fc-state-default fc-corner-left fc-corner-right").addClass("btn btn-blue").html('<span class="glyphicon glyphicon-backward"></span>&nbsp;');
 					$("button.fc-next-button").removeClass("fc-button fc-state-default fc-corner-left fc-corner-right").addClass("btn btn-blue").html('&nbsp;<span class="glyphicon glyphicon-forward"></span>');
 					$("button.fc-today-button").removeClass("fc-button fc-state-default fc-corner-left fc-corner-right").addClass("btn btn-inverse").html('<span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbspToday');
 
 					$(".fc-prev-button, .fc-next-button, .fc-today-button").bind("click", function() {
-						$(".fc-today").css({"background-color": "#fec78a", "color": "#ff5c2b", "font-weight": "bold"});
+						$(".fc-today").css({"background-color": "#000", "color": "#fef159", "font-weight": "bold"});
 						$("th.fc-day-header").css({"background-color": "#ddd", "padding": "10px"});
 					});
 				}
