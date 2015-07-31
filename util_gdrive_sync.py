@@ -6,7 +6,7 @@ import time
 import traceback
 
 t0 = time.time()
-
+print time.ctime()
 sys.path.append(os.path.abspath('.'))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.settings") 
 
