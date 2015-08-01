@@ -32,23 +32,24 @@ $(document).ready(function() {
         	$("#id_webauth").html(txt[14]);
         	$("#id_ssh").html(txt[15]);
         	$("#id_git").html(txt[16]);
-            $("#id_gdrive").html(txt[17]);
-            $("#id_pandoc").html(txt[18]);
-            $("#id_curl").html(txt[19]);
-        	$("#id_pip").html(txt[20]);
-        	$("#id_virtualenv").html(txt[21]);
+            $("#id_git_inspector").html(txt[17]);
+            $("#id_gdrive").html(txt[18]);
+            $("#id_pandoc").html(txt[19]);
+            $("#id_curl").html(txt[20]);
+        	$("#id_pip").html(txt[21]);
+        	$("#id_virtualenv").html(txt[22]);
 
-        	var disk_sp = txt[22].split(/\//);
+        	var disk_sp = txt[23].split(/\//);
         	$("#id_disk_space").html('<span style="color:#080;">' + disk_sp[0] + '</span> | <span style="color:#f00;">' + disk_sp[1] + '</span>');
-        	var mem_sp = txt[23].split(/\//);
+        	var mem_sp = txt[24].split(/\//);
         	$("#id_memory").html('<span style="color:#080;">' + mem_sp[0] + '</span> | <span style="color:#f00;">' + mem_sp[1] + '</span>');
-        	$("#id_backup").html('<span style="color:#00f;">' + txt[24] + '</span>');
-        	var cpu = txt[25].split(/\//);
+        	$("#id_backup").html('<span style="color:#00f;">' + txt[25] + '</span>');
+        	var cpu = txt[26].split(/\//);
         	$("#id_cpu").html('<span style="color:#f00;">' + cpu[0] + '</span> | <span style="color:#080;">' + cpu[1] + '</span> | <span style="color:#00f;">' + cpu[2] + '</span>');
 
-            $("#id_base_dir").html('<code>' + txt[26] + '</code>');
-            $("#id_media_root").html('<code>' + txt[27] + '</code>');
-            $("#id_static_root").html('<code>' + txt[28] + '</code>');
+            $("#id_base_dir").html('<code>' + txt[27] + '</code>');
+            $("#id_media_root").html('<code>' + txt[28] + '</code>');
+            $("#id_static_root").html('<code>' + txt[29] + '</code>');
     	}
     });
 
