@@ -7,6 +7,13 @@ body {
 	 -webkit-text-size-adjust: none;
 }
 
+a.nav-hover>img {
+	border-bottom: 6px solid #fff;
+}
+a.nav-hover.active>img {
+	border-bottom: 6px solid #008180 !important;
+}
+
 .DAShome {
 	height: 800px;
 	width: 975px;

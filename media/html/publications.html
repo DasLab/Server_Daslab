@@ -16,8 +16,8 @@
       <tbody>
         <tr>
           <td width="38" height="15" align="left" valign="middle" class="PubH1">
-            <a href="http://www.ncbi.nlm.nih.gov/pubmed?cmd=Search&term=Das%20Rhiju" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('arrow','','/site_media/images/publications/arrow_hover.png',1)">
-              <img src="/site_media/images/publications/arrow.png" name="arrow" width="28" height="28" border="0" id="arrow">
+            <a href="http://www.ncbi.nlm.nih.gov/pubmed?cmd=Search&term=Das%20Rhiju" id="arrow">
+              <img src="/site_media/images/publications/arrow.png" width="28" height="28" border="0">
             </a>
           </td>
           <td width="807" height="15" align="left" valign="middle" class="PubH1">
@@ -34,7 +34,7 @@
                 <table>
                   <tbody>
                     <tr class="switch">
-                      <td width="38" height="15" align="left" valign="middle" class="PubH1"><a><img src="/site_media/images/publications/arrow.png" name="arrow" width="28" height="28" border="0" id="arrow2" /></a></td>
+                      <td width="38" height="15" align="left" valign="middle" class="PubH1"><a id="arrow2"><img src="/site_media/images/publications/arrow.png" width="28" height="28" border="0"/></a></td>
                       <td height="15" align="left" valign="middle" class="pubH2" id="expand"><strong>Previous work by R. Das</strong></td>
                     </tr>
                   </tbody>
@@ -150,12 +150,20 @@
 
     $(document).ready(function() {
       $("#main").addClass("DASpub");
-      $("#publications").attr("src", "/site_media/images/nav_publications_hover.png");
+      $("#nav-publications").addClass("active");
 
       $("table.previous").hide();
       $("br.previous").hide();
-      $("#arrow2").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/arrow_hover.png");} );
-      $("#arrow2").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/arrow.png");} );
+      $("#arrow").hover(function () {
+        $(this).children().attr("src", "/site_media/images/publications/arrow_hover.png");
+      }, function () {
+        $(this).children().attr("src", "/site_media/images/publications/arrow.png");
+      });
+      $("#arrow2").hover(function () {
+        $(this).children().attr("src", "/site_media/images/publications/arrow_hover.png");
+      }, function () {
+        $(this).children().attr("src", "/site_media/images/publications/arrow.png");
+      });
 
       $("#DasFOOTER").css("top", $("table.current:last").offset().top + 200);
       $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
@@ -168,13 +176,19 @@
 
         if (flag == -1) {
           $("#arrow2").attr("src", "/site_media/images/publications/collapse_hover.png");
-          $("#arrow2").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/collapse.png");} );
-          $("#arrow2").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/collapse_hover.png");} );
+          $("#arrow2").hover(function () {
+            $(this).children().attr("src", "/site_media/images/publications/collapse_hover.png");
+          }, function () {
+            $(this).children().attr("src", "/site_media/images/publications/collapse.png");
+          });
           $("#DasFOOTER").css("top", $("table.previous:last").offset().top + 200);
         } else {
           $("#arrow2").attr("src", "/site_media/images/publications/arrow.png");
-          $("#arrow2").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/arrow_hover.png");} );
-          $("#arrow2").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/arrow.png");} );
+          $("#arrow2").hover(function () {
+            $(this).children().attr("src", "/site_media/images/publications/arrow_hover.png");
+          }, function () {
+            $(this).children().attr("src", "/site_media/images/publications/arrow.png");
+          });
           $("#DasFOOTER").css("top", $("table.current:last").offset().top + 200);
         }
         $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);

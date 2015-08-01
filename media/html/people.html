@@ -40,8 +40,8 @@
             </p>
           </td>
           <td height="175" align="right" valign="bottom">
-            <a href="{{ppl.more_info}}" target="_blank" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('more info2{{forloop.counter}}','','/site_media/images/people/more_info_hover.png',1)">
-              <img src="/site_media/images/people/more_info.png" name="more info2{{forloop.counter}}" width="121" height="32" border="0" id="more info2{{forloop.counter}}">
+            <a href="{{ppl.more_info}}" target="_blank" class="btn_moreinfo">
+              <img src="/site_media/images/people/more_info.png" width="121" height="32" border="0" id="more_info_{{forloop.counter}}">
             </a>
           </td>
         </tr>
@@ -64,8 +64,8 @@
             </p>
           </td>
           <td height="175" align="right" valign="bottom">
-            <a href="https://cap.stanford.edu/profiles/auth/frdActionServlet?choiceId=facProfile&fid=10421" target="_blank" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('more info20','','/site_media/images/people/more_info_hover.png',1)">
-              <img src="/site_media/images/people/more_info.png" name="more info20" width="121" height="32" border="0" id="more info20">
+            <a href="https://cap.stanford.edu/profiles/auth/frdActionServlet?choiceId=facProfile&fid=10421" target="_blank" class="btn_moreinfo">
+              <img src="/site_media/images/people/more_info.png" width="121" height="32" border="0" id="more_info_das">
             </a>
           </td>
         </tr>
@@ -109,7 +109,13 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $("#main").addClass("DASpeople");
-      $("#people").attr("src", "/site_media/images/nav_people_hover.png");
+      $("#nav-people").addClass("active");
+
+      $(".btn_moreinfo").hover(function () {
+        $(this).children().attr("src", "/site_media/images/people/more_info_hover.png");
+      }, function () {
+        $(this).children().attr("src", "/site_media/images/people/more_info.png");
+      });
 
       $("#DasFOOTER").css("top", 700 + {{past_member|length}} * 60 + {{current_member|length}} * 200);
       $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);

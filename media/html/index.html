@@ -7,8 +7,8 @@
 {% block content %}
   <div id="animation">
     <div id="researchBTN">
-      <a href="/research" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('researchBTN','','/site_media/images/btn_research_hover.png',1)">
-        <img src="/site_media/images/btn_research.png" name="researchBTN" width="53" height="201" border="0" id="researchBTN2">
+      <a id="btn_research" href="/research">
+        <img src="/site_media/images/btn_research.png" width="53" height="201" border="0" id="researchBTN2">
       </a>
     </div>
     <div id="apDiv1">
@@ -54,7 +54,14 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $("#main").addClass("DAShome");
-      $("#dasHOME").attr("src", "/site_media/images/nav_home_hover.png");
+      $("#nav-home").addClass("active");
+
+      $("#btn_research").hover(function () {
+        $(this).children().attr("src", "/site_media/images/btn_research_hover.png");
+      }, function () {
+        $(this).children().attr("src", "/site_media/images/btn_research.png");
+      });
+
     });
   </script>
 {% endblock %}

@@ -31,8 +31,8 @@
           </td>
           <td height="160" align="right" valign="bottom">
             {% if news.link %}
-            <a href="{{news.link}}" target="_blank" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('read more2{{forloop.counter}}','','/site_media/images/news/read_more_hover.png',1)">
-              <img src="/site_media/images/news/read_more.png" name="read more2{{forloop.counter}}" width="121" height="32" border="0" id="read more2{{forloop.counter}}">
+            <a href="{{news.link}}" target="_blank" class="btn_readmore">
+              <img src="/site_media/images/news/read_more.png" width="121" height="32" border="0" id="read more2{{forloop.counter}}">
             {% endif %}
             </a>
           </td>
@@ -42,7 +42,7 @@
         </tr>
         {% if forloop.counter == 10 %}
           <tr class="switch">
-            <td width="38" height="15" align="left" valign="middle" class="PubH1"><a><img src="/site_media/images/publications/arrow.png" name="arrow" width="28" height="28" border="0" id="arrow" /></a></td>
+            <td width="38" height="15" align="left" valign="middle" class="PubH1"><a id="arrow"><img src="/site_media/images/publications/arrow.png" width="28" height="28" border="0" /></a></td>
             <td height="15" align="left" valign="middle" class="PubH1">Previous news from the Das Lab.</strong></td>
           </tr>
           <tr class="switch">
@@ -66,11 +66,19 @@
 
     $(document).ready(function() {
       $("#main").addClass("DASnews");
-      $("#news").attr("src", "/site_media/images/nav_news_hover.png");
+      $("#nav-news").addClass("active");
 
       $("tr.previous").hide();
-      $("#arrow").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/arrow_hover.png");} );
-      $("#arrow").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/arrow.png");} );
+      $(".btn_readmore").hover(function () {
+        $(this).children().attr("src", "/site_media/images/news/read_more_hover.png");
+      }, function () {
+        $(this).children().attr("src", "/site_media/images/news/read_more.png");
+      });
+      $("#arrow").hover(function () {
+        $(this).children().attr("src", "/site_media/images/publications/arrow_hover.png");
+      }, function () {
+        $(this).children().attr("src", "/site_media/images/publications/arrow.png");
+      });
 
       $("#DasFOOTER").css("top", $("tr.middle").offset().top + 200);
       $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
@@ -82,13 +90,19 @@
 
         if (flag == -1) {
           $("#arrow").attr("src", "/site_media/images/publications/collapse_hover.png");
-          $("#arrow").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/collapse.png");} );
-          $("#arrow").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/collapse_hover.png");} );
+          $("#arrow").hover(function () {
+            $(this).children().attr("src", "/site_media/images/publications/collapse_hover.png");
+          }, function () {
+            $(this).children().attr("src", "/site_media/images/publications/collapse.png");
+          });
           $("#DasFOOTER").css("top", $("tr.last").offset().top + 200);
         } else {
           $("#arrow").attr("src", "/site_media/images/publications/arrow.png");
-          $("#arrow").on("mouseover", function () {$(this).attr("src", "/site_media/images/publications/arrow_hover.png");} );
-          $("#arrow").on("mouseout", function () {$(this).attr("src", "/site_media/images/publications/arrow.png");} );
+          $("#arrow").hover(function () {
+            $(this).children().attr("src", "/site_media/images/publications/arrow_hover.png");
+          }, function () {
+            $(this).children().attr("src", "/site_media/images/publications/arrow.png");
+          });
           $("#DasFOOTER").css("top", $("tr.middle").offset().top + 200);
         }
         $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
