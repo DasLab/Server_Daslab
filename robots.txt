@@ -39,6 +39,8 @@ Disallow: /src/
 Disallow: /data/
 Disallow: /config/
 Disallow: /media/admin/
+Disallow: /media/fonts/
+Disallow: /media/js/
 Disallow: /media/_old/
 Disallow: /.git/
 
