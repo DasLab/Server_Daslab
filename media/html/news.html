@@ -11,14 +11,12 @@
 
 
 {% block content %}
-  <div id="animation">
-    <div id="header">
-      <img src="/site_media/images/news/icon_news.png" width="349" height="111">
-    </div>
+  <div id="DasBANNER" class="fix">
+    <div id="DasHEADER" class="fix"><img src="/site_media/images/news/icon_news.png" width="349" height="111"></div>
     <img src="/site_media/images/news/logo_news.jpg" width="973" height="221">
   </div>
 
-  <div class="homeTEXT" id="newsBODY">
+  <div class="TEXT BODY" id="newsBODY">
     <table width="855" height="820" border="0">
       <tbody>
 
@@ -28,9 +26,9 @@
             {% if news.image %} <img src="/site_data/news_img/{{news.image_link}}" width="190"> {% endif %}
             {% if news.video %} <iframe title="YouTube video player" class="youtube-player" type="text/html" width="160" src="{{news.video}}" frameborder="0" allowFullScreen></iframe> {% endif %}
           </td>
-          <td width="500" align="left" valign="top" class="homeTEXT">
-            <p class="teal1"><i>{{news.date|date:"F d, Y"|title}}</i></p>
-            <p class="newsTEXT">
+          <td width="500" align="left" valign="top" class="TEXT">
+            <p class="yearTEXT"><i>{{news.date|date:"F d, Y"|title}}</i></p>
+            <p class="TEXT">
               {% autoescape off %}{{news.content}}{% endautoescape %}
             </p>
           </td>
@@ -47,8 +45,8 @@
         </tr>
         {% if forloop.counter == 10 %}
           <tr class="switch">
-            <td width="38" height="15" align="left" valign="middle" class="PubH1"><a id="arrow"><img src="/site_media/images/publications/arrow.png" width="28" height="28" border="0" /></a></td>
-            <td height="15" align="left" valign="middle" class="PubH1">Previous news from the Das Lab.</strong></td>
+            <td width="38" height="15" align="left" valign="middle" class="publicationsH1"><a id="arrow"><img src="/site_media/images/publications/arrow.png" width="28" height="28" border="0" /></a></td>
+            <td height="15" align="left" valign="middle" class="HEAD publicationsH1">Previous news from the Das Lab.</strong></td>
           </tr>
           <tr class="switch">
             <td height="20" colspan="3"><div class="divisionLine"></div></td>
@@ -60,8 +58,6 @@
       </tbody>
     </table>
   </div>
-
-  <div id="DasFOOTER"><img src="/site_media/images/footer_other.jpg" width="855" height="39"></div>
 {% endblock %}
 
 
@@ -86,7 +82,7 @@
       });
 
       $("#DasFOOTER").css({"top": $("tr.middle").offset().top + 200, "display": "inline"});
-      $("#icons").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
+      $("#DasICON").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
       $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
 
       $("#arrow").on("click", function () {
@@ -110,7 +106,7 @@
           });
           $("#DasFOOTER").css("top", $("tr.middle").offset().top + 200);
         }
-        $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
+        $("#DasICON").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
         $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
       });
 

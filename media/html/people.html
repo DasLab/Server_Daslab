@@ -11,12 +11,12 @@
 
 
 {% block content %}
-  <div id="animation">
-    <div id="header"><img src="/site_media/images/people/icon_people.png" width="349" height="111"></div>
+  <div id="DasBANNER" class="fix">
+    <div id="DasHEADER" class="fix"><img src="/site_media/images/people/icon_people.png" width="349" height="111"></div>
     <img src="/site_media/images/people/logo_people.jpg" width="973" height="221">
   </div>
 
-  <div class="homeTEXT" id="pplBODY">
+  <div class="homeTEXT BODY" id="pplBODY">
     <table width="691" border="0" style="padding-left:100px;">
       <tbody>
         {% for ppl in current_member %}
@@ -29,8 +29,8 @@
             {% endif %}
           </td>
           <td height="175" align="left" valign="middle">
-            <p class="peopleH2">{{ppl.first_name}} {{ppl.last_name}}</p>
-            <p class="peopleTEXT">{{ppl.role}}
+            <p class="HEAD peopleH2">{{ppl.first_name}} {{ppl.last_name}}</p>
+            <p class="peopleTEXT TEXT">{{ppl.role}}
               <br>
               {{ppl.department}}
               <br>
@@ -59,8 +59,8 @@
         <tr>
           <td height="175" align="left" valign="middle"><img src="/site_data/ppl_img/RhijuD.jpg" width="119" height="157"></td>
           <td height="175" align="left" valign="middle">
-            <p class="peopleH2">Rhiju Das</p>
-            <p class="peopleTEXT">
+            <p class="HEAD peopleH2">Rhiju Das</p>
+            <p class="peopleTEXT TEXT">
               <strong>Principal Investigator</strong>
               <br>
               <a href="https://dl.dropboxusercontent.com/u/21569020/RhijuDas_CurriculumVitae.pdf" target="_blank">Curriculum Vitae</a>
@@ -87,9 +87,9 @@
             <p>&nbsp;</p>
             <p>
               {% for ppl in past_member %}
-              <span class="peopleH2">{{ppl.first_name}} {{ppl.last_name}}</span>
+              <span class="HEAD peopleH2">{{ppl.first_name}} {{ppl.last_name}}</span>
               <br>
-              <span class="peopleTEXT">
+              <span class="peopleTEXT TEXT">
               {{ppl.role}}, 
               {% if ppl.start_year != ppl.finish_year %}
                 {{ppl.start_year}}-{{ppl.finish_year}}
@@ -105,8 +105,6 @@
       </tbody>
     </table>
   </div>
-
-  <div id="DasFOOTER"><img src="/site_media/images/footer_other.jpg" width="855" height="39"></div>
 {% endblock %}
 
 
@@ -120,7 +118,7 @@
       });
 
       $("#DasFOOTER").css({"top": 700 + {{past_member|length}} * 60 + {{current_member|length}} * 200, "display": "inline"});
-      $("#icons").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
+      $("#DasICON").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
       $(".DASpeople").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
     });
   </script>

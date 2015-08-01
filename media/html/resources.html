@@ -11,14 +11,12 @@
 
 
 {% block content %}
-  <div id="animation">
-    <div id="header">
-      <img src="/site_media/images/resources/icon_resources.png" width="349" height="111">
-    </div>
+  <div id="DasBANNER" class="fix">
+    <div id="DasHEADER" class="fix"><img src="/site_media/images/resources/icon_resources.png" width="349" height="111"></div>
     <img src="/site_media/images/resources/logo_resources.jpg" width="973" height="221"> 
   </div>
 
-  <div class="homeTEXT" id="resourcesBODY">
+  <div class="TEXT BODY" id="resourcesBODY">
     <table width="855" height="131" border="0">
       <tbody>
         <tr>
@@ -26,7 +24,7 @@
             <br>
             <img src="/site_media/images/resources/side_1.png" width="165.15" height="67.95">
           </td>
-          <td height="110" width="50" align="left" valign="middle" class="homeTEXT">
+          <td height="110" width="50" align="left" valign="middle" class="TEXT">
             <b>For citizen scientists:</b> Join us! Create RNAs for nanomedicine at EteRNA.   
             <br>
           </td>
@@ -38,12 +36,12 @@
         </tr>
         <tr>
           <td height="20" align="left" valign="top">&nbsp;</td>
-          <td height="20" colspan="2" align="left" valign="middle" class="homeTEXT"><div class="divisionLine"></div></td>
+          <td height="20" colspan="2" align="left" valign="middle" class="TEXT"><div class="divisionLine"></div></td>
         </tr>
 
         <tr>
           <td height="110" align="left" valign="top">&nbsp;</td>
-          <td height="110" align="left" valign="middle" class="homeTEXT">
+          <td height="110" align="left" valign="middle" class="TEXT homeTEXT">
             <b>For RNA experimentalists:</b> Tools for designing primers (Primerize), analyzing raw data from multidimensional chemical mapping experiments (HiTRACE and MAPseeker), and browsing data sets and more, are served at the RNA Mapping Database.
             <a href="http://rmdb.stanford.edu/tools/" target="_blank">here</a>
             <br>
@@ -56,12 +54,12 @@
         </tr>
         <tr>
           <td height="20" align="left" valign="top">&nbsp;</td>
-          <td height="20" colspan="2" align="left" valign="middle" class="homeTEXT"><div class="divisionLine"></div></td>
+          <td height="20" colspan="2" align="left" valign="middle" class="TEXT"><div class="divisionLine"></div></td>
         </tr>
 
         <tr>
           <td height="110" align="left" valign="top">&nbsp;</td>
-          <td width="441" height="110" align="left" valign="top" class="homeTEXT">
+          <td width="441" height="110" align="left" valign="top" class="TEXT homeTEXT">
             <br>
         	  <b>For computational modelers:</b> Our high-resolution RNA modeling tools are available through Rosetta servers and software download.
           </td>
@@ -73,12 +71,12 @@
         </tr>
         <tr>
           <td height="20" align="left" valign="top">&nbsp;</td>
-          <td height="20" colspan="2" align="left" valign="middle" class="homeTEXT"><div class="divisionLine"></div></td>
+          <td height="20" colspan="2" align="left" valign="middle" class="TEXT"><div class="divisionLine"></div></td>
         </tr>
 
         <tr>
           <td height="110" align="left" valign="top">&nbsp;</td>
-          <td width="441" height="110" align="left" valign="top" class="homeTEXT">
+          <td width="441" height="110" align="left" valign="top" class="TEXT homeTEXT">
             <br>
         	  <b>For RNA engineers:</b> Our newer high resolution design tools are coming online! 
           </td>
@@ -132,7 +130,7 @@
             <br>         
             <img src="/site_media/images/resources/side_2.png" width="153.72" height="41.94">
           </td>
-          <td height="110" align="left" valign="middle" class="homeTEXT">
+          <td height="110" align="left" valign="middle" class="TEXT homeTEXT">
             <b>HelixMC</b> is a software package for Monte-Carlo (MC) 
             <br> simulations of DNA/RNA helices using base-pair level 
             <br> models.  
@@ -147,12 +145,12 @@
         </tr>
         <tr>
           <td height="20" align="left" valign="top">&nbsp;</td>
-          <td height="20" colspan="2" align="left" valign="middle" class="homeTEXT"><div class="divisionLine"></div></td>
+          <td height="20" colspan="2" align="left" valign="middle" class="TEXT"><div class="divisionLine"></div></td>
         </tr>
 
         <tr>
           <td height="110" align="left" valign="top">&nbsp;</td>
-          <td height="110" align="left" valign="middle" class="homeTEXT">
+          <td height="110" align="left" valign="middle" class="TEXT homeTEXT">
             Run Pymol in styles used by our lab with <a href="https://github.com/DasLab/pymol_daslab" target="_blank">this script</a>. Example 
             <br>
             images and basic documentation available <a href="/site_data/docs_pymol_rhiju.pdf" target="_blank">here</a>.
@@ -165,12 +163,12 @@
         </tr>
         <tr>
           <td height="20" align="left" valign="top">&nbsp;</td>
-          <td height="20" colspan="2" align="left" valign="middle" class="homeTEXT"><div class="divisionLine"></div></td>
+          <td height="20" colspan="2" align="left" valign="middle" class="TEXT"><div class="divisionLine"></div></td>
         </tr>
 
         <tr>
           <td height="110" align="left" valign="top">&nbsp;</td>
-          <td width="241" align="left" valign="top" class="homeTEXT">
+          <td width="241" align="left" valign="top" class="TEXT homeTEXT">
             <br>
             <b>Rosetta:</b> Our high-resolution RNA modeling and design algorithms 
             <br>
@@ -208,8 +206,6 @@
       </tbody>
     </table>
   </div>
-
-  <div id="DasFOOTER"><img src="/site_media/images/footer_other.jpg" width="855" height="39"></div>
 {% endblock %}
 
 
@@ -217,7 +213,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $("#DasFOOTER").css({"top": "1565px", "display": "inline"});
-      $("#icons").css({"top": "1620px", "display": "inline"});
+      $("#DasICON").css({"top": "1620px", "display": "inline"});
     });
   </script>
 {% endblock %}

@@ -11,36 +11,36 @@
 
 
 {% block content %}
-  <div id="animation">
-    <div id="header"><img src="/site_media/images/publications/icon_publications.png" width="349" height="111"></div>
+  <div id="DasBANNER" class="fix">
+    <div id="DasHEADER" class="fix"><img src="/site_media/images/publications/icon_publications.png" width="349" height="111"></div>
     <img src="/site_media/images/publications/logo_publications.jpg" width="973" height="221">
   </div>
 
-  <div class="homeTEXT" id="pubBODY">
+  <div class="BODY" id="pubBODY">
     <table width="855" height="3107" border="0">
       <tbody>
         <tr>
-          <td width="38" height="15" align="left" valign="middle" class="PubH1">
+          <td width="38" height="15" align="left" valign="middle" class="HEAD publicationsH1">
             <a href="http://www.ncbi.nlm.nih.gov/pubmed?cmd=Search&term=Das%20Rhiju" id="arrow">
               <img src="/site_media/images/publications/arrow.png" width="28" height="28" border="0">
             </a>
           </td>
-          <td width="807" height="15" align="left" valign="middle" class="PubH1">
-            Search for papers from the Das Lab on <strong class="pubH2">PubMed</strong>
+          <td width="807" height="15" align="left" valign="middle" class="HEAD publicationsH1">
+            Search for papers from the Das Lab on <strong class="publicationsH2">PubMed</strong>
           </td>
         </tr>
 
         <tr>
-          <td colspan="2" align="left" valign="top" class="PubH1 table-body">
-            <p class="homeTEXT">&nbsp;</p>
+          <td colspan="2" align="left" valign="top" class="HEAD publicationsH1 table-body">
+            <p class="TEXT">&nbsp;</p>
             {% for pub in pub_list %}
               {% if pub.previous %}
                 <br>
                 <table>
                   <tbody>
                     <tr class="switch">
-                      <td width="38" height="15" align="left" valign="middle" class="PubH1"><a id="arrow2"><img src="/site_media/images/publications/arrow.png" width="28" height="28" border="0"/></a></td>
-                      <td height="15" align="left" valign="middle" class="pubH2" id="expand"><strong>Previous work by R. Das</strong></td>
+                      <td width="38" height="15" align="left" valign="middle" class="HEAD publicationsH1"><a id="arrow2"><img src="/site_media/images/publications/arrow.png" width="28" height="28" border="0"/></a></td>
+                      <td height="15" align="left" valign="middle" class="HEAD publicationsH2" id="expand"><strong>Previous work by R. Das</strong></td>
                     </tr>
                   </tbody>
                 </table>
@@ -53,17 +53,17 @@
                     <tr>
                       <td width="100" align="center" valign="top" style="padding-top:10px;">
                         {% if pub.year_tag %}
-                          <span class="teal2" id="{{pub.year}}">{{pub.year}}</span>
+                          <span class="yearH2" id="{{pub.year}}">{{pub.year}}</span>
                         {% endif %}
                       </td>
                       <td width="110" align="center" valign="middle" bgcolor="#CCDFE0">
                         <img src="/site_data/pub_img/{{pub.image_link}}" width="200">
                       </td>
-                      <td width="256" align="left" valign="top" bgcolor="#CCDFE0" class="peopleTEXT">
+                      <td width="256" align="left" valign="top" bgcolor="#CCDFE0" class="peopleTEXT TEXT">
                         <br><br><br>
                         {{pub.authors}} ({{pub.year}})
                         <br>
-                        <span class="contactH1">"{{pub.title}}"</span>
+                        <span class="HEAD contactH1">"{{pub.title}}"</span>
                         <br>
                         <i>{{pub.journal}}</i>
                         {% if pub.volume %} {{pub.volume}} {% endif %} 
@@ -71,7 +71,7 @@
                         {% if pub.begin_page %}: {{pub.begin_page}} {% endif %} 
                         {% if pub.end_page %} - {{pub.end_page}} {% endif %}
                         <br>
-                        <span class="teal1"><strong>
+                        <span class="yearTEXT"><strong>
                           {% if pub.pdf %} 
                             <a href="/site_data/pub_pdf/{{pub.pdf_link}}" target="_blank">
                               {% if pub.preprint %} Preprint {% else %} Paper {% endif %}
@@ -102,17 +102,17 @@
                       <td width="80" align="center" valign="top">
                         {% if pub.year_tag %}
                           <br>
-                          <span class="teal2">{{pub.year}}</span>
+                          <span class="yearH2">{{pub.year}}</span>
                         {% endif %}
                       </td>
                       <td width="386" align="center" valign="top" >
-                        <p class="homeTEXT">
+                        <p class="TEXT">
                           {{pub.authors}} ({{pub.year}}) "<u>{{pub.title}}</u>" <i>{{pub.journal}}</i>
                           {% if pub.volume %} {{pub.volume}} {% endif %} 
                           {% if pub.issue %} ({{pub.issue}}) {% endif %} 
                           {% if pub.begin_page %}: {{pub.begin_page}} {% endif %} 
                           {% if pub.end_page %} - {{pub.end_page}} {% endif %}
-                          <span class="teal1">
+                          <span class="yearTEXT">
                             {% if pub.pdf %} 
                               | <a href="/site_data/pub_pdf/{{pub.pdf_link}}" target="_blank">Paper</a>
                             {% endif %}
@@ -144,8 +144,6 @@
       </tbody>
     </table>
   </div>
-
-  <div id="DasFOOTER"><img src="/site_media/images/footer_other.jpg" width="855" height="39"></div>
 {% endblock %}
 
 
@@ -168,7 +166,7 @@
       });
 
       $("#DasFOOTER").css({"top": $("table.current:last").offset().top + 200, "display": "inline"});
-      $("#icons").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
+      $("#DasICON").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
       $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
 
       $("#arrow2").on("click", function () {
@@ -193,7 +191,7 @@
           });
           $("#DasFOOTER").css("top", $("table.current:last").offset().top + 200);
         }
-        $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
+        $("#DasICON").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
         $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
       });
     });

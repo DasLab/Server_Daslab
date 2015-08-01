@@ -10,17 +10,11 @@
 {% endblock %}
 
 {% block content %}
-  <div id="animation">
-    <div id="researchBTN">
+  <div id="DasBANNER" class="fix">
+    <div id="researchBTN" class="fix">
       <a id="btn_research" href="/research">
-        <img src="/site_media/images/btn_research.png" width="53" height="201" border="0" id="researchBTN2">
+        <img src="/site_media/images/btn_research.png" width="53" height="201" border="0">
       </a>
-    </div>
-    <div id="apDiv1">
-      <img src="/site_media/images/util_invisible.png" width="175" height="100" border="0" usemap="#Map2">
-      <map name="Map2" id="Map2">
-        <area shape="rect" coords="4,3,173,99" href="/news">
-      </map>
     </div>
     <object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1022" height="355" style="visibility: inherit;">
       <param name="movie" value="/site_media/swf/home.swf">
@@ -45,10 +39,10 @@
     </object>
   </div>
 
-  <div class="header2" id="divisionBar"><img src="/site_media/images/footer_home.png" width="855" height="38"></div>
-  <div id="whatWeDo"><img src="/site_media/images/home/what_we_do.png" width="119" height="70"></div>
-  <div id="weStrive"><img src="/site_media/images/home/home_text_2.png" width="207" height="95"></div>
-  <div class="homeTEXT" id="homeTEXT">
+  <div class="researchH2 fix" id="divisionBar"><img src="/site_media/images/footer_home.png" width="855" height="38"></div>
+  <div id="whatWeDo" class="fix"><img src="/site_media/images/home/what_we_do.png" width="119" height="70"></div>
+  <div id="weStrive" class="fix"><img src="/site_media/images/home/home_text_2.png" width="207" height="95"></div>
+  <div class="TEXT homeTEXT fix" id="homeTEXT">
     Our lab seeks an agile and predictive understanding of RNAs code for information processing and replication in living systems. We are creating new computational and chemical tools to enable the precise modeling and design of these RNAs.
   </div>
 
@@ -58,7 +52,9 @@
 {% block script %}
   <script type="text/javascript">
     $(document).ready(function() {
-      $("#icons").css({"top": "673px", "display": "inline"});
+      $("#DasICON").css({"top": "673px", "display": "inline"});
+      $("#DasFOOTER").css("display", "none");
+      
       $("#btn_research").hover(function () {
         $(this).children().attr("src", "/site_media/images/btn_research_hover.png");
       }, function () {

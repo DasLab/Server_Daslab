@@ -11,32 +11,30 @@
 
 
 {% block content %}
-  <div id="animation">
-    <div id="header">
-    	<img src="/site_media/images/contact/icon_contact.png" width="349" height="111">
-    </div>
+  <div id="DasBANNER" class="fix">
+    <div id="DasHEADER" class="fix"><img src="/site_media/images/contact/icon_contact.png" width="349" height="111"></div>
   	<img src="/site_media/images/contact/logo_contact.jpg" width="973" height="221">
   </div>
 
-  <div class="homeTEXT" id="contactBODY">
+  <div class="TEXT BODY" id="contactBODY">
     <table width="855" height="" border="0">
       	<tbody>
 	      	<tr>
 		        <td width="220" rowspan="2" align="left" valign="top">
 		        	<img src="/site_media/images/contact/connect_with_us.png" width="184" height="62">
 		        </td>
-		        <td width="625" height="256" align="left" valign="top" class="homeTEXT">
+		        <td width="625" height="256" align="left" valign="top" class="TEXT">
 		        	<span class="contactH1">Rhiju Das is in B421A</span> (office) which is embedded in our
 		        	<br>
 			        home lab B419 in the Beckman Center at Stanford University.
 		          	<p>
-		          		<span class="ContactH2">Office</span>&nbsp;&nbsp;  <span class="peopleH2">650.723.5976</span>
+		          		<span class="contactH2">Office</span>&nbsp;&nbsp;  <span class="peopleH2">650.723.5976</span>
 		          		<br>
-			            <span class="ContactH2">Lab</span> &nbsp;  &nbsp;&nbsp;  &nbsp;   &nbsp;<span class="peopleH2">650.723.7310</span>
+			            <span class="contactH2">Lab</span> &nbsp;  &nbsp;&nbsp;  &nbsp;   &nbsp;<span class="peopleH2">650.723.7310</span>
 			            <br>
-			            <span class="ContactH2">Admin</span> &nbsp;<span class="peopleH2">650.498.5118</span>
+			            <span class="contactH2">Admin</span> &nbsp;<span class="peopleH2">650.498.5118</span>
 			        </p>
-			        <p><span class="ContactH2">E-mail</span> rhiju [at] stanford.edu</p>
+			        <p><span class="contactH2">E-mail</span> rhiju [at] stanford.edu</p>
 			        <p>
 			        	<strong><span class="contactH1">Administrative assistant: </span></strong>
 			        	<br>
@@ -45,7 +43,7 @@
 				</td>
 		    </tr>
 			<tr>
-	        	<td align="left" valign="top" class="homeTEXT">
+	        	<td align="left" valign="top" class="TEXT">
 	        		<a href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=279+Campus+Dr+W,+Stanford,+CA+94305&sll=37.425704,-122.181918&sspn=0.006586,0.013937&ie=UTF8&hq=&hnear=279+Campus+Dr+W,+Stanford,+Santa+Clara,+California+94305&z=17" target="_blank" id="map">
 	        			<img src="/site_media/images/contact/map.jpg" width="541" height="264" border="0">
 	        		</a>
@@ -54,8 +52,6 @@
 	    </tbody>
 	</table>
   </div>
-
-  <div id="DasFOOTER"><img src="/site_media/images/footer_other.jpg" width="855" height="39"></div>
 {% endblock %}
 
 
@@ -63,7 +59,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $("#DasFOOTER").css({"top": "1013px", "display": "inline"});
-      $("#icons").css({"top": "1068px", "display": "inline"});
+      $("#DasICON").css({"top": "1068px", "display": "inline"});
 
       $("#map").hover(function () {
         $(this).children().attr("src", "/site_media/images/contact/map_hover.jpg");

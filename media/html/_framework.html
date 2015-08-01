@@ -23,10 +23,10 @@
 
   <body>
     <div id="main" class='DASmain'>
-      <div id="dasLOGO">
+      <div id="dasLOGO" class="fix">
         <a href="/"><img src="/site_media/images/logo_das.jpg" width="141" height="82"></a>
       </div>
-      <div id="DasNAV">
+      <div id="DasNAV" class="fix">
         <table width="750" height="34" border="0">
           <tbody>
             <tr>
@@ -57,11 +57,12 @@
       </div>
 
       {% block content %}{% endblock %}
+      <div id="DasFOOTER" class="fix"><img src="/site_media/images/footer_other.jpg" width="855" height="39"></div>
       <a href="#" id="top">
         <img style="position:fixed;display:block;right:5%;bottom:5%;opacity:0.85;" src="/site_media/images/nav_top.png" height="60"/>
       </a>
 
-      <div id="icons">
+      <div id="DasICON" class="fix">
         <img src="/site_media/images/footer_link.jpg" width="729" height="54" border="0" usemap="#Map">
         <map name="Map" id="Map">
           <area shape="rect" coords="0,9,204,34" href="http://biochem.stanford.edu/" target="_blank">
