@@ -49,7 +49,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 env_gapi = simplejson.load(open('%s/config/gapi.conf' % MEDIA_ROOT))
 GA = env_gapi['GA']
-GCAL = env_gapi['CAL']
+GCAL = env_gapi['CALENDAR']
 
 
 MANAGERS = ADMINS = (

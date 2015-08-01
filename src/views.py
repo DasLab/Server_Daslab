@@ -24,20 +24,20 @@ import traceback
 
 
 def index(request):
-	return render_to_response(PATH.HTML_PATH['index'], {}, context_instance=RequestContext(request))
+	return render_to_response(PATH.HTML_PATH['index'], {'tracking_id':GA['TRACKING_ID']}, context_instance=RequestContext(request))
 def research(request):
-	return render_to_response(PATH.HTML_PATH['research'], {}, context_instance=RequestContext(request))
+	return render_to_response(PATH.HTML_PATH['research'], {'tracking_id':GA['TRACKING_ID']}, context_instance=RequestContext(request))
 def resources(request):
-	return render_to_response(PATH.HTML_PATH['resources'], {}, context_instance=RequestContext(request))
+	return render_to_response(PATH.HTML_PATH['resources'], {'tracking_id':GA['TRACKING_ID']}, context_instance=RequestContext(request))
 def contact(request):
-	return render_to_response(PATH.HTML_PATH['contact'], {}, context_instance=RequestContext(request))
+	return render_to_response(PATH.HTML_PATH['contact'], {'tracking_id':GA['TRACKING_ID']}, context_instance=RequestContext(request))
 
 def news(request):
 	news_list = News.objects.order_by('-date')
 	for news in news_list:
 		if news.image:
 			news.image_link = os.path.basename(news.image.name)
-	return render_to_response(PATH.HTML_PATH['news'], {'news_list':news_list}, context_instance=RequestContext(request))
+	return render_to_response(PATH.HTML_PATH['news'], {'tracking_id':GA['TRACKING_ID'], 'news_list':news_list}, context_instance=RequestContext(request))
 
 def people(request):
 	member = Member.objects.filter(alumni=0).order_by('last_name', 'first_name')
@@ -45,7 +45,7 @@ def people(request):
 	for ppl in member:
 		if ppl.image:
 			ppl.image_link = os.path.basename(ppl.image.name)
-	return render_to_response(PATH.HTML_PATH['people'], {'current_member':member, 'past_member':almuni}, context_instance=RequestContext(request))
+	return render_to_response(PATH.HTML_PATH['people'], {'tracking_id':GA['TRACKING_ID'], 'current_member':member, 'past_member':almuni}, context_instance=RequestContext(request))
 
 def publications(request):
 	pub_list = Publication.objects.order_by('-display_date')
@@ -60,7 +60,7 @@ def publications(request):
 			pub.year_tag = True
 		if pub.year == 2009 and pub_list[i-1].year == 2010:
 			pub.previous = True
-	return render_to_response(PATH.HTML_PATH['publications'], {'pub_list':pub_list}, context_instance=RequestContext(request))
+	return render_to_response(PATH.HTML_PATH['publications'], {'tracking_id':GA['TRACKING_ID'], 'pub_list':pub_list}, context_instance=RequestContext(request))
 
 
 ############################################################################################################################################
@@ -208,7 +208,7 @@ def ping_test(request):
 # 	return HttpResponsePermanentRedirect("/%s" % path)
 
 def error404(request):
-	return render_to_response(PATH.HTML_PATH['404'], {}, context_instance=RequestContext(request))
+	return render_to_response(PATH.HTML_PATH['404'], {'tracking_id':GA['TRACKING_ID']}, context_instance=RequestContext(request))
 
 def error500(request):
 	return render_to_response(PATH.HTML_PATH['500'], {}, context_instance=RequestContext(request))
