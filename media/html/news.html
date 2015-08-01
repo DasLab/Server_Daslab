@@ -1,7 +1,12 @@
 {% extends "media/html/_framework.html" %}
 
 {% block header %}
-  <link href="/site_media/css/news.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#main").addClass("DASnews");
+      $("#nav-news").addClass("active");
+    });
+  </script>
 {% endblock %}
 
 
@@ -80,8 +85,8 @@
         $(this).children().attr("src", "/site_media/images/publications/arrow.png");
       });
 
-      $("#DasFOOTER").css("top", $("tr.middle").offset().top + 200);
-      $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
+      $("#DasFOOTER").css({"top": $("tr.middle").offset().top + 200, "display": "inline"});
+      $("#icons").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
       $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
 
       $("#arrow").on("click", function () {
@@ -106,7 +111,7 @@
           $("#DasFOOTER").css("top", $("tr.middle").offset().top + 200);
         }
         $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
-        $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+        $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
       });
 
     });

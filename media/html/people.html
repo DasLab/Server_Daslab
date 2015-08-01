@@ -1,7 +1,12 @@
 {% extends "media/html/_framework.html" %}
 
 {% block header %}
-  <link href="/site_media/css/people.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#main").addClass("DASpeople");
+      $("#nav-people").addClass("active");
+    });
+  </script>
 {% endblock %}
 
 
@@ -108,19 +113,15 @@
 {% block script %}
   <script type="text/javascript">
     $(document).ready(function() {
-      $("#main").addClass("DASpeople");
-      $("#nav-people").addClass("active");
-
       $(".btn_moreinfo").hover(function () {
         $(this).children().attr("src", "/site_media/images/people/more_info_hover.png");
       }, function () {
         $(this).children().attr("src", "/site_media/images/people/more_info.png");
       });
 
-      $("#DasFOOTER").css("top", 700 + {{past_member|length}} * 60 + {{current_member|length}} * 200);
-      $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
+      $("#DasFOOTER").css({"top": 700 + {{past_member|length}} * 60 + {{current_member|length}} * 200, "display": "inline"});
+      $("#icons").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
       $(".DASpeople").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
-
     });
   </script>
 {% endblock %}

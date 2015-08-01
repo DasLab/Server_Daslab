@@ -1,7 +1,12 @@
 {% extends "media/html/_framework.html" %}
 
 {% block header %}
-  <link href="/site_media/css/research.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#main").addClass("DASresearch");
+      $("#nav-research").addClass("active");
+    });
+  </script>
 {% endblock %}
 
 
@@ -12,7 +17,7 @@
     </div>
     <img src="/site_media/images/research/logo_research.jpg" width="973" height="221">
   </div>
-  <div class="header2" id="divisionBar">
+  <div class="header2" id="ourGoal">
     <strong>Our lab strives to </strong>model and design the RNA sequences that define and regulate living systems.
   </div>
 
@@ -75,8 +80,8 @@
 {% block script %}
   <script type="text/javascript">
     $(document).ready(function() {
-      $("#main").addClass("DASresearch");
-      $("#nav-research").addClass("active");
+      $("#DasFOOTER").css({"top": "1346px", "display": "inline"});
+      $("#icons").css({"top": "1401px", "display": "inline"});
     });
   </script>
 {% endblock %}

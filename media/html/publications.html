@@ -1,7 +1,12 @@
 {% extends "media/html/_framework.html" %}
 
 {% block header %}
-  <link href="/site_media/css/publications.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#main").addClass("DASpub");
+      $("#nav-publications").addClass("active");
+    });
+  </script>
 {% endblock %}
 
 
@@ -149,9 +154,6 @@
     function sign(x){return x>0?1:x<0?-1:x;}
 
     $(document).ready(function() {
-      $("#main").addClass("DASpub");
-      $("#nav-publications").addClass("active");
-
       $("table.previous").hide();
       $("br.previous").hide();
       $("#arrow").hover(function () {
@@ -165,8 +167,8 @@
         $(this).children().attr("src", "/site_media/images/publications/arrow.png");
       });
 
-      $("#DasFOOTER").css("top", $("table.current:last").offset().top + 200);
-      $("#icons").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
+      $("#DasFOOTER").css({"top": $("table.current:last").offset().top + 200, "display": "inline"});
+      $("#icons").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
       $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
 
       $("#arrow2").on("click", function () {

@@ -1,7 +1,12 @@
 {% extends "media/html/_framework.html" %}
 
 {% block header %}
-  <link href="/site_media/css/home.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#main").addClass("DAShome");
+      $("#nav-home").addClass("active");
+    });
+  </script>
 {% endblock %}
 
 {% block content %}
@@ -53,15 +58,12 @@
 {% block script %}
   <script type="text/javascript">
     $(document).ready(function() {
-      $("#main").addClass("DAShome");
-      $("#nav-home").addClass("active");
-
+      $("#icons").css({"top": "673px", "display": "inline"});
       $("#btn_research").hover(function () {
         $(this).children().attr("src", "/site_media/images/btn_research_hover.png");
       }, function () {
         $(this).children().attr("src", "/site_media/images/btn_research.png");
       });
-
     });
   </script>
 
