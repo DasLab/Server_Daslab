@@ -40,6 +40,10 @@ def get_sys_stat():
     ver_bootstrap = f.readline()
     ver += ver_bootstrap[ver_bootstrap.find('v')+1: ver_bootstrap.find('(')].strip() + '\t'
     f.close()
+    f = open(os.path.join(MEDIA_ROOT, 'media/js/swfobject.min.js'))
+    ver_swfobj = f.readline()
+    ver += ver_swfobj[ver_swfobj.find('v')+1: ver_swfobj.find('<')].strip() + '\t'
+    f.close()
     f = open(os.path.join(MEDIA_ROOT, 'media/js/fullcalendar.min.js'))
     f.readline()
     ver_fullcall = f.readline()
