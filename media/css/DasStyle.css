@@ -1,7 +1,27 @@
 @charset "UTF-8";
 /* CSS Document */
+@font-face {
+    font-family: "Gill Sans";
+    src: local("Gill Sans"), url("/site_media/fonts/GillSans/GillSans.ttf");
+}
+@font-face {
+    font-family: "Gill Sans";
+    src: local("Gill Sans Bold"), url("/site_media/fonts/GillSans/GillSans-Bold.ttf");
+    font-weight: bold;
+}
+@font-face {
+    font-family: "Gill Sans";
+    src: local("Gill Sans Italic"), url("/site_media/fonts/GillSans/GillSans-Italic.ttf");
+    font-style: italic, oblique;
+}
+@font-face {
+    font-family: "Gill Sans";
+    src: local("Gill Sans Bold Italic"), url("/site_media/fonts/GillSans/GillSans-BoldItalic.ttf");
+    font-weight: bold;
+    font-style: italic, oblique;
+}
 
-* { font-family: Gill Sans, Arial, Helvetica, sans-serif; }
+* { font-family: "Gill Sans", Arial, Helvetica, sans-serif; }
 body {
 	margin-left: 0px; margin-top: 50px;
 	-webkit-text-size-adjust: none;
