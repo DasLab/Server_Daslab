@@ -19,7 +19,7 @@ try:
 	subprocess.check_call('gzip -f %s/backup/backup_mysql' % MEDIA_ROOT, shell=True, stderr=subprocess.STDOUT)
 except subprocess.CalledProcessError:
 	print "    \033[41mERROR\033[0m: Failed to dump \033[94mMySQL\033[0m database."
-    print traceback.format_exc()
+	print traceback.format_exc()
 	flag = True
 else:
 	print "    \033[92mSUCCESS\033[0m: \033[94mMySQL\033[0m database dumped."
@@ -31,7 +31,7 @@ try:
 	subprocess.check_call('cd %s && tar zcf backup/backup_static.tgz data/' % MEDIA_ROOT, shell=True, stderr=subprocess.STDOUT)
 except subprocess.CalledProcessError:
 	print "    \033[41mERROR\033[0m: Failed to archive \033[94mstatic\033[0m files."
-    print traceback.format_exc()
+	print traceback.format_exc()
 	flag = True
 else:
 	print "    \033[92mSUCCESS\033[0m: \033[94mstatic\033[0m files synced."
@@ -45,7 +45,7 @@ try:
 	subprocess.check_call('rm -rf %s/backup/apache2' % MEDIA_ROOT, shell=True, stderr=subprocess.STDOUT)
 except subprocess.CalledProcessError:
 	print "    \033[41mERROR\033[0m: Failed to archive \033[94mapache2\033[0m settings."
-    print traceback.format_exc()
+	print traceback.format_exc()
 	flag = True
 else:
 	print "    \033[92mSUCCESS\033[0m: \033[94mapache2\033[0m settings saved."
