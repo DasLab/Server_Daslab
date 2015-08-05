@@ -13,6 +13,7 @@ from django.shortcuts import render, render_to_response, redirect
 from filemanager import FileManager
 
 from src.console import *
+# from src.cron import *
 from src.models import *
 from src.settings import *
 
@@ -216,6 +217,7 @@ def error500(request):
 
 def test(request):
 	raise ValueError
+	# send_notify_emails('test', 'test')
 	# send_mail('text', 'test', EMAIL_HOST_USER, [EMAIL_NOTIFY])
 	return HttpResponse(content="", status=200)
 

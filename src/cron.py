@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+import smtplib
 import subprocess
 import traceback
 
@@ -10,7 +11,13 @@ from src.console import *
 
 
 def send_notify_emails(msg_subject, msg_content):
-    send_mail(msg_subject, msg_content, EMAIL_HOST_USER, [EMAIL_NOTIFY])
+    # send_mail(msg_subject, msg_content, EMAIL_HOST_USER, [EMAIL_NOTIFY])
+    smtpserver = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
+    smtpserver.starttls()
+    smtpserver.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+    msg = 'Subject: %s\n\n%s' % (msg_subject, msg_content)
+    smtpserver.sendmail(EMAIL_HOST_USER, EMAIL_NOTIFY, msg)
+    smtpserver.quit()
 
 
 def get_date_time(keyword):
