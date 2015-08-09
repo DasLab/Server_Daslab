@@ -13,7 +13,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.settings")
 from src.settings import *
 
 
-t = datetime.datetime.now().strftime('%Y%m%d')
+t = time.strftime('%Y%m%d') #datetime.datetime.now().strftime('%Y%m%d')
 gdrive_dir = 'echo'
 if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
 prefix = ''
