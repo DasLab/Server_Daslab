@@ -372,8 +372,10 @@ def get_cal():
             color = "#29be92"
         else:
             color = "#5496d7"
-        if ("group meeting" in title.lower()) or ("das lab group" in title.lower()): color = "#ff5c2b"
-        if "BD" in title or 'b-day' in title: color = "#c28fdd"
+        if ("group meeting" in title.lower()) or ("das lab group" in title.lower()):
+            color = "#ff5c2b"
+        if "BD" in title or 'b-day' in title or 'birthday' in title.lower():
+            color = "#c28fdd"
         data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
 
         if event.has_key('RRULE') and event.get('RRULE').has_key('FREQ'):
