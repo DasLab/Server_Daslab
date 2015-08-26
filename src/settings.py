@@ -192,7 +192,7 @@ env_cron = simplejson.load(open('%s/config/cron.conf' % MEDIA_ROOT))
 if os.getlogin() == 'www-data':
     CRONJOBS = env_cron['CRONJOBS'][0:2]
 else:
-    CRONJOBS = env_cron['CRONJOBS'][2]
+    CRONJOBS = [ env_cron['CRONJOBS'][2] ]
 CRONTAB_LOCK_JOBS = env_cron['CRONTAB_LOCK_JOBS']
 KEEP_BACKUP = env_cron['KEEP_BACKUP']
 
