@@ -34,7 +34,10 @@ def get_sys_stat():
     ver += subprocess.Popen('head -4 %s | tail -1 | sed %s' % (os.path.join(MEDIA_ROOT, 'data/temp.txt'),"'s/.*: //g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
     ver += '0.0.1\t'
 
-    ver += subprocess.Popen('ls %s' % os.path.join(MEDIA_ROOT, 'media/js/jquery-*.min.js'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].replace(os.path.join(MEDIA_ROOT, 'media/js/jquery-'), '').replace('.min.js', '').strip() + '\t'
+    f = open(os.path.join(MEDIA_ROOT, 'media/js/jquery.min.js'))
+    ver_jquery = f.readline()
+    ver += ver_jquery[ver_jquery.find('v')+1: ver_jquery.find('|')].strip() + '\t'
+    f.close()
     f = open(os.path.join(MEDIA_ROOT, 'media/js/bootstrap.min.js'))
     f.readline()
     ver_bootstrap = f.readline()
