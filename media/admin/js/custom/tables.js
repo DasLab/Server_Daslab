@@ -53,6 +53,7 @@ $(document).ready(function () {
 	$(".toggle.ascending").html('<span class="glyphicon glyphicon-chevron-down"></span>');
 	$(".sortremove").html('<span class="glyphicon glyphicon-remove"></span>');
 	$(".sortoptions").addClass("pull-right").removeClass("sortoptions");
+	$("div.pagination-info").html("<br/>&nbsp;&nbsp;&nbsp;&nbsp;" + $("div.pagination-info").html());
 
     if ($(location).attr("href").indexOf("admin/src/news") != -1) {
 		$("th.column-date").addClass("col-md-2");

@@ -11,8 +11,8 @@ sudo chmod 640 media/css/* media/fonts/* media/html/* media/fonts/GillSans/* med
 sudo chmod 1750 media/css media/fonts media/fonts/GillSans media/html media/js media/_old media/swf media
 sudo chmod 640 media/images/*.*g* media/images/contact/* media/images/group/* media/images/home/* media/images/news/* media/images/people/* media/images/publications/* media/images/research/* media/images/resources/*
 sudo chmod 1750 media/images media/images/contact media/images/group media/images/home media/images/news media/images/people media/images/publications media/images/research media/images/resources
-sudo chmod 640 media/admin/*.html media/admin/css/* media/admin/img/*.*g* media/admin/img/gis/* media/admin/img/filemanager/* media/admin/js/*.js media/admin/js/custom/* media/admin/js/filemanager/* media/admin/js/suit/*
-sudo chmod 1750 media/admin media/admin/css media/admin/img media/admin/img/gis media/admin/img/filemanager media/admin/js media/admin/js/custom media/admin/js/filemanager media/admin/js/suit
+sudo chmod 640 media/admin/*.html media/admin/css/* media/admin/img/*.*g* media/admin/img/gis/* media/admin/img/filemanager/* media/admin/js/*.js media/admin/js/custom/* 
+sudo chmod 1750 media/admin media/admin/css media/admin/img media/admin/img/gis media/admin/img/filemanager media/admin/js media/admin/js/custom
 
 sudo chmod 640 backup/*
 sudo chmod 1750 backup

@@ -207,8 +207,10 @@ function rightclick_handle(e,id,type)
     $('#file-menu').show();
     if(!zclip){
       zclip = true;
+      var swf_path;
+      if (isCDN) { swf_path = "https://cdnjs.cloudflare.com/ajax/libs/zclip/1.1.2/ZeroClipboard.swf"; } else { swf_path = "/site_media/swf/ZeroClipboard.swf"; }
       $('#copy-public-link-file').zclip({
-        path: '/site_media/admin/js/filemanager/ZeroClipboard.swf',
+        path: swf_path,
         copy: function(){
           var public_link = public_url_base+get_path(dir_id)+selected_file;
           return public_link;

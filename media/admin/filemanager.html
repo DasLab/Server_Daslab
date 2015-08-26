@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
- <script type="text/javascript" src="/site_media/js/jquery-1.11.3.min.js"></script>
- <script type="text/javascript" src="/site_media/js/bootstrap.min.js"></script>
- <script type="text/javascript" src="/site_media/admin/js/filemanager/jquery-migrate.min.js"></script>
- <script type="text/javascript" src="/site_media/admin/js/filemanager/jquery.zclip.min.js"></script>
- <link rel="stylesheet" type="text/css" href="/site_media/css/bootstrap.min.css" />
- <link rel="stylesheet" type="text/css" href="/site_media/css/theme.css"/>
- <link rel="stylesheet" type="text/css" href="/site_media/css/palette.css"/>
- <link rel="stylesheet" type="text/css" href="/site_media/admin/css/style.css"/>
- <!--[if IE]>
-   <script type="text/javascript" src="{{ STATIC_URL }}js/es5-shim.min.js"></script>
- <![endif]-->
- <script type="text/javascript">
-   var dir_structure = {{dir_structure|safe}};
-   var messages = {{messages|safe}};
-   var dir_id = {{current_id}};
-   var ckeditor_baseurl = '{{ ckeditor_baseurl }}';
-   var CKEditorFuncNum = {% if CKEditorFuncNum %}{{CKEditorFuncNum}}{% else %}null{%endif%};
-   var static_url = '{{STATIC_URL}}';
-   {% if public_url_base %}
-    var public_url_base = '{{public_url_base}}';
-   {% endif %}
-   var clipboard = { 'empty':true, 'path': 'full path will come here' ,
-       'mode': 'cut or copy', 'type': 'file or dir'}
-   var space_consumed = {{space_consumed}};
-   var max_space = {{max_space}}*1024;
- </script>
- <script type="text/javascript" src="/site_media/admin/js/filemanager/script.js"></script>
+  <script type="text/javascript" src="/site_media/admin/js/custom/load.js"></script>  
+  <script type="text/javascript">
+    if (isCDN) {
+      document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.2.1/jquery-migrate.min.js"><\/script>');
+      document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zclip/1.1.2/jquery.zclip.min.js"><\/script>');
+    } else {
+      document.write('<script type="text/javascript" src="/site_media/js/jquery-migrate.min.js"><\/script>');
+      document.write('<script type="text/javascript" src="/site_media/js/jquery-zclip.min.js"><\/script>');
+    }
+  </script>
+  <link rel="stylesheet" type="text/css" href="/site_media/admin/css/_filemanager.css"/>
 
+  <script type="text/javascript">
+    var dir_structure = {{dir_structure|safe}};
+    var messages = {{messages|safe}};
+    var dir_id = {{current_id}};
+    var ckeditor_baseurl = '{{ ckeditor_baseurl }}';
+    var CKEditorFuncNum = {% if CKEditorFuncNum %}{{CKEditorFuncNum}}{% else %}null{%endif%};
+    var static_url = '{{STATIC_URL}}';
+    {% if public_url_base %}
+    var public_url_base = '{{public_url_base}}';
+    {% endif %}
+    var clipboard = { 'empty':true, 'path': 'full path will come here' ,
+       'mode': 'cut or copy', 'type': 'file or dir'}
+    var space_consumed = {{space_consumed}};
+    var max_space = {{max_space}}*1024;
+  </script>
+  <script type="text/javascript" src="/site_media/admin/js/_filemanager.js"></script>
 </head>
 
 <body oncontextmenu='return false;'>

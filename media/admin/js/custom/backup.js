@@ -58,10 +58,17 @@ $(document).ready(function() {
             $("#id_day_backup").val(data.day_backup);
             $("#id_time_upload").val(data.time_upload);
             $("#id_day_upload").val(data.day_upload);
+            if (!data.time_backup || !data.day_backup) {
+                $("#banner_backup").removeClass("alert-success").addClass("alert-danger");
+                $("#sign_backup").removeClass("glyphicon-ok-sign").addClass("glyphicon-remove-sign");
+            }
+            if (!data.time_upload || !data.day_upload) {
+                $("#banner_sync").removeClass("alert-success").addClass("alert-danger");
+                $("#sign_sync").removeClass("glyphicon-ok-sign").addClass("glyphicon-remove-sign");
+            }
 
             $("#id_time_backup").trigger("change");
             $("#id_time_upload").trigger("change");
-
             $("#modal_backup").html('On <span class="label label-primary">' + $("#id_time_backup").val() + '</span> every <span class="label label-inverse">' + weekdayNames[$("#id_day_backup").val()] + '</span> (UTC).');
             $("#modal_upload").html('On <span class="label label-primary">' + $("#id_time_upload").val() + '</span> every <span class="label label-inverse">' + weekdayNames[$("#id_day_upload").val()] + '</span> (UTC).');
         }
