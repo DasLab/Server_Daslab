@@ -103,7 +103,7 @@ admin.site.register(Presentation, PresentationAdmin)
 ############################################################################################################################################
 
 def sys_stat(request):
-    get_sys_stat()
+    sys_ver_weekly()
     return HttpResponseRedirect('/admin')
 admin.site.register_view('sys_stat', view=sys_stat, visible=False)
 
