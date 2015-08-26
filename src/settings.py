@@ -189,7 +189,9 @@ USE_TZ = True
 PATH = SYS_PATH()
 
 env_cron = simplejson.load(open('%s/config/cron.conf' % MEDIA_ROOT))
-if os.getlogin() == 'www-data':
+try: 
+    os.getlogin()
+except:
     CRONJOBS = env_cron['CRONJOBS'][0:2]
 else:
     CRONJOBS = [ env_cron['CRONJOBS'][2] ]
