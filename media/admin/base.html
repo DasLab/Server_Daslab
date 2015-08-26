@@ -11,8 +11,8 @@
   {% block extrastyle %}{% endblock %}
   
   <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
-  <link rel="stylesheet" type="text/css" href="/site_media/admin/css/_suit.css" media="all">
-  <script type="text/javascript" src="/site_media/admin/js/custom/load.js"></script>  
+  <link rel="stylesheet" type="text/css" href="/site_media/css/_suit.css" media="all">
+  <script type="text/javascript" src="/site_media/js/admin/load.js"></script>  
   <script type="text/javascript">var Suit = { $: $.noConflict() }; if (!$) $ = Suit.$; </script>
 
   {% if 'SHOW_REQUIRED_ASTERISK'|suit_conf %}
@@ -20,11 +20,11 @@
   {% endif %}
 
   {% block extrahead %}{% endblock %}
-  <script type="text/javascript" src="/site_media/admin/js/core.js"></script>
-  <script type="text/javascript" src="/site_media/admin/js/RelatedObjectLookups.js"></script>
-  <script type="text/javascript" src="/site_media/admin/js/jquery.init.js"></script>
-  <script type="text/javascript" src="/site_media/admin/js/actions.min.js"></script>
-  <script type="text/javascript" src="/site_media/admin/js/DateTimeShortcuts.js"></script>
+  <script type="text/javascript" src="/site_media/js/suit/core.js"></script>
+  <script type="text/javascript" src="/site_media/js/suit/RelatedObjectLookups.js"></script>
+  <script type="text/javascript" src="/site_media/js/suit/jquery.init.js"></script>
+  <script type="text/javascript" src="/site_media/js/suit/actions.min.js"></script>
+  <script type="text/javascript" src="/site_media/js/suit/DateTimeShortcuts.js"></script>
   {% block extratail %}{% endblock %}
 
   {% block blockbots %}
@@ -186,9 +186,9 @@
 
 {% endblock %}
 
-  <script type="text/javascript" src="/site_media/admin/js/_suit.js"></script>
-  <script type="text/javascript" src="/site_media/admin/js/custom/tables.js"></script>
-  <script type="text/javascript" src="/site_media/admin/js/custom/menu.js"></script>
+  <script type="text/javascript" src="/site_media/js/admin/_suit.js"></script>
+  <script type="text/javascript" src="/site_media/js/admin/tables.js"></script>
+  <script type="text/javascript" src="/site_media/js/admin/menu.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
       $("#wait").fadeOut(500);
