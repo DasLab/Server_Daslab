@@ -1,26 +1,22 @@
-{% load admin_static %}{% load suit_tags %}{% load url from future %}<!DOCTYPE html>
+{% load admin_static %}
+{% load suit_tags %}
+{% load url from future %}
+
+<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>{% block title %}Das Lab Website Administration{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}"/>
-
-  <link rel="stylesheet" type="text/css" href="/site_media/admin/css/suit.css" media="all">
-  <link rel="stylesheet" type="text/css" href="/site_media/css/bootstrap.min.css" media="all"/>
-  <link rel="stylesheet" type="text/css" href="/site_media/css/theme.css" media="all"/>
-  <link rel="stylesheet" type="text/css" href="/site_media/css/palette.css" media="all"/>
   {% block extrastyle %}{% endblock %}
-  {% if LANGUAGE_BIDI %}
-  <link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}"/>
-  {% endif %}
   
   <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
-  <script type="text/javascript" src="/site_media/js/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript" src="/site_media/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/site_media/admin/css/suit.css" media="all">
+  <script type="text/javascript" src="/site_media/admin/js/custom/load.js"></script>  
   <script type="text/javascript">var Suit = { $: $.noConflict() }; if (!$) $ = Suit.$; </script>
 
   {% if 'SHOW_REQUIRED_ASTERISK'|suit_conf %}
-  <style type="text/css">.required:after { content: '*'; margin: 0 0 0 5px; position: absolute; color: #ccc;}</style>
+    <style type="text/css">.required:after { content: '*'; margin: 0 0 0 5px; position: absolute; color: #ccc;}</style>
   {% endif %}
 
   {% block extrahead %}{% endblock %}
@@ -32,19 +28,12 @@
   {% block extratail %}{% endblock %}
 
   {% block blockbots %}
-  <meta name="robots" content="NONE,NOARCHIVE"/>
+    <meta name="robots" content="NONE,NOARCHIVE"/>
   {% endblock %}
-
-  <!-- <link rel="stylesheet" type="text/css" href="/site_media/css/sidebar.css" media="all"> -->
-
-  <link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />
-  <link rel="icon" type-"image/gif" href="/site_media/images/icon_daslab.png" />
-
 </head>
 {% load i18n %}
 
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
-
 
   <div id="wait" class="modal"></div>
   <script type="text/javascript">

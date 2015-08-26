@@ -53,8 +53,15 @@
 
 {% block script %}
 	<link rel="stylesheet" type="text/css" href="/site_media/css/fullcalendar.min.css" media="all">
-	<script type="text/javascript" src="/site_media/js/moment.min.js"></script>
-	<script type="text/javascript" src="/site_media/js/fullcalendar.min.js"></script>
+	<script type="text/javascript">
+		if (isCDN) {
+			document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/' + ver_moment + '/moment.min.js"><\/script>');
+			document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/' + ver_fullcal + '/fullcalendar.min.js"><\/script>');
+		} else {
+			document.write('<script type="text/javascript" src="/site_media/js/moment.min.js"><\/script>');
+			document.write('<script type="text/javascript" src="/site_media/js/fullcalendar.min.js"><\/script>');		
+		}
+	</script>
 
 	<script type="text/javascript">
 		$(document).ready(function() {
