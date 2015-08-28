@@ -31,19 +31,16 @@
       <div class="row bgimg2">
         <div class="col-md-12" id="panel_right">
           <h1>
-            <span class="label label-danger">PERMISSION DENIED</span>
+            <span class="label label-danger">TRANSLATION ABORTED</span>
           </h1>
           <br/>
-          <p class="lead" style="font-weight:bold;">
-            This page is for site <span class="label label-success">admin</span> only.
-            <br>
-            Your login account <span class="label label-warning">{{user}}</span> lacks the required permission.
-            <br>
-            <span class="glyphicon glyphicon-qrcode pull-right" style="font-size:36px;"></span>
+          <p class="lead">
+            <b>
+              Your mRNA <span class="label label-warning">{{user}}</span> lacks a RBS or IRES to access the ribosome. 
+              <br/>
+              <i>trans</i>-splicing with the <span class="label label-success">admin</span> might activate proper gene expression. 
+            </b>
           </p>
-          <p class="lead">The server could not verify that you are authorized to access the document requested. Either you supplied the wrong credentials (e.g., bad password), or your browser doesn't understand how to supply the credentials required.</p>
-          <p class="lead">Please contact the site <span class="label label-success">admin</span> for administrative tasks (<a href="mailto:t47@stanford.edu" target="_blank">&nbsp;<u>t47@stanford.edu</u>&nbsp;&nbsp;<span class="glyphicon glyphicon-envelope"></span>&nbsp;</a>).</p>
-          <p class="lead" style="font-weight:bold;">For emergency, please use the <span class="label label-warning">daslab</span> shared account.</p>
           <p class="pull-right">
             <a href="/logout" class="btn btn-info">&nbsp;&nbsp;Sign Out&nbsp;&nbsp;</a>
             &nbsp;&nbsp;
@@ -51,6 +48,22 @@
             &nbsp;&nbsp;
             <a href="/" class="btn btn-primary">&nbsp;&nbsp;Home&nbsp;&nbsp;</a>
           </p>
+          <br/>
+          <br/>
+          <p><i>In other words,</i></p>
+          <h3>
+            <span class="label label-danger">UNAUTHORIZED / FORBIDDEN</span>
+          </h3>
+          <br/>
+          <p style="font-weight:bold;">
+            This page is for site <span class="label label-success">admin</span> only.
+            Your login account <span class="label label-warning">{{user}}</span> lacks the required permission.
+            <br>
+            <span class="glyphicon glyphicon-qrcode pull-right" style="font-size:36px;"></span>
+          </p>
+          <p>The server could not verify that you are authorized to access the document requested. Either you supplied the wrong credentials (e.g., bad password), or your browser doesn't understand how to supply the credentials required.</p>
+          <p>Please contact the site <span class="label label-success">admin</span> for administrative tasks (<a href="mailto:t47@stanford.edu" target="_blank">&nbsp;<u>t47@stanford.edu</u>&nbsp;&nbsp;<span class="glyphicon glyphicon-envelope"></span>&nbsp;</a>).</p>
+          <p style="font-weight:bold;">For emergency, please use the <span class="label label-warning">daslab</span> shared account.</p>
         </div>
 
       </div>
