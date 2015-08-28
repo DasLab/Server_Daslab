@@ -208,6 +208,12 @@ def ping_test(request):
 # 		path = path + '?searchtext=' + request.GET.get('searchtext')
 # 	return HttpResponsePermanentRedirect("/%s" % path)
 
+def error400(request):
+	return render_to_response(PATH.HTML_PATH['400'], {}, context_instance=RequestContext(request))
+
+def error401(request):
+	return render_to_response(PATH.HTML_PATH['401'], {}, context_instance=RequestContext(request))
+
 def error403(request):
 	return render_to_response(PATH.HTML_PATH['403'], {}, context_instance=RequestContext(request))
 
@@ -219,7 +225,7 @@ def error500(request):
 
 
 def test(request):
-	# return error404(request)
+	return error401(request)
 	raise ValueError
 	# send_notify_emails('test', 'test')
 	# send_mail('text', 'test', EMAIL_HOST_USER, [EMAIL_NOTIFY])

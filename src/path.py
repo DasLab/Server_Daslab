@@ -31,6 +31,8 @@ class SYS_PATH:
             'admin_doc': MEDIA_ROOT + '/media/html/admin_doc.html',
             'admin_export': MEDIA_ROOT + '/media/html/admin_export.html',
 
+            '400': MEDIA_ROOT + '/media/html/error_400.html',
+            '401': MEDIA_ROOT + '/media/html/error_401.html',
             '403': MEDIA_ROOT + '/media/html/error_403.html',
             '404': MEDIA_ROOT + '/media/html/error_404.html',
             '500': MEDIA_ROOT + '/media/html/error_500.html',
