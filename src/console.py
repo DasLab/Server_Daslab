@@ -1,3 +1,4 @@
+import boto.ec2.cloudwatch
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from icalendar import Calendar
@@ -134,6 +135,21 @@ def restyle_apache():
     json = {'title':title, 'ver_apache':ver[0], 'ver_wsgi':ver[1], 'ver_python':ver[2], 'mpm':mpm, 'time_build':time_build, 'time_current':time_current, 'time_restart':time_restart, 'time_up':time_up, 'server_load':server_load, 'total_access':total[0], 'total_traffic':'%s %s' % (total[1], total[2]), 'cpu_load':cpu_load, 'cpu_usage':cpu_usage, 'traffic':traffic, 'idle':workers[1], 'processing':workers[0], 'worker':worker, 'table':table, 'port':port}
     return simplejson.dumps(json)
     
+
+def aws_stats():
+    c = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=False)
+    results = c.get_metric_statistics(300, datetime.now() - timedelta(hours=24), datetime.now(), 'Latency', 'AWS/ELB', ['Average', 'Maximum'], {'LoadBalancerName': AWS['ELB_NAME']}, 'Seconds')
+    results = c.get_metric_statistics(300, datetime.now() - timedelta(hours=24), datetime.now(), 'RequestCount', 'AWS/ELB', ['Sum'], {'LoadBalancerName': AWS['ELB_NAME']}, 'Count')
+    results = c.get_metric_statistics(300, datetime.now() - timedelta(hours=24), datetime.now(), 'HealthyHostCount', 'AWS/ELB', ['Maximum'], {'LoadBalancerName': AWS['ELB_NAME']}, 'Count')
+
+    results = c.get_metric_statistics(300, datetime.now() - timedelta(hours=24), datetime.now(), 'CPUUtilization', 'AWS/EC2', ['Average'], {'InstanceId': AWS['EC2_INSTANCE_ID']}, 'Percent')
+    results = c.get_metric_statistics(300, datetime.now() - timedelta(hours=24), datetime.now(), 'DiskReadBytes', 'AWS/EC2', ['Sum'], {'InstanceId': AWS['EC2_INSTANCE_ID']}, 'Bytes')
+
+    print results
+
+    # results = c.get_metric_statistics(args['period'], args['start_time'], args['end_time'], args['metric'], args['namespace'], args['statistics'], args['dimensions'], args['unit'])
+
+
 
 def ga_stats():
     access_token = subprocess.Popen('curl --silent --request POST "https://www.googleapis.com/oauth2/v3/token" --data "refresh_token=%s" --data "client_id=%s" --data "client_secret=%s" --data "grant_type=refresh_token"' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET']), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()

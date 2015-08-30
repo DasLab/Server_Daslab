@@ -1,5 +1,14 @@
 
 {
+	"AWS": {
+		"REGION": "region",
+		"ELB_NAME": "elb_name",
+		"EC2_INSTANCE_ID": "instance_id",
+
+		"ACCESS_KEY_ID": "access_key_id",
+		"SECRET_ACCESS_KEY": "secret_access_key"
+	},
+
 	"GA": {
 		"ID": "ids",
 		"TRACKING_ID": "tracking_id",

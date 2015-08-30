@@ -39,7 +39,5 @@ $(document).ready(function () {
 	$('.left-nav>ul>li>ul>li>a[href="/admin/src/rotationstudent/"]').html('<span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;Rotation Students');
 	$('.left-nav>ul>li>ul>li>a[href="/admin/src/presentation/"]').html('<span class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;Archived Presentations');
 
-
-	$('.left-nav>ul>li>ul>li>a[href="/admin/aws/"]').attr("disabled", "disabled").css("text-decoration", "line-through").attr("href", "");
-
+	// $('.left-nav>ul>li>ul>li>a[href="/admin/aws/"]').attr("disabled", "disabled").css("text-decoration", "line-through").attr("href", "");
 });

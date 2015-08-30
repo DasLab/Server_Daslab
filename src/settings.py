@@ -47,9 +47,10 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
-env_gapi = simplejson.load(open('%s/config/gapi.conf' % MEDIA_ROOT))
-GA = env_gapi['GA']
-GCAL = env_gapi['CALENDAR']
+env_oauth = simplejson.load(open('%s/config/oauth.conf' % MEDIA_ROOT))
+AWS = env_oauth['AWS']
+GA = env_oauth['GA']
+GCAL = env_oauth['CALENDAR']
 
 
 MANAGERS = ADMINS = (

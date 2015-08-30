@@ -138,6 +138,12 @@ def apache(request):
     return render_to_response(PATH.HTML_PATH['admin_apache'], {}, context_instance=RequestContext(request))
 admin.site.register_view('apache/', view=apache, visible=False)
 
+
+def aws(request):
+    aws_stats()
+    return render_to_response(PATH.HTML_PATH['admin_aws'], {}, context_instance=RequestContext(request))
+admin.site.register_view('aws/', view=aws, visible=False)
+
 def ga(request):
     stats = ga_stats()
     stats['client_id'] = GA['CLIENT_ID']
