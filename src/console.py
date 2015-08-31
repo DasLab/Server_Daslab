@@ -1,7 +1,6 @@
-import boto.ec2.cloudwatch
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-from icalendar import Calendar
+import operator
 import os
 import simplejson
 import subprocess
@@ -11,8 +10,12 @@ import traceback
 import urllib
 import urllib2
 
+from icalendar import Calendar
+import boto.ec2.cloudwatch
+import gviz_api
+
 from django.core.management import call_command
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 
 from src.settings import *
 from src.models import BackupForm, Publication
@@ -136,19 +139,90 @@ def restyle_apache():
     return simplejson.dumps(json)
     
 
-def aws_stats():
-    c = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=False)
-    results = c.get_metric_statistics(300, datetime.now() - timedelta(hours=24), datetime.now(), 'Latency', 'AWS/ELB', ['Average', 'Maximum'], {'LoadBalancerName': AWS['ELB_NAME']}, 'Seconds')
-    results = c.get_metric_statistics(300, datetime.now() - timedelta(hours=24), datetime.now(), 'RequestCount', 'AWS/ELB', ['Sum'], {'LoadBalancerName': AWS['ELB_NAME']}, 'Count')
-    results = c.get_metric_statistics(300, datetime.now() - timedelta(hours=24), datetime.now(), 'HealthyHostCount', 'AWS/ELB', ['Maximum'], {'LoadBalancerName': AWS['ELB_NAME']}, 'Count')
+def aws_result(results, args, req_id):
+    data = []
+    data.extend(results[0])
+    for i, d in enumerate(data):
+        d.update({u'Timestamp': d[u'Timestamp']})
+        if args['calc_rate'] and 'Sum' in args['cols']: 
+            d.update({u'Rate': d[u'Sum']/args['period']})
+        for j, r in enumerate(results):
+            keys = r[i].keys()
+            keys.remove('Timestamp')
+            keys.remove('Unit')
+            for k in keys:
+                d[args['metric'][j] + k] = r[i][k]
+                if d.has_key(k): del d[k]
 
-    results = c.get_metric_statistics(300, datetime.now() - timedelta(hours=24), datetime.now(), 'CPUUtilization', 'AWS/EC2', ['Average'], {'InstanceId': AWS['EC2_INSTANCE_ID']}, 'Percent')
-    results = c.get_metric_statistics(300, datetime.now() - timedelta(hours=24), datetime.now(), 'DiskReadBytes', 'AWS/EC2', ['Sum'], {'InstanceId': AWS['EC2_INSTANCE_ID']}, 'Bytes')
+    desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', args['metric'][0] + 'Samples'), 'Unit':('string', args['unit'])}
+    stats = ['Timestamp']
+    for me in args['metric']:
+        for col in args['cols']:
+            if col == 'Sum' and args['calc_rate']: col = 'Rate'
+            desp[me + col] = ('number', me + col)
+            stats.append(me + col)
+    
+    data = sorted(data, key=operator.itemgetter(u'Timestamp'))
+    data_table = gviz_api.DataTable(desp)
+    data_table.LoadData(data)
+    results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
+    return results
 
-    print results
 
-    # results = c.get_metric_statistics(args['period'], args['start_time'], args['end_time'], args['metric'], args['namespace'], args['statistics'], args['dimensions'], args['unit'])
+def aws_stats(request):
+    if request.GET.has_key('qs') and request.GET.has_key('tqx'):
+        qs = request.GET.get('qs')
+        req_id = request.GET.get('tqx').replace('reqId:', '')
+        c = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=False)
 
+        if qs == 'latency':
+            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['Latency'], 'namespace':'AWS/ELB', 'cols':['Average', 'Maximum'], 'dims':{}, 'unit':'Seconds', 'calc_rate':True}
+        elif qs == 'request':
+            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['RequestCount'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+        elif qs == '23xx':
+            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['HTTPCode_Backend_2XX', 'HTTPCode_Backend_3XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+        elif qs == '45xx':
+            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['HTTPCode_Backend_4XX', 'HTTPCode_Backend_5XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+        elif qs == 'host':
+            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['HealthyHostCount', 'UnHealthyHostCount'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+        elif qs == 'status':
+            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['BackendConnectionErrors', 'StatusCheckFailed_Instance', 'StatusCheckFailed_System'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+        elif qs == 'network':
+            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['NetworkIn', 'NetworkOut'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True}
+        elif qs == 'cpu':
+            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['CPUUtilization'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Percent', 'calc_rate':False}
+        elif qs == 'credit':
+            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['CPUCreditUsage', 'CPUCreditBalance'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+        elif qs == 'volops':
+            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['VolumeWriteOps', 'VolumeReadOps'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+        elif qs == 'volbytes':
+            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['VolumeWriteBytes', 'VolumeReadBytes'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True}
+        else:
+            return HttpResponseBadRequest
+    else:
+        return HttpResponseBadRequest
+
+    if args['namespace'] == 'AWS/ELB':
+        args['dims'] = {'LoadBalancerName': AWS['ELB_NAME']}
+    elif args['namespace'] == 'AWS/EC2':
+        args['dims'] = {'InstanceId': AWS['EC2_INSTANCE_ID']}
+    elif args['namespace'] == 'AWS/EBS':
+        args['dims'] = {'VolumeId': AWS['EBS_VOLUME_ID']}
+
+    results = []
+    for i, me in enumerate(args['metric']):
+        data = c.get_metric_statistics(args['period'], args['start_time'], args['end_time'], me, args['namespace'], args['cols'], args['dims'], args['unit'])
+        
+        temp = []
+        for d in data:
+            temp.append(d[u'Timestamp'])
+        period = range(0, int((args['end_time'] - args['start_time']).total_seconds()), args['period'])
+        for t in (args['start_time'] + timedelta(seconds=n) for n in period):
+            t = t.replace(second=0, microsecond=0)
+            if (not t in temp):
+                data.append({u'Timestamp':t, u'Unit':args['unit'], args['cols'][0]:0})
+        results.append(data)
+    return aws_result(results, args, req_id)
 
 
 def ga_stats():
@@ -157,11 +231,9 @@ def ga_stats():
 
     stats = {'access_token':access_token}
     for i in ('sessionDuration', 'bounceRate', 'pageviewsPerSession', 'pageviews', 'sessions', 'users'):
-        temp = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), GA[
-            'ID'], urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+        temp = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), GA['ID'], urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
         temp = simplejson.loads(temp)['rows'][0][0]
-        temp_prev = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=60daysAgo&end-date=30daysAgo&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), GA[
-            'ID'], urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+        temp_prev = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=60daysAgo&end-date=30daysAgo&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), GA['ID'], urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
         temp_prev = simplejson.loads(temp_prev)['rows'][0][0]
 
         if i in ('bounceRate', 'pageviewsPerSession'):

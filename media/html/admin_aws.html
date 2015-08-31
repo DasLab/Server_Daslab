@@ -13,6 +13,26 @@
               </tr>
 		</table>
 		
+		<div class="row">
+			<div class="col-md-4">
+				<div id="plot_latency" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+				<div id="plot_request" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+				<div id="plot_network" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+				<div id="plot_volops" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+			</div>
+			<div class="col-md-4">
+				<div id="plot_host" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+				<div id="plot_23xx" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+				<div id="plot_status" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+				<div id="plot_volbytes" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+			</div>
+			<div class="col-md-4">
+				<div id="plot_cpu" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+				<div id="plot_45xx" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+				<div id="plot_credit" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+				<div id="" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+			</div>
+		</div>
 		
 	</div>
 {% endblock %}
@@ -25,6 +45,9 @@
 			$("ul.breadcrumb").append('<li class="active"><a href="/admin/doc/">Site Documentation</a></li>');
 		});
 	</script>
+    <script type="text/javascript" src="http://www.google.com/jsapi" ></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/json2/20150503/json2.min.js" ></script>
+	<script type="text/javascript" src="/site_media/js/admin/aws.js"></script>
 
 {% endblock %}
 

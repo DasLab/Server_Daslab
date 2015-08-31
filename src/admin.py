@@ -133,14 +133,19 @@ def apache_stat(request):
     return HttpResponse(json, content_type='application/json')
 admin.site.register_view('apache_stat', view=apache_stat, visible=False)
 
-
 def apache(request):
     return render_to_response(PATH.HTML_PATH['admin_apache'], {}, context_instance=RequestContext(request))
 admin.site.register_view('apache/', view=apache, visible=False)
 
+def aws_stat(request):
+    json = aws_stats(request)
+    if type(json) is str:
+        return HttpResponse(json, content_type='application/json')
+    else:
+        return json
+admin.site.register_view('aws_stat', view=aws_stat, visible=False)
 
 def aws(request):
-    aws_stats()
     return render_to_response(PATH.HTML_PATH['admin_aws'], {}, context_instance=RequestContext(request))
 admin.site.register_view('aws/', view=aws, visible=False)
 
