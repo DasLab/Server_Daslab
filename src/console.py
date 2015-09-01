@@ -145,16 +145,23 @@ def aws_result(results, args, req_id):
     for i, d in enumerate(data):
         d.update({u'Timestamp': d[u'Timestamp']})
         if args['calc_rate'] and 'Sum' in args['cols']: 
-            d.update({u'Rate': d[u'Sum']/args['period']})
+            d.update({args['metric'][0] + u'Rate': d[u'Sum']/args['period']})
         for j, r in enumerate(results):
+            if j == 0 and len(results) > 1 and args['calc_rate']: 
+                continue
             keys = r[i].keys()
-            keys.remove('Timestamp')
-            keys.remove('Unit')
+            keys.remove(u'Timestamp')
+            keys.remove(u'Unit')
             for k in keys:
-                d[args['metric'][j] + k] = r[i][k]
+                val = r[i][k]
+                name = args['metric'][j] + k
+                if args['calc_rate'] and k == u'Sum': 
+                    val = val/args['period']
+                    name = args['metric'][j] + u'Rate'
+                d[name] = val
                 if d.has_key(k): del d[k]
 
-    desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', args['metric'][0] + 'Samples'), 'Unit':('string', args['unit'])}
+    desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', args['unit'])}
     stats = ['Timestamp']
     for me in args['metric']:
         for col in args['cols']:
@@ -170,33 +177,41 @@ def aws_result(results, args, req_id):
 
 
 def aws_stats(request):
-    if request.GET.has_key('qs') and request.GET.has_key('tqx'):
+    if request.GET.has_key('qs') and request.GET.has_key('sp') and request.GET.has_key('tqx'):
         qs = request.GET.get('qs')
+        sp = request.GET.get('sp')
         req_id = request.GET.get('tqx').replace('reqId:', '')
         c = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=False)
 
+        if sp == '7d':
+            args = {'period':7200, 'start_time':datetime.now() - timedelta(days=7), 'end_time':datetime.now()}
+        elif sp == '48h':
+            args = {'period':720, 'start_time':datetime.now() - timedelta(hours=48), 'end_time':datetime.now()}
+        else:
+            return HttpResponseBadRequest
+
         if qs == 'latency':
-            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['Latency'], 'namespace':'AWS/ELB', 'cols':['Average', 'Maximum'], 'dims':{}, 'unit':'Seconds', 'calc_rate':True}
+            args.update({'metric':['Latency'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Seconds', 'calc_rate':False})
         elif qs == 'request':
-            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['RequestCount'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+            args.update({'metric':['RequestCount'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
         elif qs == '23xx':
-            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['HTTPCode_Backend_2XX', 'HTTPCode_Backend_3XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+            args.update({'metric':['HTTPCode_Backend_2XX', 'HTTPCode_Backend_3XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
         elif qs == '45xx':
-            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['HTTPCode_Backend_4XX', 'HTTPCode_Backend_5XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+            args.update({'metric':['HTTPCode_Backend_4XX', 'HTTPCode_Backend_5XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
         elif qs == 'host':
-            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['HealthyHostCount', 'UnHealthyHostCount'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+            args.update({'metric':['HealthyHostCount', 'UnHealthyHostCount'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
         elif qs == 'status':
-            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['BackendConnectionErrors', 'StatusCheckFailed_Instance', 'StatusCheckFailed_System'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+            args.update({'metric':['BackendConnectionErrors', 'StatusCheckFailed_Instance', 'StatusCheckFailed_System'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
         elif qs == 'network':
-            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['NetworkIn', 'NetworkOut'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True}
+            args.update({'metric':['NetworkIn', 'NetworkOut'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
         elif qs == 'cpu':
-            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['CPUUtilization'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Percent', 'calc_rate':False}
+            args.update({'metric':['CPUUtilization'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Percent', 'calc_rate':False})
         elif qs == 'credit':
-            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['CPUCreditUsage', 'CPUCreditBalance'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+            args.update({'metric':['CPUCreditUsage', 'CPUCreditBalance'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
         elif qs == 'volops':
-            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['VolumeWriteOps', 'VolumeReadOps'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False}
+            args.update({'metric':['VolumeWriteOps', 'VolumeReadOps'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
         elif qs == 'volbytes':
-            args = {'period':300, 'start_time':datetime.now() - timedelta(hours=24), 'end_time':datetime.now(), 'metric':['VolumeWriteBytes', 'VolumeReadBytes'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True}
+            args.update({'metric':['VolumeWriteBytes', 'VolumeReadBytes'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
         else:
             return HttpResponseBadRequest
     else:
@@ -212,7 +227,7 @@ def aws_stats(request):
     results = []
     for i, me in enumerate(args['metric']):
         data = c.get_metric_statistics(args['period'], args['start_time'], args['end_time'], me, args['namespace'], args['cols'], args['dims'], args['unit'])
-        
+
         temp = []
         for d in data:
             temp.append(d[u'Timestamp'])
@@ -220,7 +235,15 @@ def aws_stats(request):
         for t in (args['start_time'] + timedelta(seconds=n) for n in period):
             t = t.replace(second=0, microsecond=0)
             if (not t in temp):
-                data.append({u'Timestamp':t, u'Unit':args['unit'], args['cols'][0]:0})
+                data.append({u'Timestamp':t, u'Unit':args['unit'], unicode(args['cols'][0]):0})
+
+        if qs == 'latency':
+            for d in data:
+                d[u'Maximum'] = d[u'Maximum']*1000
+        if qs in ('volbytes', 'network'):
+            for d in data:
+                d[u'Sum'] = d[u'Sum']/1024
+
         results.append(data)
     return aws_result(results, args, req_id)
 
