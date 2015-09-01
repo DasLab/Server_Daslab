@@ -2,8 +2,6 @@ google.load('visualization', '1.1', {packages: ['corechart']});
 google.setOnLoadCallback(drawDash);
 
 function drawDash() {
-	var lineOptions = { };
-
    	google.visualization.drawChart({
     	'chartType': 'ColumnChart',
     	'dataSourceUrl': '/admin/aws_stat?qs=latency&sp=48h',
@@ -23,6 +21,7 @@ function drawDash() {
             },
             'bar': {'groupWidth': '500%' },
             'colors': ['#8ee4cf'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
     google.visualization.drawChart({
@@ -46,6 +45,7 @@ function drawDash() {
             'lineWidth': 3,
             'pointSize': 5,
             'colors': ['#8ee4cf'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
 
@@ -68,6 +68,7 @@ function drawDash() {
             },
             'bar': {'groupWidth': '500%' },
             'colors': ['#5496d7'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
     google.visualization.drawChart({
@@ -91,6 +92,7 @@ function drawDash() {
             'lineWidth': 3,
             'pointSize': 5,
             'colors': ['#5496d7'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
 
@@ -113,6 +115,7 @@ function drawDash() {
             },
             'bar': {'groupWidth': '500%' },
             'colors': ['#c28fdd'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
     google.visualization.drawChart({
@@ -136,6 +139,7 @@ function drawDash() {
             'lineWidth': 3,
             'pointSize': 5,
             'colors': ['#c28fdd'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
 
@@ -162,6 +166,7 @@ function drawDash() {
             'lineWidth': 3,
             'pointSize': 5,
             'colors': ['#50cc32', '#ff69bc'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
     google.visualization.drawChart({
@@ -186,6 +191,7 @@ function drawDash() {
             'lineWidth': 3,
             'pointSize': 5,
             'colors': ['#ff5c2b', '#29be92'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
     google.visualization.drawChart({
@@ -210,6 +216,7 @@ function drawDash() {
             'lineWidth': 3,
             'pointSize': 5,
             'colors': ['#ff5c2b', '#ff69bc', '#ff912e'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
 
@@ -234,6 +241,7 @@ function drawDash() {
             'lineWidth': 3,
             'pointSize': 5,
             'colors': ['#ff912e', '#3ed4e7'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
     google.visualization.drawChart({
@@ -257,6 +265,7 @@ function drawDash() {
             'lineWidth': 3,
             'pointSize': 5,
             'colors': ['#ff912e', '#3ed4e7'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
 
@@ -281,6 +290,7 @@ function drawDash() {
             'lineWidth': 3,
             'pointSize': 5,
             'colors': ['#5496d7', '#29be92'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
     google.visualization.drawChart({
@@ -304,9 +314,10 @@ function drawDash() {
             'lineWidth': 3,
             'pointSize': 5,
             'colors': ['#c28fdd', '#ff5c2b'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
-	setTimeout(function() {$(".place_holder").removeClass("place_holder");}, 1000);
+	setTimeout(function() {$(".place_holder").removeClass("place_holder");}, 800);
 }
 
 

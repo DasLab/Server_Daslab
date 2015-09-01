@@ -145,7 +145,7 @@ def aws_result(results, args, req_id):
     for i, d in enumerate(data):
         d.update({u'Timestamp': d[u'Timestamp']})
         if args['calc_rate'] and 'Sum' in args['cols']: 
-            d.update({args['metric'][0] + u'Rate': d[u'Sum']/args['period']})
+            d.update({args['metric'][0] + u'Rate': d[u'Sum'] / args['period']})
         for j, r in enumerate(results):
             if j == 0 and len(results) > 1 and args['calc_rate']: 
                 continue
@@ -156,7 +156,7 @@ def aws_result(results, args, req_id):
                 val = r[i][k]
                 name = args['metric'][j] + k
                 if args['calc_rate'] and k == u'Sum': 
-                    val = val/args['period']
+                    val = val / args['period']
                     name = args['metric'][j] + u'Rate'
                 d[name] = val
                 if d.has_key(k): del d[k]
@@ -239,10 +239,10 @@ def aws_stats(request):
 
         if qs == 'latency':
             for d in data:
-                d[u'Maximum'] = d[u'Maximum']*1000
+                d[u'Maximum'] = d[u'Maximum'] * 1000
         if qs in ('volbytes', 'network'):
             for d in data:
-                d[u'Sum'] = d[u'Sum']/1024
+                d[u'Sum'] = d[u'Sum'] / 1024
 
         results.append(data)
     return aws_result(results, args, req_id)

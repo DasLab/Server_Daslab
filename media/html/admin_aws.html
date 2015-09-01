@@ -5,62 +5,80 @@
 
 {% block content %}
 	<div id="content-main">
-		<table class="table-overview applist">
-			<tr>
-                <th scope="row"><b><i class="icon-globe"></i> Link</th>
-                <td><a href="/server-status/" class="addlink icon">http://daslab.stanford.edu/server-status/</a></td>
-                <td><i class="icon-lock"></i> Apache Autherization Required</td>
-              </tr>
-		</table>
-		
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<table class="table table-overview applist">
+					<tr>
+		                <th scope="row"><b><span class="glyphicon glyphicon-globe"></span> Link</th>
+		                <td class="active"><a href="https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#" target="_blank" class="addlink icon">https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#</a></td>
+		                <td class="active"><span class="glyphicon glyphicon-lock"></span> Amazon Web Services Authorization Required</td>
+		              </tr>
+				</table>
+			</div>
+		</div>
+
 		<div class="row">
 			<div class="col-md-6">
+				<h4><span class="label label-inverse" style="color: #ff0;">Latency</span></h4>
 				<div id="plot_lat1" class="thumbnail place_holder" style="padding:0px 20px;"></div>
 			</div>
 			<div class="col-md-6">
+				<h4>&nbsp;</h4>
 				<div id="plot_lat2" class="thumbnail place_holder" style="padding:0px 20px;"></div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-6">
+				<h4><span class="label label-inverse" style="color: #ff0;">Requests</span></h4>
 				<div id="plot_req1" class="thumbnail place_holder" style="padding:0px 20px;"></div>
 			</div>
 			<div class="col-md-6">
+				<h4>&nbsp;</h4>
 				<div id="plot_req2" class="thumbnail place_holder" style="padding:0px 20px;"></div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-6">
+				<h4><span class="label label-inverse" style="color: #ff0;">CPU Utilization</span></h4>
 				<div id="plot_cpu1" class="thumbnail place_holder" style="padding:0px 20px;"></div>
 			</div>
 			<div class="col-md-6">
+				<h4>&nbsp;</h4>
 				<div id="plot_cpu2" class="thumbnail place_holder" style="padding:0px 20px;"></div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4">
+				<h4><span class="label label-inverse" style="color: #ff0;">Hosts</span></h4>
 				<div id="plot_host" class="thumbnail place_holder" style="padding:0px 20px; height: 220px;"></div>
 			</div>
 			<div class="col-md-4">
+				<h4><span class="label label-inverse" style="color: #ff0;">CPU Credits</span></h4>
 				<div id="plot_credit" class="thumbnail place_holder" style="padding:0px 20px; height: 220px;"></div>
 			</div>
 			<div class="col-md-4">
+				<h4><span class="label label-inverse" style="color: #ff0;">Status</span></h4>
 				<div id="plot_status" class="thumbnail place_holder" style="padding:0px 20px; height: 220px;"></div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-6">
+				<h4><span class="label label-inverse" style="color: #ff0;">Network I/O</span></h4>
 				<div id="plot_net" class="thumbnail place_holder" style="padding:0px 20px; height: 220px;"></div>
 			</div>
 			<div class="col-md-6">
+				<h4><span class="label label-inverse" style="color: #ff0;">Disk I/O</span></h4>
 				<div id="plot_vol" class="thumbnail place_holder" style="padding:0px 20px; height: 220px;"></div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-6">
+				<h4><span class="label label-inverse" style="color: #ff0;">HTTP 2xx & 3xx</span></h4>
 				<div id="plot_23xx" class="thumbnail place_holder" style="padding:0px 20px; height: 220px;"></div>
 			</div>
 			<div class="col-md-6">
+				<h4><span class="label label-inverse" style="color: #ff0;">HTTP 4xx & 5xx</span></h4>
 				<div id="plot_45xx" class="thumbnail place_holder" style="padding:0px 20px; height: 220px;"></div>
 			</div>
 		</div>
@@ -71,13 +89,11 @@
 {% block extrajs %}
 	<script type="text/javascript">
 		$(document).ready(function() {
-			// $("#iframe").css("width", parseInt($("#content").css("width")) - 50);
-			// $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
-			$("ul.breadcrumb").append('<li class="active"><a href="/admin/doc/">Site Documentation</a></li>');
+			$("#view-selector-container").hide();
+			$("ul.breadcrumb").append('<li class="active"><a href="/admin/aws/">Amazon Web Services</a></li>');
 		});
 	</script>
     <script type="text/javascript" src="http://www.google.com/jsapi" ></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/json2/20150503/json2.min.js" ></script>
 	<script type="text/javascript" src="/site_media/js/admin/aws.js"></script>
 
 {% endblock %}
