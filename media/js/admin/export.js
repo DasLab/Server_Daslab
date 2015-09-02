@@ -109,10 +109,7 @@ $(document).ready(function() {
 		}
 	});
 
-
 	$("#export_save, #export_view").on("click", function() {$(window).unbind();});
-
-
 });
 
 

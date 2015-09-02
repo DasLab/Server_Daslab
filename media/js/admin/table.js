@@ -19,7 +19,7 @@ $(document).ready(function () {
 	$("textarea").addClass("form-control");
 	$("span.add-on").html('<span class="glyphicon glyphicon-calendar"></span>').addClass("input-group-addon").removeClass("add-on");
 
-	$('input[type="checkbox"],input[type="radio"]').each(function() {
+	$('input[type="checkbox"], input[type="radio"]').each(function() {
 		$(this).parent().addClass("checkbox");
 		if ($(this).next().is("label")) {
 			$(this).prependTo($(this).next());
@@ -29,7 +29,7 @@ $(document).ready(function () {
 			$(this).next().css("padding-left", "10px");
 		}
 	});
-	$('p.file-upload>a').each(function() {
+	$('p.file-upload > a').each(function() {
 		$(this).replaceWith('<div class="form-inline"><label>Current:&nbsp;&nbsp;</label><input class="form-control" disabled="disabled" style="cursor:text;" value="' + $(this).attr("href") + '">&nbsp;&nbsp;<a href="'+ replace_path($(this).attr("href")) + '" class="btn btn-default" target="_blank"><span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;View&nbsp;&nbsp;</a></div>');
 	});
 	$('.clearable-file-input').each(function() {
@@ -63,11 +63,11 @@ $(document).ready(function () {
 		$("td.field-link").css("word-break", "break-all");
 		$("td.field-link").css("text-decoration", "underline");
 
-		$("th.column-date>div.text>a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;Date');
-		$("th.column-content>div.text>a").html('<span class="glyphicon glyphicon-list-alt"></span>&nbsp;Content');
-		$("th.column-link>div.text>a").html('<span class="glyphicon glyphicon-globe"></span>&nbsp;URL');
+		$("th.column-date > div.text > a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;Date');
+		$("th.column-content > div.text > a").html('<span class="glyphicon glyphicon-list-alt"></span>&nbsp;Content');
+		$("th.column-link > div.text > a").html('<span class="glyphicon glyphicon-globe"></span>&nbsp;URL');
 
-		$("h2.legend").html('<span class="glyphicon glyphicon-picture"></span>&nbsp;' + $("h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
+		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-picture"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
     } else if ($(location).attr("href").indexOf("admin/src/publication") != -1) {
 		$("th.column-year").addClass("col-md-1");
 		$("th.column-journal").addClass("col-md-2");
@@ -83,13 +83,13 @@ $(document).ready(function () {
 		$("td.field-title").css("font-weight", "bold");
 		$("td.field-link").css("text-decoration", "underline");
 
-		$("th.column-year>div.text>a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;Year');
-		$("th.column-journal>div.text>a").html('<span class="glyphicon glyphicon-book"></span>&nbsp;Journal');
-		$("th.column-authors>div.text>a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;Authors');
-		$("th.column-title>div.text>a").html('<span class="glyphicon glyphicon-send"></span>&nbsp;Title');
-		$("th.column-link>div.text>a").html('<span class="glyphicon glyphicon-globe"></span>&nbsp;URL');
+		$("th.column-year > div.text > a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;Year');
+		$("th.column-journal > div.text > a").html('<span class="glyphicon glyphicon-book"></span>&nbsp;Journal');
+		$("th.column-authors > div.text > a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;Authors');
+		$("th.column-title > div.text > a").html('<span class="glyphicon glyphicon-send"></span>&nbsp;Title');
+		$("th.column-link > div.text > a").html('<span class="glyphicon glyphicon-globe"></span>&nbsp;URL');
 
-		$("h2.legend").html('<span class="glyphicon glyphicon-education"></span>&nbsp;' + $("h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
+		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-education"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
 	} else if ($(location).attr("href").indexOf("admin/src/member") != -1) {
 		$("th.column-full_name").addClass("col-md-3");
 		$("th.column-year").addClass("col-md-2");
@@ -99,22 +99,22 @@ $(document).ready(function () {
 		$("th.field-full_name").css("font-weight", "bold");
 		$("td.field-year").css("font-style", "italic");
 
-		$("th.column-full_name>div.text>a").html('<span class="glyphicon glyphicon-credit-card"></span>&nbsp;Full Name');
-		$("th.column-year>div.text>a").html('<span class="glyphicon glyphicon-hourglass"></span>&nbsp;Status');
-		$("th.column-joint_lab>div.text>a").html('<span class="glyphicon glyphicon-home"></span>&nbsp;Joint Lab');
-		$("th.column-affiliation>div.text>a").html('<span class="glyphicon glyphicon-education"></span>&nbsp;Affiliation');
+		$("th.column-full_name > div.text > a").html('<span class="glyphicon glyphicon-credit-card"></span>&nbsp;Full Name');
+		$("th.column-year > div.text > a").html('<span class="glyphicon glyphicon-hourglass"></span>&nbsp;Status');
+		$("th.column-joint_lab > div.text > a").html('<span class="glyphicon glyphicon-home"></span>&nbsp;Joint Lab');
+		$("th.column-affiliation > div.text > a").html('<span class="glyphicon glyphicon-education"></span>&nbsp;Affiliation');
 
-		$("h2.legend").html('<span class="glyphicon glyphicon-user"></span>&nbsp;' + $("h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
+		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-user"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
 	} else if ($(location).attr("href").indexOf("admin/src/flashslide") != -1) {
 		$("th.column-date").addClass("col-md-3");
 		$("th.column-link").addClass("col-md-9");
 
 		$("td.field-link").css("text-decoration", "underline");
 
-		$("th.column-date>div.text>a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;Date');
-		$("th.column-link>div.text>a").html('<span class="glyphicon glyphicon-globe"></span>&nbsp;URL');
+		$("th.column-date > div.text > a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;Date');
+		$("th.column-link > div.text > a").html('<span class="glyphicon glyphicon-globe"></span>&nbsp;URL');
 
-		$("h2.legend").html('<span class="glyphicon glyphicon-blackboard"></span>&nbsp;' + $("h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
+		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-blackboard"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
 	} else if ($(location).attr("href").indexOf("admin/src/rotationstudent") != -1) {
 		$("th.column-date").addClass("col-md-3");
 		$("th.column-full_name").addClass("col-md-3");
@@ -122,11 +122,11 @@ $(document).ready(function () {
 
 		$("td.field-full_name").css("font-weight", "bold");
 
-		$("th.column-date>div.text>a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;Date');
-		$("th.column-full_name>div.text>a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;Student');
-		$("th.column-title>div.text>a").html('<span class="glyphicon glyphicon-send"></span>&nbsp;Title');
+		$("th.column-date > div.text > a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;Date');
+		$("th.column-full_name > div.text > a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;Student');
+		$("th.column-title > div.text > a").html('<span class="glyphicon glyphicon-send"></span>&nbsp;Title');
 
-		$("h2.legend").html('<span class="glyphicon glyphicon-retweet"></span>&nbsp;' + $("h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
+		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-retweet"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
  	} else if ($(location).attr("href").indexOf("admin/src/eternayoutube") != -1) {
 		$("th.column-date").addClass("col-md-3");
 		$("th.column-presenter").addClass("col-md-3");
@@ -136,12 +136,12 @@ $(document).ready(function () {
 		$("td.field-presenter").css("font-weight", "bold");
 		$("td.field-link").css("text-decoration", "underline");
 
-		$("th.column-date>div.text>a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;Date');
-		$("th.column-presenter>div.text>a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;Presenter');
-		$("th.column-title>div.text>a").html('<span class="glyphicon glyphicon-send"></span>&nbsp;Title');
-		$("th.column-link>div.text>a").html('<span class="glyphicon glyphicon-globe"></span>&nbsp;URL');
+		$("th.column-date > div.text > a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;Date');
+		$("th.column-presenter > div.text > a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;Presenter');
+		$("th.column-title > div.text > a").html('<span class="glyphicon glyphicon-send"></span>&nbsp;Title');
+		$("th.column-link > div.text > a").html('<span class="glyphicon glyphicon-globe"></span>&nbsp;URL');
 
-		$("h2.legend").html('<span class="glyphicon glyphicon-facetime-video"></span>&nbsp;' + $("h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
+		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-facetime-video"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
  	} else if ($(location).attr("href").indexOf("admin/src/presentation") != -1) {
 		$("th.column-date").addClass("col-md-3");
 		$("th.column-presenter").addClass("col-md-3");
@@ -149,11 +149,11 @@ $(document).ready(function () {
 
 		$("td.field-presenter").css("font-weight", "bold");
 
-		$("th.column-date>div.text>a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;Date');
-		$("th.column-presenter>div.text>a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;Student');
-		$("th.column-title>div.text>a").html('<span class="glyphicon glyphicon-send"></span>&nbsp;Title');
+		$("th.column-date > div.text > a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;Date');
+		$("th.column-presenter > div.text > a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;Student');
+		$("th.column-title > div.text > a").html('<span class="glyphicon glyphicon-send"></span>&nbsp;Title');
 
-		$("h2.legend").html('<span class="glyphicon glyphicon-cd"></span>&nbsp;' + $("h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
+		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-cd"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
 	} else if ($(location).attr("href").indexOf("admin/auth/user") != -1) {
 		$("th.column-username").addClass("col-md-2");
 		$("th.column-email").addClass("col-md-3");
@@ -165,14 +165,14 @@ $(document).ready(function () {
 		$("th.field-username").css("font-style", "italic");
 		$("td.field-email").css("text-decoration", "underline");
 
-		$("th.column-username>div.text>a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;Username');
-		$("th.column-email>div.text>a").html('<span class="glyphicon glyphicon-envelope"></span>&nbsp;Email Address');
-		$("th.column-last_login>div.text>a").html('<span class="glyphicon glyphicon-time"></span>&nbsp;Last Login');
-		$("th.column-is_active>div.text>a").html('<span class="glyphicon glyphicon-pawn"></span>&nbsp;Active');
-		$("th.column-is_staff>div.text>a").html('<span class="glyphicon glyphicon-queen"></span>&nbsp;Staff');
-		$("th.column-is_superuser>div.text>a").html('<span class="glyphicon glyphicon-king"></span>&nbsp;Admin');
+		$("th.column-username > div.text > a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;Username');
+		$("th.column-email > div.text > a").html('<span class="glyphicon glyphicon-envelope"></span>&nbsp;Email Address');
+		$("th.column-last_login > div.text > a").html('<span class="glyphicon glyphicon-time"></span>&nbsp;Last Login');
+		$("th.column-is_active > div.text > a").html('<span class="glyphicon glyphicon-pawn"></span>&nbsp;Active');
+		$("th.column-is_staff > div.text > a").html('<span class="glyphicon glyphicon-queen"></span>&nbsp;Staff');
+		$("th.column-is_superuser > div.text > a").html('<span class="glyphicon glyphicon-king"></span>&nbsp;Admin');
 
-		$("h2.legend").html('<span class="glyphicon glyphicon-lock"></span>&nbsp;' + $("h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
+		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-lock"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<small class="pull-right">(Click values in first column to edit)</small>');
 
 		$("img[src$='/static/admin/img/icon-yes.gif']").each(function() {
 			var newElem = $('<span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span>');
@@ -262,7 +262,6 @@ $(window).load(function () {
 				$(this).detach().prependTo(datetime2);
 			});
 
-
 			$("select").addClass("form-control").removeClass("filtered");
 			$("input[placeholder='Filter']").addClass("form-control").parent().addClass("input-group");
 			$("<br/>").insertAfter($("input[placeholder='Filter']").parent())
@@ -278,7 +277,6 @@ $(window).load(function () {
 			$("a.selector-chooseall").addClass("btn btn-info").html('<span class="glyphicon glyphicon-ok-sign"></span>&nbsp;&nbsp;Choose All');
 			$("<br/>").insertBefore($("a.selector-clearall"));
 			$("a.selector-clearall").addClass("btn btn-default").html('<span class="glyphicon glyphicon-remove-sign"></span>&nbsp;&nbsp;Remove All');
-
 		}
 	}, 50);
 

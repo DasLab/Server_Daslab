@@ -2,10 +2,10 @@ var $ = django.jQuery;
 var weekdayNames = new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
 
 $(document).ready(function() {
-    $("ul.breadcrumb>li.active").text("System Dashboard");
+    $("ul.breadcrumb > li.active").text("System Dashboard");
 
     $("#content").addClass("row").removeClass("row-fluid").removeClass("colM");
-    $("#content>h2.content-title").remove();
+    $("#content > h2.content-title").remove();
     $("span.divider").remove();
     $("lspan").remove();
 
@@ -86,10 +86,6 @@ $(document).ready(function() {
         $("#time_upload_pdt").html(backup.toLocaleTimeString());
         $("#day_upload_pdt").html(weekdayNames[backup.getDay()]);
     });
-
-
-    
-
 
 });
 

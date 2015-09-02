@@ -276,18 +276,18 @@
 				$('html, body').stop().animate({scrollTop: $("#main").offset().top - 75}, 500);
 			});
 
-			$("#flash_list").find(".subpanel:first>.panel-collapse").collapse("show");
-			$("#flash_list").find(".subpanel:first>.panel-collapse").siblings().find(".panel-title>.icon")
+			$("#flash_list").find(".subpanel:first > .panel-collapse").collapse("show");
+			$("#flash_list").find(".subpanel:first > .panel-collapse").siblings().find(".panel-title > .icon")
 				.removeClass("glyphicon-chevron-right")
 				.addClass("glyphicon-chevron-down");
 
 			$('.panel-collapse').on('show.bs.collapse', function () {
-				$(this).siblings().find(".panel-title>.icon")
+				$(this).siblings().find(".panel-title > .icon")
 					.removeClass("glyphicon-chevron-right")
 					.addClass("glyphicon-chevron-down");
 			});
 			$('.panel-collapse').on('hidden.bs.collapse', function () {
-				$(this).siblings().find(".panel-title>.icon")
+				$(this).siblings().find(".panel-title > .icon")
 					.removeClass("glyphicon-chevron-down")
 					.addClass("glyphicon-chevron-right");
 			});
