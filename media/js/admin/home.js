@@ -45,9 +45,12 @@ $(document).ready(function() {
             $("#id_nano").html(txt[27]);
 
         	var disk_sp = txt[28].split(/\//);
-        	$("#id_disk_space").html('<span style="color:#080;">' + disk_sp[0] + '</span> | <span style="color:#f00;">' + disk_sp[1] + '</span>');
+            $("#id_disk_space > div > div.progress-bar-success").css("width", (parseInt(disk_sp[0]) / (parseInt(disk_sp[0]) + parseInt(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[0]);
+            $("#id_disk_space > div > div.progress-bar-danger").css("width", (parseInt(disk_sp[1]) / (parseInt(disk_sp[0]) + parseInt(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[1]);
         	var mem_sp = txt[29].split(/\//);
-        	$("#id_memory").html('<span style="color:#080;">' + mem_sp[0] + '</span> | <span style="color:#f00;">' + mem_sp[1] + '</span>');
+            $("#id_memory > div > div.progress-bar-success").css("width", (parseInt(mem_sp[0]) / (parseInt(mem_sp[0]) + parseInt(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[0]);
+            $("#id_memory > div > div.progress-bar-danger").css("width", (parseInt(mem_sp[1]) / (parseInt(mem_sp[0]) + parseInt(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[1]);
+
         	$("#id_backup").html('<span style="color:#00f;">' + txt[30] + '</span>');
         	var cpu = txt[31].split(/\//);
         	$("#id_cpu").html('<span style="color:#f00;">' + cpu[0] + '</span> | <span style="color:#080;">' + cpu[1] + '</span> | <span style="color:#00f;">' + cpu[2] + '</span>');
