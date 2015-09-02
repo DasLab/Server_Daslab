@@ -39,18 +39,22 @@ $(document).ready(function() {
             $("#id_curl").html(txt[21]);
         	$("#id_pip").html(txt[22]);
         	$("#id_virtualenv").html(txt[23]);
+            $("#id_boto").html(txt[24]);
+            $("#id_simplejson").html(txt[25]);
+            $("#id_gviz").html(txt[26]);
+            $("#id_nano").html(txt[27]);
 
-        	var disk_sp = txt[24].split(/\//);
+        	var disk_sp = txt[28].split(/\//);
         	$("#id_disk_space").html('<span style="color:#080;">' + disk_sp[0] + '</span> | <span style="color:#f00;">' + disk_sp[1] + '</span>');
-        	var mem_sp = txt[25].split(/\//);
+        	var mem_sp = txt[29].split(/\//);
         	$("#id_memory").html('<span style="color:#080;">' + mem_sp[0] + '</span> | <span style="color:#f00;">' + mem_sp[1] + '</span>');
-        	$("#id_backup").html('<span style="color:#00f;">' + txt[26] + '</span>');
-        	var cpu = txt[27].split(/\//);
+        	$("#id_backup").html('<span style="color:#00f;">' + txt[30] + '</span>');
+        	var cpu = txt[31].split(/\//);
         	$("#id_cpu").html('<span style="color:#f00;">' + cpu[0] + '</span> | <span style="color:#080;">' + cpu[1] + '</span> | <span style="color:#00f;">' + cpu[2] + '</span>');
 
-            $("#id_base_dir").html('<code>' + txt[28] + '</code>');
-            $("#id_media_root").html('<code>' + txt[29] + '</code>');
-            $("#id_static_root").html('<code>' + txt[30] + '</code>');
+            $("#id_base_dir").html('<code>' + txt[32] + '</code>');
+            $("#id_media_root").html('<code>' + txt[33] + '</code>');
+            $("#id_static_root").html('<code>' + txt[34] + '</code>');
     	}
     });
 
