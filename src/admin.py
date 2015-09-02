@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 # from suit.widgets import AutosizedTextarea
 # from suit.widgets import EnclosedInput, SuitDateWidget
 
+import boto.ec2.cloudwatch, boto.ec2.elb
+
 from src.models import *
 from src.settings import *
 from src.console import *
@@ -146,7 +148,21 @@ def aws_stat(request):
 admin.site.register_view('aws_stat', view=aws_stat, visible=False)
 
 def aws(request):
-    return render_to_response(PATH.HTML_PATH['admin_aws'], {}, context_instance=RequestContext(request))
+    conn = boto.ec2.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=False)
+    resv = conn.get_only_instances(instance_ids=AWS['EC2_INSTANCE_ID'])
+    stat = resv[0].__dict__
+    stat1 = {k: stat[k] for k in ('id', 'instance_type', 'private_dns_name', 'public_dns_name', 'vpc_id', 'subnet_id', 'image_id', 'architecture')} 
+    resv = conn.get_all_volumes(volume_ids=AWS['EBS_VOLUME_ID'])
+    stat = resv[0].__dict__
+    stat2 = {k: stat[k] for k in ('id', 'type', 'size', 'zone', 'snapshot_id', 'encrypted')} 
+
+    conn = boto.ec2.elb.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=False)
+    resv = conn.get_all_load_balancers(load_balancer_names=AWS['ELB_NAME'])
+    stat = resv[0].__dict__
+    stat3 = {k: stat[k] for k in ('dns_name', 'vpc_id', 'subnets', 'health_check')} 
+    stat3['health_check'] = str(stat3['health_check']).replace('HealthCheck:', '')
+
+    return render_to_response(PATH.HTML_PATH['admin_aws'], {'ec2':stat1, 'ebs':stat2, 'elb':stat3}, context_instance=RequestContext(request))
 admin.site.register_view('aws/', view=aws, visible=False)
 
 def ga(request):

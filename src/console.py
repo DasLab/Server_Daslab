@@ -181,7 +181,7 @@ def aws_stats(request):
         qs = request.GET.get('qs')
         sp = request.GET.get('sp')
         req_id = request.GET.get('tqx').replace('reqId:', '')
-        c = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=False)
+        conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=False)
 
         if sp == '7d':
             args = {'period':7200, 'start_time':datetime.now() - timedelta(days=7), 'end_time':datetime.now()}
@@ -226,7 +226,7 @@ def aws_stats(request):
 
     results = []
     for i, me in enumerate(args['metric']):
-        data = c.get_metric_statistics(args['period'], args['start_time'], args['end_time'], me, args['namespace'], args['cols'], args['dims'], args['unit'])
+        data = conn.get_metric_statistics(args['period'], args['start_time'], args['end_time'], me, args['namespace'], args['cols'], args['dims'], args['unit'])
 
         temp = []
         for d in data:

@@ -19,6 +19,100 @@
 		</div>
 
 		<div class="row">
+			<div class="col-md-12">
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="col-md-1"></th><th class="col-md-1"></th><th class="col-md-1"></th>
+							<th class="col-md-1"></th><th class="col-md-1"></th><th class="col-md-1"></th>
+							<th class="col-md-1"></th><th class="col-md-1"></th><th class="col-md-1"></th>
+							<th class="col-md-1"></th><th class="col-md-1"></th><th class="col-md-1"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><span class="label label-dark-blue">Instance</span><span class="label label-inverse">ID</span></td><td colspan="2"><code>{{ec2.id}}</code></td>
+							<td><span class="label label-dark-blue">Instance</span><span class="label label-primary">Type</span></td><td colspan="2"><code>{{ec2.instance_type}}</code></td>
+							<td><span class="label label-dark-blue">Instance</span><span class="label label-magenta">Image</span></td><td colspan="2"><code>{{ec2.image_id}}</code></td>
+							<td>
+								<div class="pull-right">
+									<span class="label label-dark-blue">Instance</span><span class="label label-violet">Arch</span>
+								</div>
+							</td>
+							<td colspan="2"><code>{{ec2.architecture}}</code></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div class="pull-right">
+									<span class="label label-dark-green">Load Balancer</span><span class="label label-success">Public DNS</span>
+								</div>
+							</td>
+							<td colspan="5"><code>{{elb.dns_name}}</code></td>
+							<td>
+								<div class="pull-right">
+									<span class="label label-dark-red">Volume</span><span class="label label-primary">Type</span>
+								</div>
+							</td>
+							<td><code>{{ebs.type}}</code></td>
+							<td>
+								<div class="pull-right">
+									<span class="label label-dark-red">Volume</span><span class="label label-inverse">ID</span>
+								</div>
+							</td>
+							<td colspan="2"><code>{{ebs.id}}</code></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div class="pull-right">
+									<span class="label label-dark-blue">Instance</span><span class="label label-success">Public DNS</span>
+								</div>
+							</td>
+							<td colspan="5"><code>{{ec2.public_dns_name}}</code></td>
+							<td>
+								<div class="pull-right">
+									<span class="label label-dark-red">Volume</span><span class="label label-warning">Size</span>
+								</div>
+							</td>
+							<td><code>{{ebs.size}}</code> GB</td>
+							<td>
+								<div class="pull-right">
+									<span class="label label-dark-red">Volume</span><span class="label label-magenta">Snapshot</span>
+								</div>
+							</td>
+							<td colspan="2"><code>{{ebs.snapshot_id}}</code></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div class="pull-right">
+									<span class="label label-dark-blue">Instance</span><span class="label label-danger">Private DNS</span>
+								</div>
+							</td>
+							<td colspan="5"><code>{{ec2.private_dns_name}}</code></td>
+							<td colspan="2">
+								<div class="pull-right">
+									<span class="label label-dark-green">Load Balancer</span><span class="label label-info">Health Check</span>
+								</div>
+							</td>
+							<td colspan="3"><code>{{elb.health_check}}</code></td>
+						</tr>
+						<tr>
+							<td><span class="label label-dark-blue">Instance</span><span class="label label-default">Subnet</span></td><td colspan="2"><code>{{ec2.subnet_id}}</code></td>
+							<td><span class="label label-dark-blue">Instance</span><span class="label label-default">VPC</span></td><td colspan="2"><code>{{ec2.vpc_id}}</code></td>
+							<td><span class="label label-dark-green">Load Balancer</span><span class="label label-default">VPC</span></td><td colspan="2"><code>{{elb.vpc_id}}</code></td>
+							<td>
+								<div class="pull-right">
+									<span class="label label-orange">Zone</span>
+								</div>
+							</td>
+							<td colspan="2"><code>{{ebs.zone}}</code></td>
+						</tr>
+						<tr><td colspan="12" style="padding: 0px;"></td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="row">
 			<div class="col-md-6">
 				<h4><span class="label label-inverse" style="color: #ff0;">Latency</span></h4>
 				<div id="plot_lat1" class="thumbnail place_holder" style="padding:0px 20px;"></div>
