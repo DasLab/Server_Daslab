@@ -34,7 +34,7 @@ gitinspector $(cut -d$'\t' -f19 data/stat_sys.txt | sed 's/ $*//') $(tput sgr 0)
 
 echo "$(tput setab 39) $(python -c "import celery, virtualenv, Tkinter, setuptools; \
 print 'tkinter', Tkinter.Tcl().eval('info patchlevel'), '| virtualenv', virtualenv.__version__, '| setuptools', setuptools.__version__, '| celery %d.%d.%d' %(celery.VERSION.major, celery.VERSION.minor, celery.VERSION.micro)") | \
-simplejson $(cut -d$'\t' -f25 data/stat_sys.txt | sed 's/ $*//') $(tput sgr 0)" >> ~/.ver_txt
+simplejson $(cut -d$'\t' -f26 data/stat_sys.txt | sed 's/ $*//') $(tput sgr 0)" >> ~/.ver_txt
 
 echo "$(tput setab 20) jquery $(cut -d$'\t' -f9 data/stat_sys.txt | sed 's/ $*//') | \
 bootstrap $(cut -d$'\t' -f10 data/stat_sys.txt | sed 's/ $*//') | \
@@ -48,9 +48,9 @@ suit $(cut -d$'\t' -f4 data/stat_sys.txt | sed 's/ $*//') | \
 adminplus $(cut -d$'\t' -f5 data/stat_sys.txt | sed 's/ $*//') | \
 filemanager $(cut -d$'\t' -f8 data/stat_sys.txt | sed 's/ $*//') $(tput sgr 0)" >> ~/.ver_txt
 
-echo -n "$(tput setab 171) nano $(cut -d$'\t' -f27 data/stat_sys.txt | sed 's/ $*//') | \
-boto $(cut -d$'\t' -f24 data/stat_sys.txt | sed 's/ $*//') | \
-gvizapi $(cut -d$'\t' -f26 data/stat_sys.txt | sed 's/ $*//') | \
+echo -n "$(tput setab 171) nano $(cut -d$'\t' -f28 data/stat_sys.txt | sed 's/ $*//') | \
+boto $(cut -d$'\t' -f25 data/stat_sys.txt | sed 's/ $*//') | \
+gvizapi $(cut -d$'\t' -f27 data/stat_sys.txt | sed 's/ $*//') | \
 mysql $(cut -d$'\t' -f14 data/stat_sys.txt | sed 's/ $*//') | \
 $(python -c "import cherrypy; print 'cherrypy',cherrypy.__version__") | \
 django $(cut -d$'\t' -f3 data/stat_sys.txt | sed 's/ $*//') $(tput sgr 0)" >> ~/.ver_txt
