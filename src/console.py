@@ -263,7 +263,9 @@ def ga_stats():
             temp_prev = '%.2f' % (float(temp) - float(temp_prev))
             temp = '%.2f' % float(temp)
         elif i == 'sessionDuration':
-            temp_prev = str(timedelta(seconds=(int(float(temp) / 1000) - int(float(temp_prev) / 1000))))
+            temp_diff = int(float(temp) / 1000) - int(float(temp_prev) / 1000)
+            temp_prev = str(timedelta(seconds=abs(temp_diff)))
+            if temp_diff < 0: temp_prev = '-%s' % temp_prev
             temp = str(timedelta(seconds=int(float(temp) / 1000)))
         else:
             temp_prev = '%d' % (int(temp) - int(temp_prev))
