@@ -113,7 +113,7 @@ def lab_misc(request):
 
 def user_login(request):
 	if request.user.is_authenticated():
-		if 'admin' in request.GET['next']:
+		if request.GET.has_key('next') and 'admin' in request.GET['next']:
 			return error403(request)
 		return HttpResponseRedirect('/group')
 
