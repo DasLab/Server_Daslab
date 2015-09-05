@@ -13,6 +13,7 @@ import urllib2
 from icalendar import Calendar
 import boto.ec2.cloudwatch
 import gviz_api
+from pygithub3 import Github
 
 from django.core.management import call_command
 from django.http import HttpResponse, HttpResponseBadRequest
@@ -276,15 +277,19 @@ def ga_stats():
 
 
 def git_stats():
-    gdrive_dir = 'echo'
-    if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
+    # gdrive_dir = 'echo'
+    # if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
+    # try:
+    #     subprocess.check_call('%s && gitinspector -wHlmrT %s -F html > %s/data/stat_git.html' % (gdrive_dir, MEDIA_ROOT, MEDIA_ROOT), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    # except subprocess.CalledProcessError:
+    #     print "    \033[41mERROR\033[0m: Failed to generate \033[94mgitinspector\033[0m stats."
+    #     print traceback.format_exc()
+    #     raise Exception('Error with generating gitinsepctor stats.')
 
-    try:
-        subprocess.check_call('%s && gitinspector -wHlmrT %s -F html > %s/data/stat_git.html' % (gdrive_dir, MEDIA_ROOT, MEDIA_ROOT), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError:
-        print "    \033[41mERROR\033[0m: Failed to generate \033[94mgitinspector\033[0m stats."
-        print traceback.format_exc()
-        raise Exception('Error with generating gitinsepctor stats.')
+    gh = Github(token=GIT["ACCESS_TOKEN"])
+    octocat = gh.users.get()
+    print gh, octocat
+    pass
 
 
 def export_citation(request):

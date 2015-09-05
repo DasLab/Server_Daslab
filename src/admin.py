@@ -176,9 +176,9 @@ def git(request):
     return render_to_response(PATH.HTML_PATH['admin_git'], {}, context_instance=RequestContext(request))
 admin.site.register_view('git/', view=git, visible=False)
 
-def git_inspector(request):
-    return render_to_response('%s/data/stat_git.html' % MEDIA_ROOT, {}, context_instance=RequestContext(request))
-admin.site.register_view('git_inspector/', view=git_inspector, visible=False)
+# def git_inspector(request):
+#     return render_to_response('%s/data/stat_git.html' % MEDIA_ROOT, {}, context_instance=RequestContext(request))
+# admin.site.register_view('git_inspector/', view=git_inspector, visible=False)
 
 
 def backup(request):

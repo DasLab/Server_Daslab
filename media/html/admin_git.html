@@ -17,7 +17,9 @@
 				</table>
 			</div>
 		</div>
-		<iframe src="/admin/git_inspector" class="well" id="iframe" frameborder="0" scrolling="auto" seamless="true"></iframe>
+		<!-- <iframe src="/admin/git_inspector" class="well" id="iframe" frameborder="0" scrolling="auto" seamless="true"></iframe> -->
+
+
 	</div>
 
 {% endblock %}
@@ -26,14 +28,15 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#view-selector-container").hide();
-			$("ul.breadcrumb").append('<li class="active"><a href="/admin/ga/">Google Analytics</a></li>');
-
-			$("#iframe").css("width", parseInt($("#content").css("width")) - 50);
+			$("ul.breadcrumb").append('<li class="active"><a href="/admin/git/">GitHub Repository</a></li>');
+			// $("#iframe").css("width", parseInt($("#content").css("width")) - 50);
 			// $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
-			$("#iframe").css("height", 800);
+			// $("#iframe").css("height", 800);
 			// $('#iframe').on("load", function() {
 			// 	$(this).css("height", $(this).contents().outerHeight());
 			// });
+
+			
 		});
 	</script>
 {% endblock %}
