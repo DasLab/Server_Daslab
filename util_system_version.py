@@ -80,7 +80,9 @@ ver += '%s / %s' % (disk_sp[3], disk_sp[2]) + '\t'
 if DEBUG:
     mem_str = subprocess.Popen('top -l 1 | head -n 10 | grep PhysMem', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
     mem_avail = mem_str[mem_str.find(',')+1:mem_str.find('unused')].strip()
+    if 'M' in mem_avail: mem_avail = '%.1fG' % (int(mem_avail[:-1]) / 1024.)
     mem_used = mem_str[mem_str.find(':')+1:mem_str.find('used')].strip()
+    if 'M' in mem_used: mem_used = '%.1fG' % (int(mem_used[:-1]) / 1024.)
 else:
     mem_str = subprocess.Popen('free -h', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split('\n')
     mem_avail = [x for x in mem_str[2].split(' ') if x][-1]
@@ -90,6 +92,12 @@ ver += subprocess.Popen('du -h --total %s | tail -1' % os.path.join(MEDIA_ROOT, 
 ver += cpu + '\t'
 
 ver += '%s\t%s\t%s\t' % (MEDIA_ROOT, MEDIA_ROOT + '/data', MEDIA_ROOT + '/media')
+
+gdrive_dir = 'echo'
+if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
+prefix = ''
+if DEBUG: prefix = '_DEBUG'
+ver += subprocess.Popen("%s && drive quota | awk '{ printf $2 \" G\t\"}'" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0]
 
 f = open(os.path.join(MEDIA_ROOT, 'data/stat_sys.txt'), 'w')
 f.write(ver)

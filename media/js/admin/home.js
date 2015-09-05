@@ -44,12 +44,14 @@ $(document).ready(function() {
             $("#id_gviz").html(txt[26]);
             $("#id_nano").html(txt[27]);
 
+            $("#id_drive_space > div > div.progress-bar-success").css("width", (parseFloat(txt[36]) / parseFloat(txt[37]) * 100).toString() + '%' ).html(txt[36]);
+            $("#id_drive_space > div > div.progress-bar-danger").css("width", (parseFloat(txt[35]) / parseFloat(txt[37]) * 100).toString() + '%' ).html(txt[35]);
         	var disk_sp = txt[28].split(/\//);
-            $("#id_disk_space > div > div.progress-bar-success").css("width", (parseInt(disk_sp[0]) / (parseInt(disk_sp[0]) + parseInt(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[0]);
-            $("#id_disk_space > div > div.progress-bar-danger").css("width", (parseInt(disk_sp[1]) / (parseInt(disk_sp[0]) + parseInt(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[1]);
+            $("#id_disk_space > div > div.progress-bar-success").css("width", (parseFloat(disk_sp[0]) / (parseFloat(disk_sp[0]) + parseFloat(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[0]);
+            $("#id_disk_space > div > div.progress-bar-danger").css("width", (parseFloat(disk_sp[1]) / (parseFloat(disk_sp[0]) + parseFloat(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[1]);
         	var mem_sp = txt[29].split(/\//);
-            $("#id_memory > div > div.progress-bar-success").css("width", (parseInt(mem_sp[0]) / (parseInt(mem_sp[0]) + parseInt(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[0]);
-            $("#id_memory > div > div.progress-bar-danger").css("width", (parseInt(mem_sp[1]) / (parseInt(mem_sp[0]) + parseInt(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[1]);
+            $("#id_memory > div > div.progress-bar-success").css("width", (parseFloat(mem_sp[0]) / (parseFloat(mem_sp[0]) + parseFloat(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[0]);
+            $("#id_memory > div > div.progress-bar-danger").css("width", (parseFloat(mem_sp[1]) / (parseFloat(mem_sp[0]) + parseFloat(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[1]);
 
         	$("#id_backup").html('<span style="color:#00f;">' + txt[30] + '</span>');
         	var cpu = txt[31].split(/\//);
