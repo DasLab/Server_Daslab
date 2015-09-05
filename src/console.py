@@ -44,7 +44,7 @@ def get_backup_stat():
 
     gdrive_dir = 'echo'
     if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
-    ver += '~|~'.join(subprocess.Popen("%s && drive list -q \"title contains 'DasLab_'\"" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:])
+    ver += '~|~'.join(subprocess.Popen("%s && drive list -q \"title contains 'DasLab_' and (title contains '.gz' or title contains '.tgz')\"" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:])
 
     f = open(os.path.join(MEDIA_ROOT, 'data/stat_backup.txt'), 'w')
     f.write(ver)
