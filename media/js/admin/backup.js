@@ -55,9 +55,9 @@ $(document).ready(function() {
         dataType: "text",
         success : function (data) {
             var txt = data.split(/\t/);
-            $("#id_drive_space > div > div.progress-bar-success").css("width", (parseFloat(txt[36]) / parseFloat(txt[37]) * 100).toString() + '%' ).html(txt[36]);
-            $("#id_drive_space > div > div.progress-bar-danger").css("width", (parseFloat(txt[35]) / parseFloat(txt[37]) * 100).toString() + '%' ).html(txt[35]);
-            var disk_sp = txt[28].split(/\//);
+            $("#id_drive_space > div > div.progress-bar-success").css("width", (parseFloat(txt[37]) / parseFloat(txt[38]) * 100).toString() + '%' ).html(txt[37]);
+            $("#id_drive_space > div > div.progress-bar-danger").css("width", (parseFloat(txt[36]) / parseFloat(txt[38]) * 100).toString() + '%' ).html(txt[36]);
+            var disk_sp = txt[29].split(/\//);
             $("#id_disk_space > div > div.progress-bar-success").css("width", (parseFloat(disk_sp[0]) / (parseFloat(disk_sp[0]) + parseFloat(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[0]);
             $("#id_disk_space > div > div.progress-bar-danger").css("width", (parseFloat(disk_sp[1]) / (parseFloat(disk_sp[0]) + parseFloat(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[1]);
         }

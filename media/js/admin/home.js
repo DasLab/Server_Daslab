@@ -33,7 +33,7 @@ $(document).ready(function() {
         	$("#id_webauth").html(txt[15]);
         	$("#id_ssh").html(txt[16]);
         	$("#id_git").html(txt[17]);
-            $("#id_git_inspector").html(txt[18]);
+            $("#id_pygit").html(txt[18]);
             $("#id_gdrive").html(txt[19]);
             $("#id_pandoc").html(txt[20]);
             $("#id_curl").html(txt[21]);
@@ -43,23 +43,24 @@ $(document).ready(function() {
             $("#id_simplejson").html(txt[25]);
             $("#id_gviz").html(txt[26]);
             $("#id_nano").html(txt[27]);
+            $("#id_ssl").html(txt[28]);
 
-            $("#id_drive_space > div > div.progress-bar-success").css("width", (parseFloat(txt[36]) / parseFloat(txt[37]) * 100).toString() + '%' ).html(txt[36]);
-            $("#id_drive_space > div > div.progress-bar-danger").css("width", (parseFloat(txt[35]) / parseFloat(txt[37]) * 100).toString() + '%' ).html(txt[35]);
-        	var disk_sp = txt[28].split(/\//);
+            $("#id_drive_space > div > div.progress-bar-success").css("width", (parseFloat(txt[37]) / parseFloat(txt[38]) * 100).toString() + '%' ).html(txt[37]);
+            $("#id_drive_space > div > div.progress-bar-danger").css("width", (parseFloat(txt[36]) / parseFloat(txt[38]) * 100).toString() + '%' ).html(txt[36]);
+        	var disk_sp = txt[29].split(/\//);
             $("#id_disk_space > div > div.progress-bar-success").css("width", (parseFloat(disk_sp[0]) / (parseFloat(disk_sp[0]) + parseFloat(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[0]);
             $("#id_disk_space > div > div.progress-bar-danger").css("width", (parseFloat(disk_sp[1]) / (parseFloat(disk_sp[0]) + parseFloat(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[1]);
-        	var mem_sp = txt[29].split(/\//);
+        	var mem_sp = txt[30].split(/\//);
             $("#id_memory > div > div.progress-bar-success").css("width", (parseFloat(mem_sp[0]) / (parseFloat(mem_sp[0]) + parseFloat(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[0]);
             $("#id_memory > div > div.progress-bar-danger").css("width", (parseFloat(mem_sp[1]) / (parseFloat(mem_sp[0]) + parseFloat(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[1]);
 
-        	$("#id_backup").html('<span style="color:#00f;">' + txt[30] + '</span>');
-        	var cpu = txt[31].split(/\//);
+        	$("#id_backup").html('<span style="color:#00f;">' + txt[31] + '</span>');
+        	var cpu = txt[32].split(/\//);
         	$("#id_cpu").html('<span style="color:#f00;">' + cpu[0] + '</span> | <span style="color:#080;">' + cpu[1] + '</span> | <span style="color:#00f;">' + cpu[2] + '</span>');
 
-            $("#id_base_dir").html('<code>' + txt[32] + '</code>');
-            $("#id_media_root").html('<code>' + txt[33] + '</code>');
-            $("#id_static_root").html('<code>' + txt[34] + '</code>');
+            $("#id_base_dir").html('<code>' + txt[33] + '</code>');
+            $("#id_media_root").html('<code>' + txt[34] + '</code>');
+            $("#id_static_root").html('<code>' + txt[35] + '</code>');
     	}
     });
 
