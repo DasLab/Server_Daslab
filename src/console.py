@@ -13,7 +13,8 @@ import urllib2
 from icalendar import Calendar
 import boto.ec2.cloudwatch
 import gviz_api
-from pygithub3 import Github
+from github import Github
+# from pygithub3 import Github
 
 from django.core.management import call_command
 from django.http import HttpResponse, HttpResponseBadRequest
@@ -276,7 +277,7 @@ def ga_stats():
     return stats
 
 
-def git_stats():
+def git_stats(request):
     # gdrive_dir = 'echo'
     # if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
     # try:
@@ -286,10 +287,53 @@ def git_stats():
     #     print traceback.format_exc()
     #     raise Exception('Error with generating gitinsepctor stats.')
 
-    gh = Github(token=GIT["ACCESS_TOKEN"])
-    octocat = gh.users.get()
-    print gh, octocat
-    pass
+    if request.GET.has_key('qs') and request.GET.has_key('tqx'):
+        qs = request.GET.get('qs')
+        req_id = request.GET.get('tqx').replace('reqId:', '')
+        gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
+        repo = gh.get_repo('DasLab/Server_DasLab')
+
+        data = []
+        desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+        stats = ['Timestamp']
+
+        if qs == 'c':
+            contribs = repo.get_stats_commit_activity()
+            fields = ['Commits']
+            for contrib in contribs:
+                for i, day in enumerate(contrib.days):
+                    data.append({u'Timestamp': contrib.week + timedelta(days=i), u'Commits': day})
+        elif qs == 'ad':
+            contribs = repo.get_stats_code_frequency()
+            fields = ['Additions', 'Deletions']
+            for contrib in contribs:
+                data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
+        elif qs == 'au':
+            contribs = repo.get_stats_contributors()
+            fields = ['Commits', 'Additions', 'Deletions']
+            for contrib in contribs:
+                a, d = (0, 0)
+                for w in contrib.weeks:
+                    a += w.a
+                    d += w.d
+                data.append({u'Contributors': contrib.author.login, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+            stats = ['Contributors']
+            desp['Contributors'] = ('string', 'Name')
+            del desp['Timestamp']
+        else:
+            return HttpResponseBadRequest
+
+        for field in fields:
+            stats.append(field)
+            desp[field] = ('number', field)
+        
+        data = sorted(data, key=operator.itemgetter(stats[0]))
+        data_table = gviz_api.DataTable(desp)
+        data_table.LoadData(data)
+        results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
+        return results
+    else:
+        return HttpResponseBadRequest
 
 
 def export_citation(request):

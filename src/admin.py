@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 # from suit.widgets import EnclosedInput, SuitDateWidget
 
 import boto.ec2.cloudwatch, boto.ec2.elb
+import operator
 
 from src.models import *
 from src.settings import *
@@ -117,7 +118,6 @@ admin.site.register_view('backup_stat', view=backup_stat, visible=False)
 def backup_form(request):
     json = get_backup_form()
     return HttpResponse(json, content_type='application/json')
-
 admin.site.register_view('backup_form', view=backup_form, visible=False)
 
 def backup_now(request):
@@ -130,6 +130,7 @@ def upload_now(request):
     return backup_stat(request)
 admin.site.register_view('upload_now', view=upload_now, visible=False)
 
+
 def apache_stat(request):
     json = restyle_apache()
     return HttpResponse(json, content_type='application/json')
@@ -138,6 +139,7 @@ admin.site.register_view('apache_stat', view=apache_stat, visible=False)
 def apache(request):
     return render_to_response(PATH.HTML_PATH['admin_apache'], {}, context_instance=RequestContext(request))
 admin.site.register_view('apache/', view=apache, visible=False)
+
 
 def aws_stat(request):
     json = aws_stats(request)
@@ -165,15 +167,38 @@ def aws(request):
     return render_to_response(PATH.HTML_PATH['admin_aws'], {'ec2':stat1, 'ebs':stat2, 'elb':stat3}, context_instance=RequestContext(request))
 admin.site.register_view('aws/', view=aws, visible=False)
 
+
 def ga(request):
     stats = ga_stats()
     stats['client_id'] = GA['CLIENT_ID']
     return render_to_response(PATH.HTML_PATH['admin_ga'], stats, context_instance=RequestContext(request))
 admin.site.register_view('ga/', view=ga, visible=False)
 
+
+def git_stat(request):
+    json = git_stats(request)
+    if type(json) is str:
+        return HttpResponse(json, content_type='application/json')
+    else:
+        return json
+admin.site.register_view('git_stat', view=git_stat, visible=False)
+
 def git(request):
-    git_stats()
-    return render_to_response(PATH.HTML_PATH['admin_git'], {}, context_instance=RequestContext(request))
+    gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
+    repo = gh.get_repo('DasLab/Server_DasLab')
+    contribs = repo.get_stats_contributors()
+
+    data = []
+    for contrib in contribs:
+        a, d = (0, 0)
+        for w in contrib.weeks:
+            a += w.a
+            d += w.d
+        name = '<i>%s</i> <span style="color:#888">(%s)</span>' % (contrib.author.login, contrib.author.name)
+        data.append({u'Contributors': name, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+    data = sorted(data, key=operator.itemgetter(u'Commits'))
+
+    return render_to_response(PATH.HTML_PATH['admin_git'], {'contrib':data}, context_instance=RequestContext(request))
 admin.site.register_view('git/', view=git, visible=False)
 
 # def git_inspector(request):

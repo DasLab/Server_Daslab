@@ -19,6 +19,43 @@
 		</div>
 		<!-- <iframe src="/admin/git_inspector" class="well" id="iframe" frameborder="0" scrolling="auto" seamless="true"></iframe> -->
 
+		<div class="row">
+			<div class="col-md-12">
+				<h4><span class="label label-inverse" style="color: #ff0;">Commits</span></h4>
+				<div id="plot_c" class="thumbnail place_holder" style="padding:20px 20px 0px 20px; height: 350px;"></div>
+				<h4><span class="label label-inverse" style="color: #ff0;">Additions & Deletions</span></h4>
+				<div id="plot_ad" class="thumbnail place_holder" style="padding:0px 20px; height: 275px;"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<h4><span class="label label-inverse" style="color: #ff0;">Contributors</span></h4>
+				<table class="table">
+					<thead>
+						<tr class="active">
+							<th class="col-md-3"><span class="glyphicon glyphicon-user"></span> Account</th>
+							<th class="col-md-3"><span class="glyphicon glyphicon-circle-arrow-up"></span> Commits</th>
+							<th class="col-md-3"><span class="glyphicon glyphicon-plus-sign"></span> Additions</th>
+							<th class="col-md-3"><span class="glyphicon glyphicon-minus-sign"></span> Deletions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for d in contrib %}
+						<tr>
+							<td>{% autoescape off %}{{d.Contributors}}{% endautoescape %}</td>
+							<td><span style="color:#00f;">{{d.Commits}}</span></td>
+							<td><span style="color:#080;">{{d.Additions}}</span></td>
+							<td><span style="color:#f00;">{{d.Deletions}}</span></td>
+						</tr>
+						{% endfor %}
+						<tr><td colspan="4" style="padding: 0px;"></td></tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-md-4">
+				<div id="plot_pie" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+			</div>
+		</div>
 
 	</div>
 
@@ -35,9 +72,9 @@
 			// $('#iframe').on("load", function() {
 			// 	$(this).css("height", $(this).contents().outerHeight());
 			// });
-
-			
 		});
 	</script>
+    <script type="text/javascript" src="http://www.google.com/jsapi" ></script>
+	<script type="text/javascript" src="/site_media/js/admin/git.js"></script>
 {% endblock %}
 
