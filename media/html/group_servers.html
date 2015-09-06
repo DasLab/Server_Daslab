@@ -1,0 +1,208 @@
+{% extends "media/html/_internal.html" %}
+{% block content %}
+<div class="starter-template">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2">
+				<div class="panel panel-default" id="sidebar">
+					<div class="panel-heading">
+						<h2 class="panel-title"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;&nbsp;Sections</h2>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<ul class="nav" role="tablist" id="scroll_nav">
+									<li class="li-primary">
+										<a id="tab_1" href="#aws">
+											<span class="glyphicon glyphicon-text-background"></span><b>&nbsp;&nbsp;Amazon Web Services</b>
+										</a>
+									</li>
+									<li class="li-magenta">
+										<a id="tab_2" href="#ga">
+											<span class="glyphicon glyphicon-signal"></span><b>&nbsp;&nbsp;Google Analytics</b>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-10" id="main">
+
+				<div class="panel panel-primary" id="aws">
+					<div class="panel-heading">
+						<h2 class="panel-title"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>&nbsp;&nbsp;Amazon Web Services</h2>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<h3><span class="label label-orange">EC2: Elastic Compute Cloud</span></h3>
+								<div class="thumbnail" style="padding:20px 40px;">
+								{% for id, ec2 in aws.ec2.items %}
+									<div class="row">
+										<div class="col-md-9">
+											<p>
+											{% if ec2.status == 0 %}
+												<span class="pull-left lead"><span class="label label-warning"><span class="glyphicon glyphicon-question-sign"></span></span></span>
+											{% elif ec2.status == 16 %}
+												<span class="pull-left lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
+											{% elif ec2.status == 48 or ec2.status == 80 %}
+												<span class="lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
+											{% elif ec2.status == 32 or ec2.status == 64 %}
+												<span class="lead"><span class="label label-magenta"><span class="glyphicon glyphicon-exclamation-sign"></span></span></span>
+											{% endif %}
+												&nbsp;&nbsp;<span class="lead"><b><u>{{ec2.name}}</u></b></span>&nbsp;&nbsp;
+												<span class="label label-primary">{{ec2.type}}</span>
+												<span class="label label-info">{{ec2.arch}}</span>
+												<span class="label label-violet">{{ec2.region}}</span>
+											</p>
+											<p><a href="http://{{ec2.dns}}" target="_blank"><code>{{ec2.dns}}</code></a></p>
+										</div>
+										<div class="col-md-3">
+											<p class="text-right"><span class="label label-inverse">Credits Balance</span></p>
+											<p class="text-right"><i><mark>{{ec2.credit}}</mark></i></p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div id="plot_cpu_{{id}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+										</div>
+										<div class="col-md-6">
+											<div id="plot_net_{{id}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+										</div>
+									</div>
+									{% if forloop.revcounter0 %}<hr/ style="margin: 10px;">{% endif %}
+								{% endfor %}
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<h3><span class="label label-teal">ELB: Elastic Load Balancing</span></h3>
+								<div class="thumbnail" style="padding:20px 40px;">
+								{% for name, elb in aws.elb.items %}
+									<div class="row">
+										<p>
+										{% if elb.status %}
+											<span class="pull-left lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
+										{% else %}
+											<span class="lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
+										{% endif %}
+											&nbsp;&nbsp;<span class="lead"><b><u>{{name}}</u></b></span>&nbsp;&nbsp;
+											<span class="label label-violet">{{elb.region}}</span>
+										</p>
+										<p>
+											<a href="http://{{elb.dns}}" target="_blank"><code>{{elb.dns}}</code></a>
+										</p>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div id="plot_lat_{{name}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+										</div>
+										<div class="col-md-6">
+											<div id="plot_req_{{name}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+										</div>
+									</div>
+									{% if forloop.revcounter0 %}<hr/ style="margin: 10px;">{% endif %}
+								{% endfor %}
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<h3><span class="label label-dark-blue">EBS: Elastic Block Store</span></h3>
+								<div class="thumbnail" style="padding:20px 40px;">
+								{% for id, ebs in aws.ebs.items %}
+									<div class="row">
+										<div class="col-md-4">
+											<p>
+											{% if ebs.status == 'in-use' %}
+												<span class="pull-left lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
+											{% else %}
+												<span class="lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
+											{% endif %}
+												&nbsp;&nbsp;<span class="lead"><b><u>{{ebs.name}}</u></b></span>&nbsp;&nbsp;
+											</p>
+											<p>
+												<span class="label label-primary">{{ebs.type}}</span>
+												<span class="label label-info">{{ebs.size}} GB</span>
+												<span class="label label-violet">{{ebs.region}}</span>
+												{% if ebs.encrypted %}<span class="label label-warning">Encrypted</span>{% endif %}
+											</p>
+										</div>
+										<div class="col-md-8">
+											<div id="plot_disk_{{id}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+										</div>
+									</div>
+									{% if forloop.revcounter0 %}<hr/ style="margin: 10px;">{% endif %}
+								{% endfor %}
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				
+				<div class="panel panel-magenta" id="ga">
+					<div class="panel-heading">
+						<h2 class="panel-title"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span>&nbsp;&nbsp;Google Analytics</h2>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12" id="flash_list">
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.dropdown-toggle').removeClass("active");
+			$("#nav_servers").addClass("active");
+	    	$("#nav_logo").css("text-decoration","none");
+
+		    $("#sidebar").attr("data-spy","affix").affix( { offset: { top: $("#main").position().top} } );
+	    	$("#sidebar").css("width", $("#sidebar").width());
+	    	$("#sidebar").css("margin", 0);
+
+	    	$("[id^=tab_]").on('click', function () {
+				$('html, body').stop().animate({scrollTop: $("#jumbotron").offset().top - 75}, 500);
+				$("#main").find(".panel").not(".subpanel").not(".month").hide();
+				$($(this).attr("href")).show();
+	    	})
+			$('#top').on('click', function () {
+				$('html, body').stop().animate({scrollTop: $("#main").offset().top - 75}, 500);
+			});
+
+		});
+	</script>
+    <script type="text/javascript" src="http://www.google.com/jsapi" ></script>
+	<script type="text/javascript" src="/site_media/js/group/aws.js"></script>
+	<script type="text/javascript">
+		{% for id in aws.ec2 %}
+			drawEC2("{{id}}");
+		{% endfor %}
+		{% for id in aws.elb %}
+			drawELB("{{id}}");
+		{% endfor %}
+		{% for id in aws.ebs %}
+			drawEBS("{{id}}");
+		{% endfor %}
+
+		setTimeout(function() {$(".place_holder").removeClass("place_holder");}, 800);
+	</script>
+
+{% endblock %}

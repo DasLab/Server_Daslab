@@ -47,7 +47,7 @@
 									<span class="label label-dark-green">Load Balancer</span><span class="label label-success">Public DNS</span>
 								</div>
 							</td>
-							<td colspan="5"><code>{{elb.dns_name}}</code></td>
+							<td colspan="5"><a href="http://{{elb.dns_name}}" target="_blank"><code>{{elb.dns_name}}</code></a></td>
 							<td>
 								<div class="pull-right">
 									<span class="label label-dark-red">Volume</span><span class="label label-primary">Type</span>
@@ -67,7 +67,7 @@
 									<span class="label label-dark-blue">Instance</span><span class="label label-success">Public DNS</span>
 								</div>
 							</td>
-							<td colspan="5"><code>{{ec2.public_dns_name}}</code></td>
+							<td colspan="5"><a href="http://{{ec2.public_dns_name}}" target="_blank"><code>{{ec2.public_dns_name}}</code></a></td>
 							<td>
 								<div class="pull-right">
 									<span class="label label-dark-red">Volume</span><span class="label label-warning">Size</span>
@@ -87,7 +87,7 @@
 									<span class="label label-dark-blue">Instance</span><span class="label label-danger">Private DNS</span>
 								</div>
 							</td>
-							<td colspan="5"><code>{{ec2.private_dns_name}}</code></td>
+							<td colspan="5"><a href="http://{{ec2.private_dns_name}}" target="_blank"><code>{{ec2.private_dns_name}}</code></a></td>
 							<td colspan="2">
 								<div class="pull-right">
 									<span class="label label-dark-green">Load Balancer</span><span class="label label-info">Health Check</span>
