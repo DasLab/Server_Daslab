@@ -270,8 +270,7 @@
 				$('html, body').stop().animate({scrollTop: $("#jumbotron").offset().top - 75}, 500);
 				$("#main").find(".panel").not(".subpanel").not(".month").hide();
 				$($(this).attr("href")).show();
-	    	})
-
+	    	});
 			$('#top').on('click', function () {
 				$('html, body').stop().animate({scrollTop: $("#main").offset().top - 75}, 500);
 			});

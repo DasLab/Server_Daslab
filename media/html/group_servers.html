@@ -38,10 +38,67 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-md-12">
-								<h3><span class="label label-orange">EC2: Elastic Compute Cloud</span></h3>
+								<h3><span class="label label-default">Overview</span></h3>
+								<table class="table">
+									<thead>
+										<tr class="active">
+											<th class="col-md-4">EC2: Elastic Compute Cloud</th>
+											<th class="col-md-4">ELB: Elastic Load Balancing</th>
+											<th class="col-md-4">EBS: Elastic Bloack Store</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for i, val in aws.table.items %}
+											<tr>
+												<td>
+													{% if val.ec2.status == 0 %}
+														<span class="pull-left"><span class="label label-warning"><span class="glyphicon glyphicon-question-sign"></span></span></span>
+													{% elif val.ec2.status == 16 %}
+														<span class="pull-left"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
+													{% elif val.ec2.status == 48 or val.ec2.status == 80 %}
+														<span class="pull-left"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
+													{% elif val.ec2.status == 32 or val.ec2.status == 64 %}
+														<span class="pull-left"><span class="label label-magenta"><span class="glyphicon glyphicon-exclamation-sign"></span></span></span>
+													{% endif %}
+													&nbsp;&nbsp;
+													<span class="label label-orange">{{val.ec2.id}}</span>
+													&nbsp;&nbsp;
+													<u><a href="#ec2-{{val.ec2.name}}" id="aws_ec2-{{val.ec2.name}}">{{val.ec2.name}}</a></u>
+												</td>
+												<td>
+													{% if val.elb.status %}
+														<span class="pull-left"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
+													{% elif val.elb.name %}
+														<span class="pull-left"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
+													{% endif %}
+													&nbsp;&nbsp;
+													<u><a href="#elb-{{val.elb.name}}" id="aws_elb-{{val.elb.name}}">{{val.elb.name}}</a></u>
+												</td>
+												<td>
+													{% if val.ebs.status == 'in-use' %}
+														<span class="pull-left"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
+													{% elif val.ebs.name %}
+														<span class="pull-left"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
+													{% endif %}
+													&nbsp;&nbsp;
+													<span class="label label-orange">{{val.ebs.id}}</span>
+													&nbsp;&nbsp;
+													<u><a href="#ebs-{{val.ebs.name}}" id="aws_ebs-{{val.ebs.name}}">{{val.ebs.name}}</a></u>
+												</td>
+											</tr>
+										{% endfor %}
+										<tr><td colspan="3"></td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<h3><span class="label label-dark-red">EC2: Elastic Compute Cloud</span></h3>
 								<div class="thumbnail" style="padding:20px 40px;">
 								{% for id, ec2 in aws.ec2.items %}
-									<div class="row">
+									<div class="row" id="ec2-{{ec2.name}}">
 										<div class="col-md-9">
 											<p>
 											{% if ec2.status == 0 %}
@@ -49,11 +106,12 @@
 											{% elif ec2.status == 16 %}
 												<span class="pull-left lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
 											{% elif ec2.status == 48 or ec2.status == 80 %}
-												<span class="lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
+												<span class="pull-left lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
 											{% elif ec2.status == 32 or ec2.status == 64 %}
-												<span class="lead"><span class="label label-magenta"><span class="glyphicon glyphicon-exclamation-sign"></span></span></span>
+												<span class="pull-left lead"><span class="label label-magenta"><span class="glyphicon glyphicon-exclamation-sign"></span></span></span>
 											{% endif %}
 												&nbsp;&nbsp;<span class="lead"><b><u>{{ec2.name}}</u></b></span>&nbsp;&nbsp;
+												<span class="label label-orange">{{ec2.id}}</span>
 												<span class="label label-primary">{{ec2.type}}</span>
 												<span class="label label-info">{{ec2.arch}}</span>
 												<span class="label label-violet">{{ec2.region}}</span>
@@ -84,12 +142,12 @@
 								<h3><span class="label label-teal">ELB: Elastic Load Balancing</span></h3>
 								<div class="thumbnail" style="padding:20px 40px;">
 								{% for name, elb in aws.elb.items %}
-									<div class="row">
+									<div class="row" id="elb-{{name}}">
 										<p>
 										{% if elb.status %}
 											<span class="pull-left lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
 										{% else %}
-											<span class="lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
+											<span class="pull-left lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
 										{% endif %}
 											&nbsp;&nbsp;<span class="lead"><b><u>{{name}}</u></b></span>&nbsp;&nbsp;
 											<span class="label label-violet">{{elb.region}}</span>
@@ -117,17 +175,18 @@
 								<h3><span class="label label-dark-blue">EBS: Elastic Block Store</span></h3>
 								<div class="thumbnail" style="padding:20px 40px;">
 								{% for id, ebs in aws.ebs.items %}
-									<div class="row">
+									<div class="row" id="ebs-{{ebs.name}}">
 										<div class="col-md-4">
 											<p>
 											{% if ebs.status == 'in-use' %}
 												<span class="pull-left lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
 											{% else %}
-												<span class="lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
+												<span class="pull-left lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
 											{% endif %}
 												&nbsp;&nbsp;<span class="lead"><b><u>{{ebs.name}}</u></b></span>&nbsp;&nbsp;
 											</p>
 											<p>
+												<span class="label label-orange">{{ebs.id}}</span>
 												<span class="label label-primary">{{ebs.type}}</span>
 												<span class="label label-info">{{ebs.size}} GB</span>
 												<span class="label label-violet">{{ebs.region}}</span>
@@ -182,10 +241,13 @@
 				$('html, body').stop().animate({scrollTop: $("#jumbotron").offset().top - 75}, 500);
 				$("#main").find(".panel").not(".subpanel").not(".month").hide();
 				$($(this).attr("href")).show();
-	    	})
+	    	});
 			$('#top').on('click', function () {
 				$('html, body').stop().animate({scrollTop: $("#main").offset().top - 75}, 500);
 			});
+	    	$("[id^=aws_]").on('click', function () {
+			    $('html, body').stop().animate({scrollTop: $($(this).attr("href")).offset().top - 75}, 500);
+	    	});
 
 		});
 	</script>

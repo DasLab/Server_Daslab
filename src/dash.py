@@ -14,11 +14,11 @@ from src.settings import *
 
 
 def server_list():
-    dict_aws = {'ec2':{}, 'elb':{}, 'ebs':{}}
+    dict_aws = {'ec2':{}, 'elb':{}, 'ebs':{}, 'table':{}}
 
     conn = boto.ec2.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
     resvs = conn.get_only_instances()
-    for resv in resvs:
+    for i, resv in enumerate(resvs):
         sub_conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
         data = sub_conn.get_metric_statistics(600, datetime.now() - timedelta(hours=2), datetime.now(), 'CPUCreditBalance', 'AWS/EC2', 'Average', {'InstanceId': resv.id}, 'Count')
         avg = 0
@@ -27,17 +27,22 @@ def server_list():
         avg = avg / len(data)
         name = ''
         if resv.tags.has_key('Name'): name = resv.tags['Name']
-        dict_aws['ec2'][resv.id] = {'name':name, 'type':resv.instance_type, 'dns':resv.dns_name, 'status':resv.state_code, 'arch':resv.architecture, 'region':resv.placement, 'credit': '%.1f' % avg}
+        dict_aws['ec2'][resv.id] = {'name':name, 'type':resv.instance_type, 'dns':resv.dns_name, 'status':resv.state_code, 'arch':resv.architecture, 'region':resv.placement, 'credit': '%.1f' % avg, 'id':resv.id}
+        dict_aws['table'][i] = {'ec2': {'name':name, 'status':resv.state_code, 'id':resv.id}}
     
     resvs = conn.get_all_volumes()
-    for resv in resvs:
+    for i, resv in enumerate(resvs):
         name = ''
         if resv.tags.has_key('Name'): name = resv.tags['Name']
-        dict_aws['ebs'][resv.id] = {'name':name, 'size':resv.size, 'type':resv.type, 'region':resv.zone, 'encrypted':resv.encrypted, 'status':resv.status}
+        dict_aws['ebs'][resv.id] = {'name':name, 'size':resv.size, 'type':resv.type, 'region':resv.zone, 'encrypted':resv.encrypted, 'status':resv.status, 'id':resv.id}
+        if dict_aws['table'].has_key(i):
+            dict_aws['table'][i].update({'ebs': {'name':name, 'status':resv.status, 'id':resv.id}})
+        else:
+            dict_aws['table'][i] = {'ebs': {'name':name, 'status':resv.status, 'id':resv.id}}
     
     conn = boto.ec2.elb.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
     resvs = conn.get_all_load_balancers()
-    for resv in resvs:
+    for i, resv in enumerate(resvs):
         sub_conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
         data = sub_conn.get_metric_statistics(300, datetime.now() - timedelta(minutes=30), datetime.now(), 'HealthyHostCount', 'AWS/ELB', 'Maximum', {'LoadBalancerName': resv.name}, 'Count')
         status = True
@@ -46,7 +51,10 @@ def server_list():
                 status = False
                 break
         dict_aws['elb'][resv.name] = {'dns':resv.dns_name, 'region': ', '.join(resv.availability_zones), 'status':status}
-
+        if dict_aws['table'].has_key(i):
+            dict_aws['table'][i].update({'elb': {'name':resv.name, 'status':status}})
+        else:
+            dict_aws['table'][i] = {'elb': {'name':resv.name, 'status':status}}
 
     results = {'aws':dict_aws}
     return results
