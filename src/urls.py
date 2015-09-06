@@ -44,7 +44,9 @@ urlpatterns = [
     
     url(r'^group/meetings/$', views.lab_meetings),
     url(r'^group/calendar/$', views.lab_calendar),
-    url(r'^group/resources/$', views.lab_resources),
+    url(r'^group/documents/$', views.lab_documents),
+    url(r'^group/services/$', views.lab_services),
+    url(r'^group/servers/$', views.lab_servers),
     url(r'^group/misc/$', views.lab_misc),
     url(r'^group/$', RedirectView.as_view(url='/group/meetings/', permanent=True)),
 

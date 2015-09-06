@@ -19,7 +19,9 @@ class SYS_PATH:
 
             'lab_meetings': MEDIA_ROOT + '/media/html/group_meetings.html',
             'lab_calendar': MEDIA_ROOT + '/media/html/group_calendar.html',
-            'lab_resources': MEDIA_ROOT + '/media/html/group_resources.html',
+            'lab_documents': MEDIA_ROOT + '/media/html/group_documents.html',
+            'lab_services': MEDIA_ROOT + '/media/html/group_services.html',
+            'lab_servers': MEDIA_ROOT + '/media/html/group_servers.html',
             'lab_misc': MEDIA_ROOT + '/media/html/group_misc.html',
 
             'admin_apache': MEDIA_ROOT + '/media/html/admin_apache.html',

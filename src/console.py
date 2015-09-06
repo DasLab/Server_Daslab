@@ -178,12 +178,36 @@ def aws_result(results, args, req_id):
     return results
 
 
+def aws_call(conn, args, req_id, qs):
+    results = []
+    for i, me in enumerate(args['metric']):
+        data = conn.get_metric_statistics(args['period'], args['start_time'], args['end_time'], me, args['namespace'], args['cols'], args['dims'], args['unit'])
+
+        temp = []
+        for d in data:
+            temp.append(d[u'Timestamp'])
+        period = range(0, int((args['end_time'] - args['start_time']).total_seconds()), args['period'])
+        for t in (args['start_time'] + timedelta(seconds=n) for n in period):
+            t = t.replace(second=0, microsecond=0)
+            if (not t in temp):
+                data.append({u'Timestamp':t, u'Unit':args['unit'], unicode(args['cols'][0]):0})
+
+        if qs in ['lat', 'latency']:
+            for d in data:
+                d[u'Maximum'] = d[u'Maximum'] * 1000
+        if qs in ['disk', 'net', 'volbytes', 'network']:
+            for d in data:
+                d[u'Sum'] = d[u'Sum'] / 1024
+        results.append(data)
+    return aws_result(results, args, req_id)
+
+
 def aws_stats(request):
     if request.GET.has_key('qs') and request.GET.has_key('sp') and request.GET.has_key('tqx'):
         qs = request.GET.get('qs')
         sp = request.GET.get('sp')
         req_id = request.GET.get('tqx').replace('reqId:', '')
-        conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=False)
+        conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
 
         if sp == '7d':
             args = {'period':7200, 'start_time':datetime.now() - timedelta(days=7), 'end_time':datetime.now()}
@@ -226,28 +250,7 @@ def aws_stats(request):
     elif args['namespace'] == 'AWS/EBS':
         args['dims'] = {'VolumeId': AWS['EBS_VOLUME_ID']}
 
-    results = []
-    for i, me in enumerate(args['metric']):
-        data = conn.get_metric_statistics(args['period'], args['start_time'], args['end_time'], me, args['namespace'], args['cols'], args['dims'], args['unit'])
-
-        temp = []
-        for d in data:
-            temp.append(d[u'Timestamp'])
-        period = range(0, int((args['end_time'] - args['start_time']).total_seconds()), args['period'])
-        for t in (args['start_time'] + timedelta(seconds=n) for n in period):
-            t = t.replace(second=0, microsecond=0)
-            if (not t in temp):
-                data.append({u'Timestamp':t, u'Unit':args['unit'], unicode(args['cols'][0]):0})
-
-        if qs == 'latency':
-            for d in data:
-                d[u'Maximum'] = d[u'Maximum'] * 1000
-        if qs in ('volbytes', 'network'):
-            for d in data:
-                d[u'Sum'] = d[u'Sum'] / 1024
-
-        results.append(data)
-    return aws_result(results, args, req_id)
+    return aws_call(conn, args, req_id, qs)
 
 
 def ga_stats():

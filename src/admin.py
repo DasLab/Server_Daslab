@@ -14,10 +14,11 @@ from django.contrib.auth.models import User
 import boto.ec2.cloudwatch, boto.ec2.elb
 import operator
 
-from src.models import *
-from src.settings import *
 from src.console import *
 from src.cron import *
+from src.dash import *
+from src.models import *
+from src.settings import *
 
 
 UserAdmin.list_display = ('username', 'email', 'last_login', 'is_active', 'is_staff', 'is_superuser')
@@ -116,8 +117,7 @@ def backup_stat(request):
 admin.site.register_view('backup_stat', view=backup_stat, visible=False)
 
 def backup_form(request):
-    json = get_backup_form()
-    return HttpResponse(json, content_type='application/json')
+    return HttpResponse(get_backup_form(), content_type='application/json')
 admin.site.register_view('backup_form', view=backup_form, visible=False)
 
 def backup_now(request):
@@ -132,8 +132,7 @@ admin.site.register_view('upload_now', view=upload_now, visible=False)
 
 
 def apache_stat(request):
-    json = restyle_apache()
-    return HttpResponse(json, content_type='application/json')
+    return HttpResponse(restyle_apache(), content_type='application/json')
 admin.site.register_view('apache_stat', view=apache_stat, visible=False)
 
 def apache(request):
@@ -149,8 +148,16 @@ def aws_stat(request):
         return json
 admin.site.register_view('aws_stat', view=aws_stat, visible=False)
 
+def aws_dash(request):
+    json = dash_aws(request)
+    if type(json) is str:
+        return HttpResponse(json, content_type='application/json')
+    else:
+        return json
+admin.site.register_view('aws_dash', view=aws_dash, visible=False)
+
 def aws(request):
-    conn = boto.ec2.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=False)
+    conn = boto.ec2.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
     resv = conn.get_only_instances(instance_ids=AWS['EC2_INSTANCE_ID'])
     stat = resv[0].__dict__
     stat1 = {k: stat[k] for k in ('id', 'instance_type', 'private_dns_name', 'public_dns_name', 'vpc_id', 'subnet_id', 'image_id', 'architecture')} 
@@ -158,7 +165,7 @@ def aws(request):
     stat = resv[0].__dict__
     stat2 = {k: stat[k] for k in ('id', 'type', 'size', 'zone', 'snapshot_id', 'encrypted')} 
 
-    conn = boto.ec2.elb.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=False)
+    conn = boto.ec2.elb.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
     resv = conn.get_all_load_balancers(load_balancer_names=AWS['ELB_NAME'])
     stat = resv[0].__dict__
     stat3 = {k: stat[k] for k in ('dns_name', 'vpc_id', 'subnets', 'health_check')} 
@@ -239,8 +246,7 @@ admin.site.register_view('export/', view=export, visible=False)
 
 
 def gcal(request):
-    json = get_cal()
-    return HttpResponse(json, content_type='application/json')
+    return HttpResponse(get_cal(), content_type='application/json')
 admin.site.register_view('gcal/', view=gcal, visible=False)
 
 
