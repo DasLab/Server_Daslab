@@ -1,3 +1,5 @@
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
+
 from datetime import datetime, timedelta
 import operator
 # import os
@@ -186,11 +188,13 @@ def dash_git(request):
 
         if qs == 'c':
             contribs = repo.get_stats_commit_activity()
+            if contribs is None: return HttpResponseServerError("PyGithub failed")
             fields = ['Commits']
-            for contrib in contribs:
+            for contrib in contribs: 
                 data.append({u'Timestamp': contrib.week, u'Commits': sum(contrib.days)})
         elif qs == 'ad':
             contribs = repo.get_stats_code_frequency()
+            if contribs is None: return HttpResponseServerError("PyGithub failed")
             fields = ['Additions', 'Deletions']
             for contrib in contribs:
                 data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})

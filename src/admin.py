@@ -142,18 +142,14 @@ admin.site.register_view('apache/', view=apache, visible=False)
 
 def aws_stat(request):
     json = aws_stats(request)
-    if type(json) is str:
-        return HttpResponse(json, content_type='application/json')
-    else:
-        return json
+    if isinstance(json, HttpResponseBadRequest): return json
+    return HttpResponse(json, content_type='application/json')
 admin.site.register_view('aws_stat', view=aws_stat, visible=False)
 
 def aws_dash(request):
     json = dash_aws(request)
-    if type(json) is str:
-        return HttpResponse(json, content_type='application/json')
-    else:
-        return json
+    if isinstance(json, HttpResponseBadRequest): return json
+    return HttpResponse(json, content_type='application/json')
 admin.site.register_view('aws_dash', view=aws_dash, visible=False)
 
 def aws(request):
@@ -182,18 +178,28 @@ admin.site.register_view('ga/', view=ga, visible=False)
 
 def git_stat(request):
     json = git_stats(request)
-    if type(json) is str:
-        return HttpResponse(json, content_type='application/json')
-    else:
+    if isinstance(json, HttpResponseBadRequest):
         return json
+    elif isinstance(json, HttpResponseServerError):
+        i = 0
+        while (isinstance(json, HttpResponseServerError) and i <= 5):
+            i += 1
+            json = git_stats(request)
+        if isinstance(json, HttpResponseServerError): return json
+    return HttpResponse(json, content_type='application/json')
 admin.site.register_view('git_stat', view=git_stat, visible=False)
 
 def git_dash(request):
     json = dash_git(request)
-    if type(json) is str:
-        return HttpResponse(json, content_type='application/json')
-    else:
+    if isinstance(json, HttpResponseBadRequest):
         return json
+    elif isinstance(json, HttpResponseServerError):
+        i = 0
+        while (isinstance(json, HttpResponseServerError) and i <= 5):
+            i += 1
+            json = dash_git(request)
+        if isinstance(json, HttpResponseServerError): return json
+    return HttpResponse(json, content_type='application/json')
 admin.site.register_view('git_dash', view=git_dash, visible=False)
 
 def git(request):

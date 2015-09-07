@@ -17,7 +17,7 @@ from github import Github
 # from pygithub3 import Github
 
 from django.core.management import call_command
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
 
 from src.settings import *
 from src.models import BackupForm, Publication
@@ -302,17 +302,20 @@ def git_stats(request):
 
         if qs == 'c':
             contribs = repo.get_stats_commit_activity()
+            if contribs is None: return HttpResponseServerError("PyGithub failed")
             fields = ['Commits']
             for contrib in contribs:
                 for i, day in enumerate(contrib.days):
                     data.append({u'Timestamp': contrib.week + timedelta(days=i), u'Commits': day})
         elif qs == 'ad':
             contribs = repo.get_stats_code_frequency()
+            if contribs is None: return HttpResponseServerError("PyGithub failed")
             fields = ['Additions', 'Deletions']
             for contrib in contribs:
                 data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
         elif qs == 'au':
             contribs = repo.get_stats_contributors()
+            if contribs is None: return HttpResponseServerError("PyGithub failed")
             fields = ['Commits', 'Additions', 'Deletions']
             for contrib in contribs:
                 a, d = (0, 0)
