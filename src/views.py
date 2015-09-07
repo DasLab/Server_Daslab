@@ -14,9 +14,9 @@ from filemanager import FileManager
 
 from src.console import *
 # from src.cron import *
+from src.dash import *
 from src.models import *
 from src.settings import *
-from src.dash import *
 
 import datetime
 import subprocess
@@ -232,6 +232,7 @@ def error500(request):
 
 
 def test(request):
+	return HttpResponse(content=str(dash_ga(request)), status=200)
 	return error401(request)
 	raise ValueError
 	# send_notify_emails('test', 'test')

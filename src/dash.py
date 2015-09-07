@@ -56,7 +56,29 @@ def server_list():
         else:
             dict_aws['table'][i] = {'elb': {'name':resv.name, 'status':status}}
 
-    results = {'aws':dict_aws}
+    access_token = subprocess.Popen('curl --silent --request POST "https://www.googleapis.com/oauth2/v3/token" --data "refresh_token=%s" --data "client_id=%s" --data "client_secret=%s" --data "grant_type=refresh_token"' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET']), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+    access_token = simplejson.loads(access_token)['access_token']
+
+    list_proj = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/management/accountSummaries?access_token=%s"' % (access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+    list_proj = simplejson.loads(list_proj)['items'][0]['webProperties']
+
+    dict_ga = {'access_token':access_token, 'client_id':GA['CLIENT_ID'], 'projs':{}}
+    for proj in list_proj:
+        dict_ga['projs'][proj['profiles'][0]['id']] = {'track_id':proj['id'], 'name':proj['name'], 'url':proj['websiteUrl']}
+    for id in dict_ga['projs'].keys():
+        for i in ('sessionDuration', 'bounceRate', 'pageviewsPerSession', 'pageviews', 'sessions', 'users'):
+            temp = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), id, urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+            temp = simplejson.loads(temp)['rows'][0][0]
+
+            if i in ('bounceRate', 'pageviewsPerSession'):
+                temp = '%.2f' % float(temp)
+            elif i == 'sessionDuration':
+                temp = str(timedelta(seconds=int(float(temp) / 1000)))
+            else:
+                temp = '%d' % int(temp)
+            dict_ga['projs'][id][i] = temp
+
+    results = {'aws':dict_aws, 'ga':dict_ga}
     return results
 
 
@@ -98,5 +120,30 @@ def dash_aws(request):
     return aws_call(conn, args, req_id, qs)
 
 
+def dash_ga(request):
+    access_token = subprocess.Popen('curl --silent --request POST "https://www.googleapis.com/oauth2/v3/token" --data "refresh_token=%s" --data "client_id=%s" --data "client_secret=%s" --data "grant_type=refresh_token"' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET']), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+    access_token = simplejson.loads(access_token)['access_token']
+
+    list_proj = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/management/accountSummaries?access_token=%s"' % (access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+    list_proj = simplejson.loads(list_proj)['items'][0]['webProperties']
+
+    stats = {'access_token':access_token, 'projs':{}}
+    for proj in list_proj:
+        stats['projs'][proj['profiles'][0]['id']] = {'track_id':proj['id'], 'name':proj['name'], 'url':proj['websiteUrl']}
+    for id in stats['projs'].keys():
+        for i in ('sessionDuration', 'bounceRate', 'pageviewsPerSession', 'pageviews', 'sessions', 'users'):
+            temp = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), id, urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+            temp = simplejson.loads(temp)['rows'][0][0]
+
+            if i in ('bounceRate', 'pageviewsPerSession'):
+                temp = '%.2f' % float(temp)
+            elif i == 'sessionDuration':
+                temp = str(timedelta(seconds=int(float(temp) / 1000)))
+            else:
+                temp = '%d' % int(temp)
+            stats['projs'][id][i] = temp
+
+
+    return stats
 
 
