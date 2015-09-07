@@ -211,6 +211,12 @@ def git(request):
     contribs = repo.get_stats_contributors()
 
     data = []
+    i = 0
+    while (contribs is None and i <= 5):
+        sleep(1)
+        contribs = repo.get_stats_contributors()
+    if contribs is None: return HttpResponseServerError("PyGithub failed")
+
     for contrib in contribs:
         a, d = (0, 0)
         for w in contrib.weeks:
