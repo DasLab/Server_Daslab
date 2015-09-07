@@ -62,107 +62,6 @@ EMAIL_NOTIFY = ADMINS[0][1]
 EMAIL_SUBJECT_PREFIX = '[Django] {daslab.stanford.edu}'
 
 
-# Application definition
-INSTALLED_APPS = (
-    # 'sslserver',
-    'django_crontab',
-
-    'filemanager',
-    'adminplus',
-    'suit',
-    # 'bootstrap_admin',
-    # 'django_admin_bootstrapped',
-    'django.contrib.admin.apps.SimpleAdminConfig',
-    # 'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    # 'django.contrib.sites',
-    'django.contrib.staticfiles',
-    # 'django.contrib.flatpages',
-    'django.contrib.humanize',
-
-    'src',
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.request",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.contrib.messages.context_processors.messages",
-)
-
-MIDDLEWARE_CLASSES = (
-    # 'sslify.middleware.SSLifyMiddleware',
-
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-)
-
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
-)
-TEMPLATE_DIRS = (
-    root('media'),
-    root(),
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
-
-SUIT_CONFIG = {
-    # header
-    'ADMIN_NAME': 'Das Lab Website',
-    'HEADER_DATE_FORMAT': 'F d, Y (l)',
-    'HEADER_TIME_FORMAT': 'h:i a (e)',
-
-    # forms
-    'SHOW_REQUIRED_ASTERISK': True,  # Default True
-    'CONFIRM_UNSAVED_CHANGES': True, # Default True
-
-    # menu
-    # 'SEARCH_URL': '/admin/auth/user/',
-    'MENU_OPEN_FIRST_CHILD': True, # Default True
-    'MENU': (
-        'sites',
-        {'label': 'System', 'icon':'icon-cog', 'models': [
-            {'label': 'Apache', 'icon':'icon-cog', 'url': '/admin/apache/'},
-            {'label': 'AWS', 'icon':'icon-cog', 'url': '/admin/aws/'},
-            {'label': 'GA', 'icon':'icon-cog', 'url': '/admin/ga/'},
-            {'label': 'Git', 'icon':'icon-cog', 'url': '/admin/git/'},
-            {'label': 'Directory', 'icon':'icon-folder-open', 'url': '/admin/dir/'},
-            {'label': 'Backup', 'icon':'icon-cog', 'url': '/admin/backup/'},
-        ]},
-        '-',
-        {'label': 'Global Site', 'icon':'icon-globe', 'models': [
-            'src.news', 'src.member', 'src.publication',
-            {'label': 'Export', 'icon':'icon-cog', 'url': '/admin/export/'},
-        ]},
-        {'label': 'Internal Site', 'icon':'icon-inbox', 'models': ('auth.user', 'src.flashslide', 'src.eternayoutube', 'src.rotationstudent', 'src.presentation')},
-        '-',
-        {'label': 'Documentation', 'icon':'icon-book', 'url': '/admin/doc/'},
-    ),
-
-    # misc
-    'LIST_PER_PAGE': 25
-}
-
-
 ROOT_URLCONF = 'src.urls'
 WSGI_APPLICATION = 'src.wsgi.application'
 
@@ -211,6 +110,118 @@ LOGGING = {
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
         },
     },
+}
+
+class ExceptionUserInfoMiddleware(object):
+    def process_exception(self, request, exception):
+        try:
+            if request.user.is_authenticated():
+                request.META['USERNAME'] = str(request.user.username)
+                request.META['USER_EMAIL'] = str(request.user.email)
+        except:
+            pass
+
+
+# Application definition
+INSTALLED_APPS = (
+    # 'sslserver',
+    'django_crontab',
+
+    'filemanager',
+    'adminplus',
+    'suit',
+    # 'bootstrap_admin',
+    # 'django_admin_bootstrapped',
+    'django.contrib.admin.apps.SimpleAdminConfig',
+    # 'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    # 'django.contrib.sites',
+    'django.contrib.staticfiles',
+    # 'django.contrib.flatpages',
+    'django.contrib.humanize',
+
+    'src',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.request",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages",
+)
+
+MIDDLEWARE_CLASSES = (
+    ExceptionUserInfoMiddleware,
+    # 'sslify.middleware.SSLifyMiddleware',
+
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django.contrib.messages.middleware.MessageMiddleware',
+    # 'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+)
+
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+#     'django.template.loaders.eggs.Loader',
+)
+TEMPLATE_DIRS = (
+    root('media'),
+    root(),
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+)
+
+
+SUIT_CONFIG = {
+    # header
+    'ADMIN_NAME': 'Das Lab Website',
+    'HEADER_DATE_FORMAT': 'F d, Y (l)',
+    'HEADER_TIME_FORMAT': 'h:i a (e)',
+
+    # forms
+    'SHOW_REQUIRED_ASTERISK': True,  # Default True
+    'CONFIRM_UNSAVED_CHANGES': True, # Default True
+
+    # menu
+    # 'SEARCH_URL': '/admin/auth/user/',
+    'MENU_OPEN_FIRST_CHILD': True, # Default True
+    'MENU': (
+        'sites',
+        {'label': 'System', 'icon':'icon-cog', 'models': [
+            {'label': 'Apache', 'icon':'icon-cog', 'url': '/admin/apache/'},
+            {'label': 'AWS', 'icon':'icon-cog', 'url': '/admin/aws/'},
+            {'label': 'GA', 'icon':'icon-cog', 'url': '/admin/ga/'},
+            {'label': 'Git', 'icon':'icon-cog', 'url': '/admin/git/'},
+            {'label': 'Directory', 'icon':'icon-folder-open', 'url': '/admin/dir/'},
+            {'label': 'Backup', 'icon':'icon-cog', 'url': '/admin/backup/'},
+        ]},
+        '-',
+        {'label': 'Global Site', 'icon':'icon-globe', 'models': [
+            'src.news', 'src.member', 'src.publication',
+            {'label': 'Export', 'icon':'icon-cog', 'url': '/admin/export/'},
+        ]},
+        {'label': 'Internal Site', 'icon':'icon-inbox', 'models': ('auth.user', 'src.flashslide', 'src.eternayoutube', 'src.rotationstudent', 'src.presentation')},
+        '-',
+        {'label': 'Documentation', 'icon':'icon-book', 'url': '/admin/doc/'},
+    ),
+
+    # misc
+    'LIST_PER_PAGE': 25
 }
 
 
