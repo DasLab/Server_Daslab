@@ -159,7 +159,11 @@ def service_list():
 
     repos = []
     for repo in gh.get_user().get_repos():
+        i = 0
         contribs = repo.get_stats_contributors()
+        while (contribs is None and i <= 5):
+            contribs = repo.get_stats_contributors()
+        if contribs is None: return HttpResponseServerError("PyGithub failed")
         data = []
         for contrib in contribs:
             a, d = (0, 0)
