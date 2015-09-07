@@ -188,6 +188,14 @@ def git_stat(request):
         return json
 admin.site.register_view('git_stat', view=git_stat, visible=False)
 
+def git_dash(request):
+    json = dash_git(request)
+    if type(json) is str:
+        return HttpResponse(json, content_type='application/json')
+    else:
+        return json
+admin.site.register_view('git_dash', view=git_dash, visible=False)
+
 def git(request):
     gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
     repo = gh.get_repo('DasLab/Server_DasLab')

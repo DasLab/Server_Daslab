@@ -147,8 +147,61 @@ def dash_ga(request):
 
 
 def service_list():
+    gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
 
-	return []
+    repos = []
+    for repo in gh.get_user().get_repos():
+        contribs = repo.get_stats_contributors()
+        data = []
+        for contrib in contribs:
+            a, d = (0, 0)
+            for w in contrib.weeks:
+                a += w.a
+                d += w.d
+            data.append({u'Contributors': contrib.author.login, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+        data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
+        repos.append({'url':repo.html_url, 'private':repo.private, 'data':data, 'name':repo.name, 'id':repo.full_name})
 
 
-	
+    results = {'git':repos}
+    return results
+
+
+def dash_git(request):
+    if request.GET.has_key('qs') and request.GET.has_key('repo') and request.GET.has_key('tqx'):
+        qs = request.GET.get('qs')
+        req_id = request.GET.get('tqx').replace('reqId:', '')
+        gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
+        repo = gh.get_repo('DasLab/' + request.GET.get('repo'))
+
+        data = []
+        desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+        stats = ['Timestamp']
+
+        if qs == 'c':
+            contribs = repo.get_stats_commit_activity()
+            fields = ['Commits']
+            for contrib in contribs:
+                data.append({u'Timestamp': contrib.week, u'Commits': sum(contrib.days)})
+        elif qs == 'ad':
+            contribs = repo.get_stats_code_frequency()
+            fields = ['Additions', 'Deletions']
+            for contrib in contribs:
+                data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
+        else:
+            return HttpResponseBadRequest
+
+        for field in fields:
+            stats.append(field)
+            desp[field] = ('number', field)
+        
+        data = sorted(data, key=operator.itemgetter(stats[0]))
+        data_table = gviz_api.DataTable(desp)
+        data_table.LoadData(data)
+        results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
+        return results
+    else:
+        return HttpResponseBadRequest
+
+
+

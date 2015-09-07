@@ -41,184 +41,60 @@
 						<h2 class="panel-title"><span class="glyphicon glyphicon-compressed"></span>&nbsp;&nbsp;GitHub Repositories</h2>
 					</div>
 					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-12">
-								<h3><span class="label label-default">Overview</span></h3>
-								<table class="table">
-									<thead>
-										<tr class="active">
-											<th class="col-md-4">EC2: Elastic Compute Cloud</th>
-											<th class="col-md-4">ELB: Elastic Load Balancing</th>
-											<th class="col-md-4">EBS: Elastic Bloack Store</th>
-										</tr>
-									</thead>
-									<tbody>
-										{% for i, val in aws.table.items %}
-											<tr>
-												<td>
-													{% if val.ec2.status == 0 %}
-														<span class="pull-left"><span class="label label-warning"><span class="glyphicon glyphicon-question-sign"></span></span></span>
-													{% elif val.ec2.status == 16 %}
-														<span class="pull-left"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
-													{% elif val.ec2.status == 48 or val.ec2.status == 80 %}
-														<span class="pull-left"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
-													{% elif val.ec2.status == 32 or val.ec2.status == 64 %}
-														<span class="pull-left"><span class="label label-magenta"><span class="glyphicon glyphicon-exclamation-sign"></span></span></span>
-													{% endif %}
-													&nbsp;&nbsp;
-													<span class="label label-orange">{{val.ec2.id}}</span>
-													&nbsp;&nbsp;
-													<u><a href="#ec2-{{val.ec2.name}}" id="aws_ec2-{{val.ec2.name}}">{{val.ec2.name}}</a></u>
-												</td>
-												<td>
-													{% if val.elb.status %}
-														<span class="pull-left"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
-													{% elif val.elb.name %}
-														<span class="pull-left"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
-													{% endif %}
-													&nbsp;&nbsp;
-													<u><a href="#elb-{{val.elb.name}}" id="aws_elb-{{val.elb.name}}">{{val.elb.name}}</a></u>
-												</td>
-												<td>
-													{% if val.ebs.status == 'in-use' %}
-														<span class="pull-left"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
-													{% elif val.ebs.name %}
-														<span class="pull-left"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
-													{% endif %}
-													&nbsp;&nbsp;
-													<span class="label label-orange">{{val.ebs.id}}</span>
-													&nbsp;&nbsp;
-													<u><a href="#ebs-{{val.ebs.name}}" id="aws_ebs-{{val.ebs.name}}">{{val.ebs.name}}</a></u>
-												</td>
-											</tr>
-										{% endfor %}
-										<tr><td colspan="3"></td></tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
 
 						<div class="row">
 							<div class="col-md-12">
-								<h3><span class="label label-dark-red">EC2: Elastic Compute Cloud</span></h3>
-								<div class="thumbnail" style="padding:20px 40px;">
-								{% for id, ec2 in aws.ec2.items %}
-									<div class="row" id="ec2-{{ec2.name}}">
-										<div class="col-md-9">
-											<p>
-											{% if ec2.status == 0 %}
-												<span class="pull-left lead"><span class="label label-warning"><span class="glyphicon glyphicon-question-sign"></span></span></span>
-											{% elif ec2.status == 16 %}
-												<span class="pull-left lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
-											{% elif ec2.status == 48 or ec2.status == 80 %}
-												<span class="pull-left lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
-											{% elif ec2.status == 32 or ec2.status == 64 %}
-												<span class="pull-left lead"><span class="label label-magenta"><span class="glyphicon glyphicon-exclamation-sign"></span></span></span>
-											{% endif %}
-												&nbsp;&nbsp;<span class="lead"><b><u>{{ec2.name}}</u></b></span>&nbsp;&nbsp;
-												<span class="label label-orange">{{ec2.id}}</span>
-												<span class="label label-primary">{{ec2.type}}</span>
-												<span class="label label-info">{{ec2.arch}}</span>
-												<span class="label label-violet">{{ec2.region}}</span>
-											</p>
-											<p><a href="http://{{ec2.dns}}" target="_blank"><code>{{ec2.dns}}</code></a></p>
-										</div>
-										<div class="col-md-3">
-											<p class="text-right"><span class="label label-inverse">Credits Balance</span></p>
-											<p class="text-right"><i><mark>{{ec2.credit}}</mark></i></p>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-6">
-											<div id="plot_cpu_{{id}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
-										</div>
-										<div class="col-md-6">
-											<div id="plot_net_{{id}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
-										</div>
-									</div>
-									{% if forloop.revcounter0 %}<hr/ style="margin: 10px;">{% endif %}
-								{% endfor %}
-								</div>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-md-12">
-								<h3><span class="label label-teal">ELB: Elastic Load Balancing</span></h3>
-								<div class="thumbnail" style="padding:20px 40px;">
-								{% for name, elb in aws.elb.items %}
-									<div class="row" id="elb-{{name}}">
+							{% for repo in git %}
+								<div class="row">
+									<div class="col-md-6">
 										<p>
-										{% if elb.status %}
-											<span class="pull-left lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
-										{% else %}
-											<span class="pull-left lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
-										{% endif %}
-											&nbsp;&nbsp;<span class="lead"><b><u>{{name}}</u></b></span>&nbsp;&nbsp;
-											<span class="label label-violet">{{elb.region}}</span>
-										</p>
-										<p>
-											<a href="http://{{elb.dns}}" target="_blank"><code>{{elb.dns}}</code></a>
-										</p>
-									</div>
-									<div class="row">
-										<div class="col-md-6">
-											<div id="plot_lat_{{name}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
-										</div>
-										<div class="col-md-6">
-											<div id="plot_req_{{name}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
-										</div>
-									</div>
-									{% if forloop.revcounter0 %}<hr/ style="margin: 10px;">{% endif %}
-								{% endfor %}
-								</div>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-md-12">
-								<h3><span class="label label-dark-blue">EBS: Elastic Block Store</span></h3>
-								<div class="thumbnail" style="padding:20px 40px;">
-								{% for id, ebs in aws.ebs.items %}
-									<div class="row" id="ebs-{{ebs.name}}">
-										<div class="col-md-4">
-											<p>
-											{% if ebs.status == 'in-use' %}
-												<span class="pull-left lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
+											<span class="lead"><mark><b><u>{{repo.id}}</u></b></mark></span>&nbsp;&nbsp;
+											{% if repo.private %}
+											<span class="label label-primary">private</span>
 											{% else %}
-												<span class="pull-left lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
+											<span class="label label-magenta">public</span>
 											{% endif %}
-												&nbsp;&nbsp;<span class="lead"><b><u>{{ebs.name}}</u></b></span>&nbsp;&nbsp;
-											</p>
-											<p>
-												<span class="label label-orange">{{ebs.id}}</span>
-												<span class="label label-primary">{{ebs.type}}</span>
-												<span class="label label-info">{{ebs.size}} GB</span>
-												<span class="label label-violet">{{ebs.region}}</span>
-												{% if ebs.encrypted %}<span class="label label-warning">Encrypted</span>{% endif %}
-											</p>
-										</div>
-										<div class="col-md-8">
-											<div id="plot_disk_{{id}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
-										</div>
+										</p>
+										<p><a href="http://{{repo.url}}" target="_blank"><code>{{repo.url}}</code></a></p>
+										<table class="table">
+											<thead>
+												<tr class="active">
+													<th class="col-md-3"><span class="glyphicon glyphicon-user"></span> Account</th>
+													<th class="col-md-3"><span class="glyphicon glyphicon-circle-arrow-up"></span> Commits</th>
+													<th class="col-md-3"><span class="glyphicon glyphicon-plus-sign"></span> Additions</th>
+													<th class="col-md-3"><span class="glyphicon glyphicon-minus-sign"></span> Deletions</th>
+												</tr>
+											</thead>
+											<tbody>
+												{% for d in repo.data %}
+													<tr>
+														<td>{% autoescape off %}{{d.Contributors}}{% endautoescape %}</td>
+														<td><span class="pull-right" style="color:#00f;">{{d.Commits}}</span></td>
+														<td><span class="pull-right" style="color:#080;">{{d.Additions}}</span></td>
+														<td><span class="pull-right" style="color:#f00;">{{d.Deletions}}</span></td>
+													</tr>
+												{% endfor %}
+													<tr><td colspan="4" style="padding: 0px;"></td></tr>
+											</tbody>
+										</table>
 									</div>
-									{% if forloop.revcounter0 %}<hr/ style="margin: 10px;">{% endif %}
-								{% endfor %}
+									<div class="col-md-6">
+										<div id="plot_c_{{repo.name}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+										<div id="plot_ad_{{repo.name}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+									</div>
 								</div>
+								{% if forloop.revcounter0 %}<hr/ style="margin: 10px;">{% endif %}
+							{% endfor %}
 							</div>
 						</div>
-
 					</div>
 				</div>
 				
-				<div class="panel panel-magenta" id="ga">
+				<div class="panel panel-green" id="slack">
 					<div class="panel-heading">
-						<h2 class="panel-title"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span>&nbsp;&nbsp;Google Analytics</h2>
+						<h2 class="panel-title"><span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>&nbsp;&nbsp;Slack</h2>
 					</div>
 					<div class="panel-body">
-						<div id="embed-api-auth-container"></div>
-						<div id="view-selector-container"></div>
-
 						<div class="row">
 							<div class="col-md-12">
 								<div class="thumbnail" style="padding:20px 40px;">
@@ -261,19 +137,14 @@
 		});
 	</script>
     <script type="text/javascript" src="http://www.google.com/jsapi" ></script>
-	<script type="text/javascript" src="/site_media/js/group/aws.js"></script>
+	<script type="text/javascript" src="/site_media/js/group/git.js"></script>
 	<script type="text/javascript">
-		{% for id in aws.ec2 %}
-			drawEC2("{{id}}");
+		{% for repo in git %}
+			drawGIT("{{repo.name}}");
 		{% endfor %}
-		{% for id in aws.elb %}
-			drawELB("{{id}}");
-		{% endfor %}
-		{% for id in aws.ebs %}
-			drawEBS("{{id}}");
-		{% endfor %}
-	</script>
 
+		setTimeout(function() {$(".place_holder").removeClass("place_holder");}, 800);
+	</script>
 
 {% endblock %}
 
