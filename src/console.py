@@ -6,6 +6,7 @@ import simplejson
 import subprocess
 import sys
 import textwrap
+from time import sleep
 import traceback
 import urllib
 import urllib2

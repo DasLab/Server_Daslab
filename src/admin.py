@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 
 import boto.ec2.cloudwatch, boto.ec2.elb
 import operator
+from time import sleep
 
 from src.console import *
 from src.cron import *
@@ -184,6 +185,7 @@ def git_stat(request):
         i = 0
         while (isinstance(json, HttpResponseServerError) and i <= 5):
             i += 1
+            sleep(1)
             json = git_stats(request)
         if isinstance(json, HttpResponseServerError): return json
     return HttpResponse(json, content_type='application/json')
@@ -197,6 +199,7 @@ def git_dash(request):
         i = 0
         while (isinstance(json, HttpResponseServerError) and i <= 5):
             i += 1
+            sleep(1)
             json = dash_git(request)
         if isinstance(json, HttpResponseServerError): return json
     return HttpResponse(json, content_type='application/json')

@@ -6,6 +6,7 @@ import operator
 import simplejson
 import subprocess
 # import sys
+from time import sleep
 
 import boto.ec2.cloudwatch
 import gviz_api
@@ -162,6 +163,7 @@ def service_list():
         i = 0
         contribs = repo.get_stats_contributors()
         while (contribs is None and i <= 5):
+            sleep(1)
             contribs = repo.get_stats_contributors()
         if contribs is None: return HttpResponseServerError("PyGithub failed")
         data = []
