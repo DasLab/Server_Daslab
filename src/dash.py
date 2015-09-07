@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
 import operator
-import os
+# import os
 import simplejson
 import subprocess
-import sys
+# import sys
 
 import boto.ec2.cloudwatch
 import gviz_api
@@ -99,7 +99,7 @@ def dash_aws(request):
         if tp in ['ec2', 'elb', 'ebs']:
             args = {'period':3600, 'start_time':datetime.now() - timedelta(days=1), 'end_time':datetime.now()}
         else:
-            return HttpResponseBadRequest
+            return HttpResponseBadRequest("Invalid query.")
 
         if qs == 'lat':
             args.update({'metric':['Latency'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Seconds', 'calc_rate':False})
@@ -112,9 +112,9 @@ def dash_aws(request):
         elif qs == 'disk':
             args.update({'metric':['VolumeWriteBytes', 'VolumeReadBytes'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
         else:
-            return HttpResponseBadRequest
+            return HttpResponseBadRequest("Invalid query.")
     else:
-        return HttpResponseBadRequest
+        return HttpResponseBadRequest("Invalid query.")
 
     if args['namespace'] == 'AWS/ELB':
         args['dims'] = {'LoadBalancerName': id}
@@ -195,7 +195,7 @@ def dash_git(request):
             for contrib in contribs:
                 data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
         else:
-            return HttpResponseBadRequest
+            return HttpResponseBadRequest("Invalid query.")
 
         for field in fields:
             stats.append(field)
@@ -207,7 +207,7 @@ def dash_git(request):
         results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
         return results
     else:
-        return HttpResponseBadRequest
+        return HttpResponseBadRequest("Invalid query.")
 
 
 

@@ -214,7 +214,7 @@ def aws_stats(request):
         elif sp == '48h':
             args = {'period':720, 'start_time':datetime.now() - timedelta(hours=48), 'end_time':datetime.now()}
         else:
-            return HttpResponseBadRequest
+            return HttpResponseBadRequest("Invalid query.")
 
         if qs == 'latency':
             args.update({'metric':['Latency'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Seconds', 'calc_rate':False})
@@ -239,9 +239,9 @@ def aws_stats(request):
         elif qs == 'volbytes':
             args.update({'metric':['VolumeWriteBytes', 'VolumeReadBytes'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
         else:
-            return HttpResponseBadRequest
+            return HttpResponseBadRequest("Invalid query.")
     else:
-        return HttpResponseBadRequest
+        return HttpResponseBadRequest("Invalid query.")
 
     if args['namespace'] == 'AWS/ELB':
         args['dims'] = {'LoadBalancerName': AWS['ELB_NAME']}
@@ -324,7 +324,7 @@ def git_stats(request):
             desp['Contributors'] = ('string', 'Name')
             del desp['Timestamp']
         else:
-            return HttpResponseBadRequest
+            return HttpResponseBadRequest("Invalid query.")
 
         for field in fields:
             stats.append(field)
@@ -336,7 +336,7 @@ def git_stats(request):
         results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
         return results
     else:
-        return HttpResponseBadRequest
+        return HttpResponseBadRequest("Invalid query.")
 
 
 def export_citation(request):
