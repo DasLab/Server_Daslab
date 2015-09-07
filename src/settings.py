@@ -157,7 +157,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    ExceptionUserInfoMiddleware,
+    'src.settings.ExceptionUserInfoMiddleware',
     # 'sslify.middleware.SSLifyMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
