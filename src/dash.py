@@ -14,7 +14,7 @@ from src.settings import *
 
 
 def server_list():
-    dict_aws = {'ec2':{}, 'elb':{}, 'ebs':{}, 'table':{}}
+    dict_aws = {'ec2':[], 'elb':[], 'ebs':[], 'table':[]}
 
     conn = boto.ec2.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
     resvs = conn.get_only_instances()
@@ -27,19 +27,14 @@ def server_list():
         avg = avg / len(data)
         name = ''
         if resv.tags.has_key('Name'): name = resv.tags['Name']
-        dict_aws['ec2'][resv.id] = {'name':name, 'type':resv.instance_type, 'dns':resv.dns_name, 'status':resv.state_code, 'arch':resv.architecture, 'region':resv.placement, 'credit': '%.1f' % avg, 'id':resv.id}
-        dict_aws['table'][i] = {'ec2': {'name':name, 'status':resv.state_code, 'id':resv.id}}
-    
+        dict_aws['ec2'].append({'name':name, 'type':resv.instance_type, 'dns':resv.dns_name, 'status':resv.state_code, 'arch':resv.architecture, 'region':resv.placement, 'credit': '%.1f' % avg, 'id':resv.id})
+
     resvs = conn.get_all_volumes()
     for i, resv in enumerate(resvs):
         name = ''
         if resv.tags.has_key('Name'): name = resv.tags['Name']
-        dict_aws['ebs'][resv.id] = {'name':name, 'size':resv.size, 'type':resv.type, 'region':resv.zone, 'encrypted':resv.encrypted, 'status':resv.status, 'id':resv.id}
-        if dict_aws['table'].has_key(i):
-            dict_aws['table'][i].update({'ebs': {'name':name, 'status':resv.status, 'id':resv.id}})
-        else:
-            dict_aws['table'][i] = {'ebs': {'name':name, 'status':resv.status, 'id':resv.id}}
-    
+        dict_aws['ebs'].append({'name':name, 'size':resv.size, 'type':resv.type, 'region':resv.zone, 'encrypted':resv.encrypted, 'status':resv.status, 'id':resv.id})
+
     conn = boto.ec2.elb.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
     resvs = conn.get_all_load_balancers()
     for i, resv in enumerate(resvs):
@@ -50,24 +45,35 @@ def server_list():
             if d[u'Maximum'] < 1: 
                 status = False
                 break
-        dict_aws['elb'][resv.name] = {'dns':resv.dns_name, 'region': ', '.join(resv.availability_zones), 'status':status}
-        if dict_aws['table'].has_key(i):
-            dict_aws['table'][i].update({'elb': {'name':resv.name, 'status':status}})
-        else:
-            dict_aws['table'][i] = {'elb': {'name':resv.name, 'status':status}}
+        dict_aws['elb'].append({'name':resv.name, 'dns':resv.dns_name, 'region': ', '.join(resv.availability_zones), 'status':status})
+
+    dict_aws['ec2'] = sorted(dict_aws['ec2'], key=operator.itemgetter(u'name'))
+    dict_aws['ebs'] = sorted(dict_aws['ebs'], key=operator.itemgetter(u'name'))
+    dict_aws['elb'] = sorted(dict_aws['elb'], key=operator.itemgetter(u'name'))
+
+    for i in range(max(len(dict_aws['ec2']), len(dict_aws['elb']), len(dict_aws['ebs']))):
+        temp = {}
+        if i < len(dict_aws['ec2']):
+            temp.update({'ec2': {'name':dict_aws['ec2'][i]['name'], 'status':dict_aws['ec2'][i]['status'], 'id':dict_aws['ec2'][i]['id']}})
+        if i < len(dict_aws['ebs']):
+            temp.update({'ebs': {'name':dict_aws['ebs'][i]['name'], 'status':dict_aws['ebs'][i]['status'], 'id':dict_aws['ebs'][i]['id']}})
+        if i < len(dict_aws['elb']):
+            temp.update({'elb': {'name':dict_aws['elb'][i]['name'], 'status':dict_aws['elb'][i]['status']}})
+        dict_aws['table'].append(temp)
+
 
     access_token = subprocess.Popen('curl --silent --request POST "https://www.googleapis.com/oauth2/v3/token" --data "refresh_token=%s" --data "client_id=%s" --data "client_secret=%s" --data "grant_type=refresh_token"' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET']), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
     access_token = simplejson.loads(access_token)['access_token']
 
     list_proj = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/management/accountSummaries?access_token=%s"' % (access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-    list_proj = simplejson.loads(list_proj)['items'][0]['webProperties']
+    list_proj = simplejson.loads(list_proj)['items'][0]['webProperties'][::-1]
 
-    dict_ga = {'access_token':access_token, 'client_id':GA['CLIENT_ID'], 'projs':{}}
+    dict_ga = {'access_token':access_token, 'client_id':GA['CLIENT_ID'], 'projs':[]}
     for proj in list_proj:
-        dict_ga['projs'][proj['profiles'][0]['id']] = {'track_id':proj['id'], 'name':proj['name'], 'url':proj['websiteUrl']}
-    for id in dict_ga['projs'].keys():
+        dict_ga['projs'].append({'id':proj['profiles'][0]['id'], 'track_id':proj['id'], 'name':proj['name'], 'url':proj['websiteUrl']})
+    for j, proj in enumerate(dict_ga['projs']):
         for i in ('sessionDuration', 'bounceRate', 'pageviewsPerSession', 'pageviews', 'sessions', 'users'):
-            temp = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), id, urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+            temp = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), proj['id'], urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
             temp = simplejson.loads(temp)['rows'][0][0]
 
             if i in ('bounceRate', 'pageviewsPerSession'):
@@ -76,7 +82,7 @@ def server_list():
                 temp = str(timedelta(seconds=int(float(temp) / 1000)))
             else:
                 temp = '%d' % int(temp)
-            dict_ga['projs'][id][i] = temp
+            dict_ga['projs'][j][i] = temp
 
     results = {'aws':dict_aws, 'ga':dict_ga}
     return results

@@ -48,7 +48,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										{% for i, val in aws.table.items %}
+										{% for val in aws.table %}
 											<tr>
 												<td>
 													{% if val.ec2.status == 0 %}
@@ -97,7 +97,7 @@
 							<div class="col-md-12">
 								<h3><span class="label label-dark-red">EC2: Elastic Compute Cloud</span></h3>
 								<div class="thumbnail" style="padding:20px 40px;">
-								{% for id, ec2 in aws.ec2.items %}
+								{% for ec2 in aws.ec2 %}
 									<div class="row" id="ec2-{{ec2.name}}">
 										<div class="col-md-9">
 											<p>
@@ -125,10 +125,10 @@
 									</div>
 									<div class="row">
 										<div class="col-md-6">
-											<div id="plot_cpu_{{id}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+											<div id="plot_cpu_{{ec2.id}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
 										</div>
 										<div class="col-md-6">
-											<div id="plot_net_{{id}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+											<div id="plot_net_{{ec2.id}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
 										</div>
 									</div>
 									{% if forloop.revcounter0 %}<hr/ style="margin: 10px;">{% endif %}
@@ -141,15 +141,15 @@
 							<div class="col-md-12">
 								<h3><span class="label label-teal">ELB: Elastic Load Balancing</span></h3>
 								<div class="thumbnail" style="padding:20px 40px;">
-								{% for name, elb in aws.elb.items %}
-									<div class="row" id="elb-{{name}}">
+								{% for elb in aws.elb %}
+									<div class="row" id="elb-{{elb.name}}">
 										<p>
 										{% if elb.status %}
 											<span class="pull-left lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>
 										{% else %}
 											<span class="pull-left lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>
 										{% endif %}
-											&nbsp;&nbsp;<span class="lead"><b><u>{{name}}</u></b></span>&nbsp;&nbsp;
+											&nbsp;&nbsp;<span class="lead"><b><u>{{elb.name}}</u></b></span>&nbsp;&nbsp;
 											<span class="label label-violet">{{elb.region}}</span>
 										</p>
 										<p>
@@ -158,10 +158,10 @@
 									</div>
 									<div class="row">
 										<div class="col-md-6">
-											<div id="plot_lat_{{name}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+											<div id="plot_lat_{{elb.name}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
 										</div>
 										<div class="col-md-6">
-											<div id="plot_req_{{name}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+											<div id="plot_req_{{elb.name}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
 										</div>
 									</div>
 									{% if forloop.revcounter0 %}<hr/ style="margin: 10px;">{% endif %}
@@ -174,7 +174,7 @@
 							<div class="col-md-12">
 								<h3><span class="label label-dark-blue">EBS: Elastic Block Store</span></h3>
 								<div class="thumbnail" style="padding:20px 40px;">
-								{% for id, ebs in aws.ebs.items %}
+								{% for ebs in aws.ebs %}
 									<div class="row" id="ebs-{{ebs.name}}">
 										<div class="col-md-4">
 											<p>
@@ -194,7 +194,7 @@
 											</p>
 										</div>
 										<div class="col-md-8">
-											<div id="plot_disk_{{id}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+											<div id="plot_disk_{{ebs.id}}" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
 										</div>
 									</div>
 									{% if forloop.revcounter0 %}<hr/ style="margin: 10px;">{% endif %}
@@ -217,7 +217,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="thumbnail" style="padding:20px 40px;">
-								{% for id, proj in ga.projs.items %}
+								{% for proj in ga.projs %}
 									<div class="row" id="elb-{{name}}">
 										<p>
 										{% if proj.name %}
@@ -250,10 +250,10 @@
 									</div>
 									<div class="row">
 										<div class="col-md-6">
-											<div id="chart_session_{{id}}" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+											<div id="chart_session_{{proj.id}}" class="thumbnail place_holder" style="padding:0px 20px;"></div>
 										</div>
 										<div class="col-md-6">
-											<div id="chart_visitor_{{id}}" class="thumbnail place_holder" style="padding:0px 20px;"></div>
+											<div id="chart_visitor_{{proj.id}}" class="thumbnail place_holder" style="padding:0px 20px;"></div>
 										</div>
 									</div>
 									{% if forloop.revcounter0 %}<hr/ style="margin: 10px;">{% endif %}
@@ -299,14 +299,14 @@
 	<script type="text/javascript" src="/site_media/js/group/aws.js"></script>
 	<script type="text/javascript" src="/site_media/js/group/ga.js"></script>
 	<script type="text/javascript">
-		{% for id in aws.ec2 %}
-			drawEC2("{{id}}");
+		{% for ec2 in aws.ec2 %}
+			drawEC2("{{ec2.id}}");
 		{% endfor %}
-		{% for id in aws.elb %}
-			drawELB("{{id}}");
+		{% for elb in aws.elb %}
+			drawELB("{{elb.name}}");
 		{% endfor %}
-		{% for id in aws.ebs %}
-			drawEBS("{{id}}");
+		{% for ebs in aws.ebs %}
+			drawEBS("{{ebs.id}}");
 		{% endfor %}
 	</script>
 	<script type="text/javascript">
@@ -319,8 +319,8 @@
 
 			new gapi.analytics.ViewSelector({ 'container': 'view-selector-container' }).execute();
 
-			{% for id in ga.projs %}
-				drawSVG('{{id}}');
+			{% for proj in ga.projs %}
+				drawSVG('{{proj.id}}');
 			{% endfor %}
 		});
 	</script>
