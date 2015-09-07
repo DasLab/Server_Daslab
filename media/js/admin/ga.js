@@ -13,11 +13,11 @@ gapi.analytics.ready(function() {
 		'serverAuth': { 'access_token': access_token }
 	});
 
-	var viewSelector = new gapi.analytics.ViewSelector({ 'container': 'view-selector-container' });
-	viewSelector.execute();
+	new gapi.analytics.ViewSelector({ 'container': 'view-selector-container' }).execute();
 
-	var chart_24h = new gapi.analytics.googleCharts.DataChart({
+	new gapi.analytics.googleCharts.DataChart({
 		'query': {
+			'ids': id,
 			'metrics': 'ga:sessions',
 			'dimensions': 'ga:dateHour',
 			'start-date': 'yesterday',
@@ -34,9 +34,10 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	});
-	var chart_7d = new gapi.analytics.googleCharts.DataChart({
+	}).execute();
+	new gapi.analytics.googleCharts.DataChart({
 		'query': {
+			'ids': id,
 			'metrics': 'ga:sessions',
 			'dimensions': 'ga:date',
 			'start-date': '7daysAgo',
@@ -53,9 +54,10 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	});
-	var chart_1m = new gapi.analytics.googleCharts.DataChart({
+	}).execute();
+	chart_1m = new gapi.analytics.googleCharts.DataChart({
 		'query': {
+			'ids': id,
 			'metrics': 'ga:sessions',
 			'dimensions': 'ga:date',
 			'start-date': '30daysAgo',
@@ -72,9 +74,10 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	});
-	var chart_3m = new gapi.analytics.googleCharts.DataChart({
+	}).execute();
+	chart_3m = new gapi.analytics.googleCharts.DataChart({
 		'query': {
+			'ids': id,
 			'metrics': 'ga:sessions',
 			'dimensions': 'ga:date',
 			'start-date': '90daysAgo',
@@ -91,9 +94,11 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	});
-	var geo_session = new gapi.analytics.googleCharts.DataChart({
+	}).execute();
+
+	new gapi.analytics.googleCharts.DataChart({
 		'query': {
+			'ids': id,
 			'metrics': 'ga:sessions',
 			'dimensions': 'ga:country',
 			'start-date': '30daysAgo',
@@ -109,9 +114,11 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	});
-	var pie_session = new gapi.analytics.googleCharts.DataChart({
+	}).execute();
+	
+	new gapi.analytics.googleCharts.DataChart({
 		'query': {
+			'ids': id,
 			'metrics': 'ga:sessions',
 			'dimensions': 'ga:userType',
 			'start-date': '30daysAgo',
@@ -129,9 +136,10 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	});
-	var pie_user = new gapi.analytics.googleCharts.DataChart({
+	}).execute();
+	new gapi.analytics.googleCharts.DataChart({
 		'query': {
+			'ids': id,
 			'metrics': 'ga:users',
 			'dimensions': 'ga:userType',
 			'start-date': '30daysAgo',
@@ -149,9 +157,10 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	});
-	var pie_browser = new gapi.analytics.googleCharts.DataChart({
+	}).execute();
+	new gapi.analytics.googleCharts.DataChart({
 		'query': {
+			'ids': id,
 			'metrics': 'ga:users',
 			'dimensions': 'ga:browser',
 			'start-date': '30daysAgo',
@@ -172,9 +181,10 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	});
-	var pie_pageview = new gapi.analytics.googleCharts.DataChart({
+	}).execute();
+	new gapi.analytics.googleCharts.DataChart({
 		'query': {
+			'ids': id,
 			'metrics': 'ga:pageviews',
 			'dimensions': 'ga:userType',
 			'start-date': '30daysAgo',
@@ -192,22 +202,9 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	});
-
-	viewSelector.on('change', function(ids) {
-		chart_24h.set({'query': {'ids': ids}}).execute();
-		chart_7d.set({'query': {'ids': ids}}).execute();
-		chart_1m.set({'query': {'ids': ids}}).execute();
-		chart_3m.set({'query': {'ids': ids}}).execute();
-		geo_session.set({'query': {'ids': ids}}).execute();
-		pie_session.set({'query': {'ids': ids}}).execute();
-		pie_user.set({'query': {'ids': ids}}).execute();
-		pie_browser.set({'query': {'ids': ids}}).execute();
-		pie_pageview.set({'query': {'ids': ids}}).execute();
-	});
+	}).execute();
 
 	setTimeout(function() {$(".place_holder").removeClass("place_holder");}, 800);
-
 });
 
 

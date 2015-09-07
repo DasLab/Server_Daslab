@@ -115,7 +115,7 @@
 
 {% block extrajs %}
 	<script type="text/javascript">
-		var client_id = '{{client_id}}', access_token = '{{access_token}}';
+		var client_id = '{{client_id}}', access_token = '{{access_token}}', id = 'ga:' + '{{id}}';
 
 		$(document).ready(function() {
 			$("#view-selector-container").hide();

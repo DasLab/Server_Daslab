@@ -11,6 +11,7 @@
 	},
 
 	"GA": {
+		"ACCOUNT": "account_id",
 		"ID": "ids",
 		"TRACKING_ID": "tracking_id",
 
