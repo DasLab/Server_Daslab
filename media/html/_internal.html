@@ -27,8 +27,15 @@
 
 			<div class="navbar-collapse collapse" >
 				<ul class="nav navbar-nav">
-					<li class=" clickable" id="nav_meetings">
+					<li class="dropdown clickable" id="nav_meetings">
 						<a href="/group/meetings" >Meetings</a>
+						<ul class="dropdown-menu nav nav-pills nav-stacked" role="menu">
+							<li class="li-warning"><a href="/group/meetings#schedule"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Meeting Schedule</a></li>
+							<li class="li-success"><a href="/group/meetings#flash_slides"><span class="glyphicon glyphicon-duplicate"></span>&nbsp;&nbsp;Flash Slides</a></li>
+							<li class="li-danger"><a href="/group/meetings#eterna"><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;Open Group Meetings</a></li>
+							<li class="li-info"><a href="/group/meetings#rotation"><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;Rotation Students</a></li>
+							<li class="li-violet"><a href="/group/meetings#presentation"><span class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;Presentation Archive</a></li>
+						</ul>
 					</li>
 					<li class=" clickable" id="nav_calendar">
 						<a href="/group/calendar" >Calendar</a>
@@ -36,11 +43,20 @@
 					<li class=" clickable" id="nav_documents">
 						<a href="/group/documents" >Documents</a>
 					</li>
-					<li class=" clickable" id="nav_servers">
+					<li class="dropdown clickable" id="nav_servers">
 						<a href="/group/servers" >Servers</a>
+						<ul class="dropdown-menu nav nav-pills nav-stacked" role="menu">
+							<li class="li-primary"><a href="/group/servers#aws"><span class="glyphicon glyphicon-text-background"></span>&nbsp;&nbsp;Amazon Web Services</a></li>
+							<li class="li-magenta"><a href="/group/servers#ga"><span class="glyphicon glyphicon-signal"></span>&nbsp;&nbsp;Google Analytics</a></li>
+						</ul>
 					</li>
-					<li class=" clickable" id="nav_services">
+					<li class="dropdown clickable" id="nav_services">
 						<a href="/group/services" >Services</a>
+						<ul class="dropdown-menu nav nav-pills nav-stacked" role="menu">
+							<li class="li-violet"><a href="/group/services#git"><span class="glyphicon glyphicon-compressed"></span>&nbsp;&nbsp;GitHub</a></li>
+							<li class="li-green"><a href="/group/services#slack"><span class="glyphicon glyphicon-fullscreen"></span>&nbsp;&nbsp;Slack</a></li>
+							<li class="li-orange"><a href="/group/services#dropbox"><span class="glyphicon glyphicon-cloud"></span>&nbsp;&nbsp;Dropbox</a></li>
+						</ul>
 					</li>
 					<li class=" clickable" id="nav_misc">
 						<a href="/group/misc" >Misc</a>

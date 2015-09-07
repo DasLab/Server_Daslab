@@ -112,7 +112,7 @@ def lab_servers(request):
 	return render_to_response(PATH.HTML_PATH['lab_servers'], server_list(), context_instance=RequestContext(request))
 @login_required
 def lab_services(request):
-	return render_to_response(PATH.HTML_PATH['lab_services'], {}, context_instance=RequestContext(request))
+	return render_to_response(PATH.HTML_PATH['lab_services'], service_list(), context_instance=RequestContext(request))
 @login_required
 def lab_misc(request):
 	return render_to_response(PATH.HTML_PATH['lab_misc'], {}, context_instance=RequestContext(request))
@@ -232,7 +232,7 @@ def error500(request):
 
 
 def test(request):
-	return HttpResponse(content=str(dash_ga(request)), status=200)
+	# return HttpResponse(content=str(dash_ga(request)), status=200)
 	return error401(request)
 	raise ValueError
 	# send_notify_emails('test', 'test')

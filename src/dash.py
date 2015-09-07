@@ -143,7 +143,12 @@ def dash_ga(request):
                 temp = '%d' % int(temp)
             stats['projs'][id][i] = temp
 
-
     return stats
 
 
+def service_list():
+
+	return []
+
+
+	
