@@ -52,6 +52,8 @@ AWS = env_oauth['AWS']
 GA = env_oauth['GA']
 GCAL = env_oauth['CALENDAR']
 GIT = env_oauth['GIT']
+SLACK = env_oauth['SLACK']
+DROPBOX = env_oauth['DROPBOX']
 
 
 MANAGERS = ADMINS = (

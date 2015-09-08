@@ -11,6 +11,7 @@ from time import sleep
 import boto.ec2.cloudwatch
 import gviz_api
 from github import Github
+from slacker import Slacker
 
 from src.console import *
 from src.settings import *
@@ -156,29 +157,33 @@ def dash_ga(request):
 
 
 def service_list():
-    gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
+    # gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
 
-    repos = []
-    for repo in gh.get_user().get_repos():
-        i = 0
-        contribs = repo.get_stats_contributors()
-        while (contribs is None and i <= 5):
-            sleep(1)
-            contribs = repo.get_stats_contributors()
-        if contribs is None: return HttpResponseServerError("PyGithub failed")
-        data = []
-        for contrib in contribs:
-            a, d = (0, 0)
-            for w in contrib.weeks:
-                a += w.a
-                d += w.d
-            data.append({u'Contributors': contrib.author.login, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
-        data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
-        repos.append({'url':repo.html_url, 'private':repo.private, 'data':data, 'name':repo.name, 'id':repo.full_name})
+    # repos = []
+    # for repo in gh.get_user().get_repos():
+    #     i = 0
+    #     contribs = repo.get_stats_contributors()
+    #     while (contribs is None and i <= 5):
+    #         sleep(1)
+    #         contribs = repo.get_stats_contributors()
+    #     if contribs is None: return HttpResponseServerError("PyGithub failed")
+    #     data = []
+    #     for contrib in contribs:
+    #         a, d = (0, 0)
+    #         for w in contrib.weeks:
+    #             a += w.a
+    #             d += w.d
+    #         data.append({u'Contributors': contrib.author.login, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+    #     data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
+    #     repos.append({'url':repo.html_url, 'private':repo.private, 'data':data, 'name':repo.name, 'id':repo.full_name})
 
 
-    results = {'git':repos}
-    return results
+
+        # print temp
+
+    # print sh.channels.list().body
+    # results = {'git':repos}
+    return #results
 
 
 def dash_git(request):
@@ -220,4 +225,89 @@ def dash_git(request):
         return HttpResponseBadRequest("Invalid query.")
 
 
+def dash_slack(request):
+    if request.GET.has_key('qs') and request.GET.has_key('tqx'):
+        qs = request.GET.get('qs')
+        req_id = request.GET.get('tqx').replace('reqId:', '')
+        sh = Slacker(SLACK["ACCESS_TOKEN"])
+
+        if qs == 'users':
+            response = sh.users.list().body['members']
+            owners, admins, users, gones = [], [], [], []
+            for resp in response:
+                if resp.has_key('is_bot') and resp['is_bot']: continue
+                if resp['deleted']:
+                    gones.append({'name':resp['profile']['real_name'], 'id':resp['name'], 'image':resp['profile']['image_24']})
+                elif resp['is_owner']:
+                    owners.append({'name':resp['profile']['real_name'], 'id':resp['name'], 'image':resp['profile']['image_24']})
+                elif resp['is_admin']:
+                    admins.append({'name':resp['profile']['real_name'], 'id':resp['name'], 'image':resp['profile']['image_24']})
+                else:
+                    users.append({'name':resp['profile']['real_name'], 'id':resp['name'], 'image':resp['profile']['image_24']})
+            json = {'users':users, 'admins':admins, 'owners':owners, 'gones':gones}
+        elif qs == 'channels':
+            response = sh.channels.list().body['channels']
+            channels, archives = [], []
+            for resp in response:
+                temp = {'name':resp['name'], 'num_members':resp['num_members']}
+                history = sh.channels.history(channel=resp['id'], count=1000).body
+                temp.update({'num_msgs':len(history['messages']), 'has_more':history['has_more']})
+                num_files = 0
+                latest = 0
+                for msg in history['messages']:
+                    if msg.has_key('file'): num_files += 1
+                    latest = max(latest, float(msg['ts']))
+                temp.update({'latest':latest, 'num_files':num_files})
+                if resp['is_archived']:
+                    archives.append(temp)
+                else:
+                    channels.append(temp)
+            json = {'channels':channels, 'archives':archives}
+        elif qs == 'files':
+            types = ['all', 'pdfs', 'images', 'gdocs', 'zips', 'posts', 'snippets']
+            nums, sizes = [], []
+            for t in types:
+                response = sh.files.list(count=100, types=t).body
+                size = 0
+                for i in range(response['paging']['pages']):
+                    page = sh.files.list(count=100, types=t, page=i).body['files']
+                    for p in page:
+                        size += p['size']
+                nums.append(response['paging']['total'])
+                sizes.append(size)
+            json = {'files':{'types':types, 'nums':nums, 'sizes':sizes}}
+
+        # elif qs in ['msg', 'file']:
+        #     desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+        #     stats = ['Timestamp']
+        #     data = []
+
+        #     if qs == 'msg':
+        #         contribs = repo.get_stats_code_frequency()
+        #         if contribs is None: return HttpResponseServerError("PyGithub failed")
+        #         fields = ['Additions', 'Deletions']
+        #         for contrib in contribs:
+        #             data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
+        #     elif qs == 'file':
+        #         contribs = repo.get_stats_code_frequency()
+        #         if contribs is None: return HttpResponseServerError("PyGithub failed")
+        #         fields = ['Additions', 'Deletions']
+        #         for contrib in contribs:
+        #             data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
+
+        #     for field in fields:
+        #         stats.append(field)
+        #         desp[field] = ('number', field)
+            
+        #     data = sorted(data, key=operator.itemgetter(stats[0]))
+        #     data_table = gviz_api.DataTable(desp)
+        #     data_table.LoadData(data)
+        #     results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
+        #     return results
+
+        else:
+            return HttpResponseBadRequest("Invalid query.")
+        return simplejson.dumps(json)
+    else:
+        return HttpResponseBadRequest("Invalid query.")
 
