@@ -107,14 +107,20 @@
 									<tbody>
 										<tr>
 											<td><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Members</td>
-											<td colspan="2">
-
+											<td colspan="2" id="id_user_num">
+								                <div class="progress" style="margin-bottom: 0px;">
+								                  <div class="progress-bar progress-bar-success"></div>
+								                  <div class="progress-bar progress-bar-danger"></div>
+								                </div>
 											</td>
 										</tr>
 										<tr>
 											<td><span class="glyphicon glyphicon-headphones"></span>&nbsp;&nbsp;Channels</td>
-											<td colspan="2">
-
+											<td colspan="2" id="id_channel_num">
+								                <div class="progress" style="margin-bottom: 0px;">
+								                  <div class="progress-bar progress-bar-success"></div>
+								                  <div class="progress-bar progress-bar-danger"></div>
+								                </div>
 											</td>
 										</tr>
 										<tr><td colspan="5" style="padding: 0px;"></td></tr>
@@ -123,20 +129,29 @@
 								<table class="table">
 									<thead>
 										<tr class="active">
-											<th class="col-md-5"></th>
-											<th class="col-md-4"><span class="glyphicon glyphicon-th"></span> # of Files</th>
-											<th class="col-md-3"><span class="glyphicon glyphicon-share"></span> Size</th>
+											<th class="col-md-4"></th>
+											<th class="col-md-4">
+												<span class="pull-right">
+													<span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;# of Files&nbsp;&nbsp;
+												</span>
+											</th>
+											<th class="col-md-4">
+												<span class="pull-right">
+													<span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;Size&nbsp;&nbsp;&nbsp;&nbsp;
+												</span>
+											</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
 											<td><span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;Files</td>
-											<td></td>
-											<td></td>
+											<td id="num_file"></td>
+											<td id="size_file"></td>
 										</tr>
 										<tr><td colspan="5" style="padding: 0px;"></td></tr>
 									</tbody>
 								</table>
+
 								<table class="table">
 									<thead>
 										<tr class="active">
@@ -152,8 +167,36 @@
 										<tr><td colspan="5" class="place_holder"></td></tr>
 									</tbody>
 								</table>
+
+								<table class="table" style="margin-bottom: 0px;">
+									<thead>
+									<thead>
+										<tr class="active">
+											<th class="col-md-3"><span class="glyphicon glyphicon-tag"></span>&nbsp;&nbsp;Type</th>
+											<th class="col-md-4">
+												<span class="pull-right">
+													<span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;# of Files&nbsp;&nbsp;
+												</span>
+											</th>
+											<th class="col-md-5">
+												<span class="pull-right">
+													<span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;Size&nbsp;&nbsp;&nbsp;&nbsp;
+												</span>
+											</th>
+										</tr>
+									</thead>
+									<tbody id="table_slack_file">
+										<tr><td colspan="5" class="place_holder"></td></tr>
+									</tbody>
+								</table>
 							</div>
+
 							<div class="col-md-7">
+								<h4><span class="label label-warning">Messages Activity</span></h4>
+								<div id="plot_slack_msgs" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+								<h4><span class="label label-warning">Files Activity</span></h4>
+								<div id="plot_slack_files" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+
 								<table class="table">
 									<thead>
 										<tr class="active">
@@ -219,7 +262,7 @@
 		});
 	</script>
     <script type="text/javascript" src="http://www.google.com/jsapi" ></script>
-	<!-- <script type="text/javascript" src="/site_media/js/group/git.js"></script> -->
+	<script type="text/javascript" src="/site_media/js/group/git.js"></script>
 	<!-- <script type="text/javascript">
 		{% for repo in git %}
 			drawGIT("{{repo.name}}");

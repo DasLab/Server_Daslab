@@ -1,4 +1,16 @@
-function zfill(num, len) {return (Array(len).join("0") + num).slice(-len);}
+function zfill(num, len) {
+	return (Array(len).join("0") + num).slice(-len);
+}
+
+function formatSizeUnits(bytes){
+    if      (bytes >= 1000000000) {bytes = (bytes / 1000000000).toFixed(2) + ' GB';}
+    else if (bytes >= 1000000)    {bytes = (bytes / 1000000).toFixed(2) + ' MB';}
+    else if (bytes >= 1000)       {bytes = (bytes / 1000).toFixed(2) + ' KB';}
+    else if (bytes > 1)           {bytes = bytes + ' bytes';}
+    else if (bytes == 1)          {bytes = bytes + ' byte';}
+    else                          {bytes = '0 byte';}
+    return bytes;
+}
 
 $(document).ready(function() {
 	$.ajax({
@@ -21,6 +33,10 @@ $(document).ready(function() {
 			}        	
 			html += '<tr><td colspan="2" style="padding: 0px;"></td></tr>';
 			$("#table_slack_user").html(html);
+
+			var ratio = data.gones.length / (data.owners.length + data.admins.length + data.users.length + data.gones.length);
+            $("#id_user_num > div > div.progress-bar-success").css("width", ((1 - ratio) * 100).toString() + '%' ).html(data.owners.length + data.admins.length + data.users.length);
+            $("#id_user_num > div > div.progress-bar-danger").css("width", (ratio * 100).toString() + '%' ).html(data.gones.length);
         }
     });
 
@@ -55,6 +71,80 @@ $(document).ready(function() {
 			}
 			html += '<tr><td colspan="5" style="padding: 0px;"></td></tr>';
 			$("#table_slack_channel").html(html);
+
+            $("#id_channel_num > div > div.progress-bar-success").css("width", (data.channels.length / (data.archives.length + data.channels.length) * 100).toString() + '%' ).html(data.channels.length);
+            $("#id_channel_num > div > div.progress-bar-danger").css("width", (data.archives.length / (data.archives.length + data.channels.length) * 100).toString() + '%' ).html(data.archives.length);
         }
     });
+
+	$.ajax({
+        url : "/admin/slack_dash?qs=files&tqx=reqId%3A54",
+        dataType: "json",
+        success : function (data) {
+			var html = "";
+			for (var i = 0; i < data.files.types.length; i++) {
+				html += '<tr><td><span class="pull-right"><code>' + data.files.types[i] + '</code></span></td><td><span class="pull-right">' + data.files.nums[i] + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#00f;">' + formatSizeUnits(data.files.sizes[i]) + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>';
+			}
+			html += '<tr><td colspan="3" style="padding: 0px;"></td></tr>';
+			$("#table_slack_file").html(html);
+
+            $("#num_file").html('<span class="pull-right">' + data.files.nums[0] + '&nbsp;&nbsp;&nbsp;&nbsp;</span>');
+            $("#size_file").html('<span class="pull-right" style="color:#00f;">' + formatSizeUnits(data.files.sizes[0]) + '&nbsp;&nbsp;&nbsp;&nbsp;</span>');
+        }
+    });
+
+   	google.visualization.drawChart({
+    	'chartType': 'AreaChart',
+    	'dataSourceUrl': '/admin/slack_dash?qs=plot_msgs',
+    	'containerId': 'plot_slack_msgs',
+        'options': {
+            'chartArea': {'width': '90%', 'left': '10%'},
+            'legend': {'position': 'none'},
+            'title': 'Last 7 Days',
+            'titleTextStyle': {'bold': false, 'fontSize': 16},
+            'vAxis': {
+                'title': '(#)',
+                'titleTextStyle': {'bold': true},
+            },
+            'hAxis': {
+                'gridlines': {'count': -1},
+                'textStyle': {'italic': true},
+                'format': 'MMM dd'
+            },
+            'lineWidth': 3,
+            'pointSize': 5,
+            'colors': ['#50cc32'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
+        }
+    });
+	setTimeout(function() {$("#plot_slack_msgs").removeClass("place_holder");}, 30000);
+   	google.visualization.drawChart({
+    	'chartType': 'AreaChart',
+    	'dataSourceUrl': '/admin/slack_dash?qs=plot_files',
+    	'containerId': 'plot_slack_files',
+        'options': {
+            'chartArea': {'width': '90%', 'left': '10%'},
+            'legend': {'position': 'none'},
+            'title': 'Last 7 Days',
+            'titleTextStyle': {'bold': false, 'fontSize': 16},
+            'vAxis': {
+                'title': '(#)',
+                'titleTextStyle': {'bold': true},
+            },
+            'hAxis': {
+                'gridlines': {'count': -1},
+                'textStyle': {'italic': true},
+                'format': 'MMM dd'
+            },
+            'lineWidth': 3,
+            'pointSize': 5,
+            'colors': ['#ff69bc'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
+        }
+    });
+	setTimeout(function() {$("#plot_slack_files").removeClass("place_holder");}, 1800);
+
 })
+
+
+

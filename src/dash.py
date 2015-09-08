@@ -1,12 +1,12 @@
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
 
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 import operator
 # import os
 import simplejson
 import subprocess
 # import sys
-from time import sleep
+from time import sleep, mktime
 
 import boto.ec2.cloudwatch
 import gviz_api
@@ -183,6 +183,11 @@ def service_list():
 
     # print sh.channels.list().body
     # results = {'git':repos}
+
+    # sh = Slacker(SLACK["ACCESS_TOKEN"])
+    # response = sh.files.list(types="all", ts_from=mktime((datetime.now() - timedelta(days=5)).timetuple()), ts_to=mktime(datetime.now().timetuple())).body
+    # print response
+
     return #results
 
 
@@ -277,33 +282,41 @@ def dash_slack(request):
                 sizes.append(size)
             json = {'files':{'types':types, 'nums':nums, 'sizes':sizes}}
 
-        # elif qs in ['msg', 'file']:
-        #     desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
-        #     stats = ['Timestamp']
-        #     data = []
+        elif 'plot_' in qs:
+            desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+            stats = ['Timestamp']
+            data = []
 
-        #     if qs == 'msg':
-        #         contribs = repo.get_stats_code_frequency()
-        #         if contribs is None: return HttpResponseServerError("PyGithub failed")
-        #         fields = ['Additions', 'Deletions']
-        #         for contrib in contribs:
-        #             data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
-        #     elif qs == 'file':
-        #         contribs = repo.get_stats_code_frequency()
-        #         if contribs is None: return HttpResponseServerError("PyGithub failed")
-        #         fields = ['Additions', 'Deletions']
-        #         for contrib in contribs:
-        #             data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
+            if qs == 'plot_files':
+                fields = ['Files']
+                for i in range(7):
+                    start_time = datetime.today() - timedelta(days=i+1)
+                    end_time = start_time + timedelta(days=1)
+                    num = sh.files.list(types="all", ts_from=mktime(start_time.timetuple()), ts_to=mktime(end_time.timetuple())).body['paging']['total']
+                    data.append({u'Timestamp': end_time.replace(hour=0, minute=0, second=0, microsecond=0), u'Files': num})
+            elif qs == 'plot_msgs':
+                fields = ['Messages']
+                response = sh.channels.list().body['channels']
+                for resp in response:
+                    if resp['is_archived']: continue
+                    for i in range(7):
+                        start_time = datetime.today() - timedelta(days=i+1)
+                        end_time = start_time + timedelta(days=1)
+                        num = len(sh.channels.history(channel=resp['id'], latest=mktime(end_time.timetuple()), oldest=mktime(start_time.timetuple()), count=1000).body['messages'])
+                        if len(data) > i:
+                            data[i]['Messages'] += num
+                        else:
+                            data.append({u'Timestamp': end_time.replace(hour=0, minute=0, second=0, microsecond=0), u'Messages': num})
 
-        #     for field in fields:
-        #         stats.append(field)
-        #         desp[field] = ('number', field)
+            for field in fields:
+                stats.append(field)
+                desp[field] = ('number', field)
             
-        #     data = sorted(data, key=operator.itemgetter(stats[0]))
-        #     data_table = gviz_api.DataTable(desp)
-        #     data_table.LoadData(data)
-        #     results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
-        #     return results
+            data = sorted(data, key=operator.itemgetter(stats[0]))
+            data_table = gviz_api.DataTable(desp)
+            data_table.LoadData(data)
+            results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
+            return results
 
         else:
             return HttpResponseBadRequest("Invalid query.")
