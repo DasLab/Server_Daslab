@@ -157,36 +157,7 @@ def dash_ga(request):
 
 
 def service_list():
-    # gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
 
-    # repos = []
-    # for repo in gh.get_user().get_repos():
-    #     i = 0
-    #     contribs = repo.get_stats_contributors()
-    #     while (contribs is None and i <= 5):
-    #         sleep(1)
-    #         contribs = repo.get_stats_contributors()
-    #     if contribs is None: return HttpResponseServerError("PyGithub failed")
-    #     data = []
-    #     for contrib in contribs:
-    #         a, d = (0, 0)
-    #         for w in contrib.weeks:
-    #             a += w.a
-    #             d += w.d
-    #         data.append({u'Contributors': contrib.author.login, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
-    #     data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
-    #     repos.append({'url':repo.html_url, 'private':repo.private, 'data':data, 'name':repo.name, 'id':repo.full_name})
-
-
-
-        # print temp
-
-    # print sh.channels.list().body
-    # results = {'git':repos}
-
-    # sh = Slacker(SLACK["ACCESS_TOKEN"])
-    # response = sh.files.list(types="all", ts_from=mktime((datetime.now() - timedelta(days=5)).timetuple()), ts_to=mktime(datetime.now().timetuple())).body
-    # print response
 
     return #results
 
@@ -196,36 +167,58 @@ def dash_git(request):
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
         gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
-        repo = gh.get_repo('DasLab/' + request.GET.get('repo'))
 
-        data = []
-        desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
-        stats = ['Timestamp']
+        if qs == 'init':
+            repos = []
+            for repo in gh.get_user().get_repos():
+                i = 0
+                contribs = repo.get_stats_contributors()
+                while (contribs is None and i <= 5):
+                    sleep(1)
+                    contribs = repo.get_stats_contributors()
+                if contribs is None: return HttpResponseServerError("PyGithub failed")
+                data = []
+                for contrib in contribs:
+                    a, d = (0, 0)
+                    for w in contrib.weeks:
+                        a += w.a
+                        d += w.d
+                    data.append({u'Contributors': contrib.author.login, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+                data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
+                repos.append({'url':repo.html_url, 'private':repo.private, 'data':data, 'name':repo.name, 'id':repo.full_name})
+            return simplejson.dumps({'git':repos})
 
-        if qs == 'c':
-            contribs = repo.get_stats_commit_activity()
-            if contribs is None: return HttpResponseServerError("PyGithub failed")
-            fields = ['Commits']
-            for contrib in contribs: 
-                data.append({u'Timestamp': contrib.week, u'Commits': sum(contrib.days)})
-        elif qs == 'ad':
-            contribs = repo.get_stats_code_frequency()
-            if contribs is None: return HttpResponseServerError("PyGithub failed")
-            fields = ['Additions', 'Deletions']
-            for contrib in contribs:
-                data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
+        elif qs in ['c', 'ad']:
+            repo = gh.get_repo('DasLab/' + request.GET.get('repo'))
+
+            data = []
+            desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+            stats = ['Timestamp']
+
+            if qs == 'c':
+                contribs = repo.get_stats_commit_activity()
+                if contribs is None: return HttpResponseServerError("PyGithub failed")
+                fields = ['Commits']
+                for contrib in contribs: 
+                    data.append({u'Timestamp': contrib.week, u'Commits': sum(contrib.days)})
+            elif qs == 'ad':
+                contribs = repo.get_stats_code_frequency()
+                if contribs is None: return HttpResponseServerError("PyGithub failed")
+                fields = ['Additions', 'Deletions']
+                for contrib in contribs:
+                    data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
+
+            for field in fields:
+                stats.append(field)
+                desp[field] = ('number', field)
+            
+            data = sorted(data, key=operator.itemgetter(stats[0]))
+            data_table = gviz_api.DataTable(desp)
+            data_table.LoadData(data)
+            results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
+            return results
         else:
             return HttpResponseBadRequest("Invalid query.")
-
-        for field in fields:
-            stats.append(field)
-            desp[field] = ('number', field)
-        
-        data = sorted(data, key=operator.itemgetter(stats[0]))
-        data_table = gviz_api.DataTable(desp)
-        data_table.LoadData(data)
-        results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
-        return results
     else:
         return HttpResponseBadRequest("Invalid query.")
 
@@ -282,7 +275,7 @@ def dash_slack(request):
                 sizes.append(size)
             json = {'files':{'types':types, 'nums':nums, 'sizes':sizes}}
 
-        elif 'plot_' in qs:
+        elif qs in ["plot_files", "plot_msgs"]:
             desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
             stats = ['Timestamp']
             data = []
