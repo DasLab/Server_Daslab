@@ -278,7 +278,7 @@ def ga_stats():
             temp = '%d' % int(temp)
         stats[i] = temp
         stats[i + '_prev'] = temp_prev
-    return stats
+    return simplejson.dumps(stats)
 
 
 def git_stats(request):

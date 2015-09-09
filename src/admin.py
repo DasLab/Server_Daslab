@@ -173,7 +173,7 @@ admin.site.register_view('aws/', view=aws, visible=False)
 
 
 def ga(request):
-    return render_to_response(PATH.HTML_PATH['admin_ga'], ga_stats(), context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_ga'], {}, context_instance=RequestContext(request))
 admin.site.register_view('ga/', view=ga, visible=False)
 
 def ga_dash(request):
@@ -181,6 +181,12 @@ def ga_dash(request):
     if isinstance(json, HttpResponseBadRequest): return json
     return HttpResponse(json, content_type='application/json')
 admin.site.register_view('ga_dash', view=ga_dash, visible=False)
+
+def ga_admin(request):
+    json = ga_stats()
+    if isinstance(json, HttpResponseBadRequest): return json
+    return HttpResponse(json, content_type='application/json')
+admin.site.register_view('ga_admin', view=ga_admin, visible=False)
 
 
 def git_stat(request):

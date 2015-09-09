@@ -5,14 +5,15 @@
 	fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
 }(window,document,'script'));
 
-gapi.analytics.ready(function() {
 
-	gapi.analytics.auth.authorize({
-		'container': 'embed-api-auth-container',
-		'clientid': client_id,
-		'serverAuth': { 'access_token': access_token }
-	});
+function readyHandler() {
+    $(".place_holder").each(function() {
+        if ($(this).html().length > 0) { $(this).removeClass("place_holder"); }
+    });
+}
 
+
+function drawGA(id) {
 	new gapi.analytics.ViewSelector({ 'container': 'view-selector-container' }).execute();
 
 	new gapi.analytics.googleCharts.DataChart({
@@ -34,7 +35,7 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).execute();
+	}).once('success', readyHandler).execute();
 	new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
@@ -54,7 +55,7 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).execute();
+	}).once('success', readyHandler).execute();
 	chart_1m = new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
@@ -74,7 +75,7 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).execute();
+	}).once('success', readyHandler).execute();
 	chart_3m = new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
@@ -94,7 +95,7 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).execute();
+	}).once('success', readyHandler).execute();
 
 	new gapi.analytics.googleCharts.DataChart({
 		'query': {
@@ -114,7 +115,7 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).execute();
+	}).once('success', readyHandler).execute();
 	
 	new gapi.analytics.googleCharts.DataChart({
 		'query': {
@@ -136,7 +137,7 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).execute();
+	}).once('success', readyHandler).execute();
 	new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
@@ -157,7 +158,7 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).execute();
+	}).once('success', readyHandler).execute();
 	new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
@@ -181,7 +182,7 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).execute();
+	}).once('success', readyHandler).execute();
 	new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
@@ -202,9 +203,93 @@ gapi.analytics.ready(function() {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).execute();
+	}).once('success', readyHandler).execute();
+}
 
-	setTimeout(function() {$(".place_holder").removeClass("place_holder");}, 800);
-});
+
+gapi.analytics.ready(function() {
+	$.ajax({
+	    url : "/admin/ga_admin",
+	    dataType: "json",
+	    success: function (data) {
+			gapi.analytics.auth.authorize({
+				'container': 'embed-api-auth-container',
+				'clientid': data.client_id,
+				'serverAuth': { 'access_token': data.access_token }
+			});
+			new gapi.analytics.ViewSelector({ 'container': 'view-selector-container' }).execute();
+
+			$("#br").html(data.bounceRate + ' %').removeClass('place_holder');
+			$("#br_prv").html(data.bounceRate_prev + ' %');
+			$("#u").html(data.users).removeClass('place_holder');
+			$("#u_prv").html(data.users_prev);
+			$("#sd").html(data.sessionDuration).removeClass('place_holder');
+			$("#sd_prv").html(data.sessionDuration_prev);
+			$("#s").html(data.sessions).removeClass('place_holder');
+			$("#s_prv").html(data.sessions_prev);
+			$("#pvs").html(data.pageviewsPerSession).removeClass('place_holder');
+			$("#pvs_prv").html(data.pageviewsPerSession_prev);
+			$("#pv").html(data.pageviews).removeClass('place_holder');
+			$("#pv_prv").html(data.pageviews_prev);
+
+			drawGA('ga:' + data.id);
+	    },
+	    complete: function () {
+			var green = "#50cc32", red = "#ff5c2b";
+			if ($("#br_prv").html().indexOf('-') != -1) {
+				$("#br_prv_ico").html('<sup><span class="label label-green"><span class="glyphicon glyphicon-arrow-down"></span></span></sup>');
+				$("#br_prv").css("color", green);
+			} else {
+				$("#br_prv_ico").html('<sup><span class="label label-danger"><span class="glyphicon glyphicon-arrow-up"></span></span></sup>');
+				$("#br_prv").css("color", red);
+				$("#br_prv").html('+' + $("#br_prv").html());
+			}
+			if ($("#u_prv").html().indexOf('-') != -1) {
+				$("#u_prv_ico").html('<sup><span class="label label-green"><span class="glyphicon glyphicon-arrow-down"></span></span></sup>');
+				$("#u_prv").css("color", green);
+			} else {
+				$("#u_prv_ico").html('<sup><span class="label label-danger"><span class="glyphicon glyphicon-arrow-up"></span></span></sup>');
+				$("#u_prv").css("color", red);
+				$("#u_prv").html('+' + $("#u_prv").html());
+			}
+			if ($("#sd_prv").html().indexOf('-') != -1) {
+				$("#sd_prv_ico").html('<sup><span class="label label-green"><span class="glyphicon glyphicon-arrow-down"></span></span></sup>');
+				$("#sd_prv").css("color", green);
+			} else {
+				$("#sd_prv_ico").html('<sup><span class="label label-danger"><span class="glyphicon glyphicon-arrow-up"></span></span></sup>');
+				$("#sd_prv").css("color", red);
+				$("#sd_prv").html('+' + $("#sd_prv").html());
+			}
+			if ($("#s_prv").html().indexOf('-') != -1) {
+				$("#s_prv_ico").html('<sup><span class="label label-green"><span class="glyphicon glyphicon-arrow-down"></span></span></sup>');
+				$("#s_prv").css("color", green);
+			} else {
+				$("#s_prv_ico").html('<sup><span class="label label-danger"><span class="glyphicon glyphicon-arrow-up"></span></span></sup>');
+				$("#s_prv").css("color", red);
+				$("#s_prv").html('+' + $("#s_prv").html());
+			}
+			if ($("#pvs_prv").html().indexOf('-') != -1) {
+				$("#pvs_prv_ico").html('<sup><span class="label label-green"><span class="glyphicon glyphicon-arrow-down"></span></span></sup>');
+				$("#pvs_prv").css("color", green);
+			} else {
+				$("#pvs_prv_ico").html('<sup><span class="label label-danger"><span class="glyphicon glyphicon-arrow-up"></span></span></sup>');
+				$("#pvs_prv").css("color", red);
+				$("#pvs_prv").html('+' + $("#pvs_prv").html());
+			}
+			if ($("#pv_prv").html().indexOf('-') != -1) {
+				$("#pv_prv_ico").html('<sup><span class="label label-green"><span class="glyphicon glyphicon-arrow-down"></span></span></sup>');
+				$("#pv_prv").css("color", green);
+			} else {
+				$("#pv_prv_ico").html('<sup><span class="label label-danger"><span class="glyphicon glyphicon-arrow-up"></span></span></sup>');
+				$("#pv_prv").css("color", red);
+				$("#pv_prv").html('+' + $("#pv_prv").html());
+			}
+	    }
+	});
+});	
+
+
+
+
 
 
