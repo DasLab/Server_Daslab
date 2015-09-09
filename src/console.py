@@ -15,7 +15,7 @@ from icalendar import Calendar
 import boto.ec2.cloudwatch
 import gviz_api
 from github import Github
-# from pygithub3 import Github
+import requests
 
 from django.core.management import call_command
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
@@ -313,30 +313,41 @@ def git_stats(request):
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
         gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
-        repo = gh.get_repo('DasLab/Server_DasLab')
+        repo_name = 'DasLab/Server_DasLab'
+        repo = gh.get_repo(repo_name)
 
-        if qs == 'init':
-            contribs = repo.get_stats_contributors()
-            data = []
-            i = 0
-            while (contribs is None and i <= 5):
-                sleep(1)
+        if qs in ['init', 'num']:
+            if qs == 'init':
                 contribs = repo.get_stats_contributors()
-            if contribs is None: return HttpResponseServerError("PyGithub failed")
+                data = []
+                i = 0
+                while (contribs is None and i <= 5):
+                    sleep(1)
+                    contribs = repo.get_stats_contributors()
+                if contribs is None: return HttpResponseServerError("PyGithub failed")
 
-            for contrib in contribs:
-                a, d = (0, 0)
-                for w in contrib.weeks:
-                    a += w.a
-                    d += w.d
-                name = '<i>%s</i> <span style="color:#888">(%s)</span>' % (contrib.author.login, contrib.author.name)
-                data.append({u'Contributors': name, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
-            data = sorted(data, key=operator.itemgetter(u'Commits'))            
-            return simplejson.dumps({'contrib':data})
+                for contrib in contribs:
+                    a, d = (0, 0)
+                    for w in contrib.weeks:
+                        a += w.a
+                        d += w.d
+                    name = '<i>%s</i> <span style="color:#888">(%s)</span>' % (contrib.author.login, contrib.author.name)
+                    data.append({u'Contributors': name, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+                data = sorted(data, key=operator.itemgetter(u'Commits'))            
+                return simplejson.dumps({'contrib':data})
+            else:
+                created_at = repo.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                pushed_at = repo.pushed_at.strftime('%Y-%m-%d %H:%M:%S')
+                
+                num_issues = len(requests.get('https://api.github.com/repos/' + repo_name + '/issues?access_token=%s' % GIT['ACCESS_TOKEN']).json())
+                num_pulls = len(requests.get('https://api.github.com/repos/' + repo_name + '/pulls?access_token=%s' % GIT['ACCESS_TOKEN']).json())
+                num_watchers = len(requests.get('https://api.github.com/repos/' + repo_name + '/watchers?access_token=%s' % GIT['ACCESS_TOKEN']).json())
+                num_branches = len(requests.get('https://api.github.com/repos/' + repo_name + '/branches?access_token=%s' % GIT['ACCESS_TOKEN']).json())
+                num_forks = len(requests.get('https://api.github.com/repos/' + repo_name + '/forks?access_token=%s' % GIT['ACCESS_TOKEN']).json())
+                num_downloads = len(requests.get('https://api.github.com/repos/' + repo_name + '/downloads?access_token=%s' % GIT['ACCESS_TOKEN']).json())
+                return simplejson.dumps({'created_at':created_at, 'pushed_at':pushed_at, 'num_watchers':num_watchers, 'num_pulls':num_pulls, 'num_issues':num_issues, 'num_branches':num_branches, 'num_forks':num_forks, 'num_downloads':num_downloads})
 
         else:
-            repo = gh.get_repo('DasLab/Server_DasLab')
-
             data = []
             desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
             stats = ['Timestamp']

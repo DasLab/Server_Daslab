@@ -87,7 +87,18 @@ $.ajax({
         for (var i = 0; i < data.contrib.length; i++) {
             html += '<tr><td>' + data.contrib[i].Contributors + '</td><td><span class="pull-right" style="color:#00f;">' + data.contrib[i].Commits + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#080;">' + data.contrib[i].Additions + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#f00;">' + data.contrib[i].Deletions + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>';
         }
+        html += '<tr><td colspan="4" style="padding: 0px;"></td></tr>'
         $("#git_table_body").html(html).removeClass('place_holder');
     }
 });
+
+$.ajax({
+    url : "/admin/git_stat?qs=num&tqx=reqId%3A53",
+    dataType: "json",
+    success: function (data) {
+        $("#git_num_body").html('<tr><td><span class="label label-green">created</span></td><td><span class="label label-primary">' + data.created_at + '</span></td></tr><tr><td><span class="label label-dark-green">last pushed</span></td><td><span class="label label-primary">' + data.pushed_at + '</span></td></tr><tr><td><span class="label label-danger">issue</span></td><td>' + data.num_issues + '</td></tr><tr><td><span class="label label-info">download</span></td><td>' + data.num_downloads + '</td></tr><tr><td><span class="label label-info">pull</span></td><td>' + data.num_pulls + '</td></tr><tr><td><span class="label label-orange">branch</span></td><td>' + data.num_branches + '</td></tr><tr><td><span class="label label-orange">fork</span></td><td>' + data.num_forks + '</td></tr><tr><td><span class="label label-violet">watcher</span></td><td>' + data.num_watchers + '</td></tr><tr><td colspan="2" style="padding: 0px;"></td></tr>').removeClass('place_holder');
+    }
+});
+
+
 
