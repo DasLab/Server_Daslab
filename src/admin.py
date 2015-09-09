@@ -176,6 +176,12 @@ def ga(request):
     return render_to_response(PATH.HTML_PATH['admin_ga'], ga_stats(), context_instance=RequestContext(request))
 admin.site.register_view('ga/', view=ga, visible=False)
 
+def ga_dash(request):
+    json = dash_ga(request)
+    if isinstance(json, HttpResponseBadRequest): return json
+    return HttpResponse(json, content_type='application/json')
+admin.site.register_view('ga_dash', view=ga_dash, visible=False)
+
 
 def git_stat(request):
     json = git_stats(request)

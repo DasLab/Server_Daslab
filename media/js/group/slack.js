@@ -16,7 +16,7 @@ function formatSizeUnits(bytes){
 $.ajax({
     url : "/admin/slack_dash?qs=users&tqx=reqId%3A52",
     dataType: "json",
-    success : function (data) {
+    success: function (data) {
 		var html = "";
 		for (var i = 0; i < data.owners.length; i++) {
 			html += '<tr><td><span class="pull-right"><span class="label label-danger">' + data.owners[i].id + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-registration-mark"></span></span></td><td><img src="' + data.owners[i].image + '"/>&nbsp;&nbsp;<i>' + data.owners[i].name + '</i></td></tr>';
@@ -43,7 +43,7 @@ $.ajax({
 $.ajax({
     url : "/admin/slack_dash?qs=channels&tqx=reqId%3A53",
     dataType: "json",
-    success : function (data) {
+    success: function (data) {
 		var html = "";
 		for (var i = 0; i < data.channels.length; i++) {
 			var name = "", num_msgs = data.channels[i].num_msgs.toString();
@@ -80,7 +80,7 @@ $.ajax({
 $.ajax({
     url : "/admin/slack_dash?qs=files&tqx=reqId%3A54",
     dataType: "json",
-    success : function (data) {
+    success: function (data) {
 		var html = "";
 		for (var i = 0; i < data.files.types.length; i++) {
 			html += '<tr><td><span class="pull-right"><code>' + data.files.types[i] + '</code></span></td><td><span class="pull-right">' + data.files.nums[i] + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#00f;">' + formatSizeUnits(data.files.sizes[i]) + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>';

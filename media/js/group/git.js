@@ -66,7 +66,7 @@ function drawGIT(repo) {
 $.ajax({
     url : "/admin/git_dash?qs=init&repo=init&tqx=reqId%3A55",
     dataType: "json",
-    success : function (data) {
+    success: function (data) {
         var html = "";
         for (var i = 0; i < data.git.length; i++) {
             var lb_private = "";
@@ -82,7 +82,7 @@ $.ajax({
                 html += '<tr><td>' + data.git[i].data[j].Contributors + '</td><td><span class="pull-right" style="color:#00f;">' + data.git[i].data[j].Commits + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#080;">' + data.git[i].data[j].Additions + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#f00;">' + data.git[i].data[j].Deletions + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>';
             }
             html += '<tr><td colspan="4" style="padding: 0px;"></td></tr></tbody></table></div><div class="col-md-6"><div id="plot_c_' + data.git[i].name + '" class="thumbnail git place_holder" style="padding:0px 20px; height: 120px;"></div><div id="plot_ad_' + data.git[i].name + '" class="thumbnail git place_holder" style="padding:0px 20px; height: 120px;"></div></div></div>';
-            if (i == data.git.length - 1) {
+            if (i != data.git.length - 1) {
                 html += '<hr/ style="margin: 10px;">';
             }
         }

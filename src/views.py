@@ -109,10 +109,10 @@ def lab_documents(request):
 	return render_to_response(PATH.HTML_PATH['lab_documents'], {}, context_instance=RequestContext(request))
 @login_required
 def lab_servers(request):
-	return render_to_response(PATH.HTML_PATH['lab_servers'], server_list(), context_instance=RequestContext(request))
+	return render_to_response(PATH.HTML_PATH['lab_servers'], {}, context_instance=RequestContext(request))
 @login_required
 def lab_services(request):
-	return render_to_response(PATH.HTML_PATH['lab_services'], service_list(), context_instance=RequestContext(request))
+	return render_to_response(PATH.HTML_PATH['lab_services'], {}, context_instance=RequestContext(request))
 @login_required
 def lab_misc(request):
 	return render_to_response(PATH.HTML_PATH['lab_misc'], {}, context_instance=RequestContext(request))
