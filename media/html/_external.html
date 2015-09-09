@@ -14,8 +14,8 @@
         if (xmlhttp.readyState == XMLHttpRequest.DONE) {
           if (xmlhttp.status == 200) {
             var xmlDoc = xmlhttp.responseText.split(/\t/);
-            ver_jquery = xmlDoc[8];
-            ver_swfobj = xmlDoc[10];
+            ver_jquery = xmlDoc[11];
+            ver_swfobj = xmlDoc[16];
 
             document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/' + ver_jquery + '/jquery.min.js"><\/script>');
             document.write('\

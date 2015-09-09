@@ -18,49 +18,59 @@ $(document).ready(function() {
         	$("#id_linux").html(txt[0]);
         	$("#id_python").html(txt[1]);
         	$("#id_django").html(txt[2]);
-        	$("#id_django_suit").html(txt[3]);
-        	$("#id_django_adminplus").html(txt[4]);
-            $("#id_django_crontab").html(txt[5]);
-            $("#id_django_environ").html(txt[6]);
-            $("#id_django_filemanager").html(txt[7]);
-        	$("#id_jquery").html(txt[8]);
-        	$("#id_bootstrap").html(txt[9]);
-            $("#id_swfobj").html(txt[10]);
-            $("#id_fullcal").html(txt[11]);
-            $("#id_moment").html(txt[12]);
-        	$("#id_mysql").html(txt[13]);
-        	$("#id_apache").html(txt[14]);
-        	$("#id_webauth").html(txt[15]);
-        	$("#id_ssh").html(txt[16]);
-        	$("#id_git").html(txt[17]);
-            $("#id_pygit").html(txt[18]);
-            $("#id_gdrive").html(txt[19]);
-            $("#id_pandoc").html(txt[20]);
-            $("#id_curl").html(txt[21]);
-        	$("#id_pip").html(txt[22]);
-        	$("#id_virtualenv").html(txt[23]);
-            $("#id_boto").html(txt[24]);
-            $("#id_simplejson").html(txt[25]);
-            $("#id_gvizapi").html(txt[26]);
-            $("#id_nano").html(txt[27]);
-            $("#id_ssl").html(txt[28]);
+            $("#id_django_crontab").html(txt[3]);
+            $("#id_django_environ").html(txt[4]);
+            $("#id_mysql").html(txt[5]);
+            $("#id_apache").html(txt[6]);
+            $("#id_wsgi").html(txt[7]);
+            $("#id_webauth").html(txt[8]);
+            $("#id_ssl").html(txt[9]);
+            $("#id_wallet").html(txt[10]);
 
-            $("#id_drive_space > div > div.progress-bar-success").css("width", (parseFloat(txt[37]) / parseFloat(txt[38]) * 100).toString() + '%' ).html(txt[37]);
-            $("#id_drive_space > div > div.progress-bar-danger").css("width", (parseFloat(txt[36]) / parseFloat(txt[38]) * 100).toString() + '%' ).html(txt[36]);
-        	var disk_sp = txt[29].split(/\//);
+            $("#id_jquery").html(txt[11]);
+            $("#id_bootstrap").html(txt[12]);
+            $("#id_django_suit").html(txt[13]);
+            $("#id_django_adminplus").html(txt[14]);
+            $("#id_django_filemanager").html(txt[15]);
+            $("#id_swfobj").html(txt[16]);
+            $("#id_fullcal").html(txt[17]);
+            $("#id_moment").html(txt[18]);
+            $("#id_ical").html(txt[19]);
+            $("#id_gvizapi").html(txt[20]);
+
+        	$("#id_ssh").html(txt[21]);
+        	$("#id_git").html(txt[22]);
+            $("#id_nano").html(txt[23]);
+            $("#id_gdrive").html(txt[24]);
+            $("#id_pandoc").html(txt[25]);
+            $("#id_boto").html(txt[27]);
+            $("#id_pygit").html(txt[28]);
+            $("#id_slacker").html(txt[29]);
+            $("#id_dropbox").html(txt[30]);
+
+            $("#id_request").html(txt[31]);
+            $("#id_simplejson").html(txt[32]);
+            $("#id_curl").html(txt[26]);
+            $("#id_virtualenv").html(txt[33]);
+        	$("#id_pip").html(txt[34]);
+
+            var drive_free = parseFloat(txt[43]), drive_used = parseFloat(txt[42]), drive_total = parseFloat(txt[44]);
+            $("#id_drive_space > div > div.progress-bar-success").css("width", (drive_free / drive_total * 100).toString() + '%' ).html(drive_free);
+            $("#id_drive_space > div > div.progress-bar-danger").css("width", (drive_used / drive_total * 100).toString() + '%' ).html(drive_used);
+        	var disk_sp = txt[35].split(/\//);
             $("#id_disk_space > div > div.progress-bar-success").css("width", (parseFloat(disk_sp[0]) / (parseFloat(disk_sp[0]) + parseFloat(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[0]);
             $("#id_disk_space > div > div.progress-bar-danger").css("width", (parseFloat(disk_sp[1]) / (parseFloat(disk_sp[0]) + parseFloat(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[1]);
-        	var mem_sp = txt[30].split(/\//);
+        	var mem_sp = txt[36].split(/\//);
             $("#id_memory > div > div.progress-bar-success").css("width", (parseFloat(mem_sp[0]) / (parseFloat(mem_sp[0]) + parseFloat(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[0]);
             $("#id_memory > div > div.progress-bar-danger").css("width", (parseFloat(mem_sp[1]) / (parseFloat(mem_sp[0]) + parseFloat(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[1]);
 
-        	$("#id_backup").html('<span style="color:#00f;">' + txt[31] + '</span>');
-        	var cpu = txt[32].split(/\//);
+        	$("#id_backup").html('<span style="color:#00f;">' + txt[37] + '</span>');
+        	var cpu = txt[38].split(/\//);
         	$("#id_cpu").html('<span style="color:#f00;">' + cpu[0] + '</span> | <span style="color:#080;">' + cpu[1] + '</span> | <span style="color:#00f;">' + cpu[2] + '</span>');
 
-            $("#id_base_dir").html('<code>' + txt[33] + '</code>');
-            $("#id_media_root").html('<code>' + txt[34] + '</code>');
-            $("#id_static_root").html('<code>' + txt[35] + '</code>');
+            $("#id_base_dir").html('<code>' + txt[39] + '</code>');
+            $("#id_media_root").html('<code>' + txt[40] + '</code>');
+            $("#id_static_root").html('<code>' + txt[41] + '</code>');
     	}
     });
 

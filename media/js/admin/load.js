@@ -4,11 +4,11 @@ xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState == XMLHttpRequest.DONE) {
     	if (xmlhttp.status == 200) {
 			var xmlDoc = xmlhttp.responseText.split(/\t/);
-			ver_jquery = xmlDoc[8];
-			ver_bootstrap = xmlDoc[9];
-			ver_swfobj = xmlDoc[10];
-			ver_fullcal= xmlDoc[11];
-			ver_moment = xmlDoc[12];
+			ver_jquery = xmlDoc[11];
+			ver_bootstrap = xmlDoc[12];
+			ver_swfobj = xmlDoc[16];
+			ver_fullcal= xmlDoc[17];
+			ver_moment = xmlDoc[18];
 
 			document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/' + ver_jquery + '/jquery.min.js"><\/script>');
 			document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/' + ver_bootstrap + '/js/bootstrap.min.js"><\/script>');
