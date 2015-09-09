@@ -34,21 +34,25 @@
 					<thead>
 						<tr class="active">
 							<th class="col-md-3"><span class="glyphicon glyphicon-user"></span> Account</th>
-							<th class="col-md-3"><span class="glyphicon glyphicon-circle-arrow-up"></span> Commits</th>
-							<th class="col-md-3"><span class="glyphicon glyphicon-plus-sign"></span> Additions</th>
-							<th class="col-md-3"><span class="glyphicon glyphicon-minus-sign"></span> Deletions</th>
+							<th class="col-md-3">
+								<span class="pull-right">
+									<span class="glyphicon glyphicon-circle-arrow-up"></span>&nbsp;&nbsp;Commits&nbsp;&nbsp;&nbsp;&nbsp;
+								</span>
+							</th>
+							<th class="col-md-3">
+								<span class="pull-right">
+									<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;Additions&nbsp;&nbsp;&nbsp;&nbsp;
+								</span>
+							</th>
+							<th class="col-md-3">
+								<span class="pull-right">
+									<span class="glyphicon glyphicon-minus-sign"></span>&nbsp;&nbsp;Deletions&nbsp;&nbsp;&nbsp;&nbsp;
+								</span>
+							</th>
 						</tr>
 					</thead>
-					<tbody>
-						{% for d in contrib %}
-						<tr>
-							<td>{% autoescape off %}{{d.Contributors}}{% endautoescape %}</td>
-							<td><span class="pull-right" style="color:#00f;">{{d.Commits}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-							<td><span class="pull-right" style="color:#080;">{{d.Additions}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-							<td><span class="pull-right" style="color:#f00;">{{d.Deletions}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-						</tr>
-						{% endfor %}
-						<tr><td colspan="4" style="padding: 0px;"></td></tr>
+					<tbody id="git_table_body">
+						<tr><td colspan="3" class="place_holder"></td></tr>
 					</tbody>
 				</table>
 			</div>
@@ -66,12 +70,6 @@
 		$(document).ready(function() {
 			$("#view-selector-container").hide();
 			$("ul.breadcrumb").append('<li class="active"><a href="/admin/git/">GitHub Repository</a></li>');
-			// $("#iframe").css("width", parseInt($("#content").css("width")) - 50);
-			// $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
-			// $("#iframe").css("height", 800);
-			// $('#iframe').on("load", function() {
-			// 	$(this).css("height", $(this).contents().outerHeight());
-			// });
 		});
 	</script>
     <script type="text/javascript" src="http://www.google.com/jsapi" ></script>

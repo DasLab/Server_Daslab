@@ -1,9 +1,16 @@
 google.load('visualization', '1.1', {packages: ['corechart', 'calendar']});
 google.setOnLoadCallback(drawDash);
 
-function drawDash() {
 
-    google.visualization.drawChart({
+function readyHandler() {
+    $(".place_holder").each(function() {
+        if ($(this).html().length > 0) { $(this).removeClass("place_holder"); }
+    });
+}
+
+
+function drawDash() {
+    var chart = new google.visualization.ChartWrapper({
         'chartType': 'Calendar',
         'dataSourceUrl': '/admin/git_stat?qs=c',
         'containerId': 'plot_c',
@@ -22,8 +29,10 @@ function drawDash() {
             'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
+    google.visualization.events.addListener(chart, 'ready', readyHandler);
+    chart.draw();
 
-    google.visualization.drawChart({
+    var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/admin/git_stat?qs=ad',
         'containerId': 'plot_ad',
@@ -47,8 +56,10 @@ function drawDash() {
             'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
+    google.visualization.events.addListener(chart, 'ready', readyHandler);
+    chart.draw();
 
-    google.visualization.drawChart({
+    var chart = new google.visualization.ChartWrapper({
         'chartType': 'PieChart',
         'dataSourceUrl': '/admin/git_stat?qs=au',
         'containerId': 'plot_pie',
@@ -62,8 +73,21 @@ function drawDash() {
             'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
+    google.visualization.events.addListener(chart, 'ready', readyHandler);
+    chart.draw();
 
-	setTimeout(function() {$(".place_holder").removeClass("place_holder");}, 800);
 }
 
+
+$.ajax({
+    url : "/admin/git_stat?qs=init&tqx=reqId%3A52",
+    dataType: "json",
+    success: function (data) {
+        var html = "";
+        for (var i = 0; i < data.contrib.length; i++) {
+            html += '<tr><td>' + data.contrib[i].Contributors + '</td><td><span class="pull-right" style="color:#00f;">' + data.contrib[i].Commits + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#080;">' + data.contrib[i].Additions + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#f00;">' + data.contrib[i].Deletions + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>';
+        }
+        $("#git_table_body").html(html).removeClass('place_holder');
+    }
+});
 

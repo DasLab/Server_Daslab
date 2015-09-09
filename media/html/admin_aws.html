@@ -30,16 +30,17 @@
 						</tr>
 					</thead>
 					<tbody>
+						<tr><td colspan="12" class="place_holder" id="aws_table_body"></td></tr>
 						<tr>
-							<td><span class="label label-dark-blue">Instance</span><span class="label label-inverse">ID</span></td><td colspan="2"><code>{{ec2.id}}</code></td>
-							<td><span class="label label-dark-blue">Instance</span><span class="label label-primary">Type</span></td><td colspan="2"><code>{{ec2.instance_type}}</code></td>
-							<td><span class="label label-dark-blue">Instance</span><span class="label label-magenta">Image</span></td><td colspan="2"><code>{{ec2.image_id}}</code></td>
+							<td><span class="label label-dark-blue">Instance</span><span class="label label-inverse">ID</span></td><td colspan="2"><code id="table_ec2_id"></code></td>
+							<td><span class="label label-dark-blue">Instance</span><span class="label label-primary">Type</span></td><td colspan="2"><code id="table_ec2_type"></code></td>
+							<td><span class="label label-dark-blue">Instance</span><span class="label label-magenta">Image</span></td><td colspan="2"><code id="table_ec2_img"></code></td>
 							<td>
 								<div class="pull-right">
 									<span class="label label-dark-blue">Instance</span><span class="label label-violet">Arch</span>
 								</div>
 							</td>
-							<td colspan="2"><code>{{ec2.architecture}}</code></td>
+							<td colspan="2"><code id="table_ec2_arch"></code></td>
 						</tr>
 						<tr>
 							<td colspan="2">
@@ -47,19 +48,19 @@
 									<span class="label label-dark-green">Load Balancer</span><span class="label label-success">Public DNS</span>
 								</div>
 							</td>
-							<td colspan="5"><a href="http://{{elb.dns_name}}" target="_blank"><code>{{elb.dns_name}}</code></a></td>
+							<td colspan="5"><a target="_blank"><code id="table_elb_pns"></code></a></td>
 							<td>
 								<div class="pull-right">
 									<span class="label label-dark-red">Volume</span><span class="label label-primary">Type</span>
 								</div>
 							</td>
-							<td><code>{{ebs.type}}</code></td>
+							<td><code id="table_ebs_type"></code></td>
 							<td>
 								<div class="pull-right">
 									<span class="label label-dark-red">Volume</span><span class="label label-inverse">ID</span>
 								</div>
 							</td>
-							<td colspan="2"><code>{{ebs.id}}</code></td>
+							<td colspan="2"><code id="table_ebs_id"></code></td>
 						</tr>
 						<tr>
 							<td colspan="2">
@@ -67,19 +68,19 @@
 									<span class="label label-dark-blue">Instance</span><span class="label label-success">Public DNS</span>
 								</div>
 							</td>
-							<td colspan="5"><a href="http://{{ec2.public_dns_name}}" target="_blank"><code>{{ec2.public_dns_name}}</code></a></td>
+							<td colspan="5"><a target="_blank"><code id="table_ec2_pub_dns"></code></a></td>
 							<td>
 								<div class="pull-right">
 									<span class="label label-dark-red">Volume</span><span class="label label-warning">Size</span>
 								</div>
 							</td>
-							<td><code>{{ebs.size}}</code> GB</td>
+							<td><code id="table_ebs_size"></code> GB</td>
 							<td>
 								<div class="pull-right">
 									<span class="label label-dark-red">Volume</span><span class="label label-magenta">Snapshot</span>
 								</div>
 							</td>
-							<td colspan="2"><code>{{ebs.snapshot_id}}</code></td>
+							<td colspan="2"><code id="table_ebs_snap"></code></td>
 						</tr>
 						<tr>
 							<td colspan="2">
@@ -87,24 +88,24 @@
 									<span class="label label-dark-blue">Instance</span><span class="label label-danger">Private DNS</span>
 								</div>
 							</td>
-							<td colspan="5"><a href="http://{{ec2.private_dns_name}}" target="_blank"><code>{{ec2.private_dns_name}}</code></a></td>
+							<td colspan="5"><a target="_blank"><code id="table_ec2_prv_dns"></code></a></td>
 							<td colspan="2">
 								<div class="pull-right">
 									<span class="label label-dark-green">Load Balancer</span><span class="label label-info">Health Check</span>
 								</div>
 							</td>
-							<td colspan="3"><code>{{elb.health_check}}</code></td>
+							<td colspan="3"><code id="table_elb_health"></code></td>
 						</tr>
 						<tr>
-							<td><span class="label label-dark-blue">Instance</span><span class="label label-default">Subnet</span></td><td colspan="2"><code>{{ec2.subnet_id}}</code></td>
-							<td><span class="label label-dark-blue">Instance</span><span class="label label-default">VPC</span></td><td colspan="2"><code>{{ec2.vpc_id}}</code></td>
-							<td><span class="label label-dark-green">Load Balancer</span><span class="label label-default">VPC</span></td><td colspan="2"><code>{{elb.vpc_id}}</code></td>
+							<td><span class="label label-dark-blue">Instance</span><span class="label label-default">Subnet</span></td><td colspan="2"><code id="table_ec2_subnet"></code></td>
+							<td><span class="label label-dark-blue">Instance</span><span class="label label-default">VPC</span></td><td colspan="2"><code id="table_ec2_vpc"></code></td>
+							<td><span class="label label-dark-green">Load Balancer</span><span class="label label-default">VPC</span></td><td colspan="2"><code id="table_elb_vpc"></code></td>
 							<td>
 								<div class="pull-right">
 									<span class="label label-orange">Zone</span>
 								</div>
 							</td>
-							<td colspan="2"><code>{{ebs.zone}}</code></td>
+							<td colspan="2"><code id="table_ebs_zone"></code></td>
 						</tr>
 						<tr><td colspan="12" style="padding: 0px;"></td></tr>
 					</tbody>

@@ -208,39 +208,57 @@ def aws_stats(request):
         qs = request.GET.get('qs')
         sp = request.GET.get('sp')
         req_id = request.GET.get('tqx').replace('reqId:', '')
-        conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
 
-        if sp == '7d':
-            args = {'period':7200, 'start_time':datetime.now() - timedelta(days=7), 'end_time':datetime.now()}
-        elif sp == '48h':
-            args = {'period':720, 'start_time':datetime.now() - timedelta(hours=48), 'end_time':datetime.now()}
-        else:
-            return HttpResponseBadRequest("Invalid query.")
+        if qs == 'init':
+            conn = boto.ec2.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
+            resv = conn.get_only_instances(instance_ids=AWS['EC2_INSTANCE_ID'])
+            stat = resv[0].__dict__
+            stat1 = {k: stat[k] for k in ('id', 'instance_type', 'private_dns_name', 'public_dns_name', 'vpc_id', 'subnet_id', 'image_id', 'architecture')} 
+            resv = conn.get_all_volumes(volume_ids=AWS['EBS_VOLUME_ID'])
+            stat = resv[0].__dict__
+            stat2 = {k: stat[k] for k in ('id', 'type', 'size', 'zone', 'snapshot_id', 'encrypted')} 
 
-        if qs == 'latency':
-            args.update({'metric':['Latency'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Seconds', 'calc_rate':False})
-        elif qs == 'request':
-            args.update({'metric':['RequestCount'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
-        elif qs == '23xx':
-            args.update({'metric':['HTTPCode_Backend_2XX', 'HTTPCode_Backend_3XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
-        elif qs == '45xx':
-            args.update({'metric':['HTTPCode_Backend_4XX', 'HTTPCode_Backend_5XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
-        elif qs == 'host':
-            args.update({'metric':['HealthyHostCount', 'UnHealthyHostCount'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
-        elif qs == 'status':
-            args.update({'metric':['BackendConnectionErrors', 'StatusCheckFailed_Instance', 'StatusCheckFailed_System'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
-        elif qs == 'network':
-            args.update({'metric':['NetworkIn', 'NetworkOut'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
-        elif qs == 'cpu':
-            args.update({'metric':['CPUUtilization'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Percent', 'calc_rate':False})
-        elif qs == 'credit':
-            args.update({'metric':['CPUCreditUsage', 'CPUCreditBalance'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
-        elif qs == 'volops':
-            args.update({'metric':['VolumeWriteOps', 'VolumeReadOps'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
-        elif qs == 'volbytes':
-            args.update({'metric':['VolumeWriteBytes', 'VolumeReadBytes'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
+            conn = boto.ec2.elb.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
+            resv = conn.get_all_load_balancers(load_balancer_names=AWS['ELB_NAME'])
+            stat = resv[0].__dict__
+            stat3 = {k: stat[k] for k in ('dns_name', 'vpc_id', 'subnets', 'health_check')} 
+            stat3['health_check'] = str(stat3['health_check']).replace('HealthCheck:', '')
+
+            return simplejson.dumps({'ec2':stat1, 'ebs':stat2, 'elb':stat3})
+
         else:
-            return HttpResponseBadRequest("Invalid query.")
+            conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
+            if sp == '7d':
+                args = {'period':7200, 'start_time':datetime.now() - timedelta(days=7), 'end_time':datetime.now()}
+            elif sp == '48h':
+                args = {'period':720, 'start_time':datetime.now() - timedelta(hours=48), 'end_time':datetime.now()}
+            else:
+                return HttpResponseBadRequest("Invalid query.")
+
+            if qs == 'latency':
+                args.update({'metric':['Latency'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Seconds', 'calc_rate':False})
+            elif qs == 'request':
+                args.update({'metric':['RequestCount'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+            elif qs == '23xx':
+                args.update({'metric':['HTTPCode_Backend_2XX', 'HTTPCode_Backend_3XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+            elif qs == '45xx':
+                args.update({'metric':['HTTPCode_Backend_4XX', 'HTTPCode_Backend_5XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+            elif qs == 'host':
+                args.update({'metric':['HealthyHostCount', 'UnHealthyHostCount'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+            elif qs == 'status':
+                args.update({'metric':['BackendConnectionErrors', 'StatusCheckFailed_Instance', 'StatusCheckFailed_System'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+            elif qs == 'network':
+                args.update({'metric':['NetworkIn', 'NetworkOut'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
+            elif qs == 'cpu':
+                args.update({'metric':['CPUUtilization'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Percent', 'calc_rate':False})
+            elif qs == 'credit':
+                args.update({'metric':['CPUCreditUsage', 'CPUCreditBalance'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+            elif qs == 'volops':
+                args.update({'metric':['VolumeWriteOps', 'VolumeReadOps'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+            elif qs == 'volbytes':
+                args.update({'metric':['VolumeWriteBytes', 'VolumeReadBytes'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
+            else:
+                return HttpResponseBadRequest("Invalid query.")
     else:
         return HttpResponseBadRequest("Invalid query.")
 
@@ -297,48 +315,70 @@ def git_stats(request):
         gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
         repo = gh.get_repo('DasLab/Server_DasLab')
 
-        data = []
-        desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
-        stats = ['Timestamp']
-
-        if qs == 'c':
-            contribs = repo.get_stats_commit_activity()
-            if contribs is None: return HttpResponseServerError("PyGithub failed")
-            fields = ['Commits']
-            for contrib in contribs:
-                for i, day in enumerate(contrib.days):
-                    data.append({u'Timestamp': contrib.week + timedelta(days=i), u'Commits': day})
-        elif qs == 'ad':
-            contribs = repo.get_stats_code_frequency()
-            if contribs is None: return HttpResponseServerError("PyGithub failed")
-            fields = ['Additions', 'Deletions']
-            for contrib in contribs:
-                data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
-        elif qs == 'au':
+        if qs == 'init':
             contribs = repo.get_stats_contributors()
+            data = []
+            i = 0
+            while (contribs is None and i <= 5):
+                sleep(1)
+                contribs = repo.get_stats_contributors()
             if contribs is None: return HttpResponseServerError("PyGithub failed")
-            fields = ['Commits', 'Additions', 'Deletions']
+
             for contrib in contribs:
                 a, d = (0, 0)
                 for w in contrib.weeks:
                     a += w.a
                     d += w.d
-                data.append({u'Contributors': contrib.author.login, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
-            stats = ['Contributors']
-            desp['Contributors'] = ('string', 'Name')
-            del desp['Timestamp']
-        else:
-            return HttpResponseBadRequest("Invalid query.")
+                name = '<i>%s</i> <span style="color:#888">(%s)</span>' % (contrib.author.login, contrib.author.name)
+                data.append({u'Contributors': name, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+            data = sorted(data, key=operator.itemgetter(u'Commits'))            
+            return simplejson.dumps({'contrib':data})
 
-        for field in fields:
-            stats.append(field)
-            desp[field] = ('number', field)
-        
-        data = sorted(data, key=operator.itemgetter(stats[0]))
-        data_table = gviz_api.DataTable(desp)
-        data_table.LoadData(data)
-        results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
-        return results
+        else:
+            repo = gh.get_repo('DasLab/Server_DasLab')
+
+            data = []
+            desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+            stats = ['Timestamp']
+
+            if qs == 'c':
+                contribs = repo.get_stats_commit_activity()
+                if contribs is None: return HttpResponseServerError("PyGithub failed")
+                fields = ['Commits']
+                for contrib in contribs:
+                    for i, day in enumerate(contrib.days):
+                        data.append({u'Timestamp': contrib.week + timedelta(days=i), u'Commits': day})
+            elif qs == 'ad':
+                contribs = repo.get_stats_code_frequency()
+                if contribs is None: return HttpResponseServerError("PyGithub failed")
+                fields = ['Additions', 'Deletions']
+                for contrib in contribs:
+                    data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
+            elif qs == 'au':
+                contribs = repo.get_stats_contributors()
+                if contribs is None: return HttpResponseServerError("PyGithub failed")
+                fields = ['Commits', 'Additions', 'Deletions']
+                for contrib in contribs:
+                    a, d = (0, 0)
+                    for w in contrib.weeks:
+                        a += w.a
+                        d += w.d
+                    data.append({u'Contributors': contrib.author.login, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+                stats = ['Contributors']
+                desp['Contributors'] = ('string', 'Name')
+                del desp['Timestamp']
+            else:
+                return HttpResponseBadRequest("Invalid query.")
+
+            for field in fields:
+                stats.append(field)
+                desp[field] = ('number', field)
+            
+            data = sorted(data, key=operator.itemgetter(stats[0]))
+            data_table = gviz_api.DataTable(desp)
+            data_table.LoadData(data)
+            results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
+            return results
     else:
         return HttpResponseBadRequest("Invalid query.")
 

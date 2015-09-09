@@ -141,6 +141,10 @@ def apache(request):
 admin.site.register_view('apache/', view=apache, visible=False)
 
 
+def aws(request):
+    return render_to_response(PATH.HTML_PATH['admin_aws'], {}, context_instance=RequestContext(request))
+admin.site.register_view('aws/', view=aws, visible=False)
+
 def aws_stat(request):
     json = aws_stats(request)
     if isinstance(json, HttpResponseBadRequest): return json
@@ -153,23 +157,11 @@ def aws_dash(request):
     return HttpResponse(json, content_type='application/json')
 admin.site.register_view('aws_dash', view=aws_dash, visible=False)
 
-def aws(request):
-    conn = boto.ec2.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
-    resv = conn.get_only_instances(instance_ids=AWS['EC2_INSTANCE_ID'])
-    stat = resv[0].__dict__
-    stat1 = {k: stat[k] for k in ('id', 'instance_type', 'private_dns_name', 'public_dns_name', 'vpc_id', 'subnet_id', 'image_id', 'architecture')} 
-    resv = conn.get_all_volumes(volume_ids=AWS['EBS_VOLUME_ID'])
-    stat = resv[0].__dict__
-    stat2 = {k: stat[k] for k in ('id', 'type', 'size', 'zone', 'snapshot_id', 'encrypted')} 
-
-    conn = boto.ec2.elb.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
-    resv = conn.get_all_load_balancers(load_balancer_names=AWS['ELB_NAME'])
-    stat = resv[0].__dict__
-    stat3 = {k: stat[k] for k in ('dns_name', 'vpc_id', 'subnets', 'health_check')} 
-    stat3['health_check'] = str(stat3['health_check']).replace('HealthCheck:', '')
-
-    return render_to_response(PATH.HTML_PATH['admin_aws'], {'ec2':stat1, 'ebs':stat2, 'elb':stat3}, context_instance=RequestContext(request))
-admin.site.register_view('aws/', view=aws, visible=False)
+def aws_admin(request):
+    json = ga_stats()
+    if isinstance(json, HttpResponseBadRequest): return json
+    return HttpResponse(json, content_type='application/json')
+admin.site.register_view('aws_admin', view=aws_admin, visible=False)
 
 
 def ga(request):
@@ -188,6 +180,10 @@ def ga_admin(request):
     return HttpResponse(json, content_type='application/json')
 admin.site.register_view('ga_admin', view=ga_admin, visible=False)
 
+
+def git(request):
+    return render_to_response(PATH.HTML_PATH['admin_git'], {}, context_instance=RequestContext(request))
+admin.site.register_view('git/', view=git, visible=False)
 
 def git_stat(request):
     json = git_stats(request)
@@ -216,30 +212,6 @@ def git_dash(request):
         if isinstance(json, HttpResponseServerError): return json
     return HttpResponse(json, content_type='application/json')
 admin.site.register_view('git_dash', view=git_dash, visible=False)
-
-def git(request):
-    gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
-    repo = gh.get_repo('DasLab/Server_DasLab')
-    contribs = repo.get_stats_contributors()
-
-    data = []
-    i = 0
-    while (contribs is None and i <= 5):
-        sleep(1)
-        contribs = repo.get_stats_contributors()
-    if contribs is None: return HttpResponseServerError("PyGithub failed")
-
-    for contrib in contribs:
-        a, d = (0, 0)
-        for w in contrib.weeks:
-            a += w.a
-            d += w.d
-        name = '<i>%s</i> <span style="color:#888">(%s)</span>' % (contrib.author.login, contrib.author.name)
-        data.append({u'Contributors': name, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
-    data = sorted(data, key=operator.itemgetter(u'Commits'))
-
-    return render_to_response(PATH.HTML_PATH['admin_git'], {'contrib':data}, context_instance=RequestContext(request))
-admin.site.register_view('git/', view=git, visible=False)
 
 
 def slack_dash(request):
