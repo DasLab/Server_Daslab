@@ -107,27 +107,26 @@ def dash_aws(request):
 
 
 def dash_ga(request):
-    access_token = subprocess.Popen('curl --silent --request POST "https://www.googleapis.com/oauth2/v3/token" --data "refresh_token=%s" --data "client_id=%s" --data "client_secret=%s" --data "grant_type=refresh_token"' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET']), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-    access_token = simplejson.loads(access_token)['access_token']
-
-    list_proj = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/management/accountSummaries?access_token=%s"' % (access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-    list_proj = simplejson.loads(list_proj)['items'][0]['webProperties'][::-1]
-
+    access_token = requests.post('https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])).json()['access_token']
+    list_proj = requests.get('https://www.googleapis.com/analytics/v3/management/accountSummaries?access_token=%s' % access_token).json()['items'][0]['webProperties'][::-1]
+    url_colon = urllib.quote(':')
+    url_comma = urllib.quote(',')
     dict_ga = {'access_token':access_token, 'client_id':GA['CLIENT_ID'], 'projs':[]}
+
     for proj in list_proj:
         dict_ga['projs'].append({'id':proj['profiles'][0]['id'], 'track_id':proj['id'], 'name':proj['name'], 'url':proj['websiteUrl']})
-    for j, proj in enumerate(dict_ga['projs']):
-        for i in ('sessionDuration', 'bounceRate', 'pageviewsPerSession', 'pageviews', 'sessions', 'users'):
-            temp = subprocess.Popen('curl --silent --request GET "https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&access_token=%s"' % (urllib.quote(':'), proj['id'], urllib.quote(':'), i, access_token), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-            temp = simplejson.loads(temp)['rows'][0][0]
 
-            if i in ('bounceRate', 'pageviewsPerSession'):
-                temp = '%.2f' % float(temp)
-            elif i == 'sessionDuration':
-                temp = str(timedelta(seconds=int(float(temp) / 1000)))
+    for j, proj in enumerate(dict_ga['projs']):
+        temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (url_colon, proj['id'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)).json()['totalsForAllResults']
+        for i, key in enumerate(temp):
+            ga_key = key[3:]
+            if ga_key in ['bounceRate', 'pageviewsPerSession']:
+                curr = '%.2f' % float(temp[key])
+            elif ga_key == 'sessionDuration':
+                curr = str(timedelta(seconds=int(float(temp[key]) / 1000)))
             else:
-                temp = '%d' % int(temp)
-            dict_ga['projs'][j][i] = temp
+                curr = '%d' % int(temp[key])
+            dict_ga['projs'][j][ga_key] = curr
 
     return simplejson.dumps(dict_ga)
 

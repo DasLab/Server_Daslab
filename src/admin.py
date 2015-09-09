@@ -11,8 +11,6 @@ from django.contrib.auth.models import User
 # from suit.widgets import AutosizedTextarea
 # from suit.widgets import EnclosedInput, SuitDateWidget
 
-import boto.ec2.cloudwatch, boto.ec2.elb
-import operator
 from time import sleep
 
 from src.console import *
