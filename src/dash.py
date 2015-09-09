@@ -11,6 +11,7 @@ from time import sleep, mktime
 import boto.ec2.cloudwatch
 import gviz_api
 from github import Github
+import requests
 from slacker import Slacker
 
 from src.console import *
@@ -137,29 +138,43 @@ def dash_git(request):
         req_id = request.GET.get('tqx').replace('reqId:', '')
         gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
 
-        if qs == 'init':
-            repos = []
-            for repo in gh.get_user().get_repos():
-                i = 0
-                contribs = repo.get_stats_contributors()
-                while (contribs is None and i <= 5):
-                    sleep(1)
+        if qs in ['init', 'num']:
+            if qs == 'init':
+                repos = []
+                for repo in gh.get_organization('DasLab').get_repos():
+                    i = 0
                     contribs = repo.get_stats_contributors()
-                if contribs is None: return HttpResponseServerError("PyGithub failed")
-                data = []
-                for contrib in contribs:
-                    a, d = (0, 0)
-                    for w in contrib.weeks:
-                        a += w.a
-                        d += w.d
-                    data.append({u'Contributors': contrib.author.login, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
-                data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
-                repos.append({'url':repo.html_url, 'private':repo.private, 'data':data, 'name':repo.name, 'id':repo.full_name})
-            return simplejson.dumps({'git':repos})
+                    while (contribs is None and i <= 5):
+                        sleep(1)
+                        contribs = repo.get_stats_contributors()
+                    if contribs is None: return HttpResponseServerError("PyGithub failed")
+                    data = []
+                    for contrib in contribs:
+                        a, d = (0, 0)
+                        for w in contrib.weeks:
+                            a += w.a
+                            d += w.d
+                        data.append({u'Contributors': contrib.author.login, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+
+                    data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
+                    repos.append({'url':repo.html_url, 'private':repo.private, 'data':data, 'name':repo.name, 'id':repo.full_name})
+                return simplejson.dumps({'git':repos})
+            else:
+                name = 'DasLab/' + request.GET.get('repo')
+                repo = gh.get_repo(name)
+                created_at = repo.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                pushed_at = repo.pushed_at.strftime('%Y-%m-%d %H:%M:%S')
+                
+                num_issues = len(requests.get('https://api.github.com/repos/' + name + '/issues?access_token=%s' % GIT['ACCESS_TOKEN']).json())
+                num_pulls = len(requests.get('https://api.github.com/repos/' + name + '/pulls?access_token=%s' % GIT['ACCESS_TOKEN']).json())
+                num_watchers = len(requests.get('https://api.github.com/repos/' + name + '/watchers?access_token=%s' % GIT['ACCESS_TOKEN']).json())
+                num_branches = len(requests.get('https://api.github.com/repos/' + name + '/branches?access_token=%s' % GIT['ACCESS_TOKEN']).json())
+                num_forks = len(requests.get('https://api.github.com/repos/' + name + '/forks?access_token=%s' % GIT['ACCESS_TOKEN']).json())
+                num_downloads = len(requests.get('https://api.github.com/repos/' + name + '/downloads?access_token=%s' % GIT['ACCESS_TOKEN']).json())
+                return simplejson.dumps({'name':request.GET.get('repo'), 'created_at':created_at, 'pushed_at':pushed_at, 'num_watchers':num_watchers, 'num_pulls':num_pulls, 'num_issues':num_issues, 'num_branches':num_branches, 'num_forks':num_forks, 'num_downloads':num_downloads})
 
         elif qs in ['c', 'ad']:
             repo = gh.get_repo('DasLab/' + request.GET.get('repo'))
-
             data = []
             desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
             stats = ['Timestamp']

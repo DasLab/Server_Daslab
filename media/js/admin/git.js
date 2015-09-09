@@ -1,4 +1,4 @@
-google.load('visualization', '1.1', {packages: ['corechart', 'calendar']});
+google.load('visualization', '1', {packages: ['corechart', 'calendar']});
 google.setOnLoadCallback(drawDash);
 
 

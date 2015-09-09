@@ -41,7 +41,7 @@ $(document).ready(function() {
         	$("#id_virtualenv").html(txt[23]);
             $("#id_boto").html(txt[24]);
             $("#id_simplejson").html(txt[25]);
-            $("#id_gviz").html(txt[26]);
+            $("#id_gvizapi").html(txt[26]);
             $("#id_nano").html(txt[27]);
             $("#id_ssl").html(txt[28]);
 
