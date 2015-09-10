@@ -348,8 +348,8 @@ def git_stats(request):
                 data = sorted(data, key=operator.itemgetter(u'Commits'))            
                 return simplejson.dumps({'contrib':data})
             else:
-                created_at = repo.created_at.strftime('%Y-%m-%d %H:%M:%S')
-                pushed_at = repo.pushed_at.strftime('%Y-%m-%d %H:%M:%S')
+                created_at = repo.created_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone('America/Los_Angeles')).strftime('%Y-%m-%d %H:%M:%S')
+                pushed_at = repo.pushed_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone('America/Los_Angeles')).strftime('%Y-%m-%d %H:%M:%S')
                 
                 num_issues = len(requests.get('https://api.github.com/repos/' + repo_name + '/issues?access_token=%s' % GIT['ACCESS_TOKEN']).json())
                 num_pulls = len(requests.get('https://api.github.com/repos/' + repo_name + '/pulls?access_token=%s' % GIT['ACCESS_TOKEN']).json())
