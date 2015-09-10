@@ -231,7 +231,7 @@ def dash_slack(request):
             channels, archives = [], []
             for resp in response:
                 temp = {'name':resp['name'], 'num_members':resp['num_members']}
-                history = sh.channels.history(channel=resp['id'], count=1000).body
+                history = sh.channels.history(channel=resp['id'], count=1000, inclusive=1).body
                 temp.update({'num_msgs':len(history['messages']), 'has_more':history['has_more']})
                 num_files = 0
                 latest = 0

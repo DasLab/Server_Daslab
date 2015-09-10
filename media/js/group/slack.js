@@ -47,9 +47,9 @@ $.ajax({
 		var html = "";
 		for (var i = 0; i < data.channels.length; i++) {
 			var name = "", num_msgs = data.channels[i].num_msgs.toString();
-	        var time = new Date();
-	        time.setTime(parseInt(data.channels[i].latest * 1000));
-	        latest = time.getFullYear() + '-' + zfill(time.getMonth(), 2) + '-' + zfill(time.getDate(), 2) + ' ' + zfill(time.getHours(), 2) + ':' + zfill(time.getMinutes(), 2) + ':' + zfill(time.getSeconds(), 2);
+	        var time = new Date(0);
+	        time.setUTCSeconds(data.channels[i].latest);
+	        latest = time.getFullYear() + '-' + zfill(time.getMonth() + 1, 2) + '-' + zfill(time.getDate(), 2) + ' ' + zfill(time.getHours(), 2) + ':' + zfill(time.getMinutes(), 2) + ':' + zfill(time.getSeconds(), 2);
 			if (data.channels[i].name == "general" || data.channels[i].name == "random") { 
 				name = '<span class="label label-info">' + data.channels[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-play-circle">'
 			} else if (data.channels[i].name == "dropbox" || data.channels[i].name == "github") { 
@@ -63,9 +63,9 @@ $.ajax({
 		html += '<tr><td colspan="2" style="padding: 0px;"></td></tr>';
 		for (var i = 0; i < data.archives.length; i++) {
 			var num_msgs = data.archives[i].num_msgs.toString();
-	        var time = new Date();
-	        time.setTime(parseInt(data.archives[i].latest * 1000));
-	        latest = time.getFullYear() + '-' + zfill(time.getMonth(), 2) + '-' + zfill(time.getDate(), 2) + ' ' + zfill(time.getHours(), 2) + ':' + zfill(time.getMinutes(), 2) + ':' + zfill(time.getSeconds(), 2);
+	        var time = new Date(0);
+	        time.setUTCSeconds(data.archives[i].latest);
+	        latest = time.getFullYear() + '-' + zfill(time.getMonth() + 1, 2) + '-' + zfill(time.getDate(), 2) + ' ' + zfill(time.getHours(), 2) + ':' + zfill(time.getMinutes(), 2) + ':' + zfill(time.getSeconds(), 2);
 			if (data.archives[i].has_more) { num_msgs = num_msgs + '+'}
 			html += '<tr class="active"><td><span class="pull-right"><span class="label label-default">' + data.archives[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-ban-circle"></span></td><td><span class="pull-right">' + data.archives[i].num_members + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right">' + num_msgs + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right">' + data.archives[i].num_files + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="label label-primary">' + latest + '</span></td></tr>';
 		}
