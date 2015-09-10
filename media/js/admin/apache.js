@@ -10,7 +10,7 @@ function get_apache_stat() {
             $("#apache_title").html(data['title']);
             $("#apache_ver").html(data['ver_apache']);
             $("#apache_wsgi").html(data['ver_wsgi']);
-            $("#apache_python").html(data['ver_python']);
+            $("#apache_ssl").html(data['ver_ssl']);
             $("#apache_mpm").html(data['mpm']);
             $("#apache_port").html(data['port']);
 
@@ -29,6 +29,12 @@ function get_apache_stat() {
             $("#apache_total_access").html(data['total_access']);
             $("#apache_total_traffic").html('<span style="color:#00f">' + data['total_traffic'] + '</span>');
             $("#apache_cpu_load").html(data['cpu_load'] + '%');
+
+            $("#apache_ssl_cache").html(data['ssl_cache']);
+            $("#apache_ssl_subcache").html(data['ssl_subcache']);
+            $("#apache_ssl_index").html(data['ssl_index']);
+            $("#apache_ssl_entry").html(data['ssl_entry']);
+            $("#apache_ssl_mem").html(parseInt(data['ssl_mem']) / 1000 + ' kB');
 
             $("#apache_process").html(data['processing']);
             $("#apache_idle").html(data['idle']);
