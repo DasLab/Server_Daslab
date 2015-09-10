@@ -140,7 +140,7 @@ admin.site.register_view('apache/', view=apache, visible=False)
 
 
 def aws(request):
-    return render_to_response(PATH.HTML_PATH['admin_aws'], {}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_aws'], {'timezone':TIME_ZONE}, context_instance=RequestContext(request))
 admin.site.register_view('aws/', view=aws, visible=False)
 
 def aws_stat(request):
@@ -180,7 +180,7 @@ admin.site.register_view('ga_admin', view=ga_admin, visible=False)
 
 
 def git(request):
-    return render_to_response(PATH.HTML_PATH['admin_git'], {}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_git'], {'timezone':TIME_ZONE}, context_instance=RequestContext(request))
 admin.site.register_view('git/', view=git, visible=False)
 
 def git_stat(request):

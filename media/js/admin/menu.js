@@ -1,5 +1,11 @@
 var $ = django.jQuery;
 
+setInterval(function () {
+	var utc = new Date().toISOString().replace(/\..+/, '.000Z');
+	$("#utc").html(utc);
+}, 1000);
+
+
 $(document).ready(function () {
 	$("#left-nav > ul > li > ul").css("display", "block");
 
@@ -15,11 +21,6 @@ $(document).ready(function () {
 	$(".form-search > span.glyphicon").remove();
 	$(".form-search > input.submit").attr("id", "search_submit");
 	$("#search_submit").replaceWith("<button type='submit' class='submit form-control' id='search_submit' style='border:none;'><span class='glyphicon glyphicon-search'></span>&nbsp;</button>");
-
-	setInterval(function () {
-		var utc = new Date().toISOString().replace(/\..+/, '.000Z');
-		$("#utc").html(utc);
-	}, 1000);
 
 	$('.left-nav > ul > li > ul > li > a[href="/admin/apache/"]').html('<span class="glyphicon glyphicon-grain"></span>&nbsp;&nbsp;Apache Status');
 	$('.left-nav > ul > li > ul > li > a[href="/admin/aws/"]').html('<span class="glyphicon glyphicon-text-background"></span>&nbsp;&nbsp;AWS Console');

@@ -162,8 +162,8 @@ def dash_git(request):
             else:
                 name = 'DasLab/' + request.GET.get('repo')
                 repo = gh.get_repo(name)
-                created_at = repo.created_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone('America/Los_Angeles')).strftime('%Y-%m-%d %H:%M:%S')
-                pushed_at = repo.pushed_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone('America/Los_Angeles')).strftime('%Y-%m-%d %H:%M:%S')
+                created_at = repo.created_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
+                pushed_at = repo.pushed_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
                 
                 num_issues = len(requests.get('https://api.github.com/repos/' + name + '/issues?access_token=%s' % GIT['ACCESS_TOKEN']).json())
                 num_pulls = len(requests.get('https://api.github.com/repos/' + name + '/pulls?access_token=%s' % GIT['ACCESS_TOKEN']).json())
@@ -239,6 +239,7 @@ def dash_slack(request):
                 for msg in history['messages']:
                     if msg.has_key('file'): num_files += 1
                     latest = max(latest, float(msg['ts']))
+                latest = datetime.fromtimestamp(latest).strftime('%Y-%m-%d %H:%M:%S')
                 temp.update({'latest':latest, 'num_files':num_files})
                 if resp['is_archived']:
                     archives.append(temp)
