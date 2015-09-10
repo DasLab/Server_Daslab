@@ -48,7 +48,7 @@ function drawDash() {
                 'titleTextStyle': {'bold': true},
             },
             'hAxis': {
-                'gridlines': {'count': 7},
+                'gridlines': {'count': -1},
                 'textStyle': {'italic': true},
                 'format': 'MMM dd'
             },
@@ -99,7 +99,7 @@ function drawDash() {
                 'titleTextStyle': {'bold': true},
             },
             'hAxis': {
-                'gridlines': {'count': 7},
+                'gridlines': {'count': -1},
                 'textStyle': {'italic': true},
                 'format': 'MMM dd'
             },
@@ -150,7 +150,7 @@ function drawDash() {
                 'titleTextStyle': {'bold': true},
             },
             'hAxis': {
-                'gridlines': {'count': 7},
+                'gridlines': {'count': -1},
                 'textStyle': {'italic': true},
                 'format': 'MMM dd'
             },
@@ -179,7 +179,7 @@ function drawDash() {
                 'ticks': [0, 1, 2]
             },
             'hAxis': {
-                'gridlines': {'count': 7},
+                'gridlines': {'count': -1},
                 'textStyle': {'italic': true},
                 'format': 'MMM dd'
             },
@@ -206,7 +206,7 @@ function drawDash() {
                 'viewWindow': {'min': 0},
             },
             'hAxis': {
-                'gridlines': {'count': 7},
+                'gridlines': {'count': -1},
                 'textStyle': {'italic': true},
                 'format': 'MMM dd'
             },
@@ -233,7 +233,7 @@ function drawDash() {
                 'viewWindow': {'min': 0}
             },
             'hAxis': {
-                'gridlines': {'count': 7},
+                'gridlines': {'count': -1},
                 'textStyle': {'italic': true},
                 'format': 'MMM dd'
             },
@@ -260,7 +260,7 @@ function drawDash() {
                 'titleTextStyle': {'bold': true},
             },
             'hAxis': {
-                'gridlines': {'count': 7},
+                'gridlines': {'count': -1},
                 'textStyle': {'italic': true},
                 'format': 'MMM dd'
             },
@@ -286,7 +286,7 @@ function drawDash() {
                 'titleTextStyle': {'bold': true},
             },
             'hAxis': {
-                'gridlines': {'count': 7},
+                'gridlines': {'count': -1},
                 'textStyle': {'italic': true},
                 'format': 'MMM dd'
             },
@@ -313,7 +313,7 @@ function drawDash() {
                 'titleTextStyle': {'bold': true},
             },
             'hAxis': {
-                'gridlines': {'count': 7},
+                'gridlines': {'count': -1},
                 'textStyle': {'italic': true},
                 'format': 'MMM dd'
             },
@@ -339,7 +339,7 @@ function drawDash() {
                 'titleTextStyle': {'bold': true},
             },
             'hAxis': {
-                'gridlines': {'count': 7},
+                'gridlines': {'count': -1},
                 'textStyle': {'italic': true},
                 'format': 'MMM dd'
             },

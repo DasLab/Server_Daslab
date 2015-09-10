@@ -5,17 +5,20 @@
 
 {% block content %}
 	<div id="content-main">
-		<div class="col-md-2"></div>
-		<div class="col-md-6">
-			<table class="table table-overview applist">
-				<tr>
-	                <th scope="row"><b><span class="glyphicon glyphicon-globe"></span> Link</th>
-	                <td class="active"><a href="/server-status/" target="_blank" class="addlink icon">http://daslab.stanford.edu/server-status/</a></td>
-	                <td class="active"><span class="glyphicon glyphicon-lock"></span> Apache Authorization Required</td>
-	              </tr>
-			</table>
+		<div class="row">
+			<div class="col-md-7">
+				<table class="table table-overview applist">
+					<tr>
+		                <th scope="row"><b><span class="glyphicon glyphicon-globe"></span> Link</th>
+		                <td class="active"><a href="/server-status/" target="_blank" class="addlink icon">http://daslab.stanford.edu/server-status/</a></td>
+		                <td class="active"><span class="glyphicon glyphicon-lock"></span> Apache Authorization Required</td>
+		              </tr>
+				</table>
+			</div>
+			<div class="col-md-5">
+				<span class="pull-right"><u>(Page Refreshes Every 3 <i>s</i>)</u></span>
+			</div>
 		</div>
-		<div class="col-md-4"><u>(Page Refreshes Every 3 <i>s</i>)</u></div>
 		
 		<div class="row">
 			<div class="col-md-12">

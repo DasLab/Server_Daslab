@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServer
 from datetime import date, datetime, timedelta
 import operator
 # import os
+import pytz
 import simplejson
 import subprocess
 # import sys
@@ -32,7 +33,7 @@ def dash_aws(request):
             resvs = conn.get_only_instances()
             for i, resv in enumerate(resvs):
                 sub_conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
-                data = sub_conn.get_metric_statistics(600, datetime.now() - timedelta(hours=2), datetime.now(), 'CPUCreditBalance', 'AWS/EC2', 'Average', {'InstanceId': resv.id}, 'Count')
+                data = sub_conn.get_metric_statistics(600, datetime.utcnow() - timedelta(hours=2), datetime.utcnow(), 'CPUCreditBalance', 'AWS/EC2', 'Average', {'InstanceId': resv.id}, 'Count')
                 avg = 0
                 for d in data:
                     avg += d[u'Average']
@@ -51,7 +52,7 @@ def dash_aws(request):
             resvs = conn.get_all_load_balancers()
             for i, resv in enumerate(resvs):
                 sub_conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
-                data = sub_conn.get_metric_statistics(300, datetime.now() - timedelta(minutes=30), datetime.now(), 'HealthyHostCount', 'AWS/ELB', 'Maximum', {'LoadBalancerName': resv.name}, 'Count')
+                data = sub_conn.get_metric_statistics(300, datetime.utcnow() - timedelta(minutes=30), datetime.utcnow(), 'HealthyHostCount', 'AWS/ELB', 'Maximum', {'LoadBalancerName': resv.name}, 'Count')
                 status = True
                 for d in data:
                     if d[u'Maximum'] < 1: 
@@ -77,7 +78,7 @@ def dash_aws(request):
         else:
             conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
             if tp in ['ec2', 'elb', 'ebs']:
-                args = {'period':3600, 'start_time':datetime.now() - timedelta(days=1), 'end_time':datetime.now()}
+                args = {'period':3600, 'start_time':datetime.utcnow() - timedelta(days=1), 'end_time':datetime.utcnow()}
             else:
                 return HttpResponseBadRequest("Invalid query.")
 
@@ -161,8 +162,8 @@ def dash_git(request):
             else:
                 name = 'DasLab/' + request.GET.get('repo')
                 repo = gh.get_repo(name)
-                created_at = repo.created_at.strftime('%Y-%m-%d %H:%M:%S')
-                pushed_at = repo.pushed_at.strftime('%Y-%m-%d %H:%M:%S')
+                created_at = repo.created_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone('America/Los_Angeles')).strftime('%Y-%m-%d %H:%M:%S')
+                pushed_at = repo.pushed_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone('America/Los_Angeles')).strftime('%Y-%m-%d %H:%M:%S')
                 
                 num_issues = len(requests.get('https://api.github.com/repos/' + name + '/issues?access_token=%s' % GIT['ACCESS_TOKEN']).json())
                 num_pulls = len(requests.get('https://api.github.com/repos/' + name + '/pulls?access_token=%s' % GIT['ACCESS_TOKEN']).json())

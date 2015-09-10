@@ -2,11 +2,12 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import operator
 import os
+import pytz
 import simplejson
 import subprocess
 import sys
 import textwrap
-from time import sleep
+from time import sleep, mktime
 import traceback
 import urllib
 import urllib2
@@ -146,7 +147,8 @@ def aws_result(results, args, req_id):
     data = []
     data.extend(results[0])
     for i, d in enumerate(data):
-        d.update({u'Timestamp': d[u'Timestamp']})
+        ts = d[u'Timestamp'].replace(tzinfo=pytz.utc).astimezone(pytz.timezone('America/Los_Angeles'))
+        d.update({u'Timestamp': ts})
         if args['calc_rate'] and 'Sum' in args['cols']: 
             d.update({args['metric'][0] + u'Rate': d[u'Sum'] / args['period']})
         for j, r in enumerate(results):
@@ -166,11 +168,17 @@ def aws_result(results, args, req_id):
 
     desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', args['unit'])}
     stats = ['Timestamp']
-    for me in args['metric']:
-        for col in args['cols']:
+    for i, me in enumerate(args['metric']):
+        if len(args['cols']) == len(args['metric']) and len(args['cols']) > 1:
+            col = args['cols'][i]
             if col == 'Sum' and args['calc_rate']: col = 'Rate'
             desp[me + col] = ('number', me + col)
             stats.append(me + col)
+        else:
+            for col in args['cols']:
+                if col == 'Sum' and args['calc_rate']: col = 'Rate'
+                desp[me + col] = ('number', me + col)
+                stats.append(me + col)
     
     data = sorted(data, key=operator.itemgetter(u'Timestamp'))
     data_table = gviz_api.DataTable(desp)
@@ -182,7 +190,9 @@ def aws_result(results, args, req_id):
 def aws_call(conn, args, req_id, qs):
     results = []
     for i, me in enumerate(args['metric']):
-        data = conn.get_metric_statistics(args['period'], args['start_time'], args['end_time'], me, args['namespace'], args['cols'], args['dims'], args['unit'])
+        col = args['cols']
+        if len(args['cols']) == len(args['metric']) and len(args['cols']) > 1: col = args['cols'][i]
+        data = conn.get_metric_statistics(args['period'], args['start_time'], args['end_time'], me, args['namespace'], col, args['dims'], args['unit'])
 
         temp = []
         for d in data:
@@ -229,9 +239,9 @@ def aws_stats(request):
         else:
             conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
             if sp == '7d':
-                args = {'period':7200, 'start_time':datetime.now() - timedelta(days=7), 'end_time':datetime.now()}
+                args = {'period':7200, 'start_time':datetime.utcnow() - timedelta(days=7), 'end_time':datetime.utcnow()}
             elif sp == '48h':
-                args = {'period':720, 'start_time':datetime.now() - timedelta(hours=48), 'end_time':datetime.now()}
+                args = {'period':720, 'start_time':datetime.utcnow() - timedelta(hours=48), 'end_time':datetime.utcnow()}
             else:
                 return HttpResponseBadRequest("Invalid query.")
 
@@ -244,7 +254,7 @@ def aws_stats(request):
             elif qs == '45xx':
                 args.update({'metric':['HTTPCode_Backend_4XX', 'HTTPCode_Backend_5XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
             elif qs == 'host':
-                args.update({'metric':['HealthyHostCount', 'UnHealthyHostCount'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+                args.update({'metric':['HealthyHostCount', 'UnHealthyHostCount'], 'namespace':'AWS/ELB', 'cols':['Minimum', 'Maximum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
             elif qs == 'status':
                 args.update({'metric':['BackendConnectionErrors', 'StatusCheckFailed_Instance', 'StatusCheckFailed_System'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
             elif qs == 'network':
