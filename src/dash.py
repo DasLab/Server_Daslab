@@ -307,8 +307,10 @@ def dash_ssl(request):
     f = open(os.path.join(MEDIA_ROOT, 'data/temp.txt'), 'w')
     f.write(subprocess.Popen('echo | openssl s_client -connect daslab.stanford.edu:443 | openssl x509 -noout -enddate', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip())
     f.close()
-    exp_date = subprocess.Popen('tail -1 %s | sed %s' % (os.path.join(MEDIA_ROOT, 'data/temp.txt'), "'s/^notAfter\=//g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+    exp_date = subprocess.Popen('cat %s | sed %s | tail -1 | sed %s |' % (os.path.join(MEDIA_ROOT, 'data/temp.txt'), "'s/DONE//g'", "'s/^notAfter\=//g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
     exp_date = datetime.strptime(exp_date, "%b %d %H:%M:%S %Y %Z").strftime('%Y-%m-%d %H:%M:%S')
+
+    subprocess.Popen('rm %s' % os.path.join(MEDIA_ROOT, 'data/temp.txt'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     return simplejson.dumps({'exp_date':exp_date})
 
 
