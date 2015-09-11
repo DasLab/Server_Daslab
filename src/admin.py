@@ -216,6 +216,11 @@ def slack_dash(request):
     return HttpResponse(dash_slack(request), content_type='application/json')
 admin.site.register_view('slack_dash', view=slack_dash, visible=False)
 
+
+def ssl_dash(request):
+    return HttpResponse(dash_ssl(request), content_type='application/json')
+admin.site.register_view('ssl_dash', view=ssl_dash, visible=False)
+
 # def git_inspector(request):
 #     return render_to_response('%s/data/stat_git.html' % MEDIA_ROOT, {}, context_instance=RequestContext(request))
 # admin.site.register_view('git_inspector/', view=git_inspector, visible=False)

@@ -94,5 +94,13 @@ $(document).ready(function() {
         }
     });
 
+   $.ajax({
+        url : "/admin/ssl_dash",
+        dataType: "json",
+        success : function (data) {
+            $("#id_ssl_exp").html('<span class="label label-inverse">' + data.exp_date + '</span> (UTC)');
+        }
+    });
+
 });
 
