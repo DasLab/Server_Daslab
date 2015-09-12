@@ -214,18 +214,22 @@ def dash_slack(request):
         sh = Slacker(SLACK["ACCESS_TOKEN"])
 
         if qs == 'users':
+            # logs = sh.team.access_logs().body['logins']  # error: paid only
             response = sh.users.list().body['members']
             owners, admins, users, gones = [], [], [], []
             for resp in response:
                 if resp.has_key('is_bot') and resp['is_bot']: continue
+                presence = sh.users.get_presence(resp['id']).body['presence']
+                presence = (presence == 'active')
+                temp = {'name':resp['profile']['real_name'], 'id':resp['name'], 'image':resp['profile']['image_24'], 'presence':presence}
                 if resp['deleted']:
-                    gones.append({'name':resp['profile']['real_name'], 'id':resp['name'], 'image':resp['profile']['image_24']})
+                    gones.append(temp)
                 elif resp['is_owner']:
-                    owners.append({'name':resp['profile']['real_name'], 'id':resp['name'], 'image':resp['profile']['image_24']})
+                    owners.append(temp)
                 elif resp['is_admin']:
-                    admins.append({'name':resp['profile']['real_name'], 'id':resp['name'], 'image':resp['profile']['image_24']})
+                    admins.append(temp)
                 else:
-                    users.append({'name':resp['profile']['real_name'], 'id':resp['name'], 'image':resp['profile']['image_24']})
+                    users.append(temp)
             json = {'users':users, 'admins':admins, 'owners':owners, 'gones':gones}
         elif qs == 'channels':
             response = sh.channels.list().body['channels']

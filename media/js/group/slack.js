@@ -19,17 +19,25 @@ $.ajax({
     success: function (data) {
 		var html = "";
 		for (var i = 0; i < data.owners.length; i++) {
-			html += '<tr><td><span class="pull-right"><span class="label label-danger">' + data.owners[i].id + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-registration-mark"></span></span></td><td><img src="' + data.owners[i].image + '"/>&nbsp;&nbsp;<i>' + data.owners[i].name + '</i></td></tr>';
+            var presence = "<span>";
+            if (data.owners[i].presence) { presence = '<span style="color: #50cc32;"'; }
+			html += '<tr><td><span class="pull-right"><span class="label label-danger">' + data.owners[i].id + '</span>&nbsp;&nbsp;' + presence + '<span class="glyphicon glyphicon-registration-mark"></span></span></span></td><td><img src="' + data.owners[i].image + '"/>&nbsp;&nbsp;<i>' + data.owners[i].name + '</i></td></tr>';
 		}
 		for (var i = 0; i < data.admins.length; i++) {
-			html += '<tr><td><span class="pull-right"><span class="label label-success">' + data.admins[i].id + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-copyright-mark"></span></span></td><td><img src="' + data.admins[i].image + '"/>&nbsp;&nbsp;<i>' + data.admins[i].name + '</i></td></tr>';
+            var presence = "<span>";
+            if (data.admins[i].presence) { presence = '<span style="color: #50cc32;"'; }
+			html += '<tr><td><span class="pull-right"><span class="label label-success">' + data.admins[i].id + '</span>&nbsp;&nbsp;' + presence + '<span class="glyphicon glyphicon-copyright-mark"></span></span></span></td><td><img src="' + data.admins[i].image + '"/>&nbsp;&nbsp;<i>' + data.admins[i].name + '</i></td></tr>';
 		}
 		for (var i = 0; i < data.users.length; i++) {
-			html += '<tr><td><span class="pull-right"><span class="label label-violet">' + data.users[i].id + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-ok-circle"></span></span></td><td><img src="' + data.users[i].image + '"/>&nbsp;&nbsp;<i>' + data.users[i].name + '</i></td></tr>';
+            var presence = "<span>";
+            if (data.users[i].presence) { presence = '<span style="color: #50cc32;"'; }
+			html += '<tr><td><span class="pull-right"><span class="label label-violet">' + data.users[i].id + '</span>&nbsp;&nbsp;' + presence + '<span class="glyphicon glyphicon-ok-circle"></span></span></span></td><td><img src="' + data.users[i].image + '"/>&nbsp;&nbsp;<i>' + data.users[i].name + '</i></td></tr>';
 		}
 		html += '<tr><td colspan="2" style="padding: 0px;"></td></tr>';
 		for (var i = 0; i < data.gones.length; i++) {
-			html += '<tr class="active"><td><span class="pull-right"><span class="label label-default">' + data.gones[i].id + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-ban-circle"></span></span></td><td><img src="' + data.gones[i].image + '"/>&nbsp;&nbsp;<i>' + data.gones[i].name + '</i></td></tr>';
+            var presence = "<span>";
+            if (data.gones[i].presence) { presence = '<span style="color: #50cc32;"'; }
+			html += '<tr class="active"><td><span class="pull-right"><span class="label label-default">' + data.gones[i].id + '</span>&nbsp;&nbsp;' + presence + '<span class="glyphicon glyphicon-ban-circle"></span></span></span></td><td><img src="' + data.gones[i].image + '"/>&nbsp;&nbsp;<i>' + data.gones[i].name + '</i></td></tr>';
 		}        	
 		html += '<tr><td colspan="2" style="padding: 0px;"></td></tr>';
 		$("#table_slack_user").html(html);
@@ -111,7 +119,7 @@ var chart = new google.visualization.ChartWrapper({
         },
         'lineWidth': 3,
         'pointSize': 5,
-        'colors': ['#50cc32'],
+        'colors': ['#3ed4e7'],
         'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
     }
 });
