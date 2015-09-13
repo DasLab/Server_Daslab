@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
 
+from collections import defaultdict
 from datetime import date, datetime, timedelta
 import operator
 # import os
@@ -10,6 +11,7 @@ import subprocess
 from time import sleep, mktime
 
 import boto.ec2.cloudwatch
+import dropbox
 import gviz_api
 from github import Github
 import requests
@@ -303,6 +305,96 @@ def dash_slack(request):
         else:
             return HttpResponseBadRequest("Invalid query.")
         return simplejson.dumps(json)
+    else:
+        return HttpResponseBadRequest("Invalid query.")
+
+
+def dash_dropbox(request):
+    if request.GET.has_key('qs') and request.GET.has_key('tqx'):
+        qs = request.GET.get('qs')
+        req_id = request.GET.get('tqx').replace('reqId:', '')
+        dh = dropbox.client.DropboxClient(DROPBOX["ACCESS_TOKEN"])
+
+        if qs == 'sizes':
+            account = dh.account_info()
+            json = {'quota_used':account['quota_info']['shared'], 'quota_all':account['quota_info']['quota']}
+            json.update({'quota_avail':(json['quota_all'] - json['quota_used'])})
+            return simplejson.dumps(json)
+
+        elif qs == "folders":
+            json = []
+            sizes = {}
+            cursor = None
+            while cursor is None or result['has_more']:
+                result = dh.delta(cursor)
+                for path, metadata in result['entries']:
+                    sizes[path] = metadata['bytes'] if metadata else 0
+                cursor = result['cursor']
+
+            folder_sizes = defaultdict(lambda: 0)
+            folder_nums = defaultdict(lambda: 0)
+            for path, size in sizes.items():
+                segments = path.split('/')
+                for i in range(1, len(segments)):
+                    folder = '/'.join(segments[:i])
+                    if folder == '': folder = '/'
+                    folder_sizes[folder] += size
+                    folder_nums[folder] += 1
+
+            shares = requests.get("https://api.dropboxapi.com/1/shared_folders/?include_membership=True&access_token=%s" % DROPBOX["ACCESS_TOKEN"]).json()
+            folder_shares = defaultdict(lambda: 0)
+            for f in shares:
+                folder_shares[f['shared_folder_name'].lower()] = len(f['membership'])
+
+            for folder in sorted(folder_sizes.keys()):
+                if folder == '/' or '/' in folder[1:]: continue
+                result = dh.metadata(folder, list=False)
+                latest = datetime.strptime(result['modified'][:-6], "%a, %d %b %Y %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime("%Y-%m-%d %H:%M:%S")
+                json.append({'name':result['path'][1:], 'nums':folder_nums[folder], 'sizes':folder_sizes[folder], 'shares':folder_shares[folder[1:]], 'latest':latest})
+            return simplejson.dumps({'folders':json})
+
+        elif qs == "history":
+            desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+            stats = ['Timestamp']
+            data = []
+            fields = ['Files']
+
+            sizes = {}
+            cursor = None
+            while cursor is None or result['has_more']:
+                result = dh.delta(cursor)
+                for path, metadata in result['entries']:
+                    sizes[path] = metadata['modified'] if metadata else 0
+                cursor = result['cursor']
+
+            temp = {}
+            for i in range(8):
+                ts = (datetime.utcnow() - timedelta(days=i)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).replace(hour=0, minute=0, second=0, microsecond=0)
+                temp.update({ts:0})
+            for path, ts in sizes.items():
+                    ts = datetime.strptime(ts[:-6], "%a, %d %b %Y %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
+                    for i in range(7):
+                        ts_u = (datetime.utcnow() - timedelta(days=i)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).replace(hour=0, minute=0, second=0, microsecond=0)
+                        ts_l = (datetime.utcnow() - timedelta(days=i+1)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).replace(hour=0, minute=0, second=0, microsecond=0)
+                        if ts <= ts_u and ts > ts_l:
+                            temp[ts_u] += 1
+                            break
+            data = []
+            for ts in temp.keys():
+                data.append({u'Timestamp':ts, u'Files':temp[ts]})
+
+            for field in fields:
+                stats.append(field)
+                desp[field] = ('number', field)
+            
+            data = sorted(data, key=operator.itemgetter(stats[0]))
+            data_table = gviz_api.DataTable(desp)
+            data_table.LoadData(data)
+            results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
+            return results
+
+        else:
+            return HttpResponseBadRequest("Invalid query.")
     else:
         return HttpResponseBadRequest("Invalid query.")
 

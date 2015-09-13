@@ -1,6 +1,6 @@
-function zfill(num, len) {
-	return (Array(len).join("0") + num).slice(-len);
-}
+// function zfill(num, len) {
+// 	return (Array(len).join("0") + num).slice(-len);
+// }
 
 function formatSizeUnits(bytes){
     if      (bytes >= 1000000000) {bytes = (bytes / 1000000000).toFixed(2) + ' GB';}

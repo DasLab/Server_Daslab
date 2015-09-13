@@ -217,6 +217,11 @@ def slack_dash(request):
 admin.site.register_view('slack_dash', view=slack_dash, visible=False)
 
 
+def dropbox_dash(request):
+    return HttpResponse(dash_dropbox(request), content_type='application/json')
+admin.site.register_view('dropbox_dash', view=dropbox_dash, visible=False)
+
+
 def ssl_dash(request):
     return HttpResponse(dash_ssl(request), content_type='application/json')
 admin.site.register_view('ssl_dash', view=ssl_dash, visible=False)
