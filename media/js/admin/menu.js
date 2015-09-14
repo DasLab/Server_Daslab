@@ -7,38 +7,124 @@ setInterval(function () {
 
 
 $(document).ready(function () {
-	$("#left-nav > ul > li > ul").css("display", "block");
-
-	$(".left-nav > ul").addClass("nav nav-pills nav-stacked");
-	$(".left-nav > ul > li.active > a").css("background-color", "#5496d7");
-	$(".left-nav > ul > li.active > a").css("font-size", 20);
-	$(".left-nav > ul > li > ul > li.active > a").css("color", "#fff");
-	$(".left-nav > ul > li > ul > li.active > a").css("background-color", "#ff912e");
-
 	$('i[class^="icon"]').each(function() {
 		$(this).replaceWith('<span class="glyphicon glyph' + $(this).attr("class") + '"></span>&nbsp;&nbsp;');
 	});
-	$(".form-search > span.glyphicon").remove();
-	$(".form-search > input.submit").attr("id", "search_submit");
-	$("#search_submit").replaceWith("<button type='submit' class='submit form-control' id='search_submit' style='border:none;'><span class='glyphicon glyphicon-search'></span>&nbsp;</button>");
+	$(".nav-ul-lg").css("display", "none");
+	var side_toggle = true;
 
-	$('.left-nav > ul > li > ul > li > a[href="/admin/apache/"]').html('<span class="glyphicon glyphicon-grain"></span>&nbsp;&nbsp;Apache Status');
-	$('.left-nav > ul > li > ul > li > a[href="/admin/aws/"]').html('<span class="glyphicon glyphicon-text-background"></span>&nbsp;&nbsp;AWS Console');
-	$('.left-nav > ul > li > ul > li > a[href="/admin/ga/"]').html('<span class="glyphicon glyphicon-signal"></span>&nbsp;&nbsp;Google Analytics');
-	$('.left-nav > ul > li > ul > li > a[href="/admin/git/"]').html('<span class="glyphicon glyphicon-compressed"></span>&nbsp;&nbsp;GitHub Repository');
-	$('.left-nav > ul > li > ul > li > a[href="/admin/dir/"]').html('<span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Directory');
-	$('.left-nav > ul > li > ul > li > a[href="/admin/backup/"]').html('<span class="glyphicon glyphicon-floppy-open"></span>&nbsp;&nbsp;Backup Schedule');
+	// $("#left-nav > ul > li > ul").css("display", "block");
+	// $(".left-nav > ul").addClass("nav nav-pills nav-stacked");
+	// $(".left-nav > ul > li.active > a").css("background-color", "#5496d7");
+	// $(".left-nav > ul > li.active > a").css("font-size", 20);
+	// $(".left-nav > ul > li > ul > li.active > a").css("color", "#fff");
+	// $(".left-nav > ul > li > ul > li.active > a").css("background-color", "#ff912e");
 
-	$('.left-nav > ul > li > ul > li > a[href="/admin/src/news/"]').html('<span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;News Items');
-	$('.left-nav > ul > li > ul > li > a[href="/admin/src/member/"]').html('<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Member Management');
-	$('.left-nav > ul > li > ul > li > a[href="/admin/src/publication/"]').html('<span class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;Publication Entries');
-	$('.left-nav > ul > li > ul > li > a[href="/admin/export/"]').html('<span class="glyphicon glyphicon-floppy-save"></span>&nbsp;&nbsp;Publication Export');
+	// $(".form-search > span.glyphicon").remove();
+	// $(".form-search > input.submit").attr("id", "search_submit");
+	// $("#search_submit").replaceWith("<button type='submit' class='submit form-control' id='search_submit' style='border:none;'><span class='glyphicon glyphicon-search'></span>&nbsp;</button>");
 
-	$('.left-nav > ul > li > ul > li > a[href="/admin/auth/user/"]').html('<span class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;User Autherization');
-	$('.left-nav > ul > li > ul > li > a[href="/admin/src/flashslide/"]').html('<span class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;Flash Slides');
-	$('.left-nav > ul > li > ul > li > a[href="/admin/src/eternayoutube/"]').html('<span class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;EteRNA Open Group Meetings');
-	$('.left-nav > ul > li > ul > li > a[href="/admin/src/rotationstudent/"]').html('<span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;Rotation Students');
-	$('.left-nav > ul > li > ul > li > a[href="/admin/src/presentation/"]').html('<span class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;Archived Presentations');
+    if ($(location).attr("href").indexOf("admin/apache") != -1) {
+    	$("#nav_apache").addClass("active");
+    	$("#nav_sys").addClass("active");
+    	$("#nav_sys_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #ff5c2b")
+    } else if ($(location).attr("href").indexOf("admin/aws") != -1) {
+    	$("#nav_aws").addClass("active");
+    	$("#nav_sys").addClass("active");
+    	$("#nav_sys_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #ff5c2b")
+    } else if ($(location).attr("href").indexOf("admin/ga") != -1) {
+    	$("#nav_ga").addClass("active");
+    	$("#nav_sys").addClass("active");
+    	$("#nav_sys_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #ff5c2b")
+    } else if ($(location).attr("href").indexOf("admin/git") != -1) {
+    	$("#nav_git").addClass("active");
+    	$("#nav_sys").addClass("active");
+    	$("#nav_sys_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #ff5c2b")
+    } else if ($(location).attr("href").indexOf("admin/dir") != -1) {
+    	$("#nav_dir").addClass("active");
+    	$("#nav_sys").addClass("active");
+    	$("#nav_sys_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #ff69bc")
+    } else if ($(location).attr("href").indexOf("admin/backup") != -1) {
+    	$("#nav_backup").addClass("active");
+    	$("#nav_sys").addClass("active");
+    	$("#nav_sys_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #ff69bc")
+    } else if ($(location).attr("href").indexOf("admin/src/news") != -1) {
+    	$("#nav_news").addClass("active");
+    	$("#nav_global").addClass("active");
+    	$("#nav_global_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #50cc32")
+	} else if ($(location).attr("href").indexOf("admin/src/member") != -1) {
+    	$("#nav_member").addClass("active");
+    	$("#nav_global").addClass("active");
+    	$("#nav_global_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #50cc32")
+    } else if ($(location).attr("href").indexOf("admin/src/publication") != -1) {
+    	$("#nav_pub").addClass("active");
+    	$("#nav_global").addClass("active");
+    	$("#nav_global_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #50cc32")
+	} else if ($(location).attr("href").indexOf("admin/export") != -1) {
+    	$("#nav_export").addClass("active");
+    	$("#nav_global").addClass("active");
+    	$("#nav_global_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #008080")
+	} else if ($(location).attr("href").indexOf("admin/auth/user") != -1) {
+    	$("#nav_auth").addClass("active");
+    	$("#nav_internal").addClass("active");
+    	$("#nav_internal_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #ff912e")
+	} else if ($(location).attr("href").indexOf("admin/src/flashslide") != -1) {
+    	$("#nav_flash").addClass("active");
+    	$("#nav_internal").addClass("active");
+    	$("#nav_internal_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #eeb211")
+ 	} else if ($(location).attr("href").indexOf("admin/src/eternayoutube") != -1) {
+    	$("#nav_eterna").addClass("active");
+    	$("#nav_internal").addClass("active");
+    	$("#nav_internal_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #eeb211")
+	} else if ($(location).attr("href").indexOf("admin/src/rotationstudent") != -1) {
+    	$("#nav_rot").addClass("active");
+    	$("#nav_internal").addClass("active");
+    	$("#nav_internal_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #eeb211")
+ 	} else if ($(location).attr("href").indexOf("admin/src/presentation") != -1) {
+    	$("#nav_archive").addClass("active");
+    	$("#nav_internal").addClass("active");
+    	$("#nav_internal_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #eeb211")
+ 	} else if ($(location).attr("href").indexOf("admin/doc") != -1) {
+    	$("#nav_doc").addClass("active");
+    	$("#nav_doc_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #c28fdd")
+ 	} else {
+    	$("#nav_home").addClass("active");
+    	$("#nav_home_lg").addClass("active");
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #3ed4e7")
+	}
+
+	$("#nav_toggle").on("click", function() {
+		if (side_toggle) {
+			$(".nav-ul").hide();
+			$(".nav-ul-lg").show();
+			$("#wrapper").css("padding-left", "50px");
+			$("#sidebar-wrapper").css({"margin-left":"-65px", "left":"65px", "width":"65px"});
+		} else {
+			$(".nav-ul-lg").hide();
+			$(".nav-ul").not(".nav-ul-lg").show();
+			$("#wrapper").css("padding-left", "235px");
+			$("#sidebar-wrapper").css({"margin-left":"-250px", "left":"250px", "width":"250px"});
+		}
+		side_toggle = !side_toggle
+	});
+	$("#wrapper").css("width", (parseInt($("#wrapper").css("width")) + 15).toString() + "px");
+	$("ul.breadcrumb").css("border-radius", 0);
 
 	// $('.left-nav > ul > li > ul > li > a[href="/admin/aws/"]').attr("disabled", "disabled").css("text-decoration", "line-through").attr("href", "");
 });

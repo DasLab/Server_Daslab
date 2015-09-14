@@ -40,9 +40,6 @@
     django.jQuery("#wait").fadeIn(500);
   </script>
 
-<!-- Sticky footer wrap -->
-<div id="wrap">
-
   <!-- Container -->
   {% block container %}
 
@@ -55,155 +52,257 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
+        <ul class="nav navbar-nav">
+          <li id="nav_toggle">
+            <a><span class="glyphicon glyphicon-th-list"></span></a>
+          </li>
+        </ul>
         <a class="navbar-brand" href="/admin" id="nav_logo">
-          &nbsp;&nbsp;<span id="site-name" style="color:#29be92;">{% block branding %}{{ 'ADMIN_NAME'|suit_conf }}{% endblock %}</span>&nbsp;
+          &nbsp;&nbsp;<span id="site-name" style="color:#fff;">{% block branding %}{{ 'ADMIN_NAME'|suit_conf }}{% endblock %}</span>&nbsp;
           <span style="color:#ff5c2b;">Administration</span>&nbsp;&nbsp;
         </a>
       </div>
 
       <div class="navbar-collapse collapse" >
-        <ul class="nav navbar-nav">
-          <li id="nav_meetings">
-            <a style="text-decoration:none;">
-              <span style="color:#fff;">
-                <span class="glyphicon glyphicon-calendar"></span>&nbsp;
-                <span class="date"> {% suit_date %}</span>&nbsp;&nbsp;
-              </span>
-              <span style="color:#fff; font-weight:bold;">
-                <span class="glyphicon glyphicon-time"></span>&nbsp;
-                <span class="time" id="clock">{% suit_time %}</span>&nbsp;&nbsp;
-              </span>
-              <span style="color:#92d1ee;">
-                <span class="glyphicon glyphicon-globe"></span>&nbsp;UTC:&nbsp;
-                <span class="time" id="utc"></span>
-              </span>
-            </a>
-          </li>
-        </ul>
-
-        <div class="pull-right">
+        <div class="pull-right row">
           <ul class="nav navbar-nav">
-            <li class="clickable">
-              <span class="lead"><span class="label label-warning"><i><samp><small style="font-weight:normal;">{{user}}</small></samp></i></span></span>
-              &nbsp;&nbsp;
-              <button class="btn btn-success navbar-btn" style="color: #ffffff;" onclick="location.href='/password'">Change Password</button>
-              
-              <button class="btn btn-info navbar-btn" style="color: #ffffff;background-color: #5496d7; border-color: #7495c9;" onclick="location.href='/logout'">Sign Out</button>
+            <li id="nav_meetings" style="display:none;">
+              <a style="text-decoration:none;">
+                <span style="color:#fff;">
+                  <span class="glyphicon glyphicon-calendar"></span>&nbsp;
+                  <span class="date"> {% suit_date %}</span>&nbsp;&nbsp;
+                </span>
+                <span style="color:#fff; font-weight:bold;">
+                  <span class="glyphicon glyphicon-time"></span>&nbsp;
+                  <span class="time" id="clock">{% suit_time %}</span>&nbsp;&nbsp;
+                </span>
+                <span style="color:#000;">
+                  <span class="glyphicon glyphicon-globe"></span>&nbsp;UTC:&nbsp;
+                  <span class="time" id="utc"></span>
+                </span>
+              </a>
+            </li>
+            <li id="nav_time">
+              <a><span class="glyphicon glyphicon-time"></span></a>
+            </li>
+            <li id="nav_email">
+              <a><span class="glyphicon glyphicon-send"></span></a>
+            </li>
+            <li class="dropdown">
+              <a><span class="glyphicon glyphicon-user"></span></a>
+              <ul class="dropdown-menu dropdown-menu-right nav nav-pills nav-stacked" role="menu" id="nav_user">
+                <li class="nav-list">
+                  <br/>
+                  <p><span style="text-decoration:underline; color:gray;">Signed In As:</span></p>
+                </li>
+                <li id="nav_username" style="width:225px;" class="nav-list">
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;
+                  <b>{{ user.first_name }} {{ user.last_name }}</b>
+                  <br/>
+                  <span class="glyphicon glyphicon-user" aria-hidden="true" style="color:#fff;"></span>&nbsp;&nbsp;
+                  <kbd>{{ user.username }}</kbd>
+                  <br/><br/>
+                  <p>
+                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;
+                    Last Login: {{ user.last_login|date:"SHORT_DATE_FORMAT" }}
+                  </p>
+                  <p>
+                    <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
+                    Status:
+                    <span class="label label-{% if user.is_active %}green{% else %}default{% endif %}">
+                      <span class="glyphicon glyphicon-pawn" aria-hidden="true"></span>&nbsp;&nbsp;
+                      Active
+                    </span>
+                  </p>
+                  <p>
+                    <span style="color:#fff;">
+                      <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
+                      Status:
+                    </span>
+                    <span class="label label-{% if user.is_staff %}violet{% else %}default{% endif %}">
+                      <span class="glyphicon glyphicon-queen" aria-hidden="true"></span>&nbsp;&nbsp;
+                      Staff
+                    </span>
+                  </p>
+                  <p>
+                    <span style="color:#fff;">
+                      <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
+                      Status:
+                    </span>
+                    <span class="label label-{% if user.is_superuser %}orange{% else %}default{% endif %}">
+                      <span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;
+                      Admin
+                    </span>
+                  </p>
+                </li>
+                <li class="divider"></li>
+                <li><a class="" href="/profile">
+                  <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
+                  View Profile</a>
+                </li>
+                <li><a class="" href="/password">
+                  <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;&nbsp;
+                  Change Password</a>
+                </li>
+                <li class="divider"></li>
+                <li><a class="" href="/logout">
+                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;&nbsp;
+                  Sign Out</a>
+                </li>
+
+              </ul>
             </li>
           </ul>
         </div>
+
       </div>
     </div>
   </div>
 
-    
-      <div class="suit-columns {{ is_popup|yesno:'one-column,two-columns' }}">
+  <!-- Sticky footer wrap -->
+  <div id="wrapper">
+    <div id="sidebar-wrapper">
+      <ul class="nav nav-pills nav-stacked">
+        <li id="nav_home_lg" class="nav-ul nav-ul-lg li-info" style="margin-top: 10px;">
+          <a href="/admin/" ><span class="lead glyphicon glyphicon-home"></span></a>
+        </li>
+        <li id="nav_home" class="nav-ul li-info" style="margin-top: 10px;">
+          <a href="/admin/" ><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home</a>
+        </li>
 
-        {% block content-center %}
-          <div id="suit-center" class="suit-column">
+        <li id="nav_sys_lg" class="nav-ul nav-ul-lg li-danger">
+          <a href="/admin/apache/" ><span class="lead glyphicon glyphicon-cog"></span></a>
+        </li>
+        <li id="nav_sys" class="nav-ul li-danger">
+          <a href="/admin/apache/"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;System</a>
+          <ul class="nav-li-sub">
+            <li id="nav_apache" class="nav-li"><span class="glyphicon glyphicon-grain nav-icon"></span><a href="/admin/apache/">&nbsp;&nbsp;Apache Status</a></li>
+            <li id="nav_aws" class="nav-li"><img src="/site_media/images/icons/aws_o.png" class="nav-icon" height="14px"><a href="/admin/aws/">&nbsp;&nbsp;AWS Console</a></li>
+            <li id="nav_ga" class="nav-li"><img src="/site_media/images/icons/ga_o.png" class="nav-icon" height="14px"><a href="/admin/ga/">&nbsp;&nbsp;Google Analytics</a></li>
+            <li id="nav_git" class="nav-li"><img src="/site_media/images/icons/git_o.png" class="nav-icon" height="14px"><a href="/admin/git/">&nbsp;&nbsp;GitHub Repository</a></li>
+            <li id="nav_dir" class="nav-li"><span class="glyphicon glyphicon-folder-open nav-icon"></span><a href="/admin/dir/">&nbsp;&nbsp;Directory</a></li>
+            <li id="nav_backup" class="nav-li"><span class="glyphicon glyphicon-floppy-open nav-icon"></span><a href="/admin/backup/">&nbsp;&nbsp;Backup Schedule</a></li>
+          </ul>
+        </li>
 
-            {% if not is_popup %}
-              {% block breadcrumbs %}
-                <ul class="breadcrumb">
-                  <li><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-                    {% if title %}
-                      <span class="divider">&raquo;</span>
-                      </li>
-                      <lspan class="glyphicon glyphactive">
-                      {{ title }}
-                    {% endif %}
-                    </li>
-                </ul>
-              {% endblock %}
-            {% endif %}
+        <li id="nav_global_lg" class="nav-ul nav-ul-lg li-green">
+          <a href="/admin/src/news/" ><span class="lead glyphicon glyphicon-globe"></span></a>
+        </li>
+        <li id="nav_global" class="nav-ul li-green">
+          <a href="/admin/src/news/"><span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;Global Site</a>
+          <ul class="nav-li-sub">
+            <li id="nav_news" class="nav-li"><span class="glyphicon glyphicon-picture nav-icon"></span><a href="/admin/src/news/">&nbsp;&nbsp;News Items</a></li>
+            <li id="nav_member" class="nav-li"><span class="glyphicon glyphicon-user nav-icon"></span><a href="/admin/src/member/">&nbsp;&nbsp;Member Management</a></li>
+            <li id="nav_pub" class="nav-li"><span class="glyphicon glyphicon-education nav-icon"></span><a href="/admin/src/publication/">&nbsp;&nbsp;Publication Entries</a></li>
+            <li id="nav_export" class="nav-li"><span class="glyphicon glyphicon-floppy-save nav-icon"></span><a href="/admin/export/">&nbsp;&nbsp;Publication Export</a></li>
+          </ul>
+        </li>
 
-            {% block messages %}
-              {% if messages %}
+        <li id="nav_internal_lg" class="nav-ul nav-ul-lg li-warning">
+          <a href="/admin/auth/user/" ><span class="lead glyphicon glyphicon-inbox"></span></a>
+        </li>
+        <li id="nav_internal" class="nav-ul li-warning">
+          <a href="/admin/auth/user/"><span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Internal Site</a>
+          <ul class="nav-li-sub">
+            <li id="nav_auth" class="nav-li"><span class="glyphicon glyphicon-lock nav-icon"></span><a href="/admin/auth/user/">&nbsp;&nbsp;User Autherization</a></li>
+            <li id="nav_flash" class="nav-li"><span class="glyphicon glyphicon-blackboard nav-icon"></span><a href="/admin/src/flashslide/">&nbsp;&nbsp;Flash Slides</a></li>
+            <li id="nav_eterna" class="nav-li"><span class="glyphicon glyphicon-facetime-video nav-icon"></span><a href="/admin/src/eternayoutube/">&nbsp;&nbsp;EteRNA Videos</a></li>
+            <li id="nav_rot" class="nav-li"><span class="glyphicon glyphicon-retweet nav-icon"></span><a href="/admin/src/rotationstudent/">&nbsp;&nbsp;Rotation Students</a></li>
+            <li id="nav_archive" class="nav-li"><span class="glyphicon glyphicon-cd nav-icon"></span><a href="/admin/src/presentation/">&nbsp;&nbsp;Archived Presentations</a></li>
+          </ul>
+        </li>
 
-                {% for message in messages %}
-                  <div class="alert alert-{% firstof message.tags 'info' %}">
-                    <button class="close" data-dismiss="alert">×</button>
-                    {{ message }}
-                  </div>
-                {% endfor %}
-              {% endif %}
-            {% endblock messages %}
-
-            <!-- Content -->
-            <div id="content" class="{% block coltype %}colM{% endblock %} row-fluid">
-              {% block pretitle %}{% endblock %}
-              {% block content_title %}{% if title %}
-                <h2 class="content-title">{{ title }}</h2>
-              {% endif %}{% endblock %}
-              {% block content %}
-                {% block object-tools %}{% endblock %}
-                {{ content }}
-              {% endblock %}
-              {% block sidebar_content %}
-                {% block sidebar %}{% endblock %}
-              {% endblock %}
-            </div>
-            <!-- END Content -->
-          </div>
-        {% endblock %}
-
-
-        {% block content-left %}
-          {% if not is_popup %}
-            <div id="suit-left" class="suit-column">
-              {% block quick-search %}
-                {% with 'SEARCH_URL'|suit_conf as search_url %}
-                  {% if search_url %}
-                    <form class="form-search nav-quick-search" autocomplete="off" action="{% if '/' in search_url %}{{ search_url }}{% else %}{% url search_url %}{% endif %}" method="GET">
-                      <input type="text" name="q" class="input-medium search-query" id="quick-search">
-                      <span class="glyphicon glyphinput-icon icon-search"></span>
-                      <input type="submit" class="submit" value="">
-                    </form>
-                  {% endif %}
-                {% endwith %}
-              {% endblock %}
-
-              {% include 'suit/menu.html' %}
-
-            </div>
-          {% endif %}
-        {% endblock %}
-
-      </div>
+        <li id="nav_doc_lg" class="nav-ul nav-ul-lg li-violet"><a href="/admin/doc/"><span class="lead glyphicon glyphicon-book"></span></a></li>
+        <li id="nav_doc" class="nav-ul li-violet"><a href="/admin/doc/"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Documentation</a></li>
+      </ul>
     </div>
-  {% endblock %}
 
-  {% if not is_popup %}
-  <!-- Sticky footer push -->
-  <div id="push"></div>
-  {% endif %}
+    <div id="page-content-wrapper">
+      {% if not is_popup %}
+        {% block breadcrumbs %}
+          <ul class="breadcrumb">
+            <li><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+              {% if title %}
+                <span class="divider">&raquo;</span>
+                </li>
+                <lspan class="glyphicon glyphactive">
+                {{ title }}
+              {% endif %}
+              </li>
+          </ul>
+        {% endblock %}
+      {% endif %}
 
-</div>
+      {% block messages %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{% firstof message.tags 'info' %}">
+              <button class="close" data-dismiss="alert">×</button>
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endblock messages %}
 
-{% block footer %}
-  <hr/>
-  <div class="container starter-template" id="footer">
+      <!-- Content -->
+      <div class="page-content">
+        <div class="container">
+          <div class="row">
+            {% block pretitle %}{% endblock %}
+            {% block content_title %}{% if title %}
+              <h2 class="content-title">{{ title }}</h2>
+            {% endif %}{% endblock %}
+            {% block content %}
+              {% block object-tools %}{% endblock %}
+              {{ content }}
+            {% endblock %}
+            {% block sidebar_content %}
+              {% block sidebar %}{% endblock %}
+            {% endblock %}
+          </div>
 
-{% endblock %}
+          {% block footer %}
+            <hr/>
+            <div class="container starter-template" id="footer" style="padding: 0px 15px;">
+          {% endblock %}
+        </div>
+      </div>
+      <!-- END Content -->
+    </div>
+    {% endblock %}
 
-  <script type="text/javascript" src="/site_media/js/admin/_suit.js"></script>
-  <script type="text/javascript" src="/site_media/js/admin/table.js"></script>
-  <script type="text/javascript" src="/site_media/js/admin/menu.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $("#wait").fadeOut(500);
-      $("#footer").load("/site_media/html/_footer.html", function () {
-        var today = new Date();
-        $("#cp_year").text(today.getFullYear());
+    {% if not is_popup %}
+      <!-- Sticky footer push -->
+      <div id="push"></div>
+    {% endif %}
+
+    <script type="text/javascript" src="/site_media/js/admin/_suit.js"></script>
+    <script type="text/javascript" src="/site_media/js/admin/table.js"></script>
+    <script type="text/javascript" src="/site_media/js/admin/menu.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#wait").fadeOut(500);
+        $("#footer").load("/site_media/html/_footer.html", function () {
+          var today = new Date();
+          $("#cp_year").text(today.getFullYear());
+        });
+
+        $("#nav_time").hover(
+                function(){ $("#nav_meetings").show() },
+                function(){ $("#nav_meetings").hide() }
+            );
+        $(".dropdown-toggle").dropdown();
+        $(".dropdown").hover(
+                function(){ $(this).addClass("open") },
+                function(){ $(this).removeClass("open") }
+            );
       });
 
-    });
+      $(window).on("beforeunload", function () {
+        $("#wait").fadeIn(500);
+      });
+    </script>
+    {% block extrajs %}{% endblock %}
 
-    $(window).on("beforeunload", function () {
-      $("#wait").fadeIn(500);
-    });
-  </script>
-  {% block extrajs %}{% endblock %}
-
-</body>
+  </body>
 </html>
