@@ -16,7 +16,7 @@ $.ajax({
 		for (var i = 0; i < data.folders.length; i++) {
 			html += '<tr><td><code>' + data.folders[i].name + '</code></td><td><span class="pull-right">' + data.folders[i].shares + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right">' + data.folders[i].nums + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#00f;">' + formatSizeUnits(data.folders[i].sizes) + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="label label-primary">' + data.folders[i].latest + '</span></td></tr>';
 		}
-		html += '<tr><td colspan="4" style="padding: 0px;"></td></tr>';
+		html += '<tr><td colspan="5" style="padding: 0px;"></td></tr>';
 		$("#table_dropbox_folder").html(html);
     }
 });
