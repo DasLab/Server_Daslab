@@ -1,5 +1,6 @@
 google.load('visualization', '1', {packages: ['corechart']});
 google.setOnLoadCallback(drawDash);
+var gviz_handles = [];
 
 
 function readyHandler() {
@@ -34,6 +35,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/admin/aws_stat?qs=latency&sp=7d',
@@ -60,6 +62,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'ColumnChart',
@@ -85,6 +88,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/admin/aws_stat?qs=request&sp=7d',
@@ -111,6 +115,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'ColumnChart',
@@ -136,6 +141,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/admin/aws_stat?qs=cpu&sp=7d',
@@ -162,6 +168,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
@@ -191,6 +198,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/admin/aws_stat?qs=credit&sp=7d',
@@ -218,6 +226,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/admin/aws_stat?qs=status&sp=7d',
@@ -245,6 +254,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
@@ -272,6 +282,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/admin/aws_stat?qs=volbytes&sp=7d',
@@ -298,6 +309,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
@@ -325,6 +337,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/admin/aws_stat?qs=45xx&sp=7d',
@@ -351,6 +364,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 }
 
 
@@ -381,6 +395,16 @@ $.ajax({
         $("#table_ec2_prv_dns").html(data.ec2.private_dns_name);
         $("#table_ec2_prv_dns").parent().css("href", "http://" + data.ec2.private_dns_name);
     }
+});
+
+
+$(window).on("resize", function() {
+    clearTimeout($.data(this, 'resizeTimer'));
+    $.data(this, 'resizeTimer', setTimeout(function() {
+        for (var i = 0; i < gviz_handles.length; i++) {
+            gviz_handles[i].draw();
+        }
+    }, 200));
 });
 
 

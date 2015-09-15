@@ -1,6 +1,6 @@
 google.load('visualization', '1', {packages: ['corechart', 'calendar']});
 google.setOnLoadCallback(drawDash);
-
+var gviz_handles = [];
 
 function readyHandler() {
     $(".place_holder").each(function() {
@@ -31,6 +31,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
@@ -58,6 +59,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'PieChart',
@@ -75,6 +77,7 @@ function drawDash() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 
 }
 
@@ -100,5 +103,14 @@ $.ajax({
     }
 });
 
+
+$(window).on("resize", function() {
+    clearTimeout($.data(this, 'resizeTimer'));
+    $.data(this, 'resizeTimer', setTimeout(function() {
+        for (var i = 0; i < gviz_handles.length; i++) {
+            gviz_handles[i].draw();
+        }
+    }, 200));
+});
 
 

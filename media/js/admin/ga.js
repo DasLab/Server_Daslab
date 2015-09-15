@@ -5,6 +5,7 @@
 	fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
 }(window,document,'script'));
 
+var gviz_handles = [];
 
 function readyHandler() {
     $(".place_holder").each(function() {
@@ -16,7 +17,7 @@ function readyHandler() {
 function drawGA(id) {
 	new gapi.analytics.ViewSelector({ 'container': 'view-selector-container' }).execute();
 
-	new gapi.analytics.googleCharts.DataChart({
+	var chart = new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
 			'metrics': 'ga:sessions',
@@ -35,8 +36,10 @@ function drawGA(id) {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).once('success', readyHandler).execute();
-	new gapi.analytics.googleCharts.DataChart({
+	});
+	chart.once('success', readyHandler).execute();
+    gviz_handles.push(chart);
+	var chart = new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
 			'metrics': 'ga:sessions',
@@ -55,8 +58,10 @@ function drawGA(id) {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).once('success', readyHandler).execute();
-	chart_1m = new gapi.analytics.googleCharts.DataChart({
+	});
+	chart.once('success', readyHandler).execute();
+    gviz_handles.push(chart);
+	var chart = new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
 			'metrics': 'ga:sessions',
@@ -75,8 +80,10 @@ function drawGA(id) {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).once('success', readyHandler).execute();
-	chart_3m = new gapi.analytics.googleCharts.DataChart({
+	});
+	chart.once('success', readyHandler).execute();
+    gviz_handles.push(chart);
+	var chart = new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
 			'metrics': 'ga:sessions',
@@ -95,9 +102,11 @@ function drawGA(id) {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).once('success', readyHandler).execute();
+	});
+	chart.once('success', readyHandler).execute();
+    gviz_handles.push(chart);
 
-	new gapi.analytics.googleCharts.DataChart({
+	var chart = new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
 			'metrics': 'ga:sessions',
@@ -115,9 +124,11 @@ function drawGA(id) {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).once('success', readyHandler).execute();
-	
-	new gapi.analytics.googleCharts.DataChart({
+	});
+	chart.once('success', readyHandler).execute();
+    gviz_handles.push(chart);
+
+	var chart = new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
 			'metrics': 'ga:sessions',
@@ -137,8 +148,10 @@ function drawGA(id) {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).once('success', readyHandler).execute();
-	new gapi.analytics.googleCharts.DataChart({
+	});
+	chart.once('success', readyHandler).execute();
+    gviz_handles.push(chart);
+	var chart = new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
 			'metrics': 'ga:users',
@@ -158,8 +171,10 @@ function drawGA(id) {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).once('success', readyHandler).execute();
-	new gapi.analytics.googleCharts.DataChart({
+	});
+	chart.once('success', readyHandler).execute();
+    gviz_handles.push(chart);
+	var chart = new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
 			'metrics': 'ga:users',
@@ -182,8 +197,10 @@ function drawGA(id) {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).once('success', readyHandler).execute();
-	new gapi.analytics.googleCharts.DataChart({
+	});
+	chart.once('success', readyHandler).execute();
+    gviz_handles.push(chart);
+	var chart = new gapi.analytics.googleCharts.DataChart({
 		'query': {
 			'ids': id,
 			'metrics': 'ga:pageviews',
@@ -203,7 +220,9 @@ function drawGA(id) {
             	'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
 			}
 		}
-	}).once('success', readyHandler).execute();
+	});
+	chart.once('success', readyHandler).execute();
+    gviz_handles.push(chart);
 }
 
 
@@ -289,6 +308,15 @@ gapi.analytics.ready(function() {
 });	
 
 
+
+$(window).on("resize", function() {
+    clearTimeout($.data(this, 'resizeTimer'));
+    $.data(this, 'resizeTimer', setTimeout(function() {
+        for (var i = 0; i < gviz_handles.length; i++) {
+            gviz_handles[i].execute();
+        }
+    }, 200));
+});
 
 
 
