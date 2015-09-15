@@ -68,7 +68,11 @@ def publications(request):
 ############################################################################################################################################
 
 @login_required
-def lab_meetings(request):
+def lab_meeting_schedule(request):
+    return render_to_response(PATH.HTML_PATH['lab_meeting_schedule'], {}, context_instance=RequestContext(request))
+
+@login_required
+def lab_meeting_flash(request):
     colors = ('brown', 'dark-red', 'danger', 'orange', 'warning', 'green', 'success', 'light-blue', 'info', 'primary', 'dark-blue', 'violet')
     flash_list = FlashSlide.objects.order_by('-date')
     for i, gp in enumerate(flash_list):
@@ -87,32 +91,57 @@ def lab_meetings(request):
             gp.month_end = True 
             if gp.date.month in (1,5,9):
                 gp.row_end = True
+    return render_to_response(PATH.HTML_PATH['lab_meeting_flash'], {'flash_list':flash_list}, context_instance=RequestContext(request))
 
+@login_required
+def lab_meeting_youtube(request):
     eterna_list = EternaYoutube.objects.order_by('-date')
+    return render_to_response(PATH.HTML_PATH['lab_meeting_eterna'], {'eterna_list':eterna_list}, context_instance=RequestContext(request))
+
+@login_required
+def lab_meeting_rotation(request):
     rot_list = RotationStudent.objects.order_by('-date')
     for rot in rot_list:
         if rot.ppt:
             rot.ppt_link = os.path.basename(rot.ppt.name)
         if rot.data:
             rot.dat_link = os.path.basename(rot.data.name)
+    return render_to_response(PATH.HTML_PATH['lab_meeting_rotation'], {'rot_list':rot_list}, context_instance=RequestContext(request))
+
+
+@login_required
+def lab_resource_gdocs(request):
+    return render_to_response(PATH.HTML_PATH['lab_resource_gdocs'], {}, context_instance=RequestContext(request))
+@login_required
+def lab_resource_archive(request):
     arv_list = Presentation.objects.order_by('-date')
     for arv in arv_list:
         if arv.ppt:
             arv.ppt_link = os.path.basename(arv.ppt.name)
-    return render_to_response(PATH.HTML_PATH['lab_meetings'], {'flash_list':flash_list, 'eterna_list':eterna_list, 'rot_list':rot_list, 'arv_list':arv_list}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['lab_resource_archive'], {'arv_list':arv_list}, context_instance=RequestContext(request))
 
+
+@login_required
+def lab_home(request):
+    return render_to_response(PATH.HTML_PATH['lab_home'], {}, context_instance=RequestContext(request))
 @login_required
 def lab_calendar(request):
     return render_to_response(PATH.HTML_PATH['lab_calendar'], {}, context_instance=RequestContext(request))
 @login_required
-def lab_documents(request):
-    return render_to_response(PATH.HTML_PATH['lab_documents'], {}, context_instance=RequestContext(request))
+def lab_server_aws(request):
+    return render_to_response(PATH.HTML_PATH['lab_server_aws'], {}, context_instance=RequestContext(request))
 @login_required
-def lab_servers(request):
-    return render_to_response(PATH.HTML_PATH['lab_servers'], {}, context_instance=RequestContext(request))
+def lab_server_ga(request):
+    return render_to_response(PATH.HTML_PATH['lab_server_ga'], {}, context_instance=RequestContext(request))
 @login_required
-def lab_services(request):
-    return render_to_response(PATH.HTML_PATH['lab_services'], {}, context_instance=RequestContext(request))
+def lab_service_git(request):
+    return render_to_response(PATH.HTML_PATH['lab_service_git'], {}, context_instance=RequestContext(request))
+@login_required
+def lab_service_slack(request):
+    return render_to_response(PATH.HTML_PATH['lab_service_slack'], {}, context_instance=RequestContext(request))
+@login_required
+def lab_service_dropbox(request):
+    return render_to_response(PATH.HTML_PATH['lab_service_dropbox'], {}, context_instance=RequestContext(request))
 @login_required
 def lab_misc(request):
     return render_to_response(PATH.HTML_PATH['lab_misc'], {}, context_instance=RequestContext(request))

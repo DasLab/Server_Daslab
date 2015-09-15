@@ -1,0 +1,40 @@
+{% extends "media/html/_internal.html" %}
+{% block content %}
+<div class="col-md-12">
+	<table class="table table-hover">
+		<thead>
+			<tr class="active">
+				<th class="col-md-2">Date</th>
+				<th class="col-md-3">Presenter</th>
+				<th class="col-md-6">Title</th>
+				<th class="col-md-1">Link</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for gp in eterna_list %}
+			<tr {% if forloop.counter|divisibleby:2 %} class="active" {% endif %}>
+				<td><i>{{gp.date|date:"b d Y"|title}}</i></td>
+				<td><b>{{gp.presenter}}</b></td>
+				<td>{{gp.title}}</td>
+				<td><a href="{{gp.link}}" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
+			</tr>
+		{% endfor %}
+			<tr><td colspan="4" style="padding: 0px;"></td></tr>
+		</tbody>
+	</table>
+</div>
+{% endblock %}
+
+
+{% block script %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.dropdown-toggle').removeClass("active");
+			$("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;<a href="https://www.youtube.com/channel/UCt811OXJqe35TDhe9hPYzJg" target="_blank">Eterna Dev <span class="label" style="color:#000;">You</span><span class="label label-danger">Tube</span> Channel&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></li>');
+			$('#top').on('click', function () {
+				$('html, body').stop().animate({scrollTop: $("#main").offset().top - 75}, 500);
+			});
+		});
+	</script>
+
+{% endblock %}

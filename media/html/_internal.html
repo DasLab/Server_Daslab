@@ -4,6 +4,7 @@
 <head>
     <title>Das Lab: Group Member Website</title>
     <script type="text/javascript" src="/site_media/js/admin/load.js"></script>  
+    <script type="text/javascript" src="/site_media/js/group/menu.js"></script>  
     {% block head %}{% endblock %}
 </head>
 
@@ -14,67 +15,73 @@
 	</script>
 
 	<div class="navbar navbar-fixed-top" id="nav_load">
-		<div class="container">
-			<div class="navbar-header clickable">
+		<div class="container-fluid">
+			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/" id="nav_logo">&nbsp;&nbsp;<span>Das Lab Website</span>&nbsp;&nbsp;</a>
+				<a class="navbar-brand" href="/admin" id="nav_logo">
+					&nbsp;&nbsp;Das Lab Website
+				</a>
+				<ul class="nav navbar-nav">
+					<li id="nav_toggle">
+						<a><span class="glyphicon glyphicon-th-list"></span></a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav">
+					<li id="nav_external" class="navbar-icon">
+						<a href="/">
+							<span style="font-weight:bold;">
+								<span class="glyphicon glyphicon-globe"></span>
+								<span id="nav_external_text" style="display:none; color:#ff912e;">&nbsp;&nbsp;External&nbsp;&nbsp;</span>
+								</span>
+						</a>
+					</li>
+					<li id="nav_internal" class="navbar-icon">
+						<a href="/group">
+							<span style="font-weight:bold; color:#eeb211 !important;">
+								<span class="glyphicon glyphicon-inbox"></span>
+								<span id="nav_internal_text" style="color:#eeb211;">&nbsp;&nbsp;Internal&nbsp;&nbsp;</span>
+							</span>
+						</a>
+					</li>
+					<li id="nav_admin" class="navbar-icon">
+						<a href="/admin">
+							<span style="font-weight:bold;">
+								<span class="glyphicon glyphicon-tower"></span>
+								<span id="nav_admin_text" style="display:none; color:#ff5c2b;">&nbsp;&nbsp;Admin&nbsp;&nbsp;</span>
+							</span>
+						</a>
+					</li>
+				</ul>			
 			</div>
 
 			<div class="navbar-collapse collapse" >
-				<ul class="nav navbar-nav">
-					<li class="dropdown clickable" id="nav_meetings">
-						<a href="/group/meetings" >Meetings</a>
-						<ul class="dropdown-menu nav nav-pills nav-stacked" role="menu">
-							<li class="li-warning"><a href="/group/meetings#schedule"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Meeting Schedule</a></li>
-							<li class="li-success"><a href="/group/meetings#flash_slides"><span class="glyphicon glyphicon-duplicate"></span>&nbsp;&nbsp;Flash Slides</a></li>
-							<li class="li-danger"><a href="/group/meetings#eterna"><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;Open Group Meetings</a></li>
-							<li class="li-info"><a href="/group/meetings#rotation"><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;Rotation Students</a></li>
-							<li class="li-violet"><a href="/group/meetings#presentation"><span class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;Presentation Archive</a></li>
-						</ul>
-					</li>
-					<li class=" clickable" id="nav_calendar">
-						<a href="/group/calendar" >Calendar</a>
-					</li>
-					<li class=" clickable" id="nav_documents">
-						<a href="/group/documents" >Documents</a>
-					</li>
-					<li class="dropdown clickable" id="nav_servers">
-						<a href="/group/servers" >Servers</a>
-						<ul class="dropdown-menu nav nav-pills nav-stacked" role="menu">
-							<li class="li-primary"><a href="/group/servers#aws"><span class="glyphicon glyphicon-text-background"></span>&nbsp;&nbsp;Amazon Web Services</a></li>
-							<li class="li-magenta"><a href="/group/servers#ga"><span class="glyphicon glyphicon-signal"></span>&nbsp;&nbsp;Google Analytics</a></li>
-						</ul>
-					</li>
-					<li class="dropdown clickable" id="nav_services">
-						<a href="/group/services" >Services</a>
-						<ul class="dropdown-menu nav nav-pills nav-stacked" role="menu">
-							<li class="li-violet"><a href="/group/services#git"><span class="glyphicon glyphicon-compressed"></span>&nbsp;&nbsp;GitHub</a></li>
-							<li class="li-green"><a href="/group/services#slack"><span class="glyphicon glyphicon-fullscreen"></span>&nbsp;&nbsp;Slack</a></li>
-							<li class="li-orange"><a href="/group/services#dropbox"><span class="glyphicon glyphicon-cloud"></span>&nbsp;&nbsp;Dropbox</a></li>
-						</ul>
-					</li>
-					<li class=" clickable" id="nav_misc">
-						<a href="/group/misc" >Misc</a>
-					</li>
-					{% if user.is_superuser %}
-					<li class=" clickable" id="nav_admin">
-						<a href="/admin" style="color:#ff5c2b">Admin</a>
-					</li>
-					{% endif %}
-				</ul>
-
 				<div class="pull-right row">
 					<ul class="nav navbar-nav">
-						<li class="dropdown">
-							<button class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color: #fff;background-color: #5496d7; border-color: #7495c9;">
-								Account&nbsp;
-								<span class="caret"></span>
-							</button>
+						<li id="nav_meetings" style="display:none;">
+							<a style="text-decoration:none;">
+								<span style="color:#fff;">
+									<span class="glyphicon glyphicon-calendar"></span>&nbsp;
+									<span class="date"> </span>&nbsp;&nbsp;
+								</span>
+								<span style="color:#fff; font-weight:bold;">
+									<span class="glyphicon glyphicon-time"></span>&nbsp;
+									<span class="time" id="clock"></span>&nbsp;&nbsp;
+								</span>
+							</a>
+						</li>
+						<li id="nav_time">
+							<a><span class="glyphicon glyphicon-time"></span></a>
+						</li>
+						<li id="nav_email" class="navbar-icon">
+							<a><span class="glyphicon glyphicon-send"></span></a>
+						</li>
+			            <li class="dropdown navbar-icon" style="margin-right: 15px;">
+				            <a><span class="glyphicon glyphicon-user"></span></a>
 							<ul class="dropdown-menu dropdown-menu-right nav nav-pills nav-stacked" role="menu" id="nav_user">
 								<li class="nav-list">
 									<br/>
@@ -144,24 +151,102 @@
 			</div>
 		</div>
 	</div>
+  
+	<!-- Sticky footer wrap -->
+	<div id="wrapper">
+		<div id="sidebar-wrapper">
+			<ul class="nav nav-pills nav-stacked">
+				<li id="nav_home_lg" class="nav-ul nav-ul-lg li-info" style="margin-top: 10px;">
+					<a href="/group" ><span class="lead glyphicon glyphicon-home"></span></a>
+				</li>
+				<li id="nav_home" class="nav-ul li-info" style="margin-top: 10px;">
+					<a href="/group" ><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home</a>
+				</li>
 
-	<div class="container">
-		<div class="jumbotron" id="jumbotron">
-			<div class="row">
-				<div class="col-md-12">
-					<a href="/group">
-						<img src="/site_media/images/nav_group.gif" style="max-width:100%;" class="center-block"/>
-					</a>
-				</div>
+				<li id="nav_meeting_lg" class="nav-ul nav-ul-lg li-danger">
+					<a href="/group/schedule" ><span class="lead glyphicon glyphicon-bell"></span></a>
+				</li>
+				<li id="nav_meeting" class="nav-ul li-danger">
+					<a href="/group/schedule"><span class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;Group Meetings</a>
+					<ul class="nav-li-sub">
+						<li id="nav_schedule" class="nav-li"><span class="glyphicon glyphicon-time nav-icon"></span><a href="/group/schedule">&nbsp;&nbsp;Schedule</a></li>
+						<li id="nav_flash" class="nav-li"><span class="glyphicon glyphicon-blackboard nav-icon"></span><a href="/group/flash_slide">&nbsp;&nbsp;Flash Slides</a></li>
+						<li id="nav_eterna" class="nav-li"><span class="glyphicon glyphicon-facetime-video nav-icon"></span><a href="/group/youtube">&nbsp;&nbsp;EteRNA Videos</a></li>
+						<li id="nav_rotation" class="nav-li"><span class="glyphicon glyphicon-retweet nav-icon"></span><a href="/group/rotation">&nbsp;&nbsp;Rotation Students</a></li>
+					</ul>
+				</li>
+
+				<li id="nav_cal_lg" class="nav-ul nav-ul-lg li-violet"><a href="/group/calendar"><span class="lead glyphicon glyphicon-calendar"></span></a></li>
+				<li id="nav_cal" class="nav-ul li-violet"><a href="/group/calendar"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Calendar</a></li>
+
+				<li id="nav_res_lg" class="nav-ul nav-ul-lg li-warning">
+					<a href="/group/gdocs" ><span class="lead glyphicon glyphicon-briefcase"></span></a>
+				</li>
+				<li id="nav_res" class="nav-ul li-warning">
+					<a href="/group/gdocs"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Resources</a>
+					<ul class="nav-li-sub">
+						<li id="nav_gdocs" class="nav-li"><img src="/site_media/images/icons/gdrive_o.png" class="nav-icon" height="14px"><a href="/group/gdocs">&nbsp;&nbsp;Google Docs</a></li>
+						<li id="nav_archive" class="nav-li"><span class="glyphicon glyphicon-cd nav-icon"></span><a href="/group/archive">&nbsp;&nbsp;Presentations Archive</a></li>
+					</ul>
+				</li>
+
+				<li id="nav_server_lg" class="nav-ul nav-ul-lg li-green">
+					<a href="/group/aws/" ><span class="lead glyphicon glyphicon-tasks"></span></a>
+				</li>
+				<li id="nav_server" class="nav-ul li-green">
+					<a href="/group/aws/"><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Servers</a>
+					<ul class="nav-li-sub">
+						<li id="nav_aws" class="nav-li"><img src="/site_media/images/icons/aws_o.png" class="nav-icon" height="14px"><a href="/group/aws">&nbsp;&nbsp;Amazon Web Services</a></li>
+						<li id="nav_ga" class="nav-li"><img src="/site_media/images/icons/ga_o.png" class="nav-icon" height="14px"><a href="/group/ga">&nbsp;&nbsp;Google Analytics</a></li>
+					</ul>
+				</li>
+				<li id="nav_service_lg" class="nav-ul nav-ul-lg li-orange">
+					<a href="/group/git" ><span class="lead glyphicon glyphicon-hourglass"></span></a>
+				</li>
+				<li id="nav_service" class="nav-ul li-orange">
+					<a href="/group/git"><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Services</a>
+					<ul class="nav-li-sub">
+						<li id="nav_git" class="nav-li"><img src="/site_media/images/icons/git_o.png" class="nav-icon" height="14px"><a href="/group/git">&nbsp;&nbsp;GitHub</a></li>
+						<li id="nav_slack" class="nav-li"><img src="/site_media/images/icons/slack_o.png" class="nav-icon" height="14px"><a href="/group/slack">&nbsp;&nbsp;Slack</a></li>
+						<li id="nav_dropbox" class="nav-li"><img src="/site_media/images/icons/dropbox_o.png" class="nav-icon" height="14px"><a href="/group/dropbox">&nbsp;&nbsp;Dropbox</a></li>
+					</ul>
+				</li>
+
+				<li id="nav_misc_lg" class="nav-ul nav-ul-lg li-primary"><a href="/group/misc"><span class="lead glyphicon glyphicon-magnet"></span></a></li>
+				<li id="nav_misc" class="nav-ul li-primary"><a href="/group/misc"><span class="glyphicon glyphicon-magnet"></span>&nbsp;&nbsp;Miscellaneous</a></li>
+
+			</ul>
+		</div>
+
+	    <div id="page-content-wrapper">
+			<ul class="breadcrumb">
+				<li>
+					<a href="/group">Home</a>
+					{% if title %}
+					<span class="divider">&raquo;</span>
+					</li>
+					<lspan class="glyphicon glyphactive">
+					{{ title }}
+					{% endif %}
+				</li>
+			</ul>
+
+			<!-- Content -->
+			<div class="page-content">
+				<div class="container" id="content">
+					<div class="row">
+						{% block content %}{% endblock %}
+					</div>
+
+				{% block footer %}
+				<hr/>
+				<div class="container starter-template" id="footer" style="padding: 0px 15px;">
+				{% endblock %}
 			</div>
 		</div>
-	</div>
-    <hr/>
+		<!-- END Content -->
+    </div>
 
-	{% block content %}{% endblock %}
-	
-	<hr/>
-	<div class="container starter-template" id="footer"></div>
 	<a href="#" id="top">
 		<img style="position:fixed;display:block;right:5%;bottom:5%;opacity:0.85;" src="/site_media/images/nav_top.png" name="top" height="60"/>
 	</a>

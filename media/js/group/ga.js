@@ -6,6 +6,13 @@
 }(window,document,'script'));
 
 
+function readyHandler() {
+    $(".place_holder").each(function() {
+        if ($(this).html().length > 0) { $(this).removeClass("place_holder"); }
+    });
+}
+
+
 function drawGA(id) {
 	new gapi.analytics.googleCharts.DataChart({
 		'query': {

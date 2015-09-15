@@ -1,52 +1,36 @@
 {% extends "media/html/_internal.html" %}
 {% block content %}
-<div class="starter-template">
-	<div class="container">
-		<h3>
-			&nbsp;&nbsp;Google Calendar: 
-			<span class="lead">
-				<a href="https://www.google.com/calendar/embed?src=a53lhn4i0fgrkcs9c6i85fdmdo%40group.calendar.google.com&ctz=America/Los_Angeles" target="_blank">Das Lab Calendar&nbsp;<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
-			</span>
-		</h3>
-		<br/>
-		<div class="panel panel-orange">
-			<div class="panel-heading">
-				<h2 class="panel-title"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Google Group Calendar</h2>
-			</div>
-			<div class="panel-body" id="main">
-				<div class="row">
-					<div class="col-md-12">
-						<!-- <iframe src="https://www.google.com/calendar/embed?src=a53lhn4i0fgrkcs9c6i85fdmdo%40group.calendar.google.com&ctz=America/Los_Angeles" style="border-width:0" width="800" height="600" frameborder="0" scrolling="auto" seamless="true" id="iframe" class="well center-block"></iframe> -->
-						<div id="calendar" style="padding:10px;" class="place_holder"></div>
-					</div>
-				</div>
-				<br/>
-				<div class="row">
-					<div class="col-md-1"></div>
-					<div class="col-md-3">
-						<p class="lead">Legend</p>
-						<span class="label label-success">GREEN</span> <span class="pull-right">All-day Events</span>
-						<br/>
-						<span class="label label-primary">BLUE</span> <span class="pull-right">Time-span Events</span>
-						<br/>
-						<span class="label label-danger">RED</span> <span class="pull-right">Group Meeting Recurrence</span>
-						<br/>
-						<span class="label label-violet">VIOLET</span> <span class="pull-right">Member Birthdays</span>
-						<br/>
-					</div>
-					<div class="col-md-1"><b>Note:</b></div>
-					<div class="col-md-7">
-						This page is using custom rendering library <code>fullcalendar.js</code> for the calendar view instead of Google Caldendar <code>&lt;iframe&gt;</code> embedding.
-						<br/>
-						This is a work-around for making the calendar contents <kbd>public</kbd>, which would be searchable by anyone via Google.
-						<br/>
-						Our Lab calendar is still <kbd>private</kbd>. This page is for viewing only.
-					</div>
-				</div>
-				<br/>
-			</div>
+<div class="col-md-12">
+	<div class="row">
+		<div class="col-md-12">
+			<!-- <iframe src="https://www.google.com/calendar/embed?src=a53lhn4i0fgrkcs9c6i85fdmdo%40group.calendar.google.com&ctz=America/Los_Angeles" style="border-width:0" width="800" height="600" frameborder="0" scrolling="auto" seamless="true" id="iframe" class="well center-block"></iframe> -->
+			<div id="calendar" style="padding:10px;" class="place_holder"></div>
 		</div>
 	</div>
+	<br/>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-3">
+			<p class="lead">Legend</p>
+			<span class="label label-success">GREEN</span> <span class="pull-right">All-day Events</span>
+			<br/>
+			<span class="label label-primary">BLUE</span> <span class="pull-right">Time-span Events</span>
+			<br/>
+			<span class="label label-danger">RED</span> <span class="pull-right">Group Meeting Recurrence</span>
+			<br/>
+			<span class="label label-violet">VIOLET</span> <span class="pull-right">Member Birthdays</span>
+			<br/>
+		</div>
+		<div class="col-md-1"><b>Note:</b></div>
+		<div class="col-md-7">
+			This page is using custom rendering library <code>fullcalendar.js</code> for the calendar view instead of Google Caldendar <code>&lt;iframe&gt;</code> embedding.
+			<br/>
+			This is a work-around for making the calendar contents <kbd>public</kbd>, which would be searchable by anyone via Google.
+			<br/>
+			Our Lab calendar is still <kbd>private</kbd>. This page is for viewing only.
+		</div>
+	</div>
+	<br/>
 </div>
 {% endblock %}
 
@@ -66,9 +50,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('.dropdown-toggle').removeClass("active");
-			$("#nav_calendar").addClass("active");
-			$("#nav_logo").css("text-decoration","none");
-		// $("#iframe").css("width", parseInt($("#main").css("width")) - 50);
+			$("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;<a href="https://www.google.com/calendar/embed?src=a53lhn4i0fgrkcs9c6i85fdmdo%40group.calendar.google.com&ctz=America/Los_Angeles" target="_blank">Google Calendar&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></li>');
 
 			$.ajax({
 				url : "/admin/gcal",
