@@ -3,6 +3,7 @@ google.load('visualization', '1', {packages: ['corechart']});
 // 	return (Array(len).join("0") + num).slice(-len);
 // }
 google.setOnLoadCallback(drawChart);
+var gviz_handles = [];
 
 function formatSizeUnits(bytes){
     if      (bytes >= 1000000000) {bytes = (bytes / 1000000000).toFixed(2) + ' GB';}
@@ -133,6 +134,7 @@ function drawChart() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 
     var chart = new google.visualization.ChartWrapper({
     	'chartType': 'AreaChart',
@@ -160,5 +162,17 @@ function drawChart() {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 }
+
+
+$(window).on("resize", function() {
+    clearTimeout($.data(this, 'resizeTimer'));
+    $.data(this, 'resizeTimer', setTimeout(function() {
+        for (var i = 0; i < gviz_handles.length; i++) {
+            gviz_handles[i].draw();
+        }
+    }, 200));
+});
+
 

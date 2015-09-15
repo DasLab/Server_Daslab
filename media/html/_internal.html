@@ -4,7 +4,6 @@
 <head>
     <title>Das Lab: Group Member Website</title>
     <script type="text/javascript" src="/site_media/js/admin/load.js"></script>  
-    <script type="text/javascript" src="/site_media/js/group/menu.js"></script>  
     {% block head %}{% endblock %}
 </head>
 
@@ -23,7 +22,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/admin" id="nav_logo">
+				<a class="navbar-brand" href="/group" id="nav_logo">
 					&nbsp;&nbsp;Das Lab Website
 				</a>
 				<ul class="nav navbar-nav">
@@ -37,7 +36,7 @@
 							<span style="font-weight:bold;">
 								<span class="glyphicon glyphicon-globe"></span>
 								<span id="nav_external_text" style="display:none; color:#ff912e;">&nbsp;&nbsp;External&nbsp;&nbsp;</span>
-								</span>
+							</span>
 						</a>
 					</li>
 					<li id="nav_internal" class="navbar-icon">
@@ -214,7 +213,6 @@
 
 				<li id="nav_misc_lg" class="nav-ul nav-ul-lg li-primary"><a href="/group/misc"><span class="lead glyphicon glyphicon-magnet"></span></a></li>
 				<li id="nav_misc" class="nav-ul li-primary"><a href="/group/misc"><span class="glyphicon glyphicon-magnet"></span>&nbsp;&nbsp;Miscellaneous</a></li>
-
 			</ul>
 		</div>
 
@@ -271,13 +269,13 @@
 				$("html, body").stop().animate({scrollTop: 0}, 500);
 	        	event.preventDefault()
 			});
-			$("#top").on("mouseover", function () {
-				$("#top > img").attr("src", "/site_media/images/nav_top_hover.png");
-			});
-			$("#top").on("mouseout", function () {
-				$("#top > img").attr("src", "/site_media/images/nav_top.png");
-			});
+		    $("#top").hover(
+		      function(){ $("#top > img").attr("src", "/site_media/images/nav_top_hover.png"); },
+		      function(){ $("#top > img").attr("src", "/site_media/images/nav_top.png"); }
+		    );
 			$("#top").hide();
+			// $(".navbar-collapse > div.pull-right").css("height", "50px");
+			// $("ul.nav.navbar-nav").css("height", "50px");
 
 			$(".clickable").on("click", function () {
 				if ($("#buttonAll").length && $(this).attr("id") == "nav_browse") {
@@ -301,6 +299,7 @@
 	</script>
 
 	{% block script %}{% endblock %}
+    <script type="text/javascript" src="/site_media/js/group/menu.js"></script>  
     <script type="text/javascript">
 		// var _gaq = _gaq || [];
 		// 	_gaq.push(["_setAccount", "UA-36037648-1"]);

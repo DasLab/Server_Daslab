@@ -136,7 +136,7 @@ $(document).ready(function () {
 			$("#wrapper").css("padding-left", "235px");
 			$("#sidebar-wrapper").css({"margin-left":"-250px", "left":"250px", "width":"250px"});
 		}
-		side_toggle = !side_toggle
+		side_toggle = !side_toggle;
 	});
 	$("#wrapper").css("width", (parseInt($("#wrapper").css("width")) + 15).toString() + "px");
 

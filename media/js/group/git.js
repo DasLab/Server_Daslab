@@ -1,5 +1,6 @@
 google.load('visualization', '1', {packages: ['corechart']});
 google.setOnLoadCallback(drawChart);
+var gviz_handles = [];
 
 function readyHandler() {
     $(".place_holder").each(function() {
@@ -34,6 +35,7 @@ function drawGIT(repo) {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
@@ -61,6 +63,7 @@ function drawGIT(repo) {
     });
     google.visualization.events.addListener(chart, 'ready', readyHandler);
     chart.draw();
+    gviz_handles.push(chart);
 }
 
 
@@ -104,4 +107,15 @@ function drawChart() {
         }
     });
 }
+
+
+$(window).on("resize", function() {
+    clearTimeout($.data(this, 'resizeTimer'));
+    $.data(this, 'resizeTimer', setTimeout(function() {
+        for (var i = 0; i < gviz_handles.length; i++) {
+            gviz_handles[i].draw();
+        }
+    }, 200));
+});
+
 
