@@ -262,7 +262,7 @@ def error500(request):
 
 def test(request):
     # return HttpResponse(content=str(dash_ga(request)), status=200)
-    return error401(request)
+    return error500(request)
     raise ValueError
     # send_notify_emails('test', 'test')
     # send_mail('text', 'test', EMAIL_HOST_USER, [EMAIL_NOTIFY])

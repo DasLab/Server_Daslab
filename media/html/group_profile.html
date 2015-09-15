@@ -2,19 +2,20 @@
 {% block content %}
 <div class="col-md-12" id="main">
 	<div class="row">
-		<div class="col-md-12">
+        <div class="col-md-1"></div>
+		<div class="col-md-11">
 			<p class="lead">For profile changes, please contact site <span class="label label-success">admin</span>.</p>
 		</div>
 	</div>
     <div class="row">
-    	<div class="col-md-4">
+        <div class="col-md-1"></div>
+    	<div class="col-md-3">
     		{% if profile %}
     		<img class="well center-block" src="/site_data/ppl_img/{{profile.image_link}}" width="119"/>
     		{% else %}
     		<div class="alert alert-danger">
     			Your profile is not available in the <b>Member</b> database.
     		</div>
-
     		{% endif %}
 
 			<div id="nav_username" style="width:250px;" class="nav-list">
@@ -55,7 +56,7 @@
 				</p>
 			</div>
     	</div>
-    	<div class="col-md-8">
+    	<div class="col-md-7">
     		<div class="row">
                 <div class="col-md-2"><b>First Name</b>: </div>
                 <div class="col-md-4"><input class="form-control" type="text" disabled value="{{profile.first_name}}" /></div>
@@ -71,7 +72,6 @@
                 	<input class="form-control" type="text" disabled value="{{profile.role}}" />
                 </div>
             </div>
-            <br>
     		<div class="row">
                 <div class="col-md-2">
                 	<p><b>2<sup>nd</sup> Title:</b> <br><i>(Department)</i></p>
@@ -80,7 +80,6 @@
                 	<input class="form-control" type="text" disabled value="{{profile.department}}" />
                 </div>
             </div>
-            <br>
     		<div class="row">
                 <div class="col-md-2">
                 	<p><b>3<sup>rd</sup> Title:</b> <br><i>(Additional)</i></p>
@@ -134,6 +133,7 @@
             </div>
             <br>
     	</div>
+        <div class="col-md-1"></div>
     </div>
 
 </div>

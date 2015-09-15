@@ -51,7 +51,7 @@ body {
 .bgimg2-lg {
   background-image: url("/site_media/images/group/bg_rna_2.png");
   background-repeat: no-repeat;
-  background-position: right 25px bottom 50px;
+  background-position: center bottom;
   background-size: 75%;
 }
 
@@ -95,6 +95,7 @@ label {
   border-left: 1px solid #209874;
 }*/
 .navbar .navbar-nav > li > a {
+  height: 50px;
   color: #fff;
 }
 .navbar .navbar-nav > li > a:hover, .navbar .navbar-nav > li > a:focus {
