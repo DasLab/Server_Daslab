@@ -19,13 +19,13 @@
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
+			        <span class="glyphicon glyphicon-menu-hamburger"></span>
 				</button>
 				<a class="navbar-brand" href="/group" id="nav_logo">
 					&nbsp;&nbsp;Das Lab Website
 				</a>
+			</div>
+			<div class="navbar-collapse collapse" >
 				<ul class="nav navbar-nav">
 					<li id="nav_toggle">
 						<a><span class="glyphicon glyphicon-th-list"></span></a>
@@ -57,9 +57,7 @@
 						</a>
 					</li>
 				</ul>			
-			</div>
 
-			<div class="navbar-collapse collapse" >
 				<div class="pull-right row">
 					<ul class="nav navbar-nav">
 						<li id="nav_meetings" style="display:none;">
@@ -158,7 +156,7 @@
   
 	<!-- Sticky footer wrap -->
 	<div id="wrapper">
-		<div id="sidebar-wrapper">
+		<div id="sidebar-wrapper" class="bgimg-lg">
 			<ul class="nav nav-pills nav-stacked">
 				<li id="nav_home_lg" class="nav-ul nav-ul-lg li-info" style="margin-top: 10px;">
 					<a href="/group" ><span class="lead glyphicon glyphicon-home"></span></a>
@@ -242,13 +240,14 @@
 					</div>
 
 				{% block footer %}
-				<hr/>
-				<div class="container starter-template" id="footer" style="padding: 0px 15px;">
+					<hr/>
+					<div class="container starter-template" id="footer" style="padding: 0px 15px;"></div>
 				{% endblock %}
+				</div>
 			</div>
-		</div>
-		<!-- END Content -->
-    </div>
+			<!-- END Content -->
+	    </div>
+	</div>
 
 	<a href="#" id="top">
 		<img style="position:fixed;display:block;right:5%;bottom:5%;opacity:0.85;" src="/site_media/images/nav_top.png" name="top" height="60"/>
@@ -296,6 +295,7 @@
 	</script>
 
 	{% block script %}{% endblock %}
+    <script type="text/javascript" src="/site_media/js/admin/clock.js"></script>  
     <script type="text/javascript" src="/site_media/js/group/menu.js"></script>  
     <script type="text/javascript">
 		// var _gaq = _gaq || [];

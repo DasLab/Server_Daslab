@@ -1,14 +1,4 @@
 var $ = django.jQuery;
-var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-var weekNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-
-setInterval(function () {
-	var utc = new Date().toISOString().replace(/\..+/, '.000Z');
-	$("#utc").html(utc);
-    var d = new Date(), ampm = (d.getHours() >= 12) ? "p.m." : "a.m.", hour = (d.getHours() >= 12) ? d.getHours() - 12 : d.getHours(), tz = d.toString().match(/\(([A-Za-z\s].*)\)/)[1];
-    $("#date").html(monthNames[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear() + ' (' + weekNames[d.getDay()] + ')');
-    $("#clock").html(hour + ':' + d.getMinutes() + ' ' + ampm + ' (' + tz + ')');
-}, 1000);
 
 
 $(document).ready(function () {
@@ -169,3 +159,14 @@ $(document).ready(function () {
 
 	// $('.left-nav > ul > li > ul > li > a[href="/admin/aws/"]').attr("disabled", "disabled").css("text-decoration", "line-through").attr("href", "");
 });
+
+
+$(window).on("resize", function() {
+    clearTimeout($.data(this, 'resizeTimer'));
+    $.data(this, 'resizeTimer', setTimeout(function() {
+        $("#nav_logo").css("width", parseInt($("#nav_logo").css("width")) + 250 - parseInt($("#nav_external").position().left));
+        $("#wrapper").css("width", $(window).width() - $("sidebar-wrapper").width() - 20);
+    }, 200));
+});
+
+

@@ -36,11 +36,23 @@ body {
   background-position: right 200px bottom 25px;
   background-size: 30%;
 }
+.bgimg-lg {
+  background-image: url("/site_media/images/group/bg_rna.png");
+  background-repeat: no-repeat;
+  background-position: right 25px bottom 50px;
+  background-size: 90%;
+}
 .bgimg2 {
   background-image: url("/site_media/images/group/bg_rna_2.png");
   background-repeat: no-repeat;
   background-position: right 25px bottom 25px;
   background-size: 50%;
+}
+.bgimg2-lg {
+  background-image: url("/site_media/images/group/bg_rna_2.png");
+  background-repeat: no-repeat;
+  background-position: right 25px bottom 50px;
+  background-size: 75%;
 }
 
 html { 
@@ -101,17 +113,21 @@ label {
   background-color: #209874;
 }
 .navbar .navbar-toggle {
-  border-color: #112d52;
+  border-color: #209874;
+  color: #fff;
 }
 .navbar .navbar-toggle:hover, .navbar .navbar-toggle:focus {
-  background-color: #112d52;
+  background-color: #209874;
+  color: #fff;
 }
 .navbar .navbar-toggle .icon-bar {
-  background-color: #7cafd3;
+  background-color: #2da89c;
+  color: #fff;
 }
 .navbar .navbar-collapse,
 .navbar .navbar-form {
-  border-color: #7cafd3;
+  border-color: #209874;
+  color: #fff;
 }
 .navbar .navbar-link {
   color: #7cafd3;
@@ -364,6 +380,7 @@ img.logo {
 #wrapper {
   padding-left: 235px;
   transition: all 0.4s ease 0s;
+  /*margin: 0px 0px;*/
 }
 #sidebar-wrapper {
   margin-left: -250px; left: 250px;
@@ -377,7 +394,10 @@ img.logo {
   padding-left: 0px;
   width: 100%;
 }
-
+#content {
+  padding-right: 20px;
+}
+/*
 @media (max-width:767px) {
 
     #wrapper {
@@ -399,4 +419,4 @@ img.logo {
       transition: all 0.4s ease 0s;
     }
 
-}
+}*/

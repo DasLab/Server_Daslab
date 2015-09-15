@@ -48,13 +48,14 @@
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
+          <span class="glyphicon glyphicon-menu-hamburger"></span>
         </button>
         <a class="navbar-brand" href="/admin" id="nav_logo">
           &nbsp;&nbsp;{% block branding %}{{ 'ADMIN_NAME'|suit_conf }}{% endblock %}
         </a>
+      </div>
+
+      <div class="navbar-collapse collapse" >
         <ul class="nav navbar-nav">
           <li id="nav_toggle">
             <a><span class="glyphicon glyphicon-th-list"></span></a>
@@ -86,9 +87,6 @@
             </a>
           </li>
         </ul>
-      </div>
-
-      <div class="navbar-collapse collapse" >
         <div class="pull-right row">
           <ul class="nav navbar-nav">
             <li id="nav_meetings" style="display:none;">
@@ -186,7 +184,7 @@
 
   <!-- Sticky footer wrap -->
   <div id="wrapper">
-    <div id="sidebar-wrapper">
+    <div id="sidebar-wrapper" class="bgimg-lg">
       <ul class="nav nav-pills nav-stacked">
         <li id="nav_home_lg" class="nav-ul nav-ul-lg li-info" style="margin-top: 10px;">
           <a href="/admin/" ><span class="lead glyphicon glyphicon-home"></span></a>
@@ -272,7 +270,7 @@
 
       <!-- Content -->
       <div class="page-content">
-        <div class="container" id="content">
+        <div class="container-fluid" id="content">
           <div class="row">
             {% block pretitle %}{% endblock %}
             {% block content_title %}{% if title %}
@@ -289,37 +287,39 @@
 
           {% block footer %}
             <hr/>
-            <div class="container starter-template" id="footer" style="padding: 0px 15px;">
+            <div class="container starter-template" id="footer" style="padding: 0px 15px;"></div>
           {% endblock %}
         </div>
       </div>
       <!-- END Content -->
     </div>
-    {% endblock %}
+  </div>
+  {% endblock %}
 
-    {% if not is_popup %}
-      <!-- Sticky footer push -->
-      <div id="push"></div>
-    {% endif %}
+  {% if not is_popup %}
+    <!-- Sticky footer push -->
+    <div id="push"></div>
+  {% endif %}
 
-    <script type="text/javascript" src="/site_media/js/admin/_suit.js"></script>
-    <script type="text/javascript" src="/site_media/js/admin/table.js"></script>
-    <script type="text/javascript" src="/site_media/js/admin/menu.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function(){
-        $("#wait").fadeOut(500);
-        $("#footer").load("/site_media/html/_footer.html", function () {
-          var today = new Date();
-          $("#cp_year").text(today.getFullYear());
-        });
-
+  <script type="text/javascript" src="/site_media/js/admin/_suit.js"></script>
+  <script type="text/javascript" src="/site_media/js/admin/table.js"></script>
+  <script type="text/javascript" src="/site_media/js/admin/clock.js"></script>  
+  <script type="text/javascript" src="/site_media/js/admin/menu.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#wait").fadeOut(500);
+      $("#footer").load("/site_media/html/_footer.html", function () {
+        var today = new Date();
+        $("#cp_year").text(today.getFullYear());
       });
 
-      $(window).on("beforeunload", function () {
-        $("#wait").fadeIn(500);
-      });
-    </script>
-    {% block extrajs %}{% endblock %}
+    });
 
-  </body>
+    $(window).on("beforeunload", function () {
+      $("#wait").fadeIn(500);
+    });
+  </script>
+  {% block extrajs %}{% endblock %}
+
+</body>
 </html>

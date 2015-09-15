@@ -1,7 +1,4 @@
 google.load('visualization', '1', {packages: ['corechart']});
-// function zfill(num, len) {
-// 	return (Array(len).join("0") + num).slice(-len);
-// }
 google.setOnLoadCallback(drawChart);
 var gviz_handles = [];
 
