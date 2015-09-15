@@ -52,15 +52,40 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
+        <a class="navbar-brand" href="/admin" id="nav_logo">
+          &nbsp;&nbsp;{% block branding %}{{ 'ADMIN_NAME'|suit_conf }}{% endblock %}
+        </a>
         <ul class="nav navbar-nav">
           <li id="nav_toggle">
             <a><span class="glyphicon glyphicon-th-list"></span></a>
           </li>
         </ul>
-        <a class="navbar-brand" href="/admin" id="nav_logo">
-          &nbsp;&nbsp;<span id="site-name" style="color:#fff;">{% block branding %}{{ 'ADMIN_NAME'|suit_conf }}{% endblock %}</span>&nbsp;
-          <span style="color:#ff5c2b;">Administration</span>&nbsp;&nbsp;
-        </a>
+        <ul class="nav navbar-nav">
+          <li id="nav_external" class="navbar-icon">
+            <a href="/">
+              <span style="font-weight:bold;">
+                <span class="glyphicon glyphicon-globe"></span>
+                <span id="nav_external_text" style="display:none; color:#ff912e;">&nbsp;&nbsp;External&nbsp;&nbsp;</span>
+              </span>
+            </a>
+          </li>
+          <li id="nav_internal" class="navbar-icon">
+            <a href="/group">
+              <span style="font-weight:bold;">
+                <span class="glyphicon glyphicon-inbox"></span>
+                <span id="nav_internal_text" style="display:none; color:#eeb211;">&nbsp;&nbsp;Internal&nbsp;&nbsp;</span>
+              </span>
+            </a>
+          </li>
+          <li id="nav_admin" class="navbar-icon">
+            <a href="/admin">
+              <span style="font-weight:bold; color:#ff5c2b !important;">
+                <span class="glyphicon glyphicon-tower"></span>
+                <span id="nav_admin_text" style="color:#ff5c2b;">&nbsp;&nbsp;Admin&nbsp;&nbsp;</span>
+              </span>
+            </a>
+          </li>
+        </ul>
       </div>
 
       <div class="navbar-collapse collapse" >
@@ -85,10 +110,10 @@
             <li id="nav_time">
               <a><span class="glyphicon glyphicon-time"></span></a>
             </li>
-            <li id="nav_email">
+            <li id="nav_email" class="navbar-icon">
               <a><span class="glyphicon glyphicon-send"></span></a>
             </li>
-            <li class="dropdown">
+            <li class="dropdown navbar-icon" style="margin-right: 15px;">
               <a><span class="glyphicon glyphicon-user"></span></a>
               <ul class="dropdown-menu dropdown-menu-right nav nav-pills nav-stacked" role="menu" id="nav_user">
                 <li class="nav-list">
@@ -221,7 +246,8 @@
       {% if not is_popup %}
         {% block breadcrumbs %}
           <ul class="breadcrumb">
-            <li><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+            <li>
+              <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
               {% if title %}
                 <span class="divider">&raquo;</span>
                 </li>
@@ -246,7 +272,7 @@
 
       <!-- Content -->
       <div class="page-content">
-        <div class="container">
+        <div class="container" id="content">
           <div class="row">
             {% block pretitle %}{% endblock %}
             {% block content_title %}{% if title %}
@@ -287,15 +313,6 @@
           $("#cp_year").text(today.getFullYear());
         });
 
-        $("#nav_time").hover(
-                function(){ $("#nav_meetings").show() },
-                function(){ $("#nav_meetings").hide() }
-            );
-        $(".dropdown-toggle").dropdown();
-        $(".dropdown").hover(
-                function(){ $(this).addClass("open") },
-                function(){ $(this).removeClass("open") }
-            );
       });
 
       $(window).on("beforeunload", function () {

@@ -48,7 +48,7 @@ function get_apache_stat() {
 $(document).ready(function() {
     $("[data-toggle='popover']").popover({trigger: "hover"});
     $("[data-toggle='tooltip']").tooltip();
-    $("ul.breadcrumb").append('<li class="active"><a href="/admin/apache/">Apache Status</a></li>');
+    $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-grain"></span>&nbsp;&nbsp;<a href="/admin/apache/">Apache Status</a></li>');
 
     get_apache_stat();
     setInterval(function () { get_apache_stat();}, 3000);

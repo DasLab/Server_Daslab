@@ -23,7 +23,7 @@
           {% endif %}
         {% endspaceless %}
 
-        <button type="submit" class="btn btn-blue"><span class='glyphicon glyphicon-search'></span>&nbsp;{% trans 'Search' %}</button>
+        <button type="submit" class="btn btn-blue"><span class='glyphicon glyphicon-search'></span>&nbsp;&nbsp;{% trans 'Search' %}</button>
         &nbsp;
         {% if show_result_count %}
           <span class="small quiet result-count">{% blocktrans count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %}

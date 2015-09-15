@@ -4,7 +4,7 @@ var weekdayNames = new Array('Sunday','Monday','Tuesday','Wednesday','Thursday',
 $(document).ready(function() {
     $("ul.breadcrumb > li.active").text("System Dashboard");
 
-    $("#content").addClass("row").removeClass("row-fluid").removeClass("colM");
+    // $("#content").addClass("row").removeClass("row-fluid").removeClass("colM");
     $("#content > h2.content-title").remove();
     $("span.divider").remove();
     $("lspan").remove();

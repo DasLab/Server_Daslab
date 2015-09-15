@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	// $("#iframe").css("width", parseInt($("#content").css("width")) - 50);
 	// $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
-	$("ul.breadcrumb").append('<li class="active"><a href="/admin/export/">Publication Export</a></li>');
+	$("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-floppy-save"></span>&nbsp;&nbsp;<a href="/admin/export/">Publication Export</a></li>');
 	$("ul[id^=id_]").css("list-style-type", "none");
 
 	$("[id^=id_text_type]").on("change", function() {

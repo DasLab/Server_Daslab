@@ -4,148 +4,146 @@
 {% block bodyclass %}dashboard{% endblock %}
 
 {% block content %}
-	<div id="content-main">
-		<div class="row">
-			<form enctype="multipart/form-data" action="/admin/export/" method="post" target="_blank">
-				{% csrf_token %}
-				<div class="col-md-10">
-					<div class="thumbnail" style="padding:10px 20px;">
-						<div class="row">
-							<div class="col-md-6">
-								<br/>
-								<h4><span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>&nbsp;&nbsp;Output Format Type</h4>
-								{{form.text_type}}
-								<br/>
-								<h4><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Year Range <small>(Inclusive)</small></h4>
-								<div class="row">
-									<div class="col-md-5">{{form.year_start}}</div>
-									<div class="col-md-1">To:</div>
-									<div class="col-md-5"><input value="Current" type="input" disabled></div>
-									<div class="col-md-1"></div>
-								</div>  
-								<ul>
-									<div class="checkbox">
-										<label>
-											{{form.include_preprint}}
-											Include Preprint Items
-										</label>
-									</div>
-								</ul>
+	<div class="col-md-12">
+		<form enctype="multipart/form-data" action="/admin/export/" method="post" target="_blank">
+			{% csrf_token %}
+			<div class="col-md-10">
+				<div class="thumbnail" style="padding:10px 20px;">
+					<div class="row">
+						<div class="col-md-6">
+							<br/>
+							<h4><span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>&nbsp;&nbsp;Output Format Type</h4>
+							{{form.text_type}}
+							<br/>
+							<h4><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Year Range <small>(Inclusive)</small></h4>
+							<div class="row">
+								<div class="col-md-5">{{form.year_start}}</div>
+								<div class="col-md-1">To:</div>
+								<div class="col-md-5"><input value="Current" type="input" disabled></div>
+								<div class="col-md-1"></div>
+							</div>  
+							<ul>
+								<div class="checkbox">
+									<label>
+										{{form.include_preprint}}
+										Include Preprint Items
+									</label>
+								</div>
+							</ul>
 
-								<br/>
-								<div class="row">
-									<div class="col-md-6">
-										<h4><span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>&nbsp;&nbsp;Sorting Order</h4>
-										{{form.sort_order}}
-									</div>
-									<div class="col-md-6">
-										<h4><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>&nbsp;&nbsp;Numbering Order</h4>
-										{{form.number_order}}
-									</div>
+							<br/>
+							<div class="row">
+								<div class="col-md-6">
+									<h4><span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>&nbsp;&nbsp;Sorting Order</h4>
+									{{form.sort_order}}
+								</div>
+								<div class="col-md-6">
+									<h4><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>&nbsp;&nbsp;Numbering Order</h4>
+									{{form.number_order}}
 								</div>
 							</div>
+						</div>
 
-							<div class="col-md-6">
-								<br/>
-								<h4><span class="glyphicon glyphicon-check" aria-hidden="true"></span>&nbsp;&nbsp;Rich Format Options</h4>
-								<ul>
-									<div class="checkbox">
-										<label>
-											{{form.bold_author}}
-											Mark Corresponding Author as <b>Bold</b>
-										</label>
-									</div>
-									<div class="checkbox">
-										<label>
-											{{form.bold_year}}
-											Mark Publication Year as <b>Bold</b>
-										</label>
-									</div>
-									<div class="checkbox">
-										<label>
-											{{form.underline_title}}
-											Mark Publication Title with <u>Underline</u>
-										</label>
-									</div>
-									<div class="checkbox">
-										<label>
-											{{form.italic_journal}}
-											Mark Journal Name as <i>Italic</i>
-										</label>
-									</div>
-									<div class="checkbox">
-										<label>
-											{{form.bold_volume}}
-											Mark Volume Number as <b>Bold</b>
-										</label>
-									</div>
-								</ul>
+						<div class="col-md-6">
+							<br/>
+							<h4><span class="glyphicon glyphicon-check" aria-hidden="true"></span>&nbsp;&nbsp;Rich Format Options</h4>
+							<ul>
+								<div class="checkbox">
+									<label>
+										{{form.bold_author}}
+										Mark Corresponding Author as <b>Bold</b>
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										{{form.bold_year}}
+										Mark Publication Year as <b>Bold</b>
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										{{form.underline_title}}
+										Mark Publication Title with <u>Underline</u>
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										{{form.italic_journal}}
+										Mark Journal Name as <i>Italic</i>
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										{{form.bold_volume}}
+										Mark Volume Number as <b>Bold</b>
+									</label>
+								</div>
+							</ul>
 
-								<br/>
-								<h4><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;Text Format Options</h4>
-								<ul>
-									<div class="checkbox">
-										<label>
-											{{form.order_number}}
-											Show Item Numbering
-										</label>
-									</div>
-									<div class="checkbox">
-										<label>
-											{{form.quote_title}}
-											Mark Publication Title with "Quotes"
-										</label>
-									</div>
-									<div class="checkbox">
-										<label>
-											{{form.double_space}}
-											Double Space between Items
-										</label>
-									</div>
-								</ul>
-							</div>
+							<br/>
+							<h4><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;Text Format Options</h4>
+							<ul>
+								<div class="checkbox">
+									<label>
+										{{form.order_number}}
+										Show Item Numbering
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										{{form.quote_title}}
+										Mark Publication Title with "Quotes"
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										{{form.double_space}}
+										Double Space between Items
+									</label>
+								</div>
+							</ul>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-2">
-					<button type="submit" class="btn btn-primary form-control" name="action" id="export_save" value="save"><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Export</button>
-					<br/><br/>
-					<button type="submit" class="btn btn-warning form-control" name="action" id="export_view" value="view"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;&nbsp;View</button>
-					<br/><br/>
-					<a href="" class="btn btn-default form-control"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Reset</a>
-				</div>
-			</form>
-		</div>
-
-		<h4><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</h4>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="well" style="margin-bottom:0px;">
-					<p id="prv_item_1">
-						<span class="item_num">1.</span>
-						Cheng, C., Chou, F.-C., Kladwang, W., Tian, S., Cordero, P. and <span class="item_das">Das, R.</span> (<span class="item_year">2015</span>) 
-						<span class="item_quote">"</span><span class="item_title">Consistent global structures of complex RNA states through multidimensional chemical mapping.</span><span class="item_quote">"</span> 
-						<span class="item_journal">eLife</span> <span class="item_volume">4</span>: e07600 
-					</p>
-
-					<p id="prv_item_2">
-						<span class="item_num">2.</span>
-						Lee, J., Kladwang, W., Lee, M., Cantu, D., Azizyan, M., Kim, H., Limpaecher, A., Yoon, S., Treuille, A., <span class="item_das">Das, R.</span>, and EteRNA Participants (<span class="item_year">2014</span>) 
-						<span class="item_quote">"</span><span class="item_title">RNA design rules from a massive open laboratory.</span><span class="item_quote">"</span> 
-						<span class="item_journal">Proceedings of the National Academy of Sciences U.S.A.</span> <span class="item_volume">111</span>(6): 2122-2127  
-					</p>
-
-					<p id="prv_item_3">
-						<span class="item_num">3.</span>
-						Kladwang, W., VanLang, C.C., Cordero P., and <span class="item_das">Das, R.</span> (<span class="item_year">2011</span>) 
-						<span class="item_quote">"</span><span class="item_title">A two-dimensional mutate-and-map strategy for non-coding RNA structure.</span><span class="item_quote">"</span> 
-						<span class="item_journal">Nature Chemistry</span> <span class="item_volume">3</span>: 954-962 
-					</p>
-				</div>
 			</div>
-		</div>
-		
+			<div class="col-md-2">
+				<button type="submit" class="btn btn-primary form-control" name="action" id="export_save" value="save"><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Export</button>
+				<br/><br/>
+				<button type="submit" class="btn btn-warning form-control" name="action" id="export_view" value="view"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;&nbsp;View</button>
+				<br/><br/>
+				<a href="" class="btn btn-default form-control"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Reset</a>
+			</div>
+		</form>
 	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12" style="padding-bottom:20px;">
+		<h4><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</h4>
+		<div class="well" style="margin-bottom:0px;">
+			<p id="prv_item_1">
+				<span class="item_num">1.</span>
+				Cheng, C., Chou, F.-C., Kladwang, W., Tian, S., Cordero, P. and <span class="item_das">Das, R.</span> (<span class="item_year">2015</span>) 
+				<span class="item_quote">"</span><span class="item_title">Consistent global structures of complex RNA states through multidimensional chemical mapping.</span><span class="item_quote">"</span> 
+				<span class="item_journal">eLife</span> <span class="item_volume">4</span>: e07600 
+			</p>
+
+			<p id="prv_item_2">
+				<span class="item_num">2.</span>
+				Lee, J., Kladwang, W., Lee, M., Cantu, D., Azizyan, M., Kim, H., Limpaecher, A., Yoon, S., Treuille, A., <span class="item_das">Das, R.</span>, and EteRNA Participants (<span class="item_year">2014</span>) 
+				<span class="item_quote">"</span><span class="item_title">RNA design rules from a massive open laboratory.</span><span class="item_quote">"</span> 
+				<span class="item_journal">Proceedings of the National Academy of Sciences U.S.A.</span> <span class="item_volume">111</span>(6): 2122-2127  
+			</p>
+
+			<p id="prv_item_3">
+				<span class="item_num">3.</span>
+				Kladwang, W., VanLang, C.C., Cordero P., and <span class="item_das">Das, R.</span> (<span class="item_year">2011</span>) 
+				<span class="item_quote">"</span><span class="item_title">A two-dimensional mutate-and-map strategy for non-coding RNA structure.</span><span class="item_quote">"</span> 
+				<span class="item_journal">Nature Chemistry</span> <span class="item_volume">3</span>: 954-962 
+			</p>
+		</div>
+	</div>
+		
 {% endblock %}
 
 {% block extrajs %}

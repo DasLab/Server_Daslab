@@ -4,7 +4,7 @@
 {% block bodyclass %}dashboard{% endblock %}
 
 {% block content %}
-	<div id="content-main">
+	<div id="content-main" class="col-md-12">
 		<div class="row">
 			<div class="col-md-7">
 				<table class="table table-overview applist">
@@ -82,7 +82,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#view-selector-container").hide();
-			$("ul.breadcrumb").append('<li class="active"><a href="/admin/git/">GitHub Repository</a></li>');
+			$("ul.breadcrumb").append('<li class="active"><img src="/site_media/images/icons/git.png" height="14px">&nbsp;&nbsp;<a href="/admin/git/">GitHub Repository</a></li>');
 		});
 	</script>
 	<script type="text/javascript" src="https://www.google.com/jsapi" ></script>
