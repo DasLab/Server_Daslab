@@ -5,6 +5,7 @@
     <title>Das Lab: Group Member Website</title>
     <script type="text/javascript" src="/site_media/js/admin/load.js"></script>  
     {% block head %}{% endblock %}
+    <meta name="robots" content="NONE,NOARCHIVE"/>
 </head>
 
 <body>
@@ -280,14 +281,6 @@
 			$("#top").hide();
 			// $(".navbar-collapse > div.pull-right").css("height", "50px");
 			// $("ul.nav.navbar-nav").css("height", "50px");
-
-			$(".clickable").on("click", function () {
-				if ($("#buttonAll").length && $(this).attr("id") == "nav_browse") {
-					$("#wait").hide();
-				} else {
-					$("#wait").fadeIn(500);
-				}
-			});
 		});
 
 		$(window).on("beforeunload", function () {
