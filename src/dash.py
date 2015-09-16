@@ -223,9 +223,9 @@ def dash_slack(request):
                 if resp.has_key('is_bot') and resp['is_bot']: continue
                 presence = sh.users.get_presence(resp['id']).body['presence']
                 presence = (presence == 'active')
-                temp = {'name':resp['profile']['real_name'], 'id':resp['name'], 'emalil':resp['profile']['email'], 'image':resp['profile']['image_24'], 'presence':presence}
+                temp = {'name':resp['profile']['real_name'], 'id':resp['name'], 'email':resp['profile']['email'], 'image':resp['profile']['image_24'], 'presence':presence}
                 if req_id == 'None':
-                    users.append(temp)
+                    if not resp['deleted']: users.append(temp)
                 else:
                     if resp['deleted']:
                         gones.append(temp)
