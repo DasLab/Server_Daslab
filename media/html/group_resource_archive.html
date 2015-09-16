@@ -1,35 +1,76 @@
 {% extends "media/html/_internal.html" %}
 {% block content %}
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<h3>
-		&nbsp;&nbsp;<span class="lead">To upload a presentation, please contact site <span class="label label-success">admin</span>.</span>
-	</h3>
-	<br/>
-	<table class="table table-hover">
-		<thead>
-			<tr class="active">
-				<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Date</th>
-				<th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Presenter</th>
-				<th class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Title</th>
-				<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Link</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% for arv in arv_list %}
-			<tr {% if forloop.counter|divisibleby:2 %} class="active" {% endif %}>
-				<td><i>{{arv.date|date:"b d Y"|title}}</i></td>
-				<td><b>{{arv.presenter}}</b></td>
-				<td>{{arv.title}}</td>
-				<td>
-					{% if arv.ppt %} <a href="/site_data/spe_ppt/{{arv.ppt_link}}" target="_blank"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a> {% endif %}
-					{% if arv.link %} <a href="{{arv.link}}" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a> {% endif %}
-				</td>
-			</tr>
-		{% endfor %}
-			<tr><td colspan="4" style="padding: 0px;"></td></tr>
-		</tbody>
-	</table>
+	<span>
+		<button class="btn btn-warning" id="btn_toggle"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Toggle View</button>
+		&nbsp;&nbsp;<span id="label_timeline">Timeline</span>&nbsp;&nbsp;/&nbsp;&nbsp;<span id="label_table">Table</span>
+	</span>
 
+	<div class="row" id="toggle_timeline">
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+		    <ul class="timeline">
+				{% for arv in arv_list %}
+		        <li {% if forloop.counter|divisibleby:2 %} class="timeline-inverted" {% endif %}>
+					<div class="timeline-badge timeline-{{arv.label}}"><span class="glyphicon glyphicon-retweet"></span></div>
+					{% if arv.year_start %}
+					<div class="timeline-year">{{arv.date.year}}</div>
+					{% endif %}
+					<div class="timeline-panel">
+						<div class="timeline-heading">
+							<h4 class="timeline-title">
+								{{arv.title}}
+								{% if arv.ppt %}
+								&nbsp;&nbsp;<a href="/site_data/spe_ppt/{{arv.ppt_link}}" target="_blank"><span class="glyphicon glyphicon-download-alt" style="font-size:14px;"></span></a>
+								{% endif %}
+								{% if arv.link %}
+								&nbsp;&nbsp;<a href="{{arv.link}}" target="_blank"><span class="glyphicon glyphicon-new-window" style="font-size:14px;"</span></a>
+								{% endif %}
+							</h4>
+						</div>
+						<div class="timeline-body">
+							<p>
+								<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<b>{{arv.presenter}}</b>
+								<span class="pull-right"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;{{arv.date|date:"b d Y"|title}}</span>
+							</p>
+						</div>
+					</div>
+		        </li>
+				{% endfor %}
+		    </ul>
+		</div>
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+	</div>
+
+	<div class="row" id="toggle_table">
+		<br/>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<table class="table table-hover">
+				<thead>
+					<tr class="active">
+						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Date</th>
+						<th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Presenter</th>
+						<th class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Title</th>
+						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Link</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for arv in arv_list %}
+					<tr {% if forloop.counter|divisibleby:2 %} class="active" {% endif %}>
+						<td><i>{{arv.date|date:"b d Y"|title}}</i></td>
+						<td><b>{{arv.presenter}}</b></td>
+						<td>{{arv.title}}</td>
+						<td>
+							{% if arv.ppt %} <a href="/site_data/spe_ppt/{{arv.ppt_link}}" target="_blank"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a> {% endif %}
+							{% if arv.link %} <a href="{{arv.link}}" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a> {% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+					<tr><td colspan="4" style="padding: 0px;"></td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 {% endblock %}
 
@@ -42,6 +83,23 @@
 			$('#top').on('click', function () {
 				$('html, body').stop().animate({scrollTop: $("#main").offset().top - 75}, 500);
 			});
+
+			var toggle_flag = false;
+			$("#btn_toggle").on("click", function () {
+				if (toggle_flag) {
+					$("#toggle_table").fadeIn(500);
+					$("#toggle_timeline").fadeOut(500);
+					$("#label_table").css({"font-weight":"bold", "text-decoration":"underline"});
+					$("#label_timeline").css({"font-weight":"normal", "text-decoration":"none"});
+				} else {
+					$("#toggle_table").fadeOut(500);
+					$("#toggle_timeline").fadeIn(500);
+					$("#label_table").css({"font-weight":"normal", "text-decoration":"none"});
+					$("#label_timeline").css({"font-weight":"bold", "text-decoration":"underline"});
+				}
+				toggle_flag = !toggle_flag;
+			});
+			$("#btn_toggle").trigger("click");
 		});
 	</script>
 

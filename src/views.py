@@ -123,7 +123,10 @@ def lab_resource_gdocs(request):
 @login_required
 def lab_resource_archive(request):
     arv_list = Presentation.objects.order_by('-date')
-    for arv in arv_list:
+    for i, arv in enumerate(arv_list):
+        arv.label = colors[11 - i % 12]
+        if i == 0 or arv_list[i - 1].date.year != arv.date.year:
+            arv.year_start = True
         if arv.ppt:
             arv.ppt_link = os.path.basename(arv.ppt.name)
     return render_to_response(PATH.HTML_PATH['lab_resource_archive'], {'arv_list':arv_list}, context_instance=RequestContext(request))
