@@ -163,8 +163,15 @@ ul.nav-li-sub {
   list-style-type: none;
   padding-left: 5px;
 }
+ul.nav-li-sub > li > a {
+  overflow: hidden;
+  width: 195px;
+  position: relative;
+  vertical-align:top;
+  display: inline-block;
+}
 
-li.nav-li > a, li.nav-ul > a  {
+li.nav-li > a, li.nav-ul > a {
   color: #9fa7af;
   font-weight: normal;
 }
