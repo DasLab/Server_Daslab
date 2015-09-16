@@ -140,6 +140,7 @@ $(document).ready(function () {
 
             if ($(location).attr("href").indexOf("group/contact") != -1) {
                 $("#card_user_photo").html(data.photo);
+                $("#card_user_photo > img").css("max-width", "100%");
                 $("#card_user_name").html(data.name);
                 $("#card_user_id").html(data.id);
                 $("#card_user_aff").html(data.title);
