@@ -3,22 +3,32 @@
 @font-face {
     font-family: "Gill Sans";
     src: local("Gill Sans"), url("/site_media/fonts/GillSans/GillSans.ttf");
+    font-weight: normal; font-style: normal;
 }
 @font-face {
     font-family: "Gill Sans";
     src: local("Gill Sans Bold"), local("GillSans-Bold"), url("/site_media/fonts/GillSans/GillSans-Bold.ttf");
-    font-weight: bold;
+    font-weight: bold; font-style: normal;
 }
 @font-face {
     font-family: "Gill Sans";
     src: local("Gill Sans Italic"), local("GillSans-Italic"), url("/site_media/fonts/GillSans/GillSans-Italic.ttf");
-    font-style: italic, oblique;
+    font-weight: normal; font-style: italic;
+}
+@font-face {
+    font-family: "Gill Sans";
+    src: local("Gill Sans Italic"), local("GillSans-Italic"), url("/site_media/fonts/GillSans/GillSans-Italic.ttf");
+    font-weight: normal; font-style: oblique;
 }
 @font-face {
     font-family: "Gill Sans";
     src: local("Gill Sans Bold Italic"), local("GillSans-BoldItalic"), url("/site_media/fonts/GillSans/GillSans-BoldItalic.ttf");
-    font-weight: bold;
-    font-style: italic, oblique;
+    font-weight: bold; font-style: italic;
+}
+@font-face {
+    font-family: "Gill Sans";
+    src: local("Gill Sans Bold Italic"), local("GillSans-BoldItalic"), url("/site_media/fonts/GillSans/GillSans-BoldItalic.ttf");
+    font-weight: bold; font-style: oblique;
 }
 
 * { font-family: "Gill Sans", Arial, sans-serif; }
