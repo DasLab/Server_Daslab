@@ -114,9 +114,19 @@ label {
   background-color: #209874;
 }
 .navbar .navbar-toggle {
-  border-color: #209874;
+  border: #209874;
   color: #fff;
 }
+.navbar-toggle {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 0px;
+}
+.navbar-toggle > li > a {
+  padding: 15px;
+}
+
 .navbar .navbar-toggle:hover, .navbar .navbar-toggle:focus {
   background-color: #209874;
   color: #fff;

@@ -46,10 +46,11 @@
   <div class="navbar navbar-fixed-top" id="nav_load">
     <div class="container-fluid">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="glyphicon glyphicon-menu-hamburger"></span>
-        </button>
+        <ul class="nav navbar-nav navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <li class="navbar-icon">
+            <a><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+          </li>
+        </ul>
         <a class="navbar-brand" href="/admin" id="nav_logo">
           &nbsp;&nbsp;{% block branding %}{{ 'ADMIN_NAME'|suit_conf }}{% endblock %}
         </a>
