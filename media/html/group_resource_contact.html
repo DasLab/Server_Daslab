@@ -37,6 +37,47 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;Update Contact Information</h3>
+				</div>
+				<div class="panel-body">
+					<br/>
+					<form enctype="multipart/form-data" action="/update_contact/" method="post">
+						{% csrf_token %}
+			    		<div class="row">
+			                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+			                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+			                	<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;Phone :
+			                </div>
+			                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+			                	<input class="form-control" type="tel" id="form_change_phone" name="phone" />
+			                </div>
+			                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+			            </div>
+			            <br/>
+			    		<div class="row">
+			                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+			                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+			                	<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;Email :
+			                </div>
+			                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+			                	<input class="form-control" type="email" id="form_change_email" name="email" />
+			                </div>
+			                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+			            </div>
+			            <br/>
+		                <div class="row">
+		                	<div class="center-block text-center">
+								<input id="form_change_submit" type="submit" value="&nbsp;&nbsp;Update&nbsp;&nbsp;" class="btn btn-primary clickable"/>
+							</div>
+						</div>
+					</form>
+					<br/>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<hr/>
@@ -46,7 +87,7 @@
 	</span>
 	<br/><br/>
 	<div id="toggle_card">
-	    <h1><span class="label label-teal">Current Members</span></h1>
+	    <h1><span class="label label-teal">Current Members</span><span style="font-size:14px;"><i>&nbsp;&nbsp;(Everyone Else)</i></span></h1>
 
 		<div class="row">
 	        {% for ppl in current_member %}

@@ -132,7 +132,7 @@ def lab_resource_archive(request):
     return render_to_response(PATH.HTML_PATH['lab_resource_archive'], {'arv_list':arv_list}, context_instance=RequestContext(request))
 @login_required
 def lab_resource_contact(request):
-    member = Member.objects.filter(alumni=0).exclude(sunet_id=request.user).order_by('last_name', 'first_name')
+    member = Member.objects.filter(alumni=0).exclude(sunet_id=request.user.username).order_by('last_name', 'first_name')
     for i, ppl in enumerate(member):
         ppl.label = colors[11 - i % 12]
         ppl.name = ppl.full_name()
@@ -238,6 +238,25 @@ def user_password(request):
     else:
         return render_to_response(PATH.HTML_PATH['password'], {'messages':''}, context_instance=RequestContext(request))
 
+@login_required
+def user_contact(request):
+    if request.method == 'POST':
+        if (not 'email' in request.POST) or (not 'phone' in request.POST): return HttpResponseBadRequest('Invalid input.')
+        try:
+            email = request.POST['email']
+            phone = request.POST['phone']
+            phone = int(phone)
+        except ValueError:
+            return HttpResponseBadRequest('Invalid input.')
+
+        member = Member.objects.get(sunet_id=request.user.username)
+        member.phone = phone
+        member.email = email
+        member.save()
+        return HttpResponseRedirect('/group/contact')
+    else:
+        return HttpResponseBadRequest('Invalid form.')
+
 def user_profile(request):
     profile = Member.objects.filter(last_name=User.objects.get(username=request.user).last_name)
     if len(profile) > 1:
@@ -313,8 +332,9 @@ def gcal(request):
     return HttpResponse(get_cal(), content_type='application/json')
 
 def user_dash(request):
+    if request.user.username == u'daslab': return HttpResponseBadRequest('Fake admin login.')
     try:
-        user = Member.objects.get(sunet_id=request.user)
+        user = Member.objects.get(sunet_id=request.user.username)
         if user.phone:
             user.phone = str(user.phone)
             user.phone = '(%s) %s-%s' %(user.phone[:3], user.phone[3:6], user.phone[6:])

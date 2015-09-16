@@ -40,6 +40,7 @@ urlpatterns = [
 
     url(r'^login/$', views.user_login),
     url(r'^password/$', views.user_password),
+    url(r'^update_contact/$', views.user_contact),
     url(r'^profile/$', views.user_profile),
     url(r'^logout/$', views.user_logout),
     
