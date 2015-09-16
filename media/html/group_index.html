@@ -10,10 +10,31 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+
+		</div>
+		<div class="col-md-6">
+			<table class="table">
+				<thead>
+					<tr class="active">
+						<th class="col-md-6"></th>
+						<th class="col-md-6"></th>
+					</tr>
+				</thead>
+				<tbody id="table_slack_user">
+					<tr><td colspan="2" class="place_holder"></td></tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
 </div>
 {% endblock %}
 
-{% block extrajs %}
+{% block script %}
+	<script type="text/javascript" src="/site_media/js/group/home.js"></script> 
 	<script type="text/javascript">
 		$(document).ready(function() {
 
