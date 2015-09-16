@@ -1,6 +1,6 @@
 {% extends "media/html/_internal.html" %}
 {% block content %}
-<div class="col-md-12" id="flash_list">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="flash_list">
 	{% for ppt in flash_list %}
 		{% if ppt.year_start %}
 			<div class="panel panel-default subpanel">
@@ -16,7 +16,7 @@
 			{% if ppt.row_start %}
 						<div class="row">
 			{% endif %}
-							<div class="col-md-3">
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 								<div class="panel panel-{{ppt.label}} month">
 					            	<div class="panel-heading">
 					            		<h3 class="panel-title"><b>{{ppt.date|date:"F"}}</b></h3>

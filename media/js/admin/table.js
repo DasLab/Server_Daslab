@@ -56,9 +56,9 @@ $(document).ready(function () {
 	$("div.pagination-info").html("<br/>&nbsp;&nbsp;&nbsp;&nbsp;" + $("div.pagination-info").html());
 
     if ($(location).attr("href").indexOf("admin/src/news") != -1) {
-		$("th.column-date").addClass("col-md-2");
-		$("th.column-content").addClass("col-md-6");
-		$("th.column-link").addClass("col-md-4");
+		$("th.column-date").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
+		$("th.column-content").addClass("col-lg-6 col-md-6 col-sm-6 col-xs-6");
+		$("th.column-link").addClass("col-lg-4 col-md-4 col-sm-4 col-xs-4");
 
 		$("td.field-link").css("word-break", "break-all");
 		$("td.field-link").css("text-decoration", "underline");
@@ -71,11 +71,11 @@ $(document).ready(function () {
 		$("ul.breadcrumb > li:first").next().remove();
 		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;')
     } else if ($(location).attr("href").indexOf("admin/src/publication") != -1) {
-		$("th.column-year").addClass("col-md-1");
-		$("th.column-journal").addClass("col-md-2");
-		$("th.column-authors").addClass("col-md-3");
-		$("th.column-title").addClass("col-md-4");
-		$("th.column-link").addClass("col-md-2");
+		$("th.column-year").addClass("col-lg-1 col-md-1 col-sm-1 col-xs-1");
+		$("th.column-journal").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
+		$("th.column-authors").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-title").addClass("col-lg-4 col-md-4 col-sm-4 col-xs-4");
+		$("th.column-link").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
 
 		$("td.field-authors").css("word-break", "break-all");
 		$("td.field-title").css("word-break", "break-all");
@@ -95,10 +95,10 @@ $(document).ready(function () {
 		$("ul.breadcrumb > li:first").next().remove();
 		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;')
 	} else if ($(location).attr("href").indexOf("admin/src/member") != -1) {
-		$("th.column-full_name").addClass("col-md-3");
-		$("th.column-year").addClass("col-md-2");
-		$("th.column-joint_lab").addClass("col-md-2");
-		$("th.column-affiliation").addClass("col-md-5");
+		$("th.column-full_name").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-year").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
+		$("th.column-joint_lab").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
+		$("th.column-affiliation").addClass("col-lg-5 col-md-5 col-sm-5 col-xs-5");
 
 		$("th.field-full_name").css("font-weight", "bold");
 		$("td.field-year").css("font-style", "italic");
@@ -112,8 +112,8 @@ $(document).ready(function () {
 		$("ul.breadcrumb > li:first").next().remove();
 		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;')
 	} else if ($(location).attr("href").indexOf("admin/src/flashslide") != -1) {
-		$("th.column-date").addClass("col-md-3");
-		$("th.column-link").addClass("col-md-9");
+		$("th.column-date").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-link").addClass("col-lg-9 col-md-9 col-sm-9 col-xs-9");
 
 		$("td.field-link").css("text-decoration", "underline");
 
@@ -124,9 +124,9 @@ $(document).ready(function () {
 		$("ul.breadcrumb > li:first").next().remove();
 		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;')
 	} else if ($(location).attr("href").indexOf("admin/src/rotationstudent") != -1) {
-		$("th.column-date").addClass("col-md-3");
-		$("th.column-full_name").addClass("col-md-3");
-		$("th.column-title").addClass("col-md-6");
+		$("th.column-date").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-full_name").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-title").addClass("col-lg-6 col-md-6 col-sm-6 col-xs-6");
 
 		$("td.field-full_name").css("font-weight", "bold");
 
@@ -138,10 +138,10 @@ $(document).ready(function () {
 		$("ul.breadcrumb > li:first").next().remove();
 		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;')
  	} else if ($(location).attr("href").indexOf("admin/src/eternayoutube") != -1) {
-		$("th.column-date").addClass("col-md-3");
-		$("th.column-presenter").addClass("col-md-3");
-		$("th.column-title").addClass("col-md-6");
-		$("th.column-link").addClass("col-md-6");
+		$("th.column-date").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-presenter").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-title").addClass("col-lg-6 col-md-6 col-sm-6 col-xs-6");
+		$("th.column-link").addClass("col-lg-6 col-md-6 col-sm-6 col-xs-6");
 
 		$("td.field-presenter").css("font-weight", "bold");
 		$("td.field-link").css("text-decoration", "underline");
@@ -155,9 +155,9 @@ $(document).ready(function () {
 		$("ul.breadcrumb > li:first").next().remove();
 		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;')
  	} else if ($(location).attr("href").indexOf("admin/src/presentation") != -1) {
-		$("th.column-date").addClass("col-md-3");
-		$("th.column-presenter").addClass("col-md-3");
-		$("th.column-title").addClass("col-md-6");
+		$("th.column-date").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-presenter").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-title").addClass("col-lg-6 col-md-6 col-sm-6 col-xs-6");
 
 		$("td.field-presenter").css("font-weight", "bold");
 
@@ -169,12 +169,12 @@ $(document).ready(function () {
 		$("ul.breadcrumb > li:first").next().remove();
 		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;')
 	} else if ($(location).attr("href").indexOf("admin/auth/user") != -1) {
-		$("th.column-username").addClass("col-md-2");
-		$("th.column-email").addClass("col-md-3");
-		$("th.column-last_login").addClass("col-md-3");
-		$("th.column-is_active").addClass("col-md-1");
-		$("th.column-is_staff").addClass("col-md-1");
-		$("th.column-is_superuser").addClass("col-md-2");
+		$("th.column-username").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
+		$("th.column-email").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-last_login").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-is_active").addClass("col-lg-1 col-md-1 col-sm-1 col-xs-1");
+		$("th.column-is_staff").addClass("col-lg-1 col-md-1 col-sm-1 col-xs-1");
+		$("th.column-is_superuser").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
 
 		$("th.field-username").css("font-style", "italic");
 		$("td.field-email").css("text-decoration", "underline");
