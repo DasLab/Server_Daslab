@@ -224,8 +224,3 @@ def export(request):
 admin.site.register_view('export/', view=export, visible=False)
 
 
-def gcal(request):
-    return HttpResponse(get_cal(), content_type='application/json')
-admin.site.register_view('gcal/', view=gcal, visible=False)
-
-

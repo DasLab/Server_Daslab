@@ -272,6 +272,8 @@ def slack_dash(request):
 def dropbox_dash(request):
     return HttpResponse(dash_dropbox(request), content_type='application/json')
 
+def gcal(request):
+    return HttpResponse(get_cal(), content_type='application/json')
 
 
 
