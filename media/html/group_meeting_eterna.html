@@ -1,27 +1,35 @@
 {% extends "media/html/_internal.html" %}
 {% block content %}
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<table class="table table-hover">
-		<thead>
-			<tr class="active">
-				<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Date</th>
-				<th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Presenter</th>
-				<th class="col-lg-6 col-md-6 col-sm-6 col-xs-6">Title</th>
-				<th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Link</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% for gp in eterna_list %}
-			<tr {% if forloop.counter|divisibleby:2 %} class="active" {% endif %}>
-				<td><i>{{gp.date|date:"b d Y"|title}}</i></td>
-				<td><b>{{gp.presenter}}</b></td>
-				<td>{{gp.title}}</td>
-				<td><a href="{{gp.link}}" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></td>
-			</tr>
-		{% endfor %}
-			<tr><td colspan="4" style="padding: 0px;"></td></tr>
-		</tbody>
-	</table>
+	<div class="row">
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+		    <ul class="timeline">
+				{% for gp in eterna_list %}
+		        <li {% if forloop.counter|divisibleby:2 %} class="timeline-inverted" {% endif %}>
+					<div class="timeline-badge timeline-{{gp.label}}"><span class="glyphicon glyphicon-facetime-video"></span></div>
+					{% if gp.year_start %}
+					<div class="timeline-year">{{gp.date.year}}</div>
+					{% endif %}
+					<div class="timeline-panel">
+						<div class="timeline-heading">
+							<h4 class="timeline-title">
+								<a href="{{gp.link}}" target="_blank">{{gp.title}}&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size:14px;"></span></a>
+							</h4>
+						</div>
+						<div class="timeline-body">
+							<p>
+								<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<b>{{gp.presenter}}</b>
+								<span class="pull-right"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;{{gp.date|date:"b d Y"|title}}</span>
+							</p>
+						</div>
+					</div>
+		        </li>
+				{% endfor %}
+		    </ul>
+		</div>
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+	</div>
 </div>
 {% endblock %}
 

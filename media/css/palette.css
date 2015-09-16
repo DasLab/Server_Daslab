@@ -289,3 +289,55 @@ p.cap:first-letter {
 	border-bottom: 5px solid #a19193 !important;
 	background-color: #f5f5f5 !important;
 }
+
+.timeline-default {
+	background-color: #a19193;
+}
+.timeline-primary {
+	background-color: #5496d7;
+}
+.timeline-warning {
+	background-color: #eeb211;
+}
+.timeline-danger {
+	background-color: #ff5c2b;
+}
+.timeline-info {
+	background-color: #3ed4e7;
+}
+.timeline-success {
+	background-color: #29be92;
+}
+.timeline-green {
+	background-color: #50cc32;
+}
+.timeline-light-blue {
+	background-color: #8ee4cf;
+}
+.timeline-brown {
+	background-color: #d39a6f;
+}
+.timeline-violet {
+	background-color: #c28fdd;
+}
+.timeline-orange {
+	background-color: #ff912e;
+}
+.timeline-magenta {
+	background-color: #ff69bc;
+}
+.timeline-dark-red {
+	background-color: #d86f5c;
+}
+.timeline-dark-blue {
+	background-color: #7d95c9;
+}
+.timeline-gray {
+	background-color: #b7bac5;
+}
+.timeline-dark-green {
+	background-color: #24920C;
+}
+.timeline-teal {
+	background-color: #008080;
+}

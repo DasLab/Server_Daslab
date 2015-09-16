@@ -24,6 +24,8 @@ import sys
 import traceback
 # from sys import stderr
 
+colors = ('brown', 'dark-red', 'danger', 'orange', 'warning', 'green', 'success', 'light-blue', 'info', 'primary', 'dark-blue', 'violet')
+
 
 def index(request):
     return render_to_response(PATH.HTML_PATH['index'], {'tracking_id':GA['TRACKING_ID']}, context_instance=RequestContext(request))
@@ -73,7 +75,6 @@ def lab_meeting_schedule(request):
 
 @login_required
 def lab_meeting_flash(request):
-    colors = ('brown', 'dark-red', 'danger', 'orange', 'warning', 'green', 'success', 'light-blue', 'info', 'primary', 'dark-blue', 'violet')
     flash_list = FlashSlide.objects.order_by('-date')
     for i, gp in enumerate(flash_list):
         if i == 0 or flash_list[i - 1].date.year != gp.date.year:
@@ -96,12 +97,19 @@ def lab_meeting_flash(request):
 @login_required
 def lab_meeting_youtube(request):
     eterna_list = EternaYoutube.objects.order_by('-date')
+    for i, gp in enumerate(eterna_list):
+        gp.label = colors[11 - i % 12]
+        if i == 0 or eterna_list[i - 1].date.year != gp.date.year:
+            gp.year_start = True
     return render_to_response(PATH.HTML_PATH['lab_meeting_eterna'], {'eterna_list':eterna_list}, context_instance=RequestContext(request))
 
 @login_required
 def lab_meeting_rotation(request):
     rot_list = RotationStudent.objects.order_by('-date')
-    for rot in rot_list:
+    for i, rot in enumerate(rot_list):
+        rot.label = colors[11 - i % 12]
+        if i == 0 or rot_list[i - 1].date.year != rot.date.year:
+            rot.year_start = True
         if rot.ppt:
             rot.ppt_link = os.path.basename(rot.ppt.name)
         if rot.data:
