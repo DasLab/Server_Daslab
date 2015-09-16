@@ -12,7 +12,7 @@
 		    <ul class="timeline">
 				{% for arv in arv_list %}
 		        <li {% if forloop.counter|divisibleby:2 %} class="timeline-inverted" {% endif %}>
-					<div class="timeline-badge timeline-{{arv.label}}"><span class="glyphicon glyphicon-retweet"></span></div>
+					<div class="timeline-badge timeline-{{arv.label}}"><span class="glyphicon glyphicon-blackboard"></span></div>
 					{% if arv.year_start %}
 					<div class="timeline-year">{{arv.date.year}}</div>
 					{% endif %}

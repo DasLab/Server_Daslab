@@ -93,9 +93,10 @@
 									<br/>
 									<p><span style="text-decoration:underline; color:gray;">Signed In As:</span></p>
 								</li>
-								<li id="nav_username" style="width:225px;" class="nav-list">
+								<li id="nav_username" style="width:450px;" class="nav-list">
 									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;
 									<b>{{ user.first_name }} {{ user.last_name }}</b>
+									{{user.image}}
 									<br/>
 									<span class="glyphicon glyphicon-user" aria-hidden="true" style="color:#fff;"></span>&nbsp;&nbsp;
 									<kbd>{{ user.username }}</kbd>

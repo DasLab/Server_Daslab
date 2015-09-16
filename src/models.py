@@ -68,6 +68,11 @@ class Member(models.Model):
     joint_link = models.CharField(max_length=255, blank=True, verbose_name='Joint Lab URL', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp; Link to the joint lab website.')
     description = models.CharField(max_length=255, blank=True, verbose_name='Additional Title', help_text='<span class="glyphicon glyphicon-pencil"></span>&nbsp; Shows up as a 3<sup>rd</sup> field for title.')
 
+    email = models.CharField(max_length=255, blank=True, verbose_name='Email')
+    phone = models.BigIntegerField(blank=True, verbose_name='Phone Number', help_text='<span class="glyphicon glyphicon-phone"></span>&nbsp; Cell phone number.')
+    sunet_id = models.CharField(max_length=31, blank=True, verbose_name='SUNet ID', help_text='<span class="glyphicon glyphicon-credit-card"></span>&nbsp; SUNet ID login to match WebAuth.')
+    hide = models.BooleanField(default=False, verbose_name='Hide from external page?', help_text='<span class="glyphicon glyphicon-check"></span>&nbsp; Uncheck to hide from people.')
+
     alumni = models.BooleanField(default=False, verbose_name='Is Alumni?', help_text='<span class="glyphicon glyphicon-check"></span>&nbsp; Check for alumni members.')
     start_year = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name='Start Year', help_text='<span class="glyphicon glyphicon-play"></span>&nbsp; For alumni display only.')
     finish_year = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name='Finish Year', help_text='<span class="glyphicon glyphicon-stop"></span>&nbsp; For alumni display only.')

@@ -120,6 +120,16 @@ $(document).ready(function () {
     );
     $("#nav_logo").css("width", parseInt($("#nav_logo").css("width")) + 250 - parseInt($("#nav_external").position().left));
 
+
+    $.ajax({
+        url : "/admin/user_dash",
+        dataType: "json",
+        success: function (data) {
+            
+
+        }
+    });
+
     // $('.left-nav > ul > li > ul > li > a[href="/admin/aws/"]').attr("disabled", "disabled").css("text-decoration", "line-through").attr("href", "");
 });
 

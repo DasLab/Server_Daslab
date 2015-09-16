@@ -39,14 +39,15 @@ class NewsAdmin(admin.ModelAdmin):
 admin.site.register(News, NewsAdmin)
 
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'year', 'joint_lab', 'affiliation',)
+    list_display = ('full_name', 'sunet_id', 'year', 'joint_lab', 'affiliation',)
     ordering = ('alumni', 'last_name', 'role',)
     readonly_fields = ('image_tag',)
 
     fieldsets = [
         (format_html('<span class="glyphicon glyphicon-user"></span>&nbsp;Personal Information'), {'fields': [('first_name', 'last_name'), 'role', ('image', 'image_tag'), 'description', 'more_info']}),
         (format_html('<span class="glyphicon glyphicon-home"></span>&nbsp;Affiliation'), {'fields': ['department', ('joint_lab', 'joint_link')]}),
-        (format_html('<span class="glyphicon glyphicon-road"></span>&nbsp;Alumni Information'), {'fields': ['alumni', ('start_year', 'finish_year')]}),
+        (format_html('<span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact'), {'fields': ['email', ('sunet_id', 'phone')]}),
+        (format_html('<span class="glyphicon glyphicon-road"></span>&nbsp;Alumni Information'), {'fields': [('alumni', 'hide'), ('start_year', 'finish_year')]}),
     ]
 admin.site.register(Member, MemberAdmin)
 

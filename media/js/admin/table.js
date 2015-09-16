@@ -95,15 +95,20 @@ $(document).ready(function () {
 		$("ul.breadcrumb > li:first").next().remove();
 		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;')
 	} else if ($(location).attr("href").indexOf("admin/src/member") != -1) {
-		$("th.column-full_name").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-full_name").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
+		$("th.column-sunet_id").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
 		$("th.column-year").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
 		$("th.column-joint_lab").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
-		$("th.column-affiliation").addClass("col-lg-5 col-md-5 col-sm-5 col-xs-5");
+		$("th.column-affiliation").addClass("col-lg-4 col-md-4 col-sm-4 col-xs-4");
 
 		$("th.field-full_name").css("font-weight", "bold");
-		$("td.field-year").css("font-style", "italic");
+		$("td.field-sunet_id").each(function() {
+			$(this).html("<kbd>" + $(this).html() + "</kbd>");
+		});
+		// $("td.field-year").css("font-style", "italic");
 
 		$("th.column-full_name > div.text > a").html('<span class="glyphicon glyphicon-credit-card"></span>&nbsp;&nbsp;Full Name');
+		$("th.column-sunet_id > div.text > a").html('<span class="glyphicon glyphicon-qrcode"></span>&nbsp;&nbsp;SUNet ID');
 		$("th.column-year > div.text > a").html('<span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Status');
 		$("th.column-joint_lab > div.text > a").html('<span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Joint Lab');
 		$("th.column-affiliation > div.text > a").html('<span class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;Affiliation');

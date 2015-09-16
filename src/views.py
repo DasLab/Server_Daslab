@@ -44,8 +44,8 @@ def news(request):
     return render_to_response(PATH.HTML_PATH['news'], {'tracking_id':GA['TRACKING_ID'], 'news_list':news_list}, context_instance=RequestContext(request))
 
 def people(request):
-    member = Member.objects.filter(alumni=0).order_by('last_name', 'first_name')
-    almuni = Member.objects.filter(alumni=1).order_by('finish_year', 'start_year')
+    member = Member.objects.filter(alumni=0, hide=0).order_by('last_name', 'first_name')
+    almuni = Member.objects.filter(alumni=1, hide=0).order_by('finish_year', 'start_year')
     for ppl in member:
         if ppl.image:
             ppl.image_link = os.path.basename(ppl.image.name)
@@ -286,6 +286,9 @@ def dropbox_dash(request):
 def gcal(request):
     return HttpResponse(get_cal(), content_type='application/json')
 
+def user_dash(request):
+    print request.user
+    pass
 
 
 def error400(request):

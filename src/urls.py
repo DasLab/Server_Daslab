@@ -68,6 +68,7 @@ urlpatterns = [
     url(r'^admin/git_dash/$', views.git_dash),
     url(r'^admin/slack_dash/$', views.slack_dash),
     url(r'^admin/dropbox_dash/$', views.dropbox_dash),
+    url(r'^admin/user_dash/$', views.user_dash),
     url(r'^admin/gcal/$', views.gcal),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^(?:robots.txt)?$', 'django.views.static.serve', kwargs={'path': 'robots.txt', 'document_root': MEDIA_ROOT}),
