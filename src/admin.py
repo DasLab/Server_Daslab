@@ -149,35 +149,21 @@ def aws_stat(request):
     return HttpResponse(json, content_type='application/json')
 admin.site.register_view('aws_stat', view=aws_stat, visible=False)
 
-def aws_dash(request):
-    json = dash_aws(request)
-    if isinstance(json, HttpResponseBadRequest): return json
-    return HttpResponse(json, content_type='application/json')
-admin.site.register_view('aws_dash', view=aws_dash, visible=False)
-
 def aws_admin(request):
     json = ga_stats()
     if isinstance(json, HttpResponseBadRequest): return json
     return HttpResponse(json, content_type='application/json')
 admin.site.register_view('aws_admin', view=aws_admin, visible=False)
 
-
 def ga(request):
     return render_to_response(PATH.HTML_PATH['admin_ga'], {}, context_instance=RequestContext(request))
 admin.site.register_view('ga/', view=ga, visible=False)
-
-def ga_dash(request):
-    json = dash_ga(request)
-    if isinstance(json, HttpResponseBadRequest): return json
-    return HttpResponse(json, content_type='application/json')
-admin.site.register_view('ga_dash', view=ga_dash, visible=False)
 
 def ga_admin(request):
     json = ga_stats()
     if isinstance(json, HttpResponseBadRequest): return json
     return HttpResponse(json, content_type='application/json')
 admin.site.register_view('ga_admin', view=ga_admin, visible=False)
-
 
 def git(request):
     return render_to_response(PATH.HTML_PATH['admin_git'], {'timezone':TIME_ZONE}, context_instance=RequestContext(request))
@@ -196,31 +182,6 @@ def git_stat(request):
         if isinstance(json, HttpResponseServerError): return json
     return HttpResponse(json, content_type='application/json')
 admin.site.register_view('git_stat', view=git_stat, visible=False)
-
-def git_dash(request):
-    json = dash_git(request)
-    if isinstance(json, HttpResponseBadRequest):
-        return json
-    elif isinstance(json, HttpResponseServerError):
-        i = 0
-        while (isinstance(json, HttpResponseServerError) and i <= 5):
-            i += 1
-            sleep(1)
-            json = dash_git(request)
-        if isinstance(json, HttpResponseServerError): return json
-    return HttpResponse(json, content_type='application/json')
-admin.site.register_view('git_dash', view=git_dash, visible=False)
-
-
-def slack_dash(request):
-    return HttpResponse(dash_slack(request), content_type='application/json')
-admin.site.register_view('slack_dash', view=slack_dash, visible=False)
-
-
-def dropbox_dash(request):
-    return HttpResponse(dash_dropbox(request), content_type='application/json')
-admin.site.register_view('dropbox_dash', view=dropbox_dash, visible=False)
-
 
 def ssl_dash(request):
     return HttpResponse(dash_ssl(request), content_type='application/json')

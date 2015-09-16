@@ -1,4 +1,4 @@
-from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, HttpResponseServerError
 from django.template import RequestContext#, Template
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
@@ -243,19 +243,46 @@ def ping_test(request):
 #     if request.GET.get('searchtext'):
 #         path = path + '?searchtext=' + request.GET.get('searchtext')
 #     return HttpResponsePermanentRedirect("/%s" % path)
+def aws_dash(request):
+    json = dash_aws(request)
+    if isinstance(json, HttpResponseBadRequest): return json
+    return HttpResponse(json, content_type='application/json')
+
+def ga_dash(request):
+    json = dash_ga(request)
+    if isinstance(json, HttpResponseBadRequest): return json
+    return HttpResponse(json, content_type='application/json')
+
+def git_dash(request):
+    json = dash_git(request)
+    if isinstance(json, HttpResponseBadRequest):
+        return json
+    elif isinstance(json, HttpResponseServerError):
+        i = 0
+        while (isinstance(json, HttpResponseServerError) and i <= 5):
+            i += 1
+            sleep(1)
+            json = dash_git(request)
+        if isinstance(json, HttpResponseServerError): return json
+    return HttpResponse(json, content_type='application/json')
+
+def slack_dash(request):
+    return HttpResponse(dash_slack(request), content_type='application/json')
+
+def dropbox_dash(request):
+    return HttpResponse(dash_dropbox(request), content_type='application/json')
+
+
+
 
 def error400(request):
     return render_to_response(PATH.HTML_PATH['400'], {}, context_instance=RequestContext(request))
-
 def error401(request):
     return render_to_response(PATH.HTML_PATH['401'], {}, context_instance=RequestContext(request))
-
 def error403(request):
     return render_to_response(PATH.HTML_PATH['403'], {}, context_instance=RequestContext(request))
-
 def error404(request):
     return render_to_response(PATH.HTML_PATH['404'], {'tracking_id':GA['TRACKING_ID']}, context_instance=RequestContext(request))
-
 def error500(request):
     return render_to_response(PATH.HTML_PATH['500'], {}, context_instance=RequestContext(request))
 

@@ -63,6 +63,11 @@ urlpatterns = [
     url(r'^site_data/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT + '/data'}),
 
     url(r'^admin/browse/' + path_end, views.browse),
+    url(r'^admin/aws_dash/$', views.aws_dash),
+    url(r'^admin/ga_dash/$', views.ga_dash),
+    url(r'^admin/git_dash/$', views.git_dash),
+    url(r'^admin/slack_dash/$', views.slack_dash),
+    url(r'^admin/dropbox_dash/$', views.dropbox_dash),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^(?:robots.txt)?$', 'django.views.static.serve', kwargs={'path': 'robots.txt', 'document_root': MEDIA_ROOT}),
 
