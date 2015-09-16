@@ -155,6 +155,49 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="row" id="toggle_table">
+		<br/>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<table class="table table-hover">
+				<thead>
+					<tr class="active">
+						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Name</th>
+						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Status</th>
+						<th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">ID</th>
+						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Phone</th>
+						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Email</th>
+						<th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Affiliation</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for ppl in current_member %}
+					<tr {% if forloop.counter|divisibleby:2 %} class="info" {% endif %}>
+						<td><b>{{ppl.name}}</b></td>
+						<td>{{ppl.status}}</td>
+						<td><kbd>{{ppl.sunet_id}}</kbd></td>
+						<td>{{ppl.phone}}</td>
+						<td><i><u>{{ppl.email}}</u></i></td>
+						<td>{{ppl.title}}{% if ppl.description %}, {{ ppl.description }}{% endif %}</td>
+					</tr>
+				{% endfor %}
+					<tr><td colspan="5" style="padding: 0px;"></td></tr>
+				{% for ppl in past_member %}
+					<tr class="active">
+						<td><b>{{ppl.name}}</b></td>
+						<td>{{ppl.status}}</td>
+						<td><kbd>{{ppl.sunet_id}}</kbd></td>
+						<td>{{ppl.phone}}</td>
+						<td><i><u>{{ppl.email}}</u></i></td>
+						<td>{{ppl.title}}{% if ppl.description %}, {{ ppl.description }}{% endif %}</td>
+					</tr>
+				{% endfor %}
+					<tr><td colspan="5" style="padding: 0px;"></td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
 </div>
 {% endblock %}
 

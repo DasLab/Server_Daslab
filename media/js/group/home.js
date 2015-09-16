@@ -6,7 +6,7 @@ $.ajax({
 		for (var i = 0; i < data.users.length / 2; i++) {
             var presence1 = '<span style="color: #808080;"><span class="glyphicon glyphicon-unchecked"></span>', presence2 = presence1;
             var u1 = data.users[i], u2 = data.users[i + Math.round(data.users.length / 2)];
-            if (u1.presence) { presence = '<span style="color: #50cc32;"><span class="glyphicon glyphicon-check"></span>'; }
+            if (u1.presence) { presence1 = '<span style="color: #50cc32;"><span class="glyphicon glyphicon-check"></span>'; }
             html += '<tr><td><a target="_blank" href="mailto:' + u1.email + '"><span class="glyphicon glyphicon-envelope"></span></a>&nbsp;&nbsp;' + presence1 + '</span>&nbsp;&nbsp;<img src="' + u1.image + '"/>&nbsp;&nbsp;<i>' + u1.name + '</i></td>';
             if (u2 === undefined) {
                 html += '<td></td></tr>';

@@ -139,8 +139,9 @@ def lab_resource_contact(request):
         ppl.photo = ppl.image_tag()
         ppl.title = ppl.affiliation()
         ppl.status = ppl.year()
-        ppl.phone = str(ppl.phone)
-        ppl.phone = '(%s) %s-%s' %(ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
+        if ppl.phone:
+            ppl.phone = str(ppl.phone)
+            ppl.phone = '(%s) %s-%s' %(ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
 
     almuni = Member.objects.filter(alumni=1).order_by('-finish_year', '-start_year')
     for i, ppl in enumerate(almuni):
@@ -151,8 +152,9 @@ def lab_resource_contact(request):
         ppl.photo = ppl.image_tag()
         ppl.title = ppl.affiliation()
         ppl.status = ppl.year()
-        ppl.phone = str(ppl.phone)
-        ppl.phone = '(%s) %s-%s' %(ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
+        if ppl.phone:
+            ppl.phone = str(ppl.phone)
+            ppl.phone = '(%s) %s-%s' %(ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
     return render_to_response(PATH.HTML_PATH['lab_resource_contact'], {'current_member':member, 'past_member':almuni}, context_instance=RequestContext(request))
 
 
@@ -313,8 +315,9 @@ def gcal(request):
 def user_dash(request):
     try:
         user = Member.objects.get(sunet_id=request.user)
-        user.phone = str(user.phone)
-        user.phone = '(%s) %s-%s' %(user.phone[:3], user.phone[3:6], user.phone[6:])
+        if user.phone:
+            user.phone = str(user.phone)
+            user.phone = '(%s) %s-%s' %(user.phone[:3], user.phone[3:6], user.phone[6:])
         json = {'id':user.sunet_id, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'email':user.email, 'phone':user.phone, 'cap':user.more_info, 'status':user.year()}
     except:
         return HttpResponseNotFound("User not found.")

@@ -150,6 +150,24 @@ $(document).ready(function () {
                 $("#card_user_email").attr("href", "mailto:" + data.email);
                 $("#card_user_phone").html(data.phone);
             }
+        },
+        error: function() {
+            $("#nav_user_photo").html('<img src="/site_media/images/icon_default_avatar.png" width="119" style="padding-bottom:50px;">');
+            $("#nav_user_name").html('Unknown');
+            $("#nav_user_id").html('N/A');
+            $("#nav_user_aff").html('Unknown');
+            $("#nav_user_stat").html('Unknown');
+
+            if ($(location).attr("href").indexOf("group/contact") != -1) {
+                $("#card_user_photo").html('<img src="/site_media/images/icon_default_avatar.png" width="119">');
+                $("#card_user_photo > img").css("max-width", "100%");
+                $("#card_user_name").html('Unknown');
+                $("#card_user_id").html('N/A');
+                $("#card_user_aff").html('Unknown');
+                $("#card_user_stat").html('Unknown');
+                $("#card_user_email").html('Unknown');
+                $("#card_user_phone").html('Unknown');
+            }
         }
     });
 
