@@ -38,6 +38,12 @@ $(document).ready(function () {
         $("#nav_res_lg").addClass("active");
         $("ul.breadcrumb").css("border-bottom", "5px solid #eeb211");
         $('<li><span style="color: #000;" class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;<a href="">Resources</a></li>').insertAfter($("ul.breadcrumb > li:first"));
+    } else if ($(location).attr("href").indexOf("group/contact") != -1) {
+        $("#nav_contact").addClass("active");
+        $("#nav_res").addClass("active");
+        $("#nav_res_lg").addClass("active");
+        $("ul.breadcrumb").css("border-bottom", "5px solid #eeb211");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;<a href="">Resources</a></li>').insertAfter($("ul.breadcrumb > li:first"));
     } else if ($(location).attr("href").indexOf("group/aws") != -1) {
         $("#nav_aws").addClass("active");
         $("#nav_server").addClass("active");
@@ -131,7 +137,6 @@ $(document).ready(function () {
             $("#nav_user_aff").html(data.title);
             $("#nav_user_stat").html(data.status);
             $("#nav_user_cap").attr("href", data.cap);
-
         }
     });
 

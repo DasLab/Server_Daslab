@@ -25,6 +25,7 @@ class SYS_PATH:
             'lab_calendar': MEDIA_ROOT + '/media/html/group_calendar.html',
             'lab_resource_gdocs': MEDIA_ROOT + '/media/html/group_resource_document.html',
             'lab_resource_archive': MEDIA_ROOT + '/media/html/group_resource_archive.html',
+            'lab_resource_contact': MEDIA_ROOT + '/media/html/group_resource_contact.html',
             'lab_server_aws': MEDIA_ROOT + '/media/html/group_server_aws.html',
             'lab_server_ga': MEDIA_ROOT + '/media/html/group_server_ga.html',
             'lab_service_git': MEDIA_ROOT + '/media/html/group_service_git.html',

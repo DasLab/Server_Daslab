@@ -130,6 +130,9 @@ def lab_resource_archive(request):
         if arv.ppt:
             arv.ppt_link = os.path.basename(arv.ppt.name)
     return render_to_response(PATH.HTML_PATH['lab_resource_archive'], {'arv_list':arv_list}, context_instance=RequestContext(request))
+@login_required
+def lab_resource_contact(request):
+    return render_to_response(PATH.HTML_PATH['lab_resource_contact'], {}, context_instance=RequestContext(request))
 
 
 @login_required

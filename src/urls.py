@@ -51,6 +51,7 @@ urlpatterns = [
     url(r'^group/calendar/$', views.lab_calendar),
     url(r'^group/gdocs/$', views.lab_resource_gdocs),
     url(r'^group/archive/$', views.lab_resource_archive),
+    url(r'^group/contact/$', views.lab_resource_contact),
     url(r'^group/aws/$', views.lab_server_aws),
     url(r'^group/ga/$', views.lab_server_ga),
     url(r'^group/git/$', views.lab_service_git),

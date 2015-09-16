@@ -387,6 +387,11 @@ img.logo {
   height: 72px;
 }
 
+ul.breadcrumb > li.active {
+  color: #5496d7;
+  font-weight: bold;
+}
+
 .test {
   border: #0f0 solid 2px;
 }
