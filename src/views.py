@@ -132,7 +132,28 @@ def lab_resource_archive(request):
     return render_to_response(PATH.HTML_PATH['lab_resource_archive'], {'arv_list':arv_list}, context_instance=RequestContext(request))
 @login_required
 def lab_resource_contact(request):
-    return render_to_response(PATH.HTML_PATH['lab_resource_contact'], {}, context_instance=RequestContext(request))
+    member = Member.objects.filter(alumni=0).exclude(sunet_id=request.user).order_by('last_name', 'first_name')
+    for i, ppl in enumerate(member):
+        ppl.label = colors[11 - i % 12]
+        ppl.name = ppl.full_name()
+        ppl.photo = ppl.image_tag()
+        ppl.title = ppl.affiliation()
+        ppl.status = ppl.year()
+        ppl.phone = str(ppl.phone)
+        ppl.phone = '(%s) %s-%s' %(ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
+
+    almuni = Member.objects.filter(alumni=1).order_by('-finish_year', '-start_year')
+    for i, ppl in enumerate(almuni):
+        ppl.label = colors[11 - i % 12]
+        if i == 0 or almuni[i - 1].finish_year != ppl.finish_year:
+            ppl.year_start = True
+        ppl.name = ppl.full_name()
+        ppl.photo = ppl.image_tag()
+        ppl.title = ppl.affiliation()
+        ppl.status = ppl.year()
+        ppl.phone = str(ppl.phone)
+        ppl.phone = '(%s) %s-%s' %(ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
+    return render_to_response(PATH.HTML_PATH['lab_resource_contact'], {'current_member':member, 'past_member':almuni}, context_instance=RequestContext(request))
 
 
 @login_required
@@ -292,7 +313,9 @@ def gcal(request):
 def user_dash(request):
     try:
         user = Member.objects.get(sunet_id=request.user)
-        json = {'id':user.sunet_id, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'cap':user.more_info, 'status':user.year()}
+        user.phone = str(user.phone)
+        user.phone = '(%s) %s-%s' %(user.phone[:3], user.phone[3:6], user.phone[6:])
+        json = {'id':user.sunet_id, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'email':user.email, 'phone':user.phone, 'cap':user.more_info, 'status':user.year()}
     except:
         return HttpResponseNotFound("User not found.")
     return HttpResponse(simplejson.dumps(json), content_type='application/json')

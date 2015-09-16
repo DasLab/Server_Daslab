@@ -137,6 +137,18 @@ $(document).ready(function () {
             $("#nav_user_aff").html(data.title);
             $("#nav_user_stat").html(data.status);
             $("#nav_user_cap").attr("href", data.cap);
+
+            if ($(location).attr("href").indexOf("group/contact") != -1) {
+                $("#card_user_photo").html(data.photo);
+                $("#card_user_name").html(data.name);
+                $("#card_user_id").html(data.id);
+                $("#card_user_aff").html(data.title);
+                $("#card_user_stat").html(data.status);
+                $("#card_user_cap").attr("href", data.cap);
+                $("#card_user_email").html(data.email);
+                $("#card_user_email").attr("href", "mailto:" + data.email);
+                $("#card_user_phone").html(data.phone);
+            }
         }
     });
 
