@@ -125,7 +125,12 @@ $(document).ready(function () {
         url : "/admin/user_dash",
         dataType: "json",
         success: function (data) {
-            
+            $("#nav_user_photo").html(data.photo);
+            $("#nav_user_name").html(data.name);
+            $("#nav_user_id").html(data.id);
+            $("#nav_user_aff").html(data.title);
+            $("#nav_user_stat").html(data.status);
+            $("#nav_user_cap").attr("href", data.cap);
 
         }
     });

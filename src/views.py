@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, HttpResponseServerError
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
 from django.template import RequestContext#, Template
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
@@ -287,8 +287,12 @@ def gcal(request):
     return HttpResponse(get_cal(), content_type='application/json')
 
 def user_dash(request):
-    print request.user
-    pass
+    try:
+        user = Member.objects.get(sunet_id=request.user)
+        json = {'id':user.sunet_id, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'cap':user.more_info, 'status':user.year()}
+    except:
+        return HttpResponseNotFound("User not found.")
+    return HttpResponse(simplejson.dumps(json), content_type='application/json')
 
 
 def error400(request):

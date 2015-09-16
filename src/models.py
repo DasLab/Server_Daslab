@@ -104,7 +104,7 @@ class Member(models.Model):
 
     def image_tag(self):
         if self.image: 
-            return u'<img class="well" src="/site_data/ppl_img/%s" width=120/>' % os.path.basename(self.image.url)
+            return u'<img class="thumbnail" src="/site_data/ppl_img/%s" width=120/>' % os.path.basename(self.image.url)
     image_tag.short_description = 'Preview'
     image_tag.allow_tags = True
 
