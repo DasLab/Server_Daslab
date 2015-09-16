@@ -185,7 +185,7 @@ ul.nav-li-sub {
 }
 ul.nav-li-sub > li > a {
   overflow: hidden;
-  width: 185px;
+  width: 180px;
   position: relative;
   vertical-align:top;
   display: inline-block;
