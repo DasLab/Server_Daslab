@@ -9,6 +9,7 @@ import simplejson
 import subprocess
 # import sys
 from time import sleep, mktime
+import traceback
 
 import boto.ec2.cloudwatch
 import dropbox
@@ -409,6 +410,19 @@ def dash_ssl(request):
 
     exp_date = datetime.strptime(exp_date.replace('notAfter=', ''), "%b %d %H:%M:%S %Y %Z").strftime('%Y-%m-%d %H:%M:%S')
     return simplejson.dumps({'exp_date':exp_date})
+
+
+def dash_schedule(request):
+    gdrive_dir = 'cd %s/data' % MEDIA_ROOT
+    if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
+    try:
+        subprocess.check_call("%s && drive download --format csv --force -i 1GWOBc8rRhLNMEsf8pQMUXkqqgRiYTLo22t1eKP83p80 && mv Das\ Group\ Meeting\ Schedule.csv schedule.csv" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError:
+        print traceback.format_exc()
+    pass
+
+
+
 
 
 

@@ -374,6 +374,9 @@ def user_dash(request):
         return HttpResponseNotFound("User not found.")
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
 
+def schedule_dash(request):
+    return HttpResponse(dash_schedule(request), content_type='application/json')
+
 
 def error400(request):
     return render_to_response(PATH.HTML_PATH['400'], {}, context_instance=RequestContext(request))
@@ -388,7 +391,6 @@ def error500(request):
 
 
 def test(request):
-    # return HttpResponse(content=str(dash_ga(request)), status=200)
     return error403(request)
     raise ValueError
     # send_notify_emails('test', 'test')
