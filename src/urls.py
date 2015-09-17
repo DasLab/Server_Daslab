@@ -41,6 +41,8 @@ urlpatterns = [
     url(r'^login/$', views.user_login),
     url(r'^password/$', views.user_password),
     url(r'^update_contact/$', views.user_contact),
+    url(r'^email_admin/$', views.user_email),
+    url(r'^get_admin/$', views.get_admin),
     url(r'^profile/$', views.user_profile),
     url(r'^logout/$', views.user_logout),
     

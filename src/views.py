@@ -18,10 +18,10 @@ from src.dash import *
 from src.models import *
 from src.settings import *
 
-import datetime
-import subprocess
-import sys
-import traceback
+# import datetime
+# import subprocess
+# import sys
+# import traceback
 # from sys import stderr
 
 colors = ('brown', 'dark-red', 'danger', 'orange', 'warning', 'green', 'success', 'light-blue', 'info', 'primary', 'dark-blue', 'violet')
@@ -257,6 +257,34 @@ def user_contact(request):
     else:
         return HttpResponseBadRequest('Invalid form.')
 
+@login_required
+def user_email(request):
+    if request.method == 'POST':
+        if (not 'from' in request.POST) or (not 'subject' in request.POST) or (not 'content' in request.POST): 
+            messages = 'error'
+        else:
+            em_from = request.POST['from']
+            em_to = request.POST['to']
+            em_subject = request.POST['subject']
+            em_content = request.POST['content']
+
+            if em_subject and em_content and em_from:
+                http_header = '(CONTENT_TYPE, %s)\n(CONTENT_LENGTH, %s)\n' % (request.META.get('CONTENT_TYPE'), request.META.get('CONTENT_LENGTH'))
+                for key, value in request.META.items():
+                    if key.startswith('HTTP_'):
+                        http_header += '(%s, %s)\n' % (key, request.META.get(key))    
+                http_header += request.body
+
+                em_content = 'Contact Admin from DasLab Website Internal\n\nFrom: %s: %s\n\n%s\n\nREQUEST:\n%s' % (request.user, em_from, em_content, http_header)
+                send_mail(em_subject, em_content, EMAIL_HOST_USER, [em_to])
+                messages = 'success'
+            else:
+                messages = 'invalid'
+
+        return HttpResponse(simplejson.dumps({'messages':messages}), content_type='application/json')
+    else:
+        return HttpResponseBadRequest('Invalid form.')
+
 def user_profile(request):
     profile = Member.objects.filter(last_name=User.objects.get(username=request.user).last_name)
     if len(profile) > 1:
@@ -331,6 +359,9 @@ def dropbox_dash(request):
 def gcal(request):
     return HttpResponse(get_cal(), content_type='application/json')
 
+def get_admin(request):
+    return HttpResponse(simplejson.dumps({'email':EMAIL_NOTIFY}), content_type='application/json')
+
 def user_dash(request):
     if request.user.username == u'daslab': return HttpResponseBadRequest('Fake admin login.')
     try:
@@ -358,7 +389,7 @@ def error500(request):
 
 def test(request):
     # return HttpResponse(content=str(dash_ga(request)), status=200)
-    return error500(request)
+    return error403(request)
     raise ValueError
     # send_notify_emails('test', 'test')
     # send_mail('text', 'test', EMAIL_HOST_USER, [EMAIL_NOTIFY])

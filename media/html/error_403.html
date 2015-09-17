@@ -17,7 +17,7 @@
     <img src="/site_media/images/bg_403.png" height=200/>
     <br/><br/>
     <p style="font-weight:bold;">This page is for site <span class="label label-success">admin</span> only.</p>
-    <p>Please contact the site <span class="label label-success">admin</span> for administrative tasks (<a href="mailto:t47@stanford.edu" target="_blank">&nbsp;<u>t47@stanford.edu</u>&nbsp;&nbsp;<span class="glyphicon glyphicon-envelope"></span>&nbsp;</a>).</p>
+    <p>Please contact the site <span class="label label-success">admin</span> for administrative tasks (<a target="_blank">&nbsp;<u id="admin_email"></u>&nbsp;&nbsp;<span class="glyphicon glyphicon-envelope"></span>&nbsp;</a>).</p>
   </div>
   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="panel_right">
     <h2 style="margin-bottom:20px;">
@@ -49,6 +49,15 @@
     $(document).ready(function () {
       $("#DasFOOTER").css({"top": "433px", "display": "inline"});
       $("#DasICON").css({"top": "488px", "display": "inline"});
+
+      $.ajax({
+        url : "/get_admin",
+        dataType: "json",
+        success: function (data) {
+          $("#admin_email").html(data.email);
+          $("#admin_email").parent().attr("href", "mailto:" + data.email);
+        }
+      });
     });
   </script>
 {% endblock %}

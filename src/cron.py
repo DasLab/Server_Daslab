@@ -1,10 +1,10 @@
 from datetime import datetime
-import os
+# import os
 import smtplib
 import subprocess
 import traceback
 
-from django.core.mail import send_mail
+# from django.core.mail import send_mail
 
 from src.settings import *
 from src.console import *
