@@ -1,4 +1,42 @@
 var $ = django.jQuery;
+var side_toggle = true;
+
+function navbar_collapse() {
+    if ($("#nav_collapse").is(":visible")) {
+        side_toggle = true;
+        $("#nav_toggle").trigger("click");
+        $("#nav_toggle").hide();
+        $("#nav_external").unbind();
+        $("#nav_internal").unbind();
+        $("#nav_time").unbind();
+        $("#nav_email").unbind();
+        $("#nav_upload").unbind();
+        $("#nav_profile").unbind();
+
+        $("#nav_logo").css("width", "auto");
+    } else {
+        $("#nav_toggle").show();
+        // $("#nav_time").hover(
+        //   function(){ $("#nav_meetings").fadeIn(); },
+        //   function(){ $("#nav_meetings").fadeOut(); }
+        // );
+        $("#nav_external").hover(
+          function(){ $("#nav_external_text").fadeIn().siblings().css("color", "#ff912e"); },
+          function(){ $("#nav_external_text").fadeOut().siblings().css("color", "#fff"); }
+        );
+        $("#nav_internal").hover(
+          function(){ $("#nav_internal_text").fadeIn().siblings().css("color", "#eeb211"); },
+          function(){ $("#nav_internal_text").fadeOut().siblings().css("color", "#fff"); }
+        );
+
+        $(".dropdown-toggle").dropdown();
+        $(".dropdown").hover(
+          function(){ $(this).addClass("open"); },
+          function(){ $(this).removeClass("open"); }
+        );
+        $("#nav_logo").css("width", parseInt($("#nav_logo").css("width")) + 250 - parseInt($("#nav_external").position().left));
+    }
+}
 
 
 $(document).ready(function () {
@@ -6,14 +44,6 @@ $(document).ready(function () {
 		$(this).replaceWith('<span class="glyphicon glyph' + $(this).attr("class") + '"></span>&nbsp;&nbsp;');
 	});
 	$(".nav-ul-lg").css("display", "none");
-	var side_toggle = true;
-
-	// $("#left-nav > ul > li > ul").css("display", "block");
-	// $(".left-nav > ul").addClass("nav nav-pills nav-stacked");
-	// $(".left-nav > ul > li.active > a").css("background-color", "#5496d7");
-	// $(".left-nav > ul > li.active > a").css("font-size", 20);
-	// $(".left-nav > ul > li > ul > li.active > a").css("color", "#fff");
-	// $(".left-nav > ul > li > ul > li.active > a").css("background-color", "#ff912e");
 
 	// $(".form-search > span.glyphicon").remove();
 	// $(".form-search > input.submit").attr("id", "search_submit");
@@ -138,24 +168,12 @@ $(document).ready(function () {
 	$("ul.breadcrumb").css({"border-radius":"0px", "height":"50px"}).addClass("lead");
     $("ul.breadcrumb > li:first").prepend('<span style="color: #000;" class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;');
 
-    $("#nav_time").hover(
-      function(){ $("#nav_meetings").fadeIn(); },
-      function(){ $("#nav_meetings").fadeOut(); }
-    );
-    $("#nav_external").hover(
-      function(){ $("#nav_external_text").fadeIn().siblings().css("color", "#ff912e"); },
-      function(){ $("#nav_external_text").fadeOut().siblings().css("color", "#fff"); }
-    );
-    $("#nav_internal").hover(
-      function(){ $("#nav_internal_text").fadeIn().siblings().css("color", "#eeb211"); },
-      function(){ $("#nav_internal_text").fadeOut().siblings().css("color", "#fff"); }
-    );
     $(".dropdown-toggle").dropdown();
     $(".dropdown").hover(
       function(){ $(this).addClass("open"); },
       function(){ $(this).removeClass("open"); }
     );
-    $("#nav_logo").css("width", parseInt($("#nav_logo").css("width")) + 250 - parseInt($("#nav_external").position().left));
+    navbar_collapse();
 
 	// $('.left-nav > ul > li > ul > li > a[href="/admin/aws/"]').attr("disabled", "disabled").css("text-decoration", "line-through").attr("href", "");
 });
@@ -164,7 +182,7 @@ $(document).ready(function () {
 $(window).on("resize", function() {
     clearTimeout($.data(this, 'resizeTimer'));
     $.data(this, 'resizeTimer', setTimeout(function() {
-        $("#nav_logo").css("width", parseInt($("#nav_logo").css("width")) + 250 - parseInt($("#nav_external").position().left));
+        navbar_collapse();
         $("#wrapper").css("width", $(window).width() - $("sidebar-wrapper").width() - 20);
     }, 200));
 });

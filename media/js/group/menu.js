@@ -15,10 +15,10 @@ function navbar_collapse() {
         $("#nav_logo").css("width", "auto");
     } else {
         $("#nav_toggle").show();
-        $("#nav_time").hover(
-          function(){ $("#nav_meetings").fadeIn(); },
-          function(){ $("#nav_meetings").fadeOut(); }
-        );
+        // $("#nav_time").hover(
+        //   function(){ $("#nav_meetings").fadeIn(); },
+        //   function(){ $("#nav_meetings").fadeOut(); }
+        // );
         $("#nav_external").hover(
           function(){ $("#nav_external_text").fadeIn().siblings().css("color", "#ff912e"); },
           function(){ $("#nav_external_text").fadeOut().siblings().css("color", "#fff"); }
@@ -282,7 +282,6 @@ $(document).ready(function () {
 $(window).on("resize", function() {
     clearTimeout($.data(this, 'resizeTimer'));
     $.data(this, 'resizeTimer', setTimeout(function() {
-        // $("#nav_logo").css("width", parseInt($("#nav_logo").css("width")) + 250 - parseInt($("#nav_external").position().left));
         navbar_collapse();
         $("#wrapper").css("width", $(window).width() - $("sidebar-wrapper").width() - 20);
     }, 200));
