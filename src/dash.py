@@ -413,13 +413,41 @@ def dash_ssl(request):
 
 
 def dash_schedule(request):
-    gdrive_dir = 'cd %s/data' % MEDIA_ROOT
-    if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
+    if not DEBUG: 
+        gdrive_dir = 'cd %s' % APACHE_ROOT
+        gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv %s/data/schedule.csv' % MEDIA_ROOT
+    else:
+        gdrive_dir = 'cd %s/data' % MEDIA_ROOT
+        gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv schedule.csv'
     try:
-        subprocess.check_call("%s && drive download --format csv --force -i 1GWOBc8rRhLNMEsf8pQMUXkqqgRiYTLo22t1eKP83p80 && mv Das\ Group\ Meeting\ Schedule.csv schedule.csv" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        subprocess.check_call("%s && drive download --format csv --force -i 1GWOBc8rRhLNMEsf8pQMUXkqqgRiYTLo22t1eKP83p80 && %s" % (gdrive_dir, gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
         print traceback.format_exc()
-    pass
+        raise Exception('Error with downloading schedule spreadsheet.')
+
+    try:
+        f = open('%s/data/schedule.csv' % MEDIA_ROOT, 'r')
+        lines = f.readlines()
+        f.close()
+        tp = lines[0].split(',')[5]
+        for row in lines:
+            row = row.split(',')
+            if 'this' in locals(): 
+                next = (datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), row[2], row[3])
+                break
+            if len(row) >= 9 and row[8] == '[NEXT]':
+                this = (datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), row[2], row[3])
+                
+        if not 'this' in locals(): raise Exception('Error with parsing spreadsheet csv: no [NEXT] found.')
+        for row in reversed(lines):
+            row = row.split(',')
+            if len(row) == 10 and any(row):
+                last = (datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), row[2], row[3])
+                break
+        return {'last':last, 'this':this, 'next':next, 'tp':tp}
+    except:
+        print traceback.format_exc()
+        raise Exception('Error with parsing spreadsheet csv.')
 
 
 

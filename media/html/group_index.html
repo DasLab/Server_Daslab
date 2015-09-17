@@ -12,8 +12,62 @@
 	</div>
 
 	<div class="row">
-		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding-right:0px;">
+			<div class="alert alert-success" id="tp" style="margin-bottom:10px;"></div>		
+			<div class="alert alert-orange" style="margin-bottom:10px;">
+				<h4 id="this_type"></h4>
+				<span class="label label-inverse" id="this_name"></span>
+				<div class="row">
+					<div class="col-md-12">
+						<i>This Week</i>&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="lead pull-right" style="color:#fff; font-style:italic; margin-bottom:0px;" id="this_date"></span>
+					</div>
+				</div>
+			</div>
+			<div class="alert alert-violet" style="margin-bottom:10px;">
+				<h4 id="last_type"></h4>
+				<span class="label label-inverse" id="last_name"></span>
+				<div class="row">
+					<div class="col-md-12">
+						<i>Last Week</i>&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="lead pull-right" style="color:#fff; font-style:italic; margin-bottom:0px;" id="last_date"></span>
+					</div>
+				</div>
+			</div>
+			<div class="alert alert-info" style="margin-bottom:10px;">
+				<h4 id="next_type"></h4>
+				<span class="label label-inverse" id="next_name"></span>
+				<div class="row">
+					<div class="col-md-12">
+						<i>Next Week</i>&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="lead pull-right" style="color:#fff; font-style:italic; margin-bottom:0px;" id="next_date"></span>
+					</div>
+				</div>
+			</div>
 
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+			<p><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Recent</p>
+			<ul class="list-group">
+				<li class="list-group-item li-primary">
+					<b><span class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;Flash Slide</b>
+					<br/>
+					<p class="text-right" style="margin-bottom:0px;" id="recent_flash"></p>
+				</li>
+				<li class="list-group-item li-danger">
+					<b><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;EteRNA Video</b>
+					<br/>
+					<p class="text-right" style="margin-bottom:0px;" id="recent_eterna"></p>
+				</li>
+				<li class="list-group-item li-green">
+					<p><b><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;Rotation Student</b></p>
+					<p class="text-right" style="margin-bottom:0px;" id="recent_rotation"></p>
+				</li>
+				<li class="list-group-item li-orange">
+					<p><b><span class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;Presentation Archive</b></p>
+					<p class="text-right" style="margin-bottom:0px;" id="recent_archive"></p>
+				</li>
+			</ul>
 		</div>
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 			<table class="table">

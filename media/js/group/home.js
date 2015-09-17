@@ -1,8 +1,37 @@
+function label_type(type) {
+    if (type == 'GM') {
+        return '<span class="label label-primary">Group Meeting</span>'
+    } else if (type == 'JC') {
+        return '<span class="label label-success">Journal Club</span>'
+    } else if (type == 'JC') {
+        return '<span class="label label-warning">EteRNA Special</span>'
+    } else if (type == 'N/A') {
+        return '<span class="label label-danger">No Meeting</span>'
+    } else {
+        return '<span class="label label-default">Unknown</span>'
+    }
+}
+
+
 $.ajax({
     url : "/admin/schedule_dash",
     dataType: "json",
     success: function (data) {
-        console.log(data);
+        $("#this_type").html(label_type(data.this[1]));
+        $("#this_name").html(data.this[2]);
+        $("#this_date").html(data.this[0]);
+        $("#last_type").html(label_type(data.last[1]));
+        $("#last_name").html(data.last[2]);
+        $("#last_date").html(data.last[0]);
+        $("#next_type").html(label_type(data.next[1]));
+        $("#next_name").html(data.next[2]);
+        $("#next_date").html(data.next[0]);
+        $("#tp").html('<b>' + data.tp + '</b>');
+
+        $("#recent_flash").html('<span class="label label-primary">' + data.flash_slide.date + '</span>&nbsp;&nbsp;<a href="' + data.flash_slide.url + '" target="_blanl"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_eterna").html('<span class="label label-primary">' + data.eterna.date + '</span>&nbsp;&nbsp;<a href="' + data.eterna.url + '" target="_blanl"><span class="glyphicon glyphicon-new-window"></span></a><br/><i>' + data.eterna.name + '</i>');
+        $("#recent_rotation").html('<span class="label label-primary">' + data.rotation.date + '</span><br/><i>' + data.rotation.name + '</i>');
+        $("#recent_archive").html('<span class="label label-primary">' + data.archive.date + '</span><br/><i>' + data.archive.name + '</i>');
     }
 });
 

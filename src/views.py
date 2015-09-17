@@ -286,9 +286,7 @@ def user_email(request):
         return HttpResponseBadRequest('Invalid form.')
 
 def user_profile(request):
-    profile = Member.objects.filter(last_name=User.objects.get(username=request.user).last_name)
-    if len(profile) > 1:
-        profile = profile.filter(first_name=User.objects.get(username=request.user).first_name)
+    profile = Member.objects.filter(sunet_id=request.user.username)
     if len(profile) == 1:
         profile = profile[0]
         profile.image_link = os.path.basename(profile.image.name)
@@ -375,7 +373,17 @@ def user_dash(request):
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
 
 def schedule_dash(request):
-    return HttpResponse(dash_schedule(request), content_type='application/json')
+    json = dash_schedule(request)
+    flash_slide = FlashSlide.objects.order_by('-date')[0]
+    flash_slide = {'url':flash_slide.link, 'date':flash_slide.date.strftime('%Y-%m-%d')}
+    eterna = EternaYoutube.objects.order_by('-date')[0]
+    eterna = {'url':eterna.link, 'date':eterna.date.strftime('%Y-%m-%d'), 'name':eterna.presenter, 'title':eterna.title}
+    rotation = RotationStudent.objects.order_by('-date')[0]
+    rotation = {'date':rotation.date.strftime('%Y-%m-%d'), 'name':rotation.full_name, 'title':rotation.title}
+    archive = Presentation.objects.order_by('-date')[0]
+    archive = {'date':archive.date.strftime('%Y-%m-%d'), 'name':archive.presenter, 'title':archive.title}
+    json.update({'flash_slide':flash_slide, 'eterna':eterna, 'rotation':rotation, 'archive':archive}) 
+    return HttpResponse(simplejson.dumps(json), content_type='application/json')
 
 
 def error400(request):
