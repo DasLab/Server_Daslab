@@ -20,8 +20,6 @@ admin.site.logout = views.user_logout
 
 urlpatterns = [
     url(r'^$', views.index),
-    url(r'^index/$', views.index),
-    url(r'^home/$', views.index),
     url(r'^research/$', views.research),
     url(r'^news/$', views.news),
     url(r'^people/$', views.people),
@@ -36,12 +34,18 @@ urlpatterns = [
     url(r'^das_publications\.html$', RedirectView.as_view(url='/publications/', permanent=True)),
     url(r'^das_resources\.html$', RedirectView.as_view(url='/resources/', permanent=True)),
     url(r'^das_contact\.html$', RedirectView.as_view(url='/contact/', permanent=True)),
+
+    url(r'^home/$', RedirectView.as_view(url='/', permanent=True)),
+    url(r'^index/$', RedirectView.as_view(url='/', permanent=True)),
     url(r'^member/$', RedirectView.as_view(url='/people/', permanent=True)),
+    url(r'^members/$', RedirectView.as_view(url='/people/', permanent=True)),
+    url(r'^publication/$', RedirectView.as_view(url='/publications/', permanent=True)),
+    url(r'^resource/$', RedirectView.as_view(url='/resources/', permanent=True)),
+    url(r'^contacts/$', RedirectView.as_view(url='/contact/', permanent=True)),
+    url(r'^groups/$', RedirectView.as_view(url='/group/', permanent=True)),
 
     url(r'^login/$', views.user_login),
     url(r'^password/$', views.user_password),
-    url(r'^update_contact/$', views.user_contact),
-    url(r'^email_admin/$', views.user_email),
     url(r'^get_admin/$', views.get_admin),
     url(r'^profile/$', views.user_profile),
     url(r'^logout/$', views.user_logout),
@@ -61,6 +65,9 @@ urlpatterns = [
     url(r'^group/slack/$', views.lab_service_slack),
     url(r'^group/dropbox/$', views.lab_service_dropbox),
     url(r'^group/misc/$', views.lab_misc),
+    url(r'^group/update_contact/$', views.user_contact),
+    url(r'^group/email_admin/$', views.user_email),
+    url(r'^group/upload_file/$', views.user_upload),
 
     url(r'^ping_test/$', views.ping_test),
     url(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT + '/media'}),
