@@ -35,42 +35,43 @@ $(document).ready(function() {
             $("#id_swfobj").html(txt[16]);
             $("#id_fullcal").html(txt[17]);
             $("#id_moment").html(txt[18]);
-            $("#id_ical").html(txt[19]);
-            $("#id_gvizapi").html(txt[20]);
+            $("#id_dropz").html(txt[19]);
+            $("#id_ical").html(txt[20]);
+            $("#id_gvizapi").html(txt[21]);
 
-        	$("#id_ssh").html(txt[21]);
-        	$("#id_git").html(txt[22]);
-            $("#id_nano").html(txt[23]);
-            $("#id_gdrive").html(txt[24]);
-            $("#id_pandoc").html(txt[25]);
-            $("#id_boto").html(txt[27]);
-            $("#id_pygit").html(txt[28]);
-            $("#id_slacker").html(txt[29]);
-            $("#id_dropbox").html(txt[30]);
+        	$("#id_ssh").html(txt[22]);
+        	$("#id_git").html(txt[23]);
+            $("#id_nano").html(txt[24]);
+            $("#id_gdrive").html(txt[25]);
+            $("#id_pandoc").html(txt[26]);
+            $("#id_boto").html(txt[28]);
+            $("#id_pygit").html(txt[29]);
+            $("#id_slacker").html(txt[30]);
+            $("#id_dropbox").html(txt[31]);
 
-            $("#id_request").html(txt[31]);
-            $("#id_simplejson").html(txt[32]);
-            $("#id_curl").html(txt[26]);
-            $("#id_virtualenv").html(txt[33]);
-        	$("#id_pip").html(txt[34]);
+            $("#id_request").html(txt[32]);
+            $("#id_simplejson").html(txt[33]);
+            $("#id_curl").html(txt[27]);
+            $("#id_virtualenv").html(txt[34]);
+        	$("#id_pip").html(txt[35]);
 
-            var drive_free = parseFloat(txt[43]), drive_used = parseFloat(txt[42]), drive_total = parseFloat(txt[44]);
+            var drive_free = parseFloat(txt[44]), drive_used = parseFloat(txt[43]), drive_total = parseFloat(txt[45]);
             $("#id_drive_space > div > div.progress-bar-success").css("width", (drive_free / drive_total * 100).toString() + '%' ).html(drive_free + ' G');
             $("#id_drive_space > div > div.progress-bar-danger").css("width", (drive_used / drive_total * 100).toString() + '%' ).html(drive_used + ' G');
-        	var disk_sp = txt[35].split(/\//);
+        	var disk_sp = txt[36].split(/\//);
             $("#id_disk_space > div > div.progress-bar-success").css("width", (parseFloat(disk_sp[0]) / (parseFloat(disk_sp[0]) + parseFloat(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[0]);
             $("#id_disk_space > div > div.progress-bar-danger").css("width", (parseFloat(disk_sp[1]) / (parseFloat(disk_sp[0]) + parseFloat(disk_sp[1])) * 100).toString() + '%' ).html(disk_sp[1]);
-        	var mem_sp = txt[36].split(/\//);
+        	var mem_sp = txt[37].split(/\//);
             $("#id_memory > div > div.progress-bar-success").css("width", (parseFloat(mem_sp[0]) / (parseFloat(mem_sp[0]) + parseFloat(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[0]);
             $("#id_memory > div > div.progress-bar-danger").css("width", (parseFloat(mem_sp[1]) / (parseFloat(mem_sp[0]) + parseFloat(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[1]);
 
-        	$("#id_backup").html('<span style="color:#00f;">' + txt[37] + '</span>');
-        	var cpu = txt[38].split(/\//);
+        	$("#id_backup").html('<span style="color:#00f;">' + txt[38] + '</span>');
+        	var cpu = txt[39].split(/\//);
         	$("#id_cpu").html('<span style="color:#f00;">' + cpu[0] + '</span> | <span style="color:#080;">' + cpu[1] + '</span> | <span style="color:#00f;">' + cpu[2] + '</span>');
 
-            $("#id_base_dir").html('<code>' + txt[39] + '</code>');
-            $("#id_media_root").html('<code>' + txt[40] + '</code>');
-            $("#id_static_root").html('<code>' + txt[41] + '</code>');
+            $("#id_base_dir").html('<code>' + txt[40] + '</code>');
+            $("#id_media_root").html('<code>' + txt[41] + '</code>');
+            $("#id_static_root").html('<code>' + txt[42] + '</code>');
     	}
     });
 

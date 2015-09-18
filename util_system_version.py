@@ -42,11 +42,11 @@ else:
 ver += subprocess.Popen("openssl version | sed 's/.*OpenSSL //g' | sed 's/[a-z].*//g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
 ver += 'wallet:N/A\t'
 
-f = open(os.path.join(MEDIA_ROOT, 'media/js/jquery.min.js'))
+f = open(os.path.join(MEDIA_ROOT, 'media/js/jquery.min.js'), 'r')
 ver_jquery = f.readline()
 ver += ver_jquery[ver_jquery.find('v')+1: ver_jquery.find('|')].strip() + '\t'
 f.close()
-f = open(os.path.join(MEDIA_ROOT, 'media/js/bootstrap.min.js'))
+f = open(os.path.join(MEDIA_ROOT, 'media/js/bootstrap.min.js'), 'r')
 f.readline()
 ver_bootstrap = f.readline()
 ver += ver_bootstrap[ver_bootstrap.find('v')+1: ver_bootstrap.find('(')].strip() + '\t'
@@ -54,20 +54,26 @@ f.close()
 ver += subprocess.Popen('python -c "import suit, adminplus; print %s"' % "suit.VERSION, '\t', adminplus.__version__", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
 ver += '0.0.1\t'
 
-f = open(os.path.join(MEDIA_ROOT, 'media/js/swfobject.min.js'))
+f = open(os.path.join(MEDIA_ROOT, 'media/js/swfobject.min.js'), 'r')
 ver_swfobj = f.readline()
 ver += ver_swfobj[ver_swfobj.find('v')+1: ver_swfobj.find('<')].strip() + '\t'
 f.close()
-f = open(os.path.join(MEDIA_ROOT, 'media/js/fullcalendar.min.js'))
+f = open(os.path.join(MEDIA_ROOT, 'media/js/fullcalendar.min.js'), 'r')
 f.readline()
 ver_fullcall = f.readline()
 ver += ver_fullcall[ver_fullcall.find('v')+1:].strip() + '\t'
 f.close()
-f = open(os.path.join(MEDIA_ROOT, 'media/js/moment.min.js'))
+f = open(os.path.join(MEDIA_ROOT, 'media/js/moment.min.js'), 'r')
 f.readline()
 ver_moment = f.readline()
 ver += ver_moment[ver_moment.find(':')+2:].strip() + '\t'
 f.close()
+f = open(os.path.join(MEDIA_ROOT, 'media/js/dropzone.min.js'), 'r')
+ver_dropz = ''.join(f.readlines())
+ver_dropz = ver_dropz[ver_dropz.find('.version="') + 10 : ver_dropz.find('.version="') + 18]
+ver += ver_dropz[:ver_dropz.find('"')] + '\t'
+f.close()
+
 
 f = open(os.path.join(MEDIA_ROOT, 'data/temp.txt'), 'w')
 f.write(subprocess.Popen('pip show icalendar', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip())

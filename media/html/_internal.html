@@ -2,10 +2,18 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+    <meta name="robots" content="NONE,NOARCHIVE"/>
     <title>Das Lab: Group Member Website</title>
     <script type="text/javascript" src="/site_media/js/admin/load.js"></script>  
+	<script type="text/javascript">
+		if (isCDN) {
+			document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/' + ver_dropz + '/dropzone.min.js"><\/script>');
+		} else {
+			document.write('<script type="text/javascript" src="/site_media/js/dropzone.min.js"><\/script>');
+		}
+	</script>
+
     {% block head %}{% endblock %}
-    <meta name="robots" content="NONE,NOARCHIVE"/>
 </head>
 
 <body>
