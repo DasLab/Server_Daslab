@@ -147,7 +147,7 @@ def restyle_apache():
     return simplejson.dumps(json)
     
 
-def aws_result(results, args):
+def aws_result(results, args, req_id=None):
     data = []
     data.extend(results[0])
     for i, d in enumerate(data):
@@ -187,10 +187,14 @@ def aws_result(results, args):
     data = sorted(data, key=operator.itemgetter(u'Timestamp'))
     data_table = gviz_api.DataTable(desp)
     data_table.LoadData(data)
-    return (data_table, stats)
+    if req_id:
+        results = data_table.ToJSonResponse(columns_order=stats,    order_by='Timestamp', req_id=req_id)
+        return results
+    else:
+        return (data_table, stats)
 
 
-def aws_call(conn, args, qs):
+def aws_call(conn, args, qs, req_id=None):
     results = []
     for i, me in enumerate(args['metric']):
         col = args['cols']
@@ -213,7 +217,7 @@ def aws_call(conn, args, qs):
             for d in data:
                 d[u'Sum'] = d[u'Sum'] / 1024
         results.append(data)
-    return aws_result(results, args)
+    return aws_result(results, args, req_id)
 
 
 def aws_stats(request):
@@ -282,7 +286,7 @@ def aws_stats(request):
     elif args['namespace'] == 'AWS/EBS':
         args['dims'] = {'VolumeId': AWS['EBS_VOLUME_ID']}
 
-    return aws_call(conn, args, req_id, qs)
+    return aws_call(conn, args, qs, req_id)
 
 
 def ga_stats():
