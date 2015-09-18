@@ -1,11 +1,12 @@
-from collections import defaultdict
-from datetime import date, datetime, timedelta
+# from collections import defaultdict
+# from datetime import date, datetime, timedelta
 import os
 import pickle
 import simplejson
 import subprocess
 import sys
 import time
+import traceback
 
 sys.path.append(os.path.abspath('.'))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.settings") 
@@ -49,145 +50,145 @@ def main():
     print time.ctime()
     t = time.time()
 
-    # aws init
-    print "#1: Requesting AWS..."
-    request = {'qs':'init'}
-    aws_init = cache_aws(request)
-    f = open('%s/cache/aws/init.pickle' % MEDIA_ROOT, 'wb')
-    pickle.dump(aws_init, f)
-    f.close()
-    aws_init = simplejson.loads(aws_init)
-    print "    AWS init finished."
+    if len(sys.argv) > 1:
+        is_3, is_15, is_30 = False, False, False
+        is_3 = (sys.argv[1] == '3')
+        is_15 = (sys.argv[1] == '15')
+        is_30 = (sys.argv[1] == '30')
+    else:
+        is_3, is_15, is_30 = True, True, True
 
-    # aws each
-    for i, ec2 in enumerate(aws_init['ec2']):
-        print "    AWS EC2: %s / %s (%s)..." % (i + 1, len(aws_init['ec2']), ec2['id'])
-        request = {'qs':'cpu', 'tp':'ec2', 'id':ec2['id']}
-        pickle_aws(request, ec2['id'])
-        request.update({'qs':'net'})
-        pickle_aws(request, ec2['id'])
+    try:
+        if is_3:
+            # slack
+            print "#4: Requesting \033[94mSLACK\033[0m..."
+            requests = ['home']
+            for i, request in enumerate(requests):
+                print "    SLACK: %s / %s (%s)..." % (i + 1, len(requests), request)
+                request = {'qs':request}
+                git_init = cache_slack(request)
+                pickle_slack(request)
+        else:
+            print "#4: Skip SLACK \033[94mhome\033[0m..."
 
-    for i, elb in enumerate(aws_init['elb']):
-        print "    AWS ELB: %s / %s (%s)..." % (i + 1, len(aws_init['elb']), elb['name'])
-        request = {'qs':'lat', 'tp':'elb', 'id':elb['name']}
-        pickle_aws(request, elb['name'])
-        request.update({'qs':'req'})
-        pickle_aws(request, elb['name'])
 
-    for i, ebs in enumerate(aws_init['ebs']):
-        print "    AWS EBS: %s / %s (%s)..." % (i + 1, len(aws_init['ebs']), ebs['id'])
-        request = {'qs':'disk', 'tp':'ebs', 'id':ebs['id']}
-        pickle_aws(request, ebs['id'])
+        if is_15:
+            # aws init
+            print "#1: Requesting \033[94mAWS\033[0m..."
+            request = {'qs':'init'}
+            aws_init = cache_aws(request)
+            f = open('%s/cache/aws/init.pickle' % MEDIA_ROOT, 'wb')
+            pickle.dump(aws_init, f)
+            f.close()
+            aws_init = simplejson.loads(aws_init)
+            print "    AWS \033[94minit\033[0m finished with \033[92mSUCCESS\033[0m."
 
-    # ga
-    print "#2: Requesting GA..."
-    f = open('%s/cache/ga.pickle' % MEDIA_ROOT, 'wb')
-    pickle.dump(cache_ga(), f)
-    f.close()
-    print "    GA init finished."
+            # aws each
+            for i, ec2 in enumerate(aws_init['ec2']):
+                print "    AWS \033[94mEC2\033[0m: %s / %s (%s)..." % (i + 1, len(aws_init['ec2']), ec2['id']),
+                request = {'qs':'cpu', 'tp':'ec2', 'id':ec2['id']}
+                pickle_aws(request, ec2['id'])
+                request.update({'qs':'net'})
+                pickle_aws(request, ec2['id'])
+                print " \033[92mSUCCESS\033[0m"
 
-    # git init
-    print "#3: Requesting GIT..."
-    request = {'qs':'init'}
-    git_init = cache_git(request)
-    f = open('%s/cache/git/init.pickle' % MEDIA_ROOT, 'wb')
-    pickle.dump(git_init, f)
-    f.close()
-    git_init = simplejson.loads(git_init)
-    print "    GIT init finished."
+            for i, elb in enumerate(aws_init['elb']):
+                print "    AWS \033[94mELB\033[0m: %s / %s (%s)..." % (i + 1, len(aws_init['elb']), elb['name']),
+                request = {'qs':'lat', 'tp':'elb', 'id':elb['name']}
+                pickle_aws(request, elb['name'])
+                request.update({'qs':'req'})
+                pickle_aws(request, elb['name'])
+                print " \033[92mSUCCESS\033[0m"
 
-    # git each
-    for i, repo in enumerate(git_init['git']):
-        print "    GIT repo: %s / %s (%s)..." % (i + 1, len(git_init['git']), repo['name'])
-        request = {'qs':'num', 'repo':repo['name']}
-        pickle_git(request)
-        request.update({'qs':'c'})
-        pickle_git(request)
-        request.update({'qs':'ad'})
-        pickle_git(request)
+            for i, ebs in enumerate(aws_init['ebs']):
+                print "    AWS \033[94mEBS\033[0m: %s / %s (%s)..." % (i + 1, len(aws_init['ebs']), ebs['id']),
+                request = {'qs':'disk', 'tp':'ebs', 'id':ebs['id']}
+                pickle_aws(request, ebs['id'])
+                print " \033[92mSUCCESS\033[0m"
 
-    # slack
-    print "#4: Requesting SLACK..."
-    requests = ['users', 'channels', 'files', 'plot_files', 'plot_msgs', 'home']
-    for i, request in enumerate(requests):
-        print "    SLACK: %s / %s (%s)..." % (i + 1, len(requests), request)
-        request = {'qs':request}
-        git_init = cache_slack(request)
-        pickle_slack(request)
+            # ga
+            print "#2: Requesting \033[94mGA\033[0m..."
+            f = open('%s/cache/ga.pickle' % MEDIA_ROOT, 'wb')
+            pickle.dump(cache_ga(), f)
+            f.close()
+            print "    GA \033[94minit\033[0m finished with \033[92mSUCCESS\033[0m."
+        else:
+            print "#1: Skip \033[94mAWS\033[0m..."
+            print "#2: Skip \033[94mGA\033[0m..."
 
-    # dropbox
-    print "#5: Requesting DROPBOX..."
-    requests = ['sizes', 'folders', 'history']
-    for i, request in enumerate(requests):
-        print "    DROPBOX: %s / %s (%s)..." % (i + 1, len(requests), request)
-        request = {'qs':request}
-        git_init = cache_dropbox(request)
-        pickle_dropbox(request)
 
-    # schedule
-    print "#6: Requesting Schedule Spreadsheet..."
-    f = open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'wb')
-    pickle.dump(cache_schedule(), f)
-    f.close()
-    print "    Schedule finished."
+        if is_30:
+            # git init
+            print "#3: Requesting \033[94mGIT\033[0m..."
+            request = {'qs':'init'}
+            git_init = cache_git(request)
+            f = open('%s/cache/git/init.pickle' % MEDIA_ROOT, 'wb')
+            pickle.dump(git_init, f)
+            f.close()
+            git_init = simplejson.loads(git_init)
+            print "    GIT \033[94minit\033[0m finished with \033[92mSUCCESS\033[0m."
 
-    # cal
-    print "#7: Requesting Google Calendar..."
-    f = open('%s/cache/calendar.pickle' % MEDIA_ROOT, 'wb')
-    pickle.dump(cache_cal(), f)
-    f.close()
-    print "    Calendar finished."
+            # git each
+            for i, repo in enumerate(git_init['git']):
+                print "    GIT \033[94mrepo\033[0m: %s / %s (%s)..." % (i + 1, len(git_init['git']), repo['name']),
+                request = {'qs':'num', 'repo':repo['name']}
+                pickle_git(request)
+                request.update({'qs':'c'})
+                pickle_git(request)
+                request.update({'qs':'ad'})
+                pickle_git(request)
+                print " \033[92mSUCCESS\033[0m"
 
-    print "Time elapsed: %.1f s." % (time.time() - t)
-    print
+            # slack
+            print "#4: Requesting \033[94mSLACK\033[0m..."
+            requests = ['users', 'channels', 'files', 'plot_files', 'plot_msgs']
+            for i, request in enumerate(requests):
+                print "    SLACK: %s / %s (%s)..." % (i + 1, len(requests), request),
+                request = {'qs':request}
+                git_init = cache_slack(request)
+                pickle_slack(request)
+                print " \033[92mSUCCESS\033[0m"
+
+            # dropbox
+            print "#5: Requesting \033[94mDROPBOX\033[0m..."
+            requests = ['sizes', 'folders', 'history']
+            for i, request in enumerate(requests):
+                print "    DROPBOX: %s / %s (%s)..." % (i + 1, len(requests), request),
+                request = {'qs':request}
+                git_init = cache_dropbox(request)
+                pickle_dropbox(request)
+                print " \033[92mSUCCESS\033[0m"
+
+            # schedule
+            print "#6: Requesting \033[94mSchedule Spreadsheet\033[0m..."
+            f = open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'wb')
+            pickle.dump(cache_schedule(), f)
+            f.close()
+            print "    Schedule finished with \033[92mSUCCESS\033[0m."
+
+            # cal
+            print "#7: Requesting \033[94mGoogle Calendar\033[0m..."
+            f = open('%s/cache/calendar.pickle' % MEDIA_ROOT, 'wb')
+            pickle.dump(cache_cal(), f)
+            f.close()
+            print "    Calendar finished with \033[92mSUCCESS\033[0m."
+        else:
+            print "#3: Skip \033[94mGIT\033[0m..."
+            print "#4: Skip \033[94mSLACK\033[0m..."
+            print "#5: Skip \033[94mDROPBOX\033[0m..."
+            print "#7: Skip \033[94mSchedule Spreadsheet\033[0m..."
+            print "#7: Skip \033[94mGoogle Calendar\033[0m..."
+    except:
+        print traceback.format_exc()
+        print "Finished with \033[41mERROR\033[0m!"
+        print "Time elapsed: %.1f s." % (time.time() - t0)
+        sys.exit(1)
+
+    print "Finished with \033[92mSUCCESS\033[0m!"
+    print "Time elapsed: %.1f s." % (time.time() - t0)
+    sys.exit(0)
 
 
 if __name__ == "__main__": 
     main()
 
-# flag = False
-# print "#1: Backing up MySQL database..."
-# try:
-#     subprocess.check_call('mysqldump --quick %s -u %s -p%s > %s/backup/backup_mysql' % (env.db()['NAME'], env.db()['USER'], env.db()['PASSWORD'], MEDIA_ROOT), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-#     subprocess.check_call('gzip -f %s/backup/backup_mysql' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-# except subprocess.CalledProcessError:
-#     print "    \033[41mERROR\033[0m: Failed to dump \033[94mMySQL\033[0m database."
-#     print traceback.format_exc()
-#     flag = True
-# else:
-#     print "    \033[92mSUCCESS\033[0m: \033[94mMySQL\033[0m database dumped."
-# print "Time elapsed: %.1f s." % (time.time() - t)
-
-# t = time.time()
-# print "#2: Backing up static files..."
-# try:
-#     subprocess.check_call('cd %s && tar zcf backup/backup_static.tgz data/' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-# except subprocess.CalledProcessError:
-#     print "    \033[41mERROR\033[0m: Failed to archive \033[94mstatic\033[0m files."
-#     print traceback.format_exc()
-#     flag = True
-# else:
-#     print "    \033[92mSUCCESS\033[0m: \033[94mstatic\033[0m files synced."
-# print "Time elapsed: %.1f s." % (time.time() - t)
-
-# t = time.time()
-# print "#3: Backing up apache2 settings..."
-# try:
-#     subprocess.check_call('cp -r /etc/apache2 %s/backup' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-#     subprocess.check_call('cd %s/backup && tar zcf backup_apache.tgz apache2/' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-#     subprocess.check_call('rm -rf %s/backup/apache2' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-# except subprocess.CalledProcessError:
-#     print "    \033[41mERROR\033[0m: Failed to archive \033[94mapache2\033[0m settings."
-#     print traceback.format_exc()
-#     flag = True
-# else:
-#     print "    \033[92mSUCCESS\033[0m: \033[94mapache2\033[0m settings saved."
-
-# if flag:
-#     print "Finished with errors!"
-#     print "Time elapsed: %.1f s." % (time.time() - t0)
-#     sys.exit(1)
-# else:
-#     print "All done successfully!"
-#     print "Time elapsed: %.1f s." % (time.time() - t0)
-#     sys.exit(0)
