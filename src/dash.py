@@ -206,6 +206,7 @@ def cache_git(request):
             stats = ['Timestamp']
 
             if qs == 'c':
+                i = 0
                 contribs = repo.get_stats_commit_activity()
                 while (contribs is None and i <= 5):
                     sleep(1)
@@ -215,6 +216,7 @@ def cache_git(request):
                 for contrib in contribs: 
                     data.append({u'Timestamp': contrib.week, u'Commits': sum(contrib.days)})
             elif qs == 'ad':
+                i = 0
                 contribs = repo.get_stats_code_frequency()
                 while (contribs is None and i <= 5):
                     sleep(1)
