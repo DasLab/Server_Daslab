@@ -499,7 +499,7 @@ def cache_schedule():
     #     gdrive_dir = 'sudo cd %s' % APACHE_ROOT
     #     gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv %s/data/schedule.csv' % MEDIA_ROOT
     # else:
-    gdrive_dir = 'cd %s/data' % MEDIA_ROOT
+    gdrive_dir = 'cd %s/cache' % MEDIA_ROOT
     gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv schedule.csv'
     try:
         subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -508,7 +508,7 @@ def cache_schedule():
         raise Exception('Error with downloading schedule spreadsheet.')
 
     try:
-        f = open('%s/data/schedule.csv' % MEDIA_ROOT, 'r')
+        f = open('%s/cache/schedule.csv' % MEDIA_ROOT, 'r')
         lines = f.readlines()
         f.close()
         tp = lines[0].split(',')[5]
@@ -527,7 +527,7 @@ def cache_schedule():
                 last = (datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), row[2], row[3], row[5])
                 break
 
-        subprocess.check_call("rm %s/data/schedule.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        subprocess.check_call("rm %s/cache/schedule.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return {'last':last, 'this':this, 'next':next, 'tp':tp}
     except:
         print traceback.format_exc()
