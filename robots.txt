@@ -35,14 +35,15 @@ User-agent: Yahoo-Blogs
 User-agent: Yahoo-MMCrawler
 
 # Directories
-Disallow: /src/
-Disallow: /data/
+Disallow: /.git/
+Disallow: /cache/
 Disallow: /config/
+Disallow: /data/
 Disallow: /media/admin/
 Disallow: /media/fonts/
 Disallow: /media/js/
 Disallow: /media/_old/
-Disallow: /.git/
+Disallow: /src/
 
 # Files
 Disallow: /*.py
@@ -52,11 +53,11 @@ Disallow: /*.sh
 Disallow: /.gitignore
 
 # Paths (clean URLs)
-Disallow: /login/
-Disallow: /password/
-Disallow: /logout/
-Disallow: /group/
 Disallow: /admin/
+Disallow: /group/
+Disallow: /login/
+Disallow: /logout/
+Disallow: /password/
 Disallow: /site_data/_old/
 Disallow: /site_data/pub_data/
 Disallow: /site_data/rot_data/
