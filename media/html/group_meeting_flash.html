@@ -4,9 +4,9 @@
 	{% for ppt in flash_list %}
 		{% if ppt.year_start %}
 		<div class="subpanel">
-			<div id="heading{{ppt.date.year}}" role="tab" data-toggle="collapse" data-parent="#category{{ppt.date.year}}" href="#{{ppt.date.year}}" aria-expanded="true" aria-controls="{{ppt.date.year}}">
-				<span class="icon glyphicon glyphicon-chevron-left pull-right" style="font-weight:bold; font-size:36px; color:#ddd; padding-top:40px;"></span>&nbsp;&nbsp;
-				<span style="font-weight:bold; font-size:96px; color:#ddd;">{{ppt.date.year}}</span>
+			<div id="heading{{ppt.date.year}}" role="tab" data-toggle="collapse" data-parent="#category{{ppt.date.year}}" href="#{{ppt.date.year}}" aria-expanded="true" aria-controls="{{ppt.date.year}}" style="color:#ddd;">
+				<span class="icon glyphicon glyphicon-chevron-left pull-right" style="font-weight:bold; font-size:36px; padding-top:40px;"></span>&nbsp;&nbsp;
+				<span style="font-weight:bold; font-size:96px;">{{ppt.date.year}}</span>
 			</div>
 			<div id="{{ppt.date.year}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ppt.date.year}}">
 		{% endif %}
@@ -62,6 +62,7 @@
 
 			$('div.panel-collapse').on('shown.bs.collapse', function () {
 				$(this).prev().children().first().removeClass("glyphicon-chevron-left").addClass("glyphicon-chevron-down");
+				$(this).prev().css("color", "#555");
 
 				$(this).children().each(function() {
 					var max_height = 0, row = $(this);
@@ -77,6 +78,7 @@
 			});
 			$('div.panel-collapse').on('hidden.bs.collapse', function () {
 				$(this).prev().children().first().removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-left");
+				$(this).prev().css("color", "#ddd");
 			});
 
 		});
