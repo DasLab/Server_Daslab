@@ -2,7 +2,7 @@ sudo usermod -a -G www-data ubuntu
 
 sudo chgrp -R www-data *
 sudo chown -R ubuntu *.py *.md *.txt src media config .gitignore
-sudo chown -R www-data backup data
+sudo chown -R www-data backup cache data
 
 sudo chmod 640 *.py* *.md *.txt .gitignore
 sudo chmod 640 src/*.py* src/templatetags/*
@@ -14,8 +14,8 @@ sudo chmod 750 media/images media/images/contact media/images/group media/images
 sudo chmod 640 media/admin/*.html media/admin/img/*.*g* media/admin/img/gis/* media/admin/img/filemanager/* media/admin/js/*.js 
 sudo chmod 750 media/admin media/admin/img media/admin/img/gis media/admin/img/filemanager media/admin/js 
 
-sudo chmod 640 backup/*
-sudo chmod 750 backup
+sudo chmod 640 backup/* cache/* cache/aws/* cache/slack/* cache/git/* cache/dropbox/*
+sudo chmod 750 backup cache cache/aws cache/slack cache/git cache/dropbox
 sudo chmod 640 data/*.txt data/*.log data/*.pdf data/news_img/* data/_old/* data/ppl_img/* data/pub_data/* data/pub_img/* data/pub_pdf/* data/rot_data/* data/rot_ppt/* data/spe_ppt/*
 sudo chmod 750 data data/news_img data/_old data/ppl_img data/pub_data data/pub_img data/pub_pdf data/rot_data data/rot_ppt data/spe_ppt
 
