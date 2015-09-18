@@ -3,6 +3,7 @@ from datetime import date, datetime, timedelta
 import os
 import pickle
 import simplejson
+import subprocess
 import sys
 import time
 
@@ -15,24 +16,32 @@ from src.dash import *
 
 
 def pickle_aws(request, name):
-    f = open('%s/cache/aws/%s_%s_%s.pickle' % (MEDIA_ROOT, request['tp'], name, request['qs']), 'wb')
+    f_name = '%s/cache/aws/%s_%s_%s.pickle' % (MEDIA_ROOT, request['tp'], name, request['qs'])
+    f = open(f_name + '_tmp', 'wb')
     pickle.dump(cache_aws(request), f)
     f.close()
+    subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 def pickle_git(request):
-    f = open('%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, request['repo'], request['qs']), 'wb')
+    f_name = '%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, request['repo'], request['qs'])
+    f = open(f_name + '_tmp', 'wb')
     pickle.dump(cache_git(request), f)
     f.close()
+    subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 def pickle_slack(request):
-    f = open('%s/cache/slack/%s.pickle' % (MEDIA_ROOT, request['qs']), 'wb')
+    f_name = '%s/cache/slack/%s.pickle' % (MEDIA_ROOT, request['qs'])
+    f = open(f_name + '_tmp', 'wb')
     pickle.dump(cache_slack(request), f)
     f.close()
+    subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 def pickle_dropbox(request):
-    f = open('%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, request['qs']), 'wb')
+    f_name = '%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, request['qs'])
+    f = open(f_name + '_tmp', 'wb')
     pickle.dump(cache_dropbox(request), f)
     f.close()
+    subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 
 def main():
