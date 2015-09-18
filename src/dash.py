@@ -495,12 +495,12 @@ def dash_ssl(request):
 
 
 def cache_schedule():
-    if not DEBUG: 
-        gdrive_dir = 'sudo cd %s' % APACHE_ROOT
-        gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv %s/data/schedule.csv' % MEDIA_ROOT
-    else:
-        gdrive_dir = 'cd %s/data' % MEDIA_ROOT
-        gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv schedule.csv'
+    # if not DEBUG: 
+    #     gdrive_dir = 'sudo cd %s' % APACHE_ROOT
+    #     gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv %s/data/schedule.csv' % MEDIA_ROOT
+    # else:
+    gdrive_dir = 'cd %s/data' % MEDIA_ROOT
+    gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv schedule.csv'
     try:
         subprocess.check_call("%s && drive download --format csv --force -i 1GWOBc8rRhLNMEsf8pQMUXkqqgRiYTLo22t1eKP83p80 && %s" % (gdrive_dir, gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:

@@ -40,6 +40,20 @@ def main():
     print time.ctime()
     t = time.time()
 
+    # schedule
+    print "#6: Requesting Schedule Spreadsheet..."
+    f = open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'wb')
+    pickle.dump(cache_schedule(), f)
+    f.close()
+    print "    Schedule finished."
+
+    # cal
+    print "#7: Requesting Google Calendar..."
+    f = open('%s/cache/calendar.pickle' % MEDIA_ROOT, 'wb')
+    pickle.dump(cache_cal(), f)
+    f.close()
+    print "    Calendar finished."
+
     # aws init
     print "#1: Requesting AWS..."
     request = {'qs':'init'}
@@ -52,21 +66,21 @@ def main():
 
     # aws each
     for i, ec2 in enumerate(aws_init['ec2']):
-        print "    AWS EC2: %s / %s (%s)..." % (i, len(aws_init['ec2']), ec2['id'])
+        print "    AWS EC2: %s / %s (%s)..." % (i + 1, len(aws_init['ec2']), ec2['id'])
         request = {'qs':'cpu', 'tp':'ec2', 'id':ec2['id']}
         pickle_aws(request, ec2['id'])
         request.update({'qs':'net'})
         pickle_aws(request, ec2['id'])
 
     for i, elb in enumerate(aws_init['elb']):
-        print "    AWS ELB: %s / %s (%s)..." % (i, len(aws_init['elb']), elb['name'])
+        print "    AWS ELB: %s / %s (%s)..." % (i + 1, len(aws_init['elb']), elb['name'])
         request = {'qs':'lat', 'tp':'elb', 'id':elb['name']}
         pickle_aws(request, elb['name'])
         request.update({'qs':'req'})
         pickle_aws(request, elb['name'])
 
     for i, ebs in enumerate(aws_init['ebs']):
-        print "    AWS EBS: %s / %s (%s)..." % (i, len(aws_init['ebs']), ebs['id'])
+        print "    AWS EBS: %s / %s (%s)..." % (i + 1, len(aws_init['ebs']), ebs['id'])
         request = {'qs':'disk', 'tp':'ebs', 'id':ebs['id']}
         pickle_aws(request, ebs['id'])
 
@@ -89,7 +103,7 @@ def main():
 
     # git each
     for i, repo in enumerate(git_init['git']):
-        print "    GIT repo: %s / %s (%s)..." % (i, len(git_init['git']), repo['name'])
+        print "    GIT repo: %s / %s (%s)..." % (i + 1, len(git_init['git']), repo['name'])
         request = {'qs':'num', 'repo':repo['name']}
         pickle_git(request)
         request.update({'qs':'c'})
@@ -101,7 +115,7 @@ def main():
     print "#4: Requesting SLACK..."
     requests = ['users', 'channels', 'files', 'plot_files', 'plot_msgs', 'home']
     for i, request in enumerate(requests):
-        print "    SLACK: %s / %s (%s)..." % (i, len(requests), request)
+        print "    SLACK: %s / %s (%s)..." % (i + 1, len(requests), request)
         request = {'qs':request}
         git_init = cache_slack(request)
         pickle_slack(request)
@@ -110,24 +124,11 @@ def main():
     print "#5: Requesting DROPBOX..."
     requests = ['sizes', 'folders', 'history']
     for i, request in enumerate(requests):
-        print "    DROPBOX: %s / %s (%s)..." % (i, len(requests), request)
+        print "    DROPBOX: %s / %s (%s)..." % (i + 1, len(requests), request)
         request = {'qs':request}
         git_init = cache_dropbox(request)
         pickle_dropbox(request)
 
-    # schedule
-    print "#6: Requesting Schedule Spreadsheet..."
-    f = open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'wb')
-    pickle.dump(cache_schedule(), f)
-    f.close()
-    print "    Schedule finished."
-
-    # cal
-    print "#7: Requesting Google Calendar..."
-    f = open('%s/cache/calendar.pickle' % MEDIA_ROOT, 'wb')
-    pickle.dump(cache_cal(), f)
-    f.close()
-    print "    Calendar finished."
 
     print "Time elapsed: %.1f s." % (time.time() - t)
     print
