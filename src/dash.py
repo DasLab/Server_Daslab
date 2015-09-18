@@ -502,7 +502,7 @@ def cache_schedule():
     gdrive_dir = 'cd %s/data' % MEDIA_ROOT
     gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv schedule.csv'
     try:
-        subprocess.check_call("%s && drive download --format csv --force -i 1GWOBc8rRhLNMEsf8pQMUXkqqgRiYTLo22t1eKP83p80 && %s" % (gdrive_dir, gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
         print traceback.format_exc()
         raise Exception('Error with downloading schedule spreadsheet.')

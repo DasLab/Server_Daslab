@@ -31,6 +31,8 @@
 	},
 
 	"DRIVE": {
+		"SPREADSHEET_ID": "spreadsheet_id",
+
 		"CLIENT_ID": "client_id",
 		"CLIENT_SECRET": "client_secret",
 
