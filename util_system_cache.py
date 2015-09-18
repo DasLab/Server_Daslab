@@ -40,20 +40,6 @@ def main():
     print time.ctime()
     t = time.time()
 
-    # schedule
-    print "#6: Requesting Schedule Spreadsheet..."
-    f = open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'wb')
-    pickle.dump(cache_schedule(), f)
-    f.close()
-    print "    Schedule finished."
-
-    # cal
-    print "#7: Requesting Google Calendar..."
-    f = open('%s/cache/calendar.pickle' % MEDIA_ROOT, 'wb')
-    pickle.dump(cache_cal(), f)
-    f.close()
-    print "    Calendar finished."
-
     # aws init
     print "#1: Requesting AWS..."
     request = {'qs':'init'}
@@ -129,6 +115,19 @@ def main():
         git_init = cache_dropbox(request)
         pickle_dropbox(request)
 
+    # schedule
+    print "#6: Requesting Schedule Spreadsheet..."
+    f = open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'wb')
+    pickle.dump(cache_schedule(), f)
+    f.close()
+    print "    Schedule finished."
+
+    # cal
+    print "#7: Requesting Google Calendar..."
+    f = open('%s/cache/calendar.pickle' % MEDIA_ROOT, 'wb')
+    pickle.dump(cache_cal(), f)
+    f.close()
+    print "    Calendar finished."
 
     print "Time elapsed: %.1f s." % (time.time() - t)
     print
