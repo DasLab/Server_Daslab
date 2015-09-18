@@ -51,7 +51,7 @@ def main():
     print "    AWS init finished."
 
     # aws each
-    for i, ec2 in enmerate(aws_init['ec2']):
+    for i, ec2 in enumerate(aws_init['ec2']):
         print "    AWS EC2: %s / %s (%s)..." % (i, len(aws_init['ec2']), ec2['id'])
         request = {'qs':'cpu', 'tp':'ec2', 'id':ec2['id']}
         pickle_aws(request, ec2['id'])
