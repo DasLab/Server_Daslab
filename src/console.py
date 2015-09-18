@@ -147,7 +147,7 @@ def restyle_apache():
     return simplejson.dumps(json)
     
 
-def aws_result(results, args, req_id):
+def aws_result(results, args):
     data = []
     data.extend(results[0])
     for i, d in enumerate(data):
@@ -187,11 +187,10 @@ def aws_result(results, args, req_id):
     data = sorted(data, key=operator.itemgetter(u'Timestamp'))
     data_table = gviz_api.DataTable(desp)
     data_table.LoadData(data)
-    results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
-    return results
+    return (data_table, stats)
 
 
-def aws_call(conn, args, req_id, qs):
+def aws_call(conn, args, qs):
     results = []
     for i, me in enumerate(args['metric']):
         col = args['cols']
@@ -214,7 +213,7 @@ def aws_call(conn, args, req_id, qs):
             for d in data:
                 d[u'Sum'] = d[u'Sum'] / 1024
         results.append(data)
-    return aws_result(results, args, req_id)
+    return aws_result(results, args)
 
 
 def aws_stats(request):
@@ -505,63 +504,6 @@ def export_citation(request):
             response = HttpResponse(lines, content_type='application/msword')
             response["Content-Disposition"] = "attachment; filename=export_citation.docx"
     return response
-
-
-def get_cal():
-    ics = subprocess.Popen('curl --silent --request GET "%s"' % GCAL['ICS'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-    cal = Calendar.from_ical(ics)
-    data = []
-
-    format_UTC = "%Y-%m-%d %H:%M:%S"
-    for event in cal.walk('vevent'):
-        title = event.get('SUMMARY')
-        start = event.get('DTSTART').dt
-        end = event.get('DTEND').dt
-
-        all_day = (not isinstance(start, datetime))
-        if all_day:
-            color = "#29be92"
-        else:
-            color = "#5496d7"
-        if ("group meeting" in title.lower()) or ("das lab group" in title.lower()):
-            color = "#ff5c2b"
-        if "BD" in title or 'b-day' in title or 'birthday' in title.lower():
-            color = "#c28fdd"
-        data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
-
-        if event.has_key('RRULE') and event.get('RRULE').has_key('FREQ'):
-            rrule = event.get('RRULE')
-            while True:
-                if 'YEARLY' in rrule['FREQ']:
-                    start += relativedelta(years=1)
-                    end += relativedelta(years=1)
-                elif 'MONTHLY' in rrule['FREQ']:
-                    start += relativedelta(months=1)
-                    end += relativedelta(months=1)
-                elif 'WEEKLY' in rrule['FREQ']:
-                    start += timedelta(days=7)
-                    end += timedelta(days=7)
-                elif 'DAILY' in rrule['FREQ']:
-                    start += timedelta(days=1)
-                    end += timedelta(days=1)
-                else:
-                    break
-
-                until = (datetime.today() + relativedelta(years=2)).date()
-                if rrule.has_key('UNTIL'): 
-                    until = rrule['UNTIL'][0]
-                    if isinstance(until, datetime): until = until.date()
-
-                if all_day:
-                    if start > until: break
-                else:
-                    if start.date() > until: break
-
-                data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
-
-    return simplejson.dumps(data)
-
-
 
 
 

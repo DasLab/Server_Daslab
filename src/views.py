@@ -355,7 +355,7 @@ def dropbox_dash(request):
     return HttpResponse(dash_dropbox(request), content_type='application/json')
 
 def gcal(request):
-    return HttpResponse(get_cal(), content_type='application/json')
+    return HttpResponse(dash_cal(), content_type='application/json')
 
 def get_admin(request):
     return HttpResponse(simplejson.dumps({'email':EMAIL_NOTIFY}), content_type='application/json')

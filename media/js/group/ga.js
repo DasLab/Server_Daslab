@@ -95,11 +95,6 @@ gapi.analytics.ready(function() {
                 drawGA(data.projs[i].id);
             }
         },
-        complete: function () {
-            $("#sidebar").attr("data-spy","affix").affix( { offset: { top: $("#main").position().top} } );
-            $("#sidebar").css("width", $("#sidebar").width());
-            $("#sidebar").css("margin", 0);
-        }
     });
 });
 

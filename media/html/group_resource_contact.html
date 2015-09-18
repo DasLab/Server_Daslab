@@ -118,7 +118,7 @@
 								{% endif %}
 								<br/>
 								<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span>{{ ppl.status }}</span>
-								<span class="pull-right"><a href="{{ ppl.cap }}" target="_blank"><span class="label label-warning">CAP Profile</span></a></span>
+								<span class="pull-right"><a href="{{ ppl.more_info }}" target="_blank"><span class="label label-warning">CAP Profile</span></a></span>
 							</p>
 							<p style="line-height:25px; margin-top:30px;">
 								<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
@@ -174,8 +174,8 @@
 											{% endif %}
 											<br/>
 											<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span>{{ ppl.status }}</span>
-											{% if ppl.cap %}
-												<span class="pull-right"><a href="{{ ppl.cap }}" target="_blank"><span class="label label-warning">CAP Profile</span></a></span>
+											{% if ppl.more_info %}
+												<span class="pull-right"><a href="{{ ppl.more_info }}" target="_blank"><span class="label label-warning">CAP Profile</span></a></span>
 											{% endif %}
 										</p>
 										<p style="line-height:25px; margin-top:30px;">

@@ -49,7 +49,7 @@ $.ajax({
 
 
 $.ajax({
-    url : "/admin/slack_dash?qs=users&tqx=reqId%3ANone",
+    url : "/admin/slack_dash?qs=home&tqx=reqId%3A50",
     dataType: "json",
     success: function (data) {
         var html = "";
