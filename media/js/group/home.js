@@ -18,13 +18,25 @@ $.ajax({
     dataType: "json",
     success: function (data) {
         $("#this_type").html(label_type(data.this[1]));
-        $("#this_name").html(data.this[2]);
+        if (data.this[1] == 'N/A') {
+            $("#this_name").html('(' + data.this[3] + ')').removeClass("label label-inverse").addClass("small");
+        } else {
+            $("#this_name").html(data.this[2]);
+        }
         $("#this_date").html(data.this[0]);
         $("#last_type").html(label_type(data.last[1]));
-        $("#last_name").html(data.last[2]);
+        if (data.last[1] == 'N/A') {
+            $("#last_name").html('(' + data.last[3] + ')').removeClass("label label-inverse").addClass("small");
+        } else {
+            $("#last_name").html(data.last[2]);
+        }
         $("#last_date").html(data.last[0]);
         $("#next_type").html(label_type(data.next[1]));
-        $("#next_name").html(data.next[2]);
+        if (data.next[1] == 'N/A') {
+            $("#next_name").html('(' + data.next[3] + ')').removeClass("label label-inverse").addClass("small");
+        } else {
+            $("#next_name").html(data.next[2]);
+        }
         $("#next_date").html(data.next[0]);
         $("#tp").html('<b>' + data.tp + '</b>');
 
