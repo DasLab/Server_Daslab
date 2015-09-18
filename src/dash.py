@@ -524,6 +524,8 @@ def cache_schedule():
             if len(row) == 10 and any(row):
                 last = (datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), row[2], row[3], row[5])
                 break
+
+        subprocess.check_call("rm %s/data/schedule.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return {'last':last, 'this':this, 'next':next, 'tp':tp}
     except:
         print traceback.format_exc()
