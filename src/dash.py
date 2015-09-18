@@ -496,7 +496,7 @@ def dash_ssl(request):
 
 def cache_schedule():
     if not DEBUG: 
-        gdrive_dir = 'cd %s' % APACHE_ROOT
+        gdrive_dir = 'sudo cd %s' % APACHE_ROOT
         gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv %s/data/schedule.csv' % MEDIA_ROOT
     else:
         gdrive_dir = 'cd %s/data' % MEDIA_ROOT

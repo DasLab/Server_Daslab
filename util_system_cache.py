@@ -41,45 +41,55 @@ def main():
     t = time.time()
 
     # aws init
+    print "#1: Requesting AWS..."
     request = {'qs':'init'}
     aws_init = cache_aws(request)
     f = open('%s/cache/aws/init.pickle' % MEDIA_ROOT, 'wb')
     pickle.dump(aws_init, f)
     f.close()
     aws_init = simplejson.loads(aws_init)
+    print "    AWS init finished."
 
     # aws each
-    for ec2 in aws_init['ec2']:
+    for i, ec2 in enmerate(aws_init['ec2']):
+        print "    AWS EC2: %s / %s (%s)..." % (i, len(aws_init['ec2']), ec2['id'])
         request = {'qs':'cpu', 'tp':'ec2', 'id':ec2['id']}
         pickle_aws(request, ec2['id'])
         request.update({'qs':'net'})
         pickle_aws(request, ec2['id'])
 
-    for elb in aws_init['elb']:
+    for i, elb in enumerate(aws_init['elb']):
+        print "    AWS ELB: %s / %s (%s)..." % (i, len(aws_init['elb']), elb['name'])
         request = {'qs':'lat', 'tp':'elb', 'id':elb['name']}
         pickle_aws(request, elb['name'])
         request.update({'qs':'req'})
         pickle_aws(request, elb['name'])
 
-    for ebs in aws_init['ebs']:
+    for i, ebs in enumerate(aws_init['ebs']):
+        print "    AWS EBS: %s / %s (%s)..." % (i, len(aws_init['ebs']), ebs['id'])
         request = {'qs':'disk', 'tp':'ebs', 'id':ebs['id']}
         pickle_aws(request, ebs['id'])
 
     # ga
+    print "#2: Requesting GA..."
     f = open('%s/cache/ga.pickle' % MEDIA_ROOT, 'wb')
     pickle.dump(cache_ga(), f)
     f.close()
+    print "    GA init finished."
 
     # git init
+    print "#3: Requesting GIT..."
     request = {'qs':'init'}
     git_init = cache_git(request)
     f = open('%s/cache/git/init.pickle' % MEDIA_ROOT, 'wb')
     pickle.dump(git_init, f)
     f.close()
     git_init = simplejson.loads(git_init)
+    print "    GIT init finished."
 
     # git each
-    for repo in git_init['git']:
+    for i, repo in enumerate(git_init['git']):
+        print "    GIT repo: %s / %s (%s)..." % (i, len(git_init['git']), repo['name'])
         request = {'qs':'num', 'repo':repo['name']}
         pickle_git(request)
         request.update({'qs':'c'})
@@ -88,28 +98,36 @@ def main():
         pickle_git(request)
 
     # slack
+    print "#4: Requesting SLACK..."
     requests = ['users', 'channels', 'files', 'plot_files', 'plot_msgs', 'home']
-    for request in requests:
+    for i, request in enumerate(requests):
+        print "    SLACK: %s / %s (%s)..." % (i, len(requests), request)
         request = {'qs':request}
         git_init = cache_slack(request)
         pickle_slack(request)
 
     # dropbox
+    print "#5: Requesting DROPBOX..."
     requests = ['sizes', 'folders', 'history']
-    for request in requests:
+    for i, request in enumerate(requests):
+        print "    DROPBOX: %s / %s (%s)..." % (i, len(requests), request)
         request = {'qs':request}
         git_init = cache_dropbox(request)
         pickle_dropbox(request)
 
     # schedule
+    print "#6: Requesting Schedule Spreadsheet..."
     f = open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'wb')
     pickle.dump(cache_schedule(), f)
     f.close()
+    print "    Schedule finished."
 
     # cal
+    print "#7: Requesting Google Calendar..."
     f = open('%s/cache/calendar.pickle' % MEDIA_ROOT, 'wb')
     pickle.dump(cache_cal(), f)
     f.close()
+    print "    Calendar finished."
 
     print "Time elapsed: %.1f s." % (time.time() - t)
     print
