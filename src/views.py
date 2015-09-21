@@ -259,26 +259,23 @@ def user_contact(request):
 @login_required
 def user_email(request):
     if request.method == 'POST':
-        if (not 'from' in request.POST) or (not 'subject' in request.POST) or (not 'content' in request.POST): 
-            messages = 'error'
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            em_from = form.cleaned_data['email_from']
+            em_subject = form.cleaned_data['email_subject']
+            em_content = form.cleaned_data['email_content']
+
+            http_header = '(CONTENT_TYPE, %s)\n(CONTENT_LENGTH, %s)\n' % (request.META.get('CONTENT_TYPE'), request.META.get('CONTENT_LENGTH'))
+            for key, value in request.META.items():
+                if key.startswith('HTTP_'):
+                    http_header += '(%s, %s)\n' % (key, request.META.get(key))    
+            http_header += request.body
+
+            em_content = 'Contact Admin from DasLab Website Internal\n\nFrom: %s: %s\nSubject: %s\n%s\n\nREQUEST:\n%s' % (request.user, em_from, em_subject, em_content, http_header)
+            send_mail('[System] {daslab.stanford.edu} Internal Email Notice', em_content, EMAIL_HOST_USER, [EMAIL_NOTIFY])
+            messages = 'success'
         else:
-            em_from = request.POST['from']
-            em_to = request.POST['to']
-            em_subject = request.POST['subject']
-            em_content = request.POST['content']
-
-            if em_subject and em_content and em_from:
-                http_header = '(CONTENT_TYPE, %s)\n(CONTENT_LENGTH, %s)\n' % (request.META.get('CONTENT_TYPE'), request.META.get('CONTENT_LENGTH'))
-                for key, value in request.META.items():
-                    if key.startswith('HTTP_'):
-                        http_header += '(%s, %s)\n' % (key, request.META.get(key))    
-                http_header += request.body
-
-                em_content = 'Contact Admin from DasLab Website Internal\n\nFrom: %s: %s\n\n%s\n\nREQUEST:\n%s' % (request.user, em_from, em_content, http_header)
-                send_mail(em_subject, em_content, EMAIL_HOST_USER, [em_to])
-                messages = 'success'
-            else:
-                messages = 'invalid'
+            messages = 'invalid'
 
         return HttpResponse(simplejson.dumps({'messages':messages}), content_type='application/json')
     else:

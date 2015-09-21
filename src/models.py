@@ -254,3 +254,15 @@ class UploadForm(forms.Form):
     upload_file = forms.FileField(required=True)
     upload_link = forms.CharField(required=False)
 
+class EmailForm(forms.Form):
+    email_from = forms.EmailField(required=True)
+    email_subject = forms.CharField(required=True)
+    email_content = forms.CharField(widget=forms.Textarea, required=True)
+
+def email_form(request):
+    return {'email_form':EmailForm()}
+
+
+
+
+    
