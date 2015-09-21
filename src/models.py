@@ -247,7 +247,10 @@ class ExportForm(forms.Form):
     include_preprint = forms.BooleanField(initial=True)
 
 
-
-
-
+class UploadForm(forms.Form):
+    upload_date = forms.DateField(required=True)
+    upload_presenter = forms.CharField(required=True)
+    upload_title = forms.CharField(required=True)
+    upload_file = forms.FileField(required=True)
+    upload_link = forms.CharField(required=False)
 

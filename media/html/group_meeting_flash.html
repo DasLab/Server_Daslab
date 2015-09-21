@@ -54,9 +54,6 @@
 		$(document).ready(function() {
 			$('.dropdown-toggle').removeClass("active");
 			$("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;Flash Slides</li>');
-			$('#top').on('click', function () {
-				$('html, body').stop().animate({scrollTop: $("#main").offset().top - 75}, 500);
-			});
 
 			$("#flash_list > div.subpanel:first > div.panel-collapse").collapse("show");
 

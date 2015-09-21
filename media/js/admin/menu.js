@@ -7,7 +7,7 @@ function navbar_collapse() {
         $("#nav_toggle").trigger("click");
         $("#nav_toggle").hide();
         $("#nav_external").unbind();
-        $("#nav_internal").unbind();
+        $("#nav_group").unbind();
         $("#nav_time").unbind();
         $("#nav_email").unbind();
         $("#nav_upload").unbind();
@@ -24,9 +24,9 @@ function navbar_collapse() {
           function(){ $("#nav_external_text").fadeIn().siblings().css("color", "#ff912e"); },
           function(){ $("#nav_external_text").fadeOut().siblings().css("color", "#fff"); }
         );
-        $("#nav_internal").hover(
-          function(){ $("#nav_internal_text").fadeIn().siblings().css("color", "#eeb211"); },
-          function(){ $("#nav_internal_text").fadeOut().siblings().css("color", "#fff"); }
+        $("#nav_group").hover(
+          function(){ $("#nav_group_text").fadeIn().siblings().css("color", "#eeb211"); },
+          function(){ $("#nav_group_text").fadeOut().siblings().css("color", "#fff"); }
         );
 
         $(".dropdown-toggle").dropdown();

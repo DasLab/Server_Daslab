@@ -363,7 +363,8 @@ h1.section>span.num {
   overflow: hidden;
   margin: 0;
 }
-.fileUpload input {
+.fileUpload > input {
+  float: left;
   position: absolute;
   top: 0;
   right: 0;

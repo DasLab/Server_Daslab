@@ -1,10 +1,14 @@
 {% extends "media/html/_internal.html" %}
 {% block content %}
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<span>
-		<button class="btn btn-warning" id="btn_toggle"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Toggle View</button>
-		&nbsp;&nbsp;<span id="label_timeline">Timeline</span>&nbsp;&nbsp;/&nbsp;&nbsp;<span id="label_table">Table</span>
-	</span>
+	<div class="row">
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+			<button class="btn btn-warning" id="btn_toggle"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Toggle View</button>
+			&nbsp;&nbsp;<span id="label_timeline">Timeline</span>&nbsp;&nbsp;/&nbsp;&nbsp;<span id="label_table">Table</span>
+		</div>
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+	</div>
 
 	<div class="row" id="toggle_timeline">
 		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
@@ -44,7 +48,8 @@
 
 	<div class="row" id="toggle_table">
 		<br/>
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
 			<table class="table table-hover">
 				<thead>
 					<tr class="active">
@@ -73,6 +78,7 @@
 				</tbody>
 			</table>
 		</div>
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
 	</div>
 </div>
 {% endblock %}
@@ -83,9 +89,6 @@
 		$(document).ready(function() {
 			$('.dropdown-toggle').removeClass("active");
 			$("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;Rotation Student Presentations</li>');
-			$('#top').on('click', function () {
-				$('html, body').stop().animate({scrollTop: $("#main").offset().top - 75}, 500);
-			});
 
 			var toggle_flag = false;
 			$("#btn_toggle").on("click", function () {

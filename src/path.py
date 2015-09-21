@@ -16,6 +16,7 @@ class SYS_PATH:
             'login': MEDIA_ROOT + '/media/html/_login.html',
             'password': MEDIA_ROOT + '/media/html/group_password.html',
             'profile': MEDIA_ROOT + '/media/html/group_profile.html',
+            'upload': MEDIA_ROOT + '/media/html/group_resource_upload.html',
 
             'lab_home': MEDIA_ROOT + '/media/html/group_index.html',
             'lab_meeting_schedule': MEDIA_ROOT + '/media/html/group_meeting_schedule.html',

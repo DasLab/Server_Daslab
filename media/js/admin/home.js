@@ -35,7 +35,7 @@ $(document).ready(function() {
             $("#id_swfobj").html(txt[16]);
             $("#id_fullcal").html(txt[17]);
             $("#id_moment").html(txt[18]);
-            $("#id_dropz").html(txt[19]);
+            // $("#id_dropz").html(txt[19]);
             $("#id_ical").html(txt[20]);
             $("#id_gvizapi").html(txt[21]);
 

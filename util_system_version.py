@@ -68,11 +68,12 @@ f.readline()
 ver_moment = f.readline()
 ver += ver_moment[ver_moment.find(':')+2:].strip() + '\t'
 f.close()
-f = open(os.path.join(MEDIA_ROOT, 'media/js/dropzone.min.js'), 'r')
-ver_dropz = ''.join(f.readlines())
-ver_dropz = ver_dropz[ver_dropz.find('.version="') + 10 : ver_dropz.find('.version="') + 18]
-ver += ver_dropz[:ver_dropz.find('"')] + '\t'
-f.close()
+# f = open(os.path.join(MEDIA_ROOT, 'media/js/dropzone.min.js'), 'r')
+# ver_dropz = ''.join(f.readlines())
+# ver_dropz = ver_dropz[ver_dropz.find('.version="') + 10 : ver_dropz.find('.version="') + 18]
+# ver += ver_dropz[:ver_dropz.find('"')] + '\t'
+# f.close()
+ver += 'place_holder\t'
 
 
 f = open(os.path.join(MEDIA_ROOT, 'data/temp.txt'), 'w')

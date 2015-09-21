@@ -45,7 +45,8 @@
   {% else %}
 
     {% block delete_form %}
-      <form action="" method="post">{% csrf_token %}
+      <form action="" method="post">
+        {% csrf_token %}
         <div class="alert alert-block alert-danger">
           <h4 class="alert-heading"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;{% trans 'Delete' %} {% trans opts.verbose_name %}?</h4>
           <p>

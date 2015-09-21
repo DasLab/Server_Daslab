@@ -1,7 +1,7 @@
 var $ = django.jQuery;
 
 function replace_path(string) {
-	return string.replace('/home/ubuntu/Server_DasLab/data/', '/site_data').replace('/MATLAB_Code/Daslab_server/data', '/site_data')
+	return string.replace('/home/ubuntu/Server_DasLab/data/', '/site_data/').replace('/Website_Server/Daslab/data/', '/site_data/')
 }
 
 $(document).ready(function () {

@@ -21,7 +21,7 @@ from src.settings import *
 # import datetime
 # import subprocess
 # import sys
-# import traceback
+import traceback
 # from sys import stderr
 
 colors = ('brown', 'dark-red', 'danger', 'orange', 'warning', 'green', 'success', 'light-blue', 'info', 'primary', 'dark-blue', 'violet')
@@ -116,7 +116,6 @@ def lab_meeting_rotation(request):
             rot.dat_link = os.path.basename(rot.data.name)
     return render_to_response(PATH.HTML_PATH['lab_meeting_rotation'], {'rot_list':rot_list}, context_instance=RequestContext(request))
 
-
 @login_required
 def lab_resource_gdocs(request):
     return render_to_response(PATH.HTML_PATH['lab_resource_gdocs'], {}, context_instance=RequestContext(request))
@@ -128,7 +127,7 @@ def lab_resource_archive(request):
         if i == 0 or arv_list[i - 1].date.year != arv.date.year:
             arv.year_start = True
         if arv.ppt:
-            arv.ppt_link = os.path.basename(arv.ppt.name)
+            arv.ppt_link = os.path.basename(arv.ppt.name).replace('C:\\fakepath\\', '')
     return render_to_response(PATH.HTML_PATH['lab_resource_archive'], {'arv_list':arv_list}, context_instance=RequestContext(request))
 @login_required
 def lab_resource_contact(request):
@@ -141,7 +140,7 @@ def lab_resource_contact(request):
         ppl.status = ppl.year()
         if ppl.phone:
             ppl.phone = str(ppl.phone)
-            ppl.phone = '(%s) %s-%s' %(ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
+            ppl.phone = '(%s) %s-%s' % (ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
 
     almuni = Member.objects.filter(alumni=1).order_by('-finish_year', '-start_year')
     for i, ppl in enumerate(almuni):
@@ -154,7 +153,7 @@ def lab_resource_contact(request):
         ppl.status = ppl.year()
         if ppl.phone:
             ppl.phone = str(ppl.phone)
-            ppl.phone = '(%s) %s-%s' %(ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
+            ppl.phone = '(%s) %s-%s' % (ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
     return render_to_response(PATH.HTML_PATH['lab_resource_contact'], {'current_member':member, 'past_member':almuni}, context_instance=RequestContext(request))
 
 
@@ -284,6 +283,31 @@ def user_email(request):
         return HttpResponse(simplejson.dumps({'messages':messages}), content_type='application/json')
     else:
         return HttpResponseBadRequest('Invalid form.')
+
+@login_required
+def user_upload(request):
+    if request.method == 'POST':
+        form = UploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            em_title = form.cleaned_data['upload_title']
+            em_presenter = form.cleaned_data['upload_presenter']
+            em_date = form.cleaned_data['upload_date']
+            em_file = form.cleaned_data['upload_file']
+            em_link = form.cleaned_data['upload_link']
+            try:
+                tmp = Presentation(title=em_title, presenter=em_presenter, date=em_date, ppt=em_file, link=em_link)
+                tmp.save()
+                send_mail('[System] {daslab.stanford.edu} Archive Upload Notice', 'This is an automatic email notification for a user uploaded Presentation Archive item.\n\nThe description is:\nTitle:\t%s\nDate:\t%s\nPresenter:\t%s\nFile:\t%s\nLink:\t%s\n\nUploaded by:%s\n\nDasLab Website Admin\n' % (em_title, em_date, em_presenter, em_file, em_link, request.user.username), EMAIL_HOST_USER, [EMAIL_NOTIFY])
+                messages = 'success'
+            except:
+                print traceback.format_exc()
+                messages = 'invalid'
+        else:
+            messages = 'error'
+
+        return render_to_response(PATH.HTML_PATH['upload'], {'upload_form':form, 'messages':messages}, context_instance=RequestContext(request))
+    else:
+        return render_to_response(PATH.HTML_PATH['upload'], {'upload_form':UploadForm(), 'messages':''}, context_instance=RequestContext(request))
 
 def user_profile(request):
     profile = Member.objects.filter(sunet_id=request.user.username)

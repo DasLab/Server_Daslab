@@ -44,7 +44,7 @@
 				</div>
 				<div class="panel-body">
 					<br/>
-					<form enctype="multipart/form-data" action="/update_contact/" method="post">
+					<form enctype="multipart/form-data" action="/group/contact/update/" method="post">
 						{% csrf_token %}
 			    		<div class="row">
 			                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
@@ -248,9 +248,6 @@
 		$(document).ready(function() {
 			$('.dropdown-toggle').removeClass("active");
 			$("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;Contacts</li>');
-			$('#top').on('click', function () {
-				$('html, body').stop().animate({scrollTop: $("#main").offset().top - 75}, 500);
-			});
 
 			var max_height = 0;
 			$("div.profile-card").each(function () {

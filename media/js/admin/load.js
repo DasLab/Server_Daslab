@@ -9,7 +9,7 @@ xmlhttp.onreadystatechange = function() {
 			ver_swfobj = xmlDoc[16];
 			ver_fullcal= xmlDoc[17];
 			ver_moment = xmlDoc[18];
-			ver_dropz = xmlDoc[19];
+			// ver_dropz = xmlDoc[19];
 
 			document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/' + ver_jquery + '/jquery.min.js"><\/script>');
 			document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/' + ver_bootstrap + '/js/bootstrap.min.js"><\/script>');
