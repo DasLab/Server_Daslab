@@ -156,7 +156,11 @@ def dash_ga(request):
     f = open('%s/cache/ga.pickle' % MEDIA_ROOT, 'rb')
     results = pickle.load(f)
     f.close()
-    return results
+    access_token = requests.post('https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])).json()['access_token']
+
+    results = simplejson.loads(results)
+    results.update({'access_token':access_token})
+    return simplejson.dumps(results)
 
 
 def cache_git(request):
