@@ -38,7 +38,7 @@ $.ajax({
             $("#next_name").html(data.next[2]);
         }
         $("#next_date").html(data.next[0]);
-        $("#tp").html('<b>' + data.tp + '</b>');
+        $("#tp").html('<b>' + data.tp.replace("[", "").replace("]", "") + '</b>');
 
         $("#recent_flash").html('<span class="label label-primary">' + data.flash_slide.date + '</span>&nbsp;&nbsp;<a href="' + data.flash_slide.url + '" target="_blanl"><span class="glyphicon glyphicon-new-window"></span></a>');
         $("#recent_eterna").html('<span class="label label-primary">' + data.eterna.date + '</span>&nbsp;&nbsp;<a href="' + data.eterna.url + '" target="_blanl"><span class="glyphicon glyphicon-new-window"></span></a><br/><i>' + data.eterna.name + '</i>');

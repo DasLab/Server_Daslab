@@ -301,6 +301,10 @@ p.cap:first-letter {
 	border-bottom: 5px solid #3ed4e7 !important;
 	background-color: #c5f2f7 !important;
 }
+.alert-light-blue {
+	border-bottom: 5px solid #8ee4cf !important;
+	background-color: #ddf6f0 !important;
+}
 
 .timeline-default {
 	background-color: #a19193;

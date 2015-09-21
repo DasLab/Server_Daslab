@@ -12,6 +12,7 @@
           <span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-console"></span>&nbsp;&nbsp;Title</span>
           {{upload_form.upload_title}}
         </div>
+        <p style="margin-top:5px; margin-bottom:0px;"><small>Do <span class="label label-danger">NOT</span> use "CamelCase / InterCaps / CapWords". Only capitalize the first word.</small></p>
       </div>
       <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
     </div>
@@ -46,6 +47,7 @@
             <button class="btn btn-info" type="button" id="form_upload_browse"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Browse&nbsp;&nbsp;</button>
           </span>
         </div>
+        <p style="margin-top:5px; margin-bottom:0px;"><small>Link to slides on server. <span class="label label-danger">NO</span> spaces in file name. Use file name format <i>DATE_TITLE.pptx</i>: date in <span class="label label-inverse">8-digits(yyyymmdd)</span>. <span class="label label-success">Example</span>: <i>20150619_RNAWorksBlueprint.jpg</i>.</small></p>
         {{upload_form.upload_file}}
       </div>
       <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
@@ -58,6 +60,7 @@
           <span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;Link</span>
           {{upload_form.upload_link}}
         </div>
+        <p style="margin-top:5px; margin-bottom:0px;"><small>External link to Google Docs.</small></p>
       </div>
       <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
     </div>

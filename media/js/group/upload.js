@@ -2,7 +2,7 @@ $(document).ready(function () {
     $("#id_upload_title").addClass("form-control").attr("placeholder", "What was it?");
     $("#id_upload_presenter").addClass("form-control").attr("placeholder", "Who was it?");
     $("#id_upload_date").addClass("form-control").attr("placeholder", "When was it?");
-    $("#id_upload_link").addClass("form-control").attr("placeholder", "Optional Google Docs Link");
+    $("#id_upload_link").addClass("form-control").attr("placeholder", "Optional");
     $("#id_upload_file").addClass("form-control").css("display", "none");
 
     $("#form_upload_browse").on("click", function(event) {
