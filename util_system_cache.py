@@ -181,16 +181,20 @@ def main():
 
             # schedule
             print "#6: Requesting \033[94mSchedule Spreadsheet\033[0m..."
-            f = open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'wb')
+            f_name = '%s/cache/schedule.pickle' % MEDIA_ROOT
+            f = open(f_name + '_tmp', 'wb')
             pickle.dump(cache_schedule(), f)
             f.close()
+            subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             print "    Schedule finished with \033[92mSUCCESS\033[0m."
 
             # cal
             print "#7: Requesting \033[94mGoogle Calendar\033[0m..."
-            f = open('%s/cache/calendar.pickle' % MEDIA_ROOT, 'wb')
+            f_name = '%s/cache/calendar.pickle_tmp' % MEDIA_ROOT
+            f = open(f_name + '_tmp', 'wb')
             pickle.dump(cache_cal(), f)
             f.close()
+            subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             print "    Calendar finished with \033[92mSUCCESS\033[0m."
         else:
             print "#3: Skip \033[94mGIT\033[0m..."
