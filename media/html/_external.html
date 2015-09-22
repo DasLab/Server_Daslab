@@ -91,7 +91,7 @@
         </a>
       </div>
       <a href="#" id="top">
-        <img style="position:fixed; display:block; right:5%; bottom:5%; opacity:0.85;" src="/site_media/images/nav_top.png" height="60"/>
+        <img style="position:fixed; display:block; right:-5%; bottom:5%; opacity:0.85;" src="/site_media/images/nav_top.png" height="60"/>
       </a>
 
       <div id="DasICON" class="fix">
@@ -115,10 +115,10 @@
           $(this).children().attr("src", "/site_media/images/nav_top.png");
         });
         $("#top").on("click", function () {
-          $("html, body").stop().animate({scrollTop: 0}, 500);
           event.preventDefault()
+          $('#top > img').animate({'right':'-5%', 'opacity':'0'}, 125);
+          $("html, body").stop().animate({scrollTop: 0}, 250);
         });
-        $("#top").hide();
 
         $("a.nav-hover").hover(function () {
           $(this).children().css("border-bottom-color", "#008180");
@@ -133,11 +133,14 @@
       });
   
       $(window).on("scroll", function () {
-        if ($(this).scrollTop() > $(window).height()/2) {
-          $('#top').fadeIn();
-        } else {
-          $('#top').fadeOut();
-        }
+        clearTimeout($.data(this, 'resizeTimer'));
+        $.data(this, 'resizeTimer', setTimeout(function() {
+          if ($(this).scrollTop() > $(window).height() / 2) {
+            $('#top > img').animate({'right':'5%', 'opacity':'0.85'}, 125);
+          } else {
+            $('#top > img').animate({'right':'-5%', 'opacity':'0'}, 125);
+          }
+        }, 200));
       });
     </script>
   </body>

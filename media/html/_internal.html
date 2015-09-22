@@ -11,7 +11,7 @@
 <body>
   <div id="wait" class="modal"></div>
   <script type="text/javascript">
-    $("#wait").fadeIn(500);
+    $("#wait").fadeIn(250);
   </script>
 
   <div class="navbar navbar-fixed-top" id="nav_load">
@@ -288,8 +288,8 @@
     </div>
   </div>
 
-  <a href="#" id="top">
-    <img style="position:fixed;display:block;right:5%;bottom:5%;opacity:0.85;" src="/site_media/images/nav_top.png" name="top" height="60"/>
+  <a href="#" id="top" style="z-index:2000;">
+    <img style="position:fixed;display:block;left:-5%;bottom:100px;opacity:0.85;z-index:2000;" src="/site_media/images/nav_top_hover.png" name="top" height="60"/>
   </a>
 
   <script type="text/javascript">
@@ -309,28 +309,31 @@
       $("[data-toggle='tooltip']").tooltip();
 
       $("#top").on("click", function () {
-        $("html, body").stop().animate({scrollTop: 0}, 500);
         event.preventDefault()
+        $('#top > img').animate({'left':'-5%', 'opacity':'0'}, 125);
+        $("html, body").stop().animate({scrollTop: 0}, 250);
       });
       $("#top").hover(
-        function(){ $("#top > img").attr("src", "/site_media/images/nav_top_hover.png"); },
-        function(){ $("#top > img").attr("src", "/site_media/images/nav_top.png"); }
+        function(){ $("#top > img").attr("src", "/site_media/images/nav_top.png"); },
+        function(){ $("#top > img").attr("src", "/site_media/images/nav_top_hover.png"); }
       );
-      $("#top").hide();
 
       // $(".navbar-collapse > div.pull-right").css("height", "50px");
       // $("ul.nav.navbar-nav").css("height", "50px");
     });
 
     $(window).on("beforeunload", function () {
-      $("#wait").fadeIn(500);
+      $("#wait").fadeIn(250);
     });
     $(window).on("scroll", function () {
-      if ($(this).scrollTop() > $(window).height()/2) {
-        $('#top').fadeIn();
-      } else {
-        $('#top').fadeOut();
-      }
+      clearTimeout($.data(this, 'resizeTimer'));
+      $.data(this, 'resizeTimer', setTimeout(function() {
+        if ($(this).scrollTop() > $(window).height() / 2) {
+          $('#top > img').animate({'left':'0%', 'opacity':'1.0'}, 125);
+        } else {
+          $('#top > img').animate({'left':'-5%', 'opacity':'0'}, 125);
+        }
+      }, 200));
     });
   </script>
 

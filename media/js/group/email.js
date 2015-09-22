@@ -14,7 +14,7 @@ $(document).ready(function () {
         $("#form_email_notice > div > div > p > span").removeClass("glyphicon-remove-sign").removeClass("glyphicon-ok-sign").addClass("glyphicon-hourglass");
         $("#form_email_notice > div > div > p > b").html('SENDING');
         $("#form_email_msg").html('');
-        $("#form_email_notice").fadeIn();
+        $("#form_email_notice").fadeIn(250);
         $.ajax({
             type: "POST",
             url: $(this).attr("action"),
@@ -31,7 +31,7 @@ $(document).ready(function () {
                     $("#form_email_notice > div > div > p > b").html('ERROR');
                     $("#form_email_msg").html('Incomplete email fields. Please try again.');
                 }
-                setTimeout(function() { $("#form_email_notice").fadeOut(); }, 2500);
+                setTimeout(function() { $("#form_email_notice").fadeOut(250); }, 2500);
             },
             error: function() {
                 $("#form_email_msg").parent().addClass("alert-danger").removeClass("alert-warning").removeClass("alert-success");

@@ -21,12 +21,12 @@ function navbar_collapse() {
         //   function(){ $("#nav_meetings").fadeOut(); }
         // );
         $("#nav_external").hover(
-          function(){ $("#nav_external_text").fadeIn().siblings().css("color", "#ff912e"); },
-          function(){ $("#nav_external_text").fadeOut().siblings().css("color", "#fff"); }
+          function(){ $("#nav_external_text").fadeIn(250).siblings().css("color", "#ff912e"); },
+          function(){ $("#nav_external_text").fadeOut(250).siblings().css("color", "#fff"); }
         );
         $("#nav_group").hover(
-          function(){ $("#nav_group_text").fadeIn().siblings().css("color", "#eeb211"); },
-          function(){ $("#nav_group_text").fadeOut().siblings().css("color", "#fff"); }
+          function(){ $("#nav_group_text").fadeIn(250).siblings().css("color", "#eeb211"); },
+          function(){ $("#nav_group_text").fadeOut(250).siblings().css("color", "#fff"); }
         );
 
         $(".dropdown-toggle").dropdown();

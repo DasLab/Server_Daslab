@@ -4,7 +4,7 @@
 	height: 270px; 
 }
 #clockanalog { 
-	background: #012345 url("/site_media/images/clock/analog.gif") no-repeat 0 0; 
+	background: #012345 url("/site_media/images/group/clock/analog.gif") no-repeat 0 0; 
 	float: left; 
 	height: 125px; width: 125px; 
 	margin: 0; 
@@ -18,7 +18,7 @@
 	position: absolute;  
 }
 #clockdigital { 
-	background: #012345 url("/site_media/images/clock/digital.gif") no-repeat 81px 50px; 
+	background: #012345 url("/site_media/images/group/clock/digital.gif") no-repeat 81px 50px; 
 	float: right; 
 	height: 125px; width: 242px; 
 	margin: 0; padding: 0;
