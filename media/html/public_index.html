@@ -39,7 +39,12 @@
     </object>
   </div>
 
-  <div class="researchH2 fix" id="divisionBar"><img src="/site_media/images/footer_home.png" width="855" height="38"></div>
+  <div class="researchH2 fix" id="divisionBar">
+    <img src="/site_media/images/footer_left.jpg" width="599" height="39" style="float:left;">
+    <a href="/group">
+      <img src="/site_media/images/footer_home.png" width="256" height="39" style="float:right;" id="img_group2">
+    </a>
+  </div>
   <div id="whatWeDo" class="fix"><img src="/site_media/images/home/what_we_do.png" width="119" height="70"></div>
   <div id="weStrive" class="fix"><img src="/site_media/images/home/home_text_2.png" width="207" height="95"></div>
   <div class="TEXT homeTEXT fix" id="homeTEXT">
@@ -59,6 +64,11 @@
         $(this).children().attr("src", "/site_media/images/btn_research_hover.png");
       }, function () {
         $(this).children().attr("src", "/site_media/images/btn_research.png");
+      });
+      $("#img_group2").hover(function () {
+        $(this).attr("src", "/site_media/images/footer_right_hover.jpg");
+      }, function () {
+        $(this).attr("src", "/site_media/images/footer_home.png");
       });
     });
   </script>
