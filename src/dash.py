@@ -35,7 +35,8 @@ def cache_aws(request):
             avg = 0
             for d in data:
                 avg += d[u'Average']
-            avg = avg / len(data)
+            if len(data):
+                avg = avg / len(data)
             name = ''
             if resv.tags.has_key('Name'): name = resv.tags['Name']
             dict_aws['ec2'].append({'name':name, 'type':resv.instance_type, 'dns':resv.dns_name, 'status':resv.state_code, 'arch':resv.architecture, 'region':resv.placement, 'credit': '%.1f' % avg, 'id':resv.id})
