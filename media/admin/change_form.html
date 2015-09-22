@@ -88,7 +88,7 @@
 {% endif %}
 
 {% block content %}
-  <div id="content-main" class="inner-two-columns col-md-12">
+  <div id="content-main" class="inner-two-columns col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
     <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post"
           id="{{ opts.module_name }}_form" class="form-horizontal">
