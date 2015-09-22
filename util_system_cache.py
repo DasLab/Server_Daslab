@@ -23,6 +23,13 @@ def pickle_aws(request, name):
     f.close()
     subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
+def pickle_ga(request):
+    f_name = '%s/cache/ga/%s_%s.pickle' % (MEDIA_ROOT, request['id'], request['qs'])
+    f = open(f_name + '_tmp', 'wb')
+    pickle.dump(cache_ga(request), f)
+    f.close()
+    subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
 def pickle_git(request):
     f_name = '%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, request['repo'], request['qs'])
     f = open(f_name + '_tmp', 'wb')
@@ -106,12 +113,25 @@ def main():
                 pickle_aws(request, ebs['id'])
                 print " \033[92mSUCCESS\033[0m"
 
-            # ga
+            # ga init
             print "#2: Requesting \033[94mGA\033[0m..."
-            f = open('%s/cache/ga.pickle' % MEDIA_ROOT, 'wb')
-            pickle.dump(cache_ga(), f)
+            request = {'qs':'init'}
+            ga_init = cache_ga(request)
+            f = open('%s/cache/ga/init.pickle' % MEDIA_ROOT, 'wb')
+            pickle.dump(ga_init, f)
             f.close()
+            ga_init = simplejson.loads(ga_init)
             print "    GA \033[94minit\033[0m finished with \033[92mSUCCESS\033[0m."
+
+            # ga each
+            for i, ga in enumerate(ga_init['projs']):
+                print "    GA \033[94mtracker\033[0m: %s / %s (%s)..." % (i + 1, len(ga_init['projs']), ga['track_id']),
+                request = {'qs':'sessions', 'id':ga['id'], 'access_token':ga_init['access_token']}
+                pickle_ga(request)
+                request.update({'qs':'percentNewSessions'})
+                pickle_ga(request)
+                print " \033[92mSUCCESS\033[0m"
+
         else:
             print "#1: Skip \033[94mAWS\033[0m..."
             print "#2: Skip \033[94mGA\033[0m..."

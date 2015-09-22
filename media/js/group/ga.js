@@ -1,10 +1,5 @@
-(function(w,d,s,g,js,fs){
-    g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(f){this.q.push(f);}};
-    js=d.createElement(s);fs=d.getElementsByTagName(s)[0];
-    js.src='https://apis.google.com/js/platform.js';
-    fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
-}(window,document,'script'));
-
+google.load('visualization', '1', {packages: ['corechart']});
+google.setOnLoadCallback(drawChart);
 var gviz_handles = [];
 
 function readyHandler() {
@@ -15,68 +10,67 @@ function readyHandler() {
 
 
 function drawGA(id) {
-    var chart = new gapi.analytics.googleCharts.DataChart({
-        'query': {
-            'ids': 'ga:' + id,
-            'metrics': 'ga:sessions',
-            'dimensions': 'ga:date',
-            'start-date': '30daysAgo',
-            'end-date': 'yesterday'
-        },
-        'chart': {
-            'container': 'chart_session_' + id,
-            'type': 'LINE',
-            'options': {
-                'width': '100%',
-                'height': '25%',
-                'title': 'Last 30 Days',
-                'colors': ['#c28fdd'],
-                'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
-            }
+    var chart = new google.visualization.ChartWrapper({
+        'chartType': 'AreaChart',
+        'dataSourceUrl': '/admin/ga_dash?qs=sessions&id=' + id,
+        'containerId': 'chart_session_' + id,
+        'options': {
+            'chartArea': {'width': '90%', 'left': '10%'},
+            'legend': {'position': 'bottom'},
+            'title': 'Last 30 Days',
+            'titleTextStyle': {'bold': false, 'fontSize': 16},
+            'vAxis': {
+                'title': '(%)',
+                'titleTextStyle': {'bold': true},
+            },
+            'hAxis': {
+                'gridlines': {'count': -1},
+                'textStyle': {'italic': true}
+            },
+            'lineWidth': 3,
+            'pointSize': 5,
+            'colors': ['#c28fdd'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
-    chart.once('success', readyHandler).execute();
+    google.visualization.events.addListener(chart, 'ready', readyHandler);
+    chart.draw();
     gviz_handles.push(chart);
 
-    var chart = new gapi.analytics.googleCharts.DataChart({
-        'query': {
-            'ids': 'ga:' + id,
-            'metrics': 'ga:percentNewSessions',
-            'dimensions': 'ga:date',
-            'start-date': '30daysAgo',
-            'end-date': 'yesterday'
-        },
-        'chart': {
-            'container': 'chart_visitor_' + id,
-            'type': 'LINE',
-            'options': {
-                'width': '100%',
-                'height': '25%',
-                'title': 'Last 30 Days',
-                'colors': ['#ff5c2b'],
-                'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
-            }
+    var chart = new google.visualization.ChartWrapper({
+        'chartType': 'AreaChart',
+        'dataSourceUrl': '/admin/ga_dash?qs=percentNewSessions&id=' + id,
+        'containerId': 'chart_visitor_' + id,
+        'options': {
+            'chartArea': {'width': '90%', 'left': '10%'},
+            'legend': {'position': 'bottom'},
+            'title': 'Last 30 Days',
+            'titleTextStyle': {'bold': false, 'fontSize': 16},
+            'vAxis': {
+                'title': '(%)',
+                'titleTextStyle': {'bold': true},
+            },
+            'hAxis': {
+                'gridlines': {'count': -1},
+                'textStyle': {'italic': true}
+            },
+            'lineWidth': 3,
+            'pointSize': 5,
+            'colors': ['#ff5c2b'],
+            'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
     });
-    chart.once('success', readyHandler).execute();
+    google.visualization.events.addListener(chart, 'ready', readyHandler);
+    chart.draw();
     gviz_handles.push(chart);
 }
 
 
-$("#view-selector-container").hide();
-
-gapi.analytics.ready(function() {
+function drawChart() {
     $.ajax({
-        url : "/admin/ga_dash",
+        url : "/admin/ga_dash?qs=init&id=init&tqx=reqId%3A55",
         dataType: "json",
         success: function (data) {
-            gapi.analytics.auth.authorize({
-                'container': 'embed-api-auth-container',
-                'clientid': data.client_id,
-                'serverAuth': { 'access_token': data.access_token }
-            });
-            new gapi.analytics.ViewSelector({ 'container': 'view-selector-container' }).execute();
-
             var html = "";
             for (var i = 0; i < data.projs.length; i++) {
                 var ga = "";
@@ -85,7 +79,7 @@ gapi.analytics.ready(function() {
                 } else {
                     ga = '<span class="pull-left lead"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>';
                 }
-                html += '<div class="row"><p><span class="lead">' + ga + '&nbsp;&nbsp;<b><u>' + data.projs[i].name + '</u></b></span>&nbsp;&nbsp;<span class="label label-primary">' + data.projs[i].track_id + '</span><span class="pull-right"><span class="label label-warning">Bounce Rate</span>&nbsp;<span class="text-right" style="margin-bottom:0px;">' + data.projs[i].bounceRate + ' %</span>&nbsp;&nbsp;<span class="label label-orange">Users</span>&nbsp;<span class="text-right" style="margin-bottom:0px;">' + data.projs[i].users + '</span></span></p><p><a href="' + data.projs[i].url + '" target="_blank"><code>' + data.projs[i].url + '</code></a><span class="pull-right"><span class="label label-success">Sessions</span>&nbsp;<span class="text-right" style="margin-bottom:0px;">' + data.projs[i].sessions + '</span>&nbsp;&nbsp;<span class="label label-success">Session Duration</span>&nbsp;<span class="text-right" style="margin-bottom:0px;">' + data.projs[i].sessionDuration + '</span>&nbsp;&nbsp;<span class="label label-info">Page Views</span>&nbsp;<span class="text-right" style="margin-bottom:0px;">' + data.projs[i].pageviews + '</span>&nbsp;&nbsp;<span class="label label-info">Page View / Session</span>&nbsp;<span class="text-right" style="margin-bottom:0px;">' + data.projs[i].pageviewsPerSession + '</span></span></p></div><div class="row"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><div id="chart_session_' + data.projs[i].id + '" class="thumbnail place_holder" style="padding:0px 20px;"></div></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><div id="chart_visitor_' + data.projs[i].id + '" class="thumbnail place_holder" style="padding:0px 20px;"></div></div></div>';
+                html += '<div class="row"><p><span class="lead">' + ga + '&nbsp;&nbsp;<b><u>' + data.projs[i].name + '</u></b></span>&nbsp;&nbsp;<span class="label label-primary">' + data.projs[i].track_id + '</span><span class="pull-right"><span class="label label-warning">Bounce Rate</span>&nbsp;<span class="text-right" style="margin-bottom:0px;">' + data.projs[i].bounceRate + ' %</span>&nbsp;&nbsp;<span class="label label-orange">Users</span>&nbsp;<span class="text-right" style="margin-bottom:0px;">' + data.projs[i].users + '</span></span></p><p><a href="' + data.projs[i].url + '" target="_blank"><code>' + data.projs[i].url + '</code></a><span class="pull-right"><span class="label label-success">Sessions</span>&nbsp;<span class="text-right" style="margin-bottom:0px;">' + data.projs[i].sessions + '</span>&nbsp;&nbsp;<span class="label label-success">Session Duration</span>&nbsp;<span class="text-right" style="margin-bottom:0px;">' + data.projs[i].sessionDuration + '</span>&nbsp;&nbsp;<span class="label label-info">Page Views</span>&nbsp;<span class="text-right" style="margin-bottom:0px;">' + data.projs[i].pageviews + '</span>&nbsp;&nbsp;<span class="label label-info">Page View / Session</span>&nbsp;<span class="text-right" style="margin-bottom:0px;">' + data.projs[i].pageviewsPerSession + '</span></span></p></div><div class="row"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><div id="chart_session_' + data.projs[i].id + '" class="thumbnail place_holder" style="padding:0px 20px; height: 150px;"></div></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><div id="chart_visitor_' + data.projs[i].id + '" class="thumbnail place_holder" style="padding:0px 20px; height: 150px;"></div></div></div>';
                 if (i != data.projs.length - 1) {
                     html += '<hr/ style="margin: 10px;">';
                 }
@@ -96,7 +90,7 @@ gapi.analytics.ready(function() {
             }
         },
     });
-});
+};
 
 
 

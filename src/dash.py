@@ -128,40 +128,78 @@ def dash_aws(request):
         return HttpResponseBadRequest("Invalid query.")
 
 
-def cache_ga():
-    access_token = requests.post('https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])).json()['access_token']
-    list_proj = requests.get('https://www.googleapis.com/analytics/v3/management/accountSummaries?access_token=%s' % access_token).json()['items'][0]['webProperties'][::-1]
-    url_colon = urllib.quote(':')
-    url_comma = urllib.quote(',')
-    dict_ga = {'access_token':access_token, 'client_id':GA['CLIENT_ID'], 'projs':[]}
+def cache_ga(request):
+    if request['qs'] == 'init':
+        access_token = requests.post('https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])).json()['access_token']
+        list_proj = requests.get('https://www.googleapis.com/analytics/v3/management/accountSummaries?access_token=%s' % access_token).json()['items'][0]['webProperties'][::-1]
+        url_colon = urllib.quote(':')
+        url_comma = urllib.quote(',')
+        dict_ga = {'access_token':access_token, 'client_id':GA['CLIENT_ID'], 'projs':[]}
 
-    for proj in list_proj:
-        dict_ga['projs'].append({'id':proj['profiles'][0]['id'], 'track_id':proj['id'], 'name':proj['name'], 'url':proj['websiteUrl']})
+        for proj in list_proj:
+            dict_ga['projs'].append({'id':proj['profiles'][0]['id'], 'track_id':proj['id'], 'name':proj['name'], 'url':proj['websiteUrl']})
 
-    for j, proj in enumerate(dict_ga['projs']):
-        temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (url_colon, proj['id'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)).json()['totalsForAllResults']
-        for i, key in enumerate(temp):
-            ga_key = key[3:]
-            if ga_key in ['bounceRate', 'pageviewsPerSession']:
-                curr = '%.2f' % float(temp[key])
-            elif ga_key == 'sessionDuration':
-                curr = str(timedelta(seconds=int(float(temp[key]) / 1000)))
-            else:
-                curr = '%d' % int(temp[key])
-            dict_ga['projs'][j][ga_key] = curr
+        for j, proj in enumerate(dict_ga['projs']):
+            temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (url_colon, proj['id'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)).json()['totalsForAllResults']
+            for i, key in enumerate(temp):
+                ga_key = key[3:]
+                if ga_key in ['bounceRate', 'pageviewsPerSession']:
+                    curr = '%.2f' % float(temp[key])
+                elif ga_key == 'sessionDuration':
+                    curr = str(timedelta(seconds=int(float(temp[key]) / 1000)))
+                else:
+                    curr = '%d' % int(temp[key])
+                dict_ga['projs'][j][ga_key] = curr
+        return simplejson.dumps(dict_ga)
+    else:
+        url_colon = urllib.quote(':')
+        url_comma = urllib.quote(',')
+        temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%sdate&access_token=%s' % (url_colon, request['id'], url_colon, request['qs'], url_colon, request['access_token'])).json()['rows']
 
-    return simplejson.dumps(dict_ga)
+        data = []
+        stats = ['Timestamp']
+        if request['qs'] == 'sessions':
+            desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+            fields = ['Sessions']
+        else:
+            desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Percent')}
+            fields = ['percentNewSessions']
+
+        for row in temp:
+            data.append({u'Timestamp': datetime.strptime(row[0], '%Y%m%d'), fields[0]: float(row[1])})
+
+        for field in fields:
+            stats.append(field)
+            desp[field] = ('number', field)
+        
+        data = sorted(data, key=operator.itemgetter(stats[0]))
+        data_table = gviz_api.DataTable(desp)
+        data_table.LoadData(data)
+        return (data_table, stats)
 
 
 def dash_ga(request):
-    f = open('%s/cache/ga.pickle' % MEDIA_ROOT, 'rb')
-    results = pickle.load(f)
-    f.close()
-    access_token = requests.post('https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])).json()['access_token']
+    if request.GET.has_key('qs') and request.GET.has_key('id') and request.GET.has_key('tqx'):
+        qs = request.GET.get('qs')
+        id = request.GET.get('id')
+        req_id = request.GET.get('tqx').replace('reqId:', '')
 
-    results = simplejson.loads(results)
-    results.update({'access_token':access_token})
-    return simplejson.dumps(results)
+        if qs == 'init':
+            f = open('%s/cache/ga/init.pickle' % MEDIA_ROOT, 'rb')
+            results = pickle.load(f)
+            f.close()
+            return results
+        elif qs in ['sessions', 'percentNewSessions']:
+            f = open('%s/cache/ga/%s_%s.pickle' % (MEDIA_ROOT, id, qs), 'rb')
+            (data_table, stats) = pickle.load(f)
+            f.close()
+            results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
+            return results
+        else:
+            return HttpResponseBadRequest("Invalid query.")
+    else:
+        return HttpResponseBadRequest("Invalid query.")
+
 
 
 def cache_git(request):
