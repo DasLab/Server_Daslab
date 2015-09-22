@@ -20,7 +20,7 @@ function drawGA(id) {
             'title': 'Last 30 Days',
             'titleTextStyle': {'bold': false, 'fontSize': 16},
             'vAxis': {
-                'title': '(%)',
+                'title': '(#)',
                 'titleTextStyle': {'bold': true},
             },
             'hAxis': {

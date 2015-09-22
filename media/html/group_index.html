@@ -1,4 +1,9 @@
 {% extends "media/html/_internal.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/site_media/css/clock.css" type="text/css">
+{% endblock %}
+
 {% block content %}
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	<div class="jumbotron" id="jumbotron">
@@ -75,14 +80,36 @@
 					<tr><td colspan="2" class="place_holder"></td></tr>
 				</tbody>
 			</table>
-
 		</div>
 	</div>
+
+	<div class="row">
+		<div style="float:left; padding-left:20px; width:600px;">
+	        <iframe id="forecast_embed" type="text/html" frameborder="0" height="245" width="100%" src="http://forecast.io/embed/#lat=42.3583&lon=-71.0603&name=Palo Alto"> </iframe>
+        </div>
+		<div style="float:right; width:387px; height:145px; padding:10px;" class="nav-list">
+			<div id="cssclock">
+				<div id="clockanalog">
+					<img src="/site_media/images/clock/analog_seconds.png" id="analogsecond" alt="Clock second-hand" style="transform: rotate(150deg);">
+					<img src="/site_media/images/clock/analog_minutes.png" id="analogminute" alt="Clock minute-hand" style="transform: rotate(129deg);">
+					<img src="/site_media/images/clock/analog_hours.png" id="analoghour" alt="Clock hour-hand" style="transform: rotate(311deg);">
+				</div>
+				<div id="clockdigital">
+					<img src="/site_media/images/clock/digital_hours.gif" id="digitalhour" alt="Clocks hours" style="transform: rotate(210deg);">
+					<img src="/site_media/images/clock/digital_minutes.gif" id="digitalminute" alt="Clocks minutes" style="transform: rotate(234deg);">
+					<img src="/site_media/images/clock/digital_seconds.gif" id="digitalsecond" alt="Clocks seconds" style="transform: rotate(210deg);">
+					<div style="opacity: 0.8;">&nbsp;</div>
+					<div style="opacity: 0.8;">&nbsp;</div>
+				</div>
+			</div>
+		</div>
+    </div>
 </div>
 {% endblock %}
 
 {% block script %}
 	<script type="text/javascript" src="/site_media/js/group/home.js"></script>
+    <script type="text/javascript" src="/site_media/js/group/clock.js"></script>  
 	<script type="text/javascript">
 		$(document).ready(function() {
 
