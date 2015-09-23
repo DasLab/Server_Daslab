@@ -36,6 +36,7 @@ User-agent: Yahoo-MMCrawler
 
 # Directories
 Disallow: /.git/
+Disallow: /backup/
 Disallow: /cache/
 Disallow: /config/
 Disallow: /data/
@@ -63,6 +64,8 @@ Disallow: /site_data/pub_data/
 Disallow: /site_data/rot_data/
 Disallow: /site_data/rot_ppt/
 Disallow: /site_data/spe_ppt/
+Disallow: /site_data/export_citation.html
+Disallow: /site_data/export_citation.docx
 
 Disallow: /ping_test/
 Disallow: /test/
