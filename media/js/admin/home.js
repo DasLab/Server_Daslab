@@ -107,13 +107,13 @@ $(document).ready(function() {
         url : "/admin/dash_dash",
         dataType: "json",
         success : function (data) {
-            $("#id_dash_aws").html('<span class="label label-primary">' + data.t_aws + '</span>');
-            $("#id_dash_ga").html('<span class="label label-primary">' + data.t_ga + '</span>');
-            $("#id_dash_git").html('<span class="label label-primary">' + data.t_git + '</span>');
-            $("#id_dash_slack").html('<span class="label label-primary">' + data.t_slack + '</span>');
-            $("#id_dash_dropbox").html('<span class="label label-primary">' + data.t_dropbox + '</span>');
-            $("#id_dash_cal").html('<span class="label label-primary">' + data.t_cal + '</span>');
-            $("#id_dash_sch").html('<span class="label label-primary">' + data.t_sch + '</span>');
+            $("#id_dash_aws").html(data.t_aws);
+            $("#id_dash_ga").html(data.t_ga);
+            $("#id_dash_git").html(data.t_git);
+            $("#id_dash_slack").html(data.t_slack);
+            $("#id_dash_dropbox").html(data.t_dropbox);
+            $("#id_dash_cal").html(data.t_cal);
+            $("#id_dash_sch").html(data.t_sch);
         }
     });
 

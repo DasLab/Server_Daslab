@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 # from suit.widgets import EnclosedInput, SuitDateWidget
 
 from datetime import datetime
-from time import sleep
+from time import sleep, time
 
 from src.console import *
 from src.cron import *
@@ -190,13 +190,43 @@ def ssl_dash(request):
 admin.site.register_view('ssl_dash', view=ssl_dash, visible=False)
 
 def dash_dash(request):
-    t_aws = datetime.fromtimestamp(os.path.getmtime('%s/cache/aws/init.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
-    t_ga = datetime.fromtimestamp(os.path.getmtime('%s/cache/ga/init.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
-    t_git = datetime.fromtimestamp(os.path.getmtime('%s/cache/git/init.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
-    t_slack = datetime.fromtimestamp(os.path.getmtime('%s/cache/slack/users.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
-    t_dropbox = datetime.fromtimestamp(os.path.getmtime('%s/cache/dropbox/sizes.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
-    t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
-    t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
+    now = datetime.fromtimestamp(time())
+    t_aws = datetime.fromtimestamp(os.path.getmtime('%s/cache/aws/init.pickle' % MEDIA_ROOT))
+    if ((now - t_aws).seconds >= 2700):
+        t_aws = '<span class="label label-danger">' + t_aws.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    else:
+        t_aws = '<span class="label label-primary">' + t_aws.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    t_ga = datetime.fromtimestamp(os.path.getmtime('%s/cache/ga/init.pickle' % MEDIA_ROOT))
+    if ((now - t_ga).seconds >= 2700):
+        t_ga = '<span class="label label-danger">' + t_ga.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    else:
+        t_ga = '<span class="label label-primary">' + t_ga.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    t_git = datetime.fromtimestamp(os.path.getmtime('%s/cache/git/init.pickle' % MEDIA_ROOT))
+    if ((now - t_git).seconds >= 2700):
+        t_git = '<span class="label label-danger">' + t_git.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    else:
+        t_git = '<span class="label label-primary">' + t_git.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    t_slack = datetime.fromtimestamp(os.path.getmtime('%s/cache/slack/users.pickle' % MEDIA_ROOT))
+    if ((now - t_slack).seconds >= 2700):
+        t_slack = '<span class="label label-danger">' + t_slack.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    else:
+        t_slack = '<span class="label label-primary">' + t_slack.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    t_dropbox = datetime.fromtimestamp(os.path.getmtime('%s/cache/dropbox/sizes.pickle' % MEDIA_ROOT))
+    if ((now - t_dropbox).seconds >= 2700):
+        t_dropbox = '<span class="label label-danger">' + t_dropbox.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    else:
+        t_dropbox = '<span class="label label-primary">' + t_dropbox.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT))
+    if ((now - t_cal).seconds >= 2700):
+        t_cal = '<span class="label label-danger">' + t_cal.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    else:
+        t_cal = '<span class="label label-primary">' + t_cal.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.pickle' % MEDIA_ROOT))
+    if ((now - t_sch).seconds >= 2700):
+        t_sch = '<span class="label label-danger">' + t_sch.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    else:
+        t_sch = '<span class="label label-primary">' + t_sch.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+
     json = {'t_aws':t_aws, 't_ga':t_ga, 't_git':t_git, 't_slack':t_slack, 't_dropbox':t_dropbox, 't_cal':t_cal, 't_sch':t_sch}
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
 admin.site.register_view('dash_dash', view=dash_dash, visible=False)
