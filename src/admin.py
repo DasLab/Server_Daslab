@@ -190,13 +190,13 @@ def ssl_dash(request):
 admin.site.register_view('ssl_dash', view=ssl_dash, visible=False)
 
 def dash_dash(request):
-    t_aws = datetime.fromtimestamp(os.path.getmtime('%s/cache/aws/init.pickle' % MEDIA_ROOT)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
-    t_ga = datetime.fromtimestamp(os.path.getmtime('%s/cache/ga/init.pickle' % MEDIA_ROOT)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
-    t_git = datetime.fromtimestamp(os.path.getmtime('%s/cache/git/init.pickle' % MEDIA_ROOT)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
-    t_slack = datetime.fromtimestamp(os.path.getmtime('%s/cache/slack/users.pickle' % MEDIA_ROOT)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
-    t_dropbox = datetime.fromtimestamp(os.path.getmtime('%s/cache/dropbox/sizes.pickle' % MEDIA_ROOT)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
-    t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
-    t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.pickle' % MEDIA_ROOT)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
+    t_aws = datetime.fromtimestamp(os.path.getmtime('%s/cache/aws/init.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
+    t_ga = datetime.fromtimestamp(os.path.getmtime('%s/cache/ga/init.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
+    t_git = datetime.fromtimestamp(os.path.getmtime('%s/cache/git/init.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
+    t_slack = datetime.fromtimestamp(os.path.getmtime('%s/cache/slack/users.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
+    t_dropbox = datetime.fromtimestamp(os.path.getmtime('%s/cache/dropbox/sizes.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
+    t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
+    t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.pickle' % MEDIA_ROOT)).strftime('%Y-%m-%d %H:%M:%S')
     json = {'t_aws':t_aws, 't_ga':t_ga, 't_git':t_git, 't_slack':t_slack, 't_dropbox':t_dropbox, 't_cal':t_cal, 't_sch':t_sch}
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
 admin.site.register_view('dash_dash', view=dash_dash, visible=False)
