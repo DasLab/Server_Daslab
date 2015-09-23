@@ -40,7 +40,10 @@ if DEBUG:
 else:
     ver += subprocess.Popen('apt-cache show libapache2-webauth | grep Version | sed %s | sed %s' % ("'s/.*: //g'", "'s/-.*//g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
 ver += subprocess.Popen("openssl version | sed 's/.*OpenSSL //g' | sed 's/[a-z].*//g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
-ver += 'wallet:N/A\t'
+if DEBUG:
+    ver += 'N/A\t'
+else:
+    ver += subprocess.Popen('wallet -v | sed %s' % "'s/.*wallet //g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
 
 f = open(os.path.join(MEDIA_ROOT, 'media/js/jquery.min.js'), 'r')
 ver_jquery = f.readline()
