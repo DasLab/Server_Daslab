@@ -303,6 +303,8 @@
   <script type="text/javascript" src="/site_media/js/admin/clock.js"></script>  
   <script type="text/javascript" src="/site_media/js/admin/menu.js"></script>
   <script type="text/javascript">
+    var scrollTimer, resizeTimer;
+    
     $(document).ready(function(){
       $("#wait").fadeOut(500);
       $("#footer").load("/site_media/html/_footer.html", function () {

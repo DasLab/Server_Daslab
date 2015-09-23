@@ -23,32 +23,32 @@ function drawChart() {
         url : "/admin/slack_dash?qs=users&tqx=reqId%3A52",
         dataType: "json",
         success: function (data) {
-    		var html = "";
-    		for (var i = 0; i < data.owners.length; i++) {
+            var html = "";
+            for (var i = 0; i < data.owners.length; i++) {
                 var presence = "<span>";
                 if (data.owners[i].presence) { presence = '<span style="color: #50cc32;"'; }
-    			html += '<tr><td><span class="pull-right"><span class="label label-danger">' + data.owners[i].id + '</span>&nbsp;&nbsp;' + presence + '<span class="glyphicon glyphicon-registration-mark"></span></span></span></td><td><img src="' + data.owners[i].image + '"/>&nbsp;&nbsp;<i>' + data.owners[i].name + '</i></td></tr>';
-    		}
-    		for (var i = 0; i < data.admins.length; i++) {
+                html += '<tr><td><span class="pull-right"><span class="label label-danger">' + data.owners[i].id + '</span>&nbsp;&nbsp;' + presence + '<span class="glyphicon glyphicon-registration-mark"></span></span></span></td><td><img src="' + data.owners[i].image + '"/>&nbsp;&nbsp;<i>' + data.owners[i].name + '</i></td></tr>';
+            }
+            for (var i = 0; i < data.admins.length; i++) {
                 var presence = "<span>";
                 if (data.admins[i].presence) { presence = '<span style="color: #50cc32;"'; }
-    			html += '<tr><td><span class="pull-right"><span class="label label-success">' + data.admins[i].id + '</span>&nbsp;&nbsp;' + presence + '<span class="glyphicon glyphicon-copyright-mark"></span></span></span></td><td><img src="' + data.admins[i].image + '"/>&nbsp;&nbsp;<i>' + data.admins[i].name + '</i></td></tr>';
-    		}
-    		for (var i = 0; i < data.users.length; i++) {
+                html += '<tr><td><span class="pull-right"><span class="label label-success">' + data.admins[i].id + '</span>&nbsp;&nbsp;' + presence + '<span class="glyphicon glyphicon-copyright-mark"></span></span></span></td><td><img src="' + data.admins[i].image + '"/>&nbsp;&nbsp;<i>' + data.admins[i].name + '</i></td></tr>';
+            }
+            for (var i = 0; i < data.users.length; i++) {
                 var presence = "<span>";
                 if (data.users[i].presence) { presence = '<span style="color: #50cc32;"'; }
-    			html += '<tr><td><span class="pull-right"><span class="label label-violet">' + data.users[i].id + '</span>&nbsp;&nbsp;' + presence + '<span class="glyphicon glyphicon-ok-circle"></span></span></span></td><td><img src="' + data.users[i].image + '"/>&nbsp;&nbsp;<i>' + data.users[i].name + '</i></td></tr>';
-    		}
-    		html += '<tr><td colspan="2" style="padding: 0px;"></td></tr>';
-    		for (var i = 0; i < data.gones.length; i++) {
+                html += '<tr><td><span class="pull-right"><span class="label label-violet">' + data.users[i].id + '</span>&nbsp;&nbsp;' + presence + '<span class="glyphicon glyphicon-ok-circle"></span></span></span></td><td><img src="' + data.users[i].image + '"/>&nbsp;&nbsp;<i>' + data.users[i].name + '</i></td></tr>';
+            }
+            html += '<tr><td colspan="2" style="padding: 0px;"></td></tr>';
+            for (var i = 0; i < data.gones.length; i++) {
                 var presence = "<span>";
                 if (data.gones[i].presence) { presence = '<span style="color: #50cc32;"'; }
-    			html += '<tr class="active"><td><span class="pull-right"><span class="label label-default">' + data.gones[i].id + '</span>&nbsp;&nbsp;' + presence + '<span class="glyphicon glyphicon-ban-circle"></span></span></span></td><td><img src="' + data.gones[i].image + '"/>&nbsp;&nbsp;<i>' + data.gones[i].name + '</i></td></tr>';
-    		}        	
-    		html += '<tr><td colspan="2" style="padding: 0px;"></td></tr>';
-    		$("#table_slack_user").html(html);
+                html += '<tr class="active"><td><span class="pull-right"><span class="label label-default">' + data.gones[i].id + '</span>&nbsp;&nbsp;' + presence + '<span class="glyphicon glyphicon-ban-circle"></span></span></span></td><td><img src="' + data.gones[i].image + '"/>&nbsp;&nbsp;<i>' + data.gones[i].name + '</i></td></tr>';
+            }            
+            html += '<tr><td colspan="2" style="padding: 0px;"></td></tr>';
+            $("#table_slack_user").html(html);
 
-    		var ratio = data.gones.length / (data.owners.length + data.admins.length + data.users.length + data.gones.length);
+            var ratio = data.gones.length / (data.owners.length + data.admins.length + data.users.length + data.gones.length);
             $("#id_user_num > div > div.progress-bar-success").css("width", ((1 - ratio) * 100).toString() + '%' ).html(data.owners.length + data.admins.length + data.users.length);
             $("#id_user_num > div > div.progress-bar-danger").css("width", (ratio * 100).toString() + '%' ).html(data.gones.length);
         }
@@ -58,30 +58,30 @@ function drawChart() {
         url : "/admin/slack_dash?qs=channels&tqx=reqId%3A53",
         dataType: "json",
         success: function (data) {
-    		var html = "";
-    		for (var i = 0; i < data.channels.length; i++) {
-    			var name = "", num_msgs = data.channels[i].num_msgs.toString();
-    			if (data.channels[i].name == "general" || data.channels[i].name == "random") { 
-    				name = '<span class="label label-info">' + data.channels[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-play-circle">'
-    			} else if (data.channels[i].name == "dropbox" || data.channels[i].name == "github") { 
-    				name = '<span class="label label-orange">' + data.channels[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-record">'
-    			} else {
-    				name = '<span class="label label-inverse">' + data.channels[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-ok-circle">'
-    			}
-    			if (data.channels[i].has_more) { num_msgs = num_msgs + '+'}
-    			html += '<tr><td><span class="pull-right">' + name + '</span></td><td><span class="pull-right">' + data.channels[i].num_members + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right">' + num_msgs + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right">' + data.channels[i].num_files + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="label label-primary">' + data.channels[i].latest + '</span></td></tr>';
-    		}
-    		html += '<tr><td colspan="2" style="padding: 0px;"></td></tr>';
-    		for (var i = 0; i < data.archives.length; i++) {
-    			var num_msgs = data.archives[i].num_msgs.toString();
-    	        // var time = new Date(0);
-    	        // time.setUTCSeconds(data.archives[i].latest);
-    	        // latest = time.getFullYear() + '-' + zfill(time.getMonth() + 1, 2) + '-' + zfill(time.getDate(), 2) + ' ' + zfill(time.getHours(), 2) + ':' + zfill(time.getMinutes(), 2) + ':' + zfill(time.getSeconds(), 2);
-    			if (data.archives[i].has_more) { num_msgs = num_msgs + '+'}
-    			html += '<tr class="active"><td><span class="pull-right"><span class="label label-default">' + data.archives[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-ban-circle"></span></td><td><span class="pull-right">' + data.archives[i].num_members + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right">' + num_msgs + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right">' + data.archives[i].num_files + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="label label-primary">' + data.archives[i].latest + '</span></td></tr>';
-    		}
-    		html += '<tr><td colspan="5" style="padding: 0px;"></td></tr>';
-    		$("#table_slack_channel").html(html);
+            var html = "";
+            for (var i = 0; i < data.channels.length; i++) {
+                var name = "", num_msgs = data.channels[i].num_msgs.toString();
+                if (data.channels[i].name == "general" || data.channels[i].name == "random") { 
+                    name = '<span class="label label-info">' + data.channels[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-play-circle">'
+                } else if (data.channels[i].name == "dropbox" || data.channels[i].name == "github") { 
+                    name = '<span class="label label-orange">' + data.channels[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-record">'
+                } else {
+                    name = '<span class="label label-inverse">' + data.channels[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-ok-circle">'
+                }
+                if (data.channels[i].has_more) { num_msgs = num_msgs + '+'}
+                html += '<tr><td><span class="pull-right">' + name + '</span></td><td><span class="pull-right">' + data.channels[i].num_members + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right">' + num_msgs + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right">' + data.channels[i].num_files + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="label label-primary">' + data.channels[i].latest + '</span></td></tr>';
+            }
+            html += '<tr><td colspan="2" style="padding: 0px;"></td></tr>';
+            for (var i = 0; i < data.archives.length; i++) {
+                var num_msgs = data.archives[i].num_msgs.toString();
+                // var time = new Date(0);
+                // time.setUTCSeconds(data.archives[i].latest);
+                // latest = time.getFullYear() + '-' + zfill(time.getMonth() + 1, 2) + '-' + zfill(time.getDate(), 2) + ' ' + zfill(time.getHours(), 2) + ':' + zfill(time.getMinutes(), 2) + ':' + zfill(time.getSeconds(), 2);
+                if (data.archives[i].has_more) { num_msgs = num_msgs + '+'}
+                html += '<tr class="active"><td><span class="pull-right"><span class="label label-default">' + data.archives[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-ban-circle"></span></td><td><span class="pull-right">' + data.archives[i].num_members + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right">' + num_msgs + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right">' + data.archives[i].num_files + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="label label-primary">' + data.archives[i].latest + '</span></td></tr>';
+            }
+            html += '<tr><td colspan="5" style="padding: 0px;"></td></tr>';
+            $("#table_slack_channel").html(html);
 
             $("#id_channel_num > div > div.progress-bar-success").css("width", (data.channels.length / (data.archives.length + data.channels.length) * 100).toString() + '%' ).html(data.channels.length);
             $("#id_channel_num > div > div.progress-bar-danger").css("width", (data.archives.length / (data.archives.length + data.channels.length) * 100).toString() + '%' ).html(data.archives.length);
@@ -92,23 +92,23 @@ function drawChart() {
         url : "/admin/slack_dash?qs=files&tqx=reqId%3A54",
         dataType: "json",
         success: function (data) {
-    		var html = "";
-    		for (var i = 0; i < data.files.types.length; i++) {
-    			html += '<tr><td><span class="pull-right"><code>' + data.files.types[i] + '</code></span></td><td><span class="pull-right">' + data.files.nums[i] + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#00f;">' + formatSizeUnits(data.files.sizes[i]) + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>';
-    		}
-    		html += '<tr><td colspan="3" style="padding: 0px;"></td></tr>';
-    		$("#table_slack_file").html(html);
+            var html = "";
+            for (var i = 0; i < data.files.types.length; i++) {
+                html += '<tr><td><span class="pull-right"><code>' + data.files.types[i] + '</code></span></td><td><span class="pull-right">' + data.files.nums[i] + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#00f;">' + formatSizeUnits(data.files.sizes[i]) + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>';
+            }
+            html += '<tr><td colspan="3" style="padding: 0px;"></td></tr>';
+            $("#table_slack_file").html(html);
 
             $("#num_file").html('<span class="pull-right">' + data.files.nums[0] + '&nbsp;&nbsp;&nbsp;&nbsp;</span>');
             $("#size_file").html('<span class="pull-right" style="color:#00f;">' + formatSizeUnits(data.files.sizes[0]) + '&nbsp;&nbsp;&nbsp;&nbsp;</span>');
         }
     });
 
-
+ 
     var chart = new google.visualization.ChartWrapper({
-    	'chartType': 'AreaChart',
-    	'dataSourceUrl': '/admin/slack_dash?qs=plot_msgs',
-    	'containerId': 'plot_slack_msgs',
+        'chartType': 'AreaChart',
+        'dataSourceUrl': '/admin/slack_dash?qs=plot_msgs',
+        'containerId': 'plot_slack_msgs',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
             'legend': {'position': 'none'},
@@ -134,9 +134,9 @@ function drawChart() {
     gviz_handles.push(chart);
 
     var chart = new google.visualization.ChartWrapper({
-    	'chartType': 'AreaChart',
-    	'dataSourceUrl': '/admin/slack_dash?qs=plot_files',
-    	'containerId': 'plot_slack_files',
+        'chartType': 'AreaChart',
+        'dataSourceUrl': '/admin/slack_dash?qs=plot_files',
+        'containerId': 'plot_slack_files',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
             'legend': {'position': 'none'},
@@ -164,10 +164,10 @@ function drawChart() {
 
 
 $(window).on("resize", function() {
-    clearTimeout($.data(this, 'resizeTimer'));
-    $.data(this, 'resizeTimer', setTimeout(function() {
+    clearTimeout($(window).data(this, 'resizeTimer'));
+    $(window).data(this, 'resizeTimer', setTimeout(function() {
         for (var i = 0; i < gviz_handles.length; i++) {
-            gviz_handles[i].draw();
+            gviz_handles[i].draw(); 
         }
     }, 200));
 });

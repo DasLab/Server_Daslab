@@ -110,8 +110,8 @@ function drawChart() {
 
 
 $(window).on("resize", function() {
-    clearTimeout($.data(this, 'resizeTimer'));
-    $.data(this, 'resizeTimer', setTimeout(function() {
+    clearTimeout($(window).data(this, 'resizeTimer'));
+    $(window).data(this, 'resizeTimer', setTimeout(function() {
         for (var i = 0; i < gviz_handles.length; i++) {
             gviz_handles[i].draw();
         }

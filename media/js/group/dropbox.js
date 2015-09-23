@@ -46,7 +46,7 @@ function drawChart() {
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/admin/dropbox_dash?qs=history',
-        'containerId': 'plot_dropbpx_files',
+        'containerId': 'plot_dropbox_files',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
             'legend': {'position': 'none'},
@@ -74,8 +74,8 @@ function drawChart() {
 
 
 $(window).on("resize", function() {
-    clearTimeout($.data(this, 'resizeTimer'));
-    $.data(this, 'resizeTimer', setTimeout(function() {
+    clearTimeout($(window).data(this, 'resizeTimer'));
+    $(window).data(this, 'resizeTimer', setTimeout(function() {
         for (var i = 0; i < gviz_handles.length; i++) {
             gviz_handles[i].draw();
         }

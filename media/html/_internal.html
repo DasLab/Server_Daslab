@@ -293,6 +293,8 @@
   </a>
 
   <script type="text/javascript">
+    var scrollTimer, resizeTimer;
+
     $(document).ready(function () {
       $("#wait").fadeOut(500);
       $("#footer").load("/site_media/html/_footer.html", function () {
@@ -326,8 +328,8 @@
       $("#wait").fadeIn(250);
     });
     $(window).on("scroll", function () {
-      clearTimeout($.data(this, 'resizeTimer'));
-      $.data(this, 'resizeTimer', setTimeout(function() {
+      clearTimeout($.data(this, 'scrollTimer'));
+      $.data(this, 'scrollTimer', setTimeout(function() {
         if ($(this).scrollTop() > $(window).height() / 2) {
           $('#top > img').animate({'left':'0%', 'opacity':'1.0'}, 125);
         } else {
