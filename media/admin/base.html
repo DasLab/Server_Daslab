@@ -37,7 +37,7 @@
 
   <div id="wait" class="modal"></div>
   <script type="text/javascript">
-    django.jQuery("#wait").fadeIn(500);
+    django.jQuery("#wait").fadeIn(250);
   </script>
 
   <!-- Container -->
@@ -282,10 +282,8 @@
             {% endblock %}
           </div>
 
-          {% block footer %}
-            <hr/>
-            <div class="container-fluid starter-template" id="footer" style="padding: 0px 15px;"></div>
-          {% endblock %}
+          <hr/>
+          <div class="container-fluid starter-template" id="footer" style="padding: 0px 15px;"></div>
         </div>
       </div>
       <!-- END Content -->
@@ -304,9 +302,9 @@
   <script type="text/javascript" src="/site_media/js/admin/menu.js"></script>
   <script type="text/javascript">
     var scrollTimer, resizeTimer;
-    
+
     $(document).ready(function(){
-      $("#wait").fadeOut(500);
+      $("#wait").fadeOut(250);
       $("#footer").load("/site_media/html/_footer.html", function () {
         var today = new Date();
         $("#cp_year").text(today.getFullYear());
@@ -315,7 +313,7 @@
     });
 
     $(window).on("beforeunload", function () {
-      $("#wait").fadeIn(500);
+      $("#wait").fadeIn(250);
     });
   </script>
   {% block extrajs %}{% endblock %}

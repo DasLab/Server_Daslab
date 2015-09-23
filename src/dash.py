@@ -153,7 +153,6 @@ def cache_ga(request):
         return simplejson.dumps(dict_ga)
     else:
         url_colon = urllib.quote(':')
-        url_comma = urllib.quote(',')
         temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%sdate&access_token=%s' % (url_colon, request['id'], url_colon, request['qs'], url_colon, request['access_token'])).json()['rows']
 
         data = []

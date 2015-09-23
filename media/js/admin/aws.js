@@ -11,11 +11,41 @@ function readyHandler() {
 
 
 function drawDash() {
+    $.ajax({
+        url : "/admin/aws_stat?qs=init&sp=init&tqx=reqId%3A52",
+        dataType: "json",
+        success: function (data) {
+            $("#aws_table_body").parent().remove();
+
+            $("#table_ec2_id").html(data.ec2.id);
+            $("#table_ec2_type").html(data.ec2.instance_type);
+            $("#table_ec2_img").html(data.ec2.image_id);
+            $("#table_ec2_arch").html(data.ec2.architecture);
+            $("#table_ec2_vpc").html(data.ec2.vpc_id);
+            $("#table_ec2_subnet").html(data.ec2.subnet_id);
+            $("#table_ebs_type").html(data.ebs.type);
+            $("#table_ebs_id").html(data.ebs.id);
+            $("#table_ebs_size").html(data.ebs.size);
+            $("#table_ebs_snap").html(data.ebs.snapshot_id);
+            $("#table_ebs_zone").html(data.ebs.zone);
+            $("#table_elb_vpc").html(data.elb.vpc_id);
+            $("#table_elb_health").html(data.elb.health_check);
+
+            $("#table_elb_pns").html(data.elb.dns_name);
+            $("#table_elb_pns").parent().css("href", "http://" + data.elb.dns_name);
+            $("#table_ec2_pub_dns").html(data.ec2.public_dns_name);
+            $("#table_ec2_pub_dns").parent().css("href", "http://" + data.ec2.public_dns_name);
+            $("#table_ec2_prv_dns").html(data.ec2.private_dns_name);
+            $("#table_ec2_prv_dns").parent().css("href", "http://" + data.ec2.private_dns_name);
+        }
+    });
+
+
     var chart = new google.visualization.ChartWrapper({
-    	'chartType': 'ColumnChart',
-    	'dataSourceUrl': '/admin/aws_stat?qs=latency&sp=48h',
-    	'containerId': 'plot_lat1',
-    	'options': {
+        'chartType': 'ColumnChart',
+        'dataSourceUrl': '/admin/aws_stat?qs=latency&sp=48h',
+        'containerId': 'plot_lat1',
+        'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
             'legend': {'position': 'none'},
             'title': 'Last 48 Hours',
@@ -366,36 +396,6 @@ function drawDash() {
     chart.draw();
     gviz_handles.push(chart);
 }
-
-
-$.ajax({
-    url : "/admin/aws_stat?qs=init&sp=init&tqx=reqId%3A52",
-    dataType: "json",
-    success: function (data) {
-        $("#aws_table_body").parent().remove();
-
-        $("#table_ec2_id").html(data.ec2.id);
-        $("#table_ec2_type").html(data.ec2.instance_type);
-        $("#table_ec2_img").html(data.ec2.image_id);
-        $("#table_ec2_arch").html(data.ec2.architecture);
-        $("#table_ec2_vpc").html(data.ec2.vpc_id);
-        $("#table_ec2_subnet").html(data.ec2.subnet_id);
-        $("#table_ebs_type").html(data.ebs.type);
-        $("#table_ebs_id").html(data.ebs.id);
-        $("#table_ebs_size").html(data.ebs.size);
-        $("#table_ebs_snap").html(data.ebs.snapshot_id);
-        $("#table_ebs_zone").html(data.ebs.zone);
-        $("#table_elb_vpc").html(data.elb.vpc_id);
-        $("#table_elb_health").html(data.elb.health_check);
-
-        $("#table_elb_pns").html(data.elb.dns_name);
-        $("#table_elb_pns").parent().css("href", "http://" + data.elb.dns_name);
-        $("#table_ec2_pub_dns").html(data.ec2.public_dns_name);
-        $("#table_ec2_pub_dns").parent().css("href", "http://" + data.ec2.public_dns_name);
-        $("#table_ec2_prv_dns").html(data.ec2.private_dns_name);
-        $("#table_ec2_prv_dns").parent().css("href", "http://" + data.ec2.private_dns_name);
-    }
-});
 
 
 $(window).on("resize", function() {

@@ -337,6 +337,9 @@
         }
       }, 200));
     });
+    $(window).on("beforeunload", function () {
+      $("#wait").fadeIn(250);
+    });
   </script>
 
   {% block script %}{% endblock %}

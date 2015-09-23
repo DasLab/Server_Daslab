@@ -7,12 +7,12 @@
 	<div id="content-main" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="row">
 			<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-				<table class="table table-overview applist">
+				<table class="table">
 					<tr>
 		                <th scope="row"><b><span class="glyphicon glyphicon-globe"></span> Link</th>
 		                <td class="active"><a href="https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#" target="_blank" class="addlink icon">https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#</a></td>
 		                <td class="active"><span class="glyphicon glyphicon-lock"></span> AWS Authorization Required</td>
-		              </tr>
+		            </tr>
 				</table>
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -188,7 +188,6 @@
 {% block extrajs %}
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#view-selector-container").hide();
 			$("ul.breadcrumb").append('<li class="active"><img src="/site_media/images/icons/aws.png" height="21px" style="vertical-align:text-top;">&nbsp;&nbsp;Amazon Web Services</li>');
 		});
 	</script>
