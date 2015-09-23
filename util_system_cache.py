@@ -190,7 +190,7 @@ def main():
 
             # cal
             print "#7: Requesting \033[94mGoogle Calendar\033[0m..."
-            f_name = '%s/cache/calendar.pickle_tmp' % MEDIA_ROOT
+            f_name = '%s/cache/calendar.pickle' % MEDIA_ROOT
             f = open(f_name + '_tmp', 'wb')
             pickle.dump(cache_cal(), f)
             f.close()

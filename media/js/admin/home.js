@@ -103,5 +103,21 @@ $(document).ready(function() {
         }
     });
 
+   $.ajax({
+        url : "/admin/dash_dash",
+        dataType: "json",
+        success : function (data) {
+            $("#id_dash_aws").html('<span class="label label-primary">' + data.t_aws + '</span>');
+            $("#id_dash_ga").html('<span class="label label-primary">' + data.t_ga + '</span>');
+            $("#id_dash_git").html('<span class="label label-primary">' + data.t_git + '</span>');
+            $("#id_dash_slack").html('<span class="label label-primary">' + data.t_slack + '</span>');
+            $("#id_dash_dropbox").html('<span class="label label-primary">' + data.t_dropbox + '</span>');
+            $("#id_dash_cal").html('<span class="label label-primary">' + data.t_cal + '</span>');
+            $("#id_dash_sch").html('<span class="label label-primary">' + data.t_sch + '</span>');
+        }
+    });
+
+
+
 });
 
