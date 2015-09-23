@@ -11,8 +11,8 @@ from django.contrib.auth.models import User
 # from suit.widgets import AutosizedTextarea
 # from suit.widgets import EnclosedInput, SuitDateWidget
 
-import pytz
-from time import sleep, ctime
+from datetime import datetime
+from time import sleep
 
 from src.console import *
 from src.cron import *
