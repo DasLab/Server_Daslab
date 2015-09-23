@@ -306,6 +306,7 @@ def user_upload(request):
     else:
         return render_to_response(PATH.HTML_PATH['upload'], {'upload_form':UploadForm(), 'messages':''}, context_instance=RequestContext(request))
 
+@login_required
 def user_profile(request):
     profile = Member.objects.filter(sunet_id=request.user.username)
     if len(profile) == 1:
@@ -346,16 +347,19 @@ def ping_test(request):
 #     if request.GET.get('searchtext'):
 #         path = path + '?searchtext=' + request.GET.get('searchtext')
 #     return HttpResponsePermanentRedirect("/%s" % path)
+@login_required
 def aws_dash(request):
     json = dash_aws(request)
     if isinstance(json, HttpResponseBadRequest): return json
     return HttpResponse(json, content_type='application/json')
 
+@login_required
 def ga_dash(request):
     json = dash_ga(request)
     if isinstance(json, HttpResponseBadRequest): return json
     return HttpResponse(json, content_type='application/json')
 
+@login_required
 def git_dash(request):
     json = dash_git(request)
     if isinstance(json, HttpResponseBadRequest):
@@ -369,18 +373,22 @@ def git_dash(request):
         if isinstance(json, HttpResponseServerError): return json
     return HttpResponse(json, content_type='application/json')
 
+@login_required
 def slack_dash(request):
     return HttpResponse(dash_slack(request), content_type='application/json')
 
+@login_required
 def dropbox_dash(request):
     return HttpResponse(dash_dropbox(request), content_type='application/json')
 
+@login_required
 def gcal(request):
     return HttpResponse(dash_cal(), content_type='application/json')
 
 def get_admin(request):
     return HttpResponse(simplejson.dumps({'email':EMAIL_NOTIFY}), content_type='application/json')
 
+@login_required
 def user_dash(request):
     if request.user.username == u'daslab': return HttpResponseBadRequest('Fake admin login.')
     try:
@@ -393,6 +401,7 @@ def user_dash(request):
         return HttpResponseNotFound("User not found.")
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
 
+@login_required
 def schedule_dash(request):
     json = dash_schedule(request)
     flash_slide = FlashSlide.objects.order_by('-date')[0]
