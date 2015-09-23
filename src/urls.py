@@ -45,10 +45,13 @@ urlpatterns = [
     url(r'^groups/$', RedirectView.as_view(url='/group/', permanent=True)),
 
     url(r'^login/$', views.user_login),
-    url(r'^password/$', views.user_password),
-    url(r'^get_admin/$', views.get_admin),
-    url(r'^profile/$', views.user_profile),
     url(r'^logout/$', views.user_logout),
+    url(r'^password/$', views.user_password),
+    url(r'^profile/$', views.user_profile),
+    url(r'^get_admin/$', views.get_admin),
+    url(r'^get_js/$', views.get_js),
+    url(r'^get_ver/$', views.get_ver),
+    url(r'^get_backup/$', views.get_backup),
     
     url(r'^group/$', views.lab_home),
     url(r'^group/schedule/$', views.lab_meeting_schedule),

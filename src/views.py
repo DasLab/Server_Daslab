@@ -385,9 +385,6 @@ def dropbox_dash(request):
 def gcal(request):
     return HttpResponse(dash_cal(), content_type='application/json')
 
-def get_admin(request):
-    return HttpResponse(simplejson.dumps({'email':EMAIL_NOTIFY}), content_type='application/json')
-
 @login_required
 def user_dash(request):
     if request.user.username == u'daslab': return HttpResponseBadRequest('Fake admin login.')
@@ -414,6 +411,34 @@ def schedule_dash(request):
     archive = {'date':archive.date.strftime('%Y-%m-%d'), 'name':archive.presenter, 'title':archive.title}
     json.update({'flash_slide':flash_slide, 'eterna':eterna, 'rotation':rotation, 'archive':archive}) 
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
+
+
+def get_admin(request):
+    return HttpResponse(simplejson.dumps({'email':EMAIL_NOTIFY}), content_type='application/json')
+
+def get_js(request):
+    f = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r')
+    lines = f.readlines()
+    f.close()
+    lines = ''.join(lines).split('\t')
+    json = {'jquery':lines[11], 'bootstrap':lines[12], 'swfobj':lines[16], 'fullcal':lines[17], 'moment':lines[18]}
+    return HttpResponse(simplejson.dumps(json), content_type='application/json')
+
+@user_passes_test(lambda u: u.is_superuser)
+def get_ver(request):
+    f = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r')
+    lines = f.readlines()
+    f.close()
+    lines = ''.join(lines)
+    return HttpResponse(lines, content_type='text/plain')
+
+@user_passes_test(lambda u: u.is_superuser)
+def get_backup(request):
+    f = open('%s/cache/stat_backup.txt' % MEDIA_ROOT, 'r')
+    lines = f.readlines()
+    f.close()
+    lines = ''.join(lines)
+    return HttpResponse(lines, content_type='text/plain')
 
 
 def error400(request):

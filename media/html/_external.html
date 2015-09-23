@@ -12,9 +12,9 @@
       xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == XMLHttpRequest.DONE) {
           if (xmlhttp.status == 200) {
-            var xmlDoc = xmlhttp.responseText.split(/\t/);
-            ver_jquery = xmlDoc[11];
-            ver_swfobj = xmlDoc[16];
+            var xmlDoc = JSON.parse(xmlhttp.responseText);
+            ver_jquery = xmlDoc.jquery;
+            ver_swfobj = xmlDoc.swfobj;
 
             document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/' + ver_jquery + '/jquery.min.js"><\/script>');
             document.write('\
@@ -31,7 +31,7 @@
           }
         }
       }
-      xmlhttp.open("GET", "/site_data/stat_sys.txt", false);
+      xmlhttp.open("GET", "/get_js", false);
       xmlhttp.send();
     </script>  
     {% block header %}{% endblock %}

@@ -7,33 +7,6 @@
     <link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />
 
     <link href="/site_media/css/DasStyle.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript">
-      var xmlhttp = new XMLHttpRequest(), ver_jquery, ver_swfobj, isCDN = false;
-      xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-          if (xmlhttp.status == 200) {
-            var xmlDoc = xmlhttp.responseText.split(/\t/);
-            ver_jquery = xmlDoc[11];
-            ver_swfobj = xmlDoc[16];
-
-            document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/' + ver_jquery + '/jquery.min.js"><\/script>');
-            document.write('\
-              <script type="text/javascript"> \
-                if (!window.jQuery) { \
-                  document.write(\'<script type="text/javascript" src="/site_media/js/jquery.min.js"><\' + \'/script>\'); \
-                  isCDN = false; \
-                } else { \
-                  isCDN = true; \
-                } \
-              \x3C\/script>');
-          } else {
-            document.write('<script type="text/javascript" src="/site_media/js/jquery.min.js"><\/script>');
-          }
-        }
-      }
-      xmlhttp.open("GET", "/site_data/stat_sys.txt", false);
-      xmlhttp.send();
-    </script>  
     <script type="text/javascript" src="/site_media/js/admin/load.js"></script>  
     <script type="text/javascript">
       $(document).ready(function() {

@@ -10,7 +10,7 @@ $(document).ready(function() {
     $("lspan").remove();
 
     $.ajax({
-        url : "/site_data/stat_backup.txt",
+        url : "/get_backup",
         dataType: "text",
         success : function (data) {
             var txt = data.split(/\t/);
@@ -51,7 +51,7 @@ $(document).ready(function() {
     });
 
   $.ajax({
-        url : "/site_data/stat_sys.txt",
+        url : "/get_ver",
         dataType: "text",
         success : function (data) {
             var txt = data.split(/\t/);

@@ -138,14 +138,14 @@ prefix = ''
 if DEBUG: prefix = '_DEBUG'
 ver += subprocess.Popen("%s && drive quota | awk '{ printf $2 \" G\t\"}'" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0]
 
-f = open(os.path.join(MEDIA_ROOT, 'data/stat_sys.txt'), 'w')
+f = open(os.path.join(MEDIA_ROOT, 'cache/stat_sys.txt'), 'w')
 f.write(ver)
 f.close()
 subprocess.Popen('rm %s' % os.path.join(MEDIA_ROOT, 'data/temp.txt'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 print "Time elapsed: %.1f s." % (time.time() - t)
 print
-print "\033[92mSUCCESS\033[0m: \033[94mVersions\033[0m recorded in data/stat_sys.txt."
+print "\033[92mSUCCESS\033[0m: \033[94mVersions\033[0m recorded in cache/stat_sys.txt."
 print "All done successfully!"
 print "Time elapsed: %.1f s." % (time.time() - t0)
 sys.exit(0)

@@ -10,7 +10,7 @@ $(document).ready(function() {
   $("lspan").remove();
 
   $.ajax({
-        url : "/site_data/stat_sys.txt",
+        url : "/get_ver",
         dataType: "text",
         success : function (data) {
         	var txt = data.split(/\t/);

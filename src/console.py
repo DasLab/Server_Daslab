@@ -49,7 +49,7 @@ def get_backup_stat():
     if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
     ver += '~|~'.join(subprocess.Popen("%s && drive list -q \"title contains 'DasLab_' and (title contains '.gz' or title contains '.tgz')\"" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:])
 
-    f = open(os.path.join(MEDIA_ROOT, 'data/stat_backup.txt'), 'w')
+    f = open(os.path.join(MEDIA_ROOT, 'cache/stat_backup.txt'), 'w')
     f.write(ver)
     f.close()
     subprocess.Popen('rm %s' % os.path.join(MEDIA_ROOT, 'data/temp.txt'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -83,8 +83,8 @@ def set_backup_form(request):
     f.close()
 
     index =  [i for i, line in enumerate(lines) if 'src.cron.backup_weekly' in line or 'src.cron.gdrive_weekly' in line or 'KEEP_BACKUP' in line]
-    lines[index[0]] = '\t\t["%s", "src.cron.backup_weekly", ">> %s/data/log_cron.log # backup_weekly"],\n' % (cron_backup, MEDIA_ROOT)
-    lines[index[1]] = '\t\t["%s", "src.cron.gdrive_weekly", ">> %s/data/log_cron.log # gdrive_weekly"],\n' % (cron_upload, MEDIA_ROOT)
+    lines[index[0]] = '\t\t["%s", "src.cron.backup_weekly", ">> %s/cache/log_cron.log # backup_weekly"],\n' % (cron_backup, MEDIA_ROOT)
+    lines[index[1]] = '\t\t["%s", "src.cron.gdrive_weekly", ">> %s/cache/log_cron.log # gdrive_weekly"],\n' % (cron_upload, MEDIA_ROOT)
     lines[index[2]] = '\t"KEEP_BACKUP": %s\n' % request.POST['keep']
 
     f = open('%s/config/cron.conf' % MEDIA_ROOT, 'w')
