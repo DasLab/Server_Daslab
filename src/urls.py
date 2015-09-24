@@ -45,7 +45,8 @@ urlpatterns = [
     url(r'^groups/$', RedirectView.as_view(url='/group/', permanent=True)),
 
     url(r'^login/$', views.user_login),
-    url(r'^logout/$', views.user_logout),
+    url(r'^logout/$', RedirectView.as_view(url='/index/', permanent=True)),
+#    url(r'^logout/$', views.user_logout),
     url(r'^password/$', views.user_password),
     url(r'^get_admin/$', views.get_admin),
     url(r'^get_js/$', views.get_js),
