@@ -64,7 +64,7 @@
           </h2>
           <p style="font-weight:bold; font-size:16px;">
             <b>
-              Your mRNA <span class="label label-warning">{{user}}</span> lacks a RBS or IRES to access the ribosome. 
+              Your mRNA <span id="user_1" class="label label-warning">{{sunet_id}}</span> lacks a RBS or IRES to access the ribosome. 
               <i>trans</i>-splicing with the <span class="label label-success">admin</span> might activate proper gene expression. 
             </b>
           </p>
@@ -74,7 +74,7 @@
           <p>
             The server understood the rquest but refused to fulfill it.
             <br/>
-            Your login account <span class="label label-warning">{{user}}</span> lacks the required permission.
+            Your login account <span id="user_2" class="label label-warning">{{sunet_id}}</span> lacks the required permission.
             <br/>
             <b>For emergency, please use the <span class="label label-warning">daslab</span> shared account.</b>
           </p>
@@ -115,6 +115,16 @@
           success: function (data) {
             $("#admin_email").html(data.email);
             $("#admin_email").parent().attr("href", "mailto:" + data.email);
+          }
+        });
+
+        $.ajax({
+          url : "/group/get_user",
+          dataType: "json",
+          success: function (data) {
+            console.log(data);
+            $("#user_1").html(data.user);
+            $("#user_2").html(data.user);  
           }
         });
       });

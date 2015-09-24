@@ -49,7 +49,7 @@ urlpatterns = [
     url(r'^password/$', views.user_password),
     url(r'^get_admin/$', views.get_admin),
     url(r'^get_js/$', views.get_js),
-    
+
     url(r'^group/$', views.lab_home),
     url(r'^group/schedule/$', views.lab_meeting_schedule),
     url(r'^group/flash_slide/$', views.lab_meeting_flash),
@@ -68,6 +68,7 @@ urlpatterns = [
     url(r'^group/dropbox/$', views.lab_service_dropbox),
     url(r'^group/misc/$', views.lab_misc),
     url(r'^group/email_admin/$', views.user_email),
+    url(r'^group/get_user/$', views.get_user),
 
     url(r'^group/aws_dash/$', views.aws_dash),
     url(r'^group/ga_dash/$', views.ga_dash),

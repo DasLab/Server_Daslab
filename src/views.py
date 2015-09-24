@@ -412,6 +412,9 @@ def schedule_dash(request):
 def get_admin(request):
     return HttpResponse(simplejson.dumps({'email':EMAIL_NOTIFY}), content_type='application/json')
 
+def get_user(request):
+    return HttpResponse(simplejson.dumps({'user':request.META['WEBAUTH_USER']}), content_type='application/json')
+
 def get_js(request):
     f = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r')
     lines = f.readlines()
