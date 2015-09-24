@@ -167,7 +167,11 @@ $(document).ready(function () {
         url : "/group/user_dash",
         dataType: "json",
         success: function (data) {
-            $("#nav_user_photo").html(data.photo);
+            if (data.photo) {
+                $("#nav_user_photo").html(data.photo);
+            } else {
+                $("#nav_user_photo").html('<img src="/site_media/images/icon_default_avatar.png" width="119" style="padding-bottom:50px;">');
+            }
             $("#nav_user_name").html(data.name);
             $("#nav_user_id").html(data.id);
             $("#nav_user_aff").html(data.title);
@@ -192,60 +196,32 @@ $(document).ready(function () {
             }
 
             if ($(location).attr("href").indexOf("group/contact") != -1) {
-                $("#card_user_photo").html(data.photo);
+                if (data.photo) {
+                    $("#card_user_photo").html(data.photo);
+                } else {
+                    $("#card_user_photo").html('<img src="/site_media/images/icon_default_avatar.png" width="119">');
+                }
                 $("#card_user_photo > img").css("max-width", "100%");
                 $("#card_user_name").html(data.name);
                 $("#card_user_id").html(data.id);
                 $("#card_user_aff").html(data.title);
                 $("#card_user_stat").html(data.status);
                 $("#card_user_cap").attr("href", data.cap);
-                $("#card_user_email").html(data.email);
-                $("#card_user_email").attr("href", "mailto:" + data.email);
-                $("#form_change_email").val(data.email);
-                $("#card_user_phone").html(data.phone);
-                $("#form_change_phone").val(data.phone.replace(/\D+/g, ''));
+                if (data.email) {
+                    $("#card_user_email").html(data.email);
+                    $("#card_user_email").attr("href", "mailto:" + data.email);
+                    $("#form_change_email").val(data.email);
+                } else {
+                    $("#form_change_email").attr("disabled", "disabled");
+                }
+                if (data.phone) {
+                    $("#card_user_phone").html(data.phone);
+                    $("#form_change_phone").val(data.phone.replace(/\D+/g, ''));
+                } else{
+                    $("#form_change_phone").attr("disabled", "disabled");
+                    $("#form_change_submit").attr("disabled", "disabled");
+                }
             }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            $("#form_change_email").attr("disabled", "disabled");
-            $("#form_change_phone").attr("disabled", "disabled");
-            $("#form_change_submit").attr("disabled", "disabled");
-
-            if (errorThrown == 'BAD REQUEST') {
-                $("#nav_user_photo").html('<img src="/site_media/images/group/fg_load.gif" width="119" style="padding-bottom:50px;">');
-                $("#nav_user_name").html('DasLab Admin');
-                $("#nav_user_id").html('daslab');
-                $("#nav_user_aff").html('Shared <span class="label label-success">Admin</span> Account');
-                $("#nav_user_stat").html('N/A');
-                if ($(location).attr("href").indexOf("group/contact") != -1) {
-                    $("#card_user_photo").html('<img src="/site_media/images/group/fg_load.gif" width="119">');
-                    $("#card_user_photo > img").css("max-width", "100%");
-                    $("#card_user_name").html('DasLab Admin');
-                    $("#card_user_id").html('daslab');
-                    $("#card_user_aff").html('Shared <span class="label label-success">Admin</span> Account');
-                    $("#card_user_stat").html('N/A');
-                    $("#card_user_email").html('daslabsu@gmail.com');
-                    $("#card_user_email").attr("href", "mailto:daslabsu@gmail.com");
-                    $("#card_user_phone").html('(650) 723-7310');
-                }          
-            } else {
-                $("#nav_user_photo").html('<img src="/site_media/images/group/fg_loadicon_default_avatar.png" width="119" style="padding-bottom:50px;">');
-                $("#nav_user_name").html('Unknown');
-                $("#nav_user_id").html('N/A');
-                $("#nav_user_aff").html('Unknown');
-                $("#nav_user_stat").html('Rotation Student / Temporary');
-                if ($(location).attr("href").indexOf("group/contact") != -1) {
-                    $("#card_user_photo").html('<img src="/site_media/images/icon_default_avatar.png" width="119">');
-                    $("#card_user_photo > img").css("max-width", "100%");
-                    $("#card_user_name").html('Unknown');
-                    $("#card_user_id").html('N/A');
-                    $("#card_user_aff").html('Unknown');
-                    $("#card_user_stat").html('Rotation Student / Temporary');
-                    $("#card_user_email").html('Unknown');
-                    $("#card_user_phone").html('Unknown');
-                }                
-            }
-
         }
     });
 

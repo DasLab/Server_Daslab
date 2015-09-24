@@ -384,27 +384,31 @@ def gcal_dash(request):
 def user_dash(request):
     # if request.user.username == u'daslab': return HttpResponseBadRequest('Fake admin login.')
     try:
-        login = request.META['WEBAUTH_USER']
-        user = Member.objects.get(sunet_id=login)
-        if user.phone:
-            user.phone = str(user.phone)
-            user.phone = '(%s) %s-%s' %(user.phone[:3], user.phone[3:6], user.phone[6:])
-        if login in GROUP.ADMIN:
+        sunet_id = request.META['WEBAUTH_USER']
+        if sunet_id in GROUP.ADMIN:
             user.type = 'admin'
-        elif login in GROUP.GROUP:
+        elif sunet_id in GROUP.GROUP:
             user.type = 'group'
-        elif login in GROUP.ALUMNI:
+        elif sunet_id in GROUP.ALUMNI:
             user.type = 'alumni'
-        elif login in GROUP.ROTON:
+        elif sunet_id in GROUP.ROTON:
             user.type = 'roton'
-        elif login in GROUP.OTHER:
+        elif sunet_id in GROUP.OTHER:
             user.type = 'other'
         else:
             user.type = 'unknown'
 
+        user = Member.objects.get(sunet_id=sunet_id)
+        if user.phone:
+            user.phone = str(user.phone)
+            user.phone = '(%s) %s-%s' %(user.phone[:3], user.phone[3:6], user.phone[6:])
+
         json = {'id':user.sunet_id, 'type':user.type, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'email':user.email, 'phone':user.phone, 'cap':user.more_info, 'status':user.year()}
     except:
-        return HttpResponseNotFound("User not found.")
+        if request.META.has_key('WEBAUTH_USER'):
+            json = {'id':sunet_id, 'type':user.type}
+        else:
+            json = {}
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
 
 # @login_required
