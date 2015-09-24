@@ -95,78 +95,20 @@
               <ul class="dropdown-menu dropdown-menu-right nav nav-pills nav-stacked" role="menu">
                 <li>
                   <a><span class="glyphicon glyphicon-calendar"></span>&nbsp;
-                  <span class="date" id="date"></span>&nbsp;&nbsp;</a>
+                  <span class="label label-primary" id="date"></span>&nbsp;&nbsp;</a>
                 </li>
                 <li>
                   <a><span class="glyphicon glyphicon-time"></span>&nbsp;
-                  <span class="time" id="clock"></span>&nbsp;&nbsp;</a>
+                  <span class="label label-primary" id="clock"></span>&nbsp;&nbsp;</a>
                 </li>
                 <li class="divider"></li>
                 <li>
                   <a><span class="glyphicon glyphicon-globe"></span>&nbsp;UTC:&nbsp;
-                  <span class="time" id="utc"></span>&nbsp;&nbsp;</a>
+                  <span class="label label-inverse" id="utc"></span>&nbsp;&nbsp;</a>
                 </li>
               </ul>
             </li>
-            <li id="nav_profile" class="dropdown navbar-icon" style="margin-right: 15px;">
-              <a><span class="glyphicon glyphicon-user"></span></a>
-              <ul class="dropdown-menu dropdown-menu-right nav nav-pills nav-stacked" role="menu" id="nav_user">
-                <li class="nav-list">
-                  <br/>
-                  <p><span style="text-decoration:underline; color:gray;">Signed In As:</span></p>
-                </li>
-                <li id="nav_username" style="width:225px;" class="nav-list">
-                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;
-                  <b>{{ user.first_name }} {{ user.last_name }}</b>
-                  <br/>
-                  <span class="glyphicon glyphicon-user" aria-hidden="true" style="color:#fff;"></span>&nbsp;&nbsp;
-                  <kbd>{{ user.username }}</kbd>
-                  <br/><br/>
-                  <p>
-                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;
-                    Last Login: {{ user.last_login|date:"SHORT_DATE_FORMAT" }}
-                  </p>
-                  <p>
-                    <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
-                    Status:
-                    <span class="label label-{% if user.is_active %}green{% else %}default{% endif %}">
-                      <span class="glyphicon glyphicon-pawn" aria-hidden="true"></span>&nbsp;&nbsp;
-                      Active
-                    </span>
-                  </p>
-                  <p>
-                    <span style="color:#fff;">
-                      <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
-                      Status:
-                    </span>
-                    <span class="label label-{% if user.is_staff %}violet{% else %}default{% endif %}">
-                      <span class="glyphicon glyphicon-queen" aria-hidden="true"></span>&nbsp;&nbsp;
-                      Staff
-                    </span>
-                  </p>
-                  <p>
-                    <span style="color:#fff;">
-                      <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
-                      Status:
-                    </span>
-                    <span class="label label-{% if user.is_superuser %}orange{% else %}default{% endif %}">
-                      <span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;
-                      Admin
-                    </span>
-                  </p>
-                </li>
-                <li class="divider"></li>
-                <li><a class="" href="/password">
-                  <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;&nbsp;
-                  Change Password</a>
-                </li>
-                <li><a class="" href="/signout">
-                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;&nbsp;
-                  Sign Out</a>
-                </li>
 
-              </ul>
-            </li>
           </ul>
         </div>
 
