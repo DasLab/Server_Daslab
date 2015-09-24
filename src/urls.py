@@ -86,6 +86,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^(?:robots.txt)?$', 'django.views.static.serve', kwargs={'path': 'robots.txt', 'document_root': MEDIA_ROOT}),
 
+    url(r'^private/$', views.test)
 ] #+ static(STATIC_URL, document_root=STATIC_ROOT)
 
 if DEBUG: urlpatterns.append(url(r'^test/$', views.test))

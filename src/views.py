@@ -19,6 +19,7 @@ from src.models import *
 from src.settings import *
 
 # import datetime
+# import os
 # import subprocess
 # import sys
 import traceback
@@ -69,11 +70,11 @@ def publications(request):
 
 ############################################################################################################################################
 
-@login_required
+# @login_required
 def lab_meeting_schedule(request):
     return render_to_response(PATH.HTML_PATH['lab_meeting_schedule'], {}, context_instance=RequestContext(request))
 
-@login_required
+# @login_required
 def lab_meeting_flash(request):
     flash_list = FlashSlide.objects.order_by('-date')
     for i, gp in enumerate(flash_list):
@@ -94,7 +95,7 @@ def lab_meeting_flash(request):
                 gp.row_end = True
     return render_to_response(PATH.HTML_PATH['lab_meeting_flash'], {'flash_list':flash_list}, context_instance=RequestContext(request))
 
-@login_required
+# @login_required
 def lab_meeting_youtube(request):
     eterna_list = EternaYoutube.objects.order_by('-date')
     for i, gp in enumerate(eterna_list):
@@ -103,7 +104,7 @@ def lab_meeting_youtube(request):
             gp.year_start = True
     return render_to_response(PATH.HTML_PATH['lab_meeting_eterna'], {'eterna_list':eterna_list}, context_instance=RequestContext(request))
 
-@login_required
+# @login_required
 def lab_meeting_rotation(request):
     rot_list = RotationStudent.objects.order_by('-date')
     for i, rot in enumerate(rot_list):
@@ -116,10 +117,10 @@ def lab_meeting_rotation(request):
             rot.dat_link = os.path.basename(rot.data.name)
     return render_to_response(PATH.HTML_PATH['lab_meeting_rotation'], {'rot_list':rot_list}, context_instance=RequestContext(request))
 
-@login_required
+# @login_required
 def lab_resource_gdocs(request):
     return render_to_response(PATH.HTML_PATH['lab_resource_gdocs'], {}, context_instance=RequestContext(request))
-@login_required
+# @login_required
 def lab_resource_archive(request):
     arv_list = Presentation.objects.order_by('-date')
     for i, arv in enumerate(arv_list):
@@ -129,7 +130,7 @@ def lab_resource_archive(request):
         if arv.ppt:
             arv.ppt_link = os.path.basename(arv.ppt.name).replace('C:\\fakepath\\', '')
     return render_to_response(PATH.HTML_PATH['lab_resource_archive'], {'arv_list':arv_list}, context_instance=RequestContext(request))
-@login_required
+# @login_required
 def lab_resource_contact(request):
     member = Member.objects.filter(alumni=0).exclude(sunet_id=request.user.username).order_by('last_name', 'first_name')
     for i, ppl in enumerate(member):
@@ -157,28 +158,28 @@ def lab_resource_contact(request):
     return render_to_response(PATH.HTML_PATH['lab_resource_contact'], {'current_member':member, 'past_member':almuni}, context_instance=RequestContext(request))
 
 
-@login_required
+# @login_required
 def lab_home(request):
     return render_to_response(PATH.HTML_PATH['lab_home'], {}, context_instance=RequestContext(request))
-@login_required
+# @login_required
 def lab_calendar(request):
     return render_to_response(PATH.HTML_PATH['lab_calendar'], {}, context_instance=RequestContext(request))
-@login_required
+# @login_required
 def lab_server_aws(request):
     return render_to_response(PATH.HTML_PATH['lab_server_aws'], {}, context_instance=RequestContext(request))
-@login_required
+# @login_required
 def lab_server_ga(request):
     return render_to_response(PATH.HTML_PATH['lab_server_ga'], {}, context_instance=RequestContext(request))
-@login_required
+# @login_required
 def lab_service_git(request):
     return render_to_response(PATH.HTML_PATH['lab_service_git'], {}, context_instance=RequestContext(request))
-@login_required
+# @login_required
 def lab_service_slack(request):
     return render_to_response(PATH.HTML_PATH['lab_service_slack'], {}, context_instance=RequestContext(request))
-@login_required
+# @login_required
 def lab_service_dropbox(request):
     return render_to_response(PATH.HTML_PATH['lab_service_dropbox'], {}, context_instance=RequestContext(request))
-@login_required
+# @login_required
 def lab_misc(request):
     return render_to_response(PATH.HTML_PATH['lab_misc'], {}, context_instance=RequestContext(request))
 
@@ -214,7 +215,7 @@ def user_login(request):
             flag = 'Member'
         return render_to_response(PATH.HTML_PATH['login'], {'messages':'', 'flag':flag}, context_instance=RequestContext(request))
 
-@login_required
+# @login_required
 def user_password(request):
     if request.method == 'POST':
         password_old = request.POST['password_old']
@@ -237,7 +238,7 @@ def user_password(request):
     else:
         return render_to_response(PATH.HTML_PATH['password'], {'messages':''}, context_instance=RequestContext(request))
 
-@login_required
+# @login_required
 def user_contact(request):
     if request.method == 'POST':
         if (not 'email' in request.POST) or (not 'phone' in request.POST): return HttpResponseBadRequest('Invalid input.')
@@ -256,7 +257,7 @@ def user_contact(request):
     else:
         return HttpResponseBadRequest('Invalid form.')
 
-@login_required
+# @login_required
 def user_email(request):
     if request.method == 'POST':
         form = EmailForm(request.POST)
@@ -281,7 +282,7 @@ def user_email(request):
     else:
         return HttpResponseBadRequest('Invalid form.')
 
-@login_required
+# @login_required
 def user_upload(request):
     if request.method == 'POST':
         form = UploadForm(request.POST, request.FILES)
@@ -341,25 +342,19 @@ def ping_test(request):
     return HttpResponse(content="", status=200)
 
 
-# def url_redirect(request, path):
-#     if 'detail/' in path:
-#         path = path.rstrip('/')
-#     if request.GET.get('searchtext'):
-#         path = path + '?searchtext=' + request.GET.get('searchtext')
-#     return HttpResponsePermanentRedirect("/%s" % path)
-@login_required
+# @login_required
 def aws_dash(request):
     json = dash_aws(request)
     if isinstance(json, HttpResponseBadRequest): return json
     return HttpResponse(json, content_type='application/json')
 
-@login_required
+# @login_required
 def ga_dash(request):
     json = dash_ga(request)
     if isinstance(json, HttpResponseBadRequest): return json
     return HttpResponse(json, content_type='application/json')
 
-@login_required
+# @login_required
 def git_dash(request):
     json = dash_git(request)
     if isinstance(json, HttpResponseBadRequest):
@@ -373,23 +368,24 @@ def git_dash(request):
         if isinstance(json, HttpResponseServerError): return json
     return HttpResponse(json, content_type='application/json')
 
-@login_required
+# @login_required
 def slack_dash(request):
     return HttpResponse(dash_slack(request), content_type='application/json')
 
-@login_required
+# @login_required
 def dropbox_dash(request):
     return HttpResponse(dash_dropbox(request), content_type='application/json')
 
-@login_required
+# @login_required
 def gcal_dash(request):
     return HttpResponse(dash_cal(), content_type='application/json')
 
-@login_required
+# @login_required
 def user_dash(request):
-    if request.user.username == u'daslab': return HttpResponseBadRequest('Fake admin login.')
+    # if request.user.username == u'daslab': return HttpResponseBadRequest('Fake admin login.')
     try:
-        user = Member.objects.get(sunet_id=request.user.username)
+	login = request.META['WEBAUTH_USER']
+        user = Member.objects.get(sunet_id=login)
         if user.phone:
             user.phone = str(user.phone)
             user.phone = '(%s) %s-%s' %(user.phone[:3], user.phone[3:6], user.phone[6:])
@@ -398,7 +394,7 @@ def user_dash(request):
         return HttpResponseNotFound("User not found.")
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
 
-@login_required
+# @login_required
 def schedule_dash(request):
     json = dash_schedule(request)
     flash_slide = FlashSlide.objects.order_by('-date')[0]
@@ -438,6 +434,7 @@ def error500(request):
 
 
 def test(request):
+    print request.META
     return error400(request)
     raise ValueError
     # send_notify_emails('test', 'test')
