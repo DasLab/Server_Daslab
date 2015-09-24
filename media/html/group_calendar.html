@@ -53,7 +53,7 @@
 			$("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;<a href="https://www.google.com/calendar/embed?src=a53lhn4i0fgrkcs9c6i85fdmdo%40group.calendar.google.com&ctz=America/Los_Angeles" target="_blank">Google Calendar&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size:14px;"></span></a></li>');
 
 			$.ajax({
-				url : "/admin/gcal",
+				url : "/group/gcal_dash",
 				dataType: "json",
 				success : function (data) {
 					$('#calendar').fullCalendar({ 

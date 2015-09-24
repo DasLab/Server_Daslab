@@ -11,7 +11,7 @@ function readyHandler() {
 function drawGIT(repo) {
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/admin/git_dash?qs=c&repo=' + repo,
+        'dataSourceUrl': '/group/git_dash?qs=c&repo=' + repo,
         'containerId': 'plot_c_' + repo,
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -39,7 +39,7 @@ function drawGIT(repo) {
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/admin/git_dash?qs=ad&repo=' + repo,
+        'dataSourceUrl': '/group/git_dash?qs=ad&repo=' + repo,
         'containerId': 'plot_ad_' + repo,
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -69,7 +69,7 @@ function drawGIT(repo) {
 
 function drawChart() {
     $.ajax({
-        url : "/admin/git_dash?qs=init&repo=init&tqx=reqId%3A55",
+        url : "/group/git_dash?qs=init&repo=init&tqx=reqId%3A55",
         dataType: "json",
         success: function (data) {
             var html = "";
@@ -97,7 +97,7 @@ function drawChart() {
                 var name = data.git[i].name;
                 drawGIT(name);
                 $.ajax({
-                    url : "/admin/git_dash?qs=num&repo=" + name + "&tqx=reqId%3A55",
+                    url : "/group/git_dash?qs=num&repo=" + name + "&tqx=reqId%3A55",
                     dataType: "json",
                     success: function (data) {
                         $("#git-label-" + data.name).html('<span class="label label-green">created</span>&nbsp;<span class="label label-primary">' + data.created_at + '</span>&nbsp;&nbsp;<span class="label label-dark-green">last pushed</span>&nbsp;<span class="label label-primary">' + data.pushed_at + '</span></p><p><span class="label label-danger">issue</span>&nbsp;' + data.num_issues + '&nbsp;&nbsp;<span class="label label-info">download</span>&nbsp;' + data.num_downloads + '&nbsp;&nbsp;<span class="label label-info">pull</span>&nbsp;' + data.num_pulls + '&nbsp;&nbsp;<span class="label label-orange">branch</span>&nbsp;' + data.num_branches + '&nbsp;&nbsp;<span class="label label-orange">fork</span>&nbsp;' + data.num_forks + '&nbsp;&nbsp;<span class="label label-violet">watcher</span>&nbsp;' + data.num_watchers);

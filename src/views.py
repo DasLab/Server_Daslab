@@ -306,25 +306,25 @@ def user_upload(request):
     else:
         return render_to_response(PATH.HTML_PATH['upload'], {'upload_form':UploadForm(), 'messages':''}, context_instance=RequestContext(request))
 
-@login_required
-def user_profile(request):
-    profile = Member.objects.filter(sunet_id=request.user.username)
-    if len(profile) == 1:
-        profile = profile[0]
-        profile.image_link = os.path.basename(profile.image.name)
-        if not profile.description: profile.description = '(N/A)'
-        if not profile.department: profile.department = '(N/A)'
-        if not profile.more_info: profile.more_info = '(N/A)'
-        if not profile.joint_lab: profile.joint_lab = '(N/A)'
-        if not profile.start_year: profile.start_year = '(N/A)'
-        if not profile.finish_year: profile.finish_year = '(N/A)'
-        if profile.alumni:
-            profile.alumni = '<span class="label label-danger">Almuni</span>'
-        else:
-            profile.alumni = '<span class="label label-success">Current</span>'
-    else:
-        profile = []
-    return render_to_response(PATH.HTML_PATH['profile'], {'profile':profile}, context_instance=RequestContext(request))
+# @login_required
+# def user_profile(request):
+#     profile = Member.objects.filter(sunet_id=request.user.username)
+#     if len(profile) == 1:
+#         profile = profile[0]
+#         profile.image_link = os.path.basename(profile.image.name)
+#         if not profile.description: profile.description = '(N/A)'
+#         if not profile.department: profile.department = '(N/A)'
+#         if not profile.more_info: profile.more_info = '(N/A)'
+#         if not profile.joint_lab: profile.joint_lab = '(N/A)'
+#         if not profile.start_year: profile.start_year = '(N/A)'
+#         if not profile.finish_year: profile.finish_year = '(N/A)'
+#         if profile.alumni:
+#             profile.alumni = '<span class="label label-danger">Almuni</span>'
+#         else:
+#             profile.alumni = '<span class="label label-success">Current</span>'
+#     else:
+#         profile = []
+#     return render_to_response(PATH.HTML_PATH['profile'], {'profile':profile}, context_instance=RequestContext(request))
 
 def user_logout(request):
     logout(request)
@@ -382,7 +382,7 @@ def dropbox_dash(request):
     return HttpResponse(dash_dropbox(request), content_type='application/json')
 
 @login_required
-def gcal(request):
+def gcal_dash(request):
     return HttpResponse(dash_cal(), content_type='application/json')
 
 @login_required
@@ -423,22 +423,6 @@ def get_js(request):
     lines = ''.join(lines).split('\t')
     json = {'jquery':lines[11], 'bootstrap':lines[12], 'swfobj':lines[16], 'fullcal':lines[17], 'moment':lines[18]}
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
-
-@user_passes_test(lambda u: u.is_superuser)
-def get_ver(request):
-    f = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r')
-    lines = f.readlines()
-    f.close()
-    lines = ''.join(lines)
-    return HttpResponse(lines, content_type='text/plain')
-
-@user_passes_test(lambda u: u.is_superuser)
-def get_backup(request):
-    f = open('%s/cache/stat_backup.txt' % MEDIA_ROOT, 'r')
-    lines = f.readlines()
-    f.close()
-    lines = ''.join(lines)
-    return HttpResponse(lines, content_type='text/plain')
 
 
 def error400(request):

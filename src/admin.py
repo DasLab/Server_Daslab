@@ -267,4 +267,19 @@ def export(request):
         return render_to_response(PATH.HTML_PATH['admin_export'], {'form':ExportForm()}, context_instance=RequestContext(request))
 admin.site.register_view('export/', view=export, visible=False)
 
+def get_ver(request):
+    f = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r')
+    lines = f.readlines()
+    f.close()
+    lines = ''.join(lines)
+    return HttpResponse(lines, content_type='text/plain')
+admin.site.register_view('get_ver/', view=get_ver, visible=False)
+
+def get_backup(request):
+    f = open('%s/cache/stat_backup.txt' % MEDIA_ROOT, 'r')
+    lines = f.readlines()
+    f.close()
+    lines = ''.join(lines)
+    return HttpResponse(lines, content_type='text/plain')
+admin.site.register_view('get_backup/', view=get_backup, visible=False)
 

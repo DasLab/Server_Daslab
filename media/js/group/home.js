@@ -14,7 +14,7 @@ function label_type(type) {
 
 
 $.ajax({
-    url : "/admin/schedule_dash",
+    url : "/group/schedule_dash",
     dataType: "json",
     success: function (data) {
         $("#this_type").html(label_type(data.this[1]));
@@ -49,7 +49,7 @@ $.ajax({
 
 
 $.ajax({
-    url : "/admin/slack_dash?qs=home&tqx=reqId%3A50",
+    url : "/group/slack_dash?qs=home&tqx=reqId%3A50",
     dataType: "json",
     success: function (data) {
         var html = "";

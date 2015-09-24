@@ -12,7 +12,7 @@ function readyHandler() {
 function drawGA(id) {
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/admin/ga_dash?qs=sessions&id=' + id,
+        'dataSourceUrl': '/group/ga_dash?qs=sessions&id=' + id,
         'containerId': 'chart_session_' + id,
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -40,7 +40,7 @@ function drawGA(id) {
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/admin/ga_dash?qs=percentNewSessions&id=' + id,
+        'dataSourceUrl': '/group/ga_dash?qs=percentNewSessions&id=' + id,
         'containerId': 'chart_visitor_' + id,
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -69,7 +69,7 @@ function drawGA(id) {
 
 function drawChart() {
     $.ajax({
-        url : "/admin/ga_dash?qs=init&id=init&tqx=reqId%3A55",
+        url : "/group/ga_dash?qs=init&id=init&tqx=reqId%3A55",
         dataType: "json",
         success: function (data) {
             var html = "";

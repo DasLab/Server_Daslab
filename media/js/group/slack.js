@@ -20,7 +20,7 @@ function readyHandler() {
 
 function drawChart() {
     $.ajax({
-        url : "/admin/slack_dash?qs=users&tqx=reqId%3A52",
+        url : "/group/slack_dash?qs=users&tqx=reqId%3A52",
         dataType: "json",
         success: function (data) {
             var html = "";
@@ -55,7 +55,7 @@ function drawChart() {
     });
 
     $.ajax({
-        url : "/admin/slack_dash?qs=channels&tqx=reqId%3A53",
+        url : "/group/slack_dash?qs=channels&tqx=reqId%3A53",
         dataType: "json",
         success: function (data) {
             var html = "";
@@ -89,7 +89,7 @@ function drawChart() {
     });
 
     $.ajax({
-        url : "/admin/slack_dash?qs=files&tqx=reqId%3A54",
+        url : "/group/slack_dash?qs=files&tqx=reqId%3A54",
         dataType: "json",
         success: function (data) {
             var html = "";
@@ -107,7 +107,7 @@ function drawChart() {
  
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/admin/slack_dash?qs=plot_msgs',
+        'dataSourceUrl': '/group/slack_dash?qs=plot_msgs',
         'containerId': 'plot_slack_msgs',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -135,7 +135,7 @@ function drawChart() {
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/admin/slack_dash?qs=plot_files',
+        'dataSourceUrl': '/group/slack_dash?qs=plot_files',
         'containerId': 'plot_slack_files',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},

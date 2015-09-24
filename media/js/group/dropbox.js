@@ -20,7 +20,7 @@ function readyHandler() {
 
 function drawChart() {
     $.ajax({
-        url : "/admin/dropbox_dash?qs=sizes&tqx=reqId%3A56",
+        url : "/group/dropbox_dash?qs=sizes&tqx=reqId%3A56",
         dataType: "json",
         success: function (data) {
             var ratio = data.quota_used / data.quota_all;
@@ -30,7 +30,7 @@ function drawChart() {
     });
 
     $.ajax({
-        url : "/admin/dropbox_dash?qs=folders&tqx=reqId%3A57",
+        url : "/group/dropbox_dash?qs=folders&tqx=reqId%3A57",
         dataType: "json",
         success: function (data) {
             var html = "";
@@ -45,7 +45,7 @@ function drawChart() {
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/admin/dropbox_dash?qs=history',
+        'dataSourceUrl': '/group/dropbox_dash?qs=history',
         'containerId': 'plot_dropbox_files',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},

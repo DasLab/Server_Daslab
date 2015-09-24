@@ -164,7 +164,7 @@ $(document).ready(function () {
     });
 
     $.ajax({
-        url : "/admin/user_dash",
+        url : "/group/user_dash",
         dataType: "json",
         success: function (data) {
             $("#nav_user_photo").html(data.photo);
