@@ -384,7 +384,7 @@ def gcal_dash(request):
 def user_dash(request):
     # if request.user.username == u'daslab': return HttpResponseBadRequest('Fake admin login.')
     try:
-	login = request.META['WEBAUTH_USER']
+        login = request.META['WEBAUTH_USER']
         user = Member.objects.get(sunet_id=login)
         if user.phone:
             user.phone = str(user.phone)

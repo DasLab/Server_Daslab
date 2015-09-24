@@ -16,15 +16,22 @@ import simplejson
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
 
-from src.path import SYS_PATH
-from src.auth import *
 from config.t47_dev import *
-
+# SECURITY WARNING: don't run with debug turned on in production!
+TEMPLATE_DEBUG = DEBUG = T47_DEV
 
 root = environ.Path(os.path.dirname(os.path.dirname(__file__)))
 MEDIA_ROOT = root()
 # MEDIA_ROOT = os.path.join(os.path.abspath("."))
 FILEMANAGER_STATIC_ROOT = root('media/admin') + '/'
+
+env = environ.Env(DEBUG=DEBUG,) # set default values and casting
+environ.Env.read_env('%s/config/env.conf' % MEDIA_ROOT) # reading .env file
+
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env('SECRET_KEY')
+
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -36,18 +43,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '' # MEDIA_ROOT + '/media/'
 STATICFILES_DIRS = (root('data'), root('media'))
 
-APACHE_ROOT = '/var/www'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-TEMPLATE_DEBUG = DEBUG = T47_DEV
-
-env = environ.Env(DEBUG=DEBUG,) # set default values and casting
-environ.Env.read_env('%s/config/env.conf' % MEDIA_ROOT) # reading .env file
-
-ALLOWED_HOSTS = env('ALLOWED_HOSTS')
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
-
 env_oauth = simplejson.load(open('%s/config/oauth.conf' % MEDIA_ROOT))
 AWS = env_oauth['AWS']
 GA = env_oauth['GA']
@@ -56,6 +51,7 @@ DRIVE = env_oauth['DRIVE']
 GIT = env_oauth['GIT']
 SLACK = env_oauth['SLACK']
 DROPBOX = env_oauth['DROPBOX']
+APACHE_ROOT = '/var/www'
 
 
 MANAGERS = ADMINS = (
@@ -64,7 +60,6 @@ MANAGERS = ADMINS = (
 EMAIL_NOTIFY = ADMINS[0][1]
 (EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_USE_TLS, EMAIL_PORT, EMAIL_HOST) = [v for k, v in env.email_url().items() if k in ['EMAIL_HOST_PASSWORD', 'EMAIL_HOST_USER', 'EMAIL_USE_TLS', 'EMAIL_PORT', 'EMAIL_HOST']]
 EMAIL_SUBJECT_PREFIX = '[Django] {daslab.stanford.edu}'
-GROUP = USER_GROUP()
 
 ROOT_URLCONF = 'src.urls'
 WSGI_APPLICATION = 'src.wsgi.application'
@@ -74,7 +69,7 @@ WSGI_APPLICATION = 'src.wsgi.application'
 DATABASES = {
     'default': env.db_url(),
 }
-LOGIN_URL = '/login'
+LOGIN_URL = '/signin/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -91,7 +86,11 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/"
+from src.path import *
+from src.auth import *
+GROUP = USER_GROUP()
 PATH = SYS_PATH()
+
 
 env_cron = simplejson.load(open('%s/config/cron.conf' % MEDIA_ROOT))
 #     os.getlogin()
@@ -163,9 +162,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 MIDDLEWARE_CLASSES = (
     'src.settings.ExceptionUserInfoMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'src.auth.AutomaticAdminLoginMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
