@@ -158,23 +158,12 @@
                     <span class="pull-right" style="padding-right:20px;"><a id="nav_user_cap" target="_blank"><span class="label label-warning">CAP Profile</span></a></span>
                   </p>
                   <p style="line-height:25px; margin-top:30px;">
-                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;
-                    Last Login:&nbsp;&nbsp;<span class="label label-primary">{{ user.last_login|date:"Y-m-d H:i:s" }}</span>
+                    <!-- <span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;
+                    Last Login:&nbsp;&nbsp;<span class="label label-primary">{{ user.last_login|date:"Y-m-d H:i:s" }}</span> -->
                     <br/>
                     <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;&nbsp;
                     Status:&nbsp;&nbsp;
-                    <span class="label label-{% if user.is_active %}green{% else %}default{% endif %}">
-                      <span class="glyphicon glyphicon-pawn" aria-hidden="true"></span>&nbsp;&nbsp;
-                      Active
-                    </span>&nbsp;&nbsp;
-                    <span class="label label-{% if user.is_staff %}violet{% else %}default{% endif %}">
-                      <span class="glyphicon glyphicon-queen" aria-hidden="true"></span>&nbsp;&nbsp;
-                      Staff
-                    </span>&nbsp;&nbsp;
-                    <span class="label label-{% if user.is_superuser %}orange{% else %}default{% endif %}">
-                      <span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;
-                      Admin
-                    </span>
+                    <span id="user_type_tag" class="label"></span>
                   </p>
                 </li>
                 <li class="divider"></li>

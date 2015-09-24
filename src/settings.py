@@ -17,6 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
 
 from src.path import SYS_PATH
+from src.auth import *
 from config.t47_dev import *
 
 
@@ -63,7 +64,7 @@ MANAGERS = ADMINS = (
 EMAIL_NOTIFY = ADMINS[0][1]
 (EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_USE_TLS, EMAIL_PORT, EMAIL_HOST) = [v for k, v in env.email_url().items() if k in ['EMAIL_HOST_PASSWORD', 'EMAIL_HOST_USER', 'EMAIL_USE_TLS', 'EMAIL_PORT', 'EMAIL_HOST']]
 EMAIL_SUBJECT_PREFIX = '[Django] {daslab.stanford.edu}'
-
+GROUP = USER_GROUP()
 
 ROOT_URLCONF = 'src.urls'
 WSGI_APPLICATION = 'src.wsgi.application'
@@ -143,7 +144,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     # 'django.contrib.sites',
     'django.contrib.staticfiles',
-    # 'django.contrib.flatpages',
     'django.contrib.humanize',
 
     'src',
@@ -163,7 +163,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 MIDDLEWARE_CLASSES = (
     'src.settings.ExceptionUserInfoMiddleware',
-    # 'sslify.middleware.SSLifyMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -172,9 +171,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
 # List of callables that know how to import templates from various sources.

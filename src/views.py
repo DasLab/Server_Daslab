@@ -389,7 +389,20 @@ def user_dash(request):
         if user.phone:
             user.phone = str(user.phone)
             user.phone = '(%s) %s-%s' %(user.phone[:3], user.phone[3:6], user.phone[6:])
-        json = {'id':user.sunet_id, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'email':user.email, 'phone':user.phone, 'cap':user.more_info, 'status':user.year()}
+        if login in GROUP.ADMIN:
+            user.type = 'admin'
+        elif login in GROUP.GROUP:
+            user.type = 'group'
+        elif login in GROUP.ALUMNI:
+            user.type = 'alumni'
+        elif login in GROUP.ROTON:
+            user.type = 'roton'
+        elif login in GROUP.OTHER:
+            user.type = 'other'
+        else:
+            user.type = 'unknown'
+
+        json = {'id':user.sunet_id, 'type':user.type, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'email':user.email, 'phone':user.phone, 'cap':user.more_info, 'status':user.year()}
     except:
         return HttpResponseNotFound("User not found.")
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
