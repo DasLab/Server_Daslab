@@ -13,11 +13,11 @@ class USER_GROUP:
         lines = f.readlines()
         f.close()
 
-        self.ADMIN = lines[0].replace('daslab_admin: ', '').split(' ')
-        self.GROUP = lines[1].replace('daslab_group: ', '').split(' ')
-        self.ALUMNI = lines[2].replace('daslab_alumni: ', '').split(' ')
-        self.ROTON = lines[3].replace('daslab_roton: ', '').split(' ')
-        self.OTHER = lines[4].replace('daslab_other: ', '').split(' ')
+        self.ADMIN = [ x.strip() for x in lines[0].replace('daslab_admin: ', '').split(' ')]
+        self.GROUP = [ x.strip() for x in lines[1].replace('daslab_group: ', '').split(' ')]
+        self.ALUMNI = [ x.strip() for x in lines[2].replace('daslab_alumni: ', '').split(' ')]
+        self.OTHER = [ x.strip() for x in lines[3].replace('daslab_other: ', '').split(' ')]
+        self.ROTON = [ x.strip() for x in lines[4].replace('daslab_roton: ', '').split(' ')]
 
 
 class AutomaticAdminLoginMiddleware(object):
