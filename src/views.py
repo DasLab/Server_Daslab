@@ -389,27 +389,28 @@ def user_dash(request):
     try:
         sunet_id = request.META['WEBAUTH_USER']
         if sunet_id in GROUP.ADMIN:
-            user.type = 'admin'
+            user_type = 'admin'
         elif sunet_id in GROUP.GROUP:
-            user.type = 'group'
+            user_type = 'group'
         elif sunet_id in GROUP.ALUMNI:
-            user.type = 'alumni'
+            user_type = 'alumni'
         elif sunet_id in GROUP.ROTON:
-            user.type = 'roton'
+            user_type = 'roton'
         elif sunet_id in GROUP.OTHER:
-            user.type = 'other'
+            user_type = 'other'
         else:
-            user.type = 'unknown'
+            user_type = 'unknown'
 
         user = Member.objects.get(sunet_id=sunet_id)
         if user.phone:
             user.phone = str(user.phone)
             user.phone = '(%s) %s-%s' %(user.phone[:3], user.phone[3:6], user.phone[6:])
+        user.type = user_type
 
         json = {'id':user.sunet_id, 'type':user.type, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'email':user.email, 'phone':user.phone, 'cap':user.more_info, 'status':user.year()}
     except:
         if request.META.has_key('WEBAUTH_USER'):
-            json = {'id':sunet_id, 'type':user.type}
+            json = {'id':sunet_id, 'type':user_type}
         else:
             json = {}
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
