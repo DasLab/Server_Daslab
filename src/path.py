@@ -33,6 +33,7 @@ class SYS_PATH:
             'lab_service_slack': MEDIA_ROOT + '/media/html/group_service_slack.html',
             'lab_service_dropbox': MEDIA_ROOT + '/media/html/group_service_dropbox.html',
             'lab_misc': MEDIA_ROOT + '/media/html/group_misc.html',
+            'lab_error': MEDIA_ROOT + '/media/html/group_error.html',
 
             'admin_apache': MEDIA_ROOT + '/media/html/admin_apache.html',
             'admin_aws': MEDIA_ROOT + '/media/html/admin_aws.html',

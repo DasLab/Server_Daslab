@@ -68,6 +68,12 @@ urlpatterns = [
     url(r'^group/slack/$', views.lab_service_slack),
     url(r'^group/dropbox/$', views.lab_service_dropbox),
     url(r'^group/misc/$', views.lab_misc),
+    url(r'^group/error/$', views.lab_error),
+    url(r'^group/error/400/$', views.error400),
+    url(r'^group/error/401/$', views.error401),
+    url(r'^group/error/403/$', views.error403),
+    url(r'^group/error/404/$', views.error404),
+    url(r'^group/error/500/$', views.error500),
     url(r'^group/email_admin/$', views.user_email),
     url(r'^group/get_user/$', views.get_user),
 

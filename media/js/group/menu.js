@@ -119,8 +119,16 @@ $(document).ready(function () {
         $("#nav_cal_lg").addClass("active");
         $("ul.breadcrumb").css("border-bottom", "5px solid #c28fdd");
     } else if ($(location).attr("href").indexOf("group/misc") != -1) {
+        $("#nav_onboard").addClass("active");
         $("#nav_misc").addClass("active");
         $("#nav_misc_lg").addClass("active");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-magnet"></span>&nbsp;&nbsp;<a href="">Miscellaneous</a></li>').insertAfter($("ul.breadcrumb > li:first"));
+        $("ul.breadcrumb").css("border-bottom", "5px solid #5496d7");
+    } else if ($(location).attr("href").indexOf("group/error") != -1) {
+        $("#nav_error").addClass("active");
+        $("#nav_misc").addClass("active");
+        $("#nav_misc_lg").addClass("active");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-magnet"></span>&nbsp;&nbsp;<a href="">Miscellaneous</a></li>').insertAfter($("ul.breadcrumb > li:first"));
         $("ul.breadcrumb").css("border-bottom", "5px solid #5496d7");
     } else {
         $("#nav_home").addClass("active");

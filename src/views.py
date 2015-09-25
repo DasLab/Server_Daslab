@@ -182,6 +182,9 @@ def lab_service_dropbox(request):
 # @login_required
 def lab_misc(request):
     return render_to_response(PATH.HTML_PATH['lab_misc'], {}, context_instance=RequestContext(request))
+# @login_required
+def lab_error(request):
+    return render_to_response(PATH.HTML_PATH['lab_error'], {}, context_instance=RequestContext(request))
 
 
 def user_login(request):
