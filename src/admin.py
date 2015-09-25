@@ -189,6 +189,11 @@ def ssl_dash(request):
     return HttpResponse(dash_ssl(request), content_type='application/json')
 admin.site.register_view('ssl_dash', view=ssl_dash, visible=False)
 
+def group_dash(request):
+    json = simplejson.dumps({'admin':GROUP.ADMIN, 'group':GROUP.GROUP, 'alumni':GROUP.ALUMNI, 'roton':GROUP.ROTON, 'other':GROUP.OTHER})
+    return HttpResponse(json, content_type='application/json')
+admin.site.register_view('group_dash', view=group_dash, visible=False)
+
 def dash_dash(request):
     now = datetime.fromtimestamp(time())
     t_aws = datetime.fromtimestamp(os.path.getmtime('%s/cache/aws/init.pickle' % MEDIA_ROOT))

@@ -175,6 +175,10 @@ $(document).ready(function () {
     );
     navbar_collapse();
 
+    if ($(location).attr("pathname") == "/admin/auth/user/" || $(location).attr("pathname") == "/admin/auth/user") {
+        $("body").append('<script type="text/javascript" src="/site_media/js/admin/group.js"></script>');
+    }
+
 	// $('.left-nav > ul > li > ul > li > a[href="/admin/aws/"]').attr("disabled", "disabled").css("text-decoration", "line-through").attr("href", "");
 });
 
