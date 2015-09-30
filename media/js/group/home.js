@@ -3,7 +3,7 @@ function label_type(type) {
         return '<span class="label label-primary">Group Meeting</span>'
     } else if (type == 'JC') {
         return '<span class="label label-success">Journal Club</span>'
-    } else if (type == 'JC') {
+    } else if (type == 'ES') {
         return '<span class="label label-warning">EteRNA Special</span>'
     } else if (type == 'N/A') {
         return '<span class="label label-danger">No Meeting</span>'
