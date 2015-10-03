@@ -62,7 +62,7 @@ pip $(cut -d$'\t' -f36 cache/stat_sys.txt | sed 's/ $*//') | \
 nano $(cut -d$'\t' -f25 cache/stat_sys.txt | sed 's/ $*//') | \
 imagemagick $(mogrify -version | head -1 | sed 's/\-.*//g' | sed 's/.*ImageMagick //g') | \
 htop $(htop --version | head -1 | sed 's/.*htop //g' | sed 's/ \-.*//g') | \
-awscli $(aws --version | sed 's/ Python.*//g' | sed 's/.*\///g') $(tput sgr 0)" >> ~/.ver_txt
+awscli $(aws --version 2> temp.txt && sed 's/ Python.*//g' temp.txt | sed 's/.*\///g') $(tput sgr 0)" >> ~/.ver_txt
 
 echo -e "\n\n$(tput setab 15)$(tput setaf 16) Das Lab Website Server $(tput sgr 0)" >> ~/.ver_txt
 echo -e "$(tput setab 15)$(tput setaf 16) daslab.stanford.edu / 54.149.140.20 $(tput sgr 0)\n" >> ~/.ver_txt
