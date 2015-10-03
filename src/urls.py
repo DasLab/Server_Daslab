@@ -1,14 +1,14 @@
 from django.conf.urls import include, url, handler404, handler500
 # from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth.views import login
+# from django.contrib.auth.views import login
 # from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
 
 from adminplus.sites import AdminSitePlus
 from filemanager import path_end
 
-from settings import MEDIA_ROOT, STATIC_ROOT, STATIC_URL, DEBUG
+from src.settings import MEDIA_ROOT, STATIC_ROOT, STATIC_URL, DEBUG
 from src import views
 
 admin.site = AdminSitePlus()
@@ -93,8 +93,6 @@ urlpatterns = [
     url(r'^admin/browse/' + path_end, views.browse),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^(?:robots.txt)?$', 'django.views.static.serve', kwargs={'path': 'robots.txt', 'document_root': MEDIA_ROOT}),
-
-    url(r'^private/$', views.test)
 ] #+ static(STATIC_URL, document_root=STATIC_ROOT)
 
 if DEBUG: urlpatterns.append(url(r'^test/$', views.test))
