@@ -81,13 +81,13 @@ def sys_ver_weekly():
         raise Exception('Error with running scheduled sys_ver_weekly().')
 
 
-def cache_every15min():
-    try:
-        subprocess.check_call('cd %s && python util_system_cache.py' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError:
-        print "    \033[41mERROR\033[0m: Failed to run \033[94mcache_every15min()\033[0m schedule."
-        print traceback.format_exc()
-        raise Exception('Error with running scheduled cache_every15min().')
+# def cache_every15min():
+#     try:
+#         subprocess.check_call('cd %s && python util_system_cache.py' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+#     except subprocess.CalledProcessError:
+#         print "    \033[41mERROR\033[0m: Failed to run \033[94mcache_every15min()\033[0m schedule."
+#         print traceback.format_exc()
+#         raise Exception('Error with running scheduled cache_every15min().')
 
 
   
