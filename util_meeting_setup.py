@@ -52,7 +52,7 @@ try:
         type_next = types[result['next'][1]]
         year = (datetime.utcnow() + timedelta(days=8)).date().year
         date = datetime.strptime("%s %s" % (result['next'][0], year), '%b %d %Y')
-        msg_next = 'For next week:\n# Date: _%s_\n# Time: *%s*\n# Place: %s\n# Presenter: _*%s*_\n# Type: `%s`' % (result['next'][0], datetime.strftime(date, '%b %d %Y (%a)'), clock, place, result['next'][2], type_next)
+        msg_next = 'For next week:\n# Date: _%s_\n# Time: *%s*\n# Place: %s\n# Presenter: _*%s*_\n# Type: `%s`' % (datetime.strftime(date, '%b %d %Y (%a)'), clock, place, result['next'][2], type_next)
     post = '''Hi all,\n\n%s\n\n%s\n\nThe full schedule is on the Das Lab <https://daslab.stanford.edu/group/schedule/|website>. Thanks for your attention.''' % (msg_this, msg_next)
     sh.chat.post_message('#general', post, as_user=False, parse='none', username='DasLab Bot')
 
