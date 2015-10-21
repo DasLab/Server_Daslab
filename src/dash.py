@@ -596,7 +596,10 @@ def cache_cal():
     for event in cal.walk('vevent'):
         title = event.get('SUMMARY')
         start = event.get('DTSTART').dt
-        end = event.get('DTEND').dt
+        if event.has_key('DTEND'):
+            end = event.get('DTEND').dt
+        else:
+            end = start + relativedelta(hours=1)
 
         all_day = (not isinstance(start, datetime))
         if all_day:
