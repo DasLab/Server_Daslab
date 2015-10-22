@@ -33,7 +33,7 @@ try:
         id = temp.json()['id']
         temp = requests.post('https://www.googleapis.com/drive/v2/files/%s/permissions?sendNotificationEmails=false&access_token=%s' % (id, access_token), json={"role":"writer", "type":"group", "value":"das-lab@googlegroups.com"})
 
-        sh.chat.post_message('#general', '>*<https://docs.google.com/presentation/d/%s/edit#slide=id.p|%s>*' % (id, title), as_user=False, parse='none', username='DasLab Bot')
+        sh.chat.post_message('#general', '>*<https://docs.google.com/presentation/d/%s/edit#slide=id.p|%s>*' % (id, title), as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
         flash_slides = FlashSlide(date=date, link='https://docs.google.com/presentation/d/%s/edit#slide=id.p' % id)
         flash_slides.save()
 
@@ -54,7 +54,7 @@ try:
         date = datetime.strptime("%s %s" % (result['next'][0], year), '%b %d %Y')
         msg_next = 'For next week:\n# Date: _%s_\n# Time: *%s*\n# Place: %s\n# Presenter: _*%s*_\n# Type: `%s`' % (datetime.strftime(date, '%b %d %Y (%a)'), clock, place, result['next'][2], type_next)
     post = '''Hi all,\n\n%s\n\n%s\n\nThe full schedule is on the Das Lab <https://daslab.stanford.edu/group/schedule/|website>. Thanks for your attention.''' % (msg_this, msg_next)
-    sh.chat.post_message('#general', post, as_user=False, parse='none', username='DasLab Bot')
+    sh.chat.post_message('#general', post, as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
 
 except:
     print traceback.format_exc()
