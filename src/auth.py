@@ -29,7 +29,7 @@ class AutomaticAdminLoginMiddleware(object):
             except:
                 is_admin = False
 
-            print "middleware:", is_admin
+            # print "middleware:", is_admin
             if is_admin:
                 user = authenticate(username=env('APACHE_USER'), password=env('APACHE_PASSWORD'))
                 request.user = user
