@@ -121,6 +121,12 @@ $(document).ready(function () {
     	$("#nav_internal_lg").addClass("active");
     	$("ul.breadcrumb").css("border-bottom", "5px solid #eeb211");
         $('<li><span style="color: #000;" class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;<a href="">Internal Site</a></li>').insertAfter($("ul.breadcrumb > li:first"));
+    } else if ($(location).attr("href").indexOf("admin/src/journalclub") != -1) {
+        $("#nav_jc").addClass("active");
+        $("#nav_internal").addClass("active");
+        $("#nav_internal_lg").addClass("active");
+        $("ul.breadcrumb").css("border-bottom", "5px solid #eeb211");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;<a href="">Internal Site</a></li>').insertAfter($("ul.breadcrumb > li:first"));
  	} else if ($(location).attr("href").indexOf("admin/src/eternayoutube") != -1) {
     	$("#nav_eterna").addClass("active");
     	$("#nav_internal").addClass("active");

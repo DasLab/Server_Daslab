@@ -76,6 +76,15 @@ class FlashSlideAdmin(admin.ModelAdmin):
     ]
 admin.site.register(FlashSlide, FlashSlideAdmin)
 
+class JournalClubAdmin(admin.ModelAdmin):
+    list_display = ('date', 'presenter', 'title', 'link',)
+    ordering = ('-date',)
+
+    fieldsets = [
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'presenter', 'link', 'title', ('authors', 'year'), 'citation']}),
+    ]
+admin.site.register(JournalClub, JournalClubAdmin)
+
 class RotationStudentAdmin(admin.ModelAdmin):
     list_display = ('date', 'full_name', 'title',)
     ordering = ('-date',)

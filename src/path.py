@@ -21,6 +21,7 @@ class SYS_PATH:
             'lab_home': MEDIA_ROOT + '/media/html/group_index.html',
             'lab_meeting_schedule': MEDIA_ROOT + '/media/html/group_meeting_schedule.html',
             'lab_meeting_flash': MEDIA_ROOT + '/media/html/group_meeting_flash.html',
+            'lab_meeting_jc': MEDIA_ROOT + '/media/html/group_meeting_jc.html',
             'lab_meeting_eterna': MEDIA_ROOT + '/media/html/group_meeting_eterna.html',
             'lab_meeting_rotation': MEDIA_ROOT + '/media/html/group_meeting_rotation.html',
             'lab_calendar': MEDIA_ROOT + '/media/html/group_calendar.html',

@@ -96,6 +96,15 @@ def lab_meeting_flash(request):
     return render_to_response(PATH.HTML_PATH['lab_meeting_flash'], {'flash_list':flash_list}, context_instance=RequestContext(request))
 
 # @login_required
+def lab_meeting_jc(request):
+    jc_list = JournalClub.objects.order_by('-date')
+    for i, gp in enumerate(jc_list):
+        gp.label = colors[11 - i % 12]
+        if i == 0 or jc_list[i - 1].date.year != gp.date.year:
+            gp.year_start = True
+    return render_to_response(PATH.HTML_PATH['lab_meeting_jc'], {'jc_list':jc_list}, context_instance=RequestContext(request))
+
+# @login_required
 def lab_meeting_youtube(request):
     eterna_list = EternaYoutube.objects.order_by('-date')
     for i, gp in enumerate(eterna_list):
@@ -420,13 +429,15 @@ def schedule_dash(request):
     json = dash_schedule(request)
     flash_slide = FlashSlide.objects.order_by('-date')[0]
     flash_slide = {'url':flash_slide.link, 'date':flash_slide.date.strftime('%Y-%m-%d')}
+    journal_club = JournalClub.objects.order_by('-date')[0]
+    journal_club = {'url':journal_club.link, 'date':journal_club.date.strftime('%Y-%m-%d'), 'name':journal_club.presenter, 'title':journal_club.title}
     eterna = EternaYoutube.objects.order_by('-date')[0]
     eterna = {'url':eterna.link, 'date':eterna.date.strftime('%Y-%m-%d'), 'name':eterna.presenter, 'title':eterna.title}
     rotation = RotationStudent.objects.order_by('-date')[0]
     rotation = {'date':rotation.date.strftime('%Y-%m-%d'), 'name':rotation.full_name, 'title':rotation.title}
     archive = Presentation.objects.order_by('-date')[0]
     archive = {'date':archive.date.strftime('%Y-%m-%d'), 'name':archive.presenter, 'title':archive.title}
-    json.update({'flash_slide':flash_slide, 'eterna':eterna, 'rotation':rotation, 'archive':archive}) 
+    json.update({'flash_slide':flash_slide, 'journal_club':journal_club, 'eterna':eterna, 'rotation':rotation, 'archive':archive}) 
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
 
 

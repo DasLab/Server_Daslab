@@ -156,6 +156,20 @@ class FlashSlide(models.Model):
         verbose_name_plural = 'Flash Slides'
 
 
+class JournalClub(models.Model):
+    date = models.DateField()
+    presenter = models.CharField(max_length=255)
+    authors = models.CharField(max_length=255, blank=True, help_text='<span class="glyphicon glyphicon-user"></span>&nbsp; Abbreviated first author last name only: <span class="label label-inverse">Das</span>.')
+    year = models.PositiveSmallIntegerField()
+    title = models.TextField(blank=True, help_text='<i class="icon-bullhorn"></i> Do <span class="label label-danger">NOT</span> use "CamelCase / InterCaps / CapWords". Only capitalize the first word.')
+    citation = models.CharField(max_length=255, blank=True, null=True, help_text='Journal, Volume, Issue, and Pages.')
+    link = models.CharField(max_length=255, verbose_name='URL', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp; Shows as <b>"Link"</b> to redirect to journal website.')
+
+    class Meta():
+        verbose_name = 'Journal Club'
+        verbose_name_plural = 'Journal Clubs'
+
+
 class RotationStudent(models.Model):
     date = models.DateField(verbose_name='Presentation Date')
     full_name = models.CharField(max_length=255, verbose_name='Full Name')

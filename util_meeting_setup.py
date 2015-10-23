@@ -120,7 +120,6 @@ try:
                     who_id = resp['id']
 
             if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
-                who_id = sh.users.get_user_id(who[0].sunet_id)
                 sh.chat.post_message(who_id, msg_who, as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
                 print '\033[92mSUCCESS\033[0m: PM\'ed reminder to \033[94m%s\033[0m in Slack.' % name
             else:

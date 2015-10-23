@@ -41,9 +41,10 @@ $.ajax({
         $("#tp").html('<b>' + data.tp.replace("[", "").replace("]", "") + '</b>');
 
         $("#recent_flash").html('<span class="label label-primary">' + data.flash_slide.date + '</span>&nbsp;&nbsp;<a href="' + data.flash_slide.url + '" target="_blanl"><span class="glyphicon glyphicon-new-window"></span></a>');
-        $("#recent_eterna").html('<span class="label label-primary">' + data.eterna.date + '</span>&nbsp;&nbsp;<a href="' + data.eterna.url + '" target="_blanl"><span class="glyphicon glyphicon-new-window"></span></a><br/><i>' + data.eterna.name + '</i>');
-        $("#recent_rotation").html('<span class="label label-primary">' + data.rotation.date + '</span><br/><i>' + data.rotation.name + '</i>');
-        $("#recent_archive").html('<span class="label label-primary">' + data.archive.date + '</span><br/><i>' + data.archive.name + '</i>');
+        $("#recent_jc").html('<i>' + data.journal_club.name + '</i> <span class="label label-primary">' + data.journal_club.date + '</span>&nbsp;&nbsp;<a href="' + data.journal_club.url + '" target="_blanl"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_eterna").html('<i>' + data.eterna.name + '</i> <span class="label label-primary">' + data.eterna.date + '</span>&nbsp;&nbsp;<a href="' + data.eterna.url + '" target="_blanl"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_rotation").html('<i>' + data.rotation.name + '</i> <span class="label label-primary">' + data.rotation.date + '</span><br/>');
+        $("#recent_archive").html('<i>' + data.archive.name + '</i> <span class="label label-primary">' + data.archive.date + '</span><br/>');
     }
 });
 

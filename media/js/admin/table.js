@@ -128,6 +128,23 @@ $(document).ready(function () {
 		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-blackboard"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
 		$("ul.breadcrumb > li:first").next().remove();
 		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;')
+	} else if ($(location).attr("href").indexOf("admin/src/journalclub") != -1) {
+		$("th.column-date").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
+		$("th.column-presenter").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
+		$("th.column-title").addClass("col-lg-5 col-md-5 col-sm-5 col-xs-5");
+		$("th.column-link").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+
+		$("td.field-link").css("text-decoration", "underline");
+		$("td.field-presenter").css("font-weight", "bold");
+
+		$("th.column-date > div.text > a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Date');
+		$("th.column-presenter > div.text > a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Presenter');
+		$("th.column-title > div.text > a").html('<span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Title');
+		$("th.column-link > div.text > a").html('<span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;URL');
+
+		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-book"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
+		$("ul.breadcrumb > li:first").next().remove();
+		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;')
 	} else if ($(location).attr("href").indexOf("admin/src/rotationstudent") != -1) {
 		$("th.column-date").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
 		$("th.column-full_name").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
@@ -143,10 +160,10 @@ $(document).ready(function () {
 		$("ul.breadcrumb > li:first").next().remove();
 		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;')
  	} else if ($(location).attr("href").indexOf("admin/src/eternayoutube") != -1) {
-		$("th.column-date").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
-		$("th.column-presenter").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
-		$("th.column-title").addClass("col-lg-6 col-md-6 col-sm-6 col-xs-6");
-		$("th.column-link").addClass("col-lg-6 col-md-6 col-sm-6 col-xs-6");
+		$("th.column-date").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
+		$("th.column-presenter").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
+		$("th.column-title").addClass("col-lg-5 col-md-5 col-sm-5 col-xs-5");
+		$("th.column-link").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
 
 		$("td.field-presenter").css("font-weight", "bold");
 		$("td.field-link").css("text-decoration", "underline");

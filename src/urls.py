@@ -54,6 +54,7 @@ urlpatterns = [
     url(r'^group/$', views.lab_home),
     url(r'^group/schedule/$', views.lab_meeting_schedule),
     url(r'^group/flash_slide/$', views.lab_meeting_flash),
+    url(r'^group/journal_club/$', views.lab_meeting_jc),
     url(r'^group/youtube/$', views.lab_meeting_youtube),
     url(r'^group/rotation/$', views.lab_meeting_rotation),
     url(r'^group/calendar/$', views.lab_calendar),

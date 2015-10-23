@@ -54,6 +54,12 @@ $(document).ready(function () {
         $("#nav_meeting_lg").addClass("active");
         $("ul.breadcrumb").css("border-bottom", "5px solid #ff5c2b");
         $('<li><span style="color: #000;" class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;<a href="">Group Meeting</a></li>').insertAfter($("ul.breadcrumb > li:first"));
+    } else if ($(location).attr("href").indexOf("group/journal_club") != -1) {
+        $("#nav_jc").addClass("active");
+        $("#nav_meeting").addClass("active");
+        $("#nav_meeting_lg").addClass("active");
+        $("ul.breadcrumb").css("border-bottom", "5px solid #ff5c2b");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;<a href="">Group Meeting</a></li>').insertAfter($("ul.breadcrumb > li:first"));
     } else if ($(location).attr("href").indexOf("group/youtube") != -1) {
         $("#nav_eterna").addClass("active");
         $("#nav_meeting").addClass("active");
