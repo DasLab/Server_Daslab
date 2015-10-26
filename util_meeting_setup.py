@@ -107,29 +107,29 @@ try:
             names = name.replace('/', '*|*').replace('&', '*|*').replace(' ', '').split('*|*')
         else:
             names = [name]
-        for name in names:
-            sunet_id = 'none'
-            for resp in response:
-                if resp.has_key('is_bot') and resp['is_bot']: continue
-                if resp['profile']['real_name'][:len(name)] == name:
-                    if sunet_id != 'none': 
-                        sunet_id = 'ambiguous'
-                        break
-                    email = resp['profile']['email']
-                    sunet_id = email[:email.find('@')]
-                    who_id = resp['id']
+        if name:
+            for name in names:
+                sunet_id = 'none'
+                for resp in response:
+                    if resp.has_key('is_bot') and resp['is_bot']: continue
+                    if resp['profile']['real_name'][:len(name)] == name:
+                        if sunet_id != 'none': 
+                            sunet_id = 'ambiguous'
+                            break
+                        email = resp['profile']['email']
+                        sunet_id = email[:email.find('@')]
+                        who_id = resp['id']
 
-            if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
-                sh.chat.post_message(who_id, msg_who, as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
-                print '\033[92mSUCCESS\033[0m: PM\'ed reminder to \033[94m%s\033[0m in Slack.' % name
-            else:
-                if sunet_id == 'none':
-                    print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not found.' % name
-                elif sunet_id == 'ambiguous':
-                    print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name
+                if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
+                    sh.chat.post_message(who_id, msg_who, as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
+                    print '\033[92mSUCCESS\033[0m: PM\'ed reminder to \033[94m%s\033[0m in Slack.' % name
                 else:
-                    print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not available in database.' % name
-
+                    if sunet_id == 'none':
+                        print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not found.' % name
+                    elif sunet_id == 'ambiguous':
+                        print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name
+                    else:
+                        print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not available in database.' % name
 
     post = '''Hi all,\n\n%s\n\n%s\n\nThe full schedule is on the Das Lab <https://daslab.stanford.edu/group/schedule/|website>. Thanks for your attention.''' % (msg_this, msg_next)
     sh.chat.post_message('#general', post, as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
