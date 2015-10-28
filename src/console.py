@@ -49,9 +49,7 @@ def get_backup_stat():
     if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
     ver += '~|~'.join(subprocess.Popen("%s && drive list -q \"title contains 'DasLab_' and (title contains '.gz' or title contains '.tgz')\"" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:])
 
-    f = open(os.path.join(MEDIA_ROOT, 'cache/stat_backup.txt'), 'w')
-    f.write(ver)
-    f.close()
+    open(os.path.join(MEDIA_ROOT, 'cache/stat_backup.txt'), 'w').write(ver)
     subprocess.Popen('rm %s' % os.path.join(MEDIA_ROOT, 'data/temp.txt'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 
@@ -78,18 +76,14 @@ def set_backup_form(request):
     cron_backup = '%s %s * * %s' % (time_backup[1], time_backup[0], day_backup)
     cron_upload = '%s %s * * %s' % (time_upload[1], time_upload[0], day_upload)
 
-    f = open('%s/config/cron.conf' % MEDIA_ROOT, 'r')
-    lines = f.readlines()
-    f.close()
+    lines = open('%s/config/cron.conf' % MEDIA_ROOT, 'r').readlines()
 
     index =  [i for i, line in enumerate(lines) if 'src.cron.backup_weekly' in line or 'src.cron.gdrive_weekly' in line or 'KEEP_BACKUP' in line]
-    lines[index[0]] = '\t\t["%s", "src.cron.backup_weekly", ">> %s/cache/log_cron.log # backup_weekly"],\n' % (cron_backup, MEDIA_ROOT)
-    lines[index[1]] = '\t\t["%s", "src.cron.gdrive_weekly", ">> %s/cache/log_cron.log # gdrive_weekly"],\n' % (cron_upload, MEDIA_ROOT)
+    lines[index[0]] = '\t\t["%s", "src.cron.backup_weekly", ">> %s/cache/log_cron_backup.log # backup_weekly"],\n' % (cron_backup, MEDIA_ROOT)
+    lines[index[1]] = '\t\t["%s", "src.cron.gdrive_weekly", ">> %s/cache/log_cron_gdrive.log # gdrive_weekly"],\n' % (cron_upload, MEDIA_ROOT)
     lines[index[2]] = '\t"KEEP_BACKUP": %s\n' % request.POST['keep']
+    open('%s/config/cron.conf' % MEDIA_ROOT, 'w').writelines(lines)
 
-    f = open('%s/config/cron.conf' % MEDIA_ROOT, 'w')
-    f.writelines(lines)
-    f.close()
     try:
         cron = subprocess.Popen('crontab -l | cut -d" " -f1-5', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()
         if len(cron) > 9:
@@ -490,9 +484,7 @@ def export_citation(request):
         if text_type == '0':
             response["Content-Disposition"] = "attachment; filename=export_citation.txt"
         else:
-            f = open(os.path.join(MEDIA_ROOT, 'data/export_citation.html'), 'w')
-            f.write(html.encode('UTF-8'))
-            f.close()
+            open(os.path.join(MEDIA_ROOT, 'data/export_citation.html'), 'w').write(html.encode('UTF-8'))
 
             try:
                 subprocess.check_call('cd %s/data && pandoc -f html -t docx -o export_citation.docx export_citation.html' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -501,10 +493,7 @@ def export_citation(request):
                 print traceback.format_exc()
                 raise Exception('Error with pandoc converting html source file to docx output.')
 
-            f = open(os.path.join(MEDIA_ROOT, 'data/export_citation.docx'), 'r')
-            lines = f.readlines()
-            f.close()
-
+            lines = open(os.path.join(MEDIA_ROOT, 'data/export_citation.docx'), 'r').readlines()
             response = HttpResponse(lines, content_type='application/msword')
             response["Content-Disposition"] = "attachment; filename=export_citation.docx"
     return response

@@ -448,9 +448,7 @@ def get_user(request):
     return HttpResponse(simplejson.dumps({'user':request.META['WEBAUTH_USER']}), content_type='application/json')
 
 def get_js(request):
-    f = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r')
-    lines = f.readlines()
-    f.close()
+    lines = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r').readlines()
     lines = ''.join(lines).split('\t')
     json = {'jquery':lines[11], 'bootstrap':lines[12], 'swfobj':lines[16], 'fullcal':lines[17], 'moment':lines[18]}
     return HttpResponse(simplejson.dumps(json), content_type='application/json')

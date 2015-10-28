@@ -255,10 +255,7 @@ def backup(request):
     if request.method == 'POST':
         set_backup_form(request)
         flag = 1
-
-    f = open('%s/config/cron.conf' % MEDIA_ROOT, 'r')
-    lines = f.readlines()
-    f.close()
+    lines = open('%s/config/cron.conf' % MEDIA_ROOT, 'r').readlines()
 
     index =  [i for i, line in enumerate(lines) if 'KEEP_BACKUP' in line][0]
     keep = int(lines[index].split(':')[1])
@@ -282,17 +279,13 @@ def export(request):
 admin.site.register_view('export/', view=export, visible=False)
 
 def get_ver(request):
-    f = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r')
-    lines = f.readlines()
-    f.close()
+    lines = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r').readlines()
     lines = ''.join(lines)
     return HttpResponse(lines, content_type='text/plain')
 admin.site.register_view('get_ver/', view=get_ver, visible=False)
 
 def get_backup(request):
-    f = open('%s/cache/stat_backup.txt' % MEDIA_ROOT, 'r')
-    lines = f.readlines()
-    f.close()
+    lines = open('%s/cache/stat_backup.txt' % MEDIA_ROOT, 'r').readlines()
     lines = ''.join(lines)
     return HttpResponse(lines, content_type='text/plain')
 admin.site.register_view('get_backup/', view=get_backup, visible=False)

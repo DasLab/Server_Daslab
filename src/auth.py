@@ -9,9 +9,7 @@ MEDIA_ROOT = os.path.dirname(os.path.dirname(__file__))
 
 class USER_GROUP:
     def __init__(self):
-        f = open('%s/config/group.conf' % MEDIA_ROOT, 'r')
-        lines = f.readlines()
-        f.close()
+        lines = open('%s/config/group.conf' % MEDIA_ROOT, 'r').readlines()
 
         self.ADMIN = [ x.strip() for x in lines[0].replace('daslab_admin: ', '').split(' ')]
         self.GROUP = [ x.strip() for x in lines[1].replace('daslab_group: ', '').split(' ')]
