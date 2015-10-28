@@ -597,8 +597,18 @@ def cache_cal():
     for event in cal.walk('vevent'):
         title = event.get('SUMMARY')
         start = event.get('DTSTART').dt
+        if type(start) is datetime: 
+            if event.get('DTSTART').params.has_key('TZID'):
+                start = start.replace(tzinfo=pytz.timezone(event.get('DTSTART').params['TZID'])).astimezone(pytz.timezone(TIME_ZONE))
+            else:
+                start = start.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
         if event.has_key('DTEND'):
             end = event.get('DTEND').dt
+            if type(end) is datetime: 
+                if event.get('DTEND').params.has_key('TZID'):
+                    end = end.replace(tzinfo=pytz.timezone(event.get('DTSTART').params['TZID'])).astimezone(pytz.timezone(TIME_ZONE))
+                else:
+                    end = end.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
         else:
             end = start + relativedelta(hours=1)
 
@@ -607,7 +617,7 @@ def cache_cal():
             color = "#29be92"
         else:
             color = "#5496d7"
-        if ("group meeting" in title.lower()) or ("das lab group" in title.lower()):
+        if ("group meeting" in title.lower()) or ("das lab group" in title.lower()) or ("eterna dev meeting" in title.lower()):
             color = "#ff5c2b"
         if "BD" in title or 'b-day' in title or 'birthday' in title.lower():
             color = "#c28fdd"
@@ -617,17 +627,33 @@ def cache_cal():
             rrule = event.get('RRULE')
             while True:
                 if 'YEARLY' in rrule['FREQ']:
-                    start += relativedelta(years=1)
-                    end += relativedelta(years=1)
+                    if rrule.has_key('INTERVAL'):
+                        interval = rrule['INTERVAL'][0]
+                    else:
+                        interval = 1
+                    start += relativedelta(years=interval)
+                    end += relativedelta(years=interval)
                 elif 'MONTHLY' in rrule['FREQ']:
-                    start += relativedelta(months=1)
-                    end += relativedelta(months=1)
+                    if rrule.has_key('INTERVAL'):
+                        interval = rrule['INTERVAL'][0]
+                    else:
+                        interval = 1
+                    start += relativedelta(months=interval)
+                    end += relativedelta(months=interval)
                 elif 'WEEKLY' in rrule['FREQ']:
-                    start += timedelta(days=7)
-                    end += timedelta(days=7)
+                    if rrule.has_key('INTERVAL'):
+                        interval = rrule['INTERVAL'][0]
+                    else:
+                        interval = 1
+                    start += timedelta(days=7*interval)
+                    end += timedelta(days=7*interval)
                 elif 'DAILY' in rrule['FREQ']:
-                    start += timedelta(days=1)
-                    end += timedelta(days=1)
+                    if rrule.has_key('INTERVAL'):
+                        interval = rrule['INTERVAL'][0]
+                    else:
+                        interval = 1
+                    start += timedelta(days=interval)
+                    end += timedelta(days=interval)
                 else:
                     break
 
@@ -642,6 +668,7 @@ def cache_cal():
                     if start.date() > until: break
 
                 data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
+
 
     return simplejson.dumps(data)    
 
