@@ -18,37 +18,27 @@ from src.dash import *
 
 def pickle_aws(request, name):
     f_name = '%s/cache/aws/%s_%s_%s.pickle' % (MEDIA_ROOT, request['tp'], name, request['qs'])
-    f = open(f_name + '_tmp', 'wb')
-    pickle.dump(cache_aws(request), f)
-    f.close()
+    pickle.dump(cache_aws(request), open(f_name + '_tmp', 'wb'))
     subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 def pickle_ga(request):
     f_name = '%s/cache/ga/%s_%s.pickle' % (MEDIA_ROOT, request['id'], request['qs'])
-    f = open(f_name + '_tmp', 'wb')
-    pickle.dump(cache_ga(request), f)
-    f.close()
+    pickle.dump(cache_ga(request), open(f_name + '_tmp', 'wb'))
     subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 def pickle_git(request):
     f_name = '%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, request['repo'], request['qs'])
-    f = open(f_name + '_tmp', 'wb')
-    pickle.dump(cache_git(request), f)
-    f.close()
+    pickle.dump(cache_git(request), open(f_name + '_tmp', 'wb'))
     subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 def pickle_slack(request):
     f_name = '%s/cache/slack/%s.pickle' % (MEDIA_ROOT, request['qs'])
-    f = open(f_name + '_tmp', 'wb')
-    pickle.dump(cache_slack(request), f)
-    f.close()
+    pickle.dump(cache_slack(request), open(f_name + '_tmp', 'wb'))
     subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 def pickle_dropbox(request):
     f_name = '%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, request['qs'])
-    f = open(f_name + '_tmp', 'wb')
-    pickle.dump(cache_dropbox(request), f)
-    f.close()
+    pickle.dump(cache_dropbox(request), open(f_name + '_tmp', 'wb'))
     subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 
@@ -84,9 +74,7 @@ def main():
             print "#1: Requesting \033[94mAWS\033[0m..."
             request = {'qs':'init'}
             aws_init = cache_aws(request)
-            f = open('%s/cache/aws/init.pickle' % MEDIA_ROOT, 'wb')
-            pickle.dump(aws_init, f)
-            f.close()
+            pickle.dump(aws_init, open('%s/cache/aws/init.pickle' % MEDIA_ROOT, 'wb'))
             aws_init = simplejson.loads(aws_init)
             print "    AWS \033[94minit\033[0m finished with \033[92mSUCCESS\033[0m."
 
@@ -117,9 +105,7 @@ def main():
             print "#2: Requesting \033[94mGA\033[0m..."
             request = {'qs':'init'}
             ga_init = cache_ga(request)
-            f = open('%s/cache/ga/init.pickle' % MEDIA_ROOT, 'wb')
-            pickle.dump(ga_init, f)
-            f.close()
+            pickle.dump(ga_init, open('%s/cache/ga/init.pickle' % MEDIA_ROOT, 'wb'))
             ga_init = simplejson.loads(ga_init)
             print "    GA \033[94minit\033[0m finished with \033[92mSUCCESS\033[0m."
 
@@ -142,9 +128,7 @@ def main():
             print "#3: Requesting \033[94mGIT\033[0m..."
             request = {'qs':'init'}
             git_init = cache_git(request)
-            f = open('%s/cache/git/init.pickle' % MEDIA_ROOT, 'wb')
-            pickle.dump(git_init, f)
-            f.close()
+            pickle.dump(git_init, open('%s/cache/git/init.pickle' % MEDIA_ROOT, 'wb'))
             git_init = simplejson.loads(git_init)
             print "    GIT \033[94minit\033[0m finished with \033[92mSUCCESS\033[0m."
 
@@ -182,18 +166,14 @@ def main():
             # schedule
             print "#6: Requesting \033[94mSchedule Spreadsheet\033[0m..."
             f_name = '%s/cache/schedule.pickle' % MEDIA_ROOT
-            f = open(f_name + '_tmp', 'wb')
-            pickle.dump(cache_schedule(), f)
-            f.close()
+            pickle.dump(cache_schedule(), open(f_name + '_tmp', 'wb'))
             subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             print "    Schedule finished with \033[92mSUCCESS\033[0m."
 
             # cal
             print "#7: Requesting \033[94mGoogle Calendar\033[0m..."
             f_name = '%s/cache/calendar.pickle' % MEDIA_ROOT
-            f = open(f_name + '_tmp', 'wb')
-            pickle.dump(cache_cal(), f)
-            f.close()
+            pickle.dump(cache_cal(), open(f_name + '_tmp', 'wb'))
             subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             print "    Calendar finished with \033[92mSUCCESS\033[0m."
         else:
@@ -203,7 +183,14 @@ def main():
             print "#7: Skip \033[94mSchedule Spreadsheet\033[0m..."
             print "#7: Skip \033[94mGoogle Calendar\033[0m..."
     except:
-        print traceback.format_exc()
+        err = traceback.format_exc()
+        if is_3: var = '3'
+        if is_15: var = '15'
+        if is_30: var = '30'
+        if is_3 and is_15 and is_30: var = ''
+        ts = '%s\t\tutil_system_cache.py %s\n' % (time.ctime(), var)
+        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
+        open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
         print "Finished with \033[41mERROR\033[0m!"
         print "Time elapsed: %.1f s." % (time.time() - t0)
         sys.exit(1)

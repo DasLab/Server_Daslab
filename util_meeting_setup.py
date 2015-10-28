@@ -14,15 +14,13 @@ from slacker import Slacker
 from src.settings import *
 from src.models import *
 
+
 t0 = time.time()
 print time.ctime()
 t = time.time()
 
 try:
-    f = open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb')
-    result = pickle.load(f)
-    f.close()
-
+    result = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
     sh = Slacker(SLACK["ACCESS_TOKEN"])
     response = sh.users.list().body['members']
 
@@ -136,7 +134,10 @@ try:
     print '\033[92mSUCCESS\033[0m: Meeting Reminder posted in Slack.'
 
 except:
-    print traceback.format_exc()
+    err = traceback.format_exc()
+    ts = '%s\t\tutil_meeting_setup.py\n' % time.ctime()
+    open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
+    open('%s/cache/log_cron_meeting.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
     print "Finished with \033[41mERROR\033[0m!"
     print "Time elapsed: %.1f s." % (time.time() - t0)
     sys.exit(1)
