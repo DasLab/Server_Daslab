@@ -45,7 +45,6 @@ def pickle_dropbox(request):
 def main():
     t0 = time.time()
     print time.ctime()
-    t = time.time()
 
     if len(sys.argv) > 1:
         is_3, is_15, is_30 = False, False, False

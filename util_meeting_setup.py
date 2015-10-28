@@ -21,7 +21,6 @@ from src.cron import send_notify_emails
 
 t0 = time.time()
 print time.ctime()
-t = time.time()
 
 try:
     result = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
