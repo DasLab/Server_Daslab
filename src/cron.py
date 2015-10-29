@@ -38,8 +38,8 @@ def backup_weekly():
                 html += '%s\t\t%s %s, %s\t\t%s\n' % (local_list[i+7], local_list[i+4], local_list[i+5], local_list[i+6], local_list[i+3])
 
             if IS_SLACK: 
-                send_notify_slack(SLACK['ADMIN_ID'], '*SUCCESS*: Scheduled weekly *backup* finished @ _%s_\n' % time.ctime())
-                send_notify_slack(SLACK['ADMIN_ID'], '>```%s```\n' % html)
+                send_notify_slack(SLACK['ADMIN_NAME'], '*SUCCESS*: Scheduled weekly *backup* finished @ _%s_\n' % time.ctime())
+                send_notify_slack(SLACK['ADMIN_NAME'], '>```%s```\n' % html)
             else:
                 send_notify_emails('[System] {daslab.stanford.edu} Weekly Backup Notice', 'This is an automatic email notification for the success of scheduled weekly backup of the DasLab Website database and static contents.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n%s\n\nDasLab Website Admin\n' % (t_cron, d_cron, t_now, html))
         get_backup_stat()
@@ -65,8 +65,8 @@ def gdrive_weekly():
                 html += '%s\t\t%s %s\t\t%s %s\n' % (gdrive_list[i+1], gdrive_list[i+4], gdrive_list[i+5], gdrive_list[i+2], gdrive_list[i+3])
 
             if IS_SLACK: 
-                send_notify_slack(SLACK['ADMIN_ID'], '*SUCCESS*: Scheduled weekly *gdrive sync* finished @ _%s_\n' % time.ctime())
-                send_notify_slack(SLACK['ADMIN_ID'], '>```%s```\n' % html)
+                send_notify_slack(SLACK['ADMIN_NAME'], '*SUCCESS*: Scheduled weekly *gdrive sync* finished @ _%s_\n' % time.ctime())
+                send_notify_slack(SLACK['ADMIN_NAME'], '>```%s```\n' % html)
             else:
                 send_notify_emails('[System] {daslab.stanford.edu} Weekly Sync Notice', 'This is an automatic email notification for the success of scheduled weekly sync of the DasLab Website backup contents to Google Drive account.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n%s\n\nDasLab Website Admin\n' % (t_cron, d_cron, t_now, html))
         get_backup_stat()

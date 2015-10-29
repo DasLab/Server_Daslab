@@ -26,7 +26,6 @@ try:
     result = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
     sh = Slacker(SLACK["ACCESS_TOKEN"])
     users = sh.users.list().body['members']
-    ims = sh.im.list().body['ims']
     msg_handles = []
 
     year = (datetime.utcnow() + timedelta(days=1)).date().year
@@ -39,7 +38,7 @@ try:
         temp = requests.post('https://www.googleapis.com/drive/v2/files/%s/permissions?sendNotificationEmails=false&access_token=%s' % (ppt_id, access_token), json={"role":"writer", "type":"group", "value":"das-lab@googlegroups.com"})
         print '\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) created and shared.' % ppt_id
 
-        msg_handles.append(send_notify_slack('#general', '>*<https://docs.google.com/presentation/d/%s/edit#slide=id.p|%s>*' % (ppt_id, title)))
+        msg_handles.append( ('#general', '>*<https://docs.google.com/presentation/d/%s/edit#slide=id.p|%s>*' % (ppt_id, title)) )
         print '\033[92mSUCCESS\033[0m: Google Presentation posted in Slack.'
         flash_slides = FlashSlide(date=date, link='https://docs.google.com/presentation/d/%s/edit#slide=id.p' % ppt_id)
         flash_slides.save()
@@ -77,12 +76,8 @@ try:
                         who_id = resp['id']
 
                 if sunet_id in GROUP.ROTON:
-                    for resp in ims:
-                        if resp['user'] == who_id:
-                            who_id = resp['id']
-                            break
                     msg_who = 'Just a reminder: Please send your presentation to our site admin for `archiving` *after* your presentation _tomorrow_.'
-                    msg_handles.append(send_notify_slack(who_id, msg_who))
+                    msg_handles.append( ('@' + who_id, msg_who) )
                     print '\033[92mSUCCESS\033[0m: PM\'ed reminder to \033[94m%s\033[0m in Slack.' % name
                 else:
                     if sunet_id == 'none':
@@ -128,11 +123,7 @@ try:
                         who_id = resp['id']
 
                 if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
-                    for resp in ims:
-                        if resp['user'] == who_id:
-                            who_id = resp['id']
-                            break
-                    msg_handles.append(send_notify_slack(who_id, msg_who))
+                    msg_handles.append( ('@' + who_id, msg_who) )
                     print '\033[92mSUCCESS\033[0m: PM\'ed reminder to \033[94m%s\033[0m in Slack.' % name
                 else:
                     if sunet_id == 'none':
@@ -143,7 +134,7 @@ try:
                         print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not available in database.' % name
 
     post = '''Hi all,\n\n%s\n\n%s\n\nThe full schedule is on the Das Lab <https://daslab.stanford.edu/group/schedule/|website>. Thanks for your attention.''' % (msg_this, msg_next)
-    msg_handles.append(send_notify_slack('#general', post))
+    msg_handles.append( ('#general', post) )
     print '\033[92mSUCCESS\033[0m: Meeting Reminder posted in Slack.'
 
 except:
@@ -152,9 +143,6 @@ except:
     open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
     open('%s/cache/log_cron_meeting.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
 
-    for h in msg_handles:
-        h = h.body
-        sh.chat.delete(h['channel'], h['ts'])
     if result['this'][1] != 'N/A':
         year = (datetime.utcnow() + timedelta(days=1)).date().year
         date = datetime.strptime("%s %s" % (result['this'][0], year), '%b %d %Y')
@@ -162,8 +150,8 @@ except:
         requests.delete('https://www.googleapis.com/drive/v2/files/%s/?access_token=%s' % (ppt_id, access_token))
 
     if IS_SLACK:
-        send_notify_slack(SLACK['ADMIN_ID'], '*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err))
-        send_notify_slack(SLACK['ADMIN_ID'], 'FlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\n>Flash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.')
+        send_notify_slack(SLACK['ADMIN_NAME'], '*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err))
+        send_notify_slack(SLACK['ADMIN_NAME'], 'FlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\n>Flash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.')
     else:
         send_notify_emails('[Django] {daslab.stanford.edu} ERROR: Weekly Meeting Setup', 'This is an automatic email notification for the failure of scheduled weekly flash slides setup. The following error occurred:\n\n%s\n\n%s\n\nFlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\n\n** Flash Slide has NOT been setup yet for this week! Please investigate and fix the setup immediately.\n\nDasLab Website Admin' % (ts, err))
 
@@ -171,7 +159,11 @@ except:
     print "Time elapsed: %.1f s." % (time.time() - t0)
     sys.exit(1)
 
-if IS_SLACK: send_notify_slack(SLACK['ADMIN_ID'], '*SUCCESS*: Scheduled weekly *flash slides setup* finished @ _%s_\n' % time.ctime())
+else:
+    for h in msg_handles:
+        send_notify_slack(h[0], h[1])
+
+if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '*SUCCESS*: Scheduled weekly *flash slides setup* finished @ _%s_\n' % time.ctime())
 print "Finished with \033[92mSUCCESS\033[0m!"
 print "Time elapsed: %.1f s." % (time.time() - t0)
 sys.exit(0)

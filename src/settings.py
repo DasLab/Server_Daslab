@@ -50,25 +50,11 @@ GA = env_oauth['GA']
 GCAL = env_oauth['CALENDAR']
 DRIVE = env_oauth['DRIVE']
 GIT = env_oauth['GIT']
+SLACK = env_oauth['SLACK']
+SLACK['ADMIN_NAME'] = '@' + SLACK['ADMIN_NAME']
 DROPBOX = env_oauth['DROPBOX']
 APACHE_ROOT = '/var/www'
 
-SLACK = env_oauth['SLACK']
-sh = Slacker(SLACK["ACCESS_TOKEN"])
-users = sh.users.list().body['members']
-ims = sh.im.list().body['ims']
-for resp in users:
-    if resp['name'] == SLACK['BOT_NAME']:
-        SLACK['BOT_ID'] = resp['id']
-        break
-for resp in users:
-    if resp['name'] == SLACK['ADMIN_NAME']:
-        admin_id = resp['id']
-        for resp in ims:
-            if resp['user'] == admin_id:
-                SLACK['ADMIN_ID'] = resp['id']
-                break
-        break
 
 MANAGERS = ADMINS = (
     (env('ADMIN_NAME'), env('ADMIN_EMAIL')),

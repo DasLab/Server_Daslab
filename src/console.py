@@ -110,10 +110,10 @@ def set_backup_form(request):
         ts = '%s\t\tset_backup_form()\n' % time.ctime()
         open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
         open('%s/cache/log_cron_backup.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_ID'], '*`ERROR`*: *set_backup_form()* @ _%s_\n>```%s```\n' % (time.ctime(), err))
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '*`ERROR`*: *set_backup_form()* @ _%s_\n>```%s```\n' % (time.ctime(), err))
         raise Exception('Error with setting crontab scheduled jobs.')
     else:
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_ID'], '*SUCCESS*: weekly *backup & sync* set @ _%s_\n' % time.ctime())
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '*SUCCESS*: weekly *backup & sync* set @ _%s_\n' % time.ctime())
 
         # call_command('crontab', 'add')
     # except:
@@ -515,7 +515,7 @@ def export_citation(request):
                 err = traceback.format_exc()
                 ts = '%s\t\texport_citation()\n' % time.ctime()
                 open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-                if IS_SLACK: send_notify_slack(SLACK['ADMIN_ID'], '*`ERROR`*: *export_citation()* @ _%s_\n>```%s```\n' % (time.ctime(), err))
+                if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '*`ERROR`*: *export_citation()* @ _%s_\n>```%s```\n' % (time.ctime(), err))
                 raise Exception('Error with pandoc converting html source file to docx output.')
 
             lines = open(os.path.join(MEDIA_ROOT, 'data/export_citation.docx'), 'r').readlines()
