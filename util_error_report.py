@@ -22,6 +22,7 @@ try:
         send_notify_emails('[System] {daslab.stanford.edu} Weekly Error Report', 'This is an automatic email notification for the aggregated weekly error report. The following error occurred:\n\n\n%s\n\n\nDasLab Website Admin' % (lines))
         open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'w').write('')
 
+    subprocess.check_call('gzip -f %s/cache/log_cron.log' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 except:
     err = traceback.format_exc()
     ts = '%s\t\t%s\n' % (time.ctime(), sys.argv[0])

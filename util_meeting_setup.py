@@ -39,7 +39,6 @@ try:
         print '\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) created and shared.' % ppt_id
 
         msg_handles.append( ('#general', '>*<https://docs.google.com/presentation/d/%s/edit#slide=id.p|%s>*' % (ppt_id, title)) )
-        print '\033[92mSUCCESS\033[0m: Google Presentation posted in Slack.'
         flash_slides = FlashSlide(date=date, link='https://docs.google.com/presentation/d/%s/edit#slide=id.p' % ppt_id)
         flash_slides.save()
         print '\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) saved in MySQL.' % ppt_id
@@ -67,7 +66,7 @@ try:
                 sunet_id = 'none'
                 for resp in users:
                     if resp.has_key('is_bot') and resp['is_bot']: continue
-                    if resp['profile']['real_name'][:len(name)] == name:
+                    if resp['profile']['real_name'][:len(name)].lower() == name.lower():
                         if sunet_id != 'none': 
                             sunet_id = 'ambiguous'
                             break
@@ -78,7 +77,6 @@ try:
                 if sunet_id in GROUP.ROTON:
                     msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation _tomorrow_.' % SLACK['ADMIN_NAME']
                     msg_handles.append( ('@' + who_id, msg_who) )
-                    print '\033[92mSUCCESS\033[0m: PM\'ed reminder to \033[94m%s\033[0m in Slack.' % name
                 else:
                     if sunet_id == 'none':
                         print '\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) not found.' % name
@@ -120,7 +118,7 @@ try:
                 sunet_id = 'none'
                 for resp in users:
                     if resp.has_key('is_bot') and resp['is_bot']: continue
-                    if resp['profile']['real_name'][:len(name)] == name:
+                    if resp['profile']['real_name'][:len(name)].lower() == name.lower():
                         if sunet_id != 'none': 
                             sunet_id = 'ambiguous'
                             break
@@ -130,7 +128,6 @@ try:
 
                 if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
                     msg_handles.append( ('@' + who_id, msg_who) )
-                    print '\033[92mSUCCESS\033[0m: PM\'ed reminder to \033[94m%s\033[0m in Slack.' % name
                 else:
                     if sunet_id == 'none':
                         print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not found.' % name
@@ -141,7 +138,6 @@ try:
 
     post = '''Hi all,\n\n%s\n\n%s\n\nThe full schedule is on the Das Lab <https://daslab.stanford.edu/group/schedule/|website>. For questions regarding the schedule, please contact _%s_ (site admin). Thanks for your attention.''' % (msg_this, msg_next, SLACK['ADMIN_NAME'])
     msg_handles.append( ('#general', post) )
-    print '\033[92mSUCCESS\033[0m: Meeting Reminder posted in Slack.'
 
 except:
     err = traceback.format_exc()
@@ -154,6 +150,8 @@ except:
         date = datetime.strptime("%s %s" % (result['this'][0], year), '%b %d %Y')
         FlashSlide.objects.get(date=date).delete()
         requests.delete('https://www.googleapis.com/drive/v2/files/%s/?access_token=%s' % (ppt_id, access_token))
+        print '\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) deleted.' % ppt_id
+        print '\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) removed in MySQL.' % ppt_id
 
     if IS_SLACK:
         send_notify_slack(SLACK['ADMIN_NAME'], '*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err))
@@ -168,6 +166,10 @@ except:
 else:
     for h in msg_handles:
         send_notify_slack(h[0], h[1])
+        if '@' in h[0]:
+            print '\033[92mSUCCESS\033[0m: PM\'ed reminder to \033[94m%s\033[0m in Slack.' % h[0]
+    print '\033[92mSUCCESS\033[0m: Google Presentation posted in Slack.'
+    print '\033[92mSUCCESS\033[0m: Meeting Reminder posted in Slack.'
 
 if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '*SUCCESS*: Scheduled weekly *flash slides setup* finished @ _%s_\n' % time.ctime())
 print "Finished with \033[92mSUCCESS\033[0m!"
