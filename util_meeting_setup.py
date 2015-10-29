@@ -26,42 +26,46 @@ try:
     result = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
     sh = Slacker(SLACK["ACCESS_TOKEN"])
     users = sh.users.list().body['members']
-    msg_handles = []
 
-    year = (datetime.utcnow() + timedelta(days=1)).date().year
-    date = datetime.strptime("%s %s" % (result['this'][0], year), '%b %d %Y')
-    title = 'Flash Slides: %s' % datetime.strftime(date, '%b %d %Y')
-    if result['this'][1] != 'N/A':
+    msg_handles = []
+    clock = result['tp'][result['tp'].find('@')+1:result['tp'].rfind('@')].strip()
+    clock = clock[:clock.find('-')].strip()
+    place = result['tp'][result['tp'].rfind('@')+1:].strip()[:-1]
+    types = {'ES':'EteRNA Special', 'GM':'Group Meeting', 'JC':'Journal Club'}
+
+    if result['this'][1] == 'N/A':
+        msg_this = 'Hi all,\n\nThis is a reminder that there will be *`NO Meeting`* this week'
+        if result['this'][3]:
+            msg_this += ' due to: _%s_.' % result['this'][3]
+        else:
+            msg_this += '.'
+        msg_handles.append( ('#general', '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "title":'Group Meeting Reminder', "text":msg_this, "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg'}]) )
+        print '\033[92mSUCCESS\033[0m: Google Presentation skipped (N/A for this week: \033[94m%s\033[0m).' % datetime.strftime(date, '%b %d %Y')
+    else:
+        type_this = types[result['this'][1]]
+        year = (datetime.utcnow() + timedelta(days=1)).date().year
+        date = datetime.strptime("%s %s" % (result['this'][0], year), '%b %d %Y')
+        title = 'Flash Slides: %s' % datetime.strftime(date, '%b %d %Y')
+
         access_token = requests.post('https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (DRIVE['REFRESH_TOKEN'], DRIVE['CLIENT_ID'], DRIVE['CLIENT_SECRET'])).json()['access_token']
         temp = requests.post('https://www.googleapis.com/drive/v2/files/%s/copy?access_token=%s' % (DRIVE['PRESENTATION_ID'], access_token), json={"title":"%s" % title})
         ppt_id = temp.json()['id']
         temp = requests.post('https://www.googleapis.com/drive/v2/files/%s/permissions?sendNotificationEmails=false&access_token=%s' % (ppt_id, access_token), json={"role":"writer", "type":"group", "value":"das-lab@googlegroups.com"})
         print '\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) created and shared.' % ppt_id
 
-        msg_handles.append( ('#general', '', [{"fallback":'%s' % title, "mrkdwn_in": ["text"], "color":"warning", "title":'%s' % title, "text":'*<https://docs.google.com/presentation/d/%s/edit#slide=id.p>*\n_This link could also be found on the Das Lab <https://daslab.stanford.edu/group/flash_slide/|website>_' % ppt_id, "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_drive.png'}]))
         flash_slides = FlashSlide(date=date, link='https://docs.google.com/presentation/d/%s/edit#slide=id.p' % ppt_id)
         flash_slides.save()
         print '\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) saved in MySQL.' % ppt_id
-    else:
-        print '\033[92mSUCCESS\033[0m: Google Presentation skipped (N/A for this week: \033[94m%s\033[0m).' % datetime.strftime(date, '%b %d %Y')
-
-    clock = result['tp'][result['tp'].find('@')+1:result['tp'].rfind('@')].strip()
-    clock = clock[:clock.find('-')].strip()
-    place = result['tp'][result['tp'].rfind('@')+1:].strip()[:-1]
-    types = {'ES':'EteRNA Special', 'GM':'Group Meeting', 'JC':'Journal Club'}
-    if result['this'][1] == 'N/A':
-        msg_this = 'This is a reminder that there will be `NO Meeting` this week.'
-    else:
-        type_this = types[result['this'][1]]
-        msg_this = 'This is a reminder that group meeting will be `%s` for this week.\n# Date: _%s_\n# Time: *%s*\n# Place: %s\n# Presenter: _*%s*_\n# Type: `%s`\n# Flash Slides: <https://docs.google.com/presentation/d/%s/edit#slide=id.p>' % (type_this, datetime.strftime(date, '%b %d %Y (%a)'), clock, place, result['this'][2], type_this, ppt_id)
-
+        
         flag = result['this'][3].lower().replace(' ', '')
-        if flag == 'endofrotationtalk':
-            name = result['this'][2]
-            if '/' in name or '&' in name:
-                names = name.replace('/', '*|*').replace('&', '*|*').replace(' ', '').split('*|*')
-            else:
-                names = [name]
+        name = result['this'][2]
+        ids = []
+        if '/' in name or '&' in name:
+            names = name.replace('/', '*|*').replace('&', '*|*').replace(' ', '').split('*|*')
+        else:
+            names = [name]
+
+        if name:
             for name in names:
                 sunet_id = 'none'
                 for resp in users:
@@ -74,31 +78,43 @@ try:
                         sunet_id = email[:email.find('@')]
                         who_id = resp['name']
 
-                if sunet_id in GROUP.ROTON:
-                    msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation _tomorrow_.' % SLACK['ADMIN_NAME']
-                    msg_handles.append( ('@' + who_id, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))
-                else:
-                    if sunet_id == 'none':
-                        print '\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) not found.' % name
-                    elif sunet_id == 'ambiguous':
-                        print '\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name
+                if flag == 'endofrotationtalk':
+                    if sunet_id in GROUP.ROTON:
+                        msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation _tomorrow_.' % SLACK['ADMIN_NAME']
+                        ids.append('<@' + who_id + '>')
+                        msg_handles.append( ('@' + who_id, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))
                     else:
-                        print '\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) not available in database.' % name
-            msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'REMINDER', "mrkdwn_in": ["text"], "color":"warning", "text":'*REMINDER*: Add *RotationStudent* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
+                        if sunet_id == 'none':
+                            print '\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) not found.' % name
+                        elif sunet_id == 'ambiguous':
+                            print '\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name
+                        else:
+                            print '\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) not available in database.' % name
+                elif sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.OTHER:
+                    ids.append('<@' + who_id + '>')
 
+        if flag == 'endofrotationtalk':
+            msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'REMINDER', "mrkdwn_in": ["text"], "color":"warning", "text":'*REMINDER*: Add *RotationStudent* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
         if result['this'][1] == 'JC':
             msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'REMINDER', "mrkdwn_in": ["text"], "color":"warning", "text":'*REMINDER*: Add *JournalClub* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
         elif result['this'][1] == 'ES':
             msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'REMINDER', "mrkdwn_in": ["text"], "color":"warning", "text":'*REMINDER*: Add *EternaYoutube* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
 
+        msg_handles.append( ('#general', '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"good", "title":'Group Meeting Reminder', "text":'Hi all,\n\nThis is a reminder that group meeting will be *`%s`* for this week.\n' % type_this, "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg', "fields":[{'title':'Date', 'value':'_%s_' % datetime.strftime(date, '%b %d %Y (%a)'), 'short':True}, {'title':'Time & Place', 'value':'_%s @ %s_' % (clock, place), 'short':True}, {'title':'Type', 'value':'`%s`' % type_this, 'short':True}, {'title':'Presenter', 'value':'_%s_ %s' % (' '.join(names), ' '.join(ids)), 'short':True}] }]) )
+        msg_handles.append( ('#general', '', [{"fallback":'%s' % title, "mrkdwn_in": ["text"], "color":"warning", "title":'%s' % title, "text":'*<https://docs.google.com/presentation/d/%s/edit#slide=id.p>*\n_This link could also be found on the Das Lab <https://daslab.stanford.edu/group/flash_slide/|website>_' % ppt_id}]) )
+
 
     if result['next'][1] == 'N/A':
-        msg_next = 'For next week, there will be `NO Meeting`.'
+        msg_next = 'For next week, there will be *`NO Meeting`*'
+        if result['next'][3]:
+            msg_next += ' due to: _%s_.' % result['next'][3]
+        else:
+            msg_next += '.'
+        msg_handles.append( ('#general', '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"439fe0", "text":msg_next}]) )
     else:
         type_next = types[result['next'][1]]
         year = (datetime.utcnow() + timedelta(days=8)).date().year
         date = datetime.strptime("%s %s" % (result['next'][0], year), '%b %d %Y')
-        msg_next = 'For next week:\n# Date: _%s_\n# Time: *%s*\n# Place: %s\n# Presenter: _*%s*_\n# Type: `%s`' % (datetime.strftime(date, '%b %d %Y (%a)'), clock, place, result['next'][2], type_next)
 
         msg_who = 'Just a reminder that you are up for `%s` *next* _%s_ (*%s*).\n' % (type_next, datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
         if result['next'][1] == 'JC':
@@ -109,6 +125,7 @@ try:
             msg_who += ' Please post a brief description of the topic to the group `#general` channel by *next* _%s_ (*%s*) to allow time for releasing news on both DasLab Website and EteRNA broadcast.\n' % (datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
 
         name = result['next'][2]
+        ids = []
         if '/' in name or '&' in name:
             names = name.replace('/', '*|*').replace('&', '*|*').replace(' ', '').split('*|*')
         else:
@@ -127,6 +144,7 @@ try:
                         who_id = resp['name']
 
                 if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
+                    ids.append('<@' + who_id + '>')
                     msg_handles.append( ('@' + who_id, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))
                 else:
                     if sunet_id == 'none':
@@ -136,9 +154,9 @@ try:
                     else:
                         print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not available in database.' % name
 
-    post = '''Hi all,\n\n%s\n\n%s\n\nThe full schedule is on the Das Lab <https://daslab.stanford.edu/group/schedule/|website>. For questions regarding the schedule, please contact _%s_ (site admin). Thanks for your attention.''' % (msg_this, msg_next, SLACK['ADMIN_NAME'])
-    msg_handles.append( ('#general', '*Group Meeting Reminder*', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"439fe0", "text":post, "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg'}]) )
+        msg_handles.append( ('#general', '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"439fe0", "text":'For next week:\n', "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg', "fields":[{'title':'Date', 'value':'_%s_' % datetime.strftime(date, '%b %d %Y (%a)'), 'short':True}, {'title':'Time & Place', 'value':'_%s @ %s_' % (clock, place), 'short':True}, {'title':'Type', 'value':'`%s`' % type_next, 'short':True}, {'title':'Presenter', 'value':'_%s_ %s' % (' '.join(names), ' '.join(ids)), 'short':True}] }]) )
 
+    msg_handles.append( ('#general', '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"danger", "text":'The full schedule is on the Das Lab <https://daslab.stanford.edu/group/schedule/|website>. For questions regarding the schedule, please contact _<%s>_ (site admin). Thanks for your attention.''' % SLACK['ADMIN_NAME']}]) )
 
 except:
     err = traceback.format_exc()
