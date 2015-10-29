@@ -73,7 +73,7 @@ try:
                             break
                         email = resp['profile']['email']
                         sunet_id = email[:email.find('@')]
-                        who_id = resp['id']
+                        who_id = resp['name']
 
                 if sunet_id in GROUP.ROTON:
                     msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation _tomorrow_.' % SLACK['ADMIN_NAME']
@@ -86,6 +86,12 @@ try:
                         print '\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name
                     else:
                         print '\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) not available in database.' % name
+            msg_handles.append( (SLACK['ADMIN_NAME'], '*REMINDER*: Add *RotationStudent* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')) )
+
+        if result['this'][1] == 'JC':
+            msg_handles.append( (SLACK['ADMIN_NAME'], '*REMINDER*: Add *JournalClub* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')) )
+        elif result['this'][1] == 'ES':
+            msg_handles.append( (SLACK['ADMIN_NAME'], '*REMINDER*: Add *EternaYoutube* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')) )
 
 
     if result['next'][1] == 'N/A':
@@ -120,7 +126,7 @@ try:
                             break
                         email = resp['profile']['email']
                         sunet_id = email[:email.find('@')]
-                        who_id = resp['id']
+                        who_id = resp['name']
 
                 if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
                     msg_handles.append( ('@' + who_id, msg_who) )
@@ -133,7 +139,7 @@ try:
                     else:
                         print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not available in database.' % name
 
-    post = '''Hi all,\n\n%s\n\n%s\n\nThe full schedule is on the Das Lab <https://daslab.stanford.edu/group/schedule/|website>. For questions regarding the schedule, please contact %s (site admin). Thanks for your attention.''' % (msg_this, msg_next, SLACK['ADMIN_NAME'])
+    post = '''Hi all,\n\n%s\n\n%s\n\nThe full schedule is on the Das Lab <https://daslab.stanford.edu/group/schedule/|website>. For questions regarding the schedule, please contact _%s_ (site admin). Thanks for your attention.''' % (msg_this, msg_next, SLACK['ADMIN_NAME'])
     msg_handles.append( ('#general', post) )
     print '\033[92mSUCCESS\033[0m: Meeting Reminder posted in Slack.'
 

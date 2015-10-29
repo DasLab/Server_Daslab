@@ -313,7 +313,7 @@ def cache_slack(request):
         owners, admins, users, gones = [], [], [], []
         for resp in response:
             if resp.has_key('is_bot') and resp['is_bot']: continue
-            if resp['id'] == SLACK["BOT_ID"]: continue
+            if resp['name'] == SLACK["BOT_NAME"]: continue
             presence = sh.users.get_presence(resp['id']).body['presence']
             presence = (presence == 'active')
             temp = {'name':resp['profile']['real_name'], 'id':resp['name'], 'email':resp['profile']['email'], 'image':resp['profile']['image_24'], 'presence':presence}
