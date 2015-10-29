@@ -69,15 +69,32 @@ else:
     print "    \033[92mSUCCESS\033[0m: \033[94mapache2\033[0m settings uploaded."
 print "Time elapsed: %.1f s." % (time.time() - t)
 
+t = time.time()
+print "#4: Uploading config settings..."
+try:
+    subprocess.check_call('%s && drive upload -f %s/backup/backup_config.tgz -t DasLab_%s_config%s.tgz' % (gdrive_dir, MEDIA_ROOT, d, prefix), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+except subprocess.CalledProcessError:
+    print "    \033[41mERROR\033[0m: Failed to upload \033[94mconfig\033[0m settings."
+    err = traceback.format_exc()
+    ts = '%s\t\t%s\n' % (time.ctime(), sys.argv[0])
+    open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
+    open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
+    if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err))
+    flag = True
+else:
+    print "    \033[92mSUCCESS\033[0m: \033[94mconfig\033[0m settings uploaded."
+print "Time elapsed: %.1f s." % (time.time() - t)
+
 
 t = time.time()
-print "#4: Removing obsolete backups..."
+print "#5: Removing obsolete backups..."
 old = (datetime.date.today() - datetime.timedelta(days=KEEP_BACKUP)).strftime('%Y-%m-%dT00:00:00')
 
 list_mysql = subprocess.Popen("%s && drive list -q \"title contains 'DasLab' and (title contains '_mysql.gz' or title contains '_mysql_DEBUG.gz') and modifiedDate <= '%s'\"| awk '{ printf $1\" \"}'" % (gdrive_dir, old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
 list_static = subprocess.Popen("%s && drive list -q \"title contains 'DasLab' and (title contains '_static.tgz' or title contains '_static_DEBUG.tgz') and modifiedDate <= '%s'\"| awk '{ printf $1\" \"}'" % (gdrive_dir, old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
 list_apache = subprocess.Popen("%s && drive list -q \"title contains 'DasLab' and (title contains '_apache.tgz' or title contains '_apache_DEBUG.tgz') and modifiedDate <= '%s'\"| awk '{ printf $1\" \"}'" % (gdrive_dir, old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
-list_all = list_mysql + list_static + list_apache
+list_config = subprocess.Popen("%s && drive list -q \"title contains 'DasLab' and (title contains '_config.tgz' or title contains '_config_DEBUG.tgz') and modifiedDate <= '%s'\"| awk '{ printf $1\" \"}'" % (gdrive_dir, old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
+list_all = list_mysql + list_static + list_apache + list_config
 
 for id in list_all:
     try:

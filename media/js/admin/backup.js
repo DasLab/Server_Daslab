@@ -29,11 +29,13 @@ $(document).ready(function() {
             $("#id_mysql_s").html('<span style="color:#00f;">' + txt[10] + '</span>');
             $("#id_static_s").html('<span style="color:#00f;">' + txt[11] + '</span>');
             $("#id_apache_s").html('<span style="color:#00f;">' + txt[12] + '</span>');
-            $("#id_mysql_p").html($("#id_mysql_p").html() + '<br/><code>' + txt[13] + '</code>');
-            $("#id_static_p").html($("#id_static_p").html() + '<br/><code>' + txt[14] + '</code>');
-            $("#id_apache_p").html($("#id_apache_p").html() + '<br/><code>' + txt[15] + '</code>');
+            $("#id_config_s").html('<span style="color:#00f;">' + txt[13] + '</span>');
+            $("#id_mysql_p").html($("#id_mysql_p").html() + '<br/><code>' + txt[14] + '</code>');
+            $("#id_static_p").html($("#id_static_p").html() + '<br/><code>' + txt[15] + '</code>');
+            $("#id_apache_p").html($("#id_apache_p").html() + '<br/><code>' + txt[16] + '</code>');
+            $("#id_config_p").html($("#id_config_p").html() + '<br/><code>' + txt[17] + '</code>');
 
-            var gdrive = txt[16].split(/~|~/);
+            var gdrive = txt[18].split(/~|~/);
             var names = [], sizes = [], times = [];
             for (var i = 0; i < gdrive.length; i += 12) {
                 names.push(gdrive[i+2]);
