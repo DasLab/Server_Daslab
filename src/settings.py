@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import environ
 import os
 import simplejson
+from slacker import Slacker
 
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
@@ -49,15 +50,34 @@ GA = env_oauth['GA']
 GCAL = env_oauth['CALENDAR']
 DRIVE = env_oauth['DRIVE']
 GIT = env_oauth['GIT']
-SLACK = env_oauth['SLACK']
 DROPBOX = env_oauth['DROPBOX']
 APACHE_ROOT = '/var/www'
 
+SLACK = env_oauth['SLACK']
+sh = Slacker(SLACK["ACCESS_TOKEN"])
+users = sh.users.list().body['members']
+ims = sh.im.list().body['ims']
+for resp in users:
+    if resp['name'] == SLACK['BOT_NAME']:
+        bot_id = resp['id']
+        for resp in ims:
+            if resp['user'] == bot_id:
+                SLACK['BOT_ID'] = resp['id']
+                break
+        break
+for resp in users:
+    if resp['name'] == SLACK['ADMIN_NAME']:
+        admin_id = resp['id']
+        for resp in ims:
+            if resp['user'] == admin_id:
+                SLACK['ADMIN_ID'] = resp['id']
+                break
+        break
 
 MANAGERS = ADMINS = (
-    ('Siqi Tian', 't47@stanford.edu'),
+    (env('ADMIN_NAME'), env('ADMIN_EMAIL')),
 )
-EMAIL_NOTIFY = ADMINS[0][1]
+EMAIL_NOTIFY = env('ADMIN_EMAIL')
 (EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_USE_TLS, EMAIL_PORT, EMAIL_HOST) = [v for k, v in env.email_url().items() if k in ['EMAIL_HOST_PASSWORD', 'EMAIL_HOST_USER', 'EMAIL_USE_TLS', 'EMAIL_PORT', 'EMAIL_HOST']]
 EMAIL_SUBJECT_PREFIX = '[Django] {daslab.stanford.edu}'
 
@@ -66,9 +86,7 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-DATABASES = {
-    'default': env.db_url(),
-}
+DATABASES = {'default': env.db_url(), }
 LOGIN_URL = '/signin/'
 
 # Internationalization
@@ -201,25 +219,7 @@ SUIT_CONFIG = {
     # menu
     # 'SEARCH_URL': '/admin/auth/user/',
     'MENU_OPEN_FIRST_CHILD': True, # Default True
-    'MENU': (
-        'sites',
-        {'label': 'System', 'icon':'icon-cog', 'models': [
-            {'label': 'Apache', 'icon':'icon-cog', 'url': '/admin/apache/'},
-            {'label': 'AWS', 'icon':'icon-cog', 'url': '/admin/aws/'},
-            {'label': 'GA', 'icon':'icon-cog', 'url': '/admin/ga/'},
-            {'label': 'Git', 'icon':'icon-cog', 'url': '/admin/git/'},
-            {'label': 'Directory', 'icon':'icon-folder-open', 'url': '/admin/dir/'},
-            {'label': 'Backup', 'icon':'icon-cog', 'url': '/admin/backup/'},
-        ]},
-        '-',
-        {'label': 'Global Site', 'icon':'icon-globe', 'models': [
-            'src.news', 'src.member', 'src.publication',
-            {'label': 'Export', 'icon':'icon-cog', 'url': '/admin/export/'},
-        ]},
-        {'label': 'Internal Site', 'icon':'icon-inbox', 'models': ('auth.user', 'src.flashslide', 'src.eternayoutube', 'src.rotationstudent', 'src.presentation')},
-        '-',
-        {'label': 'Documentation', 'icon':'icon-book', 'url': '/admin/doc/'},
-    ),
+    'MENU': (),
 
     # misc
     'LIST_PER_PAGE': 25

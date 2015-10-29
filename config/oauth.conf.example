@@ -48,7 +48,8 @@
 	},
 
 	"SLACK": {
-		"ID": "bot_id",
+		"BOT_ID": "bot_name",
+		"ADMIN_ID": "admin_name",
 
 		"CLIENT_ID": "client_id",
 		"CLIENT_SECRET": "client_secret",
