@@ -179,7 +179,7 @@ def main():
             print "#3: Skip \033[94mGIT\033[0m..."
             print "#4: Skip \033[94mSLACK\033[0m..."
             print "#5: Skip \033[94mDROPBOX\033[0m..."
-            print "#7: Skip \033[94mSchedule Spreadsheet\033[0m..."
+            print "#6: Skip \033[94mSchedule Spreadsheet\033[0m..."
             print "#7: Skip \033[94mGoogle Calendar\033[0m..."
     except:
         err = traceback.format_exc()
