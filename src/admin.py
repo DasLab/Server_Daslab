@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 # from suit.widgets import EnclosedInput, SuitDateWidget
 
 from datetime import datetime
-from time import sleep, time
+import time
 
 from src.console import *
 from src.cron import *
@@ -188,7 +188,7 @@ def git_stat(request):
         i = 0
         while (isinstance(json, HttpResponseServerError) and i <= 5):
             i += 1
-            sleep(1)
+            time.sleep(1)
             json = git_stats(request)
         if isinstance(json, HttpResponseServerError): return json
     return HttpResponse(json, content_type='application/json')
@@ -204,7 +204,7 @@ def group_dash(request):
 admin.site.register_view('group_dash', view=group_dash, visible=False)
 
 def dash_dash(request):
-    now = datetime.fromtimestamp(time())
+    now = datetime.fromtimestamp(time.time())
     t_aws = datetime.fromtimestamp(os.path.getmtime('%s/cache/aws/init.pickle' % MEDIA_ROOT))
     if ((now - t_aws).seconds >= 2700):
         t_aws = '<span class="label label-danger">' + t_aws.strftime('%Y-%m-%d %H:%M:%S') + '</span>'

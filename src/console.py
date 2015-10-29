@@ -7,7 +7,7 @@ import simplejson
 import subprocess
 import sys
 import textwrap
-from time import sleep, mktime, ctime
+import time
 import traceback
 import urllib
 import urllib2
@@ -107,13 +107,13 @@ def set_backup_form(request):
     except subprocess.CalledProcessError:
         print "    \033[41mERROR\033[0m: Failed to reset \033[94mcrontab\033[0m schedules."
         err = traceback.format_exc()
-        ts = '%s\t\tset_backup_form()\n' % ctime()
+        ts = '%s\t\tset_backup_form()\n' % time.ctime()
         open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
         open('%s/cache/log_cron_backup.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_ID'], '*`ERROR`*: *set_backup_form()* @ _%s_\n>```%s```\n' % (ctime(), err))
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_ID'], '*`ERROR`*: *set_backup_form()* @ _%s_\n>```%s```\n' % (time.ctime(), err))
         raise Exception('Error with setting crontab scheduled jobs.')
     else:
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_ID'], '*SUCCESS*: weekly *backup & sync* set @ _%s_\n' % ctime())
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_ID'], '*SUCCESS*: weekly *backup & sync* set @ _%s_\n' % time.ctime())
 
         # call_command('crontab', 'add')
     # except:
@@ -354,7 +354,7 @@ def git_stats(request):
                 data = []
                 i = 0
                 while (contribs is None and i <= 5):
-                    sleep(1)
+                    time.sleep(1)
                     contribs = repo.get_stats_contributors()
                 if contribs is None: return HttpResponseServerError("PyGithub failed")
 
@@ -513,9 +513,9 @@ def export_citation(request):
             except subprocess.CalledProcessError:
                 print "    \033[41mERROR\033[0m: Failed to export \033[94mcitation\033[0m as DOCX file."
                 err = traceback.format_exc()
-                ts = '%s\t\texport_citation()\n' % ctime()
+                ts = '%s\t\texport_citation()\n' % time.ctime()
                 open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-                if IS_SLACK: send_notify_slack(SLACK['ADMIN_ID'], '*`ERROR`*: *export_citation()* @ _%s_\n>```%s```\n' % (ctime(), err))
+                if IS_SLACK: send_notify_slack(SLACK['ADMIN_ID'], '*`ERROR`*: *export_citation()* @ _%s_\n>```%s```\n' % (time.ctime(), err))
                 raise Exception('Error with pandoc converting html source file to docx output.')
 
             lines = open(os.path.join(MEDIA_ROOT, 'data/export_citation.docx'), 'r').readlines()

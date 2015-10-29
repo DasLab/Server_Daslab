@@ -59,11 +59,7 @@ users = sh.users.list().body['members']
 ims = sh.im.list().body['ims']
 for resp in users:
     if resp['name'] == SLACK['BOT_NAME']:
-        bot_id = resp['id']
-        for resp in ims:
-            if resp['user'] == bot_id:
-                SLACK['BOT_ID'] = resp['id']
-                break
+        SLACK['BOT_ID'] = resp['id']
         break
 for resp in users:
     if resp['name'] == SLACK['ADMIN_NAME']:

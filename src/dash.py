@@ -9,7 +9,7 @@ import pytz
 import simplejson
 import subprocess
 # import sys
-from time import sleep, mktime
+import time
 import traceback
 
 import boto.ec2.cloudwatch
@@ -212,7 +212,7 @@ def cache_git(request):
             i = 0
             contribs = repo.get_stats_contributors()
             while (contribs is None and i <= 5):
-                sleep(1)
+                time.sleep(1)
                 contribs = repo.get_stats_contributors()
             if contribs is None: raise Exception("PyGithub failed")
             data = []
@@ -251,7 +251,7 @@ def cache_git(request):
                 i = 0
                 contribs = repo.get_stats_commit_activity()
                 while (contribs is None and i <= 5):
-                    sleep(1)
+                    time.sleep(1)
                     contribs = repo.get_stats_commit_activity()
                 if contribs is None: raise Exception("PyGithub failed")
                 fields = ['Commits']
@@ -261,7 +261,7 @@ def cache_git(request):
                 i = 0
                 contribs = repo.get_stats_code_frequency()
                 while (contribs is None and i <= 5):
-                    sleep(1)
+                    time.sleep(1)
                     contribs = repo.get_stats_code_frequency()
                 if contribs is None: raise Exception("PyGithub failed")
                 fields = ['Additions', 'Deletions']
@@ -372,7 +372,7 @@ def cache_slack(request):
             for i in range(7):
                 start_time = datetime.today() - timedelta(days=i+1)
                 end_time = start_time + timedelta(days=1)
-                num = sh.files.list(types="all", ts_from=mktime(start_time.timetuple()), ts_to=mktime(end_time.timetuple())).body['paging']['total']
+                num = sh.files.list(types="all", ts_from=time.mktime(start_time.timetuple()), ts_to=time.mktime(end_time.timetuple())).body['paging']['total']
                 data.append({u'Timestamp': end_time.replace(hour=0, minute=0, second=0, microsecond=0), u'Files': num})
         elif qs == 'plot_msgs':
             fields = ['Messages']
@@ -382,7 +382,7 @@ def cache_slack(request):
                 for i in range(7):
                     start_time = datetime.today() - timedelta(days=i+1)
                     end_time = start_time + timedelta(days=1)
-                    num = len(sh.channels.history(channel=resp['id'], latest=mktime(end_time.timetuple()), oldest=mktime(start_time.timetuple()), count=1000).body['messages'])
+                    num = len(sh.channels.history(channel=resp['id'], latest=time.mktime(end_time.timetuple()), oldest=time.mktime(start_time.timetuple()), count=1000).body['messages'])
                     if len(data) > i:
                         data[i]['Messages'] += num
                     else:
