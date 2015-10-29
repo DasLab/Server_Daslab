@@ -16,7 +16,7 @@ application = get_wsgi_application()
 from slacker import Slacker
 from src.settings import *
 from src.models import FlashSlide
-from src.cron import send_notify_emails, send_notify_slack
+from src.console import send_notify_emails, send_notify_slack
 
 
 t0 = time.time()

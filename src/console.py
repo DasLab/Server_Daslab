@@ -23,7 +23,21 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServer
 
 from src.settings import *
 from src.models import BackupForm, Publication
-from src.cron import send_notify_slack
+
+
+def send_notify_slack(msg_channel, msg_content):
+    sh = Slacker(SLACK["ACCESS_TOKEN"])
+    return sh.chat.post_message(msg_channel, msg_content, as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
+
+
+def send_notify_emails(msg_subject, msg_content):
+    # send_mail(msg_subject, msg_content, EMAIL_HOST_USER, [EMAIL_NOTIFY])
+    smtpserver = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
+    smtpserver.starttls()
+    smtpserver.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+    msg = 'Subject: %s\n\n%s' % (msg_subject, msg_content)
+    smtpserver.sendmail(EMAIL_HOST_USER, EMAIL_NOTIFY, msg)
+    smtpserver.quit()
 
 
 def get_backup_stat():

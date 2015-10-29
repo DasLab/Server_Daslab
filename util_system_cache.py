@@ -14,7 +14,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.settings")
 from src.settings import *
 from src.console import *
 from src.dash import *
-from src.cron import send_notify_slack
 
 
 def pickle_aws(request, name):

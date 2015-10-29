@@ -10,7 +10,7 @@ sys.path.append(os.path.abspath('.'))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.settings") 
 
 from src.settings import *
-from src.cron import send_notify_slack
+from src.console import send_notify_slack
 
 
 d = time.strftime('%Y%m%d') #datetime.datetime.now().strftime('%Y%m%d')
