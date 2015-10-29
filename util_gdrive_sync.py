@@ -31,7 +31,7 @@ except subprocess.CalledProcessError:
     ts = '%s\t\t%s\n' % (time.ctime(), sys.argv[0])
     open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
     open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-    if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err))
+    if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err)}])
     flag = True
 else:
     print "    \033[92mSUCCESS\033[0m: \033[94mMySQL\033[0m database uploaded."
@@ -47,7 +47,7 @@ except subprocess.CalledProcessError:
     ts = '%s\t\t%s\n' % (time.ctime(), sys.argv[0])
     open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
     open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-    if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err))
+    if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err)}])
     flag = True
 else:
     print "    \033[92mSUCCESS\033[0m: \033[94mstatic\033[0m files uploaded."
@@ -63,7 +63,7 @@ except subprocess.CalledProcessError:
     ts = '%s\t\t%s\n' % (time.ctime(), sys.argv[0])
     open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
     open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-    if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err))
+    if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err)}])
     flag = True
 else:
     print "    \033[92mSUCCESS\033[0m: \033[94mapache2\033[0m settings uploaded."
@@ -79,7 +79,7 @@ except subprocess.CalledProcessError:
     ts = '%s\t\t%s\n' % (time.ctime(), sys.argv[0])
     open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
     open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-    if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err))
+    if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err)}])
     flag = True
 else:
     print "    \033[92mSUCCESS\033[0m: \033[94mconfig\033[0m settings uploaded."
@@ -107,7 +107,7 @@ for id in list_all:
         ts = '%s\t\t%s\n' % (time.ctime(), sys.argv[0])
         open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
         open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err))
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err)}])
         flag = True
 
 if not flag: print "    \033[92mSUCCESS\033[0m: \033[94m%s\033[0m obsolete backup files removed." % len(list_all)
