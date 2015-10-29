@@ -9,7 +9,7 @@ import traceback
 from slacker import Slacker
 
 from src.settings import *
-from src.console import send_notify_emails, send_notify_slack
+from src.console import get_backup_stat, send_notify_emails, send_notify_slack
 
 
 def get_date_time(keyword):
