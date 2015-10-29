@@ -76,7 +76,7 @@ try:
                         who_id = resp['id']
 
                 if sunet_id in GROUP.ROTON:
-                    msg_who = 'Just a reminder: Please send your presentation to our site admin for `archiving` *after* your presentation _tomorrow_.'
+                    msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation _tomorrow_.' % SLACK['ADMIN_NAME']
                     msg_handles.append( ('@' + who_id, msg_who) )
                     print '\033[92mSUCCESS\033[0m: PM\'ed reminder to \033[94m%s\033[0m in Slack.' % name
                 else:
@@ -133,7 +133,7 @@ try:
                     else:
                         print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not available in database.' % name
 
-    post = '''Hi all,\n\n%s\n\n%s\n\nThe full schedule is on the Das Lab <https://daslab.stanford.edu/group/schedule/|website>. Thanks for your attention.''' % (msg_this, msg_next)
+    post = '''Hi all,\n\n%s\n\n%s\n\nThe full schedule is on the Das Lab <https://daslab.stanford.edu/group/schedule/|website>. For questions regarding the schedule, please contact %s (site admin). Thanks for your attention.''' % (msg_this, msg_next, SLACK['ADMIN_NAME'])
     msg_handles.append( ('#general', post) )
     print '\033[92mSUCCESS\033[0m: Meeting Reminder posted in Slack.'
 
