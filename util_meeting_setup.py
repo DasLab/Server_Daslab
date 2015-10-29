@@ -16,7 +16,7 @@ application = get_wsgi_application()
 from slacker import Slacker
 from src.settings import *
 from src.models import FlashSlide
-from src.cron import send_notify_emails
+from src.cron import send_notify_emails, send_notify_slack
 
 
 t0 = time.time()
@@ -39,8 +39,7 @@ try:
         temp = requests.post('https://www.googleapis.com/drive/v2/files/%s/permissions?sendNotificationEmails=false&access_token=%s' % (ppt_id, access_token), json={"role":"writer", "type":"group", "value":"das-lab@googlegroups.com"})
         print '\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) created and shared.' % ppt_id
 
-        temp = sh.chat.post_message('#general', '>*<https://docs.google.com/presentation/d/%s/edit#slide=id.p|%s>*' % (ppt_id, title), as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
-        msg_handles.append(temp)
+        msg_handles.append(send_notify_slack('#general', '>*<https://docs.google.com/presentation/d/%s/edit#slide=id.p|%s>*' % (ppt_id, title)))
         print '\033[92mSUCCESS\033[0m: Google Presentation posted in Slack.'
         flash_slides = FlashSlide(date=date, link='https://docs.google.com/presentation/d/%s/edit#slide=id.p' % ppt_id)
         flash_slides.save()
@@ -83,8 +82,7 @@ try:
                             who_id = resp['id']
                             break
                     msg_who = 'Just a reminder: Please send your presentation to our site admin for `archiving` *after* your presentation _tomorrow_.'
-                    temp = sh.chat.post_message(who_id, msg_who, as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
-                    msg_handles.append(temp)
+                    msg_handles.append(send_notify_slack(who_id, msg_who))
                     print '\033[92mSUCCESS\033[0m: PM\'ed reminder to \033[94m%s\033[0m in Slack.' % name
                 else:
                     if sunet_id == 'none':
@@ -134,8 +132,7 @@ try:
                         if resp['user'] == who_id:
                             who_id = resp['id']
                             break
-                    temp = sh.chat.post_message(who_id, msg_who, as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
-                    msg_handles.append(temp)
+                    msg_handles.append(send_notify_slack(who_id, msg_who))
                     print '\033[92mSUCCESS\033[0m: PM\'ed reminder to \033[94m%s\033[0m in Slack.' % name
                 else:
                     if sunet_id == 'none':
@@ -146,13 +143,12 @@ try:
                         print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not available in database.' % name
 
     post = '''Hi all,\n\n%s\n\n%s\n\nThe full schedule is on the Das Lab <https://daslab.stanford.edu/group/schedule/|website>. Thanks for your attention.''' % (msg_this, msg_next)
-    temp = sh.chat.post_message('#general', post, as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
-    msg_handles.append(temp)
+    msg_handles.append(send_notify_slack('#general', post))
     print '\033[92mSUCCESS\033[0m: Meeting Reminder posted in Slack.'
 
 except:
     err = traceback.format_exc()
-    ts = '%s\t\tutil_meeting_setup.py\n' % time.ctime()
+    ts = '%s\t\t%s\n' % (time.ctime(), sys.argv[0])
     open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
     open('%s/cache/log_cron_meeting.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
 
@@ -165,12 +161,17 @@ except:
         FlashSlide.objects.get(date=date).delete()
         requests.delete('https://www.googleapis.com/drive/v2/files/%s/?access_token=%s' % (ppt_id, access_token))
 
-    send_notify_emails('[Django] {daslab.stanford.edu} ERROR: Weekly Meeting Setup', 'This is an automatic email notification for the failure of scheduled weekly flash slides setup. The following error occurred:\n\n%s\n\n%s\n\nFlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\n\n** Flash Slide has NOT been setup yet for this week! Please investigate and fix the setup immediately.\n\nDasLab Website Admin' % (ts, err))
+    if IS_SLACK:
+        send_notify_slack(SLACK['ADMIN_ID'], '*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err))
+        send_notify_slack(SLACK['ADMIN_ID'], 'FlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\n>Flash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.')
+    else:
+        send_notify_emails('[Django] {daslab.stanford.edu} ERROR: Weekly Meeting Setup', 'This is an automatic email notification for the failure of scheduled weekly flash slides setup. The following error occurred:\n\n%s\n\n%s\n\nFlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\n\n** Flash Slide has NOT been setup yet for this week! Please investigate and fix the setup immediately.\n\nDasLab Website Admin' % (ts, err))
 
     print "Finished with \033[41mERROR\033[0m!"
     print "Time elapsed: %.1f s." % (time.time() - t0)
     sys.exit(1)
 
+if IS_SLACK: send_notify_slack(SLACK['ADMIN_ID'], '*SUCCESS*: Scheduled weekly *flash slides setup* finished @ _%s_\n' % time.ctime())
 print "Finished with \033[92mSUCCESS\033[0m!"
 print "Time elapsed: %.1f s." % (time.time() - t0)
 sys.exit(0)
