@@ -9,7 +9,7 @@ import traceback
 from slacker import Slacker
 
 from src.settings import *
-from src.console import *
+from src.console import get_backup_stat
 
 
 def send_notify_slack(msg_channel, msg_content):
