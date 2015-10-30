@@ -47,7 +47,7 @@ def backup_weekly():
 
 def gdrive_weekly():
     try:
-        subprocess.check_call('cd %s && python manage.py sync_gdrive' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        subprocess.check_call('cd %s && python manage.py gdrive' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
         print "    \033[41mERROR\033[0m: Failed to run \033[94mgdrive_weekly()\033[0m schedule."
         print traceback.format_exc()
@@ -74,7 +74,7 @@ def gdrive_weekly():
 
 def sys_ver_weekly():
     try:
-        subprocess.check_call('cd %s && python manage.py system_version' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        subprocess.check_call('cd %s && python manage.py version' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
         print "    \033[41mERROR\033[0m: Failed to run \033[94msys_ver_weekly()\033[0m schedule."
         print traceback.format_exc()
