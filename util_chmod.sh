@@ -6,8 +6,8 @@ sudo chown -R ubuntu *.py *.md *.txt src media config .gitignore
 sudo chown -R www-data backup data #cache
 
 sudo chmod 640 *.py* *.md *.txt .gitignore
-sudo chmod 640 src/*.py* src/templatetags/*
-sudo chmod 750 src src/templatetags
+sudo chmod 640 src/*.py* src/management/* src/management/commands/* src/templatetags/*
+sudo chmod 750 src src/management src/management/commands src/templatetags
 sudo chmod 640 media/css/* media/fonts/* media/html/* media/fonts/GillSans/* media/fonts/Helvetica/* media/js/* media/js/admin/* media/js/group/* media/js/suit/* media/_old/* media/swf/*
 sudo chmod 750 media/css media/fonts media/fonts/GillSans media/fonts/Helvetica media/html media/js media/js/admin media/js/group media/js/suit media/_old media/swf media
 sudo chmod 640 media/images/*.*g* media/images/contact/* media/images/group/* media/images/group/clock/* media/images/home/* media/images/news/* media/images/people/* media/images/publications/* media/images/research/* media/images/resources/* media/images/icons/*

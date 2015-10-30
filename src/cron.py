@@ -22,7 +22,7 @@ def get_date_time(keyword):
 
 def backup_weekly():
     try:
-        subprocess.check_call('cd %s && python util_backup.py' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        subprocess.check_call('cd %s && python manage.py backup' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
         print "    \033[41mERROR\033[0m: Failed to run \033[94mbackup_weekly()\033[0m schedule."
         print traceback.format_exc()
@@ -47,7 +47,7 @@ def backup_weekly():
 
 def gdrive_weekly():
     try:
-        subprocess.check_call('cd %s && python util_gdrive_sync.py' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        subprocess.check_call('cd %s && python manage.py sync_gdrive' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
         print "    \033[41mERROR\033[0m: Failed to run \033[94mgdrive_weekly()\033[0m schedule."
         print traceback.format_exc()
@@ -74,7 +74,7 @@ def gdrive_weekly():
 
 def sys_ver_weekly():
     try:
-        subprocess.check_call('cd %s && python util_system_version.py' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        subprocess.check_call('cd %s && python manage.py system_version' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
         print "    \033[41mERROR\033[0m: Failed to run \033[94msys_ver_weekly()\033[0m schedule."
         print traceback.format_exc()
