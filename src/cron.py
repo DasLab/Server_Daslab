@@ -26,10 +26,10 @@ def backup_weekly():
     except subprocess.CalledProcessError:
         print "    \033[41mERROR\033[0m: Failed to run \033[94mbackup_weekly()\033[0m schedule."
         err = traceback.format_exc()
-        ts = '%s\t\t%s\n' % (time.ctime(), sys.argv[0])
+        ts = '%s\t\tbackup_weekly()\n' % time.ctime()
         open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
         open('%s/cache/log_cron_backup.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err)}])
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *backup_weekly()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
         raise Exception('Error with running scheduled backup_weekly().')
     else:
         (t_cron, d_cron, t_now) = get_date_time('backup')
@@ -55,10 +55,10 @@ def gdrive_weekly():
     except subprocess.CalledProcessError:
         print "    \033[41mERROR\033[0m: Failed to run \033[94mgdrive_weekly()\033[0m schedule."
         err = traceback.format_exc()
-        ts = '%s\t\t%s\n' % (time.ctime(), sys.argv[0])
+        ts = '%s\t\tgdrive_weekly()\n' % time.ctime()
         open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
         open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err)}])
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *gdrive_weekly()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
         raise Exception('Error with running scheduled gdrive_weekly().')
     else:
         (t_cron, d_cron, t_now) = get_date_time('gdrive')
@@ -86,10 +86,10 @@ def sys_ver_weekly():
     except subprocess.CalledProcessError:
         print "    \033[41mERROR\033[0m: Failed to run \033[94msys_ver_weekly()\033[0m schedule."
         err = traceback.format_exc()
-        ts = '%s\t\t%s\n' % (time.ctime(), sys.argv[0])
+        ts = '%s\t\tsys_ver_weekly()\n' % time.ctime()
         open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
         open('%s/cache/log_cron_version.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err)}])
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *sys_ver_weekly()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
         raise Exception('Error with running scheduled sys_ver_weekly().')
 
 

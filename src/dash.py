@@ -112,14 +112,9 @@ def dash_aws(request):
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
         if qs == 'init':
-            f = open('%s/cache/aws/init.pickle' % MEDIA_ROOT, 'rb')
-            result = pickle.load(f)
-            f.close()
-            return result
+            return pickle.load(open('%s/cache/aws/init.pickle' % MEDIA_ROOT, 'rb'))
         elif qs in ['cpu', 'net', 'lat', 'req', 'disk']:
-            f = open('%s/cache/aws/%s_%s_%s.pickle' % (MEDIA_ROOT, tp, id, qs), 'rb')
-            (data_table, stats) = pickle.load(f)
-            f.close()
+            (data_table, stats) = pickle.load(open('%s/cache/aws/%s_%s_%s.pickle' % (MEDIA_ROOT, tp, id, qs), 'rb'))
             results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
             return results
         else:
@@ -184,14 +179,9 @@ def dash_ga(request):
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
         if qs == 'init':
-            f = open('%s/cache/ga/init.pickle' % MEDIA_ROOT, 'rb')
-            results = pickle.load(f)
-            f.close()
-            return results
+            return pickle.load(open('%s/cache/ga/init.pickle' % MEDIA_ROOT, 'rb'))
         elif qs in ['sessions', 'percentNewSessions']:
-            f = open('%s/cache/ga/%s_%s.pickle' % (MEDIA_ROOT, id, qs), 'rb')
-            (data_table, stats) = pickle.load(f)
-            f.close()
+            (data_table, stats) = pickle.load(open('%s/cache/ga/%s_%s.pickle' % (MEDIA_ROOT, id, qs), 'rb'))
             results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
             return results
         else:
@@ -285,10 +275,7 @@ def dash_git(request):
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
         if qs == 'init':
-            f = open('%s/cache/git/init.pickle' % MEDIA_ROOT, 'rb')
-            result = pickle.load(f)
-            f.close()
-            return result
+            return pickle.load(open('%s/cache/git/init.pickle' % MEDIA_ROOT, 'rb'))
         elif qs in ['c', 'ad', 'num']:
             f = open('%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, repo, qs), 'rb')
             if qs == 'num':
@@ -406,16 +393,10 @@ def dash_slack(request):
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
         if qs in ['users', 'home', 'channels', 'files']:
-            f = open('%s/cache/slack/%s.pickle' % (MEDIA_ROOT, qs), 'rb')
-            result = pickle.load(f)
-            f.close()
-            return result
-
+            return pickle.load(open('%s/cache/slack/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
         elif qs in ["plot_files", "plot_msgs"]:
-            f = open('%s/cache/slack/%s.pickle' % (MEDIA_ROOT, qs), 'rb')
-            (data_table, stats) = pickle.load(f)
+            (data_table, stats) = pickle.load(open('%s/cache/slack/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
             results = data_table.ToJSonResponse(columns_order=stats,    order_by='Timestamp', req_id=req_id)
-            f.close()
             return results
         else:
             return HttpResponseBadRequest("Invalid query.")
@@ -511,16 +492,10 @@ def dash_dropbox(request):
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
         if qs in ['sizes', 'folders']:
-            f = open('%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, qs), 'rb')
-            result = pickle.load(f)
-            f.close()
-            return result
-
+            return pickle.load(open('%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
         elif qs == 'history':
-            f = open('%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, qs), 'rb')
-            (data_table, stats) = pickle.load(f)
+            (data_table, stats) = pickle.load(open('%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
             results = data_table.ToJSonResponse(columns_order=stats,    order_by='Timestamp', req_id=req_id)
-            f.close()
             return results
         else:
             return HttpResponseBadRequest("Invalid query.")
@@ -534,7 +509,12 @@ def dash_ssl(request):
         exp_date = subprocess.Popen('sed %s %s' % ("'s/^notAfter\=//g'", os.path.join(MEDIA_ROOT, 'data/temp.txt')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
         subprocess.check_call('rm %s' % os.path.join(MEDIA_ROOT, 'data/temp.txt'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
-        print traceback.format_exc()
+        print "    \033[41mERROR\033[0m: Failed to check \033[94mSSL Certificate\033[0m."
+        err = traceback.format_exc()
+        ts = '%s\t\tdash_ssl()\n' % time.ctime()
+        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
+        open('%s/cache/log_cron.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *dash_ssl()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
         raise Exception('Error with checking SSL certificate.')
 
     exp_date = datetime.strptime(exp_date.replace('notAfter=', ''), "%b %d %H:%M:%S %Y %Z").strftime('%Y-%m-%d %H:%M:%S')
@@ -549,15 +529,13 @@ def cache_schedule():
     gdrive_dir = 'cd %s/cache' % MEDIA_ROOT
     gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv schedule.csv'
     try:
-        subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["SCHEDULE_SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
         print traceback.format_exc()
         raise Exception('Error with downloading schedule spreadsheet.')
 
     try:
-        f = open('%s/cache/schedule.csv' % MEDIA_ROOT, 'r')
-        lines = f.readlines()
-        f.close()
+        lines = open('%s/cache/schedule.csv' % MEDIA_ROOT, 'r').readlines()
         tp = lines[0].split(',')[5]
         for row in lines:
             row = row.split(',')
@@ -582,10 +560,7 @@ def cache_schedule():
 
 
 def dash_schedule(request):
-    f = open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb')
-    result = pickle.load(f)
-    f.close()
-    return result
+    return pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
 
 
 def cache_cal():
@@ -674,9 +649,6 @@ def cache_cal():
 
 
 def dash_cal():
-    f = open('%s/cache/calendar.pickle' % MEDIA_ROOT, 'rb')
-    result = pickle.load(f)
-    f.close()
-    return result
+    return pickle.load(open('%s/cache/calendar.pickle' % MEDIA_ROOT, 'rb'))
 
 

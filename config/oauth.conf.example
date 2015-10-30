@@ -31,8 +31,9 @@
 	},
 
 	"DRIVE": {
-		"SPREADSHEET_ID": "schedule_spreadsheet_id",
-		"PRESENTATION_ID": "template_presentation_id",
+		"SCHEDULE_SPREADSHEET_ID": "schedule_spreadsheet_id",
+		"DUTY_SPREADSHEET_ID": "duty_spreadsheet_id",
+		"TEMPLATE_PRESENTATION_ID": "template_presentation_id",
 
 		"CLIENT_ID": "client_id",
 		"CLIENT_SECRET": "client_secret",
