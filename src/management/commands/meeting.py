@@ -16,15 +16,32 @@ from src.console import send_notify_emails, send_notify_slack
 class Command(BaseCommand):
     help = 'Parses Group Meeting schedule, create and share Google Presentation, add to FlashSlide database table, send out Group Meeting Reminder and individual notifications in Slack.'
 
+    def __init__(self, *args, **kwargs):
+        super(Command, self).__init__(*args, **kwargs)
+        self.sh = Slacker(SLACK["ACCESS_TOKEN"])
+        self.users = self.sh.users.list().body['members']
+
+    def find_slack_id(self, name):
+        sunet_id = 'none'
+        who_id = ''
+        for resp in self.users:
+            if resp.has_key('is_bot') and resp['is_bot']: continue
+            if resp['profile']['real_name'][:len(name)].lower() == name.lower():
+                if sunet_id != 'none': 
+                    sunet_id = 'ambiguous'
+                    break
+                email = resp['profile']['email']
+                sunet_id = email[:email.find('@')]
+                who_id = resp['name']
+        return (sunet_id, who_id)
+
+
     def handle(self, *args, **options):
         t0 = time.time()
         self.stdout.write(time.ctime())
 
         try:
             result = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
-            sh = Slacker(SLACK["ACCESS_TOKEN"])
-            users = sh.users.list().body['members']
-
             msg_handles = []
             clock = result['tp'][result['tp'].find('@')+1:result['tp'].rfind('@')].strip()
             clock = clock[:clock.find('-')].strip()
@@ -46,7 +63,7 @@ class Command(BaseCommand):
                 title = 'Flash Slides: %s' % datetime.strftime(date, '%b %d %Y')
 
                 access_token = requests.post('https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (DRIVE['REFRESH_TOKEN'], DRIVE['CLIENT_ID'], DRIVE['CLIENT_SECRET'])).json()['access_token']
-                temp = requests.post('https://www.googleapis.com/drive/v2/files/%s/copy?access_token=%s' % (DRIVE['PRESENTATION_ID'], access_token), json={"title":"%s" % title})
+                temp = requests.post('https://www.googleapis.com/drive/v2/files/%s/copy?access_token=%s' % (DRIVE['TEMPLATE_PRESENTATION_ID'], access_token), json={"title":"%s" % title})
                 ppt_id = temp.json()['id']
                 temp = requests.post('https://www.googleapis.com/drive/v2/files/%s/permissions?sendNotificationEmails=false&access_token=%s' % (ppt_id, access_token), json={"role":"writer", "type":"group", "value":"das-lab@googlegroups.com"})
                 self.stdout.write('\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) created and shared.' % ppt_id)
@@ -65,17 +82,7 @@ class Command(BaseCommand):
 
                 if name:
                     for name in names:
-                        sunet_id = 'none'
-                        for resp in users:
-                            if resp.has_key('is_bot') and resp['is_bot']: continue
-                            if resp['profile']['real_name'][:len(name)].lower() == name.lower():
-                                if sunet_id != 'none': 
-                                    sunet_id = 'ambiguous'
-                                    break
-                                email = resp['profile']['email']
-                                sunet_id = email[:email.find('@')]
-                                who_id = resp['name']
-
+                        (sunet_id, who_id) = find_slack_id(name)
                         if flag == 'endofrotationtalk':
                             if sunet_id in GROUP.ROTON:
                                 msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation _tomorrow_.' % SLACK['ADMIN_NAME']
@@ -130,17 +137,7 @@ class Command(BaseCommand):
                     names = [name]
                 if name:
                     for name in names:
-                        sunet_id = 'none'
-                        for resp in users:
-                            if resp.has_key('is_bot') and resp['is_bot']: continue
-                            if resp['profile']['real_name'][:len(name)].lower() == name.lower():
-                                if sunet_id != 'none': 
-                                    sunet_id = 'ambiguous'
-                                    break
-                                email = resp['profile']['email']
-                                sunet_id = email[:email.find('@')]
-                                who_id = resp['name']
-
+                        (sunet_id, who_id) = find_slack_id(name)
                         if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
                             ids.append('<@' + who_id + '>')
                             msg_handles.append( ('@' + who_id, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))
@@ -158,7 +155,7 @@ class Command(BaseCommand):
 
         except:
             err = traceback.format_exc()
-            ts = '%s\t\t%s\n' % (time.ctime(), sys.argv[0])
+            ts = '%s\t\t%s %s\n' % (time.ctime(), sys.argv[0], sys.argv[1])
             open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
             open('%s/cache/log_cron_meeting.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
 
@@ -171,7 +168,7 @@ class Command(BaseCommand):
                 self.stdout.write('\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) removed in MySQL.' % ppt_id)
 
             if IS_SLACK:
-                send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (sys.argv[0], time.ctime(), err)}])
+                send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s %s* @ _%s_\n>```%s```\n' % (sys.argv[0], sys.argv[1], time.ctime(), err)}])
                 send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"warning", "text":'FlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.'}])
             else:
                 send_notify_emails('[Django] {daslab.stanford.edu} ERROR: Weekly Meeting Setup', 'This is an automatic email notification for the failure of scheduled weekly flash slides setup. The following error occurred:\n\n%s\n\n%s\n\nFlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\n\n** Flash Slide has NOT been setup yet for this week! Please investigate and fix the setup immediately.\n\nDasLab Website Admin' % (ts, err))

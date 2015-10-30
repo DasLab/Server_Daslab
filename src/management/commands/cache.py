@@ -43,17 +43,17 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         # Positional arguments
-        parser.add_argument('int', nargs='+', type=int, help='Interval, choose from (3, 15, 30).')
+        parser.add_argument('interval', nargs='+', type=int, help='Interval, choose from (3, 15, 30).')
 
     def handle(self, *args, **options):
         t0 = time.time()
         self.stdout.write(time.ctime())
 
-        if options['int']:
+        if options['interval']:
             is_3, is_15, is_30 = False, False, False
-            is_3 = (options['int'][0] == 3)
-            is_15 = (options['int'][0] == 15)
-            is_30 = (options['int'][0] == 30)
+            is_3 = (options['interval'][0] == 3)
+            is_15 = (options['interval'][0] == 15)
+            is_30 = (options['interval'][0] == 30)
         else:
             is_3, is_15, is_30 = True, True, True
 
@@ -187,10 +187,10 @@ class Command(BaseCommand):
             if is_15: var = '15'
             if is_30: var = '30'
             if is_3 and is_15 and is_30: var = ''
-            ts = '%s\t\t%s %s\n' % (time.ctime(), sys.argv[0], var)
+            ts = '%s\t\t%s %s %s\n' % (time.ctime(), sys.argv[0], sys.argv[1], var)
             open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
             open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-            if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s %s* @ _%s_\n>```%s```\n' % (sys.argv[0], var, time.ctime(), err)}])
+            if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s %s %s* @ _%s_\n>```%s```\n' % (sys.argv[0], sys.argv[1], var, time.ctime(), err)}])
             self.stdout.write("Finished with \033[41mERROR\033[0m!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
             sys.exit(1)
