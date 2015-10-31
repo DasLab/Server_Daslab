@@ -47,7 +47,7 @@ class MemberAdmin(admin.ModelAdmin):
     fieldsets = [
         (format_html('<span class="glyphicon glyphicon-user"></span>&nbsp;Personal Information'), {'fields': [('first_name', 'last_name'), 'role', ('image', 'image_tag'), 'description', 'more_info']}),
         (format_html('<span class="glyphicon glyphicon-home"></span>&nbsp;Affiliation'), {'fields': ['department', ('joint_lab', 'joint_link')]}),
-        (format_html('<span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact'), {'fields': ['email', ('sunet_id', 'phone')]}),
+        (format_html('<span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact'), {'fields': [('email', 'bday'), ('sunet_id', 'phone')]}),
         (format_html('<span class="glyphicon glyphicon-road"></span>&nbsp;Alumni Information'), {'fields': [('alumni', 'hide'), ('start_year', 'finish_year')]}),
     ]
 admin.site.register(Member, MemberAdmin)

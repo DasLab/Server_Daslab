@@ -71,6 +71,7 @@ class Member(models.Model):
     email = models.CharField(max_length=255, blank=True, verbose_name='Email')
     phone = models.BigIntegerField(blank=True, verbose_name='Phone Number', help_text='<span class="glyphicon glyphicon-phone"></span>&nbsp; Cell phone number.')
     sunet_id = models.CharField(max_length=31, blank=True, verbose_name='SUNet ID', help_text='<span class="glyphicon glyphicon-credit-card"></span>&nbsp; SUNet ID login to match WebAuth.')
+    bday = models.CharField(max_length=5, blank=True, verbose_name='Birthday', help_text='<span class="glyphicon glyphicon-gift"></span>&nbsp; Birthday, in the format of <span class="label label-inverse">mm/dd</span>. <span class="label label-success">Example</span>: "<b>04/19</b>".')
     hide = models.BooleanField(default=False, verbose_name='Hide from external page?', help_text='<span class="glyphicon glyphicon-check"></span>&nbsp; Uncheck to hide from people.')
 
     alumni = models.BooleanField(default=False, verbose_name='Is Alumni?', help_text='<span class="glyphicon glyphicon-check"></span>&nbsp; Check for alumni members.')

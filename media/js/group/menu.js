@@ -235,6 +235,11 @@ $(document).ready(function () {
                     $("#form_change_phone").attr("disabled", "disabled");
                     $("#form_change_submit").attr("disabled", "disabled");
                 }
+                if (data.bday) {
+                    $("#form_change_bday").val(data.bday);
+                } else{
+                    $("#form_change_bday").attr("disabled", "disabled");
+                }
             }
         }
     });

@@ -8,22 +8,16 @@ from django.db import IntegrityError
 # from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
 from django.shortcuts import render, render_to_response, redirect
-# from django import forms
 
 from filemanager import FileManager
 
 from src.console import *
-# from src.cron import *
 from src.dash import *
 from src.models import *
 from src.settings import *
 
-# import datetime
-# import os
-# import subprocess
-# import sys
+import re
 import traceback
-# from sys import stderr
 
 colors = ('brown', 'dark-red', 'danger', 'orange', 'warning', 'green', 'success', 'light-blue', 'info', 'primary', 'dark-blue', 'violet')
 
@@ -253,17 +247,22 @@ def user_password(request):
 # @login_required
 def user_contact(request):
     if request.method == 'POST':
-        if (not 'email' in request.POST) or (not 'phone' in request.POST): return HttpResponseBadRequest('Invalid input.')
+        if (not 'email' in request.POST) or (not 'phone' in request.POST) or (not 'bday' in request.POST): return HttpResponseBadRequest('Invalid input.')
         try:
             email = request.POST['email']
             phone = request.POST['phone']
             phone = int(phone)
+            bday = request.POST['bday']
+            bday = re.match('[0-9]{1,2}\/[0-9]{1,2}', bday)
+            if bday is None: raise ValueError
+            bday = bday.string
         except ValueError:
             return HttpResponseBadRequest('Invalid input.')
 
         member = Member.objects.get(sunet_id=request.user.username)
         member.phone = phone
         member.email = email
+        member.bday = bday
         member.save()
         return HttpResponseRedirect('/group/contact')
     else:
@@ -416,7 +415,7 @@ def user_dash(request):
             user.phone = '(%s) %s-%s' %(user.phone[:3], user.phone[3:6], user.phone[6:])
         user.type = user_type
 
-        json = {'id':user.sunet_id, 'type':user.type, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'email':user.email, 'phone':user.phone, 'cap':user.more_info, 'status':user.year()}
+        json = {'id':user.sunet_id, 'type':user.type, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'email':user.email, 'phone':user.phone, 'bday':user.bday, 'cap':user.more_info, 'status':user.year()}
     except:
         if request.META.has_key('WEBAUTH_USER'):
             json = {'id':sunet_id, 'type':user_type}
