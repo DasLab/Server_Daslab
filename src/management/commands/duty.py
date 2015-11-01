@@ -121,6 +121,7 @@ class Command(BaseCommand):
                         is_upcoming = is_upcoming or ( (temp <= datetime.utcnow() + timedelta(days=60)) and (temp >= datetime.utcnow()) )
                     if is_upcoming:
                         fields.append({'title':ppl.full_name(), 'value':ppl.bday, 'short':True})
+                if not fields: fields.append({'title': 'Nobody', 'value':'_within next 60 days_', 'short':True})
 
                 birthday = ppls[flag]['birthday']
                 who_main = self.find_slack_id(birthday[0])
