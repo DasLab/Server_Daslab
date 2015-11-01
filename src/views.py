@@ -256,6 +256,11 @@ def user_contact(request):
             bday = re.match('[0-9]{1,2}\/[0-9]{1,2}', bday)
             if bday is None: raise ValueError
             bday = bday.string
+            if len(bday) < 5:
+                if len(bday[:bday.find('/')]) < 2:
+                    bday = '0' + bday
+                if len(bday[bday.find('/')+1:]) < 2:
+                    bday = bday[:bday.find('/')+1] + '0' + bday[-1]
         except ValueError:
             return HttpResponseBadRequest('Invalid input.')
 
