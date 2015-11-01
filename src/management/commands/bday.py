@@ -52,7 +52,7 @@ class Command(BaseCommand):
             for ppl in member:
                 who = self.find_slack_id(ppl.first_name)
                 if who:
-                    msg_handles.append( ('@' + who, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"3ed4e7", "text":'*Happy Birthday*, _%s_!' % ppl.first_name}]) )
+                    msg_handles.append( ('@' + who, '', [{"fallback":'BDay', "mrkdwn_in": ["text"], "color":"ff912e", "text":'*Happy Birthday*, _%s_!' % ppl.first_name}]) )
                     ids.append(who)
 
         except subprocess.CalledProcessError:

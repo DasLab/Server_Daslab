@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import pickle
 import subprocess
 import sys
@@ -7,6 +8,7 @@ import traceback
 from django.core.management.base import BaseCommand
 
 from src.settings import *
+from src.models import Member
 from src.console import send_notify_slack
 
 
@@ -99,15 +101,32 @@ class Command(BaseCommand):
                     who_bkup = self.find_slack_id(microphone[1])
                     if who_main:
                         if who_bkup:
-                        self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder that you are up for `Microphone Setup` for _Eterna Open Group Meeting_. Please arrive *30 min* early. If you are unable to do so, please inform the backup person for this task: _%s_ <@%s>.' % (microphone[1], who_bkup)}]) )
-                    else:
-                        self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder that you are up for `Microphone Setup` for _Eterna Open Group Meeting_. Please arrive *30 min* early. If you are unable to do so, please inform the site admin <@%s> since there is no backup person for this task.' % SLACK['ADMIN_NAME']}]) )                        
+                            self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder that you are up for `Microphone Setup` for _Eterna Open Group Meeting_. Please arrive *30 min* early. If you are unable to do so, please inform the backup person for this task: _%s_ <@%s>.' % (microphone[1], who_bkup)}]) )
+                        else:
+                            self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder that you are up for `Microphone Setup` for _Eterna Open Group Meeting_. Please arrive *30 min* early. If you are unable to do so, please inform the site admin <@%s> since there is no backup person for this task.' % SLACK['ADMIN_NAME']}]) )                        
 
             elif flag == 'monthly':
                 compose_msg(self, ppls[flag]['amazon'], 'Amazon Web Services', flag)
                 compose_msg(self, ppls[flag]['website'], 'Website', flag)
-                compose_msg(self, ppls[flag]['birthday'], 'Birthday Celebrations', flag)
                 compose_msg(self, ppls[flag]['group meeting'], 'Meeting Scheduling', flag)
+                compose_msg(self, ppls[flag]['birthday'], 'Birthday Celebrations', flag)
+
+                day = datetime.utcnow().date()
+                fields = []
+                for ppl in Member.objects.filter(alumni=0).exclude(bday__isnull=True).order_by('bday'):
+                    temp = datetime.strptime('%s/%s' % (day.year, ppl.bday), '%Y/%m/%d')
+                    is_upcoming = (temp <= datetime.utcnow() + timedelta(days=60)) and (temp >= datetime.utcnow())
+                    if day.month >= 10:
+                        temp = datetime.strptime('%s/%s' % (day.year + 1, ppl.bday), '%Y/%m/%d')
+                        is_upcoming = is_upcoming or ( (temp <= datetime.utcnow() + timedelta(days=60)) and (temp >= datetime.utcnow()) )
+                    if is_upcoming:
+                        fields.append({'title':ppl.full_name(), 'value':ppl.bday, 'short':True})
+
+                birthday = ppls[flag]['birthday']
+                who_main = self.find_slack_id(birthday[0])
+                who_bkup = self.find_slack_id(birthday[1])
+                self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"ff912e", "text":'_Upcoming Birthdays_:', "fields":fields}]) )
+
             elif flag == 'quarterly':
                 compose_msg(self, ppls[flag]['lab trips'], 'Lab Outing/Trips', flag)
                 compose_msg(self, ppls[flag]['github'], 'Mailing, Slack, GitHub', flag)
