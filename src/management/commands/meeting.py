@@ -38,7 +38,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         t0 = time.time()
-        self.stdout.write(time.ctime())
+        self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 
         try:
             result = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
@@ -155,7 +155,7 @@ class Command(BaseCommand):
 
         except:
             err = traceback.format_exc()
-            ts = '%s\t\t%s %s\n' % (time.ctime(), sys.argv[0], sys.argv[1])
+            ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
             open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
             open('%s/cache/log_cron_meeting.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
 
@@ -168,7 +168,7 @@ class Command(BaseCommand):
                 self.stdout.write('\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) removed in MySQL.' % ppt_id)
 
             if IS_SLACK:
-                send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s %s* @ _%s_\n>```%s```\n' % (sys.argv[0], sys.argv[1], time.ctime(), err)}])
+                send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (' '.join(sys.argv), time.ctime(), err)}])
                 send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"warning", "text":'FlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.'}])
             else:
                 send_notify_emails('[Django] {daslab.stanford.edu} ERROR: Weekly Meeting Setup', 'This is an automatic email notification for the failure of scheduled weekly flash slides setup. The following error occurred:\n\n%s\n\n%s\n\nFlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\n\n** Flash Slide has NOT been setup yet for this week! Please investigate and fix the setup immediately.\n\nDasLab Website Admin' % (ts, err))

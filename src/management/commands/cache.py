@@ -47,7 +47,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         t0 = time.time()
-        self.stdout.write(time.ctime())
+        self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 
         if options['interval']:
             is_3, is_15, is_30 = False, False, False
@@ -183,14 +183,10 @@ class Command(BaseCommand):
                 self.stdout.write("#7: Skip \033[94mGoogle Calendar\033[0m...")
         except:
             err = traceback.format_exc()
-            if is_3: var = '3'
-            if is_15: var = '15'
-            if is_30: var = '30'
-            if is_3 and is_15 and is_30: var = ''
-            ts = '%s\t\t%s %s %s\n' % (time.ctime(), sys.argv[0], sys.argv[1], var)
+            ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
             open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
             open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-            if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s %s %s* @ _%s_\n>```%s```\n' % (sys.argv[0], sys.argv[1], var, time.ctime(), err)}])
+            if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (' '.join(sys.argv), time.ctime(), err)}])
             self.stdout.write("Finished with \033[41mERROR\033[0m!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
             sys.exit(1)
