@@ -46,7 +46,7 @@ class Command(BaseCommand):
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
          
         try:
-            msg_handles,ids = [], []
+            msg_handles, ids, names = [], [], []
             today_str = datetime.date.today().strftime('%m/%d')
             member = Member.objects.filter(alumni=0, bday=today_str)
             for ppl in member:
@@ -54,6 +54,9 @@ class Command(BaseCommand):
                 if who:
                     msg_handles.append( ('@' + who, '', [{"fallback":'BDay', "mrkdwn_in": ["text"], "color":"ff912e", "text":'*Happy Birthday*, _%s_!' % ppl.first_name}]) )
                     ids.append(who)
+                    names.append(ppl.first_name)
+            if ids:
+                msg_handles.append( ('#general', '', [{"fallback":'BDay', "mrkdwn_in": ["text"], "color":"ff912e", "text":'*Happy Birthday* to _%s_! %s' % (' '.join(names), ' '.join('<@' + id + '>' for id in ids]))}]) )
 
         except subprocess.CalledProcessError:
             err = traceback.format_exc()
