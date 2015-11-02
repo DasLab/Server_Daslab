@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServer
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 import operator
-# import os
+import os
 import pickle
 import pytz
 import simplejson
@@ -531,8 +531,13 @@ def cache_schedule():
     try:
         subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["SCHEDULE_SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
+        print "    \033[41mERROR\033[0m: Failed to download \033[94mSchedule\033[0m spreadsheet."
         print traceback.format_exc()
-        raise Exception('Error with downloading schedule spreadsheet.')
+        if os.path.exists('%s/cache/schedule.pickle' % MEDIA_ROOT):
+            now = datetime.fromtimestamp(time.time())
+            t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.pickle' % MEDIA_ROOT))
+            if ((now - t_sch).seconds >= 6000):
+                raise Exception('Error with downloading schedule spreadsheet.')
 
     try:
         lines = open('%s/cache/schedule.csv' % MEDIA_ROOT, 'r').readlines()

@@ -106,10 +106,10 @@ class Command(BaseCommand):
                             self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder that you are up for `Microphone Setup` for _Eterna Open Group Meeting_. Please arrive *30 min* early. If you are unable to do so, please inform the site admin <@%s> since there is no backup person for this task.' % SLACK['ADMIN_NAME']}]) )                        
 
             elif flag == 'monthly':
-                compose_msg(self, ppls[flag]['amazon'], 'Amazon Web Services', flag)
-                compose_msg(self, ppls[flag]['website'], 'Website', flag)
-                compose_msg(self, ppls[flag]['group meeting'], 'Meeting Scheduling', flag)
-                compose_msg(self, ppls[flag]['birthday'], 'Birthday Celebrations', flag)
+                self.compose_msg(self, ppls[flag]['amazon'], 'Amazon Web Services', flag)
+                self.compose_msg(self, ppls[flag]['website'], 'Website', flag)
+                self.compose_msg(self, ppls[flag]['group meeting'], 'Meeting Scheduling', flag)
+                self.compose_msg(self, ppls[flag]['birthday'], 'Birthday Celebrations', flag)
 
                 day = datetime.utcnow().date()
                 fields = []
@@ -129,8 +129,8 @@ class Command(BaseCommand):
                 self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"ff912e", "text":'_Upcoming Birthdays_:', "fields":fields}]) )
 
             elif flag == 'quarterly':
-                compose_msg(self, ppls[flag]['lab trips'], 'Lab Outing/Trips', flag)
-                compose_msg(self, ppls[flag]['github'], 'Mailing, Slack, GitHub', flag)
+                self.compose_msg(self, ppls[flag]['lab trips'], 'Lab Outing/Trips', flag)
+                self.compose_msg(self, ppls[flag]['github'], 'Mailing, Slack, GitHub', flag)
 
         except subprocess.CalledProcessError:
             err = traceback.format_exc()
