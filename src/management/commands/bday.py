@@ -58,7 +58,7 @@ class Command(BaseCommand):
             if ids:
                 msg_handles.append( ('#general', '', [{"fallback":'BDay', "mrkdwn_in": ["text"], "color":"ff912e", "text":'*Happy Birthday* to _%s_! %s' % (' '.join(names), ' '.join( ['<@' + id + '>' for id in ids] ))}]) )
 
-        except subprocess.CalledProcessError:
+        except:
             err = traceback.format_exc()
             ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
             open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
