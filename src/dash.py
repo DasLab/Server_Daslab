@@ -565,7 +565,7 @@ def cache_schedule():
     except:
         print "    \033[41mERROR\033[0m: Failed to parse \033[94mSchedule\033[0m spreadsheet."
         err = traceback.format_exc()
-        ts = '%s\t\cache_schedule()\n' % time.ctime()
+        ts = '%s\t\tcache_schedule()\n' % time.ctime()
         open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
         open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
         if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_schedule()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
@@ -577,88 +577,109 @@ def dash_schedule(request):
 
 
 def cache_cal():
-    ics = subprocess.Popen('curl --silent --request GET "%s"' % GCAL['ICS'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-    cal = Calendar.from_ical(ics)
-    data = []
-
-    format_UTC = "%Y-%m-%d %H:%M:%S"
-    for event in cal.walk('vevent'):
-        title = event.get('SUMMARY')
-        start = event.get('DTSTART').dt
-        if type(start) is datetime: 
-            if event.get('DTSTART').params.has_key('TZID'):
-                start = start.replace(tzinfo=pytz.timezone(event.get('DTSTART').params['TZID'])).astimezone(pytz.timezone(TIME_ZONE))
+    try:
+        subprocess.check_call('curl --silent --request GET "%s" -o %s/cache/calendar.ics' % (GCAL['ICS'], MEDIA_ROOT), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError:
+        print "    \033[41mERROR\033[0m: Failed to download \033[94mCalendar\033[0m ICS file."
+        print traceback.format_exc()
+        if os.path.exists('%s/cache/calendar.pickle' % MEDIA_ROOT):
+            now = datetime.fromtimestamp(time.time())
+            t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT))
+            if ((now - t_cal).seconds >= 6000):
+                raise Exception('Error with downloading calendar ICS file.')
             else:
-                start = start.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
-        if event.has_key('DTEND'):
-            end = event.get('DTEND').dt
-            if type(end) is datetime: 
-                if event.get('DTEND').params.has_key('TZID'):
-                    end = end.replace(tzinfo=pytz.timezone(event.get('DTSTART').params['TZID'])).astimezone(pytz.timezone(TIME_ZONE))
+                return
+
+    try:
+        ics = open('%s/cache/calendar.ics' % MEDIA_ROOT, 'r').readlines()
+        cal = Calendar.from_ical(''.join(ics))
+        data = []
+        format_UTC = "%Y-%m-%d %H:%M:%S"
+        for event in cal.walk('vevent'):
+            title = event.get('SUMMARY')
+            start = event.get('DTSTART').dt
+            if type(start) is datetime: 
+                if event.get('DTSTART').params.has_key('TZID'):
+                    start = start.replace(tzinfo=pytz.timezone(event.get('DTSTART').params['TZID'])).astimezone(pytz.timezone(TIME_ZONE))
                 else:
-                    end = end.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
-        else:
-            end = start + relativedelta(hours=1)
-
-        all_day = (not isinstance(start, datetime))
-        if all_day:
-            color = "#29be92"
-        else:
-            color = "#5496d7"
-        if ("group meeting" in title.lower()) or ("das lab group" in title.lower()) or ("eterna dev meeting" in title.lower()):
-            color = "#ff5c2b"
-        if "BD" in title or 'b-day' in title or 'birthday' in title.lower():
-            color = "#c28fdd"
-        data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
-
-        if event.has_key('RRULE') and event.get('RRULE').has_key('FREQ'):
-            rrule = event.get('RRULE')
-            while True:
-                if 'YEARLY' in rrule['FREQ']:
-                    if rrule.has_key('INTERVAL'):
-                        interval = rrule['INTERVAL'][0]
+                    start = start.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
+            if event.has_key('DTEND'):
+                end = event.get('DTEND').dt
+                if type(end) is datetime: 
+                    if event.get('DTEND').params.has_key('TZID'):
+                        end = end.replace(tzinfo=pytz.timezone(event.get('DTSTART').params['TZID'])).astimezone(pytz.timezone(TIME_ZONE))
                     else:
-                        interval = 1
-                    start += relativedelta(years=interval)
-                    end += relativedelta(years=interval)
-                elif 'MONTHLY' in rrule['FREQ']:
-                    if rrule.has_key('INTERVAL'):
-                        interval = rrule['INTERVAL'][0]
+                        end = end.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
+            else:
+                end = start + relativedelta(hours=1)
+
+            all_day = (not isinstance(start, datetime))
+            if all_day:
+                color = "#29be92"
+            else:
+                color = "#5496d7"
+            if ("group meeting" in title.lower()) or ("das lab group" in title.lower()) or ("eterna dev meeting" in title.lower()):
+                color = "#ff5c2b"
+            if "BD" in title or 'b-day' in title or 'birthday' in title.lower():
+                color = "#c28fdd"
+            data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
+
+            if event.has_key('RRULE') and event.get('RRULE').has_key('FREQ'):
+                rrule = event.get('RRULE')
+                while True:
+                    if 'YEARLY' in rrule['FREQ']:
+                        if rrule.has_key('INTERVAL'):
+                            interval = rrule['INTERVAL'][0]
+                        else:
+                            interval = 1
+                        start += relativedelta(years=interval)
+                        end += relativedelta(years=interval)
+                    elif 'MONTHLY' in rrule['FREQ']:
+                        if rrule.has_key('INTERVAL'):
+                            interval = rrule['INTERVAL'][0]
+                        else:
+                            interval = 1
+                        start += relativedelta(months=interval)
+                        end += relativedelta(months=interval)
+                    elif 'WEEKLY' in rrule['FREQ']:
+                        if rrule.has_key('INTERVAL'):
+                            interval = rrule['INTERVAL'][0]
+                        else:
+                            interval = 1
+                        start += timedelta(days=7*interval)
+                        end += timedelta(days=7*interval)
+                    elif 'DAILY' in rrule['FREQ']:
+                        if rrule.has_key('INTERVAL'):
+                            interval = rrule['INTERVAL'][0]
+                        else:
+                            interval = 1
+                        start += timedelta(days=interval)
+                        end += timedelta(days=interval)
                     else:
-                        interval = 1
-                    start += relativedelta(months=interval)
-                    end += relativedelta(months=interval)
-                elif 'WEEKLY' in rrule['FREQ']:
-                    if rrule.has_key('INTERVAL'):
-                        interval = rrule['INTERVAL'][0]
+                        break
+
+                    until = (datetime.today() + relativedelta(years=2)).date()
+                    if rrule.has_key('UNTIL'): 
+                        until = rrule['UNTIL'][0]
+                        if isinstance(until, datetime): until = until.date()
+
+                    if all_day:
+                        if start > until: break
                     else:
-                        interval = 1
-                    start += timedelta(days=7*interval)
-                    end += timedelta(days=7*interval)
-                elif 'DAILY' in rrule['FREQ']:
-                    if rrule.has_key('INTERVAL'):
-                        interval = rrule['INTERVAL'][0]
-                    else:
-                        interval = 1
-                    start += timedelta(days=interval)
-                    end += timedelta(days=interval)
-                else:
-                    break
+                        if start.date() > until: break
 
-                until = (datetime.today() + relativedelta(years=2)).date()
-                if rrule.has_key('UNTIL'): 
-                    until = rrule['UNTIL'][0]
-                    if isinstance(until, datetime): until = until.date()
+                    data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
 
-                if all_day:
-                    if start > until: break
-                else:
-                    if start.date() > until: break
-
-                data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
-
-
-    return simplejson.dumps(data)    
+        subprocess.check_call("rm %s/cache/calendar.ics" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        return simplejson.dumps(data)    
+    except:
+        print "    \033[41mERROR\033[0m: Failed to parse \033[94mCalendar\033[0m ICS file."
+        err = traceback.format_exc()
+        ts = '%s\t\tcache_cal()\n' % time.ctime()
+        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
+        open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_cal()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
+        raise Exception('Error with parsing calendar ICS.')
 
 
 def dash_cal():

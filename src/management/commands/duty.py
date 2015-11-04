@@ -136,6 +136,7 @@ class Command(BaseCommand):
                 self.compose_msg(ppls[flag]['lab trips'], 'Lab Outing/Trips', flag)
                 self.compose_msg(ppls[flag]['github'], 'Mailing, Slack, GitHub', flag)
 
+            subprocess.check_call("rm %s/cache/duty.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         except:
             err = traceback.format_exc()
             ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
