@@ -538,19 +538,22 @@ def cache_schedule():
             t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.pickle' % MEDIA_ROOT))
             if ((now - t_sch).seconds >= 6000):
                 raise Exception('Error with downloading schedule spreadsheet.')
+            else:
+                return
 
     try:
         lines = open('%s/cache/schedule.csv' % MEDIA_ROOT, 'r').readlines()
+        this = ''
         tp = lines[0].split(',')[5]
         for row in lines:
             row = row.split(',')
-            if 'this' in locals(): 
+            if this: 
                 next = (datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), row[2], row[3], row[5])
                 break
             if len(row) >= 9 and row[8] == '[NEXT]':
                 this = (datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), row[2], row[3], row[5])
                 
-        if not 'this' in locals(): raise Exception('Error with parsing spreadsheet csv: no [NEXT] found.')
+        if not this: raise Exception('Error with parsing spreadsheet csv: no [NEXT] found.')
         for row in reversed(lines):
             row = row.split(',')
             if len(row) == 10 and any(row):
@@ -560,7 +563,12 @@ def cache_schedule():
         subprocess.check_call("rm %s/cache/schedule.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return {'last':last, 'this':this, 'next':next, 'tp':tp}
     except:
-        print traceback.format_exc()
+        print "    \033[41mERROR\033[0m: Failed to parse \033[94mSchedule\033[0m spreadsheet."
+        err = traceback.format_exc()
+        ts = '%s\t\cache_schedule()\n' % time.ctime()
+        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
+        open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_schedule()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
         raise Exception('Error with parsing spreadsheet csv.')
 
 

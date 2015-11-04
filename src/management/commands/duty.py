@@ -128,6 +128,10 @@ class Command(BaseCommand):
                 who_bkup = self.find_slack_id(birthday[1])
                 self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"ff912e", "text":'_Upcoming Birthdays_:', "fields":fields}]) )
 
+                if datetime.utcnow().date().month == 10:
+                    self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"3ed4e7", "text":'*REMINDER*: Renewal of `Dropbox` membership _annually_. Please check the payment status.'}]) )
+
+
             elif flag == 'quarterly':
                 self.compose_msg(ppls[flag]['lab trips'], 'Lab Outing/Trips', flag)
                 self.compose_msg(ppls[flag]['github'], 'Mailing, Slack, GitHub', flag)
