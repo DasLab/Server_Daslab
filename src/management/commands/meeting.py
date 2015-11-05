@@ -60,8 +60,11 @@ class Command(BaseCommand):
                 type_this = types[result['this'][1]]
                 year = (datetime.utcnow() + timedelta(days=1)).date().year
                 date = datetime.strptime("%s %s" % (result['this'][0], year), '%b %d %Y')
-                title = 'Flash Slides: %s' % datetime.strftime(date, '%b %d %Y')
+                if (datetime.utcnow() + timedelta(days=1)).date() != date.date():
+                    send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"warning", "text":'Mismatch in Schedule Spreadsheet date. It seems to be not up-to-date.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.'}])
+                    sys.exit(1)
 
+                title = 'Flash Slides: %s' % datetime.strftime(date, '%b %d %Y')
                 access_token = requests.post('https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (DRIVE['REFRESH_TOKEN'], DRIVE['CLIENT_ID'], DRIVE['CLIENT_SECRET'])).json()['access_token']
                 temp = requests.post('https://www.googleapis.com/drive/v2/files/%s/copy?access_token=%s' % (DRIVE['TEMPLATE_PRESENTATION_ID'], access_token), json={"title":"%s" % title})
                 ppt_id = temp.json()['id']
@@ -82,7 +85,7 @@ class Command(BaseCommand):
 
                 if name:
                     for name in names:
-                        (sunet_id, who_id) = find_slack_id(name)
+                        (sunet_id, who_id) = self.find_slack_id(name)
                         if flag == 'endofrotationtalk':
                             if sunet_id in GROUP.ROTON:
                                 msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation _tomorrow_.' % SLACK['ADMIN_NAME']
@@ -137,7 +140,7 @@ class Command(BaseCommand):
                     names = [name]
                 if name:
                     for name in names:
-                        (sunet_id, who_id) = find_slack_id(name)
+                        (sunet_id, who_id) = self.find_slack_id(name)
                         if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
                             ids.append('<@' + who_id + '>')
                             msg_handles.append( ('@' + who_id, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))

@@ -69,6 +69,10 @@ class Command(BaseCommand):
             self.stdout.write("Finished with \033[41mERROR\033[0m!")
             sys.exit(1)
 
+        if flag in ['monthly', 'quarterly']:
+            if datetime.utcnow().date().day > 7:
+                sys.exit(0)
+
         try:
             gdrive_dir = 'cd %s/cache' % MEDIA_ROOT
             gdrive_mv = 'mv Das\ Lab\ Responsibilities.csv duty.csv'
