@@ -52,10 +52,12 @@ class Command(BaseCommand):
             for ppl in member:
                 who = self.find_slack_id(ppl.first_name)
                 if who:
-                    msg_handles.append( ('@' + who, '', [{"fallback":'BDay', "mrkdwn_in": ["text"], "color":"ff912e", "text":'*Happy Birthday*, _%s_!' % ppl.first_name}]) )
+                    send_to = '@' + who
+                    if DEBUG: send_to = SLACK['ADMIN_NAME']
+                    msg_handles.append( (send_to, '', [{"fallback":'BDay', "mrkdwn_in": ["text"], "color":"ff912e", "text":'*Happy Birthday*, _%s_!' % ppl.first_name}]) )
                     ids.append(who)
                     names.append(ppl.first_name)
-            if ids:
+            if ids and (not DEBUG):
                 msg_handles.append( ('#general', '', [{"fallback":'BDay', "mrkdwn_in": ["text"], "color":"ff912e", "text":'*Happy Birthday* to _%s_! %s' % (' '.join(names), ' '.join( ['<@' + id + '>' for id in ids] ))}]) )
 
         except:
