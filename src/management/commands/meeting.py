@@ -54,7 +54,11 @@ class Command(BaseCommand):
                     msg_this += ' due to: _%s_.' % result['this'][3]
                 else:
                     msg_this += '.'
-                msg_handles.append( ('#general', '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "title":'Group Meeting Reminder', "text":msg_this, "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg'}]) )
+                if DEBUG: 
+                    send_to = SLACK['ADMIN_NAME'] 
+                else: 
+                    send_to = "#general"
+                msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "title":'Group Meeting Reminder', "text":msg_this, "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg'}]) )
                 self.stdout.write('\033[92mSUCCESS\033[0m: Google Presentation skipped (N/A for this week: \033[94m%s\033[0m).' % datetime.strftime(date, '%b %d %Y'))
             else:
                 type_this = types[result['this'][1]]
@@ -90,7 +94,9 @@ class Command(BaseCommand):
                             if sunet_id in GROUP.ROTON:
                                 msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation _tomorrow_.' % SLACK['ADMIN_NAME']
                                 ids.append('<@' + who_id + '>')
-                                msg_handles.append( ('@' + who_id, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))
+                                send_to = '@' + who_id
+                                if DEBUG: send_to = SLACK['ADMIN_NAME']
+                                msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))
                             else:
                                 if sunet_id == 'none':
                                     self.stdout.write('\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) not found.' % name)
@@ -108,8 +114,12 @@ class Command(BaseCommand):
                 elif result['this'][1] == 'ES':
                     msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'REMINDER', "mrkdwn_in": ["text"], "color":"warning", "text":'*REMINDER*: Add *EternaYoutube* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
 
-                msg_handles.append( ('#general', '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"good", "title":'Group Meeting Reminder', "text":'Hi all,\n\nThis is a reminder that group meeting will be *`%s`* for this week.\n' % type_this, "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg', "fields":[{'title':'Date', 'value':'_%s_' % datetime.strftime(date, '%b %d %Y (%a)'), 'short':True}, {'title':'Time & Place', 'value':'_%s @ %s_' % (clock, place), 'short':True}, {'title':'Type', 'value':'`%s`' % type_this, 'short':True}, {'title':'Presenter', 'value':'_%s_ %s' % (' '.join(names), ' '.join(ids)), 'short':True}] }]) )
-                msg_handles.append( ('#general', '', [{"fallback":'%s' % title, "mrkdwn_in": ["text"], "color":"warning", "title":'%s' % title, "text":'*<https://docs.google.com/presentation/d/%s/edit#slide=id.p>*\nA <https://daslab.stanford.edu/group/flash_slide/|full list> of Flash Slide links is available on the DasLab Website.' % ppt_id}]) )
+                if DEBUG: 
+                    send_to = SLACK['ADMIN_NAME']
+                else:
+                    send_to = "#general"
+                msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"good", "title":'Group Meeting Reminder', "text":'Hi all,\n\nThis is a reminder that group meeting will be *`%s`* for this week.\n' % type_this, "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg', "fields":[{'title':'Date', 'value':'_%s_' % datetime.strftime(date, '%b %d %Y (%a)'), 'short':True}, {'title':'Time & Place', 'value':'_%s @ %s_' % (clock, place), 'short':True}, {'title':'Type', 'value':'`%s`' % type_this, 'short':True}, {'title':'Presenter', 'value':'_%s_ %s' % (' '.join(names), ' '.join(ids)), 'short':True}] }]) )
+                msg_handles.append( (send_to, '', [{"fallback":'%s' % title, "mrkdwn_in": ["text"], "color":"warning", "title":'%s' % title, "text":'*<https://docs.google.com/presentation/d/%s/edit#slide=id.p>*\nA <https://daslab.stanford.edu/group/flash_slide/|full list> of Flash Slide links is available on the DasLab Website.' % ppt_id}]) )
 
 
             if result['next'][1] == 'N/A':
@@ -118,7 +128,11 @@ class Command(BaseCommand):
                     msg_next += ' due to: _%s_.' % result['next'][3]
                 else:
                     msg_next += '.'
-                msg_handles.append( ('#general', '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"439fe0", "text":msg_next}]) )
+                if DEBUG: 
+                    send_to = SLACK['ADMIN_NAME']
+                else:
+                    send_to = "#general"
+                msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"439fe0", "text":msg_next}]) )
             else:
                 type_next = types[result['next'][1]]
                 year = (datetime.utcnow() + timedelta(days=8)).date().year
@@ -143,7 +157,9 @@ class Command(BaseCommand):
                         (sunet_id, who_id) = self.find_slack_id(name)
                         if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
                             ids.append('<@' + who_id + '>')
-                            msg_handles.append( ('@' + who_id, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))
+                            send_to = '@' + who_id
+                            if DEBUG: send_to = SLACK['ADMIN_NAME']
+                            msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))
                         else:
                             if sunet_id == 'none':
                                 self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not found.' % name)
@@ -152,9 +168,13 @@ class Command(BaseCommand):
                             else:
                                 self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not available in database.' % name)
 
-                msg_handles.append( ('#general', '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"439fe0", "text":'For next week:\n', "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg', "fields":[{'title':'Date', 'value':'_%s_' % datetime.strftime(date, '%b %d %Y (%a)'), 'short':True}, {'title':'Time & Place', 'value':'_%s @ %s_' % (clock, place), 'short':True}, {'title':'Type', 'value':'`%s`' % type_next, 'short':True}, {'title':'Presenter', 'value':'_%s_ %s' % (' '.join(names), ' '.join(ids)), 'short':True}] }]) )
+                if DEBUG: 
+                    send_to = SLACK['ADMIN_NAME']
+                else:
+                    send_to = "#general"
+                msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"439fe0", "text":'For next week:\n', "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg', "fields":[{'title':'Date', 'value':'_%s_' % datetime.strftime(date, '%b %d %Y (%a)'), 'short':True}, {'title':'Time & Place', 'value':'_%s @ %s_' % (clock, place), 'short':True}, {'title':'Type', 'value':'`%s`' % type_next, 'short':True}, {'title':'Presenter', 'value':'_%s_ %s' % (' '.join(names), ' '.join(ids)), 'short':True}] }]) )
 
-            msg_handles.append( ('#general', '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"danger", "text":'The <https://daslab.stanford.edu/group/schedule/|full schedule> is available on the DasLab Website. For questions regarding the schedule, please contact _<%s>_ (site admin). Thanks for your attention.''' % SLACK['ADMIN_NAME']}]) )
+            msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"danger", "text":'The <https://daslab.stanford.edu/group/schedule/|full schedule> is available on the DasLab Website. For questions regarding the schedule, please contact _<%s>_ (site admin). Thanks for your attention.''' % SLACK['ADMIN_NAME']}]) )
 
         except:
             err = traceback.format_exc()

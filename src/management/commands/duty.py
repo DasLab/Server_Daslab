@@ -46,16 +46,21 @@ class Command(BaseCommand):
             who_id = ''
         return who_id
 
-    def compose_msg(self, task_tuple, task_name, interval):
+    def compose_msg(self, task_tuple, task_name, interval, alt_text):
         who_main = self.find_slack_id(task_tuple[0])
         who_bkup = self.find_slack_id(task_tuple[1])
         if who_main:
-            msg = '*LAB DUTY*: Just a reminder for the _%s_ check of `%s`. If you are unable to do so, please inform the ' % (interval, task_name)
+            msg = '*LAB DUTY*: Just a reminder for the _%s_ task of `%s`%s. If you are unable to do so, please inform the ' % (interval, task_name, alt_text)
             if who_bkup:
                 msg += 'backup person for this task: _%s_ <@%s>.' % (task_tuple[1], who_bkup)
             else:
                 msg += 'site admin <@%s> since there is *NO* backup person for this task.' % SLACK['ADMIN_NAME']
-            self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"c28fdd", "text":msg }]) )
+            send_to = '@' + who_main
+            if DEBUG: send_to = SLACK['ADMIN_NAME']
+            self.msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"c28fdd", "text":msg }]) )
+        else:
+            self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"ff912e", "text": '*WARNING*: No one is primarily assigned for the duty of _%s_ check of `%s`. *NO* reminder sent.' % (intern, task_name) }]) )
+
 
 
     def handle(self, *args, **options):
@@ -80,7 +85,7 @@ class Command(BaseCommand):
             lines = open('%s/cache/duty.csv' % MEDIA_ROOT, 'r').readlines()
 
             ppls = {'weekly':{}, 'monthly':{}, 'quarterly':{}}
-            jobs = ['birthday', 'breakfast', 'microphone', 'group meeting', 'lab trips', 'amazon', 'website', 'github']
+            jobs = ['birthday', 'breakfast', 'eterna', 'group meeting', 'lab trips', 'amazon', 'website', 'github']
             for row in lines[1:-6]:
                 row = row.split(',')
                 for job in jobs:
@@ -90,30 +95,23 @@ class Command(BaseCommand):
             result = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
 
             if flag == 'weekly':
-                breakfast = ppls['weekly']['breakfast']
-                who_main = self.find_slack_id(breakfast[0])
-                who_bkup = self.find_slack_id(breakfast[1])
-                if who_main:
-                    if who_bkup:
-                        self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder that you are up for bringing `Breakfast` for _tomorrow_. If you are unable to do so, please inform the backup person for this task: _%s_ <@%s>.' % (breakfast[1], who_bkup)}]) )
-                    else:
-                        self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder that you are up for bringing `Breakfast` for _tomorrow_. If you are unable to do so, please inform the site admin <@%s> since there is no backup person for this task.' % SLACK['ADMIN_NAME']}]) )                        
+                if datetime.utcnow().date().isoweekday() == 4:
+                    self.compose_msg(ppls[flag]['breakfast'], 'Breakfast', flag, ' to _Group Meeting_ tomorrow')
+                    if result['this'][1] == 'ES':
+                        self.compose_msg(ppls['monthly']['eterna'], 'Eterna Microphone Setup', flag, ' for _Eterna Open Group Meeting_ tomorrow. Please arrive *30 min* early. The instructions are <https://docs.google.com/document/d/1bh5CYBklIdZl65LJDsBffC8m8J_3jKf4FY1qiYjRIw8/edit|here>')
+                elif datetime.utcnow().date().isoweekday() == 2:
+                    if result['this'][1] == 'ES':
+                        who = result['this'][2]
+                        who_id = self.find_slack_id(who)
+                        self.compose_msg(ppls['monthly']['eterna'], 'Eterna Broadcast Posting', flag, ' for _Eterna Open Group Meeting_. If _%s_ <@%s> hasn\'t send out descriptions, please ask him/her' % (who, who_id))
+                        self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder for posting news on lab website about the upcoming _Eterna Open Group Meeing_ on *%s* by _%s_ <@%s>.' % (result['this'][0], who, who_id)}]) )
 
-                if result['this'][1] == 'ES':
-                    microphone = ppls['monthly']['microphone']
-                    who_main = self.find_slack_id(microphone[0])
-                    who_bkup = self.find_slack_id(microphone[1])
-                    if who_main:
-                        if who_bkup:
-                            self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder that you are up for `Microphone Setup` for _Eterna Open Group Meeting_. Please arrive *30 min* early. If you are unable to do so, please inform the backup person for this task: _%s_ <@%s>.' % (microphone[1], who_bkup)}]) )
-                        else:
-                            self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder that you are up for `Microphone Setup` for _Eterna Open Group Meeting_. Please arrive *30 min* early. If you are unable to do so, please inform the site admin <@%s> since there is no backup person for this task.' % SLACK['ADMIN_NAME']}]) )                        
 
             elif flag == 'monthly':
-                self.compose_msg(ppls[flag]['amazon'], 'Amazon Web Services', flag)
-                self.compose_msg(ppls[flag]['website'], 'Website', flag)
-                self.compose_msg(ppls[flag]['group meeting'], 'Meeting Scheduling', flag)
-                self.compose_msg(ppls[flag]['birthday'], 'Birthday Celebrations', flag)
+                self.compose_msg(ppls[flag]['amazon'], 'Amazon Web Services', flag, '')
+                self.compose_msg(ppls[flag]['website'], 'Website', flag, '')
+                self.compose_msg(ppls[flag]['group meeting'], 'Meeting Scheduling', flag, '')
+                self.compose_msg(ppls[flag]['birthday'], 'Birthday Celebrations', flag, '')
 
                 day = datetime.utcnow().date()
                 fields = []
@@ -130,15 +128,17 @@ class Command(BaseCommand):
                 birthday = ppls[flag]['birthday']
                 who_main = self.find_slack_id(birthday[0])
                 who_bkup = self.find_slack_id(birthday[1])
-                self.msg_handles.append( ('@' + who_main, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"ff912e", "text":'_Upcoming Birthdays_:', "fields":fields}]) )
+                send_to = '@' + who_main
+                if DEBUG: send_to = SLACK['ADMIN_NAME']
+                self.msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"ff912e", "text":'_Upcoming Birthdays_:', "fields":fields}]) )
 
                 if datetime.utcnow().date().month == 10:
                     self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"3ed4e7", "text":'*REMINDER*: Renewal of `Dropbox` membership _annually_. Please check the payment status.'}]) )
 
 
             elif flag == 'quarterly':
-                self.compose_msg(ppls[flag]['lab trips'], 'Lab Outing/Trips', flag)
-                self.compose_msg(ppls[flag]['github'], 'Mailing, Slack, GitHub', flag)
+                self.compose_msg(ppls[flag]['lab trips'], 'Lab Outing/Trips', flag, '')
+                self.compose_msg(ppls[flag]['github'], 'Mailing, Slack, GitHub', flag, '')
 
             subprocess.check_call("rm %s/cache/duty.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         except:
