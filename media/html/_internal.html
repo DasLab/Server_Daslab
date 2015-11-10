@@ -4,7 +4,10 @@
 <head>
     <meta name="robots" content="NONE,NOARCHIVE"/>
     <title>Das Lab: Group Member Website</title>
-    <script type="text/javascript" src="/site_media/js/admin/load.js"></script>  
+    <script type="text/javascript">
+      var DEBUG_DIR = "{{DEBUG_DIR}}", DEBUG_STR = "{{DEBUG_STR}}";
+    </script>
+    <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}load{{DEBUG_STR}}.js"></script>  
     {% block head %}{% endblock %}
 </head>
 
@@ -344,8 +347,8 @@
   </script>
 
   {% block script %}{% endblock %}
-    <script type="text/javascript" src="/site_media/js/group/menu.js"></script>  
-    <script type="text/javascript" src="/site_media/js/group/email.js"></script>  
+    <script type="text/javascript" src="/site_media/js/group/{{DEBUG_DIR}}menu{{DEBUG_STR}}.js"></script>  
+    <script type="text/javascript" src="/site_media/js/group/{{DEBUG_DIR}}email{{DEBUG_STR}}.js"></script>  
     <script type="text/javascript">
     // var _gaq = _gaq || [];
     //   _gaq.push(["_setAccount", "UA-36037648-1"]);

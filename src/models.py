@@ -277,6 +277,12 @@ class EmailForm(forms.Form):
 def email_form(request):
     return {'email_form':EmailForm()}
 
+def debug_flag(request):
+    if DEBUG:
+        return {'DEBUG_STR': '', 'DEBUG_DIR': ''}
+    else:
+        return {'DEBUG_STR': '.min', 'DEBUG_DIR': 'min/'}
+
 
 
 

@@ -167,6 +167,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
 
     "src.models.email_form",
+    "src.models.debug_flag",
 )
 
 MIDDLEWARE_CLASSES = (

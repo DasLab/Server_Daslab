@@ -8,11 +8,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>{% block title %}Das Lab Website Administration{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}"/>
+  <link rel="stylesheet" type="text/css" href="/site_media/css/{{DEBUG_DIR}}_suit{{DEBUG_STR}}.css" media="all">
   {% block extrastyle %}{% endblock %}
   
   <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
-  <link rel="stylesheet" type="text/css" href="/site_media/css/_suit.css" media="all">
-  <script type="text/javascript" src="/site_media/js/admin/load.js"></script>  
+  <script type="text/javascript">
+    var DEBUG_DIR = "{{DEBUG_DIR}}", DEBUG_STR = "{{DEBUG_STR}}";
+  </script>
+  <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}load{{DEBUG_STR}}.js"></script>  
   <script type="text/javascript">var Suit = { $: $.noConflict() }; if (!$) $ = Suit.$; </script>
 
   {% if 'SHOW_REQUIRED_ASTERISK'|suit_conf %}
@@ -20,11 +23,11 @@
   {% endif %}
 
   {% block extrahead %}{% endblock %}
-  <script type="text/javascript" src="/site_media/js/suit/core.js"></script>
-  <script type="text/javascript" src="/site_media/js/suit/RelatedObjectLookups.js"></script>
-  <script type="text/javascript" src="/site_media/js/suit/jquery.init.js"></script>
-  <script type="text/javascript" src="/site_media/js/suit/actions.min.js"></script>
-  <script type="text/javascript" src="/site_media/js/suit/DateTimeShortcuts.js"></script>
+  <script type="text/javascript" src="/site_media/js/suit/{{DEBUG_DIR}}core{{DEBUG_STR}}.js"></script>
+  <script type="text/javascript" src="/site_media/js/suit/{{DEBUG_DIR}}RelatedObjectLookups{{DEBUG_STR}}.js"></script>
+  <script type="text/javascript" src="/site_media/js/suit/{{DEBUG_DIR}}jquery.init{{DEBUG_STR}}.js"></script>
+  <script type="text/javascript" src="/site_media/js/suit/{{DEBUG_DIR}}actions{{DEBUG_STR}}.js"></script>
+  <script type="text/javascript" src="/site_media/js/suit/{{DEBUG_DIR}}DateTimeShortcuts{{DEBUG_STR}}.js"></script>
   {% block extratail %}{% endblock %}
 
   {% block blockbots %}
@@ -234,10 +237,10 @@
     <div id="push"></div>
   {% endif %}
 
-  <script type="text/javascript" src="/site_media/js/admin/_suit.js"></script>
-  <script type="text/javascript" src="/site_media/js/admin/table.js"></script>
-  <script type="text/javascript" src="/site_media/js/admin/clock.js"></script>  
-  <script type="text/javascript" src="/site_media/js/admin/menu.js"></script>
+  <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}_suit{{DEBUG_STR}}.js"></script>
+  <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}table{{DEBUG_STR}}.js"></script>
+  <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}clock{{DEBUG_STR}}.js"></script>  
+  <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}menu{{DEBUG_STR}}.js"></script>
   <script type="text/javascript">
     var scrollTimer, resizeTimer;
 
