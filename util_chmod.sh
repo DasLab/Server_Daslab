@@ -15,6 +15,9 @@ sudo chmod 750 media/images media/images/contact media/images/group media/images
 sudo chmod 640 media/admin/*.html media/admin/img/*.*g* media/admin/img/gis/* media/admin/img/filemanager/* media/admin/js/*.js 
 sudo chmod 750 media/admin media/admin/img media/admin/img/gis media/admin/img/filemanager media/admin/js 
 
+sudo chmod 640 media/css/min/* media/js/group/min/* media/js/admin/min/* media/js/suit/min/*
+sudo chmod 750 media/css/min media/js/group/min media/js/admin/min media/js/suit/min
+
 sudo chmod 640 backup/* #cache/* cache/aws/* cache/slack/* cache/git/* cache/dropbox/*
 sudo chmod 750 backup #cache cache/aws cache/slack cache/git cache/dropbox
 sudo chmod 640 data/*.pdf data/news_img/* data/_old/* data/ppl_img/* data/pub_data/* data/pub_img/* data/pub_pdf/* data/rot_data/* data/rot_ppt/* data/spe_ppt/*

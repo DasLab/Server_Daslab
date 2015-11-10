@@ -17,13 +17,13 @@ $.ajax({
     url : "/group/schedule_dash",
     dataType: "json",
     success: function (data) {
-        $("#this_type").html(label_type(data.this[1]));
-        if (data.this[1] == 'N/A') {
-            $("#this_name").html('(' + data.this[3] + ')').removeClass("label label-inverse").addClass("small");
+        $("#this_type").html(label_type(data['this'][1]));
+        if (data['this'][1] == 'N/A') {
+            $("#this_name").html('(' + data['this'][3] + ')').removeClass("label label-inverse").addClass("small");
         } else {
-            $("#this_name").html(data.this[2]);
+            $("#this_name").html(data['this'][2]);
         }
-        $("#this_date").html(data.this[0]);
+        $("#this_date").html(data['this'][0]);
         $("#last_type").html(label_type(data.last[1]));
         if (data.last[1] == 'N/A') {
             $("#last_name").html('(' + data.last[3] + ')').removeClass("label label-inverse").addClass("small");

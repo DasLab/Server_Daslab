@@ -75,7 +75,7 @@ function drawChart() {
             var html = "";
             for (var i = 0; i < data.git.length; i++) {
                 var lb_private = "";
-                if (data.git[i].private) {
+                if (data.git[i]['private']) {
                     lb_private = '<span class="label label-success">private</span>';
                 } else {
                     lb_private = '<span class="label label-magenta">public</span>';
