@@ -3,6 +3,11 @@ cache/
 backup/
 *.pyc
 
+media/js/admin/min/
+media/js/group/min/
+media/js/suit/min/
+media/css/min/
+
 config/t47_dev.py
 config/*.conf
 
