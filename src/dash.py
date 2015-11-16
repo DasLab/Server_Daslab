@@ -536,7 +536,7 @@ def cache_schedule():
         if os.path.exists('%s/cache/schedule.pickle' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
             t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.pickle' % MEDIA_ROOT))
-            if ((now - t_sch).seconds >= 6000):
+            if ((now - t_sch).seconds >= 7200):
                 raise Exception('Error with downloading schedule spreadsheet.')
             else:
                 return
@@ -585,7 +585,7 @@ def cache_cal():
         if os.path.exists('%s/cache/calendar.pickle' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
             t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT))
-            if ((now - t_cal).seconds >= 6000):
+            if ((now - t_cal).seconds >= 7200):
                 raise Exception('Error with downloading calendar ICS file.')
             else:
                 return
@@ -678,7 +678,13 @@ def cache_cal():
         ts = '%s\t\tcache_cal()\n' % time.ctime()
         open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
         open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_cal()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
+
+        if os.path.exists('%s/cache/calendar.pickle' % MEDIA_ROOT):
+            now = datetime.fromtimestamp(time.time())
+            t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT))
+            if ((now - t_cal).seconds >= 7200):
+                if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_cal()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
+        subprocess.check_call("rm %s/cache/calendar.ics" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         raise Exception('Error with parsing calendar ICS.')
 
 

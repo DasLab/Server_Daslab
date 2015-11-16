@@ -81,7 +81,7 @@ class Command(BaseCommand):
 
                 # aws each
                 for i, ec2 in enumerate(aws_init['ec2']):
-                    self.stdout.write("    AWS \033[94mEC2\033[0m: %s / %s (%s)..." % (i + 1, len(aws_init['ec2']), ec2['id']),)
+                    self.stdout.write("    AWS \033[94mEC2\033[0m: %s / %s (%s)..." % (i + 1, len(aws_init['ec2']), ec2['id']), ending='')
                     request = {'qs':'cpu', 'tp':'ec2', 'id':ec2['id']}
                     self.pickle_aws(request, ec2['id'])
                     request.update({'qs':'net'})
@@ -89,7 +89,7 @@ class Command(BaseCommand):
                     self.stdout.write(" \033[92mSUCCESS\033[0m")
 
                 for i, elb in enumerate(aws_init['elb']):
-                    self.stdout.write("    AWS \033[94mELB\033[0m: %s / %s (%s)..." % (i + 1, len(aws_init['elb']), elb['name']),)
+                    self.stdout.write("    AWS \033[94mELB\033[0m: %s / %s (%s)..." % (i + 1, len(aws_init['elb']), elb['name']), ending='')
                     request = {'qs':'lat', 'tp':'elb', 'id':elb['name']}
                     self.pickle_aws(request, elb['name'])
                     request.update({'qs':'req'})
@@ -97,7 +97,7 @@ class Command(BaseCommand):
                     self.stdout.write(" \033[92mSUCCESS\033[0m")
 
                 for i, ebs in enumerate(aws_init['ebs']):
-                    self.stdout.write("    AWS \033[94mEBS\033[0m: %s / %s (%s)..." % (i + 1, len(aws_init['ebs']), ebs['id']),)
+                    self.stdout.write("    AWS \033[94mEBS\033[0m: %s / %s (%s)..." % (i + 1, len(aws_init['ebs']), ebs['id']), ending='')
                     request = {'qs':'disk', 'tp':'ebs', 'id':ebs['id']}
                     self.pickle_aws(request, ebs['id'])
                     self.stdout.write(" \033[92mSUCCESS\033[0m")
@@ -112,7 +112,7 @@ class Command(BaseCommand):
 
                 # ga each
                 for i, ga in enumerate(ga_init['projs']):
-                    self.stdout.write("    GA \033[94mtracker\033[0m: %s / %s (%s)..." % (i + 1, len(ga_init['projs']), ga['track_id']),)
+                    self.stdout.write("    GA \033[94mtracker\033[0m: %s / %s (%s)..." % (i + 1, len(ga_init['projs']), ga['track_id']), ending='')
                     request = {'qs':'sessions', 'id':ga['id'], 'access_token':ga_init['access_token']}
                     self.pickle_ga(request)
                     request.update({'qs':'percentNewSessions'})
@@ -135,7 +135,7 @@ class Command(BaseCommand):
 
                 # git each
                 for i, repo in enumerate(git_init['git']):
-                    self.stdout.write("    GIT \033[94mrepo\033[0m: %s / %s (%s)..." % (i + 1, len(git_init['git']), repo['name']),)
+                    self.stdout.write("    GIT \033[94mrepo\033[0m: %s / %s (%s)..." % (i + 1, len(git_init['git']), repo['name']), ending='')
                     request = {'qs':'num', 'repo':repo['name']}
                     self.pickle_git(request)
                     request.update({'qs':'c'})
@@ -148,7 +148,7 @@ class Command(BaseCommand):
                 self.stdout.write("#4: Requesting \033[94mSLACK\033[0m...")
                 requests = ['users', 'channels', 'files', 'plot_files', 'plot_msgs']
                 for i, request in enumerate(requests):
-                    self.stdout.write("    SLACK: %s / %s (%s)..." % (i + 1, len(requests), request),)
+                    self.stdout.write("    SLACK: %s / %s (%s)..." % (i + 1, len(requests), request), ending='')
                     request = {'qs':request}
                     self.pickle_slack(request)
                     self.stdout.write(" \033[92mSUCCESS\033[0m")
@@ -157,7 +157,7 @@ class Command(BaseCommand):
                 self.stdout.write("#5: Requesting \033[94mDROPBOX\033[0m...")
                 requests = ['sizes', 'folders', 'history']
                 for i, request in enumerate(requests):
-                    self.stdout.write("    DROPBOX: %s / %s (%s)..." % (i + 1, len(requests), request),)
+                    self.stdout.write("    DROPBOX: %s / %s (%s)..." % (i + 1, len(requests), request), ending='')
                     request = {'qs':request}
                     self.pickle_dropbox(request)
                     self.stdout.write(" \033[92mSUCCESS\033[0m")
