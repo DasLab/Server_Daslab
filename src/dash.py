@@ -684,6 +684,7 @@ def cache_cal():
             t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT))
             if ((now - t_cal).seconds >= 7200):
                 if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_cal()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
+        subprocess.check_call("cp %s/cache/calendar.ics %s/cache/calendar_%s.ics" % (MEDIA_ROOT, MEDIA_ROOT, time.ctime()), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         subprocess.check_call("rm %s/cache/calendar.ics" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         raise Exception('Error with parsing calendar ICS.')
 
