@@ -247,24 +247,28 @@ def user_password(request):
 # @login_required
 def user_contact(request):
     if request.method == 'POST':
-        if (not 'email' in request.POST) or (not 'phone' in request.POST) or (not 'bday' in request.POST): return HttpResponseBadRequest('Invalid input.')
-        try:
-            email = request.POST['email']
-            phone = request.POST['phone']
-            phone = int(phone)
-            bday = request.POST['bday']
-            bday = re.match('[0-9]{1,2}\/[0-9]{1,2}', bday)
-            if bday is None: raise ValueError
-            bday = bday.string
-            if len(bday) < 5:
-                if len(bday[:bday.find('/')]) < 2:
-                    bday = '0' + bday
-                if len(bday[bday.find('/')+1:]) < 2:
-                    bday = bday[:bday.find('/')+1] + '0' + bday[-1]
-        except ValueError:
+#        if (not 'email' in request.POST) or (not 'phone' in request.POST) or (not 'bday' in request.POST): return HttpResponseBadRequest('Invalid input.')
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            try:
+                email = request.cleaned_data['email']
+                phone = request.cleaned_data['phone']
+#                phone = int(phone)
+                bday = request.cleaned_data['bday']
+                bday = re.match('[0-9]{1,2}\/[0-9]{1,2}', bday)
+                if bday is None: raise ValueError
+                bday = bday.string
+                if len(bday) < 5:
+                    if len(bday[:bday.find('/')]) < 2:
+                        bday = '0' + bday
+                    if len(bday[bday.find('/')+1:]) < 2:
+                        bday = bday[:bday.find('/')+1] + '0' + bday[-1]
+            except ValueError:
+                return HttpResponseBadRequest('Invalid input.')
+        else:
             return HttpResponseBadRequest('Invalid input.')
 
-        member = Member.objects.get(sunet_id=request.user.username)
+        member = Member.objects.get(sunet_id=request.META['WEBAUTH_USER'])
         member.phone = phone
         member.email = email
         member.bday = bday

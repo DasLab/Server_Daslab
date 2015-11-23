@@ -269,6 +269,11 @@ class UploadForm(forms.Form):
     upload_file = forms.FileField(required=True)
     upload_link = forms.CharField(required=False)
 
+class ContactForm(forms.Form):
+    phone = forms.IntegerField(required=True)
+    email = forms.EmailField(required=True)
+    bday = forms.CharField(required=True)
+
 class EmailForm(forms.Form):
     email_from = forms.EmailField(required=True)
     email_subject = forms.CharField(required=True)
