@@ -472,8 +472,8 @@ def error500(request):
 
 def test(request):
     print request.META
-    return error400(request)
     raise ValueError
+    return error400(request)
     # send_notify_emails('test', 'test')
     # send_mail('text', 'test', EMAIL_HOST_USER, [EMAIL_NOTIFY])
     return HttpResponse(content="", status=200)
