@@ -12,10 +12,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import environ
 import os
 import simplejson
-from slacker import Slacker
 
 from django.utils.translation import ugettext_lazy as _
-from django.contrib import messages
 
 from config.t47_dev import *
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -224,4 +222,4 @@ SECURE_SSL_HOST = env('SSL_HOST')
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
