@@ -100,7 +100,7 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'filters': {
-        'require_debug_true': {
+        'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse',
         },
     },
@@ -116,7 +116,7 @@ LOGGING = {
         },
         'email': {
             'level': 'DEBUG',
-            'filters': ['require_debug_true'],
+            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler',
         },
     },
@@ -131,8 +131,8 @@ LOGGING = {
         },
         'django.request': {
             'handlers': ['email'],
-
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'filters': ['require_debug_false'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'ERROR'),
         }
     },
 }

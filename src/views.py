@@ -252,9 +252,9 @@ def user_contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             try:
-                email = request.cleaned_data['email']
-                phone = request.cleaned_data['phone']
-                bday = request.cleaned_data['bday']
+                email = form.cleaned_data['email']
+                phone = form.cleaned_data['phone']
+                bday = form.cleaned_data['bday']
                 bday = re.match('[0-9]{1,2}\/[0-9]{1,2}', bday)
                 if bday is None: raise ValueError
                 bday = bday.string
