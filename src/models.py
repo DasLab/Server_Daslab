@@ -250,16 +250,27 @@ class ExportForm(forms.Form):
     sort_order = forms.ChoiceField(choices=SORT_ORDER_CHOICES, widget=forms.RadioSelect(), initial=1)
     number_order = forms.ChoiceField(choices=NUMBER_ORDER_CHOICES, widget=forms.RadioSelect(), initial=1)
 
-    bold_author = forms.BooleanField(initial=True)
-    bold_year = forms.BooleanField(initial=True)
-    underline_title = forms.BooleanField(initial=True)
-    italic_journal = forms.BooleanField(initial=True)
-    bold_volume = forms.BooleanField(initial=True)
+    bold_author = forms.BooleanField(initial=True, required=False)
+    bold_year = forms.BooleanField(initial=True, required=False)
+    underline_title = forms.BooleanField(initial=True, required=False)
+    italic_journal = forms.BooleanField(initial=True, required=False)
+    bold_volume = forms.BooleanField(initial=True, required=False)
 
-    order_number = forms.BooleanField(initial=True)
-    quote_title = forms.BooleanField(initial=True)
-    double_space = forms.BooleanField(initial=False)
-    include_preprint = forms.BooleanField(initial=True)
+    order_number = forms.BooleanField(initial=True, required=False)
+    quote_title = forms.BooleanField(initial=True, required=False)
+    double_space = forms.BooleanField(initial=False, required=False)
+    include_preprint = forms.BooleanField(initial=True, required=False)
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(required=True)
+    password = forms.CharField(required=True)
+    flag = forms.CharField(required=True)
+
+class PasswordForm(forms.Form):
+    password_old = forms.CharField(required=True)
+    password_new = forms.CharField(required=True)
+    password_new_rep = forms.CharField(required=True)
 
 
 class UploadForm(forms.Form):

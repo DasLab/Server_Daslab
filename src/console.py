@@ -17,12 +17,15 @@ import boto.ec2.cloudwatch, boto.ec2.elb
 import gviz_api
 from github import Github
 import requests
+from slacker import Slacker
 
 from django.core.management import call_command
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 from src.settings import *
-from src.models import BackupForm, Publication
+from src.models import BackupForm, ExportForm, Publication
 
 
 def send_notify_slack(msg_channel, msg_content, msg_attachment):
@@ -84,20 +87,23 @@ def get_backup_form():
 
 
 def set_backup_form(request):
-    time_backup = request.POST['time_backup'].split(':')
-    time_upload = request.POST['time_upload'].split(':')
-    day_backup = request.POST['day_backup']
-    day_upload = request.POST['day_upload']
+    form = BackupForm(request.POST)
+    if not form.is_valid(): return
 
-    cron_backup = '%s %s * * %s' % (time_backup[1], time_backup[0], day_backup)
-    cron_upload = '%s %s * * %s' % (time_upload[1], time_upload[0], day_upload)
+    time_backup = form.cleaned_data['time_backup']
+    time_upload = form.cleaned_data['time_upload']
+    day_backup = form.cleaned_data['day_backup']
+    day_upload = form.cleaned_data['day_upload']
+
+    cron_backup = '%s %s * * %s' % (time_backup.hour, time_backup.minute, day_backup)
+    cron_upload = '%s %s * * %s' % (time_upload.hour, time_upload.minute, day_upload)
 
     lines = open('%s/config/cron.conf' % MEDIA_ROOT, 'r').readlines()
 
     index =  [i for i, line in enumerate(lines) if 'src.cron.backup_weekly' in line or 'src.cron.gdrive_weekly' in line or 'KEEP_BACKUP' in line]
     lines[index[0]] = '\t\t["%s", "src.cron.backup_weekly", ">> %s/cache/log_cron_backup.log # backup_weekly"],\n' % (cron_backup, MEDIA_ROOT)
     lines[index[1]] = '\t\t["%s", "src.cron.gdrive_weekly", ">> %s/cache/log_cron_gdrive.log # gdrive_weekly"],\n' % (cron_upload, MEDIA_ROOT)
-    lines[index[2]] = '\t"KEEP_BACKUP": %s\n' % request.POST['keep']
+    lines[index[2]] = '\t"KEEP_BACKUP": %s\n' % form.cleaned_data['keep']
     open('%s/config/cron.conf' % MEDIA_ROOT, 'w').writelines(lines)
 
     try:
@@ -428,16 +434,19 @@ def git_stats(request):
 
 
 def export_citation(request):
-    is_order_number = 'order_number' in request.POST
-    is_quote_title = 'quote_title' in request.POST
-    is_double_space = 'double_space' in request.POST
-    is_include_preprint = 'include_preprint' in request.POST
+    form = ExportForm(request.POST)
+    if not form.is_valid(): return render_to_response(PATH.HTML_PATH['admin_export'], {'form':ExportForm()}, context_instance=RequestContext(request))
 
-    text_type = request.POST['text_type']
-    year_start = int(request.POST['year_start'])
-    number_order = (request.POST['number_order'] == '1')
+    is_order_number = form.cleaned_data['order_number']
+    is_quote_title = form.cleaned_data['quote_title']
+    is_double_space = form.cleaned_data['double_space']
+    is_include_preprint = form.cleaned_data['include_preprint']
+
+    text_type = form.cleaned_data['text_type']
+    year_start = form.cleaned_data['year_start']
+    number_order = form.cleaned_data['number_order'] == '1'
     sort_order = 'display_date'
-    if request.POST['sort_order'] == '1': sort_order = '-' + sort_order
+    if form.cleaned_data['sort_order'] == '1': sort_order = '-' + sort_order
 
     publications = Publication.objects.filter(year__gte=year_start).order_by(sort_order)
     if not is_include_preprint: publications = publications.filter(preprint=False)
@@ -465,11 +474,11 @@ def export_citation(request):
 
         response = HttpResponse(txt, content_type='text/plain')
     else:
-        is_bold_author = 'bold_author' in request.POST
-        is_bold_year = 'bold_year' in request.POST
-        is_underline_title = 'underline_title' in request.POST
-        is_italic_journal = 'italic_journal' in request.POST
-        is_bold_volume = 'bold_volume' in request.POST
+        is_bold_author = form.cleaned_data['bold_author']
+        is_bold_year = form.cleaned_data['bold_year']
+        is_underline_title = form.cleaned_data['underline_title']
+        is_italic_journal = form.cleaned_data['italic_journal']
+        is_bold_volume = form.cleaned_data['bold_volume']
 
         html = '<html><body>'
         for i, pub in enumerate(publications):

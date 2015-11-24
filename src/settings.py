@@ -99,6 +99,11 @@ KEEP_BACKUP = env_cron['KEEP_BACKUP']
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
     'handlers': {
         'console': {
             'level': 'DEBUG',
@@ -109,6 +114,11 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': '%s/cache/log_django.log' % MEDIA_ROOT,
         },
+        'email': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
     },
     'loggers': {
         'django_crontab.crontab': {
@@ -117,6 +127,11 @@ LOGGING = {
         },
         'django': {
             'handlers': ['file'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+        'django.request': {
+            'handlers': ['email'],
+
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
         }
     },
@@ -220,6 +235,5 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_HOST = env('SSL_HOST')
 SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-CSRF_COOKIE_SECURE = (not DEBUG)
+SESSION_COOKIE_SECURE = CSRF_COOKIE_SECURE = (not DEBUG)

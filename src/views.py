@@ -197,22 +197,23 @@ def user_login(request):
         return HttpResponseRedirect('/group')
 
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        flag = request.POST['flag']
-        user = authenticate(username=username, password=password)
+        form = LoginForm(request.POST)
+        messages = 'Invalid username and/or password. Please try again.'
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            flag = form.cleaned_data['flag']
+            user = authenticate(username=username, password=password)
 
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                if flag == "Admin":
-                    return HttpResponseRedirect('/admin')
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    if flag == "Admin":
+                        return HttpResponseRedirect('/admin')
+                    else:
+                        return HttpResponseRedirect('/group')
                 else:
-                    return HttpResponseRedirect('/group')
-            else:
-                messages = 'Inactive/disabled account. Please contact us.'
-        else:
-            messages = 'Invalid username and/or password. Please try again.'
+                    messages = 'Inactive/disabled account. Please contact us.'
         return render_to_response(PATH.HTML_PATH['login'], {'messages':messages, 'flag':flag}, context_instance=RequestContext(request))
     else:
         if request.GET.has_key('next') and 'admin' in request.GET['next']:
@@ -224,36 +225,35 @@ def user_login(request):
 # @login_required
 def user_password(request):
     if request.method == 'POST':
-        password_old = request.POST['password_old']
-        password_new = request.POST['password_new']
-        password_new_rep = request.POST['password_new_rep']
-        if password_new != password_new_rep:
-            return render_to_response(PATH.HTML_PATH['password'], {'messages':'New password does not match. Please try again.'}, context_instance=RequestContext(request))
-        if password_new == password_old:
-            return render_to_response(PATH.HTML_PATH['password'], {'messages':'New password is the same as current. Please try again.'}, context_instance=RequestContext(request))
+        form = PasswordForm(request.POST)
+        if form.is_valid():
+            password_old = form.cleaned_data['password_old']
+            password_new = form.cleaned_data['password_new']
+            password_new_rep = form.cleaned_data['password_new_rep']
+            if password_new != password_new_rep:
+                return render_to_response(PATH.HTML_PATH['password'], {'messages':'New password does not match. Please try again.'}, context_instance=RequestContext(request))
+            if password_new == password_old:
+                return render_to_response(PATH.HTML_PATH['password'], {'messages':'New password is the same as current. Please try again.'}, context_instance=RequestContext(request))
 
-        user = authenticate(username=request.user, password=password_old)
-        if user is not None:
-            u = User.objects.get(username=request.user)
-            u.set_password(password_new)
-            u.save()
-            logout(request)
-            return render_to_response(PATH.HTML_PATH['password'], {'notices':'Password change successful. Please sign in using new credentials.'}, context_instance=RequestContext(request))
-        else:
-            return render_to_response(PATH.HTML_PATH['password'], {'messages':'Invalid username and/or password. Please try again.'}, context_instance=RequestContext(request))
+            user = authenticate(username=request.user, password=password_old)
+            if user is not None:
+                u = User.objects.get(username=request.user)
+                u.set_password(password_new)
+                u.save()
+                logout(request)
+                return render_to_response(PATH.HTML_PATH['password'], {'notices':'Password change successful. Please sign in using new credentials.'}, context_instance=RequestContext(request))
+        return render_to_response(PATH.HTML_PATH['password'], {'messages':'Invalid username and/or password. Please try again.'}, context_instance=RequestContext(request))
     else:
         return render_to_response(PATH.HTML_PATH['password'], {'messages':''}, context_instance=RequestContext(request))
 
 # @login_required
 def user_contact(request):
     if request.method == 'POST':
-#        if (not 'email' in request.POST) or (not 'phone' in request.POST) or (not 'bday' in request.POST): return HttpResponseBadRequest('Invalid input.')
         form = ContactForm(request.POST)
         if form.is_valid():
             try:
                 email = request.cleaned_data['email']
                 phone = request.cleaned_data['phone']
-#                phone = int(phone)
                 bday = request.cleaned_data['bday']
                 bday = re.match('[0-9]{1,2}\/[0-9]{1,2}', bday)
                 if bday is None: raise ValueError

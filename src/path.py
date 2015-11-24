@@ -2,7 +2,7 @@ import os
 
 MEDIA_ROOT = os.path.dirname(os.path.dirname(__file__))
 
-class SYS_PATH:
+class SYS_PATH(object):
     def __init__(self):
         self.HTML_PATH = {
             'index': MEDIA_ROOT + '/media/html/public_index.html',

@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 
 MEDIA_ROOT = os.path.dirname(os.path.dirname(__file__))
 
-class USER_GROUP:
+class USER_GROUP(object):
     def __init__(self):
         lines = open('%s/config/group.conf' % MEDIA_ROOT, 'r').readlines()
 
