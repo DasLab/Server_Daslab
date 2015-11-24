@@ -181,6 +181,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     "src.models.email_form",
     "src.models.debug_flag",
+    "src.models.ga_tracker",
 )
 
 MIDDLEWARE_CLASSES = (

@@ -291,7 +291,7 @@ class EmailForm(forms.Form):
     email_content = forms.CharField(widget=forms.Textarea, required=True)
 
 def email_form(request):
-    return {'email_form':EmailForm()}
+    return {'email_form': EmailForm()}
 
 def debug_flag(request):
     if DEBUG:
@@ -299,7 +299,7 @@ def debug_flag(request):
     else:
         return {'DEBUG_STR': '.min', 'DEBUG_DIR': 'min/'}
 
-
-
+def ga_tracker(request):
+    return {'TRACKING_ID': GA['TRACKING_ID']}
 
     
