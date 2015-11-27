@@ -55,7 +55,7 @@
 		</div>
 	</div>
 
-	<iframe src="/group/error/500/" width="800" height="600" frameborder="0" scrolling="auto" seamless="true" id="iframe" class="thumbnail center-block"></iframe>
+	<iframe src="/error/500/" width="800" height="600" frameborder="0" scrolling="auto" seamless="true" id="iframe" class="thumbnail center-block"></iframe>
 </div>
 {% endblock %}
 
@@ -68,7 +68,7 @@
 
 	    	$("#iframe").css("width", parseInt($("#content").css("width")) - 50);
 			$("input:radio").on("change", function () {
-				$("#iframe").attr("src", "/group/error/" + $(this).val() + '/');
+				$("#iframe").attr("src", "/error/" + $(this).val() + '/');
 			});
 		});
 	</script>

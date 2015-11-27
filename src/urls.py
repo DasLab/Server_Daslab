@@ -70,11 +70,6 @@ urlpatterns = [
     url(r'^group/dropbox/$', views.lab_service_dropbox),
     url(r'^group/misc/$', views.lab_misc),
     url(r'^group/error/$', views.lab_error),
-    url(r'^group/error/400/$', views.error400),
-    url(r'^group/error/401/$', views.error401),
-    url(r'^group/error/403/$', views.error403),
-    url(r'^group/error/404/$', views.error404),
-    url(r'^group/error/500/$', views.error500),
     url(r'^group/email_admin/$', views.user_email),
     url(r'^group/get_user/$', views.get_user),
 
@@ -90,6 +85,12 @@ urlpatterns = [
     url(r'^ping_test/$', views.ping_test),
     url(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT + '/media'}),
     url(r'^site_data/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT + '/data'}),
+
+    url(r'^error/400/$', views.error400),
+    url(r'^error/401/$', views.error401),
+    url(r'^error/403/$', views.error403),
+    url(r'^error/404/$', views.error404),
+    url(r'^error/500/$', views.error500),
 
     url(r'^admin/browse/' + path_end, views.browse),
     url(r'^admin/', include(admin.site.urls)),
