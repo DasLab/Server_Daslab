@@ -3,38 +3,11 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>DAS LAB + Stanford Biochemistry Department + Stanford University</title>
-    <link rel="icon" href="/site_media/images/icon_daslab.png" />
-    <link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />
-
     <link href="/site_media/css/{{DEBUG_DIR}}DasStyle{{DEBUG_STR}}.css" rel="stylesheet" type="text/css" />
-    {% block preload %}{% endblock %}
     <script type="text/javascript">
-      var xmlhttp = new XMLHttpRequest(), ver_jquery, ver_swfobj, isCDN = false;
-      xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-          if (xmlhttp.status == 200) {
-            var xmlDoc = JSON.parse(xmlhttp.responseText);
-            ver_jquery = xmlDoc.jquery;
-            ver_swfobj = xmlDoc.swfobj;
-
-            document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/' + ver_jquery + '/jquery.min.js"><\/script>');
-            document.write('\
-              <script type="text/javascript"> \
-                if (!window.jQuery) { \
-                  document.write(\'<script type="text/javascript" src="/site_media/js/jquery.min.js"><\' + \'/script>\'); \
-                  isCDN = false; \
-                } else { \
-                  isCDN = true; \
-                } \
-              \x3C\/script>');
-          } else {
-            document.write('<script type="text/javascript" src="/site_media/js/jquery.min.js"><\/script>');
-          }
-        }
-      }
-      xmlhttp.open("GET", "/get_js", false);
-      xmlhttp.send();
-    </script>  
+      var DEBUG_DIR = "{{DEBUG_DIR}}", DEBUG_STR = "{{DEBUG_STR}}";
+    </script>
+    <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}load{{DEBUG_STR}}.js"></script>
     {% block header %}{% endblock %}
 
     <script type="text/javascript">

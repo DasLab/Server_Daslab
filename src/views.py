@@ -453,7 +453,11 @@ def get_admin(request):
     return HttpResponse(simplejson.dumps({'email':EMAIL_NOTIFY}), content_type='application/json')
 
 def get_user(request):
-    return HttpResponse(simplejson.dumps({'user':request.META['WEBAUTH_USER']}), content_type='application/json')
+    if request.META.has_key('WEBAUTH_USER'):
+        user = request.META['WEBAUTH_USER']
+    else:
+        user = 'unknown'
+    return HttpResponse(simplejson.dumps({'user':user}), content_type='application/json')
 
 def get_js(request):
     lines = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r').readlines()
