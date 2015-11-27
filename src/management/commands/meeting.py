@@ -172,6 +172,7 @@ class Command(BaseCommand):
                     send_to = SLACK['ADMIN_NAME']
                 else:
                     send_to = "#general"
+                date = datetime.strptime("%s %s" % (result['next'][0], year), '%b %d %Y')
                 msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"439fe0", "text":'For next week:\n', "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg', "fields":[{'title':'Date', 'value':'_%s_' % datetime.strftime(date, '%b %d %Y (%a)'), 'short':True}, {'title':'Time & Place', 'value':'_%s @ %s_' % (clock, place), 'short':True}, {'title':'Type', 'value':'`%s`' % type_next, 'short':True}, {'title':'Presenter', 'value':'_%s_ %s' % (' '.join(names), ' '.join(ids)), 'short':True}] }]) )
 
             msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"danger", "text":'The <https://daslab.stanford.edu/group/schedule/|full schedule> is available on the DasLab Website. For questions regarding the schedule, please contact _<%s>_ (site admin). Thanks for your attention.''' % SLACK['ADMIN_NAME']}]) )
