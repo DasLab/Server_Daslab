@@ -48,6 +48,8 @@ class Command(BaseCommand):
             place = result['tp'][result['tp'].rfind('@')+1:].strip()[:-1]
             types = {'ES':'EteRNA Special', 'GM':'Group Meeting', 'JC':'Journal Club'}
 
+            year = (datetime.utcnow() + timedelta(days=1)).date().year
+            date = datetime.strptime("%s %s" % (result['this'][0], year), '%b %d %Y')
             if result['this'][1] == 'N/A':
                 msg_this = 'Hi all,\n\nThis is a reminder that there will be *`NO Meeting`* this week'
                 if result['this'][3]:
@@ -62,8 +64,6 @@ class Command(BaseCommand):
                 self.stdout.write('\033[92mSUCCESS\033[0m: Google Presentation skipped (N/A for this week: \033[94m%s\033[0m).' % datetime.strftime(date, '%b %d %Y'))
             else:
                 type_this = types[result['this'][1]]
-                year = (datetime.utcnow() + timedelta(days=1)).date().year
-                date = datetime.strptime("%s %s" % (result['this'][0], year), '%b %d %Y')
                 if (datetime.utcnow() + timedelta(days=1)).date() != date.date():
                     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"warning", "text":'Mismatch in Schedule Spreadsheet date. It seems to be not up-to-date.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.'}])
                     sys.exit(1)
