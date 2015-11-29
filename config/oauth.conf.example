@@ -42,6 +42,8 @@
 	},
 
 	"GIT": {
+		"REPOSITORY": "org_name/repo_name",
+
 		"CLIENT_ID": "client_id",
 		"CLIENT_SECRET": "client_secret",
 

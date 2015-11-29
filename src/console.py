@@ -352,7 +352,7 @@ def git_stats(request):
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
         gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
-        repo_name = 'DasLab/Server_DasLab'
+        repo_name = GIT["REPOSITORY"]
         repo = gh.get_repo(repo_name)
 
         if qs in ['init', 'num']:
