@@ -214,37 +214,41 @@ def user_login(request):
                         return HttpResponseRedirect('/group')
                 else:
                     messages = 'Inactive/disabled account. Please contact us.'
-        return render_to_response(PATH.HTML_PATH['login'], {'messages':messages, 'flag':flag}, context_instance=RequestContext(request))
+        return render_to_response(PATH.HTML_PATH['login'], {'form': form, 'messages':messages}, context_instance=RequestContext(request))
     else:
         if request.GET.has_key('next') and 'admin' in request.GET['next']:
             flag = 'Admin'
         else:
             flag = 'Member'
-        return render_to_response(PATH.HTML_PATH['login'], {'messages':'', 'flag':flag}, context_instance=RequestContext(request))
+        form = LoginForm(initial={'flag': flag})
+        return render_to_response(PATH.HTML_PATH['login'], {'form': form}, context_instance=RequestContext(request))
 
 # @login_required
 def user_password(request):
     if request.method == 'POST':
         form = PasswordForm(request.POST)
         if form.is_valid():
+            username = form.cleaned_data['username']
             password_old = form.cleaned_data['password_old']
             password_new = form.cleaned_data['password_new']
             password_new_rep = form.cleaned_data['password_new_rep']
             if password_new != password_new_rep:
-                return render_to_response(PATH.HTML_PATH['password'], {'messages':'New password does not match. Please try again.'}, context_instance=RequestContext(request))
+                return render_to_response(PATH.HTML_PATH['password'], {'form': form, 'messages':'New password does not match. Please try again.'}, context_instance=RequestContext(request))
             if password_new == password_old:
-                return render_to_response(PATH.HTML_PATH['password'], {'messages':'New password is the same as current. Please try again.'}, context_instance=RequestContext(request))
+                return render_to_response(PATH.HTML_PATH['password'], {'form': form, 'messages':'New password is the same as current. Please try again.'}, context_instance=RequestContext(request))
 
-            user = authenticate(username=request.user, password=password_old)
+            user = authenticate(username=username, password=password_old)
             if user is not None:
-                u = User.objects.get(username=request.user)
+                u = User.objects.get(username=username)
                 u.set_password(password_new)
                 u.save()
                 logout(request)
-                return render_to_response(PATH.HTML_PATH['password'], {'notices':'Password change successful. Please sign in using new credentials.'}, context_instance=RequestContext(request))
-        return render_to_response(PATH.HTML_PATH['password'], {'messages':'Invalid username and/or password. Please try again.'}, context_instance=RequestContext(request))
+                return render_to_response(PATH.HTML_PATH['password'], {'form': form, 'notices':'Password change successful. Please sign in using new credentials.'}, context_instance=RequestContext(request))
+        form = PasswordForm(initial={'username': request.user.username})
+        return render_to_response(PATH.HTML_PATH['password'], {'form': form, 'messages':'Invalid username and/or current password, or missing new password.<br/>Please try again.'}, context_instance=RequestContext(request))
     else:
-        return render_to_response(PATH.HTML_PATH['password'], {'messages':''}, context_instance=RequestContext(request))
+        form = PasswordForm(initial={'username': request.user.username})
+        return render_to_response(PATH.HTML_PATH['password'], {'form': form}, context_instance=RequestContext(request))
 
 # @login_required
 def user_contact(request):

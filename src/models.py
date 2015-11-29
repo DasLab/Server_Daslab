@@ -264,13 +264,14 @@ class ExportForm(forms.Form):
 
 class LoginForm(forms.Form):
     username = forms.CharField(required=True)
-    password = forms.CharField(required=True)
+    password = forms.CharField(required=True, widget=forms.PasswordInput)
     flag = forms.CharField(required=True)
 
 class PasswordForm(forms.Form):
-    password_old = forms.CharField(required=True)
-    password_new = forms.CharField(required=True)
-    password_new_rep = forms.CharField(required=True)
+    username = forms.CharField(widget = forms.TextInput(attrs={'readonly': 'readonly'}))
+    password_old = forms.CharField(required=True, widget=forms.PasswordInput)
+    password_new = forms.CharField(required=True, widget=forms.PasswordInput)
+    password_new_rep = forms.CharField(required=True, widget=forms.PasswordInput)
 
 
 class UploadForm(forms.Form):

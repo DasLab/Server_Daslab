@@ -143,7 +143,7 @@ class Command(BaseCommand):
                     date = (datetime.utcnow() + timedelta(days=5)).date()
                     msg_who += ' Please post your paper of choice to the group `#general` channel by *next* _%s_ (*%s*).\n' % (datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
                 elif result['next'][1] == 'ES':
-                    date = (datetime.utcnow() + timedelta(days=6)).date()
+                    date = (datetime.utcnow() + timedelta(days=5)).date()
                     msg_who += ' Please post a brief description of the topic to the group `#general` channel by *next* _%s_ (*%s*) to allow time for releasing news on both DasLab Website and EteRNA broadcast.\n' % (datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
 
                 name = result['next'][2]
