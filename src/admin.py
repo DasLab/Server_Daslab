@@ -167,7 +167,7 @@ def aws_admin(request):
 admin.site.register_view('aws_admin', view=aws_admin, visible=False)
 
 def ga(request):
-    return render_to_response(PATH.HTML_PATH['admin_ga'], {}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_ga'], {'ga_url':GA['LINK_URL']}, context_instance=RequestContext(request))
 admin.site.register_view('ga/', view=ga, visible=False)
 
 def ga_admin(request):

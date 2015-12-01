@@ -7,6 +7,8 @@ import traceback
 
 from django.core.management.base import BaseCommand
 
+from slacker import Slacker
+
 from src.settings import *
 from src.models import Member
 from src.console import send_notify_slack
@@ -162,4 +164,3 @@ class Command(BaseCommand):
         if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled %s *duty reminder* finished @ _%s_\n' % (flag, time.ctime())}])
         self.stdout.write("Finished with \033[92mSUCCESS\033[0m!")
         self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
-        sys.exit(0)

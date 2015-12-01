@@ -146,5 +146,4 @@ class Command(BaseCommand):
         self.stdout.write("\033[92mSUCCESS\033[0m: \033[94mVersions\033[0m recorded in cache/stat_sys.txt.")
         self.stdout.write("All done successfully!")
         self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
-        sys.exit(0)
 

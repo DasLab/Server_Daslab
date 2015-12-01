@@ -193,6 +193,5 @@ class Command(BaseCommand):
 
         self.stdout.write("Finished with \033[92mSUCCESS\033[0m!")
         self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
-        sys.exit(0)
 
 

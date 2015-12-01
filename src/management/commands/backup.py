@@ -91,4 +91,3 @@ class Command(BaseCommand):
         else:
             self.stdout.write("All done successfully!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
-            sys.exit(0)

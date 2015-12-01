@@ -93,10 +93,10 @@ class Command(BaseCommand):
         self.stdout.write("#5: Removing obsolete backups...")
         try:
             old = (datetime.date.today() - datetime.timedelta(days=KEEP_BACKUP)).strftime('%Y-%m-%dT00:00:00')
-            list_mysql = subprocess.Popen("%s && drive list -q \"title contains 'DasLab' and (title contains '_mysql.gz' or title contains '_mysql_DEBUG.gz') and modifiedDate <= '%s'\"| awk '{printf $1\" \"}'" % (gdrive_dir, old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
-            list_static = subprocess.Popen("%s && drive list -q \"title contains 'DasLab' and (title contains '_static.tgz' or title contains '_static_DEBUG.tgz') and modifiedDate <= '%s'\"| awk '{ printf $1\" \"}'" % (gdrive_dir, old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
-            list_apache = subprocess.Popen("%s && drive list -q \"title contains 'DasLab' and (title contains '_apache.tgz' or title contains '_apache_DEBUG.tgz') and modifiedDate <= '%s'\"| awk '{ printf $1\" \"}'" % (gdrive_dir, old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
-            list_config = subprocess.Popen("%s && drive list -q \"title contains 'DasLab' and (title contains '_config.tgz' or title contains '_config_DEBUG.tgz') and modifiedDate <= '%s'\"| awk '{ printf $1\" \"}'" % (gdrive_dir, old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
+            list_mysql = subprocess.Popen("%s && drive list -q \"title contains 'DasLab_' and (title contains '_mysql.gz' or title contains '_mysql_DEBUG.gz') and modifiedDate <= '%s'\"| awk '{printf $1\" \"}'" % (gdrive_dir, old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
+            list_static = subprocess.Popen("%s && drive list -q \"title contains 'DasLab_' and (title contains '_static.tgz' or title contains '_static_DEBUG.tgz') and modifiedDate <= '%s'\"| awk '{ printf $1\" \"}'" % (gdrive_dir, old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
+            list_apache = subprocess.Popen("%s && drive list -q \"title contains 'DasLab_' and (title contains '_apache.tgz' or title contains '_apache_DEBUG.tgz') and modifiedDate <= '%s'\"| awk '{ printf $1\" \"}'" % (gdrive_dir, old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
+            list_config = subprocess.Popen("%s && drive list -q \"title contains 'DasLab_' and (title contains '_config.tgz' or title contains '_config_DEBUG.tgz') and modifiedDate <= '%s'\"| awk '{ printf $1\" \"}'" % (gdrive_dir, old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
             list_all = list_mysql + list_static + list_apache + list_config
         except:
             self.stdout.write("    \033[41mERROR\033[0m: Failed to check obsolete \033[94mbackup\033[0m files.")
@@ -130,5 +130,4 @@ class Command(BaseCommand):
         else:
             self.stdout.write("All done successfully!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
-            sys.exit(0)
 

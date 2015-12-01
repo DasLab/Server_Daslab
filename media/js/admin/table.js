@@ -60,8 +60,8 @@ $(document).ready(function () {
 		$("th.column-content").addClass("col-lg-6 col-md-6 col-sm-6 col-xs-6");
 		$("th.column-link").addClass("col-lg-4 col-md-4 col-sm-4 col-xs-4");
 
-		$("td.field-link").css("word-break", "break-all");
-		$("td.field-link").css("text-decoration", "underline");
+		$("td.field-link").css({"word-break":"break-all", "text-decoration":"underline"});
+		$("td.field-content").each(function() { $(this).html($(this).text()); });
 
 		$("th.column-date > div.text > a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Date');
 		$("th.column-content > div.text > a").html('<span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;Content');
@@ -78,12 +78,9 @@ $(document).ready(function () {
 		$("th.column-link").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
 
 		$("td.field-authors").css("word-break", "break-all");
-		$("td.field-title").css("word-break", "break-all");
-		$("td.field-link").css("word-break", "break-all");
-
+		$("td.field-title").css({"word-break":"break-all", "font-weight":"bold"});
+		$("td.field-link").css({"word-break":"break-all", "text-decoration":"underline"});
 		$("td.field-journal").css("font-style", "italic");
-		$("td.field-title").css("font-weight", "bold");
-		$("td.field-link").css("text-decoration", "underline");
 
 		$("th.column-year > div.text > a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Year');
 		$("th.column-journal > div.text > a").html('<span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Journal');
@@ -102,10 +99,7 @@ $(document).ready(function () {
 		$("th.column-affiliation").addClass("col-lg-4 col-md-4 col-sm-4 col-xs-4");
 
 		$("th.field-full_name").css("font-weight", "bold");
-		$("td.field-sunet_id").each(function() {
-			$(this).html("<kbd>" + $(this).html() + "</kbd>");
-		});
-		// $("td.field-year").css("font-style", "italic");
+		$("td.field-sunet_id").each(function() { $(this).html("<kbd>" + $(this).html() + "</kbd>");	});
 
 		$("th.column-full_name > div.text > a").html('<span class="glyphicon glyphicon-credit-card"></span>&nbsp;&nbsp;Full Name');
 		$("th.column-sunet_id > div.text > a").html('<span class="glyphicon glyphicon-qrcode"></span>&nbsp;&nbsp;SUNet ID');

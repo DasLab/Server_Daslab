@@ -62,7 +62,7 @@ def get_backup_stat():
     ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, 'backup/backup_static.tgz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
     ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, 'backup/backup_apache.tgz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
     ver += subprocess.Popen('du -h %s' % os.path.join(MEDIA_ROOT, 'backup/backup_config.tgz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
-    ver += '%s\t%s\t%s\t%s\t' % (os.path.join(os.path.dirname(MEDIA_ROOT), 'backup/backup_mysql.gz'), os.path.join(os.path.dirname(MEDIA_ROOT), 'backup/backup_static.tgz'), os.path.join(os.path.dirname(MEDIA_ROOT), 'backup/backup_apache.tgz'), os.path.join(os.path.dirname(MEDIA_ROOT), 'backup/backup_config.tgz'))
+    ver += '%s\t%s\t%s\t%s\t' % (os.path.join(MEDIA_ROOT, 'backup/backup_mysql.gz'), os.path.join(MEDIA_ROOT, 'backup/backup_static.tgz'), os.path.join(MEDIA_ROOT, 'backup/backup_apache.tgz'), os.path.join(MEDIA_ROOT, 'backup/backup_config.tgz'))
 
     gdrive_dir = 'echo'
     if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
