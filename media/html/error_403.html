@@ -56,7 +56,7 @@
       $("#DasICON").css({"top": "488px", "display": "inline"});
 
       $.ajax({
-        url : "/get_admin",
+        url : "/get_admin/",
         dataType: "json",
         success: function (data) {
           $("#admin_email").html(data.email);
@@ -65,7 +65,7 @@
       });
 
       $.ajax({
-        url : "/group/get_user",
+        url : "/group/get_user/",
         dataType: "json",
         success: function (data) {
           $("#user_1").html(data.user);

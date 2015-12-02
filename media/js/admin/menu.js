@@ -11,7 +11,7 @@ function navbar_collapse() {
         $("#nav_time").unbind();
         $("#nav_email").unbind();
         $("#nav_upload").unbind();
-        $("#nav_profile").unbind();
+        // $("#nav_profile").unbind();
 
         $("#nav_logo").css("width", "auto");
     } else {

@@ -118,67 +118,54 @@ admin.site.register(Presentation, PresentationAdmin)
 
 def sys_stat(request):
     sys_ver_weekly()
-    return HttpResponseRedirect('/admin')
-admin.site.register_view('sys_stat', view=sys_stat, visible=False)
+    return HttpResponseRedirect('/admin/')
 
 def backup_stat(request):
     get_backup_stat()
-    return HttpResponseRedirect('/admin/backup')
-admin.site.register_view('backup_stat', view=backup_stat, visible=False)
+    return HttpResponseRedirect('/admin/backup/')
 
 def backup_form(request):
     return HttpResponse(get_backup_form(), content_type='application/json')
-admin.site.register_view('backup_form', view=backup_form, visible=False)
 
 def backup_now(request):
     backup_weekly()
     return backup_stat(request)
-admin.site.register_view('backup_now', view=backup_now, visible=False)
 
 def upload_now(request):
     gdrive_weekly()
     return backup_stat(request)
-admin.site.register_view('upload_now', view=upload_now, visible=False)
 
 
 def apache_stat(request):
     return HttpResponse(restyle_apache(), content_type='application/json')
-admin.site.register_view('apache_stat', view=apache_stat, visible=False)
 
 def apache(request):
     return render_to_response(PATH.HTML_PATH['admin_apache'], {}, context_instance=RequestContext(request))
-admin.site.register_view('apache/', view=apache, visible=False)
 
 
 def aws(request):
     return render_to_response(PATH.HTML_PATH['admin_aws'], {'timezone':TIME_ZONE}, context_instance=RequestContext(request))
-admin.site.register_view('aws/', view=aws, visible=False)
 
 def aws_stat(request):
     json = aws_stats(request)
     if isinstance(json, HttpResponseBadRequest): return json
     return HttpResponse(json, content_type='application/json')
-admin.site.register_view('aws_stat', view=aws_stat, visible=False)
 
 def aws_admin(request):
     json = ga_stats()
     if isinstance(json, HttpResponseBadRequest): return json
     return HttpResponse(json, content_type='application/json')
-admin.site.register_view('aws_admin', view=aws_admin, visible=False)
 
 def ga(request):
     return render_to_response(PATH.HTML_PATH['admin_ga'], {'ga_url':GA['LINK_URL']}, context_instance=RequestContext(request))
-admin.site.register_view('ga/', view=ga, visible=False)
 
 def ga_admin(request):
     json = ga_stats()
     if isinstance(json, HttpResponseBadRequest): return json
     return HttpResponse(json, content_type='application/json')
-admin.site.register_view('ga_admin', view=ga_admin, visible=False)
 
 def git(request):
     return render_to_response(PATH.HTML_PATH['admin_git'], {'timezone':TIME_ZONE, 'git_repo':GIT['REPOSITORY']}, context_instance=RequestContext(request))
-admin.site.register_view('git/', view=git, visible=False)
 
 def git_stat(request):
     json = git_stats(request)
@@ -192,16 +179,13 @@ def git_stat(request):
             json = git_stats(request)
         if isinstance(json, HttpResponseServerError): return json
     return HttpResponse(json, content_type='application/json')
-admin.site.register_view('git_stat', view=git_stat, visible=False)
 
 def ssl_dash(request):
     return HttpResponse(dash_ssl(request), content_type='application/json')
-admin.site.register_view('ssl_dash', view=ssl_dash, visible=False)
 
 def group_dash(request):
     json = simplejson.dumps({'admin':GROUP.ADMIN, 'group':GROUP.GROUP, 'alumni':GROUP.ALUMNI, 'roton':GROUP.ROTON, 'other':GROUP.OTHER})
     return HttpResponse(json, content_type='application/json')
-admin.site.register_view('group_dash', view=group_dash, visible=False)
 
 def dash_dash(request):
     now = datetime.fromtimestamp(time.time())
@@ -243,7 +227,6 @@ def dash_dash(request):
 
     json = {'t_aws':t_aws, 't_ga':t_ga, 't_git':t_git, 't_slack':t_slack, 't_dropbox':t_dropbox, 't_cal':t_cal, 't_sch':t_sch}
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
-admin.site.register_view('dash_dash', view=dash_dash, visible=False)
 
 # def git_inspector(request):
 #     return render_to_response('%s/data/stat_git.html' % MEDIA_ROOT, {}, context_instance=RequestContext(request))
@@ -260,15 +243,12 @@ def backup(request):
     index =  [i for i, line in enumerate(lines) if 'KEEP_BACKUP' in line][0]
     keep = int(lines[index].split(':')[1])
     return render_to_response(PATH.HTML_PATH['admin_backup'], {'form':BackupForm(), 'flag':flag, 'keep':keep, 'email':EMAIL_HOST_USER}, context_instance=RequestContext(request))
-admin.site.register_view('backup/', view=backup, visible=False)
 
 def dir(request):
     return render_to_response(PATH.HTML_PATH['admin_dir'], {}, context_instance=RequestContext(request))
-admin.site.register_view('dir/', view=dir, visible=False)
 
 def doc(request):
     return render_to_response(PATH.HTML_PATH['admin_doc'], {}, context_instance=RequestContext(request))
-admin.site.register_view('doc/', view=doc, visible=False)
 
 
 def export(request):
@@ -276,17 +256,46 @@ def export(request):
         return export_citation(request)
     else:
         return render_to_response(PATH.HTML_PATH['admin_export'], {'form':ExportForm()}, context_instance=RequestContext(request))
-admin.site.register_view('export/', view=export, visible=False)
 
 def get_ver(request):
     lines = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r').readlines()
     lines = ''.join(lines)
     return HttpResponse(lines, content_type='text/plain')
-admin.site.register_view('get_ver/', view=get_ver, visible=False)
 
 def get_backup(request):
     lines = open('%s/cache/stat_backup.txt' % MEDIA_ROOT, 'r').readlines()
     lines = ''.join(lines)
     return HttpResponse(lines, content_type='text/plain')
+
+
+admin.site.register_view('backup/', view=backup, visible=False)
+admin.site.register_view('backup_stat/', view=backup_stat, visible=False)
+admin.site.register_view('backup_form/', view=backup_form, visible=False)
+admin.site.register_view('backup_now/', view=backup_now, visible=False)
+admin.site.register_view('upload_now/', view=upload_now, visible=False)
+
+admin.site.register_view('apache_stat/', view=apache_stat, visible=False)
+admin.site.register_view('apache/', view=apache, visible=False)
+
+admin.site.register_view('aws/', view=aws, visible=False)
+admin.site.register_view('aws_stat/', view=aws_stat, visible=False)
+admin.site.register_view('aws_admin/', view=aws_admin, visible=False)
+
+admin.site.register_view('ga/', view=ga, visible=False)
+admin.site.register_view('ga_admin/', view=ga_admin, visible=False)
+
+admin.site.register_view('git/', view=git, visible=False)
+admin.site.register_view('git_stat/', view=git_stat, visible=False)
+
+admin.site.register_view('sys_stat/', view=sys_stat, visible=False)
+admin.site.register_view('ssl_dash/', view=ssl_dash, visible=False)
+admin.site.register_view('group_dash/', view=group_dash, visible=False)
+admin.site.register_view('dash_dash/', view=dash_dash, visible=False)
+
+admin.site.register_view('dir/', view=dir, visible=False)
+admin.site.register_view('doc/', view=doc, visible=False)
+admin.site.register_view('export/', view=export, visible=False)
+
+admin.site.register_view('get_ver/', view=get_ver, visible=False)
 admin.site.register_view('get_backup/', view=get_backup, visible=False)
 

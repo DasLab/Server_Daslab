@@ -1,13 +1,13 @@
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
-from django.template import RequestContext#, Template
+from django.template import RequestContext
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib import messages
-from django.db import IntegrityError
+# from django.contrib import messages
+# from django.db import IntegrityError
 # from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render, render_to_response
 
 from filemanager import FileManager
 
@@ -194,7 +194,7 @@ def user_login(request):
     if request.user.is_authenticated():
         if request.GET.has_key('next') and 'admin' in request.GET['next']:
             return error403(request)
-        return HttpResponseRedirect('/group')
+        return HttpResponseRedirect('/group/')
 
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -209,9 +209,9 @@ def user_login(request):
                 if user.is_active:
                     login(request, user)
                     if flag == "Admin":
-                        return HttpResponseRedirect('/admin')
+                        return HttpResponseRedirect('/admin/')
                     else:
-                        return HttpResponseRedirect('/group')
+                        return HttpResponseRedirect('/group/')
                 else:
                     messages = 'Inactive/disabled account. Please contact us.'
         return render_to_response(PATH.HTML_PATH['login'], {'form': form, 'messages':messages}, context_instance=RequestContext(request))
@@ -277,7 +277,7 @@ def user_contact(request):
         member.email = email
         member.bday = bday
         member.save()
-        return HttpResponseRedirect('/group/contact')
+        return HttpResponseRedirect('/group/contact/')
     else:
         return HttpResponseBadRequest('Invalid form.')
 

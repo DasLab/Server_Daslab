@@ -35,7 +35,7 @@
             <a><span class="glyphicon glyphicon-menu-hamburger"></span></a>
           </li>
         </ul>
-        <a class="navbar-brand" href="/group" id="nav_logo">
+        <a class="navbar-brand" href="/group/" id="nav_logo">
           &nbsp;&nbsp;Das Lab Website
         </a>
       </div>
@@ -55,7 +55,7 @@
             </a>
           </li>
           <li id="nav_internal" class="navbar-icon">
-            <a href="/group">
+            <a href="/group/">
               <span style="font-weight:bold; color:#eeb211 !important;">
                 <span class="glyphicon glyphicon-inbox"></span>
                 <span id="nav_internal_text" style="color:#eeb211;">&nbsp;&nbsp;Internal&nbsp;&nbsp;</span>
@@ -63,7 +63,7 @@
             </a>
           </li>
           <li id="nav_admin" class="navbar-icon">
-            <a href="/admin">
+            <a href="/admin/">
               <span style="font-weight:bold;">
                 <span class="glyphicon glyphicon-tower"></span>
                 <span id="nav_admin_text" style="display:none; color:#ff5c2b;">&nbsp;&nbsp;Admin&nbsp;&nbsp;</span>
@@ -75,7 +75,7 @@
         <div class="pull-right row">
           <ul class="nav navbar-nav">
             <li id="nav_upload" class="navbar-icon">
-              <a href="/group/archive/upload"><span class="glyphicon glyphicon-open"></span></a>
+              <a href="/group/archive/upload/"><span class="glyphicon glyphicon-open"></span></a>
             </li>
             <li id="nav_email" class="dropdown navbar-icon">
               <a><span class="glyphicon glyphicon-send"></span></a>
@@ -171,7 +171,7 @@
                     <span class="pull-right" style="padding-right:20px;"><a id="nav_user_cap" target="_blank"><span class="label label-warning">CAP Profile</span></a></span>
                   </p>
                   <p style="line-height:25px; margin-top:30px;">
-		    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
+		                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
                     Email:&nbsp;&nbsp;<a target="_blank" style="text-decoration:underline;" id="nav_user_email"></a>
                     <!-- <span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;
                     Last Login:&nbsp;&nbsp;<span class="label label-primary">{{ user.last_login|date:"Y-m-d H:i:s" }}</span> -->
@@ -183,7 +183,7 @@
                 </li>
                 <li class="divider"></li>
                 <li class="nav-list">
-                  <!-- <a style="display:inline-block;" href="/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;&nbsp;Change Password</a> -->
+                  <!-- <a style="display:inline-block;" href="/password/"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;&nbsp;Change Password</a> -->
                   <a style="display:inline-block; margin-right:20px;" class="pull-right" href="/logout/"><span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;&nbsp;Sign Out</a>
                 </li>
               </ul>
@@ -201,38 +201,38 @@
     <div id="sidebar-wrapper" class="bgimg-lg">
       <ul class="nav nav-pills nav-stacked">
         <li id="nav_home_lg" class="nav-ul nav-ul-lg li-info" style="margin-top: 10px;">
-          <a href="/group" ><span class="lead glyphicon glyphicon-home"></span></a>
+          <a href="/group/" ><span class="lead glyphicon glyphicon-home"></span></a>
         </li>
         <li id="nav_home" class="nav-ul li-info" style="margin-top: 10px;">
-          <a href="/group" ><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home</a>
+          <a href="/group/" ><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home</a>
         </li>
 
         <li id="nav_meeting_lg" class="nav-ul nav-ul-lg li-danger">
-          <a href="/group/schedule"><span class="lead glyphicon glyphicon-bell"></span></a>
+          <a href="/group/schedule/"><span class="lead glyphicon glyphicon-bell"></span></a>
         </li>
         <li id="nav_meeting" class="nav-ul li-danger">
-          <a href="/group/schedule"><span class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;Group Meetings</a>
+          <a href="/group/schedule/"><span class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;Group Meetings</a>
           <ul class="nav-li-sub">
-            <li id="nav_schedule" class="nav-li"><span class="glyphicon glyphicon-time nav-icon"></span><a href="/group/schedule">&nbsp;&nbsp;Schedule</a></li>
-            <li id="nav_flash" class="nav-li"><span class="glyphicon glyphicon-blackboard nav-icon"></span><a href="/group/flash_slide">&nbsp;&nbsp;Flash Slides</a></li>
-            <li id="nav_jc" class="nav-li"><span class="glyphicon glyphicon-book nav-icon"></span><a href="/group/journal_club">&nbsp;&nbsp;Journal Clubs</a></li>
-            <li id="nav_eterna" class="nav-li"><span class="glyphicon glyphicon-facetime-video nav-icon"></span><a href="/group/youtube">&nbsp;&nbsp;EteRNA Videos</a></li>
-            <li id="nav_rotation" class="nav-li"><span class="glyphicon glyphicon-retweet nav-icon"></span><a href="/group/rotation">&nbsp;&nbsp;Rotation Students</a></li>
+            <li id="nav_schedule" class="nav-li"><span class="glyphicon glyphicon-time nav-icon"></span><a href="/group/schedule/">&nbsp;&nbsp;Schedule</a></li>
+            <li id="nav_flash" class="nav-li"><span class="glyphicon glyphicon-blackboard nav-icon"></span><a href="/group/flash_slide/">&nbsp;&nbsp;Flash Slides</a></li>
+            <li id="nav_jc" class="nav-li"><span class="glyphicon glyphicon-book nav-icon"></span><a href="/group/journal_club/">&nbsp;&nbsp;Journal Clubs</a></li>
+            <li id="nav_eterna" class="nav-li"><span class="glyphicon glyphicon-facetime-video nav-icon"></span><a href="/group/youtube/">&nbsp;&nbsp;EteRNA Videos</a></li>
+            <li id="nav_rotation" class="nav-li"><span class="glyphicon glyphicon-retweet nav-icon"></span><a href="/group/rotation/">&nbsp;&nbsp;Rotation Students</a></li>
           </ul>
         </li>
 
-        <li id="nav_cal_lg" class="nav-ul nav-ul-lg li-violet"><a href="/group/calendar"><span class="lead glyphicon glyphicon-calendar"></span></a></li>
-        <li id="nav_cal" class="nav-ul li-violet"><a href="/group/calendar"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Calendar</a></li>
+        <li id="nav_cal_lg" class="nav-ul nav-ul-lg li-violet"><a href="/group/calendar/"><span class="lead glyphicon glyphicon-calendar"></span></a></li>
+        <li id="nav_cal" class="nav-ul li-violet"><a href="/group/calendar/"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Calendar</a></li>
 
         <li id="nav_res_lg" class="nav-ul nav-ul-lg li-warning">
           <a href="/group/gdocs" ><span class="lead glyphicon glyphicon-briefcase"></span></a>
         </li>
         <li id="nav_res" class="nav-ul li-warning">
-          <a href="/group/gdocs"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Resources</a>
+          <a href="/group/gdocs/"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Resources</a>
           <ul class="nav-li-sub">
-            <li id="nav_gdocs" class="nav-li"><img src="/site_media/images/icons/gdrive_o.png" class="nav-icon" height="14px"><a href="/group/gdocs">&nbsp;&nbsp;Google Docs</a></li>
-            <li id="nav_archive" class="nav-li"><span class="glyphicon glyphicon-cd nav-icon"></span><a href="/group/archive">&nbsp;&nbsp;Presentations Archive</a></li>
-            <li id="nav_contact" class="nav-li"><span class="glyphicon glyphicon-earphone nav-icon"></span><a href="/group/contact">&nbsp;&nbsp;Contacts</a></li>
+            <li id="nav_gdocs" class="nav-li"><img src="/site_media/images/icons/gdrive_o.png" class="nav-icon" height="14px"><a href="/group/gdocs/">&nbsp;&nbsp;Google Docs</a></li>
+            <li id="nav_archive" class="nav-li"><span class="glyphicon glyphicon-cd nav-icon"></span><a href="/group/archive/">&nbsp;&nbsp;Presentations Archive</a></li>
+            <li id="nav_contact" class="nav-li"><span class="glyphicon glyphicon-earphone nav-icon"></span><a href="/group/contact/">&nbsp;&nbsp;Contacts</a></li>
           </ul>
         </li>
 
@@ -242,30 +242,30 @@
         <li id="nav_server" class="nav-ul li-green">
           <a href="/group/aws/"><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Servers</a>
           <ul class="nav-li-sub">
-            <li id="nav_aws" class="nav-li"><img src="/site_media/images/icons/aws_o.png" class="nav-icon" height="14px"><a href="/group/aws">&nbsp;&nbsp;Amazon Web Services</a></li>
-            <li id="nav_ga" class="nav-li"><img src="/site_media/images/icons/ga_o.png" class="nav-icon" height="14px"><a href="/group/ga">&nbsp;&nbsp;Google Analytics</a></li>
+            <li id="nav_aws" class="nav-li"><img src="/site_media/images/icons/aws_o.png" class="nav-icon" height="14px"><a href="/group/aws/">&nbsp;&nbsp;Amazon Web Services</a></li>
+            <li id="nav_ga" class="nav-li"><img src="/site_media/images/icons/ga_o.png" class="nav-icon" height="14px"><a href="/group/ga/">&nbsp;&nbsp;Google Analytics</a></li>
           </ul>
         </li>
         <li id="nav_service_lg" class="nav-ul nav-ul-lg li-orange">
-          <a href="/group/git" ><span class="lead glyphicon glyphicon-hourglass"></span></a>
+          <a href="/group/git/" ><span class="lead glyphicon glyphicon-hourglass"></span></a>
         </li>
         <li id="nav_service" class="nav-ul li-orange">
-          <a href="/group/git"><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Services</a>
+          <a href="/group/git/"><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Services</a>
           <ul class="nav-li-sub">
-            <li id="nav_git" class="nav-li"><img src="/site_media/images/icons/git_o.png" class="nav-icon" height="14px"><a href="/group/git">&nbsp;&nbsp;GitHub</a></li>
-            <li id="nav_slack" class="nav-li"><img src="/site_media/images/icons/slack_o.png" class="nav-icon" height="14px"><a href="/group/slack">&nbsp;&nbsp;Slack</a></li>
-            <li id="nav_dropbox" class="nav-li"><img src="/site_media/images/icons/dropbox_o.png" class="nav-icon" height="14px"><a href="/group/dropbox">&nbsp;&nbsp;Dropbox</a></li>
+            <li id="nav_git" class="nav-li"><img src="/site_media/images/icons/git_o.png" class="nav-icon" height="14px"><a href="/group/git/">&nbsp;&nbsp;GitHub</a></li>
+            <li id="nav_slack" class="nav-li"><img src="/site_media/images/icons/slack_o.png" class="nav-icon" height="14px"><a href="/group/slack/">&nbsp;&nbsp;Slack</a></li>
+            <li id="nav_dropbox" class="nav-li"><img src="/site_media/images/icons/dropbox_o.png" class="nav-icon" height="14px"><a href="/group/dropbox/">&nbsp;&nbsp;Dropbox</a></li>
           </ul>
         </li>
 
         <li id="nav_misc_lg" class="nav-ul nav-ul-lg li-primary">
-          <a href="/group/misc"><span class="lead glyphicon glyphicon-magnet"></span></a>
+          <a href="/group/misc/"><span class="lead glyphicon glyphicon-magnet"></span></a>
         </li>
         <li id="nav_misc" class="nav-ul li-primary">
-          <a href="/group/misc"><span class="glyphicon glyphicon-magnet"></span>&nbsp;&nbsp;Miscellaneous</a>
+          <a href="/group/misc/"><span class="glyphicon glyphicon-magnet"></span>&nbsp;&nbsp;Miscellaneous</a>
           <ul class="nav-li-sub">
-            <li id="nav_onboard" class="nav-li"><span class="glyphicon glyphicon-hand-right nav-icon"></span><a href="/group/misc">&nbsp;&nbsp;Onboarding</a></li>
-            <li id="nav_error" class="nav-li"><span class="glyphicon glyphicon-volume-off nav-icon"></span><a href="/group/error">&nbsp;&nbsp;Error Pages</a></li>
+            <li id="nav_onboard" class="nav-li"><span class="glyphicon glyphicon-hand-right nav-icon"></span><a href="/group/misc/">&nbsp;&nbsp;Onboarding</a></li>
+            <li id="nav_error" class="nav-li"><span class="glyphicon glyphicon-volume-off nav-icon"></span><a href="/group/error/">&nbsp;&nbsp;Error Pages</a></li>
           </ul>
         </li>
 
@@ -275,7 +275,7 @@
     <div id="page-content-wrapper">
     <ul class="breadcrumb">
       <li>
-        <a href="/group">Home</a>
+        <a href="/group/">Home</a>
         {% if title %}
         <span class="divider">&raquo;</span>
         </li>

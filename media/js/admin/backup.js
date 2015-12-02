@@ -10,7 +10,7 @@ $(document).ready(function() {
     $("lspan").remove();
 
     $.ajax({
-        url : "/admin/get_backup",
+        url : "/admin/get_backup/",
         dataType: "text",
         success : function (data) {
             var txt = data.split(/\t/);
@@ -53,7 +53,7 @@ $(document).ready(function() {
     });
 
   $.ajax({
-        url : "/admin/get_ver",
+        url : "/admin/get_ver/",
         dataType: "text",
         success : function (data) {
             var txt = data.split(/\t/);
@@ -67,7 +67,7 @@ $(document).ready(function() {
     });
 
     $.ajax({
-        url : "/admin/backup_form",
+        url : "/admin/backup_form/",
         dataType: "json",
         success : function (data) {
             $("#id_time_backup").val(data.time_backup);

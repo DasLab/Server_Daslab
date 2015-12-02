@@ -169,7 +169,7 @@ $(document).ready(function () {
     navbar_collapse();
 
     $.ajax({
-        url : "/get_admin",
+        url : "/get_admin/",
         dataType: "json",
         success: function (data) {
             $("#form_email_to").val(data.email);
@@ -178,7 +178,7 @@ $(document).ready(function () {
     });
 
     $.ajax({
-        url : "/group/user_dash",
+        url : "/group/user_dash/",
         dataType: "json",
         success: function (data) {
             if (data.photo) {

@@ -11,7 +11,7 @@ import os
 def get_member_image(instance, filename):
     name = instance.first_name.strip() + instance.last_name[0].strip()
     ext = filename[filename.rfind('.'):]
-    return PATH.DATA_DIR['MEMBER_IMG_DIR'] + '%s%s' % (name,ext)
+    return PATH.DATA_DIR['MEMBER_IMG_DIR'] + '%s%s' % (name, ext)
 
 def get_pub_pdf(instance, filename):
     return PATH.DATA_DIR['PUB_PDF_DIR'] + '%s' % filename
@@ -26,14 +26,14 @@ def get_news_image(instance, filename):
     return PATH.DATA_DIR['NEWS_IMG_DIR'] + '%s' % filename
 
 def get_rot_ppt(instance, filename):
-    name = instance.date.strftime('%Y%m%d') + '_' + instance.full_name.replace(' ','')
+    name = instance.date.strftime('%Y%m%d') + '_' + instance.full_name.replace(' ', '')
     ext = filename[filename.rfind('.'):]
-    return PATH.DATA_DIR['ROT_PPT_DIR'] + '%s%s' % (name,ext)
+    return PATH.DATA_DIR['ROT_PPT_DIR'] + '%s%s' % (name, ext)
 
 def get_rot_data(instance, filename):
-    name = instance.date.strftime('%Y%m%d') + '_' + instance.full_name.replace(' ','')
+    name = instance.date.strftime('%Y%m%d') + '_' + instance.full_name.replace(' ', '')
     ext = filename[filename.rfind('.'):]
-    return PATH.DATA_DIR['ROT_DAT_DIR'] + '%s%s' % (name,ext)
+    return PATH.DATA_DIR['ROT_DAT_DIR'] + '%s%s' % (name, ext)
 
 def get_spe_ppt(instance, filename):
     return PATH.DATA_DIR['SPE_PPT_DIR'] + '%s' % filename

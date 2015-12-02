@@ -2,7 +2,6 @@ from django.conf.urls import include, url, handler404, handler500
 # from django.conf.urls.static import static
 from django.contrib import admin
 # from django.contrib.auth.views import login
-# from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
 
 from adminplus.sites import AdminSitePlus

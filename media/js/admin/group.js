@@ -1,5 +1,5 @@
 $.ajax({
-    url : "/admin/group_dash",
+    url : "/admin/group_dash/",
     dataType: "json",
     success: function (data) {
         var html = '<table class="table table-hover"><thead><tr class="active"><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-th-list"></span>&nbsp;&nbsp;Group</th><th class="col-lg-9 col-md-9 col-sm-9 col-xs-9"><span class="glyphicon glyphicon-credit-card"></span>&nbsp;&nbsp;SUNet IDs</th></tr></thead><tbody><tr><td><span class="label label-violet"><span class="glyphicon glyphicon-king"></span>&nbsp;&nbsp;Administrator</span></td><td>';

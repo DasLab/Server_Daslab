@@ -12,7 +12,7 @@ function readyHandler() {
 function drawEC2(id) {
    	var chart = new google.visualization.ChartWrapper({
     	'chartType': 'AreaChart',
-    	'dataSourceUrl': '/group/aws_dash?qs=cpu&tp=ec2&id=' + id,
+    	'dataSourceUrl': '/group/aws_dash/?qs=cpu&tp=ec2&id=' + id,
     	'containerId': 'plot_cpu_' + id,
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -39,7 +39,7 @@ function drawEC2(id) {
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/group/aws_dash?qs=net&tp=ec2&id=' + id,
+        'dataSourceUrl': '/group/aws_dash/?qs=net&tp=ec2&id=' + id,
         'containerId': 'plot_net_'+ id,
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -69,7 +69,7 @@ function drawEC2(id) {
 function drawELB(id) {
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/group/aws_dash?qs=lat&tp=elb&id=' + id,
+        'dataSourceUrl': '/group/aws_dash/?qs=lat&tp=elb&id=' + id,
         'containerId': 'plot_lat_' + id,
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -96,7 +96,7 @@ function drawELB(id) {
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/group/aws_dash?qs=req&tp=elb&id=' + id,
+        'dataSourceUrl': '/group/aws_dash/?qs=req&tp=elb&id=' + id,
         'containerId': 'plot_req_'+ id,
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -126,7 +126,7 @@ function drawELB(id) {
 function drawEBS(id) {
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/group/aws_dash?qs=disk&tp=ebs&id=' + id,
+        'dataSourceUrl': '/group/aws_dash/?qs=disk&tp=ebs&id=' + id,
         'containerId': 'plot_disk_' + id,
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -155,7 +155,7 @@ function drawEBS(id) {
 
 function drawChart() {
     $.ajax({
-        url : "/group/aws_dash?qs=init&id=init&tp=init&tqx=reqId%3A55",
+        url : "/group/aws_dash/?qs=init&id=init&tp=init&tqx=reqId%3A55",
         dataType: "json",
         success: function (data) {
             var html = "";

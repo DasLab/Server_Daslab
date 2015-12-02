@@ -10,7 +10,7 @@ $(document).ready(function() {
   $("lspan").remove();
 
   $.ajax({
-        url : "/admin/get_ver",
+        url : "/admin/get_ver/",
         dataType: "text",
         success : function (data) {
         	var txt = data.split(/\t/);
@@ -77,7 +77,7 @@ $(document).ready(function() {
     });
 
     $.ajax({
-        url : "/admin/backup_form",
+        url : "/admin/backup_form/",
         dataType: "json",
         success : function (data) {
             $("#id_week_backup").html($("#id_week_backup").html() + '<br/>On <span class="label label-primary">' + data.time_backup + '</span> every <span class="label label-inverse">' + weekdayNames[data.day_backup] + '</span> (UTC)');
@@ -97,7 +97,7 @@ $(document).ready(function() {
     });
 
    $.ajax({
-        url : "/admin/ssl_dash",
+        url : "/admin/ssl_dash/",
         dataType: "json",
         success : function (data) {
             $("#id_ssl_exp").html('<span class="label label-inverse">' + data.exp_date + '</span> (UTC)');
@@ -105,7 +105,7 @@ $(document).ready(function() {
     });
 
    $.ajax({
-        url : "/admin/dash_dash",
+        url : "/admin/dash_dash/",
         dataType: "json",
         success : function (data) {
             $("#id_dash_aws").html(data.t_aws);
