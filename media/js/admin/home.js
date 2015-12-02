@@ -108,13 +108,13 @@ $(document).ready(function() {
         url : "/admin/dash_dash/",
         dataType: "json",
         success : function (data) {
-            $("#id_dash_aws").html(data.t_aws);
-            $("#id_dash_ga").html(data.t_ga);
-            $("#id_dash_git").html(data.t_git);
-            $("#id_dash_slack").html(data.t_slack);
-            $("#id_dash_dropbox").html(data.t_dropbox);
-            $("#id_dash_cal").html(data.t_cal);
-            $("#id_dash_sch").html(data.t_sch);
+            $("#id_dash_aws").html(data.t_aws + '<span class="label label-orange pull-right"><span class="glyphicon glyphicon-fire"></span></span>');
+            $("#id_dash_ga").html(data.t_ga + '<span class="label label-orange pull-right"><span class="glyphicon glyphicon-fire"></span></span>');
+            $("#id_dash_git").html(data.t_git + '<span class="label label-violet pull-right"><span class="glyphicon glyphicon-leaf"></span></span>');
+            $("#id_dash_slack").html(data.t_slack + '<span class="label label-green pull-right"><span class="glyphicon glyphicon-tint"></span></span>');
+            $("#id_dash_dropbox").html(data.t_dropbox + '<span class="label label-violet pull-right"><span class="glyphicon glyphicon-leaf"></span></span>');
+            $("#id_dash_cal").html(data.t_cal + '<span class="label label-violet pull-right"><span class="glyphicon glyphicon-leaf"></span></span>');
+            $("#id_dash_sch").html(data.t_sch + '<span class="label label-violet pull-right"><span class="glyphicon glyphicon-leaf"></span></span>');
         }
     });
 

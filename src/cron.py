@@ -93,13 +93,46 @@ def sys_ver_weekly():
         raise Exception('Error with running scheduled sys_ver_weekly().')
 
 
-# def cache_every15min():
-#     try:
-#         subprocess.check_call('cd %s && python util_system_cache.py' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-#     except subprocess.CalledProcessError:
-#         print "    \033[41mERROR\033[0m: Failed to run \033[94mcache_every15min()\033[0m schedule."
-#         print traceback.format_exc()
-#         raise Exception('Error with running scheduled cache_every15min().')
+def cache_every3min():
+    try:
+        subprocess.check_call('cd %s && python manage.py cache 3' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError:
+        print "    \033[41mERROR\033[0m: Failed to run \033[94mcache_every3min()\033[0m schedule."
+        err = traceback.format_exc()
+        ts = '%s\t\tsys_ver_weekly()\n' % time.ctime()
+        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
+        open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_every3min()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
+        raise Exception('Error with running scheduled cache_every3min().')
+
+
+def cache_every15min():
+    try:
+        subprocess.check_call('cd %s && python manage.py cache 15' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError:
+        print "    \033[41mERROR\033[0m: Failed to run \033[94mcache_every15min()\033[0m schedule."
+        err = traceback.format_exc()
+        ts = '%s\t\tsys_ver_weekly()\n' % time.ctime()
+        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
+        open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_every15min()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
+        raise Exception('Error with running scheduled cache_every15min().')
+
+
+def cache_every30min():
+    try:
+        subprocess.check_call('cd %s && python manage.py cache 30' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError:
+        print "    \033[41mERROR\033[0m: Failed to run \033[94mcache_every30min()\033[0m schedule."
+        err = traceback.format_exc()
+        ts = '%s\t\tsys_ver_weekly()\n' % time.ctime()
+        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
+        open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_every30min()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
+        raise Exception('Error with running scheduled cache_every30min().')
+
+
+  
 
 
   

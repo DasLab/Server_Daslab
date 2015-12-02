@@ -228,9 +228,20 @@ def dash_dash(request):
     json = {'t_aws':t_aws, 't_ga':t_ga, 't_git':t_git, 't_slack':t_slack, 't_dropbox':t_dropbox, 't_cal':t_cal, 't_sch':t_sch}
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
 
-# def git_inspector(request):
-#     return render_to_response('%s/data/stat_git.html' % MEDIA_ROOT, {}, context_instance=RequestContext(request))
-# admin.site.register_view('git_inspector/', view=git_inspector, visible=False)
+def dash_stat(request):
+    if request.META.has_key('QUERY_STRING'):
+        flag = request.META['QUERY_STRING'].replace('int=', '')
+        if flag == '3':
+            cache_every3min()
+        elif flag == '15':
+            cache_every15min()
+        elif flag == '30':
+            cache_every30min()
+        else:
+            return HttpResponseBadRequest('Invalid input.')
+    else:
+        return HttpResponseBadRequest('Invalid input.')
+    return HttpResponseRedirect('/admin/')
 
 
 def backup(request):
@@ -289,6 +300,7 @@ admin.site.register_view('sys_stat/', view=sys_stat, visible=False)
 admin.site.register_view('ssl_dash/', view=ssl_dash, visible=False)
 admin.site.register_view('group_dash/', view=group_dash, visible=False)
 admin.site.register_view('dash_dash/', view=dash_dash, visible=False)
+admin.site.register_view('dash_stat/', view=dash_stat, visible=False)
 
 admin.site.register_view('dir/', view=dir, visible=False)
 admin.site.register_view('doc/', view=doc, visible=False)
