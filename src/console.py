@@ -123,7 +123,7 @@ def set_backup_form(request):
         if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *set_backup_form()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
         raise Exception('Error with setting crontab scheduled jobs.')
     else:
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: weekly *backup & sync* set @ _%s_\n' % time.ctime()}])
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: weekly *backup & sync* set @ _%s_\n>```%s```\n' % (time.ctime(), lines)}])
 
         # call_command('crontab', 'add')
     # except:
