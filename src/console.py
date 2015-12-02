@@ -82,8 +82,11 @@ def get_backup_form():
     except:
         time_backup = time_upload = day_backup = day_upload = ''
 
-    json = {'day_backup':day_backup, 'day_upload':day_upload, 'time_backup':time_backup, 'time_upload':time_upload}
-    return simplejson.dumps(json)
+    lines = open('%s/config/cron.conf' % MEDIA_ROOT, 'r').readlines()
+    index =  [i for i, line in enumerate(lines) if 'KEEP_BACKUP' in line][0]
+    keep = int(lines[index].split(':')[1].strip().replace(',', ''))
+
+    return {'day_backup':day_backup, 'day_upload':day_upload, 'time_backup':time_backup, 'time_upload':time_upload, 'keep':keep}
 
 
 def set_backup_form(request):
@@ -95,8 +98,8 @@ def set_backup_form(request):
     day_backup = form.cleaned_data['day_backup']
     day_upload = form.cleaned_data['day_upload']
 
-    cron_backup = '%s %s * * %s' % (time_backup.hour, time_backup.minute, day_backup)
-    cron_upload = '%s %s * * %s' % (time_upload.hour, time_upload.minute, day_upload)
+    cron_backup = '%s * * %s' % (time_backup.strftime('%M %H'), day_backup)
+    cron_upload = '%s * * %s' % (time_upload.strftime('%M %H'), day_upload)
 
     lines = open('%s/config/cron.conf' % MEDIA_ROOT, 'r').readlines()
 

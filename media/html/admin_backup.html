@@ -306,7 +306,6 @@
     $(document).ready(function() {
       $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-floppy-open"></span>&nbsp;&nbsp;Backup Schedule</li>');
 
-      $("#id_keep").val({{keep}});
       $("#modal_keep").html('Keep <span class="label label-orange">' + $("#id_keep").val() + '</span> Days');
 
       if ({{flag}}) {$("#modal").modal("show");}

@@ -125,7 +125,7 @@ def backup_stat(request):
     return HttpResponseRedirect('/admin/backup/')
 
 def backup_form(request):
-    return HttpResponse(get_backup_form(), content_type='application/json')
+    return HttpResponse(simplejson.dumps(get_backup_form()), content_type='application/json')
 
 def backup_now(request):
     backup_weekly()
@@ -238,11 +238,9 @@ def backup(request):
     if request.method == 'POST':
         set_backup_form(request)
         flag = 1
-    lines = open('%s/config/cron.conf' % MEDIA_ROOT, 'r').readlines()
 
-    index =  [i for i, line in enumerate(lines) if 'KEEP_BACKUP' in line][0]
-    keep = int(lines[index].split(':')[1])
-    return render_to_response(PATH.HTML_PATH['admin_backup'], {'form':BackupForm(), 'flag':flag, 'keep':keep, 'email':EMAIL_HOST_USER}, context_instance=RequestContext(request))
+    form = BackupForm(initial=get_backup_form())
+    return render_to_response(PATH.HTML_PATH['admin_backup'], {'form':form, 'flag':flag, 'email':EMAIL_HOST_USER}, context_instance=RequestContext(request))
 
 def dir(request):
     return render_to_response(PATH.HTML_PATH['admin_dir'], {}, context_instance=RequestContext(request))
