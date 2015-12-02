@@ -3,7 +3,7 @@ sudo usermod -a -G www-data ubuntu
 sudo chgrp -R www-data *
 sudo chgrp -R ubuntu cache
 sudo chown -R ubuntu *.py *.md *.txt src media config .gitignore
-sudo chown -R www-data backup data #cache
+sudo chown -R www-data backup data cache
 
 sudo chmod 640 *.py* *.md *.txt .gitignore
 sudo chmod 640 src/*.py* src/management/* src/management/commands/* src/templatetags/*
@@ -18,8 +18,8 @@ sudo chmod 750 media/admin media/admin/img media/admin/img/gis media/admin/img/f
 sudo chmod 640 media/css/min/* media/js/group/min/* media/js/admin/min/* media/js/suit/min/*
 sudo chmod 750 media/css/min media/js/group/min media/js/admin/min media/js/suit/min
 
-sudo chmod 640 backup/* #cache/* cache/aws/* cache/slack/* cache/git/* cache/dropbox/*
-sudo chmod 750 backup #cache cache/aws cache/slack cache/git cache/dropbox
+sudo chmod 660 backup/* cache/* cache/aws/* cache/slack/* cache/git/* cache/dropbox/*
+sudo chmod 770 backup cache cache/aws cache/slack cache/git cache/dropbox
 sudo chmod 640 data/*.pdf data/news_img/* data/_old/* data/ppl_img/* data/pub_data/* data/pub_img/* data/pub_pdf/* data/rot_data/* data/rot_ppt/* data/spe_ppt/*
 sudo chmod 750 data data/news_img data/_old data/ppl_img data/pub_data data/pub_img data/pub_pdf data/rot_data data/rot_ppt data/spe_ppt
 
