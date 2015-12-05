@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^resource/?$', RedirectView.as_view(url='/resources/', permanent=True)),
     url(r'^contacts/?$', RedirectView.as_view(url='/contact/', permanent=True)),
     url(r'^groups/?$', RedirectView.as_view(url='/group/', permanent=True)),
+    url(r'^admin$', RedirectView.as_view(url='/admin/', permanent=True)),
 
     url(r'^signin/?$', views.user_login),
     url(r'^logout/?$', RedirectView.as_view(url='/index/', permanent=True)),
@@ -93,7 +94,7 @@ urlpatterns = [
     url(r'^error/500/?$', views.error500),
 
     url(r'^admin/browse/' + path_end, views.browse),
-    url(r'^admin/?', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^(?:robots.txt)?$', serve, kwargs={'path': 'robots.txt', 'document_root': MEDIA_ROOT}),
 ] #+ static(STATIC_URL, document_root=STATIC_ROOT)
 
