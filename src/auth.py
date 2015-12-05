@@ -1,14 +1,10 @@
-import os
-
-# from config.t47_dev import T47_DEV as DEBUG
-from src.settings import env
+# from src.settings import env
 
 from django.contrib.auth import authenticate, login, logout
 
-MEDIA_ROOT = os.path.dirname(os.path.dirname(__file__))
 
 class USER_GROUP(object):
-    def __init__(self):
+    def __init__(self, MEDIA_ROOT):
         lines = open('%s/config/group.conf' % MEDIA_ROOT, 'r').readlines()
 
         self.ADMIN = [ x.strip() for x in lines[0].replace('daslab_admin: ', '').split(' ')]
@@ -33,3 +29,12 @@ class AutomaticAdminLoginMiddleware(object):
                 request.user = user
                 login(request, user)
 
+
+class ExceptionUserInfoMiddleware(object):
+    def process_exception(self, request, exception):
+        try:
+            if request.user.is_authenticated():
+                request.META['USERNAME'] = str(request.user.username)
+                request.META['USER_EMAIL'] = str(request.user.email)
+        except:
+            pass

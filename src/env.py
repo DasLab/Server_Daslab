@@ -1,9 +1,32 @@
-import os
+import environ
+import simplejson
 
-MEDIA_ROOT = os.path.dirname(os.path.dirname(__file__))
+
+def reload_conf(DEBUG, MEDIA_ROOT):
+    env = environ.Env(DEBUG=DEBUG,) # set default values and casting
+    environ.Env.read_env('%s/config/env.conf' % MEDIA_ROOT) # reading .env file
+
+    env_oauth = simplejson.load(open('%s/config/oauth.conf' % MEDIA_ROOT))
+    AWS = env_oauth['AWS']
+    GA = env_oauth['GA']
+    GCAL = env_oauth['CALENDAR']
+    DRIVE = env_oauth['DRIVE']
+    GIT = env_oauth['GIT']
+    SLACK = env_oauth['SLACK']
+    SLACK['ADMIN_NAME'] = '@' + SLACK['ADMIN_NAME']
+    DROPBOX = env_oauth['DROPBOX']
+    APACHE_ROOT = '/var/www'
+
+    env_cron = simplejson.load(open('%s/config/cron.conf' % MEDIA_ROOT))
+    CRONJOBS = env_cron['CRONJOBS']
+    CRONTAB_LOCK_JOBS = env_cron['CRONTAB_LOCK_JOBS']
+    KEEP_BACKUP = env_cron['KEEP_BACKUP']
+
+    return (env, AWS, GA, DRIVE, GIT, SLACK, DROPBOX, APACHE_ROOT, CRONJOBS, CRONTAB_LOCK_JOBS, KEEP_BACKUP)
+
 
 class SYS_PATH(object):
-    def __init__(self):
+    def __init__(self, MEDIA_ROOT):
         self.HTML_PATH = {
             'index': MEDIA_ROOT + '/media/html/public_index.html',
             'research': MEDIA_ROOT + '/media/html/public_research.html',
