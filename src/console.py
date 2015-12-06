@@ -113,7 +113,7 @@ def set_backup_form(request):
 
     lines = open('%s/config/cron.conf' % MEDIA_ROOT, 'r').readlines()
 
-    index =  [i for i, line in enumerate(lines) if 'src.cron.backup_weekly' in line or 'src.cron.gdrive_weekly' in line or 'KEEP_BACKUP' in line]
+    index =  [i for i, line in enumerate(lines) if 'backup_weekly' in line or 'gdrive_weekly' in line or 'KEEP_BACKUP' in line]
     lines[index[0]] = '\t\t["%s", "django.core.management.call_command", ["backup"], {}, ">> %s/cache/log_cron_backup.log # backup_weekly"],\n' % (cron_backup, MEDIA_ROOT)
     lines[index[1]] = '\t\t["%s", "django.core.management.call_command", ["gdrive"], {}, ">> %s/cache/log_cron_gdrive.log # gdrive_weekly"],\n' % (cron_upload, MEDIA_ROOT)
     lines[index[2]] = '\t"KEEP_BACKUP": %s\n' % form.cleaned_data['keep']
@@ -123,10 +123,9 @@ def set_backup_form(request):
         cron = subprocess.Popen('crontab -l | cut -d" " -f1-5', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()
         if len(cron) > 9:
             subprocess.check_call('crontab -r', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        (_, _, _, _, _, _, _, _, CRONJOBS, _, KEEP_BACKUP, KEEP_JOB) = reload_conf(DEBUG, MEDIA_ROOT)
+        (_, _, _, _, _, _, _, _, _, CRONJOBS, _, KEEP_BACKUP) = reload_conf(DEBUG, MEDIA_ROOT)
         settings._wrapped.CRONJOBS = CRONJOBS
         settings._wrapped.KEEP_BACKUP = KEEP_BACKUP
-        settings._wrapped.KEEP_JOB = KEEP_JOB
         call_command('crontab', 'add')
     except subprocess.CalledProcessError:
         print "    \033[41mERROR\033[0m: Failed to reset \033[94mcrontab\033[0m schedules."
@@ -137,7 +136,7 @@ def set_backup_form(request):
         if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *set_backup_form()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
         raise Exception('Error with setting crontab scheduled jobs.')
     else:
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: weekly *backup & sync* set @ _%s_\n>```%s%s%s```\n' % (time.ctime(), lines[index[0]][2:], lines[index[1]][2:], lines[index[2]])}])
+        if IS_SLACK and (not DEBUG): send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: weekly *backup & sync* set @ _%s_\n>```%s%s%s```\n' % (time.ctime(), lines[index[0]][2:], lines[index[1]][2:], lines[index[2]])}])
 
         # call_command('crontab', 'add')
     # except:
