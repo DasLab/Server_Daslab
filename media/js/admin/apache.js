@@ -10,6 +10,7 @@ function get_apache_stat() {
             $("#apache_title").html(data['title']);
             $("#apache_ver").html(data['ver_apache']);
             $("#apache_wsgi").html(data['ver_wsgi']);
+            $("#apache_webauth").html(data['ver_webauth']);
             $("#apache_ssl").html(data['ver_ssl']);
             $("#apache_mpm").html(data['mpm']);
             $("#apache_port").html(data['port']);
