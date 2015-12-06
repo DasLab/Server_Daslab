@@ -102,7 +102,7 @@ class Command(BaseCommand):
                     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled weekly *backup* finished @ _%s_\n' % time.ctime()}])
                     send_notify_slack(SLACK['ADMIN_NAME'], '>```%s```\n' % html, '')
                 else:
-                    send_notify_emails('[System] {%s} Weekly Backup Notice' % env('SSL_HOST'), 'This is an automatic email notification for the success of scheduled weekly backup of the DasLab Website database and static contents.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n%s\n\nDasLab Website Admin\n' % (t_cron, d_cron, t_now, html))
+                    send_notify_emails('[System] {%s} Weekly Backup Notice' % env('SSL_HOST'), 'This is an automatic email notification for the success of scheduled weekly backup of the %s Website database and static contents.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n%s\n\n%s Website Admin\n' % (env('SERVER_NAME'), t_cron, d_cron, t_now, html, env('SERVER_NAME')))
                     self.stdout.write("Admin email (Weekly Backup Notice) sent.")
             get_backup_stat()
             self.stdout.write("Admin Backup Statistics refreshed.")

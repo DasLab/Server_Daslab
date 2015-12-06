@@ -197,7 +197,7 @@ TEMPLATES = [
 
 SUIT_CONFIG = {
     # header
-    'ADMIN_NAME': 'Das Lab Website',
+    'ADMIN_NAME': '%s Website' % env('SERVER_NAME'),
     'HEADER_DATE_FORMAT': 'F d, Y (l)',
     'HEADER_TIME_FORMAT': 'h:i a (e)',
 

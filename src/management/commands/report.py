@@ -22,7 +22,7 @@ class Command(BaseCommand):
                 lines = open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'r').readlines()
                 lines = ''.join(lines)
                 if not IS_SLACK:
-                    send_notify_emails('[System] {daslab.stanford.edu} Weekly Error Report', 'This is an automatic email notification for the aggregated weekly error report. The following error occurred:\n\n\n%s\n\n\nDasLab Website Admin' % (lines))
+                    send_notify_emails('[System] {%s} Weekly Error Report' % env('SSL_HOST'), 'This is an automatic email notification for the aggregated weekly error report. The following error occurred:\n\n\n%s\n\n%s Website Admin' % (lines, env('SERVER_NAME')))
                     open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'w').write('')
                     self.stdout.write("\033[92mSUCCESS\033[0m: All errors were sent to \033[94mEmail\033[0m. Log cleared.")
                 else:

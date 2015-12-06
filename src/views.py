@@ -296,8 +296,8 @@ def user_email(request):
                     http_header += '(%s, %s)\n' % (key, request.META.get(key))    
             http_header += request.body
 
-            em_content = 'Contact Admin from DasLab Website Internal\n\nFrom: %s: %s\nSubject: %s\n%s\n\nREQUEST:\n%s' % (request.user, em_from, em_subject, em_content, http_header)
-            send_mail('[System] {daslab.stanford.edu} Internal Email Notice', em_content, EMAIL_HOST_USER, [EMAIL_NOTIFY])
+            em_content = 'Contact Admin from %s Website Internal\n\nFrom: %s: %s\nSubject: %s\n%s\n\nREQUEST:\n%s' % (env('SERVER_NAME'), request.user, em_from, em_subject, em_content, http_header)
+            send_mail('[System] {%s} Internal Email Notice' % env('SSL_HOST'), em_content, EMAIL_HOST_USER, [EMAIL_NOTIFY])
             messages = 'success'
         else:
             messages = 'invalid'
@@ -319,7 +319,7 @@ def user_upload(request):
             try:
                 tmp = Presentation(title=em_title, presenter=em_presenter, date=em_date, ppt=em_file, link=em_link)
                 tmp.save()
-                send_mail('[System] {daslab.stanford.edu} Archive Upload Notice', 'This is an automatic email notification for a user uploaded Presentation Archive item.\n\nThe description is:\nTitle:\t%s\nDate:\t%s\nPresenter:\t%s\nFile:\t%s\nLink:\t%s\n\nUploaded by:%s\n\nDasLab Website Admin\n' % (em_title, em_date, em_presenter, em_file, em_link, request.user.username), EMAIL_HOST_USER, [EMAIL_NOTIFY])
+                send_mail('[System] {%s} Archive Upload Notice' % env('SSL_HOST'), 'This is an automatic email notification for a user uploaded Presentation Archive item.\n\nThe description is:\nTitle:\t%s\nDate:\t%s\nPresenter:\t%s\nFile:\t%s\nLink:\t%s\n\nUploaded by:%s\n\n%s Website Admin\n' % (em_title, em_date, em_presenter, em_file, em_link, request.user.username, env('SERVER_NAME')), EMAIL_HOST_USER, [EMAIL_NOTIFY])
                 messages = 'success'
             except:
                 print traceback.format_exc()

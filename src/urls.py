@@ -8,11 +8,11 @@ from django.views.static import serve
 from adminplus.sites import AdminSitePlus
 from filemanager import path_end
 
-from src.settings import MEDIA_ROOT, STATIC_ROOT, STATIC_URL, DEBUG
+from src.settings import MEDIA_ROOT, STATIC_ROOT, STATIC_URL, DEBUG, env
 from src import views
 
 admin.site = AdminSitePlus()
-admin.site.index_title = 'Das Lab Website Administration'
+admin.site.index_title = '%s Administration' % env('SERVER_NAME')
 admin.autodiscover()
 admin.site.login = views.user_login
 admin.site.logout = views.user_logout
