@@ -7,7 +7,7 @@ import traceback
 from django.core.management.base import BaseCommand
 
 from src.settings import *
-from src.console import send_notify_slack
+from src.console import get_date_time, get_backup_stat, send_notify_emails
 
 
 class Command(BaseCommand):
@@ -128,6 +128,25 @@ class Command(BaseCommand):
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
             sys.exit(1)
         else:
+            if DEBUG:
+                self.stdout.write("\033[94m Uploaded to Google Drive. \033[0m")
+            else:
+                (t_cron, d_cron, t_now) = get_date_time('gdrive')
+                gdrive_dir = 'echo'
+                if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
+                gdrive_list = subprocess.Popen("%s && drive list -q \"title contains 'DasLab_'\"" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:]
+                html = 'File\t\t\t\tTime\t\t\t\tSize\n\n'
+                for i in range(0, len(gdrive_list), 6):
+                    html += '%s\t\t%s %s\t\t%s %s\n' % (gdrive_list[i+1], gdrive_list[i+4], gdrive_list[i+5], gdrive_list[i+2], gdrive_list[i+3])
+
+                if IS_SLACK: 
+                    send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled weekly *gdrive sync* finished @ _%s_\n' % time.ctime()}])
+                    send_notify_slack(SLACK['ADMIN_NAME'], '>```%s```\n' % html, '')
+                else:
+                    send_notify_emails('[System] {%s} Weekly Sync Notice' % env('SSL_HOST'), 'This is an automatic email notification for the success of scheduled weekly sync of the DasLab Website backup contents to Google Drive account.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n%s\n\nDasLab Website Admin\n' % (t_cron, d_cron, t_now, html))
+            get_backup_stat()
+            self.stdout.write("Admin Backup Statistics refreshed.")
+
             self.stdout.write("All done successfully!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
 

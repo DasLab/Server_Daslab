@@ -4,6 +4,7 @@ import operator
 import os
 import pytz
 import simplejson
+import smtplib
 import subprocess
 import sys
 import textwrap
@@ -41,6 +42,14 @@ def send_notify_emails(msg_subject, msg_content):
     msg = 'Subject: %s\n\n%s' % (msg_subject, msg_content)
     smtpserver.sendmail(EMAIL_HOST_USER, EMAIL_NOTIFY, msg)
     smtpserver.quit()
+
+
+def get_date_time(keyword):
+    t_cron = [c[0] for c in CRONJOBS if ''.join(c[2]).find(keyword) != -1][0]
+    d_cron = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur'][int(t_cron.split(' ')[-1])]
+    t_cron = datetime.strptime(' '.join(t_cron.split(' ')[0:2]),'%M %H').strftime('%I:%M%p')
+    t_now = datetime.now().strftime('%b %d %Y (%a) @ %H:%M:%S')
+    return (t_cron, d_cron, t_now)
 
 
 def get_backup_stat():
