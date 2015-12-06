@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 # from django.contrib.admin import AdminSite
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from django.core.management import call_command
 
 # from suit.widgets import AutosizedTextarea
 # from suit.widgets import EnclosedInput, SuitDateWidget
@@ -15,7 +16,6 @@ from datetime import datetime
 import time
 
 from src.console import *
-from src.cron import *
 from src.dash import *
 from src.models import *
 from src.settings import *
@@ -117,7 +117,7 @@ admin.site.register(Presentation, PresentationAdmin)
 ############################################################################################################################################
 
 def sys_stat(request):
-    sys_ver_weekly()
+    call_command('versions')
     return HttpResponseRedirect('/admin/')
 
 def backup_stat(request):
@@ -128,11 +128,11 @@ def backup_form(request):
     return HttpResponse(simplejson.dumps(get_backup_form()), content_type='application/json')
 
 def backup_now(request):
-    backup_weekly()
+    call_command('backup')
     return backup_stat(request)
 
 def upload_now(request):
-    gdrive_weekly()
+    call_command('gdrive')
     return backup_stat(request)
 
 
@@ -231,12 +231,8 @@ def dash_dash(request):
 def dash_stat(request):
     if request.META.has_key('QUERY_STRING'):
         flag = request.META['QUERY_STRING'].replace('int=', '')
-        if flag == '3':
-            cache_every3min()
-        elif flag == '15':
-            cache_every15min()
-        elif flag == '30':
-            cache_every30min()
+        if flag in ('3', '15', '30'):
+            call_command('cache', flag)
         else:
             return HttpResponseBadRequest('Invalid input.')
     else:
