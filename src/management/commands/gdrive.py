@@ -7,7 +7,7 @@ import traceback
 from django.core.management.base import BaseCommand
 
 from src.settings import *
-from src.console import get_date_time, get_backup_stat, send_notify_emails
+from src.console import get_date_time, get_backup_stat, send_notify_emails, send_notify_slack
 
 
 class Command(BaseCommand):
@@ -143,7 +143,7 @@ class Command(BaseCommand):
                     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled weekly *gdrive sync* finished @ _%s_\n' % time.ctime()}])
                     send_notify_slack(SLACK['ADMIN_NAME'], '>```%s```\n' % html, '')
                 else:
-                    send_notify_emails('[System] {%s} Weekly Sync Notice' % env('SSL_HOST'), 'This is an automatic email notification for the success of scheduled weekly sync of the %s Website backup contents to Google Drive account.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n%s\n\n%s Website Admin\n' % (env('SERVER_NAME'), t_cron, d_cron, t_now, html, env('SERVER_NAME')))
+                    send_notify_emails('{%s} SYSTEM: Weekly Sync Notice' % env('SERVER_NAME'), 'This is an automatic email notification for the success of scheduled weekly sync of the %s Website backup contents to Google Drive account.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n%s\n\n%s Website Admin\n' % (env('SERVER_NAME'), t_cron, d_cron, t_now, html, env('SERVER_NAME')))
             get_backup_stat()
             self.stdout.write("Admin Backup Statistics refreshed.")
 
