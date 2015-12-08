@@ -70,7 +70,10 @@ class Command(BaseCommand):
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
          
         if options['interval']:
-            flag = options['interval'][0] + 'ly'
+            if options['interval'][0][-2:] == 'ly':
+                flag = options['interval'][0]
+            else:
+                flag = options['interval'][0] + 'ly'
         else:
             self.stdout.write('\033[41mERROR\033[0m: \033[94minterval\033[0m not found.')
             self.stdout.write("Finished with \033[41mERROR\033[0m!")
@@ -78,7 +81,7 @@ class Command(BaseCommand):
 
         if flag in ['monthly', 'quarterly']:
             if datetime.utcnow().date().day > 7:
-                sys.exit(0)
+                return
 
         try:
             gdrive_dir = 'cd %s/cache' % MEDIA_ROOT
@@ -109,7 +112,7 @@ class Command(BaseCommand):
                         self.compose_msg(ppls['monthly']['eterna'], 'Eterna Broadcast Posting', flag, ' for _Eterna Open Group Meeting_. If _%s_ <@%s> hasn\'t send out descriptions, please ask him/her!' % (who, who_id))
                         self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder for posting news on lab website about the upcoming _Eterna Open Group Meeing_ on *%s* by _%s_ <@%s>.' % (result['this'][0], who, who_id)}]) )
                     else:
-                        sys.exit(0)
+                        return
 
 
             elif flag == 'monthly':
