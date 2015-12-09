@@ -9,12 +9,85 @@
 	<div class="jumbotron" id="jumbotron">
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<a href="/group/">
-					<img src="/site_media/images/nav_group.gif" style="max-width:100%;" class="center-block"/>
+				<a href="/group/" id="banner_div">
+					<img src="/site_media/images/group/baking/banner.jpg" style="max-width:100%;" class="center-block"/>
 				</a>
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="baking-modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Baking Contest 2015</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-4">
+							<a href="/site_media/images/group/baking/1.jpg" target="_blank" class="thumbnail">
+								<img src="/site_media/images/group/baking/1.jpg" style="max-width:100%;">
+							</a>
+						</div>
+						<div class="col-md-4">
+							<a href="/site_media/images/group/baking/2.jpg" target="_blank" class="thumbnail">
+								<img src="/site_media/images/group/baking/2.jpg" style="max-width:100%;">
+							</a>
+						</div>
+						<div class="col-md-4">
+							<a href="/site_media/images/group/baking/3.jpg" target="_blank" class="thumbnail">
+								<img src="/site_media/images/group/baking/3.jpg" style="max-width:100%;">
+							</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<a href="/site_media/images/group/baking/4.jpg" target="_blank" class="thumbnail">
+								<img src="/site_media/images/group/baking/4.jpg" style="max-width:100%;">
+							</a>
+						</div>
+						<div class="col-md-4">
+							<a href="/site_media/images/group/baking/5.jpg" target="_blank" class="thumbnail">
+								<img src="/site_media/images/group/baking/5.jpg" style="max-width:100%;">
+							</a>
+						</div>
+						<div class="col-md-4">
+							<a href="/site_media/images/group/baking/6.jpg" target="_blank" class="thumbnail">
+								<img src="/site_media/images/group/baking/6.jpg" style="max-width:100%;">
+							</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<a href="/site_media/images/group/baking/7.jpg" target="_blank" class="thumbnail">
+								<img src="/site_media/images/group/baking/7.jpg" style="max-width:100%;">
+							</a>
+						</div>
+						<div class="col-md-4">
+							<a href="/site_media/images/group/baking/8.jpg" target="_blank" class="thumbnail">
+								<img src="/site_media/images/group/baking/8.jpg" style="max-width:100%;">
+							</a>
+						</div>
+						<div class="col-md-4">
+							<a href="/site_media/images/group/baking/9.jpg" target="_blank" class="thumbnail">
+								<img src="/site_media/images/group/baking/9.jpg" style="max-width:100%;">
+							</a>
+						</div>
+					</div>					
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-primary" href="/site_media/images/group/baking/baking.zip" download>
+						<span class="glyphicon glyphicon-save"></span>&nbsp;&nbsp;Download Photos
+					</a>
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove-circle"></span>&nbsp;&nbsp;Close
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 
 	<div class="row">
 		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding-right:0px;">
@@ -117,7 +190,10 @@
     <script type="text/javascript" src="/site_media/js/group/{{DEBUG_DIR}}clock{{DEBUG_STR}}.js"></script>  
 	<script type="text/javascript">
 		$(document).ready(function() {
-
+			$("#banner_div").on("click", function(event) {
+				$("#baking-modal").modal("show");
+				event.preventDefault();
+			});
 		});
 	</script>
 
