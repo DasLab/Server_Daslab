@@ -9,22 +9,9 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
-
 from src.env import *
 from src.auth import *
-from config.t47_dev import *
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = T47_DEV
 
-
-root = environ.Path(os.path.dirname(os.path.dirname(__file__)))
-MEDIA_ROOT = root()
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/"
-PATH = SYS_PATH(MEDIA_ROOT)
-# MEDIA_ROOT = os.path.join(os.path.abspath("."))
-FILEMANAGER_STATIC_ROOT = root('media/admin') + '/'
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
@@ -36,17 +23,9 @@ STATIC_ROOT = '' # MEDIA_ROOT + '/media/'
 STATICFILES_DIRS = (root('data'), root('media'))
 
 
-(env, AWS, GA, GCAL, DRIVE, GIT, SLACK, DROPBOX, APACHE_ROOT, CRONJOBS, CRONTAB_LOCK_JOBS, KEEP_BACKUP) = reload_conf(DEBUG, MEDIA_ROOT)
-GROUP = USER_GROUP(MEDIA_ROOT)
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
-
-
-MANAGERS = ADMINS = ( (env('ADMIN_NAME'), env('ADMIN_EMAIL')), )
-EMAIL_NOTIFY = env('ADMIN_EMAIL')
-(EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_USE_TLS, EMAIL_PORT, EMAIL_HOST) = [v for k, v in env.email_url().items() if k in ['EMAIL_HOST_PASSWORD', 'EMAIL_HOST_USER', 'EMAIL_USE_TLS', 'EMAIL_PORT', 'EMAIL_HOST']]
-EMAIL_SUBJECT_PREFIX = '{%s}' % env('SERVER_NAME')
 
 APPEND_SLASH = True
 ROOT_URLCONF = 'src.urls'
@@ -146,16 +125,17 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = [
-    'src.auth.ExceptionUserInfoMiddleware',
-    'src.auth.AutomaticAdminLoginMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+
+    'src.auth.ExceptionUserInfoMiddleware',
+    'src.auth.AutomaticAdminLoginMiddleware',
 ]
 if not DEBUG: MIDDLEWARE_CLASSES.append('django.middleware.security.SecurityMiddleware')
 

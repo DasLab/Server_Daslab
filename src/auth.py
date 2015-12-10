@@ -1,10 +1,15 @@
 # from src.settings import env
 
 from django.contrib.auth import authenticate, login, logout
+# import os
+# import traceback
+
+from src.env import MEDIA_ROOT, env
+# MEDIA_ROOT = os.path.dirname(os.path.dirname(__file__))
 
 
 class USER_GROUP(object):
-    def __init__(self, MEDIA_ROOT):
+    def __init__(self):
         lines = open('%s/config/group.conf' % MEDIA_ROOT, 'r').readlines()
 
         self.ADMIN = [ x.strip() for x in lines[0].replace('daslab_admin: ', '').split(' ')]
@@ -18,10 +23,12 @@ class AutomaticAdminLoginMiddleware(object):
     def process_request(self, request):
         if not hasattr(request, 'user') or not request.user.is_authenticated():
             try:
-                sunet_id = request.META['WEBAUTH_USER']
+                # sunet_id = request.META['WEBAUTH_USER']
+                sunet_id = 't47'
                 is_admin = (sunet_id in USER_GROUP().ADMIN)
             except:
                 is_admin = False
+                # print traceback.format_exc()
 
             # print "middleware:", is_admin
             if is_admin:
@@ -38,3 +45,10 @@ class ExceptionUserInfoMiddleware(object):
                 request.META['USER_EMAIL'] = str(request.user.email)
         except:
             pass
+
+
+GROUP = USER_GROUP()
+MANAGERS = ADMINS = ( (env('ADMIN_NAME'), env('ADMIN_EMAIL')), )
+EMAIL_NOTIFY = env('ADMIN_EMAIL')
+(EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_USE_TLS, EMAIL_PORT, EMAIL_HOST) = [v for k, v in env.email_url().items() if k in ['EMAIL_HOST_PASSWORD', 'EMAIL_HOST_USER', 'EMAIL_USE_TLS', 'EMAIL_PORT', 'EMAIL_HOST']]
+EMAIL_SUBJECT_PREFIX = '{%s}' % env('SERVER_NAME')
