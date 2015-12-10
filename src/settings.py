@@ -140,39 +140,37 @@ MIDDLEWARE_CLASSES = [
 if not DEBUG: MIDDLEWARE_CLASSES.append('django.middleware.security.SecurityMiddleware')
 
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-        # Always use forward slashes, even on Windows.
-        # Don't forget to use absolute paths, not relative paths.
-        'DIRS': [
-            root('media'),
-            root(),
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    'DIRS': [
+        root('media'),
+        root(),
+    ],
+    'OPTIONS': {
+        'debug': DEBUG,
+        # List of callables that know how to import templates from various sources.
+        'loaders': [
+            'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
         ],
-        'OPTIONS': {
-            'debug': T47_DEV,
-            # List of callables that know how to import templates from various sources.
-            'loaders': [
-                'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader',
-            ],
-            'context_processors': [
-                "django.contrib.auth.context_processors.auth",
-                "django.core.context_processors.debug",
-                "django.core.context_processors.i18n",
-                "django.core.context_processors.request",
-                "django.core.context_processors.media",
-                "django.core.context_processors.static",
-                "django.contrib.messages.context_processors.messages",
+        'context_processors': [
+            "django.contrib.auth.context_processors.auth",
+            "django.core.context_processors.debug",
+            "django.core.context_processors.i18n",
+            "django.core.context_processors.request",
+            "django.core.context_processors.media",
+            "django.core.context_processors.static",
+            "django.contrib.messages.context_processors.messages",
 
-                "src.models.email_form",
-                "src.models.debug_flag",
-                "src.models.ga_tracker",            ]
-        }
+            "src.models.email_form",
+            "src.models.debug_flag",
+            "src.models.ga_tracker",
+        ]
     }
-]
-
+}]
 
 
 SUIT_CONFIG = {

@@ -4,7 +4,7 @@ import simplejson
 
 from config.t47_dev import *
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = T47_DEV
+DEBUG = IS_DEVEL
 
 
 def reload_conf(DEBUG, MEDIA_ROOT):
