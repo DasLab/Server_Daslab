@@ -99,7 +99,7 @@ class Command(BaseCommand):
 
             ver += subprocess.Popen("java -jar %s/../yuicompressor.jar -V" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip() + '\t'
 
-            disk_sp = subprocess.Popen('df -h | head -2 | tail -1', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].split()
+            disk_sp = subprocess.Popen('df -h | grep "/dev/"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].split()
             ver += '%s / %s' % (disk_sp[3][:-1] + ' G', disk_sp[2][:-1] + ' G') + '\t'
             if DEBUG:
                 mem_str = subprocess.Popen('top -l 1 | head -n 10 | grep PhysMem', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
@@ -115,8 +115,18 @@ class Command(BaseCommand):
                     mem_used = mem_used[:-1] + ' ' + mem_used[-1]
             else:
                 mem_str = subprocess.Popen('free -h', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split('\n')
-                mem_avail = [x for x in mem_str[2].split(' ') if x][-1][:-1] + ' M'
-                mem_used = [x for x in mem_str[2].split(' ') if x][-2][:-1] + ' M'
+                mem_str = subprocess.Popen('free -h', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split('\n')
+                mem_str = [x for x in mem_str[2].split(' ') if x]
+                mem_avail = mem_str[-1]
+                if mem_avail[-1] == 'G': 
+                    mem_avail = str(float(mem_avail[:-1]) * 1024) + ' M'
+                else:
+                    mem_avail = mem_avail[:-1] + ' M'
+                mem_used = mem_str[-2]
+                if mem_used[-1] == 'G': 
+                    mem_used = str(float(mem_used[:-1]) * 1024) + ' M'
+                else:
+                    mem_used = mem_used[:-1] + ' M'
             ver += '%s / %s' % (mem_avail, mem_used) + '\t'
             ver += subprocess.Popen('du -h --total %s | tail -1' % os.path.join(MEDIA_ROOT, 'backup/backup_*.*gz'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[0] + '\t'
             ver += cpu + '\t'
