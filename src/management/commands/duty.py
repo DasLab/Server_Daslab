@@ -111,6 +111,10 @@ class Command(BaseCommand):
                         self.compose_msg(result['this'][2], 'Eterna Broadcast Posting', flag, ' Just a reminder for sending a description of your upcoming _Eterna Open Group Meeting_ to <%s> and <@%s> for releasing news on both DasLab Website and EteRNA broadcast.' % (SLACK['ADMIN_NAME'], self.find_slack_id(ppls['monthly']['eterna'])))
                         self.compose_msg(ppls['monthly']['eterna'], 'Eterna Broadcast Posting', flag, ' for _Eterna Open Group Meeting_. If _%s_ <@%s> hasn\'t send out descriptions, please ask him/her!' % (who, who_id))
                         self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder for posting news on lab website about the upcoming _Eterna Open Group Meeing_ on *%s* by _%s_ <@%s>.' % (result['this'][0], who, who_id)}]) )
+                    elif result['this'][1] == 'JC':
+                        who = result['this'][2]
+                        who_id = self.find_slack_id(who)
+                        self.compose_msg(result['this'][2], 'Journal Club Posting', flag, ' Just a reminder for posting your paper of choice for the upcoming _Journal Club_ to `#general`.')
                     else:
                         return
 
