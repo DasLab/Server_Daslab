@@ -5,8 +5,8 @@
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 			<div class="profile-card li-default">
 				<div class="row">
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" id="card_user_photo"></div>
-					<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" id="card_user_photo"></div>
+					<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
 						<p><b class="lead" id="card_user_name">Unknown</b><span class="pull-right"><kbd id="card_user_id">N/A</kbd></span></p>
 						<p style="line-height:25px;">
 							<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;
@@ -47,36 +47,36 @@
 					<form enctype="multipart/form-data" action="/group/contact/update/" method="post">
 						{% csrf_token %}
 			    		<div class="row">
-			                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-			                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+			                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+			                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
 			                	<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;Phone :
 			                </div>
-			                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+			                <div class="col-lg-6 col-md-6 col-sm-7 col-xs-7">
 			                	<input class="form-control" type="tel" id="form_change_phone" name="phone" />
 			                </div>
-			                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+			                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
 			            </div>
 			            <br/>
 			    		<div class="row">
-			                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-			                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+			                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+			                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
 			                	<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;Email :
 			                </div>
-			                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+			                <div class="col-lg-6 col-md-6 col-sm-7 col-xs-7">
 			                	<input class="form-control" type="email" id="form_change_email" name="email" />
 			                </div>
-			                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+			                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
 			            </div>
 			            <br/>
 			    		<div class="row">
-			                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-			                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+			                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+			                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
 			                	<span class="glyphicon glyphicon-gift" aria-hidden="true"></span>&nbsp;&nbsp;Birthday :
 			                </div>
-			                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+			                <div class="col-lg-6 col-md-6 col-sm-7 col-xs-7">
 			                	<input class="form-control" type="text" id="form_change_bday" name="bday" />
 			                </div>
-			                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+			                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
 			            </div>
 			            <br/>
 		                <div class="row">
@@ -107,14 +107,14 @@
 			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 				<div class="profile-card li-{{ppl.label}}">
 					<div class="row">
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
 							{% if ppl.photo %}
 								{% autoescape off %}{{ ppl.photo }}{% endautoescape %}
 							{% else %}
 				              <img src="/site_media/images/icon_default_avatar.png" width="119"> 
 							{% endif %}
 						</div>
-						<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+						<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
 							<p><b class="lead">{{ ppl.name }}</b><span class="pull-right"><kbd>{{ ppl.sunet_id }}</kbd></span></p>
 							<p style="line-height:25px;">
 								<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;
@@ -163,14 +163,14 @@
 						<div class="timeline-panel">
 							<div class="timeline-body">
 								<div class="row">
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
 										{% if ppl.photo %}
 											{% autoescape off %}{{ ppl.photo }}{% endautoescape %}
 										{% else %}
 							              <img src="/site_media/images/icon_default_avatar.png" width="119"> 
 										{% endif %}
 									</div>
-									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+									<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
 										<p><b class="lead">{{ ppl.name }}</b><span class="pull-right"><kbd>{{ ppl.sunet_id }}</kbd></span></p>
 										<p style="line-height:25px;">
 											<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;

@@ -11,8 +11,8 @@
 	</div>
 
 	<div class="row" id="toggle_timeline">
-		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+		<div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+		<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
 		    <ul class="timeline">
 				{% for rot in rot_list %}
 		        <li {% if forloop.counter|divisibleby:2 %} class="timeline-inverted" {% endif %}>
@@ -43,13 +43,13 @@
 				{% endfor %}
 		    </ul>
 		</div>
-		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+		<div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
 	</div>
 
 	<div class="row" id="toggle_table">
 		<br/>
-		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+		<div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+		<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
 			<table class="table table-hover">
 				<thead>
 					<tr class="active">
@@ -78,7 +78,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+		<div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
 	</div>
 </div>
 {% endblock %}

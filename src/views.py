@@ -74,19 +74,13 @@ def lab_meeting_flash(request):
     for i, gp in enumerate(flash_list):
         if i == 0 or flash_list[i - 1].date.year != gp.date.year:
             gp.year_start = True
-            gp.row_start = True
         if i == len(flash_list) - 1 or flash_list[i + 1].date.year != gp.date.year:
             gp.year_end = True
-            gp.row_end = True
         if i == 0 or flash_list[i - 1].date.month != gp.date.month:
             gp.month_start = True
             gp.label = colors[gp.date.month - 1]
-            if gp.date.month in (6, 12):
-                gp.row_start = True
         if i == len(flash_list) - 1 or flash_list[i + 1].date.month != gp.date.month:
             gp.month_end = True 
-            if gp.date.month in (1, 7):
-                gp.row_end = True
     return render_to_response(PATH.HTML_PATH['lab_meeting_flash'], {'flash_list':flash_list}, context_instance=RequestContext(request))
 
 # @login_required
