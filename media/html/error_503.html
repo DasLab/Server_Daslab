@@ -1,0 +1,55 @@
+{% extends "media/html/_external.html" %}
+
+{% block header %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#main").addClass("DASerr");
+      $("#nav-home").addClass("active");
+    });
+  </script>
+{% endblock %}
+
+
+{% block content %}
+  <div class="row bgimg2-lg BODY-ERR">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="panel_left">
+      <img src="/site_media/images/bg_503.png" height="auto" style="max-width:100%;" />
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="panel_right">
+      <h2 style="margin-bottom:20px;">
+        <span class="label label-violet">Refolding</span>
+      </h2>
+      <p style="font-weight:bold; font-size:16px;">
+        <b>
+          Magnesium mediated RNA refolding is in progress.
+          <br/>
+          Tertiary contacts and native functions are being restored.
+        </b>
+      </p>
+      <br/>
+      <p><i>In other words,</i></p>
+      <h3><span class="label label-violet">503: Service Unavailable</span></h3>
+      <p>
+        <code>Sorry!</code>
+        <br/>
+        The service you requested is not available at this time due to a temporary maintenance of the server. Please come back and try again later.
+      </p>
+    </div>
+  </div>  
+{% endblock %}
+
+
+{% block script %}
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("a.nav-hover").hover(function () {
+        $(this).children().css("border-bottom-color", "#008180");
+      }, function () {
+        $(this).children().css("border-bottom-color", "#fff");
+      });
+
+      $("#DasFOOTER").css({"top": "453px", "display": "inline"});
+      $("#DasICON").css({"top": "508px", "display": "inline"});
+    });
+  </script>
+{% endblock %}
