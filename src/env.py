@@ -27,7 +27,11 @@ def reload_conf(DEBUG, MEDIA_ROOT):
     CRONTAB_LOCK_JOBS = env_cron['CRONTAB_LOCK_JOBS']
     KEEP_BACKUP = env_cron['KEEP_BACKUP']
 
-    return (env, AWS, GA, GCAL, DRIVE, GIT, SLACK, DROPBOX, APACHE_ROOT, CRONJOBS, CRONTAB_LOCK_JOBS, KEEP_BACKUP)
+    env_bot = simplejson.load(open('%s/config/bot.conf' % MEDIA_ROOT))
+    BOT = env_bot
+    IS_SLACK = env_bot['SLACK']['IS_SLACK']
+
+    return (env, AWS, GA, GCAL, DRIVE, GIT, SLACK, DROPBOX, APACHE_ROOT, CRONJOBS, CRONTAB_LOCK_JOBS, KEEP_BACKUP, BOT, IS_SLACK)
 
 
 class SYS_PATH(object):
@@ -108,5 +112,5 @@ PATH = SYS_PATH(MEDIA_ROOT)
 # MEDIA_ROOT = os.path.join(os.path.abspath("."))
 FILEMANAGER_STATIC_ROOT = root('media/admin') + '/'
 
-(env, AWS, GA, GCAL, DRIVE, GIT, SLACK, DROPBOX, APACHE_ROOT, CRONJOBS, CRONTAB_LOCK_JOBS, KEEP_BACKUP) = reload_conf(DEBUG, MEDIA_ROOT)
+(env, AWS, GA, GCAL, DRIVE, GIT, SLACK, DROPBOX, APACHE_ROOT, CRONJOBS, CRONTAB_LOCK_JOBS, KEEP_BACKUP, BOT, IS_SLACK) = reload_conf(DEBUG, MEDIA_ROOT)
 

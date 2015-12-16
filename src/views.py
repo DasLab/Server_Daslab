@@ -483,6 +483,7 @@ def error503(request):
 
 def test(request):
     print request.META
+    # get_sys_crontab()
     raise ValueError
     return error400(request)
     # send_notify_emails('test', 'test')

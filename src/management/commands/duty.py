@@ -12,7 +12,7 @@ from slacker import Slacker
 from src.settings import *
 from src.models import Member
 from src.console import send_notify_slack
-
+from src.dash import dash_schedule, dash_duty
 
 class Command(BaseCommand):
     help = 'Send out individual Responsibility Reminder notifications in Slack.'
@@ -83,9 +83,9 @@ class Command(BaseCommand):
                 return
 
         try:
-            result = pickle.load(open('%s/cache/duty.pickle' % MEDIA_ROOT, 'rb'))
+            result = dash_duty(0)
             (jobs, ppls) = (result['jobs'], result['ppls'])
-            result = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
+            result = dash_schedule(0)
 
             if flag == 'weekly':
                 if datetime.utcnow().date().isoweekday() == 4:

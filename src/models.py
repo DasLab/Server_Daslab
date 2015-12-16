@@ -210,6 +210,7 @@ class Presentation(models.Model):
 
 
 WEEKDAY_CHOICES = (
+    ('', '------'),
     ('0', 'Sunday'),
     ('1', 'Monday'),
     ('2', 'Tuesday'),
@@ -224,31 +225,31 @@ class BackupForm(forms.Form):
     # is_upload = forms.BooleanField()
     time_backup = forms.TimeField(required=True)
     time_upload = forms.TimeField(required=True)
-    day_backup = forms.ChoiceField(choices=WEEKDAY_CHOICES)
-    day_upload = forms.ChoiceField(choices=WEEKDAY_CHOICES)
-    keep = forms.IntegerField()
+    day_backup = forms.ChoiceField(choices=WEEKDAY_CHOICES, required=True)
+    day_upload = forms.ChoiceField(choices=WEEKDAY_CHOICES, required=True)
+    keep = forms.IntegerField(required=True)
 
 
 TEXT_TYPE_CHOICES = (
-    (0, ' Plain Text'),
-    (1, ' Word Document'),
+    ('0', ' Plain Text'),
+    ('1', ' Word Document'),
 )
 
 SORT_ORDER_CHOICES = (
-    (0, ' Year Ascending'),
-    (1, ' Year Descending'),
+    ('0', ' Year Ascending'),
+    ('1', ' Year Descending'),
 )
 
 NUMBER_ORDER_CHOICES = (
-    (0, ' Incremental'),
-    (1, ' Decremental'),
+    ('0', ' Incremental'),
+    ('1', ' Decremental'),
 )
 
 class ExportForm(forms.Form):
-    text_type = forms.ChoiceField(choices=TEXT_TYPE_CHOICES, widget=forms.RadioSelect(), initial=1)
-    year_start = forms.IntegerField(initial=1996)
-    sort_order = forms.ChoiceField(choices=SORT_ORDER_CHOICES, widget=forms.RadioSelect(), initial=1)
-    number_order = forms.ChoiceField(choices=NUMBER_ORDER_CHOICES, widget=forms.RadioSelect(), initial=1)
+    text_type = forms.ChoiceField(choices=TEXT_TYPE_CHOICES, widget=forms.RadioSelect(), initial=1, required=True)
+    year_start = forms.IntegerField(initial=1996, required=True)
+    sort_order = forms.ChoiceField(choices=SORT_ORDER_CHOICES, widget=forms.RadioSelect(), initial=1, required=True)
+    number_order = forms.ChoiceField(choices=NUMBER_ORDER_CHOICES, widget=forms.RadioSelect(), initial=1, required=True)
 
     bold_author = forms.BooleanField(initial=True, required=False)
     bold_year = forms.BooleanField(initial=True, required=False)
@@ -263,79 +264,82 @@ class ExportForm(forms.Form):
 
 
 REMINDER_1_CHOICES = (
-    (1, '1'),
-    (2, '2'),
-    (3, '3'),
+    ('', '---'),
+    ('1', '1'),
+    ('2', '2'),
+    ('3', '3'),
 )
 
 REMINDER_2_CHOICES = (
-    (1, '1'),
-    (2, '2'),
-    (3, '3'),
-    (4, '4'),
-    (5, '5'),
+    ('', '---'),
+    ('3', '3'),
+    ('4', '4'),
+    ('5', '5'),
 )
 
 CACHE_3 = (
-    (2, '2'),
-    (3, '3'),
-    (5, '5'),
-    (10, '10'),
+    ('', '---'),
+    ('2', '2'),
+    ('3', '3'),
+    ('5', '5'),
+    ('10', '10'),
 )
 
 CACHE_15 = (
-    (10, '10'),
-    (15, '15'),
-    (20, '20'),
-    (30, '30'),
+    ('', '---'),
+    ('10', '10'),
+    ('15', '15'),
+    ('20', '20'),
+    ('30', '30'),
 )
 
 CACHE_30 = (
-    (30, '30'),
-    (60, '60'),
+    ('', '---'),
+    ('30', '30'),
+    ('60', '60'),
 )
 
 class BotSettingForm(forms.Form):
-    is_slack = forms.BooleanField(initial=True)
-    is_cache = forms.BooleanField(initial=True)
+    is_slack = forms.BooleanField(initial=True, required=False)
+    is_cache = forms.BooleanField(initial=True, required=False)
 
-    is_duty_bday = forms.BooleanField(initial=True)
-    is_duty_breakfast = forms.BooleanField(initial=True)
-    is_duty_aws = forms.BooleanField(initial=True)
-    is_duty_schedule = forms.BooleanField(initial=True)
-    is_duty_website = forms.BooleanField(initial=True)
-    is_duty_trip = forms.BooleanField(initial=True)
-    is_duty_git = forms.BooleanField(initial=True)
+    is_duty_bday = forms.BooleanField(initial=True, required=False)
+    is_duty_breakfast = forms.BooleanField(initial=True, required=False)
+    is_duty_aws = forms.BooleanField(initial=True, required=False)
+    is_duty_schedule = forms.BooleanField(initial=True, required=False)
+    is_duty_website = forms.BooleanField(initial=True, required=False)
+    is_duty_trip = forms.BooleanField(initial=True, required=False)
+    is_duty_git = forms.BooleanField(initial=True, required=False)
 
-    is_admin_backup = forms.BooleanField(initial=True)
-    is_admin_gdrive = forms.BooleanField(initial=True)
+    is_admin_backup = forms.BooleanField(initial=True, required=False)
+    is_admin_gdrive = forms.BooleanField(initial=True, required=False)
 
-    is_bday = forms.BooleanField(initial=True)
-    is_flash_slide = forms.BooleanField(initial=True)
+    is_bday = forms.BooleanField(initial=True, required=False)
+    is_flash_slide = forms.BooleanField(initial=True, required=False)
 
-    is_user_jc_1 = forms.BooleanField(initial=True)
-    is_user_jc_2 = forms.BooleanField(initial=True)
-    is_admin_jc = forms.BooleanField(initial=True)
-    is_user_es_1 = forms.BooleanField(initial=True)
-    is_user_es_2 = forms.BooleanField(initial=True)
-    is_admin_es = forms.BooleanField(initial=True)
-    is_user_rot_1 = forms.BooleanField(initial=True)
-    is_user_rot_2 = forms.BooleanField(initial=True)
-    is_admin_rot = forms.BooleanField(initial=True)
+    is_user_jc_1 = forms.BooleanField(initial=True, required=False)
+    is_user_jc_2 = forms.BooleanField(initial=True, required=False)
+    is_admin_jc = forms.BooleanField(initial=True, required=False)
+    is_user_es_1 = forms.BooleanField(initial=True, required=False)
+    is_user_es_2 = forms.BooleanField(initial=True, required=False)
+    is_admin_es = forms.BooleanField(initial=True, required=False)
+    is_user_rot_1 = forms.BooleanField(initial=True, required=False)
+    is_user_rot_2 = forms.BooleanField(initial=True, required=False)
+    is_admin_rot = forms.BooleanField(initial=True, required=False)
 
-    is_duty_mic = forms.BooleanField(initial=True)
-    is_duty_broadcast = forms.BooleanField(initial=True)
-    is_duty_webnews = forms.BooleanField(initial=True)
+    is_duty_mic = forms.BooleanField(initial=True, required=False)
+    is_duty_broadcast = forms.BooleanField(initial=True, required=False)
+    is_duty_webnews = forms.BooleanField(initial=True, required=False)
 
-    day_duty_month = forms.ChoiceField(choices=WEEKDAY_CHOICES, initial=1, required=True)
-    day_duty_quarter = forms.ChoiceField(choices=WEEKDAY_CHOICES, initial=1, required=True)
-    day_meeting = forms.ChoiceField(choices=WEEKDAY_CHOICES, initial=5)
-    day_reminder_1 = forms.ChoiceField(choices=REMINDER_1_CHOICES, initial=1, required=True)
-    day_reminder_2 = forms.ChoiceField(choices=REMINDER_1_CHOICES, initial=3, required=True)
+    day_duty_month = forms.ChoiceField(choices=WEEKDAY_CHOICES, required=True)
+    day_duty_quarter = forms.ChoiceField(choices=WEEKDAY_CHOICES, required=True)
+    day_meeting = forms.ChoiceField(choices=WEEKDAY_CHOICES, required=False)
+    day_reminder_1 = forms.ChoiceField(choices=REMINDER_1_CHOICES, required=True)
+    day_reminder_2 = forms.ChoiceField(choices=REMINDER_2_CHOICES, required=True)
 
-    cache_3 = forms.ChoiceField(choices=CACHE_3, initial=3, required=True)
-    cache_15 = forms.ChoiceField(choices=CACHE_15, initial=15, required=True)
-    cache_30 = forms.ChoiceField(choices=CACHE_30, initial=30, required=True)
+    cache_3 = forms.ChoiceField(choices=CACHE_3, required=True)
+    cache_15 = forms.ChoiceField(choices=CACHE_15, required=True)
+    cache_30 = forms.ChoiceField(choices=CACHE_30, required=True)
 
 class LoginForm(forms.Form):
     username = forms.CharField(required=True)

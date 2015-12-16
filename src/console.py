@@ -27,7 +27,8 @@ from django.template import RequestContext
 from django.conf import settings
 
 from src.settings import *
-from src.models import BackupForm, ExportForm, Publication
+from src.models import BackupForm, ExportForm, BotSettingForm, Publication
+from dash import dash_schedule
 
 
 def send_notify_slack(msg_channel, msg_content, msg_attachment):
@@ -82,50 +83,41 @@ def get_backup_stat():
     subprocess.Popen('rm %s' % os.path.join(MEDIA_ROOT, 'data/temp.txt'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 
-def get_backup_form():
-    cron = subprocess.Popen('crontab -l | cut -d" " -f1-5', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()
+def refresh_settings():
+    (_, _, _, _, _, _, _, _, _, CRONJOBS, _, KEEP_BACKUP, BOT, IS_SLACK) = reload_conf(DEBUG, MEDIA_ROOT)
+    settings._wrapped.CRONJOBS = CRONJOBS
+    settings._wrapped.KEEP_BACKUP = KEEP_BACKUP
+    settings._wrapped.BOT = BOT
+    settings._wrapped.IS_SLACK = IS_SLACK
+
+
+def get_sys_crontab():
+    cron = subprocess.Popen('crontab -l', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].split('\n')
+    (set_backup, set_upload, set_cache_3, set_cache_15, set_cache_30, set_duty_month, set_duty_quarter) = (('', ''), ('', ''), '', '', '', '', '')
+    for i in xrange(len(cron)):
+        cron_job = cron[i]
+        array = cron_job.split()
+        if 'backup_weekly' in cron_job:
+            set_backup = ('%s:%s' % (array[1], array[0]), array[4])
+        elif 'gdrive_weekly' in cron_job:
+            set_upload = ('%s:%s' % (array[1], array[0]), array[4])
+        elif 'cache_03' in cron_job:
+            set_cache_3 = array[0].replace('*/', '')
+        elif 'cache_15' in cron_job:
+            set_cache_15 = array[0].replace('*/', '')
+        elif 'cache_30' in cron_job:
+            set_cache_30 = array[0].replace('*/', '')
+        elif 'duty_monthly' in cron_job:
+            set_duty_month = array[4]
+        elif 'duty_quarterly' in cron_job:
+            set_duty_quarter = array[4]
+
+    return (set_backup, set_upload, set_cache_3, set_cache_15, set_cache_30, set_duty_month, set_duty_quarter)
+
+
+def set_sys_crontab():
     try:
-        day_backup = cron[4]
-        day_upload = cron[9]
-        time_backup = '%02d:%02d' % (int(cron[1]), int(cron[0]))
-        time_upload = '%02d:%02d' % (int(cron[6]), int(cron[5]))
-    except:
-        time_backup = time_upload = day_backup = day_upload = ''
-
-    lines = open('%s/config/cron.conf' % MEDIA_ROOT, 'r').readlines()
-    index =  [i for i, line in enumerate(lines) if 'KEEP_BACKUP' in line][0]
-    keep = int(lines[index].split(':')[1].strip().replace(',', ''))
-
-    return {'day_backup':day_backup, 'day_upload':day_upload, 'time_backup':time_backup, 'time_upload':time_upload, 'keep':keep}
-
-
-def set_backup_form(request):
-    form = BackupForm(request.POST)
-    if not form.is_valid(): return
-
-    time_backup = form.cleaned_data['time_backup']
-    time_upload = form.cleaned_data['time_upload']
-    day_backup = form.cleaned_data['day_backup']
-    day_upload = form.cleaned_data['day_upload']
-
-    cron_backup = '%s * * %s' % (time_backup.strftime('%M %H'), day_backup)
-    cron_upload = '%s * * %s' % (time_upload.strftime('%M %H'), day_upload)
-
-    lines = open('%s/config/cron.conf' % MEDIA_ROOT, 'r').readlines()
-
-    index =  [i for i, line in enumerate(lines) if 'backup_weekly' in line or 'gdrive_weekly' in line or 'KEEP_BACKUP' in line]
-    lines[index[0]] = '\t\t["%s", "django.core.management.call_command", ["backup"], {}, ">> %s/cache/log_cron_backup.log # backup_weekly"],\n' % (cron_backup, MEDIA_ROOT)
-    lines[index[1]] = '\t\t["%s", "django.core.management.call_command", ["gdrive"], {}, ">> %s/cache/log_cron_gdrive.log # gdrive_weekly"],\n' % (cron_upload, MEDIA_ROOT)
-    lines[index[2]] = '\t"KEEP_BACKUP": %s\n' % form.cleaned_data['keep']
-    open('%s/config/cron.conf' % MEDIA_ROOT, 'w').writelines(lines)
-
-    try:
-        cron = subprocess.Popen('crontab -l | cut -d" " -f1-5', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()
-        if len(cron) > 9:
-            subprocess.check_call('crontab -r', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        (_, _, _, _, _, _, _, _, _, CRONJOBS, _, KEEP_BACKUP) = reload_conf(DEBUG, MEDIA_ROOT)
-        settings._wrapped.CRONJOBS = CRONJOBS
-        settings._wrapped.KEEP_BACKUP = KEEP_BACKUP
+        subprocess.Popen('crontab -r', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         call_command('crontab', 'add')
     except subprocess.CalledProcessError:
         print "    \033[41mERROR\033[0m: Failed to reset \033[94mcrontab\033[0m schedules."
@@ -135,16 +127,76 @@ def set_backup_form(request):
         open('%s/cache/log_cron_backup.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
         if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *set_backup_form()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
         raise Exception('Error with setting crontab scheduled jobs.')
-    else:
-        if IS_SLACK and (not DEBUG): send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: weekly *backup & sync* set @ _%s_\n>```%s%s%s```\n' % (time.ctime(), lines[index[0]][2:], lines[index[1]][2:], lines[index[2]])}])
 
-        # call_command('crontab', 'add')
-    # except:
-        # pass
+
+def get_backup_form():
+    refresh_settings()
+    (set_backup, set_upload, _, _, _, _, _) = get_sys_crontab()
+    return {'day_backup':set_backup[1], 'day_upload':set_upload[1], 'time_backup':set_backup[0], 'time_upload':set_upload[0], 'keep':settings._wrapped.KEEP_BACKUP}
+
+
+def set_backup_form(request):
+    form = BackupForm(request.POST)
+    if not form.is_valid(): return
+
+    cron_backup = '%s * * %s' % (form.cleaned_data['time_backup'].strftime('%M %H'), form.cleaned_data['day_backup'])
+    cron_upload = '%s * * %s' % (form.cleaned_data['time_upload'].strftime('%M %H'), form.cleaned_data['day_upload'])
+
+    env_cron = simplejson.load(open('%s/config/cron.conf' % MEDIA_ROOT))
+    for i in xrange(len(env_cron['CRONJOBS'])):
+        cron_job = env_cron['CRONJOBS'][i]
+        if 'backup_weekly' in cron_job[-1]:
+            cron_job[0] = cron_backup
+            cron_job[-1] = '>> %s/cache/log_cron_backup.log # backup_weekly' % MEDIA_ROOT
+        elif 'gdrive_weekly' in cron_job[-1]:
+            cron_job[0] = cron_upload
+            cron_job[-1] = '>> %s/cache/log_cron_gdrive.log # gdrive_weekly' % MEDIA_ROOT
+    env_cron['KEEP_BACKUP'] = form.cleaned_data['keep']
+    open('%s/config/cron.conf' % MEDIA_ROOT, 'w').writelines(simplejson.dumps(env_cron, sort_keys=True, indent=' ' * 4))
+    refresh_settings()
+    set_sys_crontab()
 
 
 def get_bot_form():
-    return {}
+    refresh_settings()
+    BOT = settings._wrapped.BOT
+    (_, _, set_cache_3, set_cache_15, set_cache_30, set_duty_month, set_duty_quarter) = get_sys_crontab()
+    tp = dash_schedule(0)['tp']
+    tp = tp[1:tp.find('@')].strip().lower()
+    tp = ['monday', 'tueday', 'wednesday', 'thursday', 'friday'].index(tp) + 1
+
+    return {'is_slack':settings._wrapped.IS_SLACK, 'is_cache':BOT['CACHE']['IS_CACHE'], 'is_duty_bday':BOT['SLACK']['MSG_BDAY'], 'is_duty_breakfast':BOT['SLACK']['DUTY']['MONTH']['MSG_BDAY'], 'is_duty_aws':BOT['SLACK']['DUTY']['MONTH']['MSG_AWS'], 'is_duty_breakfast':BOT['SLACK']['DUTY']['MONTH']['MSG_BREAKFAST'], 'is_duty_schedule':BOT['SLACK']['DUTY']['MONTH']['MSG_SCHEDULE'], 'is_duty_website':BOT['SLACK']['DUTY']['MONTH']['MSG_WEBSITE'], 'is_duty_trip':BOT['SLACK']['DUTY']['QUARTER']['MSG_TRIP'], 'is_duty_git':BOT['SLACK']['DUTY']['QUARTER']['MSG_GIT'], 'is_admin_backup':BOT['SLACK']['ADMIN']['MSG_BACKUP'], 'is_admin_gdrive':BOT['SLACK']['ADMIN']['MSG_GDRIVE'], 'is_bday':BOT['SLACK']['MSG_BDAY'], 'is_flash_slide':BOT['SLACK']['IS_FLASH_SETUP'], 'is_user_jc_1':BOT['SLACK']['REMINDER']['JC']['REMINDER_1'], 'is_user_jc_2':BOT['SLACK']['REMINDER']['JC']['REMINDER_2'], 'is_admin_jc':BOT['SLACK']['REMINDER']['JC']['REMINDER_ADMIN'], 'is_user_es_1':BOT['SLACK']['REMINDER']['ES']['REMINDER_1'], 'is_user_es_2':BOT['SLACK']['REMINDER']['ES']['REMINDER_2'], 'is_admin_es':BOT['SLACK']['REMINDER']['ES']['REMINDER_ADMIN'], 'is_user_rot_1':BOT['SLACK']['REMINDER']['ROT']['REMINDER_1'], 'is_user_rot_2':BOT['SLACK']['REMINDER']['ROT']['REMINDER_2'], 'is_admin_rot':BOT['SLACK']['REMINDER']['ROT']['REMINDER_ADMIN'], 'is_duty_mic':BOT['SLACK']['DUTY']['ETERNA']['MSG_MIC'], 'is_duty_broadcast':BOT['SLACK']['DUTY']['ETERNA']['MSG_BROADCAST'], 'is_duty_webnews':BOT['SLACK']['DUTY']['ETERNA']['MSG_NEWS'], 'day_duty_month':set_duty_month, 'day_duty_quarter':set_duty_quarter, 'day_meeting':tp, 'day_reminder_1':BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_1'], 'day_reminder_2':BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_2'], 'cache_3':set_cache_3, 'cache_15':set_cache_15, 'cache_30':set_cache_30}
+
+
+def set_bot_form(request):
+    form = BotSettingForm(request.POST)
+    if not form.is_valid(): return
+
+    BOT = {"SLACK": {"IS_SLACK":form.cleaned_data['is_slack'], "IS_FLASH_SETUP":form.cleaned_data['is_flash_slide'], "MSG_BDAY":form.cleaned_data['is_bday'], "DUTY": {"MONTH": {"MSG_BDAY":form.cleaned_data['is_duty_bday'], "MSG_BREAKFAST":form.cleaned_data['is_duty_breakfast'], "MSG_AWS":form.cleaned_data['is_duty_aws'], "MSG_SCHEDULE":form.cleaned_data['is_duty_schedule'], "MSG_WEBSITE":form.cleaned_data['is_duty_website'], "WEEK_DAY":form.cleaned_data['day_duty_month']}, "QUARTER": {"MSG_TRIP":form.cleaned_data['is_duty_trip'], "MSG_GIT":form.cleaned_data['is_duty_git'], "WEEK_DAY":form.cleaned_data['day_duty_quarter']}, "ETERNA": {"MSG_MIC":form.cleaned_data['is_duty_mic'], "MSG_BROADCAST":form.cleaned_data['is_duty_broadcast'], "MSG_NEWS":form.cleaned_data['is_duty_webnews']} }, "REMINDER": {"DAY_BEFORE_REMINDER_1": form.cleaned_data['day_reminder_1'], "DAY_BEFORE_REMINDER_2": form.cleaned_data['day_reminder_2'], "JC": {"REMINDER_1":form.cleaned_data['is_user_jc_1'], "REMINDER_2":form.cleaned_data['is_user_jc_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_jc']}, "ES": {"REMINDER_1":form.cleaned_data['is_user_es_1'], "REMINDER_2":form.cleaned_data['is_user_es_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_es']}, "ROT": {"REMINDER_1":form.cleaned_data['is_user_rot_1'], "REMINDER_2":form.cleaned_data['is_user_rot_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_rot']} }, "ADMIN": {"MSG_BACKUP":form.cleaned_data['is_admin_backup'], "MSG_GDRIVE":form.cleaned_data['is_admin_gdrive']} }, "CACHE": { "IS_CACHE":form.cleaned_data['is_cache'], "INTERVAL_3":form.cleaned_data['cache_3'], "INTERVAL_15":form.cleaned_data['cache_15'], "INTERVAL_30":form.cleaned_data['cache_30']} }
+
+    env_cron = simplejson.load(open('%s/config/cron.conf' % MEDIA_ROOT))
+    for i in xrange(len(env_cron['CRONJOBS'])):
+        cron_job = env_cron['CRONJOBS'][i]
+        if 'cache_03' in cron_job[-1]:
+            cron_job[0] = '*/%s * * * *' % form.cleaned_data['cache_3']
+            cron_job[-1] = '>> %s/cache/log_cron_cache.log # cache_03' % MEDIA_ROOT
+        if 'cache_15' in cron_job[-1]:
+            cron_job[0] = '*/%s * * * *' % form.cleaned_data['cache_15']
+            cron_job[-1] = '>> %s/cache/log_cron_cache.log # cache_15' % MEDIA_ROOT
+        if 'cache_30' in cron_job[-1]:
+            cron_job[0] = '*/%s * * * *' % form.cleaned_data['cache_30']
+            cron_job[-1] = '>> %s/cache/log_cron_cache.log # cache_30' % MEDIA_ROOT
+        if 'duty_monthly' in cron_job[-1]:
+            cron_job[0] = '20 15 * * %s' % form.cleaned_data['day_duty_month']
+            cron_job[-1] = '>> %s/cache/log_cron_duty.log # duty_monthly' % MEDIA_ROOT
+        if 'duty_quarterly' in cron_job[-1]:
+            cron_job[0] = '25 15 * 1,4,7,10 %s' % form.cleaned_data['day_duty_quarter']
+            cron_job[-1] = '>> %s/cache/log_cron_duty.log # duty_quarterly' % MEDIA_ROOT
+
+    open('%s/config/cron.conf' % MEDIA_ROOT, 'w').writelines(simplejson.dumps(env_cron, sort_keys=True, indent=' ' * 4))
+    open('%s/config/bot.conf' % MEDIA_ROOT, 'w').writelines(simplejson.dumps(BOT, sort_keys=True, indent=' ' * 4))
+    refresh_settings()
+    set_sys_crontab()
 
 
 def restyle_apache():

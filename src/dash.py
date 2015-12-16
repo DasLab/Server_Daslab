@@ -611,6 +611,9 @@ def cache_duty():
         if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_duty()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
         raise Exception('Error with parsing spreadsheet csv.')
 
+def dash_duty(request):
+    return pickle.load(open('%s/cache/duty.pickle' % MEDIA_ROOT, 'rb'))
+
 
 def cache_cal():
     try:
