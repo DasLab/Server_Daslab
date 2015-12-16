@@ -89,56 +89,70 @@ class Command(BaseCommand):
 
             if flag == 'weekly':
                 if datetime.utcnow().date().isoweekday() == 4:
-                    self.compose_msg(ppls[flag]['breakfast'], 'Breakfast', flag, ' to _Group Meeting_ tomorrow')
+                    if BOT['SLACK']['DUTY']['MONTH']['MSG_BREAKFAST']:
+                        self.compose_msg(ppls[flag]['breakfast'], 'Breakfast', flag, ' to _Group Meeting_ tomorrow')
                     if result['this'][1] == 'ES':
-                        self.compose_msg(ppls['monthly']['eterna'], 'Eterna Microphone Setup', flag, ' for _Eterna Open Group Meeting_ tomorrow. Please arrive *30 min* early. The instructions are <https://docs.google.com/document/d/1bh5CYBklIdZl65LJDsBffC8m8J_3jKf4FY1qiYjRIw8/edit|here>')
+                        if BOT['SLACK']['DUTY']['ETERNA']['MSG_MIC']:
+                            self.compose_msg(ppls['monthly']['eterna'], 'Eterna Microphone Setup', flag, ' for _Eterna Open Group Meeting_ tomorrow. Please arrive *30 min* early. The instructions are <https://docs.google.com/document/d/1bh5CYBklIdZl65LJDsBffC8m8J_3jKf4FY1qiYjRIw8/edit|here>')
                 elif datetime.utcnow().date().isoweekday() == 2:
                     if result['this'][1] == 'ES':
                         who = result['this'][2]
                         who_id = self.find_slack_id(who)
-                        self.compose_msg(result['this'][2], 'Eterna Broadcast Posting', flag, ' Just a reminder for sending a description of your upcoming _Eterna Open Group Meeting_ to <%s> and <@%s> for releasing news on both DasLab Website and EteRNA broadcast.' % (SLACK['ADMIN_NAME'], self.find_slack_id(ppls['monthly']['eterna'])))
-                        self.compose_msg(ppls['monthly']['eterna'], 'Eterna Broadcast Posting', flag, ' for _Eterna Open Group Meeting_. If _%s_ <@%s> hasn\'t send out descriptions, please ask him/her!' % (who, who_id))
-                        self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder for posting news on lab website about the upcoming _Eterna Open Group Meeing_ on *%s* by _%s_ <@%s>.' % (result['this'][0], who, who_id)}]) )
+
+                        if BOT['SLACK']['REMINDER']['ES']['REMINDER_2']:
+                            self.compose_msg(result['this'][2], 'Eterna Broadcast Posting', flag, ' Just a reminder for sending a description of your upcoming _Eterna Open Group Meeting_ to <%s> and <@%s> for releasing news on both DasLab Website and EteRNA broadcast.' % (SLACK['ADMIN_NAME'], self.find_slack_id(ppls['monthly']['eterna'])))
+                        if BOT['SLACK']['DUTY']['ETERNA']['MSG_BROADCAST']:
+                            self.compose_msg(ppls['monthly']['eterna'], 'Eterna Broadcast Posting', flag, ' for _Eterna Open Group Meeting_. If _%s_ <@%s> hasn\'t send out descriptions, please ask him/her!' % (who, who_id))
+                        if BOT['SLACK']['DUTY']['ETERNA']['MSG_NEWS']:
+                            self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder for posting news on lab website about the upcoming _Eterna Open Group Meeing_ on *%s* by _%s_ <@%s>.' % (result['this'][0], who, who_id)}]) )
                     elif result['this'][1] == 'JC':
-                        who = result['this'][2]
-                        who_id = self.find_slack_id(who)
-                        self.compose_msg(result['this'][2], 'Journal Club Posting', flag, ' Just a reminder for posting your paper of choice for the upcoming _Journal Club_ to `#general`.')
+                        if BOT['SLACK']['REMINDER']['JC']['REMINDER_2']:
+                            who = result['this'][2]
+                            who_id = self.find_slack_id(who)
+                            self.compose_msg(result['this'][2], 'Journal Club Posting', flag, ' Just a reminder for posting your paper of choice for the upcoming _Journal Club_ to `#general`.')
                     else:
                         return
 
 
             elif flag == 'monthly':
-                self.compose_msg(ppls[flag]['amazon'], 'Amazon Web Services', flag, '')
-                self.compose_msg(ppls[flag]['website'], 'Website', flag, '')
-                self.compose_msg(ppls[flag]['group meeting'], 'Meeting Scheduling', flag, '')
-                self.compose_msg(ppls[flag]['birthday'], 'Birthday Celebrations', flag, '')
+                if BOT['SLACK']['DUTY']['MONTH']['MSG_AWS']:
+                    self.compose_msg(ppls[flag]['amazon'], 'Amazon Web Services', flag, '')
+                if BOT['SLACK']['DUTY']['MONTH']['MSG_WEBSITE']:
+                    self.compose_msg(ppls[flag]['website'], 'Website', flag, '')
+                if BOT['SLACK']['DUTY']['MONTH']['MSG_SCHEDULE']:
+                    self.compose_msg(ppls[flag]['group meeting'], 'Meeting Scheduling', flag, '')
 
-                day = datetime.utcnow().date()
-                fields = []
-                for ppl in Member.objects.filter(alumni=0).exclude(bday__isnull=True).order_by('bday'):
-                    temp = datetime.strptime('%s/%s' % (day.year, ppl.bday), '%Y/%m/%d')
-                    is_upcoming = (temp <= datetime.utcnow() + timedelta(days=60)) and (temp >= datetime.utcnow())
-                    if day.month >= 10:
-                        temp = datetime.strptime('%s/%s' % (day.year + 1, ppl.bday), '%Y/%m/%d')
-                        is_upcoming = is_upcoming or ( (temp <= datetime.utcnow() + timedelta(days=60)) and (temp >= datetime.utcnow()) )
-                    if is_upcoming:
-                        fields.append({'title':ppl.full_name(), 'value':ppl.bday, 'short':True})
-                if not fields: fields.append({'title': 'Nobody', 'value':'_within next 60 days_', 'short':True})
+                if BOT['SLACK']['DUTY']['MONTH']['MSG_BDAY']:
+                    self.compose_msg(ppls[flag]['birthday'], 'Birthday Celebrations', flag, '')
 
-                birthday = ppls[flag]['birthday']
-                who_main = self.find_slack_id(birthday[0])
-                who_bkup = self.find_slack_id(birthday[1])
-                send_to = '@' + who_main
-                if DEBUG: send_to = SLACK['ADMIN_NAME']
-                self.msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"ff912e", "text":'_Upcoming Birthdays_:', "fields":fields}]) )
+                    day = datetime.utcnow().date()
+                    fields = []
+                    for ppl in Member.objects.filter(alumni=0).exclude(bday__isnull=True).order_by('bday'):
+                        temp = datetime.strptime('%s/%s' % (day.year, ppl.bday), '%Y/%m/%d')
+                        is_upcoming = (temp <= datetime.utcnow() + timedelta(days=60)) and (temp >= datetime.utcnow())
+                        if day.month >= 10:
+                            temp = datetime.strptime('%s/%s' % (day.year + 1, ppl.bday), '%Y/%m/%d')
+                            is_upcoming = is_upcoming or ( (temp <= datetime.utcnow() + timedelta(days=60)) and (temp >= datetime.utcnow()) )
+                        if is_upcoming:
+                            fields.append({'title':ppl.full_name(), 'value':ppl.bday, 'short':True})
+                    if not fields: fields.append({'title': 'Nobody', 'value':'_within next 60 days_', 'short':True})
+
+                    birthday = ppls[flag]['birthday']
+                    who_main = self.find_slack_id(birthday[0])
+                    who_bkup = self.find_slack_id(birthday[1])
+                    send_to = '@' + who_main
+                    if DEBUG: send_to = SLACK['ADMIN_NAME']
+                    self.msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"ff912e", "text":'_Upcoming Birthdays_:', "fields":fields}]) )
 
                 if datetime.utcnow().date().month == 10:
                     self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"3ed4e7", "text":'*REMINDER*: Renewal of `Dropbox` membership _annually_. Please check the payment status.'}]) )
 
 
             elif flag == 'quarterly':
-                self.compose_msg(ppls[flag]['lab trips'], 'Lab Outing/Trips', flag, '')
-                self.compose_msg(ppls[flag]['github'], 'Mailing, Slack, GitHub', flag, '')
+                if BOT['SLACK']['DUTY']['QUARTER']['MSG_TRIP']:
+                    self.compose_msg(ppls[flag]['lab trips'], 'Lab Outing/Trips', flag, '')
+                if BOT['SLACK']['DUTY']['QUARTER']['MSG_GIT']:
+                    self.compose_msg(ppls[flag]['github'], 'Mailing, Slack, GitHub', flag, '')
 
         except:
             send_error_slack(traceback.format_exc(), 'Send Duty Reminders', ' '.join(sys.argv), 'log_cron_duty.log')
@@ -152,6 +166,6 @@ class Command(BaseCommand):
                 if '@' in h[0]:
                     self.stdout.write('\033[92mSUCCESS\033[0m: PM\'ed duty reminder to \033[94m%s\033[0m in Slack.' % h[0])
     
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled %s *duty reminder* finished @ _%s_\n' % (flag, time.ctime())}])
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled %s *Duty Reminder* finished @ _%s_\n' % (flag, time.ctime())}])
         self.stdout.write("Finished with \033[92mSUCCESS\033[0m!")
         self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))

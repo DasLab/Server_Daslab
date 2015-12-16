@@ -46,6 +46,7 @@ class Command(BaseCommand):
         parser.add_argument('interval', nargs='+', type=int, help='Interval, choose from (3, 15, 30).')
 
     def handle(self, *args, **options):
+        if not BOT['CACHE']['IS_CACHE']: return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 

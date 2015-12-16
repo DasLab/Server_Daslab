@@ -1,0 +1,56 @@
+{
+    "CACHE": {
+        "INTERVAL_15": "15",
+        "INTERVAL_3": "3",
+        "INTERVAL_30": "30",
+        "IS_CACHE": true
+    },
+    "SLACK": {
+        "ADMIN": {
+            "MSG_BACKUP": true,
+            "MSG_GDRIVE": true
+        },
+        "DUTY": {
+            "ETERNA": {
+                "MSG_BROADCAST": true,
+                "MSG_MIC": true,
+                "MSG_NEWS": true
+            },
+            "MONTH": {
+                "MSG_AWS": true,
+                "MSG_BDAY": true,
+                "MSG_BREAKFAST": true,
+                "MSG_SCHEDULE": true,
+                "MSG_WEBSITE": true,
+                "WEEK_DAY": "1"
+            },
+            "QUARTER": {
+                "MSG_GIT": true,
+                "MSG_TRIP": true,
+                "WEEK_DAY": "1"
+            }
+        },
+        "IS_FLASH_SETUP": true,
+        "IS_SLACK": true,
+        "MSG_BDAY": true,
+        "REMINDER": {
+            "DAY_BEFORE_REMINDER_1": "1",
+            "DAY_BEFORE_REMINDER_2": "3",
+            "ES": {
+                "REMINDER_1": true,
+                "REMINDER_2": true,
+                "REMINDER_ADMIN": true
+            },
+            "JC": {
+                "REMINDER_1": true,
+                "REMINDER_2": true,
+                "REMINDER_ADMIN": true
+            },
+            "ROT": {
+                "REMINDER_1": true,
+                "REMINDER_2": true,
+                "REMINDER_ADMIN": true
+            }
+        }
+    }
+}

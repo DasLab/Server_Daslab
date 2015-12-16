@@ -82,8 +82,8 @@ class Command(BaseCommand):
                 for i in range(0, len(local_list), 8):
                     html += '%s\t\t%s %s, %s\t\t%s\n' % (local_list[i+7], local_list[i+4], local_list[i+5], local_list[i+6], local_list[i+3])
 
-                if IS_SLACK: 
-                    send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled weekly *backup* finished @ _%s_\n' % time.ctime()}])
+                if IS_SLACK and BOT['SLACK']['ADMIN']['MSG_BACKUP']: 
+                    send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled weekly *Backup* finished @ _%s_\n' % time.ctime()}])
                     send_notify_slack(SLACK['ADMIN_NAME'], '>```%s```\n' % html, '')
                 else:
                     send_notify_emails('{%s} SYSTEM: Weekly Backup Notice' % env('SERVER_NAME'), 'This is an automatic email notification for the success of scheduled weekly backup of the %s Website database and static contents.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n%s\n\n%s Website Admin\n' % (env('SERVER_NAME'), t_cron, d_cron, t_now, html, env('SERVER_NAME')))

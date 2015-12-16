@@ -38,6 +38,7 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
+        if not BOT['SLACK']['IS_FLASH_SETUP']: return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 
@@ -91,7 +92,7 @@ class Command(BaseCommand):
                 if name:
                     for name in names:
                         (sunet_id, who_id) = self.find_slack_id(name)
-                        if flag == 'endofrotationtalk':
+                        if flag == 'endofrotationtalk' and BOT['SLACK']['REMINDER']['ROT']['REMINDER_1']:
                             if sunet_id in GROUP.ROTON:
                                 msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation _tomorrow_.' % SLACK['ADMIN_NAME']
                                 ids.append('_' + name + '_ <@' + who_id + '>')
@@ -108,11 +109,11 @@ class Command(BaseCommand):
                         elif sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.OTHER:
                             ids.append('_' + name + '_ <@' + who_id + '>')
 
-                if flag == 'endofrotationtalk':
+                if flag == 'endofrotationtalk' and BOT['SLACK']['REMINDER']['ROT']['REMINDER_ADMIN']:
                     msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'REMINDER', "mrkdwn_in": ["text"], "color":"warning", "text":'*REMINDER*: Add *RotationStudent* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
-                if result['this'][1] == 'JC':
+                if result['this'][1] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_ADMIN']:
                     msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'REMINDER', "mrkdwn_in": ["text"], "color":"warning", "text":'*REMINDER*: Add *JournalClub* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
-                elif result['this'][1] == 'ES':
+                elif result['this'][1] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_ADMIN']:
                     msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'REMINDER', "mrkdwn_in": ["text"], "color":"warning", "text":'*REMINDER*: Add *EternaYoutube* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
 
                 if DEBUG: 
@@ -140,10 +141,10 @@ class Command(BaseCommand):
                 date = datetime.strptime("%s %s" % (result['next'][0], year), '%b %d %Y')
 
                 msg_who = 'Just a reminder that you are up for `%s` *next* _%s_ (*%s*).\n' % (type_next, datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
-                if result['next'][1] == 'JC':
+                if result['next'][1] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_2']:
                     date = (datetime.utcnow() + timedelta(days=5)).date()
                     msg_who += ' Please post your paper of choice to the group `#general` channel by *next* _%s_ (*%s*).\n' % (datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
-                elif result['next'][1] == 'ES':
+                elif result['next'][1] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_2']:
                     date = (datetime.utcnow() + timedelta(days=5)).date()
                     msg_who += ' Please post a brief description of the topic to the group `#general` channel by *next* _%s_ (*%s*) to allow time for releasing news on both DasLab Website and EteRNA broadcast.\n' % (datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
 
@@ -156,18 +157,19 @@ class Command(BaseCommand):
                 if name:
                     for name in names:
                         (sunet_id, who_id) = self.find_slack_id(name)
-                        if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
-                            ids.append('_' + name + '_ <@' + who_id + '>')
-                            send_to = '@' + who_id
-                            if DEBUG: send_to = SLACK['ADMIN_NAME']
-                            msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))
-                        else:
-                            if sunet_id == 'none':
-                                self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not found.' % name)
-                            elif sunet_id == 'ambiguous':
-                                self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name)
+                        if (result['next'][1] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_2']) or (result['next'][1] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_2']):
+                            if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
+                                ids.append('_' + name + '_ <@' + who_id + '>')
+                                send_to = '@' + who_id
+                                if DEBUG: send_to = SLACK['ADMIN_NAME']
+                                msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))
                             else:
-                                self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not available in database.' % name)
+                                if sunet_id == 'none':
+                                    self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not found.' % name)
+                                elif sunet_id == 'ambiguous':
+                                    self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name)
+                                else:
+                                    self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not available in database.' % name)
 
                 if DEBUG: 
                     send_to = SLACK['ADMIN_NAME']

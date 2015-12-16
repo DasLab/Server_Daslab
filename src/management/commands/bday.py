@@ -44,6 +44,7 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
+        if not BOT['SLACK']['MSG_BDAY']: return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
          
@@ -74,6 +75,6 @@ class Command(BaseCommand):
                 if '@' in h[0]:
                     self.stdout.write('\033[92mSUCCESS\033[0m: PM\'ed birthday wish to \033[94m%s\033[0m in Slack.' % h[0])
         if msg_handles and IS_SLACK: 
-            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled *birthday wish* sent to `%s` @ _%s_\n' % (' '.join(ids), time.ctime())}])
+            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled *Birthday Wishes* sent to `%s` @ _%s_\n' % (' '.join(ids), time.ctime())}])
             self.stdout.write("Finished with \033[92mSUCCESS\033[0m!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
