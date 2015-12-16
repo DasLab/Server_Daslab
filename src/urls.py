@@ -79,6 +79,7 @@ else:
         url(r'^group/contact/update/?$', views.user_contact),
         url(r'^group/aws/?$', views.lab_server_aws),
         url(r'^group/ga/?$', views.lab_server_ga),
+        url(r'^group/bot/?$', views.lab_service_bot),
         url(r'^group/git/?$', views.lab_service_git),
         url(r'^group/slack/?$', views.lab_service_slack),
         url(r'^group/dropbox/?$', views.lab_service_dropbox),

@@ -58,6 +58,7 @@ class SYS_PATH(object):
             'lab_resource_contact': MEDIA_ROOT + '/media/html/group_resource_contact.html',
             'lab_server_aws': MEDIA_ROOT + '/media/html/group_server_aws.html',
             'lab_server_ga': MEDIA_ROOT + '/media/html/group_server_ga.html',
+            'lab_service_bot': MEDIA_ROOT + '/media/html/group_service_bot.html',
             'lab_service_git': MEDIA_ROOT + '/media/html/group_service_git.html',
             'lab_service_slack': MEDIA_ROOT + '/media/html/group_service_slack.html',
             'lab_service_dropbox': MEDIA_ROOT + '/media/html/group_service_dropbox.html',

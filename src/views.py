@@ -168,6 +168,9 @@ def lab_server_aws(request):
 def lab_server_ga(request):
     return render_to_response(PATH.HTML_PATH['lab_server_ga'], {}, context_instance=RequestContext(request))
 # @login_required
+def lab_service_bot(request):
+    return render_to_response(PATH.HTML_PATH['lab_service_bot'], {}, context_instance=RequestContext(request))
+# @login_required
 def lab_service_git(request):
     return render_to_response(PATH.HTML_PATH['lab_service_git'], {}, context_instance=RequestContext(request))
 # @login_required

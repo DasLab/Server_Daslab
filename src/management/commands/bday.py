@@ -60,7 +60,7 @@ class Command(BaseCommand):
                     ids.append(who)
                     names.append(ppl.first_name)
             if ids and (not DEBUG):
-                msg_handles.append( ('#general', '', [{"fallback":'BDay', "mrkdwn_in": ["text"], "color":"ff912e", "text":'*Happy Birthday* to _%s_! %s' % (' '.join(names), ' '.join( ['<@' + id + '>' for id in ids] ))}]) )
+                msg_handles.append( ('#general', '', [{"fallback":'BDay', "mrkdwn_in": ["text"], "color":"ff912e", "text":'*Happy Birthday* to _%s_! %s' % (' and '.join(names), ', '.join( ['<@' + id + '>' for id in ids] ))}]) )
 
         except:
             err = traceback.format_exc()

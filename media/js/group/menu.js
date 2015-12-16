@@ -102,6 +102,12 @@ $(document).ready(function () {
         $("#nav_server_lg").addClass("active");
         $("ul.breadcrumb").css("border-bottom", "5px solid #50cc32");
         $('<li><span style="color: #000;" class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;<a href="">Servers</a></li>').insertAfter($("ul.breadcrumb > li:first"));
+    } else if ($(location).attr("href").indexOf("group/bot") != -1) {
+        $("#nav_bot").addClass("active");
+        $("#nav_service").addClass("active");
+        $("#nav_service_lg").addClass("active");
+        $("ul.breadcrumb").css("border-bottom", "5px solid #ff912e");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;<a href="">Services</a></li>').insertAfter($("ul.breadcrumb > li:first"));
     } else if ($(location).attr("href").indexOf("group/git") != -1) {
         $("#nav_git").addClass("active");
         $("#nav_service").addClass("active");
