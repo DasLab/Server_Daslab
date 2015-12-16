@@ -88,13 +88,18 @@ class Command(BaseCommand):
             result = dash_schedule(0)
 
             if flag == 'weekly':
-                if datetime.utcnow().date().isoweekday() == 4:
+                day_1 = (result['wd'] - int(BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_1']))
+                day_2 = (result['wd'] - int(BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_2']))
+                if day_1 < 0: day_1 += 7
+                if day_2 < 0: day_2 += 7
+
+                if datetime.utcnow().date().isoweekday() == day_1:
                     if BOT['SLACK']['DUTY']['MONTH']['MSG_BREAKFAST']:
                         self.compose_msg(ppls[flag]['breakfast'], 'Breakfast', flag, ' to _Group Meeting_ tomorrow')
                     if result['this'][1] == 'ES':
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_MIC']:
-                            self.compose_msg(ppls['monthly']['eterna'], 'Eterna Microphone Setup', flag, ' for _Eterna Open Group Meeting_ tomorrow. Please arrive *30 min* early. The instructions are <https://docs.google.com/document/d/1bh5CYBklIdZl65LJDsBffC8m8J_3jKf4FY1qiYjRIw8/edit|here>')
-                elif datetime.utcnow().date().isoweekday() == 2:
+                            self.compose_msg(ppls['monthly']['eterna'], 'Eterna Microphone Setup', flag, ' for the upcoming _Eterna Open Group Meeting_. Please arrive *30 min* early. The instructions are <https://docs.google.com/document/d/1bh5CYBklIdZl65LJDsBffC8m8J_3jKf4FY1qiYjRIw8/edit|here>')
+                elif datetime.utcnow().date().isoweekday() == day_2:
                     if result['this'][1] == 'ES':
                         who = result['this'][2]
                         who_id = self.find_slack_id(who)

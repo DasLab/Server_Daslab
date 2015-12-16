@@ -534,6 +534,9 @@ def cache_schedule():
         lines = open('%s/cache/schedule.csv' % MEDIA_ROOT, 'r').readlines()
         this = ''
         tp = lines[0].split(',')[5]
+        week_day = tp[1:tp.find('@')].strip().lower()
+        week_day = ['sunday', 'monday', 'tueday', 'wednesday', 'thursday', 'friday', 'saturday'].index(week_day)
+
         for row in lines:
             row = row.split(',')
             if this: 
@@ -550,7 +553,7 @@ def cache_schedule():
                 break
 
         subprocess.check_call("rm %s/cache/schedule.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        return {'last':last, 'this':this, 'next':next, 'tp':tp}
+        return {'last':last, 'this':this, 'next':next, 'tp':tp, 'wd':week_day}
     except:
         send_error_slack(traceback.format_exc(), 'Parse Schedule Spreadsheet', 'cache_schedule', 'log_cron_cache.log')
 

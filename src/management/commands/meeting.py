@@ -44,13 +44,19 @@ class Command(BaseCommand):
 
         try:
             result = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
+            offset_1 = int(BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_1'])
+            offset_2 = int(BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_2'])
+            day_1 = (result['wd'] - offset_1)
+            if day_1 < 0: day_1 += 7
+            if datetime.utcnow().date().isoweekday() != day_1: return
+
             msg_handles = []
             clock = result['tp'][result['tp'].find('@')+1:result['tp'].rfind('@')].strip()
             clock = clock[:clock.find('-')].strip()
             place = result['tp'][result['tp'].rfind('@')+1:].strip()[:-1]
             types = {'ES':'EteRNA Special', 'GM':'Group Meeting', 'JC':'Journal Club'}
 
-            year = (datetime.utcnow() + timedelta(days=1)).date().year
+            year = (datetime.utcnow() + timedelta(days=offset_1)).date().year
             date = datetime.strptime("%s %s" % (result['this'][0], year), '%b %d %Y')
             if result['this'][1] == 'N/A':
                 msg_this = 'Hi all,\n\nThis is a reminder that there will be *`NO Meeting`* this week'
@@ -66,7 +72,7 @@ class Command(BaseCommand):
                 self.stdout.write('\033[92mSUCCESS\033[0m: Google Presentation skipped (N/A for this week: \033[94m%s\033[0m).' % datetime.strftime(date, '%b %d %Y'))
             else:
                 type_this = types[result['this'][1]]
-                if (datetime.utcnow() + timedelta(days=1)).date() != date.date():
+                if (datetime.utcnow() + timedelta(days=offset_1)).date() != date.date():
                     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"warning", "text":'Mismatch in Schedule Spreadsheet date. It seems to be not up-to-date.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.'}])
                     sys.exit(1)
 
@@ -94,7 +100,7 @@ class Command(BaseCommand):
                         (sunet_id, who_id) = self.find_slack_id(name)
                         if flag == 'endofrotationtalk' and BOT['SLACK']['REMINDER']['ROT']['REMINDER_1']:
                             if sunet_id in GROUP.ROTON:
-                                msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation _tomorrow_.' % SLACK['ADMIN_NAME']
+                                msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation this _%s_.' % (SLACK['ADMIN_NAME'], datetime.strftime(date, '%A'))
                                 ids.append('_' + name + '_ <@' + who_id + '>')
                                 send_to = '@' + who_id
                                 if DEBUG: send_to = SLACK['ADMIN_NAME']
@@ -137,15 +143,15 @@ class Command(BaseCommand):
                 msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"439fe0", "text":msg_next}]) )
             else:
                 type_next = types[result['next'][1]]
-                year = (datetime.utcnow() + timedelta(days=8)).date().year
+                year = (datetime.utcnow() + timedelta(days=(offset_1 + 7))).date().year
                 date = datetime.strptime("%s %s" % (result['next'][0], year), '%b %d %Y')
 
                 msg_who = 'Just a reminder that you are up for `%s` *next* _%s_ (*%s*).\n' % (type_next, datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
                 if result['next'][1] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_2']:
-                    date = (datetime.utcnow() + timedelta(days=5)).date()
+                    date = (datetime.utcnow() + timedelta(days=(offset_1 + 7 - offset_2))).date()
                     msg_who += ' Please post your paper of choice to the group `#general` channel by *next* _%s_ (*%s*).\n' % (datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
                 elif result['next'][1] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_2']:
-                    date = (datetime.utcnow() + timedelta(days=5)).date()
+                    date = (datetime.utcnow() + timedelta(days=(offset_1 + 7 - offset_2))).date()
                     msg_who += ' Please post a brief description of the topic to the group `#general` channel by *next* _%s_ (*%s*) to allow time for releasing news on both DasLab Website and EteRNA broadcast.\n' % (datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
 
                 name = result['next'][2]
@@ -178,13 +184,13 @@ class Command(BaseCommand):
                 date = datetime.strptime("%s %s" % (result['next'][0], year), '%b %d %Y')
                 msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"439fe0", "text":'For next week:\n', "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg', "fields":[{'title':'Date', 'value':'_%s_' % datetime.strftime(date, '%b %d %Y (%a)'), 'short':True}, {'title':'Time & Place', 'value':'_%s @ %s_' % (clock, place), 'short':True}, {'title':'Type', 'value':'`%s`' % type_next, 'short':True}, {'title':'Presenter', 'value':'%s' % ', \n'.join(ids), 'short':True}] }]) )
 
-            msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"danger", "text":'The <https://daslab.stanford.edu/group/schedule/|full schedule> is available on the DasLab Website. For questions regarding the schedule, please contact _<%s>_ (site admin). Thanks for your attention.''' % SLACK['ADMIN_NAME']}]) )
+            msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"danger", "text":'The <https://daslab.stanford.edu/group/schedule/|full schedule> is available on the DasLab Website. For questions regarding the schedule, please contact <%s> (site admin). Thanks for your attention.''' % SLACK['ADMIN_NAME']}]) )
 
         except:
             send_error_slack(traceback.format_exc(), 'Group Meeting Setup', ' '.join(sys.argv), 'log_cron_meeting.log')
 
             if result['this'][1] != 'N/A':
-                year = (datetime.utcnow() + timedelta(days=1)).date().year
+                year = (datetime.utcnow() + timedelta(days=offset_1)).date().year
                 date = datetime.strptime("%s %s" % (result['this'][0], year), '%b %d %Y')
                 FlashSlide.objects.get(date=date).delete()
                 requests.delete('https://www.googleapis.com/drive/v2/files/%s/?access_token=%s' % (ppt_id, access_token))
