@@ -224,8 +224,13 @@ def dash_dash(request):
         t_sch = '<span class="label label-danger">' + t_sch.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     else:
         t_sch = '<span class="label label-primary">' + t_sch.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    t_duty = datetime.fromtimestamp(os.path.getmtime('%s/cache/duty.pickle' % MEDIA_ROOT))
+    if ((now - t_duty).seconds >= 2700):
+        t_duty = '<span class="label label-danger">' + t_duty.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    else:
+        t_duty = '<span class="label label-primary">' + t_duty.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
 
-    json = {'t_aws':t_aws, 't_ga':t_ga, 't_git':t_git, 't_slack':t_slack, 't_dropbox':t_dropbox, 't_cal':t_cal, 't_sch':t_sch}
+    json = {'t_aws':t_aws, 't_ga':t_ga, 't_git':t_git, 't_slack':t_slack, 't_dropbox':t_dropbox, 't_cal':t_cal, 't_sch':t_sch, 't_duty':t_duty}
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
 
 def dash_stat(request):

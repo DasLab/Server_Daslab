@@ -64,7 +64,6 @@ class Command(BaseCommand):
             self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"ff912e", "text": '*WARNING*: No one is primarily assigned for the duty of _%s_ check of `%s`. *NO* reminder sent.' % (intern, task_name) }]) )
 
 
-
     def handle(self, *args, **options):
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
@@ -84,19 +83,8 @@ class Command(BaseCommand):
                 return
 
         try:
-            gdrive_dir = 'cd %s/cache' % MEDIA_ROOT
-            gdrive_mv = 'mv Das\ Lab\ Responsibilities.csv duty.csv'
-            subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["DUTY_SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            lines = open('%s/cache/duty.csv' % MEDIA_ROOT, 'r').readlines()
-
-            ppls = {'weekly':{}, 'monthly':{}, 'quarterly':{}}
-            jobs = ['birthday', 'breakfast', 'eterna', 'group meeting', 'lab trips', 'amazon', 'website', 'github']
-            for row in lines[1:-6]:
-                row = row.split(',')
-                for job in jobs:
-                    if job in row[0].lower():
-                        ppls[row[1].lower()][job] = (row[2], row[3])
-
+            result = pickle.load(open('%s/cache/duty.pickle' % MEDIA_ROOT, 'rb'))
+            (jobs, ppls) = (result['jobs'], result['ppls'])
             result = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
 
             if flag == 'weekly':
@@ -152,7 +140,6 @@ class Command(BaseCommand):
                 self.compose_msg(ppls[flag]['lab trips'], 'Lab Outing/Trips', flag, '')
                 self.compose_msg(ppls[flag]['github'], 'Mailing, Slack, GitHub', flag, '')
 
-            subprocess.check_call("rm %s/cache/duty.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         except:
             err = traceback.format_exc()
             ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))

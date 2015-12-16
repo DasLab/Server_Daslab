@@ -115,6 +115,7 @@ $(document).ready(function() {
             $("#id_dash_dropbox").html(data.t_dropbox + '<span class="label label-violet pull-right"><span class="glyphicon glyphicon-leaf"></span></span>');
             $("#id_dash_cal").html(data.t_cal + '<span class="label label-violet pull-right"><span class="glyphicon glyphicon-leaf"></span></span>');
             $("#id_dash_sch").html(data.t_sch + '<span class="label label-violet pull-right"><span class="glyphicon glyphicon-leaf"></span></span>');
+            $("#id_dash_duty").html(data.t_duty + '<span class="label label-violet pull-right"><span class="glyphicon glyphicon-leaf"></span></span>');
         }
     });
 

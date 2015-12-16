@@ -169,8 +169,15 @@ class Command(BaseCommand):
                 subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 self.stdout.write("    Schedule finished with \033[92mSUCCESS\033[0m.")
 
+                # duty
+                self.stdout.write("#7: Requesting \033[94mDuty Spreadsheet\033[0m...")
+                f_name = '%s/cache/duty.pickle' % MEDIA_ROOT
+                pickle.dump(cache_duty(), open(f_name + '_tmp', 'wb'))
+                subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                self.stdout.write("    Duty finished with \033[92mSUCCESS\033[0m.")
+
                 # cal
-                self.stdout.write("#7: Requesting \033[94mGoogle Calendar\033[0m...")
+                self.stdout.write("#8: Requesting \033[94mGoogle Calendar\033[0m...")
                 f_name = '%s/cache/calendar.pickle' % MEDIA_ROOT
                 pickle.dump(cache_cal(), open(f_name + '_tmp', 'wb'))
                 subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -180,7 +187,8 @@ class Command(BaseCommand):
                 self.stdout.write("#4: Skip \033[94mSLACK\033[0m...")
                 self.stdout.write("#5: Skip \033[94mDROPBOX\033[0m...")
                 self.stdout.write("#6: Skip \033[94mSchedule Spreadsheet\033[0m...")
-                self.stdout.write("#7: Skip \033[94mGoogle Calendar\033[0m...")
+                self.stdout.write("#7: Skip \033[94mDuty Spreadsheet\033[0m...")
+                self.stdout.write("#8: Skip \033[94mGoogle Calendar\033[0m...")
         except:
             err = traceback.format_exc()
             ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))

@@ -571,9 +571,45 @@ def cache_schedule():
         if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_schedule()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
         raise Exception('Error with parsing spreadsheet csv.')
 
-
 def dash_schedule(request):
     return pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
+
+
+def cache_duty():
+    gdrive_dir = 'cd %s/cache' % MEDIA_ROOT
+    gdrive_mv = 'mv Das\ Lab\ Responsibilities.csv duty.csv'
+    try:
+        subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["DUTY_SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError:
+        print "    \033[41mERROR\033[0m: Failed to download \033[94mDuty\033[0m spreadsheet."
+        print traceback.format_exc()
+        if os.path.exists('%s/cache/duty.pickle' % MEDIA_ROOT):
+            now = datetime.fromtimestamp(time.time())
+            t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/duty.pickle' % MEDIA_ROOT))
+            if ((now - t_sch).seconds >= 7200):
+                raise Exception('Error with downloading duty spreadsheet.')
+            else:
+                return
+
+    try:
+        lines = open('%s/cache/duty.csv' % MEDIA_ROOT, 'r').readlines()
+        ppls = {'weekly':{}, 'monthly':{}, 'quarterly':{}}
+        jobs = ['birthday', 'breakfast', 'eterna', 'group meeting', 'lab trips', 'amazon', 'website', 'github']
+        for row in lines[1:-6]:
+            row = row.split(',')
+            for job in jobs:
+                if job in row[0].lower():
+                    ppls[row[1].lower()][job] = (row[2], row[3])
+        subprocess.check_call("rm %s/cache/duty.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        return {'jobs':jobs, 'ppls':ppls}
+    except:
+        print "    \033[41mERROR\033[0m: Failed to parse \033[94mDuty\033[0m spreadsheet."
+        err = traceback.format_exc()
+        ts = '%s\t\tcache_duty()\n' % time.ctime()
+        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
+        open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
+        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_duty()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
+        raise Exception('Error with parsing spreadsheet csv.')
 
 
 def cache_cal():
