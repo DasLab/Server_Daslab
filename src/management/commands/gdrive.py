@@ -7,7 +7,7 @@ import traceback
 from django.core.management.base import BaseCommand
 
 from src.settings import *
-from src.console import get_date_time, get_backup_stat, send_notify_emails, send_notify_slack
+from src.console import get_date_time, get_backup_stat, send_notify_emails, send_notify_slack, send_error_slack
 
 
 class Command(BaseCommand):
@@ -29,60 +29,43 @@ class Command(BaseCommand):
         try:
             subprocess.check_call('%s && drive upload -f %s/backup/backup_mysql.gz -t %s_%s_mysql%s.gz' % (gdrive_dir, MEDIA_ROOT, env('SERVER_NAME'), d, prefix), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError:
-            self.stdout.write("    \033[41mERROR\033[0m: Failed to upload \033[94mMySQL\033[0m database.")
-            err = traceback.format_exc()
-            ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
-            open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-            open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-            if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (' '.join(sys.argv), time.ctime(), err)}])
+            send_error_slack(traceback.format_exc(), 'Upload MySQL Database', ' '.join(sys.argv), 'log_cron_gdrive.log')
             flag = True
         else:
             self.stdout.write("    \033[92mSUCCESS\033[0m: \033[94mMySQL\033[0m database uploaded.")
         self.stdout.write("Time elapsed: %.1f s." % (time.time() - t))
+
 
         t = time.time()
         self.stdout.write("#2: Uploading static files...")
         try:
             subprocess.check_call('%s && drive upload -f %s/backup/backup_static.tgz -t %s_%s_static%s.tgz' % (gdrive_dir, MEDIA_ROOT, env('SERVER_NAME'), d, prefix), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError:
-            self.stdout.write("    \033[41mERROR\033[0m: Failed to upload \033[94mstatic\033[0m files.")
-            err = traceback.format_exc()
-            ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
-            open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-            open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-            if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (' '.join(sys.argv), time.ctime(), err)}])
+            send_error_slack(traceback.format_exc(), 'Upload Static Files', ' '.join(sys.argv), 'log_cron_gdrive.log')
             flag = True
         else:
             self.stdout.write("    \033[92mSUCCESS\033[0m: \033[94mstatic\033[0m files uploaded.")
         self.stdout.write("Time elapsed: %.1f s." % (time.time() - t))
+
 
         t = time.time()
         self.stdout.write("#3: Uploading apache2 settings...")
         try:
             subprocess.check_call('%s && drive upload -f %s/backup/backup_apache.tgz -t %s_%s_apache%s.tgz' % (gdrive_dir, MEDIA_ROOT, env('SERVER_NAME'), d, prefix), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError:
-            self.stdout.write("    \033[41mERROR\033[0m: Failed to upload \033[94mapache2\033[0m settings.")
-            err = traceback.format_exc()
-            ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
-            open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-            open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-            if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (' '.join(sys.argv), time.ctime(), err)}])
+            send_error_slack(traceback.format_exc(), 'Upload Apache2 Settings', ' '.join(sys.argv), 'log_cron_gdrive.log')
             flag = True
         else:
             self.stdout.write("    \033[92mSUCCESS\033[0m: \033[94mapache2\033[0m settings uploaded.")
         self.stdout.write("Time elapsed: %.1f s." % (time.time() - t))
+
 
         t = time.time()
         self.stdout.write("#4: Uploading config settings...")
         try:
             subprocess.check_call('%s && drive upload -f %s/backup/backup_config.tgz -t %s_%s_config%s.tgz' % (gdrive_dir, MEDIA_ROOT, env('SERVER_NAME'), d, prefix), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError:
-            self.stdout.write("    \033[41mERROR\033[0m: Failed to upload \033[94mconfig\033[0m settings.")
-            err = traceback.format_exc()
-            ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
-            open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-            open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-            if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (' '.join(sys.argv), time.ctime(), err)}])
+            send_error_slack(traceback.format_exc(), 'Upload Config Settings', ' '.join(sys.argv), 'log_cron_gdrive.log')
             flag = True
         else:
             self.stdout.write("    \033[92mSUCCESS\033[0m: \033[94mconfig\033[0m settings uploaded.")
@@ -99,12 +82,7 @@ class Command(BaseCommand):
             list_config = subprocess.Popen("%s && drive list -q \"title contains '%s_' and (title contains '_config.tgz' or title contains '_config_DEBUG.tgz') and modifiedDate <= '%s'\"| awk '{ printf $1\" \"}'" % (gdrive_dir, env('SERVER_NAME'), old), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[1:]
             list_all = list_mysql + list_static + list_apache + list_config
         except:
-            self.stdout.write("    \033[41mERROR\033[0m: Failed to check obsolete \033[94mbackup\033[0m files.")
-            err = traceback.format_exc()
-            ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
-            open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-            open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-            if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (' '.join(sys.argv), time.ctime(), err)}])
+            send_error_slack(traceback.format_exc(), 'Check Obsolete Backup Files', ' '.join(sys.argv), 'log_cron_gdrive.log')
             flag = True
 
         for id in list_all:
@@ -112,16 +90,12 @@ class Command(BaseCommand):
                 subprocess.check_call('%s && drive info -i %s' % (gdrive_dir, id), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 subprocess.check_call('%s && drive delete -i %s' % (gdrive_dir, id), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             except subprocess.CalledProcessError:
-                self.stdout.write("    \033[41mERROR\033[0m: Failed to remove obsolete \033[94mbackup\033[0m files.")
-                err = traceback.format_exc()
-                ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
-                open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-                open('%s/cache/log_cron_gdrive.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-                if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (' '.join(sys.argv), time.ctime(), err)}])
+                send_error_slack(traceback.format_exc(), 'Remove Obsolete Backup Files', ' '.join(sys.argv), 'log_cron_gdrive.log')
                 flag = True
 
         if not flag: self.stdout.write("    \033[92mSUCCESS\033[0m: \033[94m%s\033[0m obsolete backup files removed." % len(list_all))
         self.stdout.write("Time elapsed: %.1f s.\n" % (time.time() - t))
+
 
         if flag:
             self.stdout.write("Finished with errors!")

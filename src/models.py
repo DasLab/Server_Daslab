@@ -370,6 +370,7 @@ class EmailForm(forms.Form):
     email_subject = forms.CharField(required=True)
     email_content = forms.CharField(widget=forms.Textarea, required=True)
 
+
 def email_form(request):
     return {'email_form': EmailForm()}
 

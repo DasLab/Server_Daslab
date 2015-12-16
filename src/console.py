@@ -46,6 +46,17 @@ def send_notify_emails(msg_subject, msg_content):
     smtpserver.quit()
 
 
+def send_error_slack(err, task='', fn='', log_file=''):
+    if task:
+        print "    \033[41mERROR\033[0m: Failed on \033[94m%s\033[0m." % task
+        task = 'Failed on %s.\n'
+    ts = '%s\t\t%s\n' % (time.ctime(), fn)
+    open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
+    if log_file:
+        open('%s/cache/%s' % (MEDIA_ROOT, log_file), 'a').write('%s\n%s\n' % (ts, err))
+    if settings._wrapped.IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: %s*%s* @ _%s_\n>```%s```\n' % (fn, task, time.ctime(), err)}])
+
+
 def get_date_time(keyword):
     t_cron = [c[0] for c in CRONJOBS if ''.join(c[2]).find(keyword) != -1][0]
     d_cron = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur'][int(t_cron.split(' ')[-1])]
@@ -120,13 +131,7 @@ def set_sys_crontab():
         subprocess.Popen('crontab -r', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         call_command('crontab', 'add')
     except subprocess.CalledProcessError:
-        print "    \033[41mERROR\033[0m: Failed to reset \033[94mcrontab\033[0m schedules."
-        err = traceback.format_exc()
-        ts = '%s\t\tset_backup_form()\n' % time.ctime()
-        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-        open('%s/cache/log_cron_backup.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *set_backup_form()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
-        raise Exception('Error with setting crontab scheduled jobs.')
+        send_error_slack(traceback.format_exc(), 'Reset Crontab', 'set_backup_form', 'log_cron_backup.log')
 
 
 def get_backup_form():
@@ -411,15 +416,6 @@ def ga_stats():
 
 
 def git_stats(request):
-    # gdrive_dir = 'echo'
-    # if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
-    # try:
-    #     subprocess.check_call('%s && gitinspector -wHlmrT %s -F html > %s/data/stat_git.html' % (gdrive_dir, MEDIA_ROOT, MEDIA_ROOT), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    # except subprocess.CalledProcessError:
-    #     print "    \033[41mERROR\033[0m: Failed to generate \033[94mgitinspector\033[0m stats."
-    #     print traceback.format_exc()
-    #     raise Exception('Error with generating gitinsepctor stats.')
-
     if request.GET.has_key('qs') and request.GET.has_key('tqx'):
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
@@ -593,12 +589,7 @@ def export_citation(request):
             try:
                 subprocess.check_call('cd %s/data && pandoc -f html -t docx -o export_citation.docx export_citation.html' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             except subprocess.CalledProcessError:
-                print "    \033[41mERROR\033[0m: Failed to export \033[94mcitation\033[0m as DOCX file."
-                err = traceback.format_exc()
-                ts = '%s\t\texport_citation()\n' % time.ctime()
-                open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-                if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *export_citation()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
-                raise Exception('Error with pandoc converting html source file to docx output.')
+                send_error_slack(traceback.format_exc(), 'Export Citations', 'export_citation', 'log_django.log')
 
             lines = open(os.path.join(MEDIA_ROOT, 'data/export_citation.docx'), 'r').readlines()
             response = HttpResponse(lines, content_type='application/msword')

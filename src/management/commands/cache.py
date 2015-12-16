@@ -190,11 +190,7 @@ class Command(BaseCommand):
                 self.stdout.write("#7: Skip \033[94mDuty Spreadsheet\033[0m...")
                 self.stdout.write("#8: Skip \033[94mGoogle Calendar\033[0m...")
         except:
-            err = traceback.format_exc()
-            ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
-            open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-            open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-            if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (' '.join(sys.argv), time.ctime(), err)}])
+            send_error_slack(traceback.format_exc(), 'Cache Dashboard Results', ' '.join(sys.argv), 'log_cron_cache.log')
             self.stdout.write("Finished with \033[41mERROR\033[0m!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
             sys.exit(1)

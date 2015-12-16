@@ -7,7 +7,7 @@ import traceback
 from django.core.management.base import BaseCommand
 
 from src.settings import *
-from src.console import send_notify_emails, send_notify_slack
+from src.console import send_notify_emails, send_notify_slack, send_error_slack
 
 
 class Command(BaseCommand):
@@ -34,11 +34,7 @@ class Command(BaseCommand):
             else:
                 self.stdout.write("\033[92mSUCCESS\033[0m: \033[94mlog_cron.log\033[0m not exist, nothing to do.")
         except:
-            err = traceback.format_exc()
-            ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
-            open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-            open('%s/cache/log_cron_report.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-            if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (' '.join(sys.argv), time.ctime(), err)}])
+            send_error_slack(traceback.format_exc(), 'Weekly Error Report', ' '.join(sys.argv), 'log_cron_report.log')
             self.stdout.write("Finished with \033[41mERROR\033[0m!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
             sys.exit(1)

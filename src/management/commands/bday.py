@@ -10,7 +10,7 @@ from slacker import Slacker
 
 from src.settings import *
 from src.models import Member
-from src.console import send_notify_slack
+from src.console import send_notify_slack, send_error_slack
 
 
 class Command(BaseCommand):
@@ -63,11 +63,7 @@ class Command(BaseCommand):
                 msg_handles.append( ('#general', '', [{"fallback":'BDay', "mrkdwn_in": ["text"], "color":"ff912e", "text":'*Happy Birthday* to _%s_! %s' % (' and '.join(names), ', '.join( ['<@' + id + '>' for id in ids] ))}]) )
 
         except:
-            err = traceback.format_exc()
-            ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
-            open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-            open('%s/cache/log_cron_bday.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-            if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (' '.join(sys.argv), time.ctime(), err)}])
+            send_error_slack(traceback.format_exc(), 'Birthday Wishes', ' '.join(sys.argv), 'log_cron_bday.log')
             self.stdout.write("Finished with \033[41mERROR\033[0m!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
             sys.exit(1)

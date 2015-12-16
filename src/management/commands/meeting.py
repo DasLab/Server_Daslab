@@ -11,7 +11,7 @@ from slacker import Slacker
 
 from src.settings import *
 from src.models import FlashSlide
-from src.console import send_notify_emails, send_notify_slack
+from src.console import send_notify_emails, send_notify_slack, send_error_slack
 
 
 class Command(BaseCommand):
@@ -179,10 +179,7 @@ class Command(BaseCommand):
             msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"danger", "text":'The <https://daslab.stanford.edu/group/schedule/|full schedule> is available on the DasLab Website. For questions regarding the schedule, please contact _<%s>_ (site admin). Thanks for your attention.''' % SLACK['ADMIN_NAME']}]) )
 
         except:
-            err = traceback.format_exc()
-            ts = '%s\t\t%s\n' % (time.ctime(), ' '.join(sys.argv))
-            open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-            open('%s/cache/log_cron_meeting.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
+            send_error_slack(traceback.format_exc(), 'Group Meeting Setup', ' '.join(sys.argv), 'log_cron_meeting.log')
 
             if result['this'][1] != 'N/A':
                 year = (datetime.utcnow() + timedelta(days=1)).date().year
@@ -193,7 +190,6 @@ class Command(BaseCommand):
                 self.stdout.write('\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) removed in MySQL.' % ppt_id)
 
             if IS_SLACK:
-                send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *%s* @ _%s_\n>```%s```\n' % (' '.join(sys.argv), time.ctime(), err)}])
                 send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"warning", "text":'FlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.'}])
             else:
                 send_notify_emails('{%s} ERROR: Weekly Meeting Setup' % env('SERVER_NAME'), 'This is an automatic email notification for the failure of scheduled weekly flash slides setup. The following error occurred:\n\n%s\n\n%s\n\nFlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\n\n** Flash Slide has NOT been setup yet for this week! Please investigate and fix the setup immediately.\n\n%s Website Admin' % (ts, err, env('SERVER_NAME')))

@@ -509,30 +509,19 @@ def dash_ssl(request):
         exp_date = subprocess.Popen('sed %s %s' % ("'s/^notAfter\=//g'", os.path.join(MEDIA_ROOT, 'data/temp.txt')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
         subprocess.check_call('rm %s' % os.path.join(MEDIA_ROOT, 'data/temp.txt'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
-        print "    \033[41mERROR\033[0m: Failed to check \033[94mSSL Certificate\033[0m."
-        err = traceback.format_exc()
-        ts = '%s\t\tdash_ssl()\n' % time.ctime()
-        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-        open('%s/cache/log_cron.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *dash_ssl()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
-        raise Exception('Error with checking SSL certificate.')
+        send_error_slack(traceback.format_exc(), 'Check SSL Certificate', 'dash_ssl', 'log_cron.log')
 
     exp_date = datetime.strptime(exp_date.replace('notAfter=', ''), "%b %d %H:%M:%S %Y %Z").strftime('%Y-%m-%d %H:%M:%S')
     return simplejson.dumps({'exp_date':exp_date})
 
 
 def cache_schedule():
-    # if not DEBUG: 
-    #     gdrive_dir = 'sudo cd %s' % APACHE_ROOT
-    #     gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv %s/data/schedule.csv' % MEDIA_ROOT
-    # else:
     gdrive_dir = 'cd %s/cache' % MEDIA_ROOT
     gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv schedule.csv'
     try:
         subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["SCHEDULE_SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
-        print "    \033[41mERROR\033[0m: Failed to download \033[94mSchedule\033[0m spreadsheet."
-        print traceback.format_exc()
+        send_error_slack(traceback.format_exc(), 'Download Schedule Spreadsheet', 'cache_schedule', 'log_cron_cache.log')
         if os.path.exists('%s/cache/schedule.pickle' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
             t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.pickle' % MEDIA_ROOT))
@@ -563,13 +552,7 @@ def cache_schedule():
         subprocess.check_call("rm %s/cache/schedule.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return {'last':last, 'this':this, 'next':next, 'tp':tp}
     except:
-        print "    \033[41mERROR\033[0m: Failed to parse \033[94mSchedule\033[0m spreadsheet."
-        err = traceback.format_exc()
-        ts = '%s\t\tcache_schedule()\n' % time.ctime()
-        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-        open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_schedule()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
-        raise Exception('Error with parsing spreadsheet csv.')
+        send_error_slack(traceback.format_exc(), 'Parse Schedule Spreadsheet', 'cache_schedule', 'log_cron_cache.log')
 
 def dash_schedule(request):
     return pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
@@ -581,8 +564,7 @@ def cache_duty():
     try:
         subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["DUTY_SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
-        print "    \033[41mERROR\033[0m: Failed to download \033[94mDuty\033[0m spreadsheet."
-        print traceback.format_exc()
+        send_error_slack(traceback.format_exc(), 'Download Duty Spreadsheet', 'cache_duty', 'log_cron_cache.log')
         if os.path.exists('%s/cache/duty.pickle' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
             t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/duty.pickle' % MEDIA_ROOT))
@@ -603,13 +585,7 @@ def cache_duty():
         subprocess.check_call("rm %s/cache/duty.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return {'jobs':jobs, 'ppls':ppls}
     except:
-        print "    \033[41mERROR\033[0m: Failed to parse \033[94mDuty\033[0m spreadsheet."
-        err = traceback.format_exc()
-        ts = '%s\t\tcache_duty()\n' % time.ctime()
-        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-        open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
-        if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_duty()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
-        raise Exception('Error with parsing spreadsheet csv.')
+        send_error_slack(traceback.format_exc(), 'Parse Duty Spreadsheet', 'cache_duty', 'log_cron_cache.log')
 
 def dash_duty(request):
     return pickle.load(open('%s/cache/duty.pickle' % MEDIA_ROOT, 'rb'))
@@ -619,8 +595,7 @@ def cache_cal():
     try:
         subprocess.check_call('curl --silent --request GET "%s" -o %s/cache/calendar.ics' % (GCAL['ICS'], MEDIA_ROOT), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
-        print "    \033[41mERROR\033[0m: Failed to download \033[94mCalendar\033[0m ICS file."
-        print traceback.format_exc()
+        send_error_slack(traceback.format_exc(), 'Download Calendar ICS', 'cache_cal', 'log_cron_cache.log')
         if os.path.exists('%s/cache/calendar.pickle' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
             t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT))
@@ -712,11 +687,7 @@ def cache_cal():
         subprocess.check_call("rm %s/cache/calendar.ics" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return simplejson.dumps(data)    
     except:
-        print "    \033[41mERROR\033[0m: Failed to parse \033[94mCalendar\033[0m ICS file."
-        err = traceback.format_exc()
-        ts = '%s\t\tcache_cal()\n' % time.ctime()
-        open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
-        open('%s/cache/log_cron_cache.log' % MEDIA_ROOT, 'a').write('%s\n%s\n' % (ts, err))
+        send_error_slack(traceback.format_exc(), 'Parse Calendar ICS', 'cache_cal', 'log_cron_cache.log')
 
         if os.path.exists('%s/cache/calendar.pickle' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
