@@ -143,6 +143,10 @@ def set_backup_form(request):
         # pass
 
 
+def get_bot_form():
+    return {}
+
+
 def restyle_apache():
     password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
     apache_url = "http://%s/server-status/" % env('SSL_HOST')

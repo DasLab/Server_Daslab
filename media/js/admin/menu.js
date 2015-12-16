@@ -85,6 +85,12 @@ $(document).ready(function () {
     	$("#nav_sys_lg").addClass("active");
     	$("ul.breadcrumb").css("border-bottom", "5px solid #ff69bc");
         $('<li><span style="color: #000;" class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;<a href="">System</a></li>').insertAfter($("ul.breadcrumb > li:first"));
+    } else if ($(location).attr("href").indexOf("admin/bot") != -1) {
+        $("#nav_bot").addClass("active");
+        $("#nav_sys").addClass("active");
+        $("#nav_sys_lg").addClass("active");
+        $("ul.breadcrumb").css("border-bottom", "5px solid #ff69bc");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;<a href="">System</a></li>').insertAfter($("ul.breadcrumb > li:first"));
     } else if ($(location).attr("href").indexOf("admin/src/news") != -1) {
     	$("#nav_news").addClass("active");
     	$("#nav_global").addClass("active");
@@ -144,6 +150,12 @@ $(document).ready(function () {
     	$("#nav_internal").addClass("active");
     	$("#nav_internal_lg").addClass("active");
     	$("ul.breadcrumb").css("border-bottom", "5px solid #eeb211");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;<a href="">Internal Site</a></li>').insertAfter($("ul.breadcrumb > li:first"));
+    } else if ($(location).attr("href").indexOf("admin/slack") != -1) {
+        $("#nav_slack").addClass("active");
+        $("#nav_internal").addClass("active");
+        $("#nav_internal_lg").addClass("active");
+        $("ul.breadcrumb").css("border-bottom", "5px solid #eeb211");
         $('<li><span style="color: #000;" class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;<a href="">Internal Site</a></li>').insertAfter($("ul.breadcrumb > li:first"));
  	} else if ($(location).attr("href").indexOf("admin/doc") != -1) {
     	$("#nav_doc").addClass("active");

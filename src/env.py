@@ -68,11 +68,13 @@ class SYS_PATH(object):
             'admin_apache': MEDIA_ROOT + '/media/html/admin_apache.html',
             'admin_aws': MEDIA_ROOT + '/media/html/admin_aws.html',
             'admin_ga': MEDIA_ROOT + '/media/html/admin_ga.html',
+            'admin_bot': MEDIA_ROOT + '/media/html/admin_bot.html',
             'admin_git': MEDIA_ROOT + '/media/html/admin_git.html',
             'admin_backup': MEDIA_ROOT + '/media/html/admin_backup.html',
             'admin_dir': MEDIA_ROOT + '/media/html/admin_dir.html',
             'admin_doc': MEDIA_ROOT + '/media/html/admin_doc.html',
             'admin_export': MEDIA_ROOT + '/media/html/admin_export.html',
+            'admin_slack': MEDIA_ROOT + '/media/html/admin_slack.html',
 
             '400': MEDIA_ROOT + '/media/html/error_400.html',
             '401': MEDIA_ROOT + '/media/html/error_401.html',

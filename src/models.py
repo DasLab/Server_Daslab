@@ -262,6 +262,81 @@ class ExportForm(forms.Form):
     include_preprint = forms.BooleanField(initial=True, required=False)
 
 
+REMINDER_1_CHOICES = (
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+)
+
+REMINDER_2_CHOICES = (
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5'),
+)
+
+CACHE_3 = (
+    (2, '2'),
+    (3, '3'),
+    (5, '5'),
+    (10, '10'),
+)
+
+CACHE_15 = (
+    (10, '10'),
+    (15, '15'),
+    (20, '20'),
+    (30, '30'),
+)
+
+CACHE_30 = (
+    (30, '30'),
+    (60, '60'),
+)
+
+class BotSettingForm(forms.Form):
+    is_slack = forms.BooleanField(initial=True)
+    is_cache = forms.BooleanField(initial=True)
+
+    is_duty_bday = forms.BooleanField(initial=True)
+    is_duty_breakfast = forms.BooleanField(initial=True)
+    is_duty_aws = forms.BooleanField(initial=True)
+    is_duty_schedule = forms.BooleanField(initial=True)
+    is_duty_website = forms.BooleanField(initial=True)
+    is_duty_trip = forms.BooleanField(initial=True)
+    is_duty_git = forms.BooleanField(initial=True)
+
+    is_admin_backup = forms.BooleanField(initial=True)
+    is_admin_gdrive = forms.BooleanField(initial=True)
+
+    is_bday = forms.BooleanField(initial=True)
+    is_flash_slide = forms.BooleanField(initial=True)
+
+    is_user_jc_1 = forms.BooleanField(initial=True)
+    is_user_jc_2 = forms.BooleanField(initial=True)
+    is_admin_jc = forms.BooleanField(initial=True)
+    is_user_es_1 = forms.BooleanField(initial=True)
+    is_user_es_2 = forms.BooleanField(initial=True)
+    is_admin_es = forms.BooleanField(initial=True)
+    is_user_rot_1 = forms.BooleanField(initial=True)
+    is_user_rot_2 = forms.BooleanField(initial=True)
+    is_admin_rot = forms.BooleanField(initial=True)
+
+    is_duty_mic = forms.BooleanField(initial=True)
+    is_duty_broadcast = forms.BooleanField(initial=True)
+    is_duty_webnews = forms.BooleanField(initial=True)
+
+    day_duty_month = forms.ChoiceField(choices=WEEKDAY_CHOICES, initial=1, required=True)
+    day_duty_quarter = forms.ChoiceField(choices=WEEKDAY_CHOICES, initial=1, required=True)
+    day_meeting = forms.ChoiceField(choices=WEEKDAY_CHOICES, initial=5)
+    day_reminder_1 = forms.ChoiceField(choices=REMINDER_1_CHOICES, initial=1, required=True)
+    day_reminder_2 = forms.ChoiceField(choices=REMINDER_1_CHOICES, initial=3, required=True)
+
+    cache_3 = forms.ChoiceField(choices=CACHE_3, initial=3, required=True)
+    cache_15 = forms.ChoiceField(choices=CACHE_15, initial=15, required=True)
+    cache_30 = forms.ChoiceField(choices=CACHE_30, initial=30, required=True)
+
 class LoginForm(forms.Form):
     username = forms.CharField(required=True)
     password = forms.CharField(required=True, widget=forms.PasswordInput)

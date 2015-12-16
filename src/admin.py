@@ -254,18 +254,31 @@ def backup(request):
     form = BackupForm(initial=get_backup_form())
     return render_to_response(PATH.HTML_PATH['admin_backup'], {'form':form, 'flag':flag, 'email':EMAIL_HOST_USER}, context_instance=RequestContext(request))
 
+def bot(request):
+    flag = 0
+    if request.method == 'POST':
+        set_bot_form(request)
+        flag = 1
+
+    form = BotSettingForm(initial=get_bot_form())
+    return render_to_response(PATH.HTML_PATH['admin_bot'], {'form':form, 'flag':flag}, context_instance=RequestContext(request))
+
 def dir(request):
     return render_to_response(PATH.HTML_PATH['admin_dir'], {}, context_instance=RequestContext(request))
 
-def doc(request):
-    return render_to_response(PATH.HTML_PATH['admin_doc'], {}, context_instance=RequestContext(request))
-
+def slack(request):
+    return render_to_response(PATH.HTML_PATH['admin_slack'], {}, context_instance=RequestContext(request))
 
 def export(request):
     if request.method == 'POST':
         return export_citation(request)
     else:
         return render_to_response(PATH.HTML_PATH['admin_export'], {'form':ExportForm()}, context_instance=RequestContext(request))
+
+
+def doc(request):
+    return render_to_response(PATH.HTML_PATH['admin_doc'], {}, context_instance=RequestContext(request))
+
 
 def get_ver(request):
     lines = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r').readlines()
@@ -304,8 +317,11 @@ admin.site.register_view('dash_dash/', view=dash_dash, visible=False)
 admin.site.register_view('dash_stat/', view=dash_stat, visible=False)
 
 admin.site.register_view('dir/', view=dir, visible=False)
-admin.site.register_view('doc/', view=doc, visible=False)
+admin.site.register_view('bot/', view=bot, visible=False)
+admin.site.register_view('slack/', view=slack, visible=False)
 admin.site.register_view('export/', view=export, visible=False)
+
+admin.site.register_view('doc/', view=doc, visible=False)
 
 admin.site.register_view('get_ver/', view=get_ver, visible=False)
 admin.site.register_view('get_backup/', view=get_backup, visible=False)
