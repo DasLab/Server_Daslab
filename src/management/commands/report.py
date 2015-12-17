@@ -14,6 +14,7 @@ class Command(BaseCommand):
     help = 'Send email to admin of weekly aggregated errors and gzip the log_cron.log file.'
 
     def handle(self, *args, **options):
+        if not BOT['SLACK']['IS_REPORT']: return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 
@@ -21,7 +22,7 @@ class Command(BaseCommand):
             if os.path.exists('%s/cache/log_alert_admin.log' % MEDIA_ROOT):
                 lines = open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'r').readlines()
                 lines = ''.join(lines)
-                if not IS_SLACK:
+                if (not IS_SLACK):
                     send_notify_emails('{%s} SYSTEM: Weekly Error Report' % env('SERVER_NAME'), 'This is an automatic email notification for the aggregated weekly error report. The following error occurred:\n\n\n%s\n\n%s Website Admin' % (lines, env('SERVER_NAME')))
                     open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'w').write('')
                     self.stdout.write("\033[92mSUCCESS\033[0m: All errors were sent to \033[94mEmail\033[0m. Log cleared.")
@@ -39,5 +40,7 @@ class Command(BaseCommand):
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
             sys.exit(1)
 
+        if (not DEBUG) and BOT['SLACK']['ADMIN']['MSG_REPORT']:
+            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled weekly *Report* finished @ _%s_\n' % time.ctime()}])
         self.stdout.write("Finished with \033[92mSUCCESS\033[0m!")
         self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))

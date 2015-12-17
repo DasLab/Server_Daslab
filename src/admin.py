@@ -117,7 +117,7 @@ admin.site.register(Presentation, PresentationAdmin)
 ############################################################################################################################################
 
 def sys_stat(request):
-    call_command('versions')
+    call_command('versions', '1')
     return HttpResponseRedirect('/admin/')
 
 def backup_stat(request):

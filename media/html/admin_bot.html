@@ -72,6 +72,18 @@
 								{{form.is_flash_slide}}
 								<span>Setup Flash Slides automatically</span>
 							</ul>
+							<br/>
+							<p><span class="lead"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;<code><b>Group Meeting</b></code></span> is on:</p>
+							<div class="row">
+								<div class="col-md-2"></div>
+								<div class="col-md-10">
+				                	<div class="input-group">
+										<span class="input-group-addon">Every</span>
+										{{form.day_meeting}}
+									</div>
+								</div>
+							</div>
+							<br/>
 						</div>
 						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 							<h4><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>&nbsp;&nbsp;Notifications</h4>
@@ -82,23 +94,15 @@
 								<span>Backup Statistics</span>
 								{{form.is_admin_gdrive}}
 								<span>Sync Statistics</span>
+								{{form.is_admin_version}}
+								<span>Update Versions</span>
+								{{form.is_admin_report}}
+								<span>Weekly Alert Report</span>
 							</ul>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<br/>
-							<div class="row">
-				                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-									<span class="lead"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;<code><b>Group Meeting</b></code></span> is on:
-								</div>
-				                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-				                	<div class="input-group">
-										<span class="input-group-addon">Every</span>
-										{{form.day_meeting}}
-									</div>
-								</div>
-							</div>
 							<h4><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Group Meeting Reminder &amp; Flash Slide Setup</h4>
 							<div class="row">
 				                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
@@ -194,6 +198,16 @@
 					</ul>
                     <br/>
 				</div>
+				<div class="thumbnail" style="padding:10px 20px;">
+					<h4><span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;&nbsp;Misc</h4>
+					<ul>
+						{{form.is_version}}
+						<span>Update system version weekly</span>
+						{{form.is_report}}
+						<span>Report admin alerts weekly</span>
+					</ul>
+				</div>
+
 				<div class="thumbnail" style="padding:10px 20px;">
 					<h4><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>&nbsp;&nbsp;<code><b>Eterna Special</b></code></h4>
 					<ul>

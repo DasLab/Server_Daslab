@@ -74,7 +74,7 @@ class Command(BaseCommand):
                 send_notify_slack(h[0], h[1], h[2])
                 if '@' in h[0]:
                     self.stdout.write('\033[92mSUCCESS\033[0m: PM\'ed birthday wish to \033[94m%s\033[0m in Slack.' % h[0])
-        if msg_handles and IS_SLACK: 
+        if (not DEBUG) and msg_handles: 
             send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled *Birthday Wishes* sent to `%s` @ _%s_\n' % (' '.join(ids), time.ctime())}])
             self.stdout.write("Finished with \033[92mSUCCESS\033[0m!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))

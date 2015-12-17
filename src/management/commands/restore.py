@@ -37,7 +37,7 @@ class Command(BaseCommand):
             subprocess.check_call('rm -rf %s/data' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             subprocess.check_call('mv %s/backup/data %s/' % (MEDIA_ROOT, MEDIA_ROOT), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             subprocess.check_call('rm -rf %s/backup/data' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            if not DEBUG:
+            if (not DEBUG):
                 subprocess.check_call('%s/util_chmod.sh' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError:
             send_error_slack(traceback.format_exc(), 'Restore Static Files', ' '.join(sys.argv), 'log_cron_restore.log')
@@ -55,7 +55,7 @@ class Command(BaseCommand):
             subprocess.check_call('rm -rf /etc/apache2', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             subprocess.check_call('mv %s/backup/apache2 /etc/apache2 ' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             subprocess.check_call('rm -rf %s/backup/apache2' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            if not DEBUG:
+            if (not DEBUG):
                 subprocess.check_call('apache2ctl restart', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError:
             send_error_slack(traceback.format_exc(), 'Restore Apache2 Settings', ' '.join(sys.argv), 'log_cron_restore.log')
@@ -73,7 +73,7 @@ class Command(BaseCommand):
             subprocess.check_call('rm -rf %s/config', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             subprocess.check_call('mv %s/backup/config %s/config ' (% MEDIA_ROOT, MEDIA_ROOT), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             subprocess.check_call('rm -rf %s/backup/config' % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            if not DEBUG:
+            if (not DEBUG):
                 subprocess.check_call('apache2ctl restart', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError:
             send_error_slack(traceback.format_exc(), 'Restore Config Settings', ' '.join(sys.argv), 'log_cron_restore.log')
