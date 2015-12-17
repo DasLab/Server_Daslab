@@ -129,6 +129,9 @@ class Command(BaseCommand):
                 msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"good", "title":'Group Meeting Reminder', "text":'Hi all,\n\nThis is a reminder that group meeting will be *`%s`* for this week.\n' % type_this, "thumb_url":'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg', "fields":[{'title':'Date', 'value':'_%s_' % datetime.strftime(date, '%b %d %Y (%a)'), 'short':True}, {'title':'Time & Place', 'value':'_%s @ %s_' % (clock, place), 'short':True}, {'title':'Type', 'value':'`%s`' % type_this, 'short':True}, {'title':'Presenter', 'value':'%s' % ', \n'.join(ids), 'short':True}] }]) )
                 msg_handles.append( (send_to, '', [{"fallback":'%s' % title, "mrkdwn_in": ["text"], "color":"warning", "title":'%s' % title, "text":'*<https://docs.google.com/presentation/d/%s/edit#slide=id.p>*\nA <https://daslab.stanford.edu/group/flash_slide/|full list> of Flash Slide links is available on the DasLab Website.' % ppt_id}]) )
 
+            if result['last'][3].lower().replace(' ', '') == 'endofrotationtalk' and BOT['SLACK']['REMINDER']['ROT']['REMINDER_2']:
+                msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'REMINDER', "mrkdwn_in": ["text"], "color":"warning", "text":'*REMINDER*: Revoke permissions (_Group Website_ and _Slack Membership_) of recent finished *RotationStudent*.'}]) )
+
 
             if result['next'][1] == 'N/A':
                 msg_next = 'For next week, there will be *`NO Meeting`*'
