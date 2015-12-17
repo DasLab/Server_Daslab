@@ -196,6 +196,9 @@ $(document).ready(function () {
     if ($(location).attr("pathname") == "/admin/auth/user/" || $(location).attr("pathname") == "/admin/auth/user") {
         $("body").append('<script type="text/javascript" src="/site_media/js/admin/group.js"></script>');
     }
+    if ($(location).attr("pathname") == "/admin/src/slackmessage/" || $(location).attr("pathname") == "/admin/slack/slackmessage") {
+        $("div.object-tools").remove();
+    }
 
 	// $('.left-nav > ul > li > ul > li > a[href="/admin/aws/"]').attr("disabled", "disabled").css("text-decoration", "line-through").attr("href", "");
 });
