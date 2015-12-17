@@ -366,11 +366,12 @@ h1.section>span.num {
 .excerpt {
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 2.8em;
+  max-height: 5em;
 }
 
 .excerpt:hover {
   height: auto;
+  max-height: none;
 }
 
 .popover-title{

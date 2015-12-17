@@ -215,7 +215,7 @@ class Command(BaseCommand):
             self.stdout.write('\033[92mSUCCESS\033[0m: Meeting Reminder posted in Slack.')
 
         if (not DEBUG):
-            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled weekly *flash slides setup* finished @ _%s_\n' % time.ctime()}])
+            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled weekly *Flash Slides Setup* finished @ _%s_\n' % time.ctime()}])
         self.stdout.write("Finished with \033[92mSUCCESS\033[0m!")
         self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
 
