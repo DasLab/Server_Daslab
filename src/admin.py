@@ -255,19 +255,17 @@ def dash_stat(request):
 
 
 def backup(request):
-    flag = 0
+    flag = -1
     if request.method == 'POST':
-        set_backup_form(request)
-        flag = 1
+        flag = set_backup_form(request)
 
     form = BackupForm(initial=get_backup_form())
     return render_to_response(PATH.HTML_PATH['admin_backup'], {'form':form, 'flag':flag, 'email':EMAIL_HOST_USER}, context_instance=RequestContext(request))
 
 def bot(request):
-    flag = 0
+    flag = -1
     if request.method == 'POST':
-        set_bot_form(request)
-        flag = 1
+        flag = set_bot_form(request)
 
     form = BotSettingForm(initial=get_bot_form())
     return render_to_response(PATH.HTML_PATH['admin_bot'], {'form':form, 'flag':flag, 'BOT':BOT}, context_instance=RequestContext(request))

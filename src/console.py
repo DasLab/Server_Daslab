@@ -147,7 +147,7 @@ def get_backup_form():
 
 def set_backup_form(request):
     form = BackupForm(request.POST)
-    if not form.is_valid(): return
+    if not form.is_valid(): return 1
 
     cron_backup = '%s * * %s' % (form.cleaned_data['time_backup'].strftime('%M %H'), form.cleaned_data['day_backup'])
     cron_upload = '%s * * %s' % (form.cleaned_data['time_upload'].strftime('%M %H'), form.cleaned_data['day_upload'])
@@ -165,6 +165,7 @@ def set_backup_form(request):
     open('%s/config/cron.conf' % MEDIA_ROOT, 'w').writelines(simplejson.dumps(env_cron, sort_keys=True, indent=' ' * 4))
     refresh_settings()
     set_sys_crontab()
+    return 0
 
 
 def get_bot_form():
@@ -178,7 +179,7 @@ def get_bot_form():
 
 def set_bot_form(request):
     form = BotSettingForm(request.POST)
-    if not form.is_valid(): return
+    if not form.is_valid(): return 1
 
     BOT = {"SLACK": {"IS_SLACK":form.cleaned_data['is_slack'], "IS_FLASH_SETUP":form.cleaned_data['is_flash_slide'], "IS_VERSION":form.cleaned_data['is_version'], "IS_REPORT":form.cleaned_data['is_report'], "MSG_BDAY":form.cleaned_data['is_bday'], "DUTY": {"MONTH": {"MSG_BDAY":form.cleaned_data['is_duty_bday'], "MSG_BREAKFAST":form.cleaned_data['is_duty_breakfast'], "MSG_AWS":form.cleaned_data['is_duty_aws'], "MSG_SCHEDULE":form.cleaned_data['is_duty_schedule'], "MSG_WEBSITE":form.cleaned_data['is_duty_website'], "WEEK_DAY":form.cleaned_data['day_duty_month']}, "QUARTER": {"MSG_TRIP":form.cleaned_data['is_duty_trip'], "MSG_GIT":form.cleaned_data['is_duty_git'], "WEEK_DAY":form.cleaned_data['day_duty_quarter']}, "ETERNA": {"MSG_MIC":form.cleaned_data['is_duty_mic'], "MSG_BROADCAST":form.cleaned_data['is_duty_broadcast'], "MSG_NEWS":form.cleaned_data['is_duty_webnews']} }, "REMINDER": {"DAY_BEFORE_REMINDER_1": form.cleaned_data['day_reminder_1'], "DAY_BEFORE_REMINDER_2": form.cleaned_data['day_reminder_2'], "JC": {"REMINDER_1":form.cleaned_data['is_user_jc_1'], "REMINDER_2":form.cleaned_data['is_user_jc_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_jc']}, "ES": {"REMINDER_1":form.cleaned_data['is_user_es_1'], "REMINDER_2":form.cleaned_data['is_user_es_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_es']}, "ROT": {"REMINDER_1":form.cleaned_data['is_user_rot_1'], "REMINDER_2":form.cleaned_data['is_user_rot_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_rot']} }, "ADMIN": {"MSG_BACKUP":form.cleaned_data['is_admin_backup'], "MSG_GDRIVE":form.cleaned_data['is_admin_gdrive'], "MSG_VERSION":form.cleaned_data['is_admin_version'], "MSG_REPORT":form.cleaned_data['is_admin_report']} }, "CACHE": { "IS_CACHE":form.cleaned_data['is_cache'], "INTERVAL_3":form.cleaned_data['cache_3'], "INTERVAL_15":form.cleaned_data['cache_15'], "INTERVAL_30":form.cleaned_data['cache_30']} }
 
@@ -202,6 +203,7 @@ def set_bot_form(request):
     open('%s/config/bot.conf' % MEDIA_ROOT, 'w').writelines(simplejson.dumps(BOT, sort_keys=True, indent=' ' * 4))
     refresh_settings()
     set_sys_crontab()
+    return 0
 
 
 def restyle_apache():

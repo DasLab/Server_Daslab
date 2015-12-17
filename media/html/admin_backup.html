@@ -228,7 +228,7 @@
 
   <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalStat" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content panel-success">
+      <div class="modal-content panel-primary">
         <div class="modal-header panel-heading">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="stat_label">
@@ -237,7 +237,7 @@
           </h4>
         </div>
         <div class="modal-body panel-body">
-          <h2><span class="label label-danger">NEW SETTINGS APPLIED</span></h2>
+          <h2><span class="label label-default">CURRENT SETTINGS</span></h2>
           <br/>
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <table class="table table-hover">
@@ -275,7 +275,17 @@
 
       $("#modal_keep").html('Keep <span class="label label-orange">' + $("#id_keep").val() + '</span> Days');
 
-      if ({{flag}}) {$("#modal").modal("show");}
+      {% if flag != -1 %}
+        {% if flag == 1 %}
+          $("div.modal-body > h2 > span.label").removeClass("label-default").addClass("label-danger");
+          $("div.modal-body > h2 > span.label").html("SETTINGS NOT APPLIED");
+        {% else %}
+          $("div.modal-body > h2 > span.label").removeClass("label-default").addClass("label-success");
+          $("div.modal-body > h2 > span.label").html("NEW SETTINGS APPLIED");
+        {% endif %}
+
+        $("#modal").modal("show");
+      {% endif %}
     });
   </script>
 {% endblock %}
