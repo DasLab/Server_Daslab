@@ -313,9 +313,13 @@ class BotSettingForm(forms.Form):
 
     is_admin_backup = forms.BooleanField(initial=True, required=False)
     is_admin_gdrive = forms.BooleanField(initial=True, required=False)
+    is_admin_version = forms.BooleanField(initial=True, required=False)
+    is_admin_report = forms.BooleanField(initial=True, required=False)
 
     is_bday = forms.BooleanField(initial=True, required=False)
     is_flash_slide = forms.BooleanField(initial=True, required=False)
+    is_version = forms.BooleanField(initial=True, required=False)
+    is_report = forms.BooleanField(initial=True, required=False)
 
     is_user_jc_1 = forms.BooleanField(initial=True, required=False)
     is_user_jc_2 = forms.BooleanField(initial=True, required=False)
