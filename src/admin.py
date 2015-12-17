@@ -113,6 +113,15 @@ class PresentationAdmin(admin.ModelAdmin):
     ]
 admin.site.register(Presentation, PresentationAdmin)
 
+class SlackMessageAdmin(admin.ModelAdmin):
+    list_display = ('date', 'receiver', 'message')
+    ordering = ('-date',)
+
+    fieldsets = [
+        (format_html('<span class="glyphicon glyphicon-comment"></span>&nbsp;Contents'), {'fields': ['date', 'receiver', 'content', 'attachment']}),
+    ]
+admin.site.register(SlackMessage, SlackMessageAdmin)
+
 
 ############################################################################################################################################
 

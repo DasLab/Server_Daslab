@@ -28,14 +28,16 @@ from django.template import RequestContext
 from django.conf import settings
 
 from src.settings import *
-from src.models import BackupForm, ExportForm, BotSettingForm, Publication
-# from dash import dash_schedule
+from src.models import BackupForm, ExportForm, BotSettingForm, Publication, SlackMessage
 
 
 def send_notify_slack(msg_channel, msg_content, msg_attachment):
     if not settings._wrapped.IS_SLACK: return
     sh = Slacker(SLACK["ACCESS_TOKEN"])
     sh.chat.post_message(msg_channel, msg_content, attachments=msg_attachment, as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
+
+    msg = SlackMessage(date=datetime.now(), receiver=msg_channel, content=msg_content, attachment=msg_attachment)
+    msg.save()
 
 
 def send_notify_emails(msg_subject, msg_content):
@@ -52,12 +54,12 @@ def send_error_slack(err, task='', fn='', log_file=''):
     if DEBUG: return
     if task:
         print "    \033[41mERROR\033[0m: Failed on \033[94m%s\033[0m." % task
-        task = 'Failed on %s.\n'
+        task = 'Failed on %s.\n' % task
     ts = '%s\t\t%s\n' % (time.ctime(), fn)
     open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
     if log_file:
         open('%s/cache/%s' % (MEDIA_ROOT, log_file), 'a').write('%s\n%s\n' % (ts, err))
-    if settings._wrapped.IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: %s*%s* @ _%s_\n>```%s```\n' % (fn, task, time.ctime(), err)}])
+    if settings._wrapped.IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: %s*%s* @ _%s_\n>```%s```\n' % (task, fn, time.ctime(), err)}])
 
 
 def get_date_time(keyword):

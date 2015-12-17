@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import os.path
 import subprocess
 import sys
@@ -7,6 +8,7 @@ import traceback
 from django.core.management.base import BaseCommand
 
 from src.settings import *
+from src.models import SlackMessage
 from src.console import send_notify_emails, send_notify_slack, send_error_slack
 
 
@@ -34,6 +36,11 @@ class Command(BaseCommand):
                 self.stdout.write("\033[92mSUCCESS\033[0m: \033[94mlog_cron.log\033[0m gzipped.")
             else:
                 self.stdout.write("\033[92mSUCCESS\033[0m: \033[94mlog_cron.log\033[0m not exist, nothing to do.")
+
+            msgs = SlackMessage.objects.filter(date__lte=(datetime.utcnow() - timedelta(days=15)).date())
+            for msg in msgs:
+                msg.delete()
+
         except:
             send_error_slack(traceback.format_exc(), 'Weekly Error Report', ' '.join(sys.argv), 'log_cron_report.log')
             self.stdout.write("Finished with \033[41mERROR\033[0m!")

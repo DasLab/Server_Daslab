@@ -206,6 +206,21 @@ class Presentation(models.Model):
         verbose_name_plural = 'Archived Presentations'
 
 
+class SlackMessage(models.Model):
+    date = models.DateField(verbose_name='Message Date')
+    receiver = models.CharField(max_length=255)
+    content = models.TextField(help_text='<span class="glyphicon glyphicon-comment"></span>&nbsp;Main text of message</span>.')
+    attachment = models.TextField(help_text='<span class="glyphicon glyphicon-compressed"></span>&nbsp;Attachment JSON (multi-media) of message.')
+
+    def message(self):
+        return '%s @ %s' % (self.content, self.attachment)
+    message.admin_order_field = 'attachment'
+
+    class Meta():
+        verbose_name = 'Slack Message'
+        verbose_name_plural = 'Slack Messages'
+
+
 ############################################################################################################################################
 
 

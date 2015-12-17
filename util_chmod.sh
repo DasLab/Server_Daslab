@@ -1,7 +1,7 @@
 sudo usermod -a -G www-data ubuntu
 
 sudo chgrp -R www-data *
-sudo chgrp -R ubuntu cache
+# sudo chgrp -R ubuntu cache
 sudo chown -R ubuntu *.py *.md *.txt src media config .gitignore
 sudo chown -R www-data backup data cache
 

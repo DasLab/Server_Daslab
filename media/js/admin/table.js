@@ -196,6 +196,21 @@ $(document).ready(function () {
 		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-cd"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
 		$("ul.breadcrumb > li:first").next().remove();
 		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;')
+ 	} else if ($(location).attr("href").indexOf("admin/src/slackmessage") != -1) {
+		$("th.column-date").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-receiver").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
+		$("th.column-message").addClass("col-lg-7 col-md-7 col-sm-7 col-xs-7");
+
+		$("th.column-date > div.text > a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Date');
+		$("th.column-receiver > div.text > a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Receiver');
+		$("th.column-message > div.text > a").html('<span class="glyphicon glyphicon-compressed"></span>&nbsp;&nbsp;Message (Content + Attachment)');
+
+		$("td.field-receiver").each(function() { $(this).html("<a>" + $(this).html() + "</a>");	});
+		$("td.field-message").each(function() { $(this).html('<div class="well well-sm" style="font-family:monospace;">' + $(this).html() + "</div>");	});
+
+		$("div.col-md-6 > h2.legend").html('<img src="/site_media/images/icons/slack.png" style="vertical-align:text-top;" height="16px">&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
+		$("ul.breadcrumb > li:first").next().remove();
+		$("ul.breadcrumb > li:first").next().prepend('<img src="/site_media/images/icons/slack.png" height="21" style="vertical-align:text-top;">&nbsp;&nbsp;')
 	} else if ($(location).attr("href").indexOf("admin/auth/user") != -1) {
 		$("th.column-username").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
 		$("th.column-email").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");

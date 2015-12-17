@@ -151,7 +151,7 @@ $(document).ready(function () {
     	$("#nav_internal_lg").addClass("active");
     	$("ul.breadcrumb").css("border-bottom", "5px solid #eeb211");
         $('<li><span style="color: #000;" class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;<a href="">Internal Site</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("admin/slack") != -1) {
+    } else if ($(location).attr("href").indexOf("admin/src/slackmessage") != -1) {
         $("#nav_slack").addClass("active");
         $("#nav_internal").addClass("active");
         $("#nav_internal_lg").addClass("active");
