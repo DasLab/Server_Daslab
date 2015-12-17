@@ -270,7 +270,7 @@ def bot(request):
         flag = 1
 
     form = BotSettingForm(initial=get_bot_form())
-    return render_to_response(PATH.HTML_PATH['admin_bot'], {'form':form, 'flag':flag}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_bot'], {'form':form, 'flag':flag, 'BOT':BOT}, context_instance=RequestContext(request))
 
 def dir(request):
     return render_to_response(PATH.HTML_PATH['admin_dir'], {}, context_instance=RequestContext(request))

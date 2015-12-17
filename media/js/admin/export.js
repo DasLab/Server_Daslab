@@ -1,47 +1,38 @@
 $(document).ready(function() {
-	// $("#iframe").css("width", parseInt($("#content").css("width")) - 50);
-	// $("#iframe").css("height", $("#footer").position().top - $("#content").position().top - 175);
 	$("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-floppy-save"></span>&nbsp;&nbsp;Publication Export</li>');
-	$("ul[id^=id_]").css("list-style-type", "none");
 
-	$("[id^=id_text_type]").on("change", function() {
-		if ($(this).is(":checked")) {
-			if ($(this).attr("id").indexOf("_0") != -1) {
-				$("#id_bold_author, #id_bold_year, #id_underline_title, #id_italic_journal, #id_bold_volume").attr("disabled", "disabled");
-				$("[class^=item_]").css({"font-weight":"normal", "font-style":"normal", "text-decoration":"none"})
-			} else {
-				$("#id_bold_author, #id_bold_year, #id_underline_title, #id_italic_journal, #id_bold_volume").removeAttr("disabled");
-				$("#id_bold_author, #id_bold_year, #id_underline_title, #id_italic_journal, #id_bold_volume").trigger("change");
-			}
+	$("#id_text_type").on("change", function() {
+		if ($(this).val() == "0") {
+			$("#id_bold_author, #id_bold_year, #id_underline_title, #id_italic_journal, #id_bold_volume").attr("disabled", "disabled");
+			$("[class^=item_]").css({"font-weight":"normal", "font-style":"normal", "text-decoration":"none"})
+		} else {
+			$("#id_bold_author, #id_bold_year, #id_underline_title, #id_italic_journal, #id_bold_volume").removeAttr("disabled");
+			$("#id_bold_author, #id_bold_year, #id_underline_title, #id_italic_journal, #id_bold_volume").trigger("change");
 		}
 	});
 
-	$("[id^=id_sort_order]").on("change", function() {
-		if ($(this).is(":checked")) {
-			if ($(this).attr("id").indexOf("_0") != -1) {
-				$("#prv_item_1").detach().insertAfter($("#prv_item_3"));
-				$("#prv_item_2").detach().insertAfter($("#prv_item_3"));
-				$("[id^=id_number_order]").trigger("change");
-			} else {
-				$("#prv_item_1").detach().insertBefore($("#prv_item_3"));
-				$("#prv_item_2").detach().insertBefore($("#prv_item_3"));
-				$("[id^=id_number_order]").trigger("change");
+	$("#id_sort_order").on("change", function() {
+		if ($(this).val() == "0") {
+			$("#prv_item_1").detach().insertAfter($("#prv_item_3"));
+			$("#prv_item_2").detach().insertAfter($("#prv_item_3"));
+			$("[id^=id_number_order]").trigger("change");
+		} else {
+			$("#prv_item_1").detach().insertBefore($("#prv_item_3"));
+			$("#prv_item_2").detach().insertBefore($("#prv_item_3"));
+			$("[id^=id_number_order]").trigger("change");
 
-			}
 		}
 	});
-	$("[id^=id_number_order]").on("change", function() {
-		if ($(this).is(":checked") && $("#id_order_number").is(":checked")) {
-			if ($(this).attr("id").indexOf("_0") != -1) {
-				var list = $("[id^=prv_item_]>span.item_num");
-				for (var i = 0; i < list.length; i++) {
-					$(list[i]).html((i + 1).toString() + '.');
-				}
-			} else {
-				var list = $("[id^=prv_item_]>span.item_num");
-				for (var i = 0; i < list.length; i++) {
-					$(list[i]).html((list.length - i).toString() + '.');
-				}
+	$("#id_number_order").on("change", function() {
+		if ($(this).val() == "0") {
+			var list = $("[id^=prv_item_]>span.item_num");
+			for (var i = 0; i < list.length; i++) {
+				$(list[i]).html((i + 1).toString() + '.');
+			}
+		} else {
+			var list = $("[id^=prv_item_]>span.item_num");
+			for (var i = 0; i < list.length; i++) {
+				$(list[i]).html((list.length - i).toString() + '.');
 			}
 		}
 	});

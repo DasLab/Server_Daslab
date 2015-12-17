@@ -241,12 +241,38 @@
 
 		</form>
 	</div>
+
+
+	<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalStat" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content panel-success">
+				<div class="modal-header panel-heading">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="stat_label">
+						<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+						&nbsp;&nbsp;Change of Settings
+					</h4>
+				</div>
+				<div class="modal-body panel-body">
+					<h2><span class="label label-danger">NEW SETTINGS APPLIED</span></h2>
+					<br/>
+					<p id="modal_set" class="well well-sm" style="font-family:monospace;"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 {% endblock %}
 
 {% block extrajs %}
+  <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}bot{{DEBUG_STR}}.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("ul.breadcrumb").append('<li class="active"><img src="/site_media/images/icons/bot.png" height="21px" style="vertical-align:text-top;">&nbsp;&nbsp;DasLab Bot Settings</li>');
+
+			$("#modal_set").html('{{BOT}}');
+			if ({{flag}}) {$("#modal").modal("show");}
 		});
 	</script>
 
