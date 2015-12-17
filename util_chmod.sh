@@ -20,8 +20,8 @@ sudo chmod 750 media/css/min media/js/group/min media/js/admin/min media/js/suit
 
 sudo chmod 660 backup/* cache/* cache/aws/* cache/slack/* cache/git/* cache/ga/* cache/dropbox/*
 sudo chmod 770 backup cache cache/aws cache/slack cache/git cache/ga cache/dropbox
-sudo chmod 640 data/*.pdf data/news_img/* data/_old/* data/ppl_img/* data/pub_data/* data/pub_img/* data/pub_pdf/* data/rot_data/* data/rot_ppt/* data/spe_ppt/*
-sudo chmod 750 data data/news_img data/_old data/ppl_img data/pub_data data/pub_img data/pub_pdf data/rot_data data/rot_ppt data/spe_ppt
+sudo chmod 660 data/*.pdf data/news_img/* data/_old/* data/ppl_img/* data/pub_data/* data/pub_img/* data/pub_pdf/* data/rot_data/* data/rot_ppt/* data/spe_ppt/*
+sudo chmod 770 data data/news_img data/_old data/ppl_img data/pub_data data/pub_img data/pub_pdf data/rot_data data/rot_ppt data/spe_ppt
 
 sudo chmod 640 config/*.py* config/*.example config/*.conf
 sudo chown www-data config/cron.conf 

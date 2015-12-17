@@ -197,9 +197,9 @@ $(document).ready(function () {
 		$("ul.breadcrumb > li:first").next().remove();
 		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;')
  	} else if ($(location).attr("href").indexOf("admin/src/slackmessage") != -1) {
-		$("th.column-date").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+		$("th.column-date").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
 		$("th.column-receiver").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
-		$("th.column-message").addClass("col-lg-7 col-md-7 col-sm-7 col-xs-7");
+		$("th.column-message").addClass("col-lg-8 col-md-8 col-sm-8 col-xs-8");
 
 		$("th.column-date > div.text > a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Date');
 		$("th.column-receiver > div.text > a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Receiver');
