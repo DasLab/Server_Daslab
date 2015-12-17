@@ -1,8 +1,20 @@
 {
 	"CRONJOBS": [
-		["cron_string", "call_command", ["backup_job"], {}, ">> path/log_cron.log # backup_weekly"],
-		["cron_string", "call_command", ["upload_job"], {}, ">> path/log_cron.log # gdrive_weekly"],
-		["cron_string", "call_command", ["cleanup_job"], {}, ">> path/log_cron.log # cleanup_quarterly"]
+		["cron_string", "call_command", ["backup"], {}, ">> path/log_cron.log # backup_weekly"],
+		["cron_string", "call_command", ["gdrive"], {}, ">> path/log_cron.log # gdrive_weekly"],
+		["cron_string", "call_command", ["versions", "0"], {}, ">> path/log_cron.log # versions_weekly"],
+		["cron_string", "call_command", ["report"], {}, ">> path/log_cron.log # report_weekly"],
+
+		["cron_string", "call_command", ["cache", "3"], {}, ">> path/log_cron.log # cache_03"],
+		["cron_string", "call_command", ["cache", "15"], {}, ">> path/log_cron.log # cache_15"],
+		["cron_string", "call_command", ["cache", "30"], {}, ">> path/log_cron.log # cache_30"],
+
+		["cron_string", "call_command", ["duty", "week"], {}, ">> path/log_cron.log # duty_weekly"],
+		["cron_string", "call_command", ["duty", "month"], {}, ">> path/log_cron.log # duty_monthly"],
+		["cron_string", "call_command", ["duty", "quarter"], {}, ">> path/log_cron.log # duty_quarterly"],
+
+		["cron_string", "call_command", ["meeting"], {}, ">> path/log_cron.log # meeting_weekly"],
+		["cron_string", "call_command", ["bday"], {}, ">> path/log_cron.log # bday_daily"]
 	],
 	"CRONTAB_LOCK_JOBS": true,
 	"KEEP_BACKUP": 60

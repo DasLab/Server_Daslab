@@ -31,7 +31,9 @@
             }
         },
         "IS_FLASH_SETUP": true,
+        "IS_REPORT": true,
         "IS_SLACK": true,
+        "IS_VERSION": true,
         "MSG_BDAY": true,
         "REMINDER": {
             "DAY_BEFORE_REMINDER_1": "1",
