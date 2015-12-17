@@ -231,25 +231,25 @@ class BackupForm(forms.Form):
 
 
 TEXT_TYPE_CHOICES = (
-    ('0', ' Plain Text'),
-    ('1', ' Word Document'),
+    ('0', '(TXT) Plain Text '),
+    ('1', '(DOCX) Word Document '),
 )
 
 SORT_ORDER_CHOICES = (
-    ('0', ' Year Ascending'),
-    ('1', ' Year Descending'),
+    ('0', ' ASC '),
+    ('1', ' DESC '),
 )
 
 NUMBER_ORDER_CHOICES = (
-    ('0', ' Incremental'),
-    ('1', ' Decremental'),
+    ('0', ' ASC '),
+    ('1', ' DESC '),
 )
 
 class ExportForm(forms.Form):
-    text_type = forms.ChoiceField(choices=TEXT_TYPE_CHOICES, widget=forms.RadioSelect(), initial=1, required=True)
+    text_type = forms.ChoiceField(choices=TEXT_TYPE_CHOICES, initial=1, required=True)
     year_start = forms.IntegerField(initial=1996, required=True)
-    sort_order = forms.ChoiceField(choices=SORT_ORDER_CHOICES, widget=forms.RadioSelect(), initial=1, required=True)
-    number_order = forms.ChoiceField(choices=NUMBER_ORDER_CHOICES, widget=forms.RadioSelect(), initial=1, required=True)
+    sort_order = forms.ChoiceField(choices=SORT_ORDER_CHOICES, initial=1, required=True)
+    number_order = forms.ChoiceField(choices=NUMBER_ORDER_CHOICES, initial=1, required=True)
 
     bold_author = forms.BooleanField(initial=True, required=False)
     bold_year = forms.BooleanField(initial=True, required=False)

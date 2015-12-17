@@ -190,42 +190,42 @@ def group_dash(request):
 def dash_dash(request):
     now = datetime.fromtimestamp(time.time())
     t_aws = datetime.fromtimestamp(os.path.getmtime('%s/cache/aws/init.pickle' % MEDIA_ROOT))
-    if ((now - t_aws).seconds >= 2700):
+    if ((now - t_aws).seconds >= int(BOT['CACHE']['INTERVAL_15']) * 2.5 * 60):
         t_aws = '<span class="label label-danger">' + t_aws.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     else:
         t_aws = '<span class="label label-primary">' + t_aws.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     t_ga = datetime.fromtimestamp(os.path.getmtime('%s/cache/ga/init.pickle' % MEDIA_ROOT))
-    if ((now - t_ga).seconds >= 2700):
+    if ((now - t_ga).seconds >= int(BOT['CACHE']['INTERVAL_15']) * 2.5 * 60):
         t_ga = '<span class="label label-danger">' + t_ga.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     else:
         t_ga = '<span class="label label-primary">' + t_ga.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     t_git = datetime.fromtimestamp(os.path.getmtime('%s/cache/git/init.pickle' % MEDIA_ROOT))
-    if ((now - t_git).seconds >= 2700):
+    if ((now - t_git).seconds >= int(BOT['CACHE']['INTERVAL_30']) * 2.5 * 60):
         t_git = '<span class="label label-danger">' + t_git.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     else:
         t_git = '<span class="label label-primary">' + t_git.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     t_slack = datetime.fromtimestamp(os.path.getmtime('%s/cache/slack/users.pickle' % MEDIA_ROOT))
-    if ((now - t_slack).seconds >= 2700):
+    if ((now - t_slack).seconds >= int(BOT['CACHE']['INTERVAL_30']) * 2.5 * 60):
         t_slack = '<span class="label label-danger">' + t_slack.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     else:
         t_slack = '<span class="label label-primary">' + t_slack.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     t_dropbox = datetime.fromtimestamp(os.path.getmtime('%s/cache/dropbox/sizes.pickle' % MEDIA_ROOT))
-    if ((now - t_dropbox).seconds >= 2700):
+    if ((now - t_dropbox).seconds >= int(BOT['CACHE']['INTERVAL_30']) * 2.5 * 60):
         t_dropbox = '<span class="label label-danger">' + t_dropbox.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     else:
         t_dropbox = '<span class="label label-primary">' + t_dropbox.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT))
-    if ((now - t_cal).seconds >= 2700):
+    if ((now - t_cal).seconds >= int(BOT['CACHE']['INTERVAL_30']) * 2.5 * 60):
         t_cal = '<span class="label label-danger">' + t_cal.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     else:
         t_cal = '<span class="label label-primary">' + t_cal.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.pickle' % MEDIA_ROOT))
-    if ((now - t_sch).seconds >= 2700):
+    if ((now - t_sch).seconds >= int(BOT['CACHE']['INTERVAL_30']) * 2.5 * 60):
         t_sch = '<span class="label label-danger">' + t_sch.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     else:
         t_sch = '<span class="label label-primary">' + t_sch.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     t_duty = datetime.fromtimestamp(os.path.getmtime('%s/cache/duty.pickle' % MEDIA_ROOT))
-    if ((now - t_duty).seconds >= 2700):
+    if ((now - t_duty).seconds >= int(BOT['CACHE']['INTERVAL_30']) * 2.5 * 60):
         t_duty = '<span class="label label-danger">' + t_duty.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     else:
         t_duty = '<span class="label label-primary">' + t_duty.strftime('%Y-%m-%d %H:%M:%S') + '</span>'

@@ -12,8 +12,11 @@
 					<div class="row">
 						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 							<br/>
-							<h4><span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>&nbsp;&nbsp;Output Format Type</h4>
-							{{form.text_type}}
+							<h4><span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>&nbsp;&nbsp;Output Format</h4>
+							<div class="input-group">
+								<span class="input-group-addon">Type</span>
+								{{form.text_type}}
+							</div>
 							<br/>
 							<h4><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Year Range <small>(Inclusive)</small></h4>
 							<div class="row">
@@ -23,23 +26,25 @@
 								<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
 							</div>  
 							<ul>
-								<div class="checkbox">
-									<label>
-										{{form.include_preprint}}
-										Include Preprint Items
-									</label>
-								</div>
+								{{form.include_preprint}}
+								<span>Include Preprint Items</span>
 							</ul>
 
 							<br/>
 							<div class="row">
 								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 									<h4><span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>&nbsp;&nbsp;Sorting Order</h4>
-									{{form.sort_order}}
+									<div class="input-group">
+										<span class="input-group-addon">Year</span>
+										{{form.sort_order}}
+									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 									<h4><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>&nbsp;&nbsp;Numbering Order</h4>
-									{{form.number_order}}
+									<div class="input-group">
+										<span class="input-group-addon">Number</span>
+										{{form.number_order}}
+									</div>
 								</div>
 							</div>
 						</div>
@@ -48,59 +53,27 @@
 							<br/>
 							<h4><span class="glyphicon glyphicon-check" aria-hidden="true"></span>&nbsp;&nbsp;Rich Format Options</h4>
 							<ul>
-								<div class="checkbox">
-									<label>
-										{{form.bold_author}}
-										Mark Corresponding Author as <b>Bold</b>
-									</label>
-								</div>
-								<div class="checkbox">
-									<label>
-										{{form.bold_year}}
-										Mark Publication Year as <b>Bold</b>
-									</label>
-								</div>
-								<div class="checkbox">
-									<label>
-										{{form.underline_title}}
-										Mark Publication Title with <u>Underline</u>
-									</label>
-								</div>
-								<div class="checkbox">
-									<label>
-										{{form.italic_journal}}
-										Mark Journal Name as <i>Italic</i>
-									</label>
-								</div>
-								<div class="checkbox">
-									<label>
-										{{form.bold_volume}}
-										Mark Volume Number as <b>Bold</b>
-									</label>
-								</div>
+								{{form.bold_author}}
+								<span>Mark Corresponding Author as <b>Bold</b></span>
+								{{form.bold_year}}
+								<span>Mark Publication Year as <b>Bold</b></span>
+								{{form.underline_title}}
+								<span>Mark Publication Title with <u>Underline</u></span>
+								{{form.italic_journal}}
+								<span>Mark Journal Name as <i>Italic</i></span>
+								{{form.bold_volume}}
+								<span>Mark Volume Number as <b>Bold</b></span>
 							</ul>
 
 							<br/>
 							<h4><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;Text Format Options</h4>
 							<ul>
-								<div class="checkbox">
-									<label>
-										{{form.order_number}}
-										Show Item Numbering
-									</label>
-								</div>
-								<div class="checkbox">
-									<label>
-										{{form.quote_title}}
-										Mark Publication Title with "Quotes"
-									</label>
-								</div>
-								<div class="checkbox">
-									<label>
-										{{form.double_space}}
-										Double Space between Items
-									</label>
-								</div>
+								{{form.order_number}}
+								<span>Show Item Numbering</span>
+								{{form.quote_title}}
+								<span>Mark Publication Title with "Quotes"</span>
+								{{form.double_space}}
+								<span>Double Space between Items</span>
 							</ul>
 						</div>
 					</div>
