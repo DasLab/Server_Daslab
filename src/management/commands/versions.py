@@ -126,7 +126,6 @@ class Command(BaseCommand):
                     mem_used = mem_used[:-1] + ' ' + mem_used[-1]
             else:
                 mem_str = subprocess.Popen('free -h', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split('\n')
-                mem_str = subprocess.Popen('free -h', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split('\n')
                 mem_str = [x for x in mem_str[2].split(' ') if x]
                 mem_avail = mem_str[-1]
                 if mem_avail[-1] == 'G': 

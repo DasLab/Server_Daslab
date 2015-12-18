@@ -117,6 +117,8 @@ class Command(BaseCommand):
                             self.compose_msg(result['this'][2], 'Journal Club Posting', flag, ' Just a reminder for posting your paper of choice for the upcoming _Journal Club_ to `#general`.')
                     else:
                         return
+                else:
+                    return
 
 
             elif flag == 'monthly':
