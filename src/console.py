@@ -157,10 +157,10 @@ def set_backup_form(request):
         cron_job = env_cron['CRONJOBS'][i]
         if 'backup_weekly' in cron_job[-1]:
             cron_job[0] = cron_backup
-            cron_job[-1] = '>> %s/cache/log_cron_backup.log # backup_weekly' % MEDIA_ROOT
         elif 'gdrive_weekly' in cron_job[-1]:
             cron_job[0] = cron_upload
-            cron_job[-1] = '>> %s/cache/log_cron_gdrive.log # gdrive_weekly' % MEDIA_ROOT
+        suffix = cron_job[-1]
+        cron_job[-1] = '>> %s/cache/log_cron.log # %s' % (MEDIA_ROOT, suffix[suffix.rfind(' # ') + 3:])
     env_cron['KEEP_BACKUP'] = form.cleaned_data['keep']
     open('%s/config/cron.conf' % MEDIA_ROOT, 'w').writelines(simplejson.dumps(env_cron, sort_keys=True, indent=' ' * 4))
     refresh_settings()

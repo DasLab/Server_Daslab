@@ -23,3 +23,6 @@ sudo chown www-data config/cron.conf config/bot.conf
 
 sudo chown -R ubuntu:ubuntu *.sh
 sudo chmod -R 700 *.sh
+
+sudo chown ubuntu:www-data ../yuicompressor.jar
+sudo chmod 640 ../yuicompressor.jar
