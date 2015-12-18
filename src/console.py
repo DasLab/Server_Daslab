@@ -59,7 +59,7 @@ def send_error_slack(err, task='', fn='', log_file=''):
     open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
     if log_file:
         open('%s/cache/%s' % (MEDIA_ROOT, log_file), 'a').write('%s\n%s\n' % (ts, err))
-    if settings._wrapped.IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: %s*%s* @ _%s_\n>```%s```\n' % (task, fn, time.ctime(), err)}])
+    send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: %s*%s* @ _%s_\n>```%s```\n' % (task, fn, time.ctime(), err)}])
 
 
 def get_date_time(keyword):
