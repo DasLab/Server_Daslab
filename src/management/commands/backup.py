@@ -6,7 +6,7 @@ import traceback
 from django.core.management.base import BaseCommand
 
 from src.settings import *
-from src.console import get_date_time, get_backup_stat, send_notify_emails, send_notify_slack
+from src.console import get_date_time, get_backup_stat, send_notify_emails, send_notify_slack, send_error_slack
 
 
 class Command(BaseCommand):
@@ -15,7 +15,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
-         
+
         flag = False
         t = time.time()
         self.stdout.write("#1: Backing up MySQL database...")
@@ -94,4 +94,4 @@ class Command(BaseCommand):
 
             self.stdout.write("All done successfully!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
-            
+
