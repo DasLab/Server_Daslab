@@ -56,7 +56,7 @@ $(document).ready(function() {
         	$("#id_pip").html(txt[35]);
             $("#id_yui").html(txt[36]);
 
-            var drive_free = parseFloat(txt[45]), drive_used = parseFloat(txt[44]), drive_total = parseFloat(txt[46]);
+            var drive_free = parseFloat(txt[44]), drive_used = parseFloat(txt[43]), drive_total = parseFloat(txt[45]);
             $("#id_drive_space > div > div.progress-bar-success").css("width", (drive_free / drive_total * 100).toString() + '%' ).html(drive_free + ' G');
             $("#id_drive_space > div > div.progress-bar-danger").css("width", (100 - drive_free / drive_total * 100).toString() + '%' ).html(drive_used + ' G');
         	var disk_sp = txt[37].split(/\//);
@@ -66,14 +66,21 @@ $(document).ready(function() {
             $("#id_memory > div > div.progress-bar-success").css("width", (parseFloat(mem_sp[0]) / (parseFloat(mem_sp[0]) + parseFloat(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[0]);
             $("#id_memory > div > div.progress-bar-danger").css("width", (parseFloat(mem_sp[1]) / (parseFloat(mem_sp[0]) + parseFloat(mem_sp[1])) * 100).toString() + '%' ).html(mem_sp[1]);
 
-        	$("#id_backup").html('<span style="color:#00f;">' + txt[39] + '</span>');
-        	var cpu = txt[40].split(/\//);
+        	var cpu = txt[39].split(/\//);
         	$("#id_cpu").html('<span style="color:#f00;">' + cpu[0] + '</span> | <span style="color:#080;">' + cpu[1] + '</span> | <span style="color:#00f;">' + cpu[2] + '</span>');
 
-            $("#id_base_dir").html('<code>' + txt[41] + '</code>');
-            $("#id_media_root").html('<code>' + txt[42] + '</code>');
-            $("#id_static_root").html('<code>' + txt[43] + '</code>');
+            $("#id_base_dir").html('<code>' + txt[40] + '</code>');
+            $("#id_media_root").html('<code>' + txt[41] + '</code>');
+            $("#id_static_root").html('<code>' + txt[42] + '</code>');
     	}
+    });
+    $.ajax({
+        url : "/admin/get_backup/",
+        dataType: "text",
+        success : function (data) {
+            var txt = data.split(/\t/);
+            $("#id_backup").html('<span style="color:#00f;">' + txt[14] + '</span>');
+        }
     });
 
     $.ajax({
