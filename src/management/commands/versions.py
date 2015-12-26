@@ -24,7 +24,7 @@ class Command(BaseCommand):
         else:
             flag = False
 
-        if (not BOT['SLACK']['IS_REPORT']) and flag: return
+        if not (BOT['SLACK']['IS_REPORT'] or flag): return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 
