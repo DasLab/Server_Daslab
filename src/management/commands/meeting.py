@@ -41,6 +41,7 @@ class Command(BaseCommand):
         if not BOT['SLACK']['IS_FLASH_SETUP']: return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
+        flag_mismatch = False
 
         try:
             result = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
@@ -74,6 +75,7 @@ class Command(BaseCommand):
                 type_this = types[result['this'][1]]
                 if (datetime.utcnow() + timedelta(days=offset_1)).date() != date.date():
                     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"warning", "text":'Mismatch in Schedule Spreadsheet date. It seems to be not up-to-date.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.'}])
+                    flag_mismatch = True
                     sys.exit(1)
 
                 title = 'Flash Slides: %s' % datetime.strftime(date, '%b %d %Y')
@@ -190,6 +192,7 @@ class Command(BaseCommand):
             msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"danger", "text":'The <https://daslab.stanford.edu/group/schedule/|full schedule> is available on the DasLab Website. For questions regarding the schedule, please contact <%s> (site admin). Thanks for your attention.''' % SLACK['ADMIN_NAME']}]) )
 
         except:
+            if flag_mismatch: return
             send_error_slack(traceback.format_exc(), 'Group Meeting Setup', ' '.join(sys.argv), 'log_cron_meeting.log')
 
             if result['this'][1] != 'N/A':

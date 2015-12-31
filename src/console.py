@@ -175,7 +175,7 @@ def set_backup_form(request):
         elif 'gdrive_weekly' in cron_job[-1]:
             cron_job[0] = cron_upload
         suffix = cron_job[-1]
-        cron_job[-1] = '>> %s/cache/log_cron.log # %s' % (MEDIA_ROOT, suffix[suffix.rfind(' # ') + 3:])
+        cron_job[-1] = '>> %s/cache/log_cron.log 2>&1 # %s' % (MEDIA_ROOT, suffix[suffix.rfind(' # ') + 3:])
     env_cron['KEEP_BACKUP'] = form.cleaned_data['keep']
     open('%s/config/cron.conf' % MEDIA_ROOT, 'w').writelines(simplejson.dumps(env_cron, sort_keys=True, indent=' ' * 4))
     refresh_settings()
@@ -212,7 +212,7 @@ def set_bot_form(request):
         elif 'duty_quarterly' in cron_job[-1]:
             cron_job[0] = '25 15 * 1,4,7,10 %s' % form.cleaned_data['day_duty_quarter']
         suffix = cron_job[-1]
-        cron_job[-1] = '>> %s/cache/log_cron.log # %s' % (MEDIA_ROOT, suffix[suffix.rfind(' # ') + 3:])
+        cron_job[-1] = '>> %s/cache/log_cron.log 2>&1 # %s' % (MEDIA_ROOT, suffix[suffix.rfind(' # ') + 3:])
 
     open('%s/config/cron.conf' % MEDIA_ROOT, 'w').writelines(simplejson.dumps(env_cron, sort_keys=True, indent=' ' * 4))
     open('%s/config/bot.conf' % MEDIA_ROOT, 'w').writelines(simplejson.dumps(BOT, sort_keys=True, indent=' ' * 4))
