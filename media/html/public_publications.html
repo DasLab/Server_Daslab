@@ -47,7 +47,7 @@
                 <br>
               {% endif %}
 
-              {% if pub.feature %}
+              {% if pub.is_feature %}
                 <table width="800" height="200" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
@@ -74,7 +74,7 @@
                         <span class="yearTEXT"><strong>
                           {% if pub.pdf %} 
                             <a href="/site_data/pub_pdf/{{pub.pdf_link}}" target="_blank">
-                              {% if pub.preprint %} Preprint {% else %} Paper {% endif %}
+                              {% if pub.is_preprint %} Preprint {% else %} Paper {% endif %}
                             </a>
                           {% endif %}
                           {% if pub.link %} 
@@ -117,7 +117,7 @@
                             {% endif %}
                             {% if pub.link %} 
                               | <a href="{{pub.link}}" target="_blank">
-                                {% if pub.preprint %} Preprint {% else %} Link {% endif %}
+                                {% if pub.is_preprint %} Preprint {% else %} Link {% endif %}
                               </a>
                             {% endif %}
                             {% if pub.extra_field %} 

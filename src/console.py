@@ -533,8 +533,8 @@ def export_citation(request):
     sort_order = 'display_date'
     if form.cleaned_data['sort_order'] == '1': sort_order = '-' + sort_order
 
-    publications = Publication.objects.filter(year__gte=year_start).order_by(sort_order)
-    if not is_include_preprint: publications = publications.filter(preprint=False)
+    publications = Publication.objects.filter(year__gte=year_start, is_visible=True).order_by(sort_order)
+    if not is_include_preprint: publications = publications.filter(is_preprint=False)
 
     if text_type == '0':
         txt = ''

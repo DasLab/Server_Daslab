@@ -39,15 +39,15 @@ def news(request):
     return render_to_response(PATH.HTML_PATH['news'], {'news_list':news_list}, context_instance=RequestContext(request))
 
 def people(request):
-    member = Member.objects.filter(alumni=0, hide=0).order_by('last_name', 'first_name')
-    almuni = Member.objects.filter(alumni=1, hide=0).order_by('finish_year', 'start_year')
+    member = Member.objects.filter(is_alumni=0, is_visible=1).order_by('last_name', 'first_name')
+    almuni = Member.objects.filter(is_alumni=1, is_visible=1).order_by('finish_year', 'start_year')
     for ppl in member:
         if ppl.image:
             ppl.image_link = os.path.basename(ppl.image.name)
     return render_to_response(PATH.HTML_PATH['people'], {'current_member':member, 'past_member':almuni}, context_instance=RequestContext(request))
 
 def publications(request):
-    pub_list = Publication.objects.filter(visible=1).order_by('-display_date')
+    pub_list = Publication.objects.filter(is_visible=1).order_by('-display_date')
     for i, pub in enumerate(pub_list):
         if pub.image:
             pub.image_link = os.path.basename(pub.image.name)
@@ -129,7 +129,7 @@ def lab_resource_archive(request):
     return render_to_response(PATH.HTML_PATH['lab_resource_archive'], {'arv_list':arv_list}, context_instance=RequestContext(request))
 # @login_required
 def lab_resource_contact(request):
-    member = Member.objects.filter(alumni=0).exclude(sunet_id=request.user.username).order_by('last_name', 'first_name')
+    member = Member.objects.filter(is_alumni=0).exclude(sunet_id=request.user.username).order_by('last_name', 'first_name')
     for i, ppl in enumerate(member):
         ppl.label = colors[11 - i % 12]
         ppl.name = ppl.full_name()
@@ -140,7 +140,7 @@ def lab_resource_contact(request):
             ppl.phone = str(ppl.phone)
             ppl.phone = '(%s) %s-%s' % (ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
 
-    almuni = Member.objects.filter(alumni=1).order_by('-finish_year', '-start_year')
+    almuni = Member.objects.filter(is_alumni=1).order_by('-finish_year', '-start_year')
     for i, ppl in enumerate(almuni):
         ppl.label = colors[11 - i % 12]
         if i == 0 or almuni[i - 1].finish_year != ppl.finish_year:

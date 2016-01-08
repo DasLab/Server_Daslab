@@ -72,9 +72,9 @@ class Member(models.Model):
     phone = models.BigIntegerField(blank=True, verbose_name='Phone Number', help_text='<span class="glyphicon glyphicon-phone"></span>&nbsp; Cell phone number.')
     sunet_id = models.CharField(max_length=31, blank=True, verbose_name='SUNet ID', help_text='<span class="glyphicon glyphicon-credit-card"></span>&nbsp; SUNet ID login to match WebAuth.')
     bday = models.CharField(max_length=5, blank=True, verbose_name='Birthday', help_text='<span class="glyphicon glyphicon-gift"></span>&nbsp; Birthday, in the format of <span class="label label-inverse">mm/dd</span>. <span class="label label-success">Example</span>: "<b>04/19</b>".')
-    hide = models.BooleanField(default=False, verbose_name='Hide from external page?', help_text='<span class="glyphicon glyphicon-check"></span>&nbsp; Uncheck to hide from people.')
+    is_visible = models.BooleanField(default=True, verbose_name='Is Visible?', help_text='<span class="glyphicon glyphicon-check"></span>&nbsp; Uncheck to hide from public site.')
 
-    alumni = models.BooleanField(default=False, verbose_name='Is Alumni?', help_text='<span class="glyphicon glyphicon-check"></span>&nbsp; Check for alumni members.')
+    is_alumni = models.BooleanField(default=False, verbose_name='Is Alumni?', help_text='<span class="glyphicon glyphicon-check"></span>&nbsp; Check for alumni members.')
     start_year = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name='Start Year', help_text='<span class="glyphicon glyphicon-play"></span>&nbsp; For alumni display only.')
     finish_year = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name='Finish Year', help_text='<span class="glyphicon glyphicon-stop"></span>&nbsp; For alumni display only.')
 
@@ -92,7 +92,7 @@ class Member(models.Model):
     affiliation.admin_order_field = 'role'
 
     def year(self): 
-        if self.alumni:
+        if self.is_alumni:
             string = '<span class="label label-danger">Alumni</span>'
         else:
             string = '<span class="label label-success">Current</span>'
@@ -101,7 +101,7 @@ class Member(models.Model):
         else:
             y = ''
         return format_html('%s %s-%s' % (string, self.start_year, y))
-    year.admin_order_field = 'alumni'
+    year.admin_order_field = 'is_alumni'
 
     def image_tag(self):
         if self.image: 
@@ -122,8 +122,8 @@ class Publication(models.Model):
     end_page = models.CharField(max_length=31, blank=True, null=True, verbose_name='End Page')
 
     pdf = models.FileField(upload_to=get_pub_pdf, blank=True, max_length=255, verbose_name='PDF File', help_text='<span class="glyphicon glyphicon-file"></span>&nbsp; Shows as <b>"Paper"</b> link. Use file name format <span class="label label-inverse">YEAR_LASTNAME_JOURNAL.pdf</span>: year in 4-digits, first author\'s lat name (no space) and journal name in short form. <span class="label label-success">Example</span>: 2012_Kladwang_NatChem.pdf.')
-    preprint = models.BooleanField(default=False, verbose_name='Is Preprint?', help_text='<span class="glyphicon glyphicon-tag"></span>&nbsp; Check if this publication is the provided link is to ArXiv, meaning with <b>"Preprint"</b> instead of <b>"Paper"</b> link.')
-    visible = models.BooleanField(default=True, verbose_name='Is Visible?', help_text='<span class="glyphicon glyphicon-eye-close"></span>&nbsp; Check if this publication is displayed in the public site.')
+    is_preprint = models.BooleanField(default=False, verbose_name='Is Preprint?', help_text='<span class="glyphicon glyphicon-tag"></span>&nbsp; Check if this publication is the provided link is to ArXiv, meaning with <b>"Preprint"</b> instead of <b>"Paper"</b> link.')
+    is_visible = models.BooleanField(default=True, verbose_name='Is Visible?', help_text='<span class="glyphicon glyphicon-eye-close"></span>&nbsp; Check if this publication is displayed in the public site.')
     link = models.URLField(max_length=255, blank=True, verbose_name='URL', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp; Shows as <b>"Link"</b> to redirect to journal website.')
 
     extra_field = models.CharField(max_length=255, blank=True, verbose_name='Extra Field #1', help_text='<span class="glyphicon glyphicon-edit"></span>&nbsp; Name for extra field for external link. <span class="label label-success">Example</span>: Server.')
@@ -133,7 +133,7 @@ class Publication(models.Model):
     extra_field_3 = models.CharField(max_length=255, blank=True, verbose_name='Extra Field #3', help_text='<span class="glyphicon glyphicon-edit"></span>&nbsp; Name for extra field for upload file. <span class="label label-success">Example</span>: Data.')
     extra_file = models.FileField(upload_to=get_pub_data, blank=True, max_length=255, verbose_name='Extra File', help_text='<span class="glyphicon glyphicon-file"></span>&nbsp; For extra file on server.')
 
-    feature = models.BooleanField(default=False, verbose_name='Is Featured?', help_text='<span class="glyphicon glyphicon-flag"></span>&nbsp; Check if this publication is <b>"featured"</b>, meaning with teal background and thumbnail.')
+    is_feature = models.BooleanField(default=False, verbose_name='Is Featured?', help_text='<span class="glyphicon glyphicon-flag"></span>&nbsp; Check if this publication is <b>"featured"</b>, meaning with teal background and thumbnail.')
     image = models.ImageField(upload_to=get_pub_image, blank=True, max_length=255, verbose_name='Feature Image', help_text='<span class="glyphicon glyphicon-picture"></span>&nbsp; For featured publications only. Use <span class="label label-info">png/jpg</span> format, low resolution (<span class="label label-danger">NO</span> larger than <span class="label label-inverse">200x300 72dpi</span>). Use the <span class="label label-danger">SAME</span> name as <b>pdf</b> file.')
 
     class Meta():

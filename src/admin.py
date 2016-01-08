@@ -41,14 +41,14 @@ admin.site.register(News, NewsAdmin)
 
 class MemberAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'sunet_id', 'year', 'joint_lab', 'affiliation',)
-    ordering = ('alumni', 'last_name', 'role',)
+    ordering = ('is_alumni', 'last_name', 'role',)
     readonly_fields = ('image_tag',)
 
     fieldsets = [
         (format_html('<span class="glyphicon glyphicon-user"></span>&nbsp;Personal Information'), {'fields': [('first_name', 'last_name'), 'role', ('image', 'image_tag'), 'description', 'more_info']}),
         (format_html('<span class="glyphicon glyphicon-home"></span>&nbsp;Affiliation'), {'fields': ['department', ('joint_lab', 'joint_link')]}),
         (format_html('<span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact'), {'fields': [('email', 'bday'), ('sunet_id', 'phone')]}),
-        (format_html('<span class="glyphicon glyphicon-road"></span>&nbsp;Alumni Information'), {'fields': [('alumni', 'hide'), ('start_year', 'finish_year')]}),
+        (format_html('<span class="glyphicon glyphicon-road"></span>&nbsp;Alumni Information'), {'fields': [('is_alumni', 'is_visible'), ('start_year', 'finish_year')]}),
     ]
 admin.site.register(Member, MemberAdmin)
 
@@ -59,7 +59,7 @@ class PublicationAdmin(admin.ModelAdmin):
 
     fieldsets = [
         (format_html('<span class="glyphicon glyphicon-book"></span>&nbsp;Citation'), {'fields': ['title', ('year', 'display_date'), 'authors', 'journal', ('volume', 'issue'), ('begin_page', 'end_page')]}),
-        (format_html('<span class="glyphicon glyphicon-th-large"></span>&nbsp;Media'), {'fields': ['pdf', 'preprint', 'visible', 'feature', ('image', 'image_tag')]}),
+        (format_html('<span class="glyphicon glyphicon-th-large"></span>&nbsp;Media'), {'fields': ['pdf', 'is_preprint', 'is_visible', 'is_feature', ('image', 'image_tag')]}),
         (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['link', 'extra_field', 'extra_link', 'extra_field_2', 'extra_link_2', 'extra_field_3', 'extra_file']}),
     ]
 admin.site.register(Publication, PublicationAdmin)
