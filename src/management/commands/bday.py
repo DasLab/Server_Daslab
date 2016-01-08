@@ -51,7 +51,7 @@ class Command(BaseCommand):
         try:
             msg_handles, ids, names = [], [], []
             today_str = datetime.date.today().strftime('%m/%d')
-            member = Member.objects.filter(alumni=0, bday=today_str)
+            member = Member.objects.filter(is_alumni=0, bday=today_str)
             for ppl in member:
                 who = self.find_slack_id(ppl.first_name)
                 if who:

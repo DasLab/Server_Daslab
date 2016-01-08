@@ -526,6 +526,7 @@ def export_citation(request):
     is_quote_title = form.cleaned_data['quote_title']
     is_double_space = form.cleaned_data['double_space']
     is_include_preprint = form.cleaned_data['include_preprint']
+    is_include_hidden = form.cleaned_data['include_hidden']
 
     text_type = form.cleaned_data['text_type']
     year_start = form.cleaned_data['year_start']
@@ -533,8 +534,9 @@ def export_citation(request):
     sort_order = 'display_date'
     if form.cleaned_data['sort_order'] == '1': sort_order = '-' + sort_order
 
-    publications = Publication.objects.filter(year__gte=year_start, is_visible=True).order_by(sort_order)
+    publications = Publication.objects.filter(year__gte=year_start).order_by(sort_order)
     if not is_include_preprint: publications = publications.filter(is_preprint=False)
+    if not is_include_hidden: publications = publications.filter(is_visible=True)
 
     if text_type == '0':
         txt = ''

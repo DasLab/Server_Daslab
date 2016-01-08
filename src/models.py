@@ -277,6 +277,7 @@ class ExportForm(forms.Form):
     quote_title = forms.BooleanField(initial=True, required=False)
     double_space = forms.BooleanField(initial=False, required=False)
     include_preprint = forms.BooleanField(initial=True, required=False)
+    include_hidden = forms.BooleanField(initial=False, required=False)
 
 
 REMINDER_1_CHOICES = (
