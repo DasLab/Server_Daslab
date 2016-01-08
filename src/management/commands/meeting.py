@@ -116,6 +116,8 @@ class Command(BaseCommand):
                                     self.stdout.write('\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) not available in database.' % name)
                         elif sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.OTHER:
                             ids.append('_' + name + '_ <@' + who_id + '>')
+                else:
+                    ids = ['_(None)_']
 
                 if flag == 'endofrotationtalk' and BOT['SLACK']['REMINDER']['ROT']['REMINDER_ADMIN']:
                     msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback":'REMINDER', "mrkdwn_in": ["text"], "color":"warning", "text":'*REMINDER*: Add *RotationStudent* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
@@ -181,6 +183,8 @@ class Command(BaseCommand):
                                     self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name)
                                 else:
                                     self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not available in database.' % name)
+                else:
+                    ids = ['_(None)_']
 
                 if DEBUG: 
                     send_to = SLACK['ADMIN_NAME']
