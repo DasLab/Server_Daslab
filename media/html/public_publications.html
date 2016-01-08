@@ -21,12 +21,12 @@
       <tbody>
         <tr>
           <td width="38" height="15" align="left" valign="middle" class="HEAD publicationsH1">
-            <a href="http://www.ncbi.nlm.nih.gov/pubmed?cmd=Search&term=Das%20Rhiju" id="arrow">
+            <a href="http://www.ncbi.nlm.nih.gov/pubmed?cmd=Search&term=Das%20Rhiju" target="_blank" id="arrow">
               <img src="/site_media/images/publications/arrow.png" width="28" height="28" border="0">
             </a>
           </td>
-          <td width="807" height="15" align="left" valign="middle" class="HEAD publicationsH1">
-            Search for papers from the Das Lab on <strong class="publicationsH2">PubMed</strong>
+          <td width="807" height="15" align="left" valign="middle" class="HEAD publicationsH1" id="search">
+            <span >Search for papers from the Das Lab on <strong class="publicationsH2">PubMed</strong></span>
           </td>
         </tr>
 
@@ -51,15 +51,15 @@
                 <table width="800" height="200" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
-                      <td width="100" align="center" valign="top" style="padding-top:0px;">
+                      <td width="100" align="center" valign="top">
                         {% if pub.year_tag %}
                           <span class="yearH2" id="{{pub.year}}">{{pub.year}}</span>
                         {% endif %}
                       </td>
-                      <td width="110" align="center" valign="middle" bgcolor="#CCDFE0">
+                      <td width="110" align="center" valign="middle" bgcolor="#CCDFE0" class="year-top">
                         <img src="/site_data/pub_img/{{pub.image_link}}" width="200">
                       </td>
-                      <td width="256" align="left" valign="top" bgcolor="#CCDFE0" class="peopleTEXT TEXT">
+                      <td width="256" align="left" valign="top" bgcolor="#CCDFE0" class="peopleTEXT TEXT year-top">
                         <br><br><br>
                         {{pub.authors}} ({{pub.year}})
                         <br>
@@ -91,7 +91,7 @@
                           {% endif %}
                         </strong></span>
                       </td>
-                      <td width="15" align="right" valign="middle" bgcolor="#CCDFE0"></td>
+                      <td width="15" align="right" valign="middle" bgcolor="#CCDFE0" class="year-top"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -99,12 +99,12 @@
                 <table width="800" border="0" cellpadding="0" cellspacing="0" {% if pub.year <= 2009 %} class="previous" {% else %} class="current" {% endif %}>
                   <tbody>
                     <tr>
-                      <td width="80" align="center" valign="top" style="padding-top:10px;">
+                      <td width="80" align="center" valign="top">
                         {% if pub.year_tag %}
                           <span class="yearH2">{{pub.year}}</span>
                         {% endif %}
                       </td>
-                      <td width="386" align="center" valign="top" >
+                      <td width="386" align="center" valign="top" class="year-top">
                         <p class="TEXT">
                           {{pub.authors}} ({{pub.year}}) "<u>{{pub.title}}</u>" <i>{{pub.journal}}</i>
                           {% if pub.volume %} {{pub.volume}} {% endif %} 
@@ -153,40 +153,41 @@
     $(document).ready(function() {
       $("table.previous").hide();
       $("p.previous").hide();
-      $("#arrow").hover(function () {
-        $(this).children().attr("src", "/site_media/images/publications/arrow_hover.png");
+      $("#arrow, #search").hover(function () {
+        $("#arrow").children().attr("src", "/site_media/images/publications/arrow_hover.png");
       }, function () {
-        $(this).children().attr("src", "/site_media/images/publications/arrow.png");
+        $("#arrow").children().attr("src", "/site_media/images/publications/arrow.png");
       });
-      $("#arrow2").hover(function () {
-        $(this).children().attr("src", "/site_media/images/publications/arrow_hover.png");
+      $("#arrow2, #expand").hover(function () {
+        $("#arrow2").children().attr("src", "/site_media/images/publications/arrow_hover.png");
       }, function () {
-        $(this).children().attr("src", "/site_media/images/publications/arrow.png");
+        $("#arrow2").children().attr("src", "/site_media/images/publications/arrow.png");
       });
 
       $("#DasFOOTER").css({"top": $("table.current:last").offset().top + 200, "display": "inline"});
       $("#DasICON").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
       $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
 
-      $("#arrow2").on("click", function () {
+      $("#search").on("click", function () { $("#arrow")[0].click(); });
+      $("#arrow2, #expand").on("click", function () {
         $("table.previous").toggle();
         $("p.previous").toggle();
         var flag = sign(($("table.previous").css("display") == "none") - 0.5);
 
         if (flag == -1) {
           $("#arrow2").attr("src", "/site_media/images/publications/collapse_hover.png");
-          $("#arrow2").hover(function () {
-            $(this).children().attr("src", "/site_media/images/publications/collapse_hover.png");
+          $("#arrow2, #expand").hover(function () {
+            $("#arrow2").children().attr("src", "/site_media/images/publications/collapse_hover.png");
           }, function () {
-            $(this).children().attr("src", "/site_media/images/publications/collapse.png");
+            $("#arrow2").children().attr("src", "/site_media/images/publications/collapse.png");
           });
           $("#DasFOOTER").css("top", $("table.previous:last").offset().top + 200);
         } else {
           $("#arrow2").attr("src", "/site_media/images/publications/arrow.png");
-          $("#arrow2").hover(function () {
-            $(this).children().attr("src", "/site_media/images/publications/arrow_hover.png");
+          $("#arrow2, #expand").hover(function () {
+            $("#arrow2").children().attr("src", "/site_media/images/publications/arrow_hover.png");
           }, function () {
-            $(this).children().attr("src", "/site_media/images/publications/arrow.png");
+            $("#arrow2").children().attr("src", "/site_media/images/publications/arrow.png");
           });
           $("#DasFOOTER").css("top", $("table.current:last").offset().top + 200);
         }

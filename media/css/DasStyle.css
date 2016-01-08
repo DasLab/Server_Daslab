@@ -93,6 +93,7 @@ a.nav-hover.active>img { border-bottom: 6px solid #008180 !important; }
 }
 .publicationsH1 { font-weight: normal; }
 .publicationsH2 { font-weight: bold; }
+table tbody tr td.year-top { border-top: 15px solid #fff; }
 .yearH2 {
 	font-size: 36px;
 	color: #00817D;
