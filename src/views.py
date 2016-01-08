@@ -47,7 +47,7 @@ def people(request):
     return render_to_response(PATH.HTML_PATH['people'], {'current_member':member, 'past_member':almuni}, context_instance=RequestContext(request))
 
 def publications(request):
-    pub_list = Publication.objects.order_by('-display_date')
+    pub_list = Publication.objects.filter(visible=1).order_by('-display_date')
     for i, pub in enumerate(pub_list):
         if pub.image:
             pub.image_link = os.path.basename(pub.image.name)

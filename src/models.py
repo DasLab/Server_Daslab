@@ -123,6 +123,7 @@ class Publication(models.Model):
 
     pdf = models.FileField(upload_to=get_pub_pdf, blank=True, max_length=255, verbose_name='PDF File', help_text='<span class="glyphicon glyphicon-file"></span>&nbsp; Shows as <b>"Paper"</b> link. Use file name format <span class="label label-inverse">YEAR_LASTNAME_JOURNAL.pdf</span>: year in 4-digits, first author\'s lat name (no space) and journal name in short form. <span class="label label-success">Example</span>: 2012_Kladwang_NatChem.pdf.')
     preprint = models.BooleanField(default=False, verbose_name='Is Preprint?', help_text='<span class="glyphicon glyphicon-tag"></span>&nbsp; Check if this publication is the provided link is to ArXiv, meaning with <b>"Preprint"</b> instead of <b>"Paper"</b> link.')
+    visible = models.BooleanField(default=True, verbose_name='Is Visible?', help_text='<span class="glyphicon glyphicon-eye-close"></span>&nbsp; Check if this publication is displayed in the public site.')
     link = models.URLField(max_length=255, blank=True, verbose_name='URL', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp; Shows as <b>"Link"</b> to redirect to journal website.')
 
     extra_field = models.CharField(max_length=255, blank=True, verbose_name='Extra Field #1', help_text='<span class="glyphicon glyphicon-edit"></span>&nbsp; Name for extra field for external link. <span class="label label-success">Example</span>: Server.')
