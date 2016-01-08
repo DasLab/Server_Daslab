@@ -8,7 +8,10 @@
     "SLACK": {
         "ADMIN": {
             "MSG_BACKUP": true,
-            "MSG_GDRIVE": true
+            "MSG_GDRIVE": true,
+            "MSG_REPORT": true,
+            "MSG_VERSION": true,
+            "MSG_AWS_WARN": true
         },
         "DUTY": {
             "ETERNA": {

@@ -11,7 +11,7 @@ from slacker import Slacker
 
 from src.settings import *
 from src.models import Member
-from src.console import send_notify_slack, send_error_slack
+from src.console import send_notify_slack, send_error_slack, find_slack_id
 from src.dash import dash_schedule, dash_duty
 
 class Command(BaseCommand):
@@ -28,29 +28,9 @@ class Command(BaseCommand):
         parser.add_argument('interval', nargs='+', type=str, help='Interval, choose from (week, month, quarter).')
 
 
-    def find_slack_id(self, name):
-        sunet_id = 'none'
-        who_id = ''
-        for resp in self.users:
-            if resp.has_key('is_bot') and resp['is_bot']: continue
-            if resp['profile']['real_name'][:len(name)].lower() == name.lower():
-                if sunet_id != 'none': 
-                    sunet_id = 'ambiguous'
-                    break
-                email = resp['profile']['email']
-                sunet_id = email[:email.find('@')]
-                who_id = resp['name']
-
-        if sunet_id == 'none':
-            self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not found.' % name)
-        elif sunet_id == 'ambiguous':
-            self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name)
-            who_id = ''
-        return who_id
-
     def compose_msg(self, task_tuple, task_name, interval, alt_text):
-        who_main = self.find_slack_id(task_tuple[0])
-        who_bkup = self.find_slack_id(task_tuple[1])
+        who_main = find_slack_id(task_tuple[0])
+        who_bkup = find_slack_id(task_tuple[1])
         if who_main:
             msg = '*LAB DUTY*: Just a reminder for the _%s_ task of `%s`%s. If you are unable to do so, please inform the ' % (interval, task_name, alt_text)
             if who_bkup:
@@ -103,10 +83,10 @@ class Command(BaseCommand):
                 elif datetime.utcnow().date().isoweekday() == day_2:
                     if result['this'][1] == 'ES':
                         who = result['this'][2]
-                        who_id = self.find_slack_id(who)
+                        who_id = find_slack_id(who)
 
                         if BOT['SLACK']['REMINDER']['ES']['REMINDER_2']:
-                            self.compose_msg(result['this'][2], 'Eterna Broadcast Posting', flag, ' Just a reminder for sending a description of your upcoming _Eterna Open Group Meeting_ to <%s> and <@%s> for releasing news on both DasLab Website and EteRNA broadcast.' % (SLACK['ADMIN_NAME'], self.find_slack_id(ppls['monthly']['eterna'])))
+                            self.compose_msg(result['this'][2], 'Eterna Broadcast Posting', flag, ' Just a reminder for sending a description of your upcoming _Eterna Open Group Meeting_ to <%s> and <@%s> for releasing news on both DasLab Website and EteRNA broadcast.' % (SLACK['ADMIN_NAME'], find_slack_id(ppls['monthly']['eterna'])))
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_BROADCAST']:
                             self.compose_msg(ppls['monthly']['eterna'], 'Eterna Broadcast Posting', flag, ' for _Eterna Open Group Meeting_. If _%s_ <@%s> hasn\'t send out descriptions, please ask him/her!' % (who, who_id))
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_NEWS']:
@@ -114,7 +94,7 @@ class Command(BaseCommand):
                     elif result['this'][1] == 'JC':
                         if BOT['SLACK']['REMINDER']['JC']['REMINDER_2']:
                             who = result['this'][2]
-                            who_id = self.find_slack_id(who)
+                            who_id = find_slack_id(who)
                             self.compose_msg(result['this'][2], 'Journal Club Posting', flag, ' Just a reminder for posting your paper of choice for the upcoming _Journal Club_ to `#general`.')
                     else:
                         return
@@ -146,8 +126,8 @@ class Command(BaseCommand):
                     if not fields: fields.append({'title': 'Nobody', 'value':'_within next 60 days_', 'short':True})
 
                     birthday = ppls[flag]['birthday']
-                    who_main = self.find_slack_id(birthday[0])
-                    who_bkup = self.find_slack_id(birthday[1])
+                    who_main = find_slack_id(birthday[0])
+                    who_bkup = find_slack_id(birthday[1])
                     send_to = '@' + who_main
                     if DEBUG: send_to = SLACK['ADMIN_NAME']
                     self.msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"ff912e", "text":'_Upcoming Birthdays_:', "fields":fields}]) )

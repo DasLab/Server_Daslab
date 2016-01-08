@@ -11,7 +11,7 @@ from slacker import Slacker
 
 from src.settings import *
 from src.models import FlashSlide
-from src.console import send_notify_emails, send_notify_slack, send_error_slack
+from src.console import send_notify_emails, send_notify_slack, send_error_slack, find_slack_id
 
 
 class Command(BaseCommand):
@@ -21,20 +21,6 @@ class Command(BaseCommand):
         super(Command, self).__init__(*args, **kwargs)
         self.sh = Slacker(SLACK["ACCESS_TOKEN"])
         self.users = self.sh.users.list().body['members']
-
-    def find_slack_id(self, name):
-        sunet_id = 'none'
-        who_id = ''
-        for resp in self.users:
-            if resp.has_key('is_bot') and resp['is_bot']: continue
-            if resp['profile']['real_name'][:len(name)].lower() == name.lower():
-                if sunet_id != 'none': 
-                    sunet_id = 'ambiguous'
-                    break
-                email = resp['profile']['email']
-                sunet_id = email[:email.find('@')]
-                who_id = resp['name']
-        return (sunet_id, who_id)
 
 
     def handle(self, *args, **options):
@@ -99,7 +85,7 @@ class Command(BaseCommand):
 
                 if name:
                     for name in names:
-                        (sunet_id, who_id) = self.find_slack_id(name)
+                        (sunet_id, who_id) = find_slack_id(name)
                         if flag == 'endofrotationtalk' and BOT['SLACK']['REMINDER']['ROT']['REMINDER_1']:
                             if sunet_id in GROUP.ROTON:
                                 msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation this _%s_.' % (SLACK['ADMIN_NAME'], datetime.strftime(date, '%A'))
@@ -169,7 +155,7 @@ class Command(BaseCommand):
                     names = [name]
                 if name:
                     for name in names:
-                        (sunet_id, who_id) = self.find_slack_id(name)
+                        (sunet_id, who_id) = find_slack_id(name)
                         if (result['next'][1] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_2']) or (result['next'][1] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_2']):
                             if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
                                 ids.append('_' + name + '_ <@' + who_id + '>')

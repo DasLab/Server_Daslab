@@ -332,6 +332,7 @@ class BotSettingForm(forms.Form):
     is_admin_gdrive = forms.BooleanField(initial=True, required=False)
     is_admin_version = forms.BooleanField(initial=True, required=False)
     is_admin_report = forms.BooleanField(initial=True, required=False)
+    is_admin_aws_warn = forms.BooleanField(initial=True, required=False)
 
     is_bday = forms.BooleanField(initial=True, required=False)
     is_flash_slide = forms.BooleanField(initial=True, required=False)

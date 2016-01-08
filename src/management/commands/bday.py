@@ -10,7 +10,7 @@ from slacker import Slacker
 
 from src.settings import *
 from src.models import Member
-from src.console import send_notify_slack, send_error_slack
+from src.console import send_notify_slack, send_error_slack, find_slack_id
 
 
 class Command(BaseCommand):
@@ -20,27 +20,6 @@ class Command(BaseCommand):
         super(Command, self).__init__(*args, **kwargs)
         self.sh = Slacker(SLACK["ACCESS_TOKEN"])
         self.users = self.sh.users.list().body['members']
-
-
-    def find_slack_id(self, name):
-        sunet_id = 'none'
-        who_id = ''
-        for resp in self.users:
-            if resp.has_key('is_bot') and resp['is_bot']: continue
-            if resp['profile']['real_name'][:len(name)].lower() == name.lower():
-                if sunet_id != 'none': 
-                    sunet_id = 'ambiguous'
-                    break
-                email = resp['profile']['email']
-                sunet_id = email[:email.find('@')]
-                who_id = resp['name']
-
-        if sunet_id == 'none':
-            self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not found.' % name)
-        elif sunet_id == 'ambiguous':
-            self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name)
-            who_id = ''
-        return who_id
 
 
     def handle(self, *args, **options):
@@ -53,7 +32,7 @@ class Command(BaseCommand):
             today_str = datetime.date.today().strftime('%m/%d')
             member = Member.objects.filter(is_alumni=0, bday=today_str)
             for ppl in member:
-                who = self.find_slack_id(ppl.first_name)
+                who = find_slack_id(ppl.first_name)
                 if who:
                     send_to = '@' + who
                     if DEBUG: send_to = SLACK['ADMIN_NAME']

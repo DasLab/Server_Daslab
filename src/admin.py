@@ -13,6 +13,7 @@ from django.core.management import call_command
 # from suit.widgets import EnclosedInput, SuitDateWidget
 
 from datetime import datetime
+import os
 import time
 
 from src.console import *
@@ -197,48 +198,14 @@ def group_dash(request):
     return HttpResponse(json, content_type='application/json')
 
 def dash_dash(request):
-    now = datetime.fromtimestamp(time.time())
-    t_aws = datetime.fromtimestamp(os.path.getmtime('%s/cache/aws/init.pickle' % MEDIA_ROOT))
-    if ((now - t_aws).seconds >= int(BOT['CACHE']['INTERVAL_15']) * 2.5 * 60):
-        t_aws = '<span class="label label-danger">' + t_aws.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    else:
-        t_aws = '<span class="label label-primary">' + t_aws.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    t_ga = datetime.fromtimestamp(os.path.getmtime('%s/cache/ga/init.pickle' % MEDIA_ROOT))
-    if ((now - t_ga).seconds >= int(BOT['CACHE']['INTERVAL_15']) * 2.5 * 60):
-        t_ga = '<span class="label label-danger">' + t_ga.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    else:
-        t_ga = '<span class="label label-primary">' + t_ga.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    t_git = datetime.fromtimestamp(os.path.getmtime('%s/cache/git/init.pickle' % MEDIA_ROOT))
-    if ((now - t_git).seconds >= int(BOT['CACHE']['INTERVAL_30']) * 2.5 * 60):
-        t_git = '<span class="label label-danger">' + t_git.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    else:
-        t_git = '<span class="label label-primary">' + t_git.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    t_slack = datetime.fromtimestamp(os.path.getmtime('%s/cache/slack/users.pickle' % MEDIA_ROOT))
-    if ((now - t_slack).seconds >= int(BOT['CACHE']['INTERVAL_30']) * 2.5 * 60):
-        t_slack = '<span class="label label-danger">' + t_slack.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    else:
-        t_slack = '<span class="label label-primary">' + t_slack.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    t_dropbox = datetime.fromtimestamp(os.path.getmtime('%s/cache/dropbox/sizes.pickle' % MEDIA_ROOT))
-    if ((now - t_dropbox).seconds >= int(BOT['CACHE']['INTERVAL_30']) * 2.5 * 60):
-        t_dropbox = '<span class="label label-danger">' + t_dropbox.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    else:
-        t_dropbox = '<span class="label label-primary">' + t_dropbox.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT))
-    if ((now - t_cal).seconds >= int(BOT['CACHE']['INTERVAL_30']) * 2.5 * 60):
-        t_cal = '<span class="label label-danger">' + t_cal.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    else:
-        t_cal = '<span class="label label-primary">' + t_cal.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.pickle' % MEDIA_ROOT))
-    if ((now - t_sch).seconds >= int(BOT['CACHE']['INTERVAL_30']) * 2.5 * 60):
-        t_sch = '<span class="label label-danger">' + t_sch.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    else:
-        t_sch = '<span class="label label-primary">' + t_sch.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    t_duty = datetime.fromtimestamp(os.path.getmtime('%s/cache/duty.pickle' % MEDIA_ROOT))
-    if ((now - t_duty).seconds >= int(BOT['CACHE']['INTERVAL_30']) * 2.5 * 60):
-        t_duty = '<span class="label label-danger">' + t_duty.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-    else:
-        t_duty = '<span class="label label-primary">' + t_duty.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
-
+    t_aws = format_dash_ts('aws/init.pickle', BOT['CACHE']['INTERVAL_15'])
+    t_ga = format_dash_ts('ga/init.pickle', BOT['CACHE']['INTERVAL_15'])
+    t_git = format_dash_ts('git/init.pickle', BOT['CACHE']['INTERVAL_30'])
+    t_slack = format_dash_ts('slack/users.pickle', BOT['CACHE']['INTERVAL_30'])
+    t_dropbox = format_dash_ts('dropbox/sizes.pickle', BOT['CACHE']['INTERVAL_30'])
+    t_cal = format_dash_ts('calendar.pickle', BOT['CACHE']['INTERVAL_30'])
+    t_sch = format_dash_ts('schedule.pickle', BOT['CACHE']['INTERVAL_30'])
+    t_duty = format_dash_ts('duty.pickle', BOT['CACHE']['INTERVAL_30'])
     json = {'t_aws':t_aws, 't_ga':t_ga, 't_git':t_git, 't_slack':t_slack, 't_dropbox':t_dropbox, 't_cal':t_cal, 't_sch':t_sch, 't_duty':t_duty}
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
 

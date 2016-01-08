@@ -58,6 +58,22 @@ def cache_aws(request):
                     status = False
                     break
             dict_aws['elb'].append({'name':resv.name, 'dns':resv.dns_name, 'region': ', '.join(resv.availability_zones), 'status':status})
+            
+            if (not status) and BOT['SLACK']['ADMIN']['MSG_AWS_WARN']:
+                last_status = False
+                if os.path.exists('%s/cache/aws/init.pickle' % MEDIA_ROOT):
+                    init = pickle.load(open('%s/cache/aws/init.pickle' % MEDIA_ROOT, 'rb'))
+                    for elb in init['elb']:
+                        if elb['name'] == resv.name:
+                            if elb['status']: last_status = True
+                            break
+
+                if not last_status:
+                    result = dash_duty(0)
+                    ppls = result['ppls']
+                    who = find_slack_id(ppls['monthly']['amazon'][0])
+                    send_notify_slack('@' + who, '', [{"fallback":'AWS WARNING', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`WARNING`*: AWS ELB Server `%s` has *NO* healthy host! @ _%s_\n' % (resv.name, time.ctime())}])
+
 
         dict_aws['ec2'] = sorted(dict_aws['ec2'], key=operator.itemgetter(u'name'))
         dict_aws['ebs'] = sorted(dict_aws['ebs'], key=operator.itemgetter(u'name'))
@@ -706,3 +722,14 @@ def dash_cal():
     return pickle.load(open('%s/cache/calendar.pickle' % MEDIA_ROOT, 'rb'))
 
 
+def format_dash_ts(rel_path, interval):
+    now = datetime.fromtimestamp(time.time())
+    if os.path.exists('%s/cache/%s' % (MEDIA_ROOT, rel_path)):
+        t = datetime.fromtimestamp(os.path.getmtime('%s/cache/%s' % (MEDIA_ROOT, rel_path)))
+        if ((now - t).seconds >= int(interval) * 2.5 * 60):
+            t = '<span class="label label-danger">' + t.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+        else:
+            t = '<span class="label label-primary">' + t.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+    else:
+        t = '<span class="label label-primary">N/A</span>'
+    return t

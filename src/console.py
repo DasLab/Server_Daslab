@@ -65,6 +65,27 @@ def send_error_slack(err, task='', fn='', log_file=''):
     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: %s*%s* @ _%s_\n>```%s```\n' % (task, fn, time.ctime(), err)}])
 
 
+def find_slack_id(name):
+    sunet_id = 'none'
+    who_id = ''
+    for resp in self.users:
+        if resp.has_key('is_bot') and resp['is_bot']: continue
+        if resp['profile']['real_name'][:len(name)].lower() == name.lower():
+            if sunet_id != 'none': 
+                sunet_id = 'ambiguous'
+                break
+            email = resp['profile']['email']
+            sunet_id = email[:email.find('@')]
+            who_id = resp['name']
+
+    if sunet_id == 'none':
+        self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not found.' % name)
+    elif sunet_id == 'ambiguous':
+        self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name)
+        who_id = ''
+    return who_id
+
+
 def get_date_time(keyword):
     t_cron = [c[0] for c in CRONJOBS if ''.join(c[2]).find(keyword) != -1][0]
     d_cron = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur'][int(t_cron.split(' ')[-1])]
@@ -104,7 +125,7 @@ def get_backup_stat():
     ver += humansize(os.path.getsize('%s/backup/backup_apache.tgz' % MEDIA_ROOT)) + '\t'
     ver += humansize(os.path.getsize('%s/backup/backup_config.tgz' % MEDIA_ROOT)) + '\t'
     ver += humansize(get_folder_size('%s/backup/*.*gz' % MEDIA_ROOT)) + '\t'
-    ver += '%s\t%s\t%s\t%s\t' % (os.path.join(MEDIA_ROOT, 'backup/backup_mysql.gz'), os.path.join(MEDIA_ROOT, 'backup/backup_static.tgz'), os.path.join(MEDIA_ROOT, 'backup/backup_apache.tgz'), os.path.join(MEDIA_ROOT, 'backup/backup_config.tgz'))
+    ver += '%s\t%s\t%s\t%s\t' % (os.path.join(MEDIA_ROOT, 'backup/backup_mysql.tgz'), os.path.join(MEDIA_ROOT, 'backup/backup_static.tgz'), os.path.join(MEDIA_ROOT, 'backup/backup_apache.tgz'), os.path.join(MEDIA_ROOT, 'backup/backup_config.tgz'))
 
     gdrive_dir = 'echo'
     if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
@@ -189,14 +210,14 @@ def get_bot_form():
     (_, _, set_cache_3, set_cache_15, set_cache_30, set_duty_month, set_duty_quarter) = get_sys_crontab()
     tp = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))['wd']
 
-    return {'is_slack':settings._wrapped.IS_SLACK, 'is_cache':BOT['CACHE']['IS_CACHE'], 'is_duty_bday':BOT['SLACK']['MSG_BDAY'], 'is_duty_breakfast':BOT['SLACK']['DUTY']['MONTH']['MSG_BDAY'], 'is_duty_aws':BOT['SLACK']['DUTY']['MONTH']['MSG_AWS'], 'is_duty_breakfast':BOT['SLACK']['DUTY']['MONTH']['MSG_BREAKFAST'], 'is_duty_schedule':BOT['SLACK']['DUTY']['MONTH']['MSG_SCHEDULE'], 'is_duty_website':BOT['SLACK']['DUTY']['MONTH']['MSG_WEBSITE'], 'is_duty_trip':BOT['SLACK']['DUTY']['QUARTER']['MSG_TRIP'], 'is_duty_git':BOT['SLACK']['DUTY']['QUARTER']['MSG_GIT'], 'is_admin_backup':BOT['SLACK']['ADMIN']['MSG_BACKUP'], 'is_admin_gdrive':BOT['SLACK']['ADMIN']['MSG_GDRIVE'], 'is_admin_version':BOT['SLACK']['ADMIN']['MSG_VERSION'], 'is_admin_report':BOT['SLACK']['ADMIN']['MSG_REPORT'], 'is_version':BOT['SLACK']['IS_VERSION'], 'is_report':BOT['SLACK']['IS_REPORT'], 'is_bday':BOT['SLACK']['MSG_BDAY'], 'is_flash_slide':BOT['SLACK']['IS_FLASH_SETUP'], 'is_user_jc_1':BOT['SLACK']['REMINDER']['JC']['REMINDER_1'], 'is_user_jc_2':BOT['SLACK']['REMINDER']['JC']['REMINDER_2'], 'is_admin_jc':BOT['SLACK']['REMINDER']['JC']['REMINDER_ADMIN'], 'is_user_es_1':BOT['SLACK']['REMINDER']['ES']['REMINDER_1'], 'is_user_es_2':BOT['SLACK']['REMINDER']['ES']['REMINDER_2'], 'is_admin_es':BOT['SLACK']['REMINDER']['ES']['REMINDER_ADMIN'], 'is_user_rot_1':BOT['SLACK']['REMINDER']['ROT']['REMINDER_1'], 'is_user_rot_2':BOT['SLACK']['REMINDER']['ROT']['REMINDER_2'], 'is_admin_rot':BOT['SLACK']['REMINDER']['ROT']['REMINDER_ADMIN'], 'is_duty_mic':BOT['SLACK']['DUTY']['ETERNA']['MSG_MIC'], 'is_duty_broadcast':BOT['SLACK']['DUTY']['ETERNA']['MSG_BROADCAST'], 'is_duty_webnews':BOT['SLACK']['DUTY']['ETERNA']['MSG_NEWS'], 'day_duty_month':set_duty_month, 'day_duty_quarter':set_duty_quarter, 'day_meeting':tp, 'day_reminder_1':BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_1'], 'day_reminder_2':BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_2'], 'cache_3':set_cache_3, 'cache_15':set_cache_15, 'cache_30':set_cache_30}
+    return {'is_slack':settings._wrapped.IS_SLACK, 'is_cache':BOT['CACHE']['IS_CACHE'], 'is_duty_bday':BOT['SLACK']['MSG_BDAY'], 'is_duty_breakfast':BOT['SLACK']['DUTY']['MONTH']['MSG_BDAY'], 'is_duty_aws':BOT['SLACK']['DUTY']['MONTH']['MSG_AWS'], 'is_duty_breakfast':BOT['SLACK']['DUTY']['MONTH']['MSG_BREAKFAST'], 'is_duty_schedule':BOT['SLACK']['DUTY']['MONTH']['MSG_SCHEDULE'], 'is_duty_website':BOT['SLACK']['DUTY']['MONTH']['MSG_WEBSITE'], 'is_duty_trip':BOT['SLACK']['DUTY']['QUARTER']['MSG_TRIP'], 'is_duty_git':BOT['SLACK']['DUTY']['QUARTER']['MSG_GIT'], 'is_admin_backup':BOT['SLACK']['ADMIN']['MSG_BACKUP'], 'is_admin_gdrive':BOT['SLACK']['ADMIN']['MSG_GDRIVE'], 'is_admin_version':BOT['SLACK']['ADMIN']['MSG_VERSION'], 'is_admin_report':BOT['SLACK']['ADMIN']['MSG_REPORT'], 'is_admin_aws_warn':BOT['SLACK']['ADMIN']['MSG_AWS_WARN'], 'is_version':BOT['SLACK']['IS_VERSION'], 'is_report':BOT['SLACK']['IS_REPORT'], 'is_bday':BOT['SLACK']['MSG_BDAY'], 'is_flash_slide':BOT['SLACK']['IS_FLASH_SETUP'], 'is_user_jc_1':BOT['SLACK']['REMINDER']['JC']['REMINDER_1'], 'is_user_jc_2':BOT['SLACK']['REMINDER']['JC']['REMINDER_2'], 'is_admin_jc':BOT['SLACK']['REMINDER']['JC']['REMINDER_ADMIN'], 'is_user_es_1':BOT['SLACK']['REMINDER']['ES']['REMINDER_1'], 'is_user_es_2':BOT['SLACK']['REMINDER']['ES']['REMINDER_2'], 'is_admin_es':BOT['SLACK']['REMINDER']['ES']['REMINDER_ADMIN'], 'is_user_rot_1':BOT['SLACK']['REMINDER']['ROT']['REMINDER_1'], 'is_user_rot_2':BOT['SLACK']['REMINDER']['ROT']['REMINDER_2'], 'is_admin_rot':BOT['SLACK']['REMINDER']['ROT']['REMINDER_ADMIN'], 'is_duty_mic':BOT['SLACK']['DUTY']['ETERNA']['MSG_MIC'], 'is_duty_broadcast':BOT['SLACK']['DUTY']['ETERNA']['MSG_BROADCAST'], 'is_duty_webnews':BOT['SLACK']['DUTY']['ETERNA']['MSG_NEWS'], 'day_duty_month':set_duty_month, 'day_duty_quarter':set_duty_quarter, 'day_meeting':tp, 'day_reminder_1':BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_1'], 'day_reminder_2':BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_2'], 'cache_3':set_cache_3, 'cache_15':set_cache_15, 'cache_30':set_cache_30}
 
 
 def set_bot_form(request):
     form = BotSettingForm(request.POST)
     if not form.is_valid(): return 1
 
-    BOT = {"SLACK": {"IS_SLACK":form.cleaned_data['is_slack'], "IS_FLASH_SETUP":form.cleaned_data['is_flash_slide'], "IS_VERSION":form.cleaned_data['is_version'], "IS_REPORT":form.cleaned_data['is_report'], "MSG_BDAY":form.cleaned_data['is_bday'], "DUTY": {"MONTH": {"MSG_BDAY":form.cleaned_data['is_duty_bday'], "MSG_BREAKFAST":form.cleaned_data['is_duty_breakfast'], "MSG_AWS":form.cleaned_data['is_duty_aws'], "MSG_SCHEDULE":form.cleaned_data['is_duty_schedule'], "MSG_WEBSITE":form.cleaned_data['is_duty_website'], "WEEK_DAY":form.cleaned_data['day_duty_month']}, "QUARTER": {"MSG_TRIP":form.cleaned_data['is_duty_trip'], "MSG_GIT":form.cleaned_data['is_duty_git'], "WEEK_DAY":form.cleaned_data['day_duty_quarter']}, "ETERNA": {"MSG_MIC":form.cleaned_data['is_duty_mic'], "MSG_BROADCAST":form.cleaned_data['is_duty_broadcast'], "MSG_NEWS":form.cleaned_data['is_duty_webnews']} }, "REMINDER": {"DAY_BEFORE_REMINDER_1": form.cleaned_data['day_reminder_1'], "DAY_BEFORE_REMINDER_2": form.cleaned_data['day_reminder_2'], "JC": {"REMINDER_1":form.cleaned_data['is_user_jc_1'], "REMINDER_2":form.cleaned_data['is_user_jc_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_jc']}, "ES": {"REMINDER_1":form.cleaned_data['is_user_es_1'], "REMINDER_2":form.cleaned_data['is_user_es_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_es']}, "ROT": {"REMINDER_1":form.cleaned_data['is_user_rot_1'], "REMINDER_2":form.cleaned_data['is_user_rot_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_rot']} }, "ADMIN": {"MSG_BACKUP":form.cleaned_data['is_admin_backup'], "MSG_GDRIVE":form.cleaned_data['is_admin_gdrive'], "MSG_VERSION":form.cleaned_data['is_admin_version'], "MSG_REPORT":form.cleaned_data['is_admin_report']} }, "CACHE": { "IS_CACHE":form.cleaned_data['is_cache'], "INTERVAL_3":form.cleaned_data['cache_3'], "INTERVAL_15":form.cleaned_data['cache_15'], "INTERVAL_30":form.cleaned_data['cache_30']} }
+    BOT = {"SLACK": {"IS_SLACK":form.cleaned_data['is_slack'], "IS_FLASH_SETUP":form.cleaned_data['is_flash_slide'], "IS_VERSION":form.cleaned_data['is_version'], "IS_REPORT":form.cleaned_data['is_report'], "MSG_BDAY":form.cleaned_data['is_bday'], "DUTY": {"MONTH": {"MSG_BDAY":form.cleaned_data['is_duty_bday'], "MSG_BREAKFAST":form.cleaned_data['is_duty_breakfast'], "MSG_AWS":form.cleaned_data['is_duty_aws'], "MSG_SCHEDULE":form.cleaned_data['is_duty_schedule'], "MSG_WEBSITE":form.cleaned_data['is_duty_website'], "WEEK_DAY":form.cleaned_data['day_duty_month']}, "QUARTER": {"MSG_TRIP":form.cleaned_data['is_duty_trip'], "MSG_GIT":form.cleaned_data['is_duty_git'], "WEEK_DAY":form.cleaned_data['day_duty_quarter']}, "ETERNA": {"MSG_MIC":form.cleaned_data['is_duty_mic'], "MSG_BROADCAST":form.cleaned_data['is_duty_broadcast'], "MSG_NEWS":form.cleaned_data['is_duty_webnews']} }, "REMINDER": {"DAY_BEFORE_REMINDER_1": form.cleaned_data['day_reminder_1'], "DAY_BEFORE_REMINDER_2": form.cleaned_data['day_reminder_2'], "JC": {"REMINDER_1":form.cleaned_data['is_user_jc_1'], "REMINDER_2":form.cleaned_data['is_user_jc_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_jc']}, "ES": {"REMINDER_1":form.cleaned_data['is_user_es_1'], "REMINDER_2":form.cleaned_data['is_user_es_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_es']}, "ROT": {"REMINDER_1":form.cleaned_data['is_user_rot_1'], "REMINDER_2":form.cleaned_data['is_user_rot_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_rot']} }, "ADMIN": {"MSG_BACKUP":form.cleaned_data['is_admin_backup'], "MSG_GDRIVE":form.cleaned_data['is_admin_gdrive'], "MSG_VERSION":form.cleaned_data['is_admin_version'], "MSG_REPORT":form.cleaned_data['is_admin_report'], "MSG_AWS_WARN":form.cleaned_data['is_admin_aws_warn']} }, "CACHE": { "IS_CACHE":form.cleaned_data['is_cache'], "INTERVAL_3":form.cleaned_data['cache_3'], "INTERVAL_15":form.cleaned_data['cache_15'], "INTERVAL_30":form.cleaned_data['cache_30']} }
 
     env_cron = simplejson.load(open('%s/config/cron.conf' % MEDIA_ROOT))
     for i in xrange(len(env_cron['CRONJOBS'])):
