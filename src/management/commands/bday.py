@@ -18,8 +18,6 @@ class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
-        self.sh = Slacker(SLACK["ACCESS_TOKEN"])
-        self.users = self.sh.users.list().body['members']
 
 
     def handle(self, *args, **options):

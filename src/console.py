@@ -66,9 +66,10 @@ def send_error_slack(err, task='', fn='', log_file=''):
 
 
 def find_slack_id(name):
-    sunet_id = 'none'
-    who_id = ''
-    for resp in self.users:
+    sh = Slacker(SLACK["ACCESS_TOKEN"])
+    users = sh.users.list().body['members']
+    (sunet_id, who_id) = ('none', '')
+    for resp in users:
         if resp.has_key('is_bot') and resp['is_bot']: continue
         if resp['profile']['real_name'][:len(name)].lower() == name.lower():
             if sunet_id != 'none': 
@@ -79,9 +80,9 @@ def find_slack_id(name):
             who_id = resp['name']
 
     if sunet_id == 'none':
-        self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not found.' % name)
+        print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not found.' % name
     elif sunet_id == 'ambiguous':
-        self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name)
+        print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name
         who_id = ''
     return who_id
 
