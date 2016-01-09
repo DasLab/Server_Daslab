@@ -108,7 +108,7 @@ class Command(BaseCommand):
                 (t_cron, d_cron, t_now) = get_date_time('gdrive')
                 gdrive_dir = 'echo'
                 if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
-                gdrive_list = subprocess.Popen("%s && drive list -q \"title contains '%s_'\"" % (gdrive_dir, env('SERVER_NAME')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:]
+                gdrive_list = subprocess.Popen("%s && drive list -q \"title contains '%s_' and title contains '.tgz'\"" % (gdrive_dir, env('SERVER_NAME')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:]
                 html = 'File\t\t\t\tTime\t\t\t\tSize\n\n'
                 for i in range(0, len(gdrive_list), 6):
                     html += '%s\t\t%s %s\t\t%s %s\n' % (gdrive_list[i+1], gdrive_list[i+4], gdrive_list[i+5], gdrive_list[i+2], gdrive_list[i+3])
