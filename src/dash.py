@@ -537,7 +537,8 @@ def cache_schedule():
     try:
         subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["SCHEDULE_SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
-        send_error_slack(traceback.format_exc(), 'Download Schedule Spreadsheet', 'cache_schedule', 'log_cron_cache.log')
+        send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *cache_schedule()* Download Failure @ _%s_\n' % time.ctime()}])
+        # send_error_slack(traceback.format_exc(), 'Download Schedule Spreadsheet', 'cache_schedule', 'log_cron_cache.log')
         if os.path.exists('%s/cache/schedule.pickle' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
             t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.pickle' % MEDIA_ROOT))
@@ -583,7 +584,8 @@ def cache_duty():
     try:
         subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["DUTY_SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
-        send_error_slack(traceback.format_exc(), 'Download Duty Spreadsheet', 'cache_duty', 'log_cron_cache.log')
+        send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *cache_duty()* Download Failure @ _%s_\n' % time.ctime()}])
+        # send_error_slack(traceback.format_exc(), 'Download Duty Spreadsheet', 'cache_duty', 'log_cron_cache.log')
         if os.path.exists('%s/cache/duty.pickle' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
             t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/duty.pickle' % MEDIA_ROOT))
