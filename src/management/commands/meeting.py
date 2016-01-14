@@ -154,9 +154,10 @@ class Command(BaseCommand):
                 if name:
                     for name in names:
                         (who_id, sunet_id) = find_slack_id(name)
-                        if (result['next'][1] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_2']) or (result['next'][1] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_2']):
-                            if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
-                                ids.append('_' + name + '_ <@' + who_id + '>')
+                        if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
+                            ids.append('_' + name + '_ <@' + who_id + '>')
+
+                            if (result['next'][1] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_2']) or (result['next'][1] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_2']):
                                 send_to = '@' + who_id
                                 if DEBUG: send_to = SLACK['ADMIN_NAME']
                                 self.msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))
