@@ -84,7 +84,7 @@ def find_slack_id(name):
     elif sunet_id == 'ambiguous':
         print '\033[41mERROR\033[0m: member (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name
         who_id = ''
-    return who_id
+    return (who_id, sunet_id)
 
 
 def get_date_time(keyword):

@@ -83,7 +83,7 @@ class Command(BaseCommand):
 
                 if name:
                     for name in names:
-                        (sunet_id, who_id) = find_slack_id(name)
+                        (who_id, sunet_id) = find_slack_id(name)
                         if flag == 'endofrotationtalk' and BOT['SLACK']['REMINDER']['ROT']['REMINDER_1']:
                             if sunet_id in GROUP.ROTON:
                                 msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation this _%s_.' % (SLACK['ADMIN_NAME'], datetime.strftime(date, '%A'))
@@ -153,7 +153,7 @@ class Command(BaseCommand):
                     names = [name]
                 if name:
                     for name in names:
-                        (sunet_id, who_id) = find_slack_id(name)
+                        (who_id, sunet_id) = find_slack_id(name)
                         if (result['next'][1] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_2']) or (result['next'][1] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_2']):
                             if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
                                 ids.append('_' + name + '_ <@' + who_id + '>')

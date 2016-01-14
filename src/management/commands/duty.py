@@ -27,8 +27,8 @@ class Command(BaseCommand):
 
 
     def compose_msg(self, task_tuple, task_name, interval, alt_text):
-        who_main = find_slack_id(task_tuple[0])
-        who_bkup = find_slack_id(task_tuple[1])
+        (who_main, _) = find_slack_id(task_tuple[0])
+        (who_bkup, _) = find_slack_id(task_tuple[1])
         if who_main:
             msg = '*LAB DUTY*: Just a reminder for the _%s_ task of `%s`%s. If you are unable to do so, please inform the ' % (interval, task_name, alt_text)
             if who_bkup:
@@ -81,10 +81,11 @@ class Command(BaseCommand):
                 elif datetime.utcnow().date().isoweekday() == day_2:
                     if result['this'][1] == 'ES':
                         who = result['this'][2]
-                        who_id = find_slack_id(who)
+                        (who_id, _) = find_slack_id(who)
 
                         if BOT['SLACK']['REMINDER']['ES']['REMINDER_2']:
-                            self.compose_msg(result['this'][2], 'Eterna Broadcast Posting', flag, ' Just a reminder for sending a description of your upcoming _Eterna Open Group Meeting_ to <%s> and <@%s> for releasing news on both DasLab Website and EteRNA broadcast.' % (SLACK['ADMIN_NAME'], find_slack_id(ppls['monthly']['eterna'])))
+                            (who_id2, _) = find_slack_id(ppls['monthly']['eterna'])
+                            self.compose_msg(result['this'][2], 'Eterna Broadcast Posting', flag, ' Just a reminder for sending a description of your upcoming _Eterna Open Group Meeting_ to <%s> and <@%s> for releasing news on both DasLab Website and EteRNA broadcast.' % (SLACK['ADMIN_NAME'], who_id2))
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_BROADCAST']:
                             self.compose_msg(ppls['monthly']['eterna'], 'Eterna Broadcast Posting', flag, ' for _Eterna Open Group Meeting_. If _%s_ <@%s> hasn\'t send out descriptions, please ask him/her!' % (who, who_id))
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_NEWS']:
@@ -92,7 +93,7 @@ class Command(BaseCommand):
                     elif result['this'][1] == 'JC':
                         if BOT['SLACK']['REMINDER']['JC']['REMINDER_2']:
                             who = result['this'][2]
-                            who_id = find_slack_id(who)
+                            (who_id, _) = find_slack_id(who)
                             self.compose_msg(result['this'][2], 'Journal Club Posting', flag, ' Just a reminder for posting your paper of choice for the upcoming _Journal Club_ to `#general`.')
                     else:
                         return
@@ -124,8 +125,8 @@ class Command(BaseCommand):
                     if not fields: fields.append({'title': 'Nobody', 'value':'_within next 60 days_', 'short':True})
 
                     birthday = ppls[flag]['birthday']
-                    who_main = find_slack_id(birthday[0])
-                    who_bkup = find_slack_id(birthday[1])
+                    (who_main, _) = find_slack_id(birthday[0])
+                    (who_bkup, _) = find_slack_id(birthday[1])
                     send_to = '@' + who_main
                     if DEBUG: send_to = SLACK['ADMIN_NAME']
                     self.msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"ff912e", "text":'_Upcoming Birthdays_:', "fields":fields}]) )

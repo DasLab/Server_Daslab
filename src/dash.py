@@ -71,7 +71,7 @@ def cache_aws(request):
                 if not last_status:
                     result = dash_duty(0)
                     ppls = result['ppls']
-                    who = find_slack_id(ppls['monthly']['amazon'][0])
+                    (who, _) = find_slack_id(ppls['monthly']['amazon'][0])
                     send_notify_slack('@' + who, '', [{"fallback":'AWS WARNING', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`WARNING`*: AWS ELB Server `%s` has *NO* healthy host! @ _%s_\n' % (resv.name, time.ctime())}])
 
 

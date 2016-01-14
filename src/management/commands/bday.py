@@ -30,7 +30,7 @@ class Command(BaseCommand):
             today_str = datetime.date.today().strftime('%m/%d')
             member = Member.objects.filter(is_alumni=0, bday=today_str)
             for ppl in member:
-                who = find_slack_id(ppl.first_name)
+                (who, _) = find_slack_id(ppl.first_name)
                 if who:
                     send_to = '@' + who
                     if DEBUG: send_to = SLACK['ADMIN_NAME']
