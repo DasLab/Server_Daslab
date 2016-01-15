@@ -3,7 +3,8 @@ sudo usermod -a -G www-data ubuntu
 sudo chgrp -R www-data *
 sudo chown -R ubuntu *.py *.md *.txt src media config .gitignore
 sudo chown -R www-data backup data cache
-sudo chmod 640 *.py* *.md *.txt .gitignore
+sudo chmod 640 *.py* robots.txt .gitignore
+sudo chmod 600 *.md requirements.txt
 
 sudo chmod 640 $(find src -type f)
 sudo chmod 750 $(find src -type d)

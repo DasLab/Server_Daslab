@@ -7,8 +7,6 @@ import traceback
 
 from django.core.management.base import BaseCommand
 
-from slacker import Slacker
-
 from src.settings import *
 from src.models import Member
 from src.console import send_notify_slack, send_error_slack, find_slack_id
