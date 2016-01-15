@@ -100,6 +100,8 @@ class Command(BaseCommand):
                                     self.stdout.write('\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) not available in database.' % name)
                         elif sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.OTHER:
                             ids.append('_' + name + '_ <@' + who_id + '>')
+                        else:
+                            ids.append('_%s_' % name)
                 else:
                     ids = ['_(None)_']
 
@@ -168,6 +170,8 @@ class Command(BaseCommand):
                                     self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name)
                                 else:
                                     self.stdout.write('\033[41mERROR\033[0m: member (\033[94m%s\033[0m) not available in database.' % name)
+                        else:
+                            ids.append('_%s_' % name)
                 else:
                     ids = ['_(None)_']
 
