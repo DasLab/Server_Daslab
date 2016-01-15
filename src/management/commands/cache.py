@@ -192,14 +192,17 @@ class Command(BaseCommand):
                 self.stdout.write("#8: Skip \033[94mGoogle Calendar\033[0m...")
         except:
             tb = traceback.format_exc()
-            if ('pickle_git' in tb) and ('ConnectionError' in tb or 'SSLError' in tb):
-                send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *pickle_git()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
-            elif 'pickle_slack' in tb and ('500' in tb and 'Internal Server Error' in tb) or ('503' in tb and 'Service Unavailable' in tb) or ('504' in tb and 'GATEWAY_TIMEOUT' in tb):
-                send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *pickle_slack()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
-            elif 'pickle_dropbox' in tb and ('502' in tb and 'Bad Gateway' in tb) or ('503' in tb and 'Service Unavailable' in tb):
-                send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *pickle_dropbox()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
+            if IS_SLACK:
+                if ('pickle_git' in tb) and ('ConnectionError' in tb or 'SSLError' in tb):
+                    send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *pickle_git()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
+                elif 'pickle_slack' in tb and ('500' in tb and 'Internal Server Error' in tb) or ('503' in tb and 'Service Unavailable' in tb) or ('504' in tb and 'GATEWAY_TIMEOUT' in tb):
+                    send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *pickle_slack()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
+                elif 'pickle_dropbox' in tb and ('502' in tb and 'Bad Gateway' in tb) or ('503' in tb and 'Service Unavailable' in tb):
+                    send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *pickle_dropbox()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
+                else:
+                    send_error_slack(tb, 'Cache Dashboard Results', ' '.join(sys.argv), 'log_cron_cache.log')
             else:
-                send_error_slack(tb, 'Cache Dashboard Results', ' '.join(sys.argv), 'log_cron_cache.log')
+                print tb
             self.stdout.write("Finished with \033[41mERROR\033[0m!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
             sys.exit(1)
