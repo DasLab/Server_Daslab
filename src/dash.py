@@ -227,7 +227,11 @@ def cache_git(request):
                 for w in contrib.weeks:
                     a += w.a
                     d += w.d
-                data.append({u'Contributors': contrib.author.login, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+                if contrib.author:
+                    au = contrib.author.login
+                else:
+                    au = '(None)'
+                data.append({u'Contributors': au, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
 
             data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
             repos.append({'url':repo.html_url, 'private':repo.private, 'data':data, 'name':repo.name, 'id':repo.full_name})
