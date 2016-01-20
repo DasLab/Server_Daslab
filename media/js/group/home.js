@@ -1,14 +1,14 @@
 function label_type(type) {
     if (type == 'GM') {
-        return '<span class="label label-primary">Group Meeting</span>'
+        return '<span class="label label-primary">Group Meeting</span>';
     } else if (type == 'JC') {
-        return '<span class="label label-success">Journal Club</span>'
+        return '<span class="label label-success">Journal Club</span>';
     } else if (type == 'ES') {
-        return '<span class="label label-warning">EteRNA Special</span>'
+        return '<span class="label label-warning">EteRNA Special</span>';
     } else if (type == 'N/A') {
-        return '<span class="label label-danger">No Meeting</span>'
+        return '<span class="label label-danger">No Meeting</span>';
     } else {
-        return '<span class="label label-default">Unknown</span>'
+        return '<span class="label label-default">Unknown</span>';
     }
 }
 
@@ -40,11 +40,11 @@ $.ajax({
         $("#next_date").html(data.next[0]);
         $("#tp").html('<b>' + data.tp.replace("[", "").replace("]", "") + '</b>');
 
-        $("#recent_flash").html('<span class="label label-primary">' + data.flash_slide.date + '</span>&nbsp;&nbsp;<a href="' + data.flash_slide.url + '" target="_blanl"><span class="glyphicon glyphicon-new-window"></span></a>');
-        $("#recent_jc").html('<i>' + data.journal_club.name + '</i> <span class="label label-primary">' + data.journal_club.date + '</span>&nbsp;&nbsp;<a href="' + data.journal_club.url + '" target="_blanl"><span class="glyphicon glyphicon-new-window"></span></a>');
-        $("#recent_eterna").html('<i>' + data.eterna.name + '</i> <span class="label label-primary">' + data.eterna.date + '</span>&nbsp;&nbsp;<a href="' + data.eterna.url + '" target="_blanl"><span class="glyphicon glyphicon-new-window"></span></a>');
-        $("#recent_rotation").html('<i>' + data.rotation.name + '</i> <span class="label label-primary">' + data.rotation.date + '</span><br/>');
-        $("#recent_archive").html('<i>' + data.archive.name + '</i> <span class="label label-primary">' + data.archive.date + '</span><br/>');
+        $("#recent_flash").html('<span class="label label-primary">' + data.flash_slide.date + '</span>&nbsp;&nbsp;<a href="' + data.flash_slide.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_jc").html('<i>' + data.journal_club.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.journal_club.date + '</span>&nbsp;&nbsp;<a href="' + data.journal_club.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_khala").html('<i>' + data.khala.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.khala.date + '</span>&nbsp;&nbsp;<a href="' + data.khala.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_rotation").html('<i>' + data.rotation.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.rotation.date + '</span>&nbsp;&nbsp;<a href="' + data.rotation.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_archive").html('<i>' + data.archive.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.archive.date + '</span>&nbsp;&nbsp;<a href="' + data.archive.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
     }
 });
 

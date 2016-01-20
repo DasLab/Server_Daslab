@@ -422,7 +422,7 @@ def user_dash(request):
         user = Member.objects.get(sunet_id=sunet_id)
         if user.phone:
             user.phone = str(user.phone)
-            user.phone = '(%s) %s-%s' %(user.phone[:3], user.phone[3:6], user.phone[6:])
+            user.phone = '(%s) %s-%s' % (user.phone[:3], user.phone[3:6], user.phone[6:])
         user.type = user_type
 
         json = {'id':user.sunet_id, 'type':user.type, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'email':user.email, 'phone':user.phone, 'bday':user.bday, 'cap':user.more_info, 'status':user.year()}
@@ -443,9 +443,13 @@ def schedule_dash(request):
     eterna = EternaYoutube.objects.order_by('-date')[0]
     eterna = {'url':eterna.link, 'date':eterna.date.strftime('%Y-%m-%d'), 'name':eterna.presenter, 'title':eterna.title}
     rotation = RotationStudent.objects.order_by('-date')[0]
-    rotation = {'date':rotation.date.strftime('%Y-%m-%d'), 'name':rotation.full_name, 'title':rotation.title}
+    rotation = {'date':rotation.date.strftime('%Y-%m-%d'), 'name':rotation.full_name, 'title':rotation.title, 'url':os.path.basename(rotation.ppt.name)}
     archive = Presentation.objects.order_by('-date')[0]
-    archive = {'date':archive.date.strftime('%Y-%m-%d'), 'name':archive.presenter, 'title':archive.title}
+    if archive.ppt:
+        ar_link = os.path.basename(archive.ppt.name)
+    else:
+        ar_link = archive.link
+    archive = {'date':archive.date.strftime('%Y-%m-%d'), 'name':archive.presenter, 'title':archive.title, 'url':ar_link}
     json.update({'flash_slide':flash_slide, 'journal_club':journal_club, 'eterna':eterna, 'rotation':rotation, 'archive':archive}) 
     return HttpResponse(simplejson.dumps(json), content_type='application/json')
 
