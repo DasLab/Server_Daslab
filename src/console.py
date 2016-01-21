@@ -326,11 +326,9 @@ def aws_result(results, args, req_id=None):
     data = sorted(data, key=operator.itemgetter(u'Timestamp'))
     data_table = gviz_api.DataTable(desp)
     data_table.LoadData(data)
-    if req_id:
-        results = data_table.ToJSonResponse(columns_order=stats,    order_by='Timestamp', req_id=req_id)
-        return results
-    else:
-        return (data_table, stats)
+    
+    if (req_id is None) or (not req_id): req_id = '__REQ_ID__'
+    return data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
 
 
 def aws_call(conn, args, qs, req_id=None):

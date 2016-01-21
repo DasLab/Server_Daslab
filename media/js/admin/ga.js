@@ -1,5 +1,5 @@
 google.load('visualization', '1', {packages: ['corechart']});
-google.setOnLoadCallback(drawGA);
+google.setOnLoadCallback(drawDash);
 var gviz_handles = [];
 
 
@@ -10,7 +10,7 @@ function readyHandler() {
 }
 
 
-function drawGA() {
+function drawDash() {
     $.ajax({
         url : "/admin/ga_stat/?qs=init&tqx=reqId%3A52",
         dataType: "json",
@@ -83,7 +83,7 @@ function drawGA() {
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/admin/ga_stat/?qs=chart&sp=24h&tqx=reqId%3A53',
+        'dataSourceUrl': '/admin/ga_stat/?qs=chart&sp=24h',
         'containerId': 'chart_24h',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -109,7 +109,7 @@ function drawGA() {
     gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/admin/ga_stat/?qs=chart&sp=7d&tqx=reqId%3A54',
+        'dataSourceUrl': '/admin/ga_stat/?qs=chart&sp=7d',
         'containerId': 'chart_7d',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -135,7 +135,7 @@ function drawGA() {
     gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/admin/ga_stat/?qs=chart&sp=1m&tqx=reqId%3A55',
+        'dataSourceUrl': '/admin/ga_stat/?qs=chart&sp=1m',
         'containerId': 'chart_1m',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -161,7 +161,7 @@ function drawGA() {
     gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/admin/ga_stat/?qs=chart&sp=3m&tqx=reqId%3A53',
+        'dataSourceUrl': '/admin/ga_stat/?qs=chart&sp=3m',
         'containerId': 'chart_3m',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -188,7 +188,7 @@ function drawGA() {
 
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'PieChart',
-        'dataSourceUrl': '/admin/ga_stat/?qs=pie&sp=session&tqx=reqId%3A56',
+        'dataSourceUrl': '/admin/ga_stat/?qs=pie&sp=session',
         'containerId': 'pie_session',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -205,7 +205,7 @@ function drawGA() {
     gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'PieChart',
-        'dataSourceUrl': '/admin/ga_stat/?qs=pie&sp=user&tqx=reqId%3A57',
+        'dataSourceUrl': '/admin/ga_stat/?qs=pie&sp=user',
         'containerId': 'pie_user',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -222,7 +222,7 @@ function drawGA() {
     gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'PieChart',
-        'dataSourceUrl': '/admin/ga_stat/?qs=pie&sp=browser&tqx=reqId%3A58',
+        'dataSourceUrl': '/admin/ga_stat/?qs=pie&sp=browser',
         'containerId': 'pie_browser',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -239,7 +239,7 @@ function drawGA() {
     gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'PieChart',
-        'dataSourceUrl': '/admin/ga_stat/?qs=pie&sp=pageview&tqx=reqId%3A59',
+        'dataSourceUrl': '/admin/ga_stat/?qs=pie&sp=pageview',
         'containerId': 'pie_pageview',
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -255,12 +255,9 @@ function drawGA() {
     chart.draw();
     gviz_handles.push(chart);
 
-    google.visualization.events.addListener(chart, 'ready', readyHandler);
-    chart.draw();
-    gviz_handles.push(chart);
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'GeoChart',
-        'dataSourceUrl': '/admin/ga_stat/?qs=geo&tqx=reqId%3A60',
+        'dataSourceUrl': '/admin/ga_stat/?qs=geo',
         'containerId': 'geo_session',
         'options': {
             'height': 300,

@@ -130,9 +130,8 @@ def dash_aws(request):
         if qs == 'init':
             return pickle.load(open('%s/cache/aws/init.pickle' % MEDIA_ROOT, 'rb'))
         elif qs in ['cpu', 'net', 'lat', 'req', 'disk']:
-            (data_table, stats) = pickle.load(open('%s/cache/aws/%s_%s_%s.pickle' % (MEDIA_ROOT, tp, id, qs), 'rb'))
-            results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
-            return results
+            results = pickle.load(open('%s/cache/aws/%s_%s_%s.pickle' % (MEDIA_ROOT, tp, id, qs), 'rb'))
+            return results.replace('__REQ_ID__', req_id)
         else:
             return HttpResponseBadRequest("Invalid query.")
     else:
@@ -184,7 +183,7 @@ def cache_ga(request):
         data = sorted(data, key=operator.itemgetter(stats[0]))
         data_table = gviz_api.DataTable(desp)
         data_table.LoadData(data)
-        return (data_table, stats)
+        return data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id='__REQ_ID__')
 
 
 def dash_ga(request):
@@ -196,9 +195,8 @@ def dash_ga(request):
         if qs == 'init':
             return pickle.load(open('%s/cache/ga/init.pickle' % MEDIA_ROOT, 'rb'))
         elif qs in ['sessions', 'percentNewSessions']:
-            (data_table, stats) = pickle.load(open('%s/cache/ga/%s_%s.pickle' % (MEDIA_ROOT, id, qs), 'rb'))
-            results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
-            return results
+            results = pickle.load(open('%s/cache/ga/%s_%s.pickle' % (MEDIA_ROOT, id, qs), 'rb'))
+            return results.replace('__REQ_ID__', req_id)
         else:
             return HttpResponseBadRequest("Invalid query.")
     else:
@@ -284,7 +282,7 @@ def cache_git(request):
             data = sorted(data, key=operator.itemgetter(stats[0]))
             data_table = gviz_api.DataTable(desp)
             data_table.LoadData(data)
-            return (data_table, stats)
+            return data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id='__REQ_ID__')
 
 
 def dash_git(request):
@@ -297,11 +295,7 @@ def dash_git(request):
             return pickle.load(open('%s/cache/git/init.pickle' % MEDIA_ROOT, 'rb'))
         elif qs in ['c', 'ad', 'num']:
             f = open('%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, repo, qs), 'rb')
-            if qs == 'num':
-                results = pickle.load(f)
-            else:
-                (data_table, stats) = pickle.load(f)
-                results = data_table.ToJSonResponse(columns_order=stats,    order_by='Timestamp', req_id=req_id)
+            results = pickle.load(f).replace('__REQ_ID__', req_id)
             f.close()
             return results
         else:
@@ -401,7 +395,7 @@ def cache_slack(request):
         data = sorted(data, key=operator.itemgetter(stats[0]))
         data_table = gviz_api.DataTable(desp)
         data_table.LoadData(data)
-        return (data_table, stats)
+        return data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id='__REQ_ID__')
 
     return simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
 
@@ -411,12 +405,9 @@ def dash_slack(request):
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
-        if qs in ['users', 'home', 'channels', 'files']:
-            return pickle.load(open('%s/cache/slack/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
-        elif qs in ["plot_files", "plot_msgs"]:
-            (data_table, stats) = pickle.load(open('%s/cache/slack/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
-            results = data_table.ToJSonResponse(columns_order=stats,    order_by='Timestamp', req_id=req_id)
-            return results
+        if qs in ['users', 'home', 'channels', 'files', 'plot_files', 'plot_msgs']:
+            results = pickle.load(open('%s/cache/slack/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
+            return results.replace('__REQ_ID__', req_id)
         else:
             return HttpResponseBadRequest("Invalid query.")
     else:
@@ -502,7 +493,7 @@ def cache_dropbox(request):
         data = sorted(data, key=operator.itemgetter(stats[0]))
         data_table = gviz_api.DataTable(desp)
         data_table.LoadData(data)
-        return (data_table, stats)
+        return data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id='__REQ_ID__')
 
 
 def dash_dropbox(request):
@@ -510,12 +501,9 @@ def dash_dropbox(request):
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
-        if qs in ['sizes', 'folders']:
-            return pickle.load(open('%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
-        elif qs == 'history':
-            (data_table, stats) = pickle.load(open('%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
-            results = data_table.ToJSonResponse(columns_order=stats,    order_by='Timestamp', req_id=req_id)
-            return results
+        if qs in ['sizes', 'folders', 'history']:
+            results = pickle.load(open('%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
+            return results.replace('__REQ_ID__', req_id)
         else:
             return HttpResponseBadRequest("Invalid query.")
     else:
