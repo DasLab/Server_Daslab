@@ -177,7 +177,6 @@ def cache_ga(request):
 
         for row in temp:
             data.append({u'Timestamp': datetime.strptime(row[0], '%Y%m%d'), fields[0]: float(row[1])})
-
         for field in fields:
             stats.append(field)
             desp[field] = ('number', field)

@@ -428,30 +428,108 @@ def aws_stats(request):
     return aws_call(conn, args, qs, req_id)
 
 
-def ga_stats():
-    access_token = requests.post('https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])).json()['access_token']
-    stats = {'access_token':access_token, 'client_id':GA['CLIENT_ID'], 'id':GA['ID']}
-    url_colon = urllib.quote(':')
-    url_comma = urllib.quote(',')
+def ga_stats(request):
+    if request.GET.has_key('qs') and request.GET.has_key('tqx'):
+        qs = request.GET.get('qs')
+        req_id = request.GET.get('tqx').replace('reqId:', '')
+        access_token = requests.post('https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])).json()['access_token']
+        stats = {'access_token':access_token, 'client_id':GA['CLIENT_ID'], 'id':GA['ID']}
+        url_colon = urllib.quote(':')
+        url_comma = urllib.quote(',')
 
-    temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (url_colon, GA['ID'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)).json()['totalsForAllResults']
-    temp_prev = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=60daysAgo&end-date=30daysAgo&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (url_colon, GA['ID'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)).json()['totalsForAllResults']
+        if qs == 'init':
+            temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (url_colon, GA['ID'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)).json()['totalsForAllResults']
+            temp_prev = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=60daysAgo&end-date=30daysAgo&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (url_colon, GA['ID'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)).json()['totalsForAllResults']
 
-    for i, key in enumerate(temp):
-        ga_key = key[3:]
-        if ga_key in ['bounceRate', 'pageviewsPerSession']:
-            prev = '%.2f' % (float(temp[key]) - float(temp_prev[key]))
-            curr = '%.2f' % float(temp[key])
-        elif ga_key == 'sessionDuration':
-            diff = int(float(temp[key]) / 1000) - int(float(temp_prev[key]) / 1000)
-            prev = str(timedelta(seconds=abs(diff)))
-            if diff < 0: prev = '-%s' % prev
-            curr = str(timedelta(seconds=int(float(temp[key]) / 1000)))
+            for i, key in enumerate(temp):
+                ga_key = key[3:]
+                if ga_key in ['bounceRate', 'pageviewsPerSession']:
+                    prev = '%.2f' % (float(temp[key]) - float(temp_prev[key]))
+                    curr = '%.2f' % float(temp[key])
+                elif ga_key == 'sessionDuration':
+                    diff = int(float(temp[key]) / 1000) - int(float(temp_prev[key]) / 1000)
+                    prev = str(timedelta(seconds=abs(diff)))
+                    if diff < 0: prev = '-%s' % prev
+                    curr = str(timedelta(seconds=int(float(temp[key]) / 1000)))
+                else:
+                    prev = '%d' % (int(temp[key]) - int(temp_prev[key]))
+                    curr = '%d' % int(temp[key])
+                stats.update({ga_key:curr, (ga_key + '_prev'):prev})
+            return simplejson.dumps(stats)
+        
+        elif request.GET.has_key('sp'):
+            sp = request.GET.get('sp')
+
+            if qs == 'chart':
+                (dm, strpt) = ('date', '%Y%m%d')
+                if sp == '24h':
+                    (d1, d2, dm, strpt) = ('yesterday', 'today', 'dateHour', '%Y%m%d%H')
+                elif sp == '7d':
+                    (d1, d2) = ('7daysAgo', 'today')
+                elif sp == '1m':
+                    (d1, d2) = ('30daysAgo', 'yesterday')
+                elif sp == '3m':
+                    (d1, d2) = ('90daysAgo', 'yesterday')
+                else:
+                    return HttpResponseBadRequest("Invalid query.")
+
+                temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=%s&end-date=%s&metrics=ga%ssessions&dimensions=ga%s%s&access_token=%s' % (url_colon, GA['ID'], d1, d2, url_colon, url_colon, dm, access_token)).json()['rows']
+                data = []
+                stats = ['Timestamp', 'Sessions']
+                desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count'), 'Sessions':('number', 'Sessions')}
+
+                for row in temp:
+                    data.append({u'Timestamp': datetime.strptime(row[0], strpt), 'Sessions': float(row[1])})
+                data = sorted(data, key=operator.itemgetter(stats[0]))
+                data_table = gviz_api.DataTable(desp)
+                data_table.LoadData(data)
+                return data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
+
+            elif qs == 'pie':
+                if sp == 'session':
+                    (me, dm, field) = ('sessions', 'userType', 'Sessions')
+                elif sp == 'user':
+                    (me, dm, field) = ('users', 'userType', 'Visitors')
+                elif sp == 'browser':
+                    (me, dm, field) = ('users', 'browser', 'Browsers')
+                elif sp == 'pageview':
+                    (me, dm, field) = ('pageviews', 'userType', 'Page Views')
+                else:
+                    return HttpResponseBadRequest("Invalid query.")
+
+                temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%s%s&access_token=%s' % (url_colon, GA['ID'], url_colon, me, url_colon, dm, access_token)).json()['rows']
+                data = []
+                stats = ['Category', field]
+                desp = {'Samples':('number', 'Samples'), 'Unit':('string', 'Count'), 'Category':('string', 'Category'), field:('number', field)}
+
+                for row in temp:
+                    data.append({'Category': row[0], field: float(row[1])})
+                data = sorted(data, key=operator.itemgetter(stats[0]))
+                if sp == 'browser':
+                    data = sorted(data, key=operator.itemgetter(stats[1]), reverse=True)[:min(len(data), 4)]
+                data_table = gviz_api.DataTable(desp)
+                data_table.LoadData(data)
+                return data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
+            else:
+                return HttpResponseBadRequest("Invalid query.")
+
+        elif qs == 'geo':
+            temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessions&dimensions=ga%scountry&access_token=%s' % (url_colon, GA['ID'], url_colon, url_colon, access_token)).json()['rows']
+            data = []
+            stats = ['Country', 'Sessions']
+            desp = {'Samples':('number', 'Samples'), 'Unit':('string', 'Count'), 'Country':('string', 'Country'), 'Sessions':('number', 'Sessions')}
+
+            for row in temp:
+                data.append({'Country': row[0], 'Sessions': float(row[1])})
+            data = sorted(data, key=operator.itemgetter(stats[0]))
+            data_table = gviz_api.DataTable(desp)
+            data_table.LoadData(data)
+            return data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
+
         else:
-            prev = '%d' % (int(temp[key]) - int(temp_prev[key]))
-            curr = '%d' % int(temp[key])
-        stats.update({ga_key:curr, (ga_key + '_prev'):prev})
-    return simplejson.dumps(stats)
+            return HttpResponseBadRequest("Invalid query.")
+    else:
+        return HttpResponseBadRequest("Invalid query.")
 
 
 def git_stats(request):
