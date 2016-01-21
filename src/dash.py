@@ -88,7 +88,7 @@ def cache_aws(request):
             if i < len(dict_aws['elb']):
                 temp.update({'elb': {'name':dict_aws['elb'][i]['name'], 'status':dict_aws['elb'][i]['status']}})
             dict_aws['table'].append(temp)
-        return simplejson.dumps(dict_aws)
+        return simplejson.dumps(dict_aws, sort_keys=True, indent=' ' * 4)
     else:
         qs = request['qs']
         id = request['id']
@@ -161,7 +161,7 @@ def cache_ga(request):
                 else:
                     curr = '%d' % int(temp[key])
                 dict_ga['projs'][j][ga_key] = curr
-        return simplejson.dumps(dict_ga)
+        return simplejson.dumps(dict_ga, sort_keys=True, indent=' ' * 4)
     else:
         url_colon = urllib.quote(':')
         temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%sdate&access_token=%s' % (url_colon, request['id'], url_colon, request['qs'], url_colon, request['access_token'])).json()['rows']
@@ -234,7 +234,7 @@ def cache_git(request):
 
             data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
             repos.append({'url':repo.html_url, 'private':repo.private, 'data':data, 'name':repo.name, 'id':repo.full_name})
-        return simplejson.dumps({'git':repos})
+        return simplejson.dumps({'git':repos}, sort_keys=True, indent=' ' * 4)
     else:
         if qs == 'num':
             name = 'DasLab/' + request['repo']
@@ -248,7 +248,7 @@ def cache_git(request):
             num_branches = len(requests.get('https://api.github.com/repos/' + name + '/branches?access_token=%s' % GIT['ACCESS_TOKEN']).json())
             num_forks = len(requests.get('https://api.github.com/repos/' + name + '/forks?access_token=%s' % GIT['ACCESS_TOKEN']).json())
             num_downloads = len(requests.get('https://api.github.com/repos/' + name + '/downloads?access_token=%s' % GIT['ACCESS_TOKEN']).json())
-            return simplejson.dumps({'name':request['repo'], 'created_at':created_at, 'pushed_at':pushed_at, 'num_watchers':num_watchers, 'num_pulls':num_pulls, 'num_issues':num_issues, 'num_branches':num_branches, 'num_forks':num_forks, 'num_downloads':num_downloads})
+            return simplejson.dumps({'name':request['repo'], 'created_at':created_at, 'pushed_at':pushed_at, 'num_watchers':num_watchers, 'num_pulls':num_pulls, 'num_issues':num_issues, 'num_branches':num_branches, 'num_forks':num_forks, 'num_downloads':num_downloads}, sort_keys=True, indent=' ' * 4)
 
         elif qs in ['c', 'ad']:
             repo = gh.get_repo('DasLab/' + request['repo'])
@@ -403,7 +403,7 @@ def cache_slack(request):
         data_table.LoadData(data)
         return (data_table, stats)
 
-    return simplejson.dumps(json)
+    return simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
 
 
 def dash_slack(request):
@@ -431,7 +431,7 @@ def cache_dropbox(request):
         account = dh.account_info()
         json = {'quota_used':account['quota_info']['shared'], 'quota_all':account['quota_info']['quota']}
         json.update({'quota_avail':(json['quota_all'] - json['quota_used'])})
-        return simplejson.dumps(json)
+        return simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
 
     elif qs == "folders":
         json = []
@@ -463,7 +463,7 @@ def cache_dropbox(request):
             result = dh.metadata(folder, list=False)
             latest = datetime.strptime(result['modified'][:-6], "%a, %d %b %Y %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime("%Y-%m-%d %H:%M:%S")
             json.append({'name':result['path'][1:], 'nums':folder_nums[folder], 'sizes':folder_sizes[folder], 'shares':folder_shares[folder[1:]], 'latest':latest})
-        return simplejson.dumps({'folders':json})
+        return simplejson.dumps({'folders':json}, sort_keys=True, indent=' ' * 4)
 
     elif qs == "history":
         desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
@@ -531,7 +531,7 @@ def dash_ssl(request):
         send_error_slack(traceback.format_exc(), 'Check SSL Certificate', 'dash_ssl', 'log_cron.log')
 
     exp_date = datetime.strptime(exp_date.replace('notAfter=', ''), "%b %d %H:%M:%S %Y %Z").strftime('%Y-%m-%d %H:%M:%S')
-    return simplejson.dumps({'exp_date':exp_date})
+    return simplejson.dumps({'exp_date':exp_date}, sort_keys=True, indent=' ' * 4)
 
 
 def cache_schedule():
@@ -709,7 +709,7 @@ def cache_cal():
                     data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
 
         subprocess.check_call("rm %s/cache/calendar.ics" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        return simplejson.dumps(data)    
+        return simplejson.dumps(data, sort_keys=True, indent=' ' * 4)    
     except:
         send_error_slack(traceback.format_exc(), 'Parse Calendar ICS', 'cache_cal', 'log_cron_cache.log')
 

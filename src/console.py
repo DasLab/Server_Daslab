@@ -283,7 +283,7 @@ def restyle_apache():
     port = response[len(response)-3].replace('</address>', '')[-3:]
 
     json = {'title':title, 'ver_apache':ver[0], 'ver_wsgi':ver[3], 'ver_webauth':ver[2], 'ver_ssl':ver[1], 'mpm':mpm, 'time_build':time_build, 'time_current':time_current, 'time_restart':time_restart, 'time_up':time_up, 'server_load':server_load, 'total_access':total[0], 'total_traffic':'%s %s' % (total[1], total[2]), 'cpu_load':cpu_load, 'cpu_usage':cpu_usage, 'traffic':traffic, 'idle':workers[1], 'processing':workers[0], 'worker':worker, 'table':table, 'port':port, 'ssl_subcache':ssl_subcache, 'ssl_index':ssl_index, 'ssl_cache':ssl[0], 'ssl_mem': ssl[1], 'ssl_entry':ssl[2]}
-    return simplejson.dumps(json)
+    return simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
     
 
 def aws_result(results, args, req_id=None):
@@ -380,7 +380,7 @@ def aws_stats(request):
             stat3 = {k: stat[k] for k in ('dns_name', 'vpc_id', 'subnets', 'health_check')} 
             stat3['health_check'] = str(stat3['health_check']).replace('HealthCheck:', '')
 
-            return simplejson.dumps({'ec2':stat1, 'ebs':stat2, 'elb':stat3})
+            return simplejson.dumps({'ec2':stat1, 'ebs':stat2, 'elb':stat3}, sort_keys=True, indent=' ' * 4)
 
         else:
             conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
@@ -455,7 +455,7 @@ def ga_stats(request):
                     prev = '%d' % (int(temp[key]) - int(temp_prev[key]))
                     curr = '%d' % int(temp[key])
                 stats.update({ga_key:curr, (ga_key + '_prev'):prev})
-            return simplejson.dumps(stats)
+            return simplejson.dumps(stats, sort_keys=True, indent=' ' * 4)
         
         elif request.GET.has_key('sp'):
             sp = request.GET.get('sp')
@@ -558,7 +558,7 @@ def git_stats(request):
                     name = '<i>%s</i> <span style="color:#888">(%s)</span>' % (contrib.author.login, contrib.author.name)
                     data.append({u'Contributors': name, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
                 data = sorted(data, key=operator.itemgetter(u'Commits'))            
-                return simplejson.dumps({'contrib':data})
+                return simplejson.dumps({'contrib':data}, sort_keys=True, indent=' ' * 4)
             else:
                 created_at = repo.created_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
                 pushed_at = repo.pushed_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
@@ -569,7 +569,7 @@ def git_stats(request):
                 num_branches = len(requests.get('https://api.github.com/repos/' + repo_name + '/branches?access_token=%s' % GIT['ACCESS_TOKEN']).json())
                 num_forks = len(requests.get('https://api.github.com/repos/' + repo_name + '/forks?access_token=%s' % GIT['ACCESS_TOKEN']).json())
                 num_downloads = len(requests.get('https://api.github.com/repos/' + repo_name + '/downloads?access_token=%s' % GIT['ACCESS_TOKEN']).json())
-                return simplejson.dumps({'created_at':created_at, 'pushed_at':pushed_at, 'num_watchers':num_watchers, 'num_pulls':num_pulls, 'num_issues':num_issues, 'num_branches':num_branches, 'num_forks':num_forks, 'num_downloads':num_downloads})
+                return simplejson.dumps({'created_at':created_at, 'pushed_at':pushed_at, 'num_watchers':num_watchers, 'num_pulls':num_pulls, 'num_issues':num_issues, 'num_branches':num_branches, 'num_forks':num_forks, 'num_downloads':num_downloads}, sort_keys=True, indent=' ' * 4)
 
         else:
             data = []

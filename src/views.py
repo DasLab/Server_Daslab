@@ -299,7 +299,7 @@ def user_email(request):
         else:
             messages = 'invalid'
 
-        return HttpResponse(simplejson.dumps({'messages':messages}), content_type='application/json')
+        return HttpResponse(simplejson.dumps({'messages':messages}, sort_keys=True, indent=' ' * 4), content_type='application/json')
     else:
         return HttpResponseBadRequest('Invalid form.')
 
@@ -431,7 +431,7 @@ def user_dash(request):
             json = {'id':sunet_id, 'type':user_type}
         else:
             json = {}
-    return HttpResponse(simplejson.dumps(json), content_type='application/json')
+    return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 # @login_required
 def schedule_dash(request):
@@ -451,24 +451,24 @@ def schedule_dash(request):
         ar_link = archive.link
     archive = {'date':archive.date.strftime('%Y-%m-%d'), 'name':archive.presenter, 'title':archive.title, 'url':ar_link}
     json.update({'flash_slide':flash_slide, 'journal_club':journal_club, 'eterna':eterna, 'rotation':rotation, 'archive':archive}) 
-    return HttpResponse(simplejson.dumps(json), content_type='application/json')
+    return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 
 def get_admin(request):
-    return HttpResponse(simplejson.dumps({'email':EMAIL_NOTIFY}), content_type='application/json')
+    return HttpResponse(simplejson.dumps({'email':EMAIL_NOTIFY}, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 def get_user(request):
     if request.META.has_key('WEBAUTH_USER'):
         user = request.META['WEBAUTH_USER']
     else:
         user = 'unknown'
-    return HttpResponse(simplejson.dumps({'user':user}), content_type='application/json')
+    return HttpResponse(simplejson.dumps({'user':user}, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 def get_js(request):
     lines = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r').readlines()
     lines = ''.join(lines).split('\t')
     json = {'jquery':lines[11], 'bootstrap':lines[12], 'swfobj':lines[16], 'fullcal':lines[17], 'moment':lines[18]}
-    return HttpResponse(simplejson.dumps(json), content_type='application/json')
+    return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 
 def error400(request):
