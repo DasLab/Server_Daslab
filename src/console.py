@@ -326,7 +326,7 @@ def aws_result(results, args, req_id=None):
     data = sorted(data, key=operator.itemgetter(u'Timestamp'))
     data_table = gviz_api.DataTable(desp)
     data_table.LoadData(data)
-    
+
     if (req_id is None) or (not req_id): req_id = '__REQ_ID__'
     return data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
 
@@ -431,7 +431,7 @@ def ga_stats(request):
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
         access_token = requests.post('https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])).json()['access_token']
-        stats = {'access_token':access_token, 'client_id':GA['CLIENT_ID'], 'id':GA['ID']}
+        stats = {}
         url_colon = urllib.quote(':')
         url_comma = urllib.quote(',')
 
