@@ -294,10 +294,8 @@ def dash_git(request):
         if qs == 'init':
             return pickle.load(open('%s/cache/git/init.pickle' % MEDIA_ROOT, 'rb'))
         elif qs in ['c', 'ad', 'num']:
-            f = open('%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, repo, qs), 'rb')
-            results = pickle.load(f).replace('__REQ_ID__', req_id)
-            f.close()
-            return results
+            results = pickle.load(open('%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, repo, qs), 'rb'))
+            return results.replace('__REQ_ID__', req_id)
         else:
             return HttpResponseBadRequest("Invalid query.")
     else:
