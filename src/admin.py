@@ -18,6 +18,7 @@ import time
 
 from src.console import *
 from src.dash import *
+from src.env import error400
 from src.models import *
 from src.settings import *
 
@@ -158,7 +159,7 @@ def aws(request):
 
 def aws_stat(request):
     json = aws_stats(request)
-    if isinstance(json, HttpResponseBadRequest): return json
+    if isinstance(json, HttpResponse): return json
     return HttpResponse(json, content_type='application/json')
 
 def ga(request):
@@ -166,7 +167,7 @@ def ga(request):
 
 def ga_stat(request):
     json = ga_stats(request)
-    if isinstance(json, HttpResponseBadRequest): return json
+    if isinstance(json, HttpResponse): return json
     return HttpResponse(json, content_type='application/json')
 
 def git(request):
@@ -174,15 +175,7 @@ def git(request):
 
 def git_stat(request):
     json = git_stats(request)
-    if isinstance(json, HttpResponseBadRequest):
-        return json
-    elif isinstance(json, HttpResponseServerError):
-        i = 0
-        while (isinstance(json, HttpResponseServerError) and i <= 5):
-            i += 1
-            time.sleep(1)
-            json = git_stats(request)
-        if isinstance(json, HttpResponseServerError): return json
+    if isinstance(json, HttpResponse): return json
     return HttpResponse(json, content_type='application/json')
 
 def ssl_dash(request):
@@ -210,9 +203,9 @@ def dash_stat(request):
         if flag in ('3', '15', '30'):
             call_command('cache', flag)
         else:
-            return HttpResponseBadRequest('Invalid input.')
+            return error400(request)
     else:
-        return HttpResponseBadRequest('Invalid input.')
+        return error400(request)
     return HttpResponseRedirect('/admin/')
 
 

@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
@@ -13,6 +13,7 @@ from filemanager import FileManager
 
 from src.console import *
 from src.dash import *
+from src.env import error400, error401, error403, error404, error500, error503
 from src.models import *
 from src.settings import *
 
@@ -265,9 +266,9 @@ def user_contact(request):
                     if len(bday[bday.find('/')+1:]) < 2:
                         bday = bday[:bday.find('/')+1] + '0' + bday[-1]
             except ValueError:
-                return HttpResponseBadRequest('Invalid input.')
+                return error400(request)
         else:
-            return HttpResponseBadRequest('Invalid input.')
+            return error400(request)
 
         member = Member.objects.get(sunet_id=request.META['WEBAUTH_USER'])
         member.phone = phone
@@ -276,7 +277,7 @@ def user_contact(request):
         member.save()
         return HttpResponseRedirect('/group/contact/')
     else:
-        return HttpResponseBadRequest('Invalid form.')
+        return error400(request)
 
 # @login_required
 def user_email(request):
@@ -301,7 +302,7 @@ def user_email(request):
 
         return HttpResponse(simplejson.dumps({'messages':messages}, sort_keys=True, indent=' ' * 4), content_type='application/json')
     else:
-        return HttpResponseBadRequest('Invalid form.')
+        return error400(request)
 
 # @login_required
 def user_upload(request):
@@ -366,27 +367,19 @@ def ping_test(request):
 # @login_required
 def aws_dash(request):
     json = dash_aws(request)
-    if isinstance(json, HttpResponseBadRequest): return json
+    if isinstance(json, HttpResponse): return json
     return HttpResponse(json, content_type='application/json')
 
 # @login_required
 def ga_dash(request):
     json = dash_ga(request)
-    if isinstance(json, HttpResponseBadRequest): return json
+    if isinstance(json, HttpResponse): return json
     return HttpResponse(json, content_type='application/json')
 
 # @login_required
 def git_dash(request):
     json = dash_git(request)
-    if isinstance(json, HttpResponseBadRequest):
-        return json
-    elif isinstance(json, HttpResponseServerError):
-        i = 0
-        while (isinstance(json, HttpResponseServerError) and i <= 5):
-            i += 1
-            sleep(1)
-            json = dash_git(request)
-        if isinstance(json, HttpResponseServerError): return json
+    if isinstance(json, HttpResponse): return json
     return HttpResponse(json, content_type='application/json')
 
 # @login_required
@@ -470,19 +463,6 @@ def get_js(request):
     json = {'jquery':lines[11], 'bootstrap':lines[12], 'swfobj':lines[16], 'fullcal':lines[17], 'moment':lines[18]}
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
-
-def error400(request):
-    return render_to_response(PATH.HTML_PATH['400'], {}, context_instance=RequestContext(request))
-def error401(request):
-    return render_to_response(PATH.HTML_PATH['401'], {}, context_instance=RequestContext(request))
-def error403(request):
-    return render_to_response(PATH.HTML_PATH['403'], {}, context_instance=RequestContext(request))
-def error404(request):
-    return render_to_response(PATH.HTML_PATH['404'], {}, context_instance=RequestContext(request))
-def error500(request):
-    return render_to_response(PATH.HTML_PATH['500'], {}, context_instance=RequestContext(request))
-def error503(request):
-    return render_to_response(PATH.HTML_PATH['503'], {}, context_instance=RequestContext(request))
 
 
 def test(request):
