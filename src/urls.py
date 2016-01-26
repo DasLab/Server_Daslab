@@ -27,7 +27,7 @@ if IS_MAINTENANCE:
         url(r'^site_media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT + '/media'}),
         url(r'^robots.txt$', serve, kwargs={'path': 'robots.txt', 'document_root': MEDIA_ROOT}),
 
-        url(r'^$', views.error503),
+        url(r'^$', views.error503, kwargs={'status': True}),
         url(r'^.*/?$', RedirectView.as_view(url='/', permanent=True)),
     ]
 else:

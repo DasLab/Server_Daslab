@@ -191,7 +191,7 @@ def lab_error(request):
 def user_login(request):
     if request.user.is_authenticated():
         if request.GET.has_key('next') and 'admin' in request.GET['next']:
-            return error403(request)
+            return error403(request, True)
         return HttpResponseRedirect('/group/')
 
     if request.method == 'POST':
@@ -266,9 +266,9 @@ def user_contact(request):
                     if len(bday[bday.find('/')+1:]) < 2:
                         bday = bday[:bday.find('/')+1] + '0' + bday[-1]
             except ValueError:
-                return error400(request)
+                return error400(request, True)
         else:
-            return error400(request)
+            return error400(request, True)
 
         member = Member.objects.get(sunet_id=request.META['WEBAUTH_USER'])
         member.phone = phone
@@ -277,7 +277,7 @@ def user_contact(request):
         member.save()
         return HttpResponseRedirect('/group/contact/')
     else:
-        return error400(request)
+        return error400(request, True)
 
 # @login_required
 def user_email(request):
@@ -302,7 +302,7 @@ def user_email(request):
 
         return HttpResponse(simplejson.dumps({'messages':messages}, sort_keys=True, indent=' ' * 4), content_type='application/json')
     else:
-        return error400(request)
+        return error400(request, True)
 
 # @login_required
 def user_upload(request):
@@ -469,7 +469,7 @@ def test(request):
     print request.META
     # get_sys_crontab()
     raise ValueError
-    return error400(request)
+    return error400(request, True)
     # send_notify_emails('test', 'test')
     # send_mail('text', 'test', EMAIL_HOST_USER, [EMAIL_NOTIFY])
     return HttpResponse(content="", status=200)

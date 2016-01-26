@@ -388,7 +388,7 @@ def aws_stats(request):
             elif sp == '48h':
                 args = {'period':720, 'start_time':datetime.utcnow() - timedelta(hours=48), 'end_time':datetime.utcnow()}
             else:
-                return error400(request)
+                return error400(request, True)
 
             if qs == 'latency':
                 args.update({'metric':['Latency'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Seconds', 'calc_rate':False})
@@ -413,9 +413,9 @@ def aws_stats(request):
             elif qs == 'volbytes':
                 args.update({'metric':['VolumeWriteBytes', 'VolumeReadBytes'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
             else:
-                return error400(request)
+                return error400(request, True)
     else:
-        return error400(request)
+        return error400(request, True)
 
     if args['namespace'] == 'AWS/ELB':
         args['dims'] = {'LoadBalancerName': AWS['ELB_NAME']}
@@ -470,7 +470,7 @@ def ga_stats(request):
                 elif sp == '3m':
                     (d1, d2) = ('90daysAgo', 'yesterday')
                 else:
-                    return error400(request)
+                    return error400(request, True)
 
                 temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=%s&end-date=%s&metrics=ga%ssessions&dimensions=ga%s%s&access_token=%s' % (url_colon, GA['ID'], d1, d2, url_colon, url_colon, dm, access_token)).json()['rows']
                 data = []
@@ -494,7 +494,7 @@ def ga_stats(request):
                 elif sp == 'pageview':
                     (me, dm, field) = ('pageviews', 'userType', 'Page Views')
                 else:
-                    return error400(request)
+                    return error400(request, True)
 
                 temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%s%s&access_token=%s' % (url_colon, GA['ID'], url_colon, me, url_colon, dm, access_token)).json()['rows']
                 data = []
@@ -510,7 +510,7 @@ def ga_stats(request):
                 data_table.LoadData(data)
                 return data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
             else:
-                return error400(request)
+                return error400(request, True)
 
         elif qs == 'geo':
             temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessions&dimensions=ga%scountry&access_token=%s' % (url_colon, GA['ID'], url_colon, url_colon, access_token)).json()['rows']
@@ -526,9 +526,9 @@ def ga_stats(request):
             return data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
 
         else:
-            return error400(request)
+            return error400(request, True)
     else:
-        return error400(request)
+        return error400(request, True)
 
 
 def git_stats(request):
@@ -547,15 +547,18 @@ def git_stats(request):
                 while (contribs is None and i <= 5):
                     time.sleep(1)
                     contribs = repo.get_stats_contributors()
-                if contribs is None: return error500(request)
+                if contribs is None: return error500(request, True)
 
                 for contrib in contribs:
                     a, d = (0, 0)
                     for w in contrib.weeks:
                         a += w.a
                         d += w.d
-                    name = '<i>%s</i> <span style="color:#888">(%s)</span>' % (contrib.author.login, contrib.author.name)
-                    data.append({u'Contributors': name, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+                    if contrib.author:
+                        au = '<i>%s</i> <span style="color:#888">(%s)</span>' % (contrib.author.login, contrib.author.name)
+                    else:
+                        au = '(None)'
+                    data.append({u'Contributors': au, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
                 data = sorted(data, key=operator.itemgetter(u'Commits'))            
                 return simplejson.dumps({'contrib':data}, sort_keys=True, indent=' ' * 4)
             else:
@@ -577,32 +580,36 @@ def git_stats(request):
 
             if qs == 'c':
                 contribs = repo.get_stats_commit_activity()
-                if contribs is None: return error500(request)
+                if contribs is None: return error500(request, True)
                 fields = ['Commits']
                 for contrib in contribs:
                     for i, day in enumerate(contrib.days):
                         data.append({u'Timestamp': contrib.week + timedelta(days=i), u'Commits': day})
             elif qs == 'ad':
                 contribs = repo.get_stats_code_frequency()
-                if contribs is None: return error500(request)
+                if contribs is None: return error500(request, True)
                 fields = ['Additions', 'Deletions']
                 for contrib in contribs:
                     data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
             elif qs == 'au':
                 contribs = repo.get_stats_contributors()
-                if contribs is None: return error500(request)
+                if contribs is None: return error500(request, True)
                 fields = ['Commits', 'Additions', 'Deletions']
                 for contrib in contribs:
                     a, d = (0, 0)
                     for w in contrib.weeks:
                         a += w.a
                         d += w.d
-                    data.append({u'Contributors': contrib.author.login, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+                    if contrib.author:
+                        au = contrib.author.login
+                    else:
+                        au = '(None)'
+                    data.append({u'Contributors': au, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
                 stats = ['Contributors']
                 desp['Contributors'] = ('string', 'Name')
                 del desp['Timestamp']
             else:
-                return error400(request)
+                return error400(request, True)
 
             for field in fields:
                 stats.append(field)
@@ -614,7 +621,7 @@ def git_stats(request):
             results = data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id=req_id)
             return results
     else:
-        return error400(request)
+        return error400(request, True)
 
 
 def export_citation(request):

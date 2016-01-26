@@ -140,10 +140,10 @@ class Command(BaseCommand):
                 date = datetime.strptime("%s %s" % (result['next'][0], year), '%b %d %Y')
 
                 msg_who = 'Just a reminder that you are up for `%s` *next* _%s_ (*%s*).\n' % (type_next, datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
-                if result['next'][1] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_2']:
+                if result['next'][1] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_1']:
                     date = (datetime.utcnow() + timedelta(days=(offset_1 + 7 - offset_2))).date()
                     msg_who += ' Please post your paper of choice to the group `#general` channel by *next* _%s_ (*%s*).\n' % (datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
-                elif result['next'][1] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_2']:
+                elif result['next'][1] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_1']:
                     date = (datetime.utcnow() + timedelta(days=(offset_1 + 7 - offset_2))).date()
                     msg_who += ' Please post a brief description of the topic to the group `#general` channel by *next* _%s_ (*%s*) to allow time for releasing news on both DasLab Website and EteRNA broadcast.\n' % (datetime.strftime(date, '%A'), datetime.strftime(date, '%b %d'))
 
@@ -159,7 +159,7 @@ class Command(BaseCommand):
                         if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
                             ids.append('_' + name + '_ <@' + who_id + '>')
 
-                            if (result['next'][1] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_2']) or (result['next'][1] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_2']):
+                            if (result['next'][1] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_1']) or (result['next'][1] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_1']) or (result['next'][1] == 'GM' and (BOT['SLACK']['REMINDER']['JC']['REMINDER_1'] or BOT['SLACK']['REMINDER']['ES']['REMINDER_1'] or BOT['SLACK']['REMINDER']['ROT']['REMINDER_1'])):
                                 send_to = '@' + who_id
                                 if DEBUG: send_to = SLACK['ADMIN_NAME']
                                 self.msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text"], "color":"good", "text":msg_who}]))

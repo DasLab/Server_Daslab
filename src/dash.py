@@ -99,7 +99,7 @@ def cache_aws(request):
         if tp in ['ec2', 'elb', 'ebs']:
             args = {'period':3600, 'start_time':datetime.utcnow() - timedelta(days=1), 'end_time':datetime.utcnow()}
         else:
-            return error400(request)
+            return error400(request, True)
 
         if qs == 'lat':
             args.update({'metric':['Latency'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Seconds', 'calc_rate':False})
@@ -134,9 +134,9 @@ def dash_aws(request):
             results = pickle.load(open('%s/cache/aws/%s_%s_%s.pickle' % (MEDIA_ROOT, tp, id, qs), 'rb'))
             return results.replace('__REQ_ID__', req_id)
         else:
-            return error400(request)
+            return error400(request, True)
     else:
-        return error400(request)
+        return error400(request, True)
 
 
 def cache_ga(request):
@@ -199,9 +199,9 @@ def dash_ga(request):
             results = pickle.load(open('%s/cache/ga/%s_%s.pickle' % (MEDIA_ROOT, id, qs), 'rb'))
             return results.replace('__REQ_ID__', req_id)
         else:
-            return error400(request)
+            return error400(request, True)
     else:
-        return error400(request)
+        return error400(request, True)
 
 
 
@@ -298,9 +298,9 @@ def dash_git(request):
             results = pickle.load(open('%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, repo, qs), 'rb'))
             return results.replace('__REQ_ID__', req_id)
         else:
-            return error400(request)
+            return error400(request, True)
     else:
-        return error400(request)
+        return error400(request, True)
 
 
 def cache_slack(request):
@@ -408,9 +408,9 @@ def dash_slack(request):
             results = pickle.load(open('%s/cache/slack/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
             return results.replace('__REQ_ID__', req_id)
         else:
-            return error400(request)
+            return error400(request, True)
     else:
-        return error400(request)
+        return error400(request, True)
 
 
 def cache_dropbox(request):
@@ -504,9 +504,9 @@ def dash_dropbox(request):
             results = pickle.load(open('%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
             return results.replace('__REQ_ID__', req_id)
         else:
-            return error400(request)
+            return error400(request, True)
     else:
-        return error400(request)
+        return error400(request, True)
 
 
 def dash_ssl(request):
