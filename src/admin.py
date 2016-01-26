@@ -203,9 +203,9 @@ def dash_stat(request):
         if flag in ('3', '15', '30'):
             call_command('cache', flag)
         else:
-            return error400(request, True)
+            return error400(request)
     else:
-        return error400(request, True)
+        return error400(request)
     return HttpResponseRedirect('/admin/')
 
 

@@ -83,7 +83,7 @@
 
 	    	$("#iframe").css("width", parseInt($("#content").css("width")) - 50);
 			$("input:radio").on("change", function () {
-				$("#iframe").attr("src", "/error/" + $(this).val() + '/');
+				$("#iframe").attr("src", "/error/" + $(this).val() + '/?status=false');
 			});
 		});
 	</script>
