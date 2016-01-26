@@ -120,21 +120,27 @@ FILEMANAGER_STATIC_ROOT = root('media/admin') + '/'
 
 
 def error400(request, status=False):
+    status = bool(request.GET['status']) if request.GET.has_key('status') else status
     status = 400 if status else 200
     return render_to_response(PATH.HTML_PATH['400'], {}, context_instance=RequestContext(request), status=status)
 def error401(request, status=False):
+    status = bool(request.GET['status']) if request.GET.has_key('status') else status
     status = 401 if status else 200
     return render_to_response(PATH.HTML_PATH['401'], {}, context_instance=RequestContext(request), status=status)
 def error403(request, status=False):
+    status = bool(request.GET['status']) if request.GET.has_key('status') else status
     status = 403 if status else 200
     return render_to_response(PATH.HTML_PATH['403'], {}, context_instance=RequestContext(request), status=status)
 def error404(request, status=False):
+    status = bool(request.GET['status']) if request.GET.has_key('status') else status
     status = 404 if status else 200
     return render_to_response(PATH.HTML_PATH['404'], {}, context_instance=RequestContext(request), status=status)
 def error500(request, status=False):
+    status = bool(request.GET['status']) if request.GET.has_key('status') else status
     status = 500 if status else 200
     return render_to_response(PATH.HTML_PATH['500'], {}, context_instance=RequestContext(request), status=status)
 def error503(request, status=False):
+    status = bool(request.GET['status']) if request.GET.has_key('status') else status
     status = 503 if status else 200
     return render_to_response(PATH.HTML_PATH['503'], {}, context_instance=RequestContext(request), status=status)
 
