@@ -213,8 +213,7 @@ def cache_git(request):
     if qs == 'init':
         repos = []
         for repo in gh.get_organization('DasLab').get_repos():
-            i = 0
-            contribs = repo.get_stats_contributors()
+            (i, contribs) = (0, None)
             while (contribs is None and i <= 5):
                 time.sleep(1)
                 contribs = repo.get_stats_contributors()
@@ -257,8 +256,7 @@ def cache_git(request):
             stats = ['Timestamp']
 
             if qs == 'c':
-                i = 0
-                contribs = repo.get_stats_commit_activity()
+                (i, contribs) = (0, None)
                 while (contribs is None and i <= 5):
                     time.sleep(1)
                     contribs = repo.get_stats_commit_activity()
@@ -268,8 +266,7 @@ def cache_git(request):
                 for contrib in contribs: 
                     data.append({u'Timestamp': contrib.week, u'Commits': sum(contrib.days)})
             elif qs == 'ad':
-                i = 0
-                contribs = repo.get_stats_code_frequency()
+                (i, contribs) = (0, None)
                 while (contribs is None and i <= 5):
                     time.sleep(1)
                     contribs = repo.get_stats_code_frequency()
