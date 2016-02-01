@@ -542,7 +542,8 @@ def git_stats(request):
         if qs in ['init', 'num']:
             if qs == 'init':
                 data = []
-                (i, contribs) = (0, None)
+                i = 0
+                contribs = repo.get_stats_contributors()
                 while (contribs is None and i <= 5):
                     time.sleep(1)
                     contribs = repo.get_stats_contributors()
@@ -579,7 +580,8 @@ def git_stats(request):
             stats = ['Timestamp']
 
             if qs == 'c':
-                (i, contribs) = (0, None)
+                i = 0
+                contribs = repo.get_stats_commit_activity()
                 while (contribs is None and i <= 5):
                     time.sleep(1)
                     contribs = repo.get_stats_commit_activity()
@@ -590,7 +592,8 @@ def git_stats(request):
                     for i, day in enumerate(contrib.days):
                         data.append({u'Timestamp': contrib.week + timedelta(days=i), u'Commits': day})
             elif qs == 'ad':
-                (i, contribs) = (0, None)
+                i = 0
+                contribs = repo.get_stats_code_frequency()
                 while (contribs is None and i <= 5):
                     time.sleep(1)
                     contribs = repo.get_stats_code_frequency()
@@ -600,7 +603,8 @@ def git_stats(request):
                 for contrib in contribs:
                     data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
             elif qs == 'au':
-                (i, contribs) = (0, None)
+                i = 0
+                contribs = repo.get_stats_contributors()
                 while (contribs is None and i <= 5):
                     time.sleep(1)
                     contribs = repo.get_stats_contributors()
