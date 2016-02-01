@@ -20,7 +20,7 @@ import requests
 from slacker import Slacker
 
 from src.console import *
-from src.env import error400
+from src.env import error400, error500
 from src.settings import *
 
 
@@ -218,7 +218,8 @@ def cache_git(request):
             while (contribs is None and i <= 5):
                 time.sleep(1)
                 contribs = repo.get_stats_contributors()
-            if contribs is None: raise Exception("PyGithub failed")
+                i += 1
+            if contribs is None: return error500(request)
             data = []
             for contrib in contribs:
                 a, d = (0, 0)
@@ -261,7 +262,8 @@ def cache_git(request):
                 while (contribs is None and i <= 5):
                     time.sleep(1)
                     contribs = repo.get_stats_commit_activity()
-                if contribs is None: raise Exception("PyGithub failed")
+                    i += 1
+                if contribs is None: return error500(request)
                 fields = ['Commits']
                 for contrib in contribs: 
                     data.append({u'Timestamp': contrib.week, u'Commits': sum(contrib.days)})
@@ -271,7 +273,8 @@ def cache_git(request):
                 while (contribs is None and i <= 5):
                     time.sleep(1)
                     contribs = repo.get_stats_code_frequency()
-                if contribs is None: raise Exception("PyGithub failed")
+                    i += 1
+                if contribs is None: return error500(request)
                 fields = ['Additions', 'Deletions']
                 for contrib in contribs:
                     data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
