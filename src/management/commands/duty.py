@@ -112,7 +112,7 @@ class Command(BaseCommand):
 
                     day = datetime.utcnow().date()
                     fields = []
-                    for ppl in Member.objects.filter(alumni=0).exclude(bday__isnull=True).order_by('bday'):
+                    for ppl in Member.objects.filter(is_alumni=0).exclude(bday__isnull=True).order_by('bday'):
                         temp = datetime.strptime('%s/%s' % (day.year, ppl.bday), '%Y/%m/%d')
                         is_upcoming = (temp <= datetime.utcnow() + timedelta(days=60)) and (temp >= datetime.utcnow())
                         if day.month >= 10:

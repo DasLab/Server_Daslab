@@ -524,12 +524,26 @@ def dash_ssl(request):
     return simplejson.dumps({'exp_date':exp_date}, sort_keys=True, indent=' ' * 4)
 
 
+def get_spreadsheet(prefix, id, suffix):
+    try:
+        subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (prefix, id, suffix), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+
 def cache_schedule():
     gdrive_dir = 'cd %s/cache' % MEDIA_ROOT
     gdrive_mv = 'mv Das\ Group\ Meeting\ Schedule.csv schedule.csv'
-    try:
-        subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["SCHEDULE_SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError:
+
+    flag = get_spreadsheet(gdrive_dir, DRIVE["SCHEDULE_SPREADSHEET_ID"], gdrive_mv)
+    i = 0
+    while (not flag and i <= 3):
+        time.sleep(5)
+        flag = get_spreadsheet(gdrive_dir, DRIVE["SCHEDULE_SPREADSHEET_ID"], gdrive_mv)
+        i += 1
+
+    if not flag:
         send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *cache_schedule()* Download Failure @ _%s_\n' % time.ctime()}])
         # send_error_slack(traceback.format_exc(), 'Download Schedule Spreadsheet', 'cache_schedule', 'log_cron_cache.log')
         if os.path.exists('%s/cache/schedule.pickle' % MEDIA_ROOT):
@@ -574,9 +588,15 @@ def dash_schedule(request):
 def cache_duty():
     gdrive_dir = 'cd %s/cache' % MEDIA_ROOT
     gdrive_mv = 'mv Das\ Lab\ Responsibilities.csv duty.csv'
-    try:
-        subprocess.check_call("%s && drive download --format csv --force -i %s && %s" % (gdrive_dir, DRIVE["DUTY_SPREADSHEET_ID"], gdrive_mv), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError:
+
+    flag = get_spreadsheet(gdrive_dir, DRIVE["DUTY_SPREADSHEET_ID"], gdrive_mv)
+    i = 0
+    while (not flag and i <= 3):
+        time.sleep(5)
+        flag = get_spreadsheet(gdrive_dir, DRIVE["DUTY_SPREADSHEET_ID"], gdrive_mv)
+        i += 1
+
+    if not flag:
         send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *cache_duty()* Download Failure @ _%s_\n' % time.ctime()}])
         # send_error_slack(traceback.format_exc(), 'Download Duty Spreadsheet', 'cache_duty', 'log_cron_cache.log')
         if os.path.exists('%s/cache/duty.pickle' % MEDIA_ROOT):
@@ -605,10 +625,22 @@ def dash_duty(request):
     return pickle.load(open('%s/cache/duty.pickle' % MEDIA_ROOT, 'rb'))
 
 
-def cache_cal():
+def get_calendar():
     try:
         subprocess.check_call('curl --silent --request GET "%s" -o %s/cache/calendar.ics' % (GCAL['ICS'], MEDIA_ROOT), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        return True
     except subprocess.CalledProcessError:
+        return False
+
+def cache_cal():
+    flag = get_calendar()
+    i = 0
+    while (not flag and i <= 3):
+        time.sleep(5)
+        flag = get_calendar()
+        i += 1
+
+    if not flag:
         send_error_slack(traceback.format_exc(), 'Download Calendar ICS', 'cache_cal', 'log_cron_cache.log')
         if os.path.exists('%s/cache/calendar.pickle' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
