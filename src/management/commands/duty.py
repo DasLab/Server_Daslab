@@ -80,10 +80,14 @@ class Command(BaseCommand):
                     if result['this'][1] == 'ES':
                         who = result['this'][2]
                         (who_id, _) = find_slack_id(who)
+                        if DEBUG: 
+                            send_to = SLACK['ADMIN_NAME']
+                        else:
+                            send_to = '@' + who_id
 
                         if BOT['SLACK']['REMINDER']['ES']['REMINDER_2']:
-                            (who_id2, _) = find_slack_id(ppls['monthly']['eterna'])
-                            self.compose_msg(result['this'][2], 'Eterna Broadcast Posting', flag, ' Just a reminder for sending a description of your upcoming _Eterna Open Group Meeting_ to <%s> and <@%s> for releasing news on both DasLab Website and EteRNA broadcast.' % (SLACK['ADMIN_NAME'], who_id2))
+                            (who_id2, _) = find_slack_id(ppls['monthly']['eterna'][0])
+                            self.msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder for sending a description of your upcoming _Eterna Open Group Meeting_ to <%s> and <@%s> for releasing news on both DasLab Website and EteRNA broadcast.' % (SLACK['ADMIN_NAME'], who_id2)}]) )
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_BROADCAST']:
                             self.compose_msg(ppls['monthly']['eterna'], 'Eterna Broadcast Posting', flag, ' for _Eterna Open Group Meeting_. If _%s_ <@%s> hasn\'t send out descriptions, please ask him/her!' % (who, who_id))
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_NEWS']:
@@ -92,7 +96,11 @@ class Command(BaseCommand):
                         if BOT['SLACK']['REMINDER']['JC']['REMINDER_2']:
                             who = result['this'][2]
                             (who_id, _) = find_slack_id(who)
-                            self.compose_msg(result['this'][2], 'Journal Club Posting', flag, ' Just a reminder for posting your paper of choice for the upcoming _Journal Club_ to `#general`.')
+                            if DEBUG: 
+                                send_to = SLACK['ADMIN_NAME']
+                            else:
+                                send_to = '@' + who_id
+                            self.msg_handles.append( (send_to, '', [{"fallback":'Reminder', "mrkdwn_in": ["text", "fields"], "color":"c28fdd", "text":'*LAB DUTY*: Just a reminder for posting your paper of choice for the upcoming _Journal Club_ to `#general`.'}]) )
                     else:
                         return
                 else:
@@ -140,6 +148,7 @@ class Command(BaseCommand):
                     self.compose_msg(ppls[flag]['github'], 'Mailing, Slack, GitHub', flag, '')
 
         except:
+            print traceback.format_exc()
             send_error_slack(traceback.format_exc(), 'Send Duty Reminders', ' '.join(sys.argv), 'log_cron_duty.log')
             self.stdout.write("Finished with \033[41mERROR\033[0m!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
