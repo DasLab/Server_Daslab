@@ -44,9 +44,9 @@ $(document).ready(function() {
             }
             var html = '';
             for (var i = 0; i < names.length; i++) {
-                html += '<tr><td><code>' + names[i] + '</code></td><td><span class="label label-primary">' + times[i] + '</span></td><td><span style="color:#00f;">' + sizes[i] + '</span></td></tr>'
+                html += '<tr><td><code>' + names[i] + '</code></td><td><span class="label label-primary">' + times[i] + '</span></td><td><span style="color:#00f;">' + sizes[i] + '</span></td></tr>';
             }
-            html += '<tr><td colspan="3" style="padding: 0px;"></td></tr>'
+            html += '<tr><td colspan="3" style="padding: 0px;"></td></tr>';
             $("#gdrive_list").html(html);
 
         }

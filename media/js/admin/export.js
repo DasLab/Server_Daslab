@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$("#id_text_type").on("change", function() {
 		if ($(this).val() == "0") {
 			$("#id_bold_author, #id_bold_year, #id_underline_title, #id_italic_journal, #id_bold_volume").attr("disabled", "disabled");
-			$("[class^=item_]").css({"font-weight":"normal", "font-style":"normal", "text-decoration":"none"})
+			$("[class^=item_]").css({"font-weight":"normal", "font-style":"normal", "text-decoration":"none"});
 		} else {
 			$("#id_bold_author, #id_bold_year, #id_underline_title, #id_italic_journal, #id_bold_volume").removeAttr("disabled");
 			$("#id_bold_author, #id_bold_year, #id_underline_title, #id_italic_journal, #id_bold_volume").trigger("change");

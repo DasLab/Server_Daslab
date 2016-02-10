@@ -160,11 +160,11 @@ $(document).ready(function () {
  	} else if ($(location).attr("href").indexOf("admin/doc") != -1) {
     	$("#nav_doc").addClass("active");
     	$("#nav_doc_lg").addClass("active");
-    	$("ul.breadcrumb").css("border-bottom", "5px solid #c28fdd")
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #c28fdd");
  	} else {
     	$("#nav_home").addClass("active");
     	$("#nav_home_lg").addClass("active");
-    	$("ul.breadcrumb").css("border-bottom", "5px solid #3ed4e7")
+    	$("ul.breadcrumb").css("border-bottom", "5px solid #3ed4e7");
 	}
 
 	$("#nav_toggle").on("click", function() {

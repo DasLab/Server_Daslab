@@ -1,7 +1,7 @@
 var $ = django.jQuery;
 
 function replace_path(string) {
-	return string.replace('/home/ubuntu/Server_DasLab/data/', '/site_data/').replace('/Website_Server/Daslab/data/', '/site_data/')
+	return string.replace('/home/ubuntu/Server_DasLab/data/', '/site_data/').replace('/Website_Server/Daslab/data/', '/site_data/');
 }
 
 $(document).ready(function () {
@@ -81,7 +81,7 @@ $(document).ready(function () {
 
 		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-picture"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
 		$("ul.breadcrumb > li:first").next().remove();
-		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;')
+		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;');
     } else if ($(location).attr("href").indexOf("admin/src/publication") != -1) {
 		$("th.column-year").addClass("col-lg-1 col-md-1 col-sm-1 col-xs-1");
 		$("th.column-journal").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
@@ -102,7 +102,7 @@ $(document).ready(function () {
 
 		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-education"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
 		$("ul.breadcrumb > li:first").next().remove();
-		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;')
+		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;');
 	} else if ($(location).attr("href").indexOf("admin/src/member") != -1) {
 		$("th.column-full_name").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
 		$("th.column-sunet_id").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
@@ -121,7 +121,7 @@ $(document).ready(function () {
 
 		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-user"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
 		$("ul.breadcrumb > li:first").next().remove();
-		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;')
+		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;');
 	} else if ($(location).attr("href").indexOf("admin/src/flashslide") != -1) {
 		$("th.column-date").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
 		$("th.column-link").addClass("col-lg-9 col-md-9 col-sm-9 col-xs-9");
@@ -133,7 +133,7 @@ $(document).ready(function () {
 
 		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-blackboard"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
 		$("ul.breadcrumb > li:first").next().remove();
-		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;')
+		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;');
 	} else if ($(location).attr("href").indexOf("admin/src/journalclub") != -1) {
 		$("th.column-date").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
 		$("th.column-presenter").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
@@ -150,7 +150,7 @@ $(document).ready(function () {
 
 		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-book"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
 		$("ul.breadcrumb > li:first").next().remove();
-		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;')
+		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;');
 	} else if ($(location).attr("href").indexOf("admin/src/rotationstudent") != -1) {
 		$("th.column-date").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
 		$("th.column-full_name").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
@@ -164,7 +164,7 @@ $(document).ready(function () {
 
 		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-retweet"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
 		$("ul.breadcrumb > li:first").next().remove();
-		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;')
+		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;');
  	} else if ($(location).attr("href").indexOf("admin/src/eternayoutube") != -1) {
 		$("th.column-date").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
 		$("th.column-presenter").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
@@ -181,7 +181,7 @@ $(document).ready(function () {
 
 		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-facetime-video"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
 		$("ul.breadcrumb > li:first").next().remove();
-		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;')
+		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;');
  	} else if ($(location).attr("href").indexOf("admin/src/presentation") != -1) {
 		$("th.column-date").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
 		$("th.column-presenter").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
@@ -195,7 +195,7 @@ $(document).ready(function () {
 
 		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-cd"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
 		$("ul.breadcrumb > li:first").next().remove();
-		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;')
+		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;');
  	} else if ($(location).attr("href").indexOf("admin/src/slackmessage") != -1) {
 		$("th.column-date").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
 		$("th.column-receiver").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
@@ -210,7 +210,7 @@ $(document).ready(function () {
 
 		$("div.col-md-6 > h2.legend").html('<img src="/site_media/images/icons/slack.png" style="vertical-align:text-top;" height="16px">&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
 		$("ul.breadcrumb > li:first").next().remove();
-		$("ul.breadcrumb > li:first").next().prepend('<img src="/site_media/images/icons/slack.png" height="21" style="vertical-align:text-top;">&nbsp;&nbsp;')
+		$("ul.breadcrumb > li:first").next().prepend('<img src="/site_media/images/icons/slack.png" height="21" style="vertical-align:text-top;">&nbsp;&nbsp;');
 	} else if ($(location).attr("href").indexOf("admin/auth/user") != -1) {
 		$("th.column-username").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
 		$("th.column-email").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
@@ -231,7 +231,7 @@ $(document).ready(function () {
 
 		$("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-lock"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
 		$("ul.breadcrumb > li:first").next().remove();
-		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;')
+		$("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;');
 
 	}
 
@@ -249,12 +249,13 @@ $(window).load(function () {
 			$('<div class="input-group-btn"><a class="btn btn-default" id="' + $(this).attr("id") + '_cal"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Calendar&nbsp;&nbsp;</a><a class="btn btn-primary" id="' + $(this).attr("id") + '_today"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Today&nbsp;&nbsp;</a></div>').insertAfter($(this));
 			$(this).css("width", "auto");
 
+			var elem;
 			if ($(this).parent().next().hasClass("datetimeshortcuts")) {
-				var elem = $(this).parent().next();
+				elem = $(this).parent().next();
 			} else {
 				// $('<br><br>').insertBefore($(this).parent().next());
 				$(this).parent().next().css("display", "block");
-				var elem = $(this).siblings().last();
+				elem = $(this).siblings().last();
 			}
 			$('#' + $(this).attr("id") + '_cal').attr("href", elem.children().last().attr("href"));
 			$('#' + $(this).attr("id") + '_cal').on("click", function() {
@@ -283,12 +284,13 @@ $(window).load(function () {
 			$('<div class="input-group-btn"><a class="btn btn-default" id="' + $(this).attr("id") + '_clk"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Clock&nbsp;&nbsp;</a><a class="btn btn-primary" id="' + $(this).attr("id") + '_now"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Now&nbsp;&nbsp;</a></div>').insertAfter($(this));
 			$(this).css("width", "auto");
 
+			var elem;
 			if ($(this).parent().next().hasClass("datetimeshortcuts")) {
-				var elem = $(this).siblings().last();
+				elem = $(this).siblings().last();
 			} else {
 				// $('<br><br>').insertBefore($(this).parent().next());
 				$(this).parent().next().css("display", "block");
-				var elem = $(this).siblings().last();
+				elem = $(this).siblings().last();
 			}
 			$('#' + $(this).attr("id") + '_clk').attr("href", elem.children().last().attr("href"));
 			$('#' + $(this).attr("id") + '_clk').on("click", function() {
@@ -313,15 +315,15 @@ $(window).load(function () {
 			$("span.help-icon").removeClass("help help-tooltip help-icon").addClass("glyphicon glyphicon-question-sign");
 			$("select").addClass("form-control").removeClass("filtered");
 			$("input[placeholder='Filter']").addClass("form-control").parent().addClass("input-group");
-			$("<br/>").insertAfter($("input[placeholder='Filter']").parent())
-			$('<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>').insertAfter($("input[placeholder='Filter']"))
+			$("<br/>").insertAfter($("input[placeholder='Filter']").parent());
+			$('<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>').insertAfter($("input[placeholder='Filter']"));
 			$("img[src='/static/admin/img/selector-search.svg']").parent().remove();
-			$('<span class="glyphicon glyphicon-question-sign"></span>').insertAfter($("img[src='/static/admin/img/icon-unknown.svg']"))
+			$('<span class="glyphicon glyphicon-question-sign"></span>').insertAfter($("img[src='/static/admin/img/icon-unknown.svg']"));
 			$("img[src='/static/admin/img/icon-unknown.svg']").remove();
 
-			$("a.selector-add").addClass("btn btn-inverse").html('<span class="glyphicon glyphicon-circle-arrow-right"></span>')
-			$("a.selector-remove").addClass("btn btn-default").html('<span class="glyphicon glyphicon-circle-arrow-left"></span>')
-			$("a.add-related").addClass("btn btn-blue").html('<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;Add Group')
+			$("a.selector-add").addClass("btn btn-inverse").html('<span class="glyphicon glyphicon-circle-arrow-right"></span>');
+			$("a.selector-remove").addClass("btn btn-default").html('<span class="glyphicon glyphicon-circle-arrow-left"></span>');
+			$("a.add-related").addClass("btn btn-blue").html('<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;Add Group');
 			$("<br/>").insertBefore($("a.selector-chooseall"));
 			$("a.selector-chooseall").addClass("btn btn-info").html('<span class="glyphicon glyphicon-ok-sign"></span>&nbsp;&nbsp;Choose All');
 			$("<br/>").insertBefore($("a.selector-clearall"));

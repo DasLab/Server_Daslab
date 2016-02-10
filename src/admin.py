@@ -228,9 +228,6 @@ def bot(request):
 def dir(request):
     return render_to_response(PATH.HTML_PATH['admin_dir'], {}, context_instance=RequestContext(request))
 
-def slack(request):
-    return render_to_response(PATH.HTML_PATH['admin_slack'], {}, context_instance=RequestContext(request))
-
 def export(request):
     if request.method == 'POST':
         return export_citation(request)
@@ -279,7 +276,6 @@ admin.site.register_view('dash_stat/', view=dash_stat, visible=False)
 
 admin.site.register_view('dir/', view=dir, visible=False)
 admin.site.register_view('bot/', view=bot, visible=False)
-admin.site.register_view('slack/', view=slack, visible=False)
 admin.site.register_view('export/', view=export, visible=False)
 
 admin.site.register_view('doc/', view=doc, visible=False)

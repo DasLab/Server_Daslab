@@ -23,14 +23,12 @@ class AutomaticAdminLoginMiddleware(object):
     def process_request(self, request):
         if not hasattr(request, 'user') or not request.user.is_authenticated():
             try:
-                # sunet_id = request.META['WEBAUTH_USER']
-                sunet_id = 't47'
+                sunet_id = request.META['WEBAUTH_USER']
                 is_admin = (sunet_id in USER_GROUP().ADMIN)
             except:
                 is_admin = False
                 # print traceback.format_exc()
 
-            # print "middleware:", is_admin
             if is_admin:
                 user = authenticate(username=env('APACHE_USER'), password=env('APACHE_PASSWORD'))
                 request.user = user

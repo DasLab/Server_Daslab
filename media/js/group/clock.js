@@ -3,7 +3,7 @@ var bDOMLoaded          = false;
 var bClocksInitialised  = false;
 
 function ClockInit() {
-    if ((bClocksInitialised != true) && (bDOMLoaded == true) && (bScriptLoaded == true)) {
+    if ((bClocksInitialised !== true) && (bDOMLoaded === true) && (bScriptLoaded === true)) {
         bClocksInitialised = true;
         oClockAnalog.fInit();
         oClockDigital.fInit();

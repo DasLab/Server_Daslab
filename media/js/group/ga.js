@@ -38,7 +38,7 @@ function drawGA(id) {
     chart.draw();
     gviz_handles.push(chart);
 
-    var chart = new google.visualization.ChartWrapper({
+    chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/group/ga_dash/?qs=percentNewSessions&id=' + id,
         'containerId': 'chart_visitor_' + id,

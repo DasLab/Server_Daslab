@@ -37,7 +37,7 @@ function drawGIT(repo) {
     chart.draw();
     gviz_handles.push(chart);
 
-    var chart = new google.visualization.ChartWrapper({
+    chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/group/git_dash/?qs=ad&repo=' + repo,
         'containerId': 'plot_ad_' + repo,
@@ -74,12 +74,7 @@ function drawChart() {
         success: function (data) {
             var html = "";
             for (var i = 0; i < data.git.length; i++) {
-                var lb_private = "";
-                if (data.git[i]['private']) {
-                    lb_private = '<span class="label label-success">private</span>';
-                } else {
-                    lb_private = '<span class="label label-magenta">public</span>';
-                }
+                var lb_private = (data.git[i].private) ? '<span class="label label-success">private</span>' : '<span class="label label-magenta">public</span>';
 
                 html += '<div class="row"><div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><p><span class="lead"><mark><b><u>' + data.git[i].id + '</u></b></mark></span>&nbsp;&nbsp;' + lb_private + '</p><p><a href="' + data.git[i].url + '" target="_blank"><code>' + data.git[i].url + '</code></a></p><p id="git-label-' + data.git[i].name + '"></p><table class="table table-hover"><thead><tr class="active"><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Account</th><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-circle-arrow-up"></span>&nbsp;&nbsp;Commits</th><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;Additions</th><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-minus-sign"></span>&nbsp;&nbsp;Deletions</th></tr></thead><tbody>';
 

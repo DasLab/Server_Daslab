@@ -37,7 +37,7 @@ function drawEC2(id) {
     chart.draw();
     gviz_handles.push(chart);
 
-    var chart = new google.visualization.ChartWrapper({
+    chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/group/aws_dash/?qs=net&tp=ec2&id=' + id,
         'containerId': 'plot_net_'+ id,
@@ -94,7 +94,7 @@ function drawELB(id) {
     chart.draw();
     gviz_handles.push(chart);
 
-    var chart = new google.visualization.ChartWrapper({
+    chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
         'dataSourceUrl': '/group/aws_dash/?qs=req&tp=elb&id=' + id,
         'containerId': 'plot_req_'+ id,
@@ -161,10 +161,10 @@ function drawChart() {
             var html = "";
             for (var i = 0; i < data.table.length; i++) {
                 var ec2 = "", elb = "", ebs = "";
-                if (!data.table[i].hasOwnProperty('ec2')) { data.table[i]['ec2'] = {'id':'', 'status':-1, 'name':''}; }
-                if (!data.table[i].hasOwnProperty('elb')) { data.table[i]['elb'] = {'id':'', 'status':false, 'name':''}; }
-                if (!data.table[i].hasOwnProperty('ebs')) { data.table[i]['ebs'] = {'id':'', 'status':-1, 'name':''}; }
-                if (data.table[i].ec2.status == 0) {
+                if (!data.table[i].hasOwnProperty('ec2')) { data.table[i].ec2 = {'id':'', 'status':-1, 'name':''}; }
+                if (!data.table[i].hasOwnProperty('elb')) { data.table[i].elb = {'id':'', 'status':false, 'name':''}; }
+                if (!data.table[i].hasOwnProperty('ebs')) { data.table[i].ebs = {'id':'', 'status':-1, 'name':''}; }
+                if (data.table[i].ec2.status === 0) {
                     ec2 = '<span class="pull-left"><span class="label label-warning"><span class="glyphicon glyphicon-question-sign"></span></span></span>';
                 } else if (data.table[i].ec2.status == 16) {
                     ec2 = '<span class="pull-left"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>';
@@ -192,7 +192,7 @@ function drawChart() {
                 var html = "";
                 for (var i = 0; i < data.ec2.length; i++) {
                     var ec2 = "";
-                    if (data.ec2[i].status == 0) {
+                    if (data.ec2[i].status === 0) {
                         ec2 = '<span class="pull-left"><span class="label label-warning"><span class="glyphicon glyphicon-question-sign"></span></span></span>';
                     } else if (data.ec2[i].status == 16) {
                         ec2 = '<span class="pull-left"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></span>';
@@ -242,7 +242,7 @@ function drawChart() {
                         ebs = '<span class="pull-left"><span class="label label-danger"><span class="glyphicon glyphicon-remove-sign"></span></span></span>';
                     }
                     if (data.ebs[i].encrypted) { encrpyed = '&nbsp;<span class="label label-warning">Encrypted</span>'; }
-                    html += '<div class="row" id="ebs-' + data.ebs[i].name + '"><div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><p><span class="lead">' + ebs + '&nbsp;&nbsp;<b><u>' + data.ebs[i].name + '</u></b></span>&nbsp;&nbsp;</p><p><span class="label label-orange">' + data.ebs[i].id + '</span>&nbsp;<span class="label label-primary">' + data.ebs[i].type + '</span>&nbsp;<span class="label label-info">' + data.ebs[i].size + ' GB</span>&nbsp;<span class="label label-violet">' + data.ebs[i].region + '</span>' + encrpyed + '</p></div><div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div id="plot_disk_' + data.ebs[i].id + '" class="thumbnail place_holder" style="padding:0px 20px; height: 150px;"></div></div></div>'
+                    html += '<div class="row" id="ebs-' + data.ebs[i].name + '"><div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><p><span class="lead">' + ebs + '&nbsp;&nbsp;<b><u>' + data.ebs[i].name + '</u></b></span>&nbsp;&nbsp;</p><p><span class="label label-orange">' + data.ebs[i].id + '</span>&nbsp;<span class="label label-primary">' + data.ebs[i].type + '</span>&nbsp;<span class="label label-info">' + data.ebs[i].size + ' GB</span>&nbsp;<span class="label label-violet">' + data.ebs[i].region + '</span>' + encrpyed + '</p></div><div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div id="plot_disk_' + data.ebs[i].id + '" class="thumbnail place_holder" style="padding:0px 20px; height: 150px;"></div></div></div>';
                     if (i != data.ebs.length - 1) {
                         html += '<hr/ style="margin: 10px;">';
                     }
