@@ -235,8 +235,11 @@ def export(request):
         return render_to_response(PATH.HTML_PATH['admin_export'], {'form':ExportForm()}, context_instance=RequestContext(request))
 
 
-def doc(request):
-    return render_to_response(PATH.HTML_PATH['admin_doc'], {}, context_instance=RequestContext(request))
+def man(request):
+    return render_to_response(PATH.HTML_PATH['admin_man'], {}, context_instance=RequestContext(request))
+
+def ref(request):
+    return render_to_response(PATH.HTML_PATH['admin_ref'], {}, context_instance=RequestContext(request))
 
 
 def get_ver(request):
@@ -278,7 +281,8 @@ admin.site.register_view('dir/', view=dir, visible=False)
 admin.site.register_view('bot/', view=bot, visible=False)
 admin.site.register_view('export/', view=export, visible=False)
 
-admin.site.register_view('doc/', view=doc, visible=False)
+admin.site.register_view('man/', view=man, visible=False)
+admin.site.register_view('ref/', view=ref, visible=False)
 
 admin.site.register_view('get_ver/', view=get_ver, visible=False)
 admin.site.register_view('get_backup/', view=get_backup, visible=False)
