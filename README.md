@@ -47,7 +47,7 @@ python manage.py runserver
 
 ## Documentation
 
-Documentation is available at https://daslab.stanford.edu/admin/docs/.
+Documentation is available at admin [manual](https://daslab.stanford.edu/admin/man/) and [reference](https://daslab.stanford.edu/admin/ref/).
 
 ## License
 

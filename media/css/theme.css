@@ -697,6 +697,7 @@ ul.breadcrumb > li.active {
 .scroll_nav > ul > li.active > a,
 .scroll_nav > ul > li.active > ul > li.active > a {
   background-color: #eee;
+  font-weight: bold;
 }
 .code {
   font-family: monospace; 
