@@ -1,0 +1,486 @@
+{% extends "admin/base.html" %}
+{% load i18n admin_static %}
+
+{% block content %}
+<div id="content-main" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="jumbotron">
+        <div class="container">
+          <h1>DasLab Admin Reference</h1>
+          <img src="/site_media/images/logo_das.jpg" style="clear:both; float:right; padding-left: 20px;"/>
+          <p>
+            This page explains server setup and code structure in detail.
+          </p>
+          <br/>
+          <h5>by <i>t47</i>, Feb 2016</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+  <div class="row">
+    <div class="col-lg-3 col-md-3 hidden-sm hidden-xs" id="side">
+      <div id="side_con">
+        <div class="panel panel-success" id="sidebar">
+          <div class="panel-heading">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-th-large"></span>&nbsp;&nbsp;Sections</h3>
+          </div>
+          <div class="panel-body scroll_nav">
+            <ul class="nav" role="tablist" id="scroll_nav">
+              <li class="li-info">
+                <a id="tab_1" href="#overview">
+                  <span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;Section #1: 
+                  <b>Overview</b>
+                </a>
+              </li>
+              <li class="li-danger">
+                <a id="tab_2" href="#linux">
+                  <span class="glyphicon glyphicon-road"></span>&nbsp;&nbsp;Section #2: 
+                  <b>Linux</b>
+                  <span class="glyphicon pull-right glyphicon-triangle-bottom" data-toggle="collapse" data-parent="#accordion" href="#collapse_tab_2" aria-expanded="true" aria-controls="collapse_tab_2"></span>
+                </a>
+                <ul id="collapse_tab_2" class="panel-collapse collapse nav" role="tabpanel" aria-labelledby="collapse_tab_2">
+                  <li><a id="tab_21" href="#linux_aws">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-text-background"></span>&nbsp;&nbsp;AWS Setup</a></li>
+                  <li><a id="tab_22" href="#linux_cmd">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-hdd"></span>&nbsp;&nbsp;Local Setup</a></li>
+                </ul>
+              </li>
+              <li class="li-green">
+                <a id="tab_3" href="#apache">
+                  <span class="glyphicon glyphicon-grain"></span>&nbsp;&nbsp;Section #3: 
+                  <b>Apache</b>
+                  <span class="glyphicon pull-right glyphicon-triangle-bottom" data-toggle="collapse" data-parent="#accordion" href="#collapse_tab_3" aria-expanded="true" aria-controls="collapse_tab_3"></span>
+                </a>
+                <ul id="collapse_tab_3" class="panel-collapse collapse nav" role="tabpanel" aria-labelledby="collapse_tab_3">
+                  <li><a id="tab_31" href="#apache_webauth">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;WebAuth Setup</a></li>
+                  <li><a id="tab_32" href="#apache_config">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Configuration</a></li>
+                </ul>
+              </li>
+              <li class="li-warning">
+                <a id="tab_4" href="#mysql">
+                  <span class="glyphicon glyphicon-oil"></span>&nbsp;&nbsp;Section #4: 
+                  <b>MySQL</b>
+                </a>
+              </li>
+              <li class="li-violet">
+                <a id="tab_5" href="#python">
+                  <span class="glyphicon glyphicon-tent"></span>&nbsp;&nbsp;Section #5: 
+                  <b>Python</b>
+                  <span class="glyphicon pull-right glyphicon-triangle-bottom" data-toggle="collapse" data-parent="#accordion" href="#collapse_tab_5" aria-expanded="true" aria-controls="collapse_tab_5"></span>
+                </a>
+                <ul id="collapse_tab_5" class="panel-collapse collapse nav" role="tabpanel" aria-labelledby="collapse_tab_5">
+                  <li><a id="tab_51" href="#python_root">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">/</span></a></li>
+                  <li><a id="tab_52" href="#python_backup">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">backup/</span></a></li>
+                  <li><a id="tab_53" href="#python_cache">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">cache/</span></a></li>
+                  <li><a id="tab_54" href="#python_config">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">config/</span></a></li>
+                  <li><a id="tab_55" href="#python_data">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">data/</span></a></li>
+                  <li>
+                    <a id="tab_56" href="#python_media">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">media/</span></a>
+                    <ul style="padding-left:60px;">
+                      <li><a id="tab_561" href="#python_js"><span class="code code_path">media/js/</span></a></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a id="tab_57" href="#">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">src/</span></a>
+                    <ul style="padding-left:60px;">
+                      <li><a id="tab_571" href="#"><span class="code code_path">src/admin.py</span></a></li>
+                      <li><a id="tab_572" href="#"><span class="code code_path">src/auth.py</span></a></li>
+                      <li><a id="tab_573" href="#"><span class="code code_path">src/console.py</span></a></li>
+                      <li><a id="tab_574" href="#"><span class="code code_path">src/dash.py</span></a></li>
+                      <li><a id="tab_575" href="#"><span class="code code_path">src/env.py</span></a></li>
+                      <li><a id="tab_576" href="#"><span class="code code_path">src/views.py</span></a></li>
+                      <li><a id="tab_577" href="#"><span class="code code_path">src/management/commands/</span></a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="pull-right col-lg-9 col-md-9 col-sm-12 col-xs-12" id="main">
+      <div class="container-fluid li-info" role="main">
+        <div class="panel-info" id="overview">
+          <div class="panel-heading">
+            <span class="lead">
+              <span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;<b><span class="sec">Section</span> <span class="num">#1</span>: Overview</b>
+            </span>
+          </div>
+          <br/>
+          <div class="row">
+
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+      <div class="container-fluid li-danger" role="main">
+        <div class="panel-danger" id="linux">
+          <div class="panel-heading">
+            <span class="lead">
+              <span class="glyphicon glyphicon-road"></span>&nbsp;&nbsp;<b><span class="sec">Section</span> <span class="num">#2</span>: Linux</b>
+            </span>
+          </div>
+          <br/>
+          <div class="row" id="linux_aws">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="glyphicon glyphicon-text-background"></span>&nbsp;&nbsp;<span class="code code_brand">AWS</span> Setup</h4>
+              <p>The server is an <span class="code code_misc">EC2</span> instance with <span class="code code_misc">ELB</span> at <span class="code code_brand">AWS</span>. Essential setup is listed as below:</p>
+              <ul>
+                <li><span class="code code_misc">EC2</span> instance with <span class="code code_brand">Ubuntu</span> <u>14.04 LTS</u>. <span class="code code_misc">EBS</span> drive is mount to <span class="code code_path">/dev/sda1</span>.</li>
+                <li>Use the following <b>Security Groups</b>: <span class="code code_key">HTTP &amp; SSH</span> (opens port <u>80</u> and port <u>22</u>), <span class="code code_key">HTTPS</span> (opens port <u>443</u>), <span class="code code_key">Kerberos</span> (opens ports related to <span class="code code_misc">Kerberos</span>, <span class="code code_misc">wallet</span>, and <span class="code code_misc">WebAuth</span>).</li>
+                <li>Submit <span class="code code_misc">SSL Certificate</span> through <span class="code code_cmd">aws iam</span>. See <a href="http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/ssl-server-cert.html" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>. Use the <span class="code code_misc">SSL Certificate</span> for <span class="code code_val">443</span> forwarding protocol.</li>
+                <li>Add instance to <span class="code code_misc">ELB</span>, configure with port forwarding <span class="code code_val">80</span> to <u>80</u>, <span class="code code_val">443</span> to <u>443</u>. Use same <b>Security Groups</b> as <span class="code code_misc">EC2</span>.</li>
+                <li>Set <span class="code code_misc">ELB</span> <b>Health Check</b> to address <span class="code code_url">HTTPS:443/ping_test/</span>, with interval <u>180 s</u> and timeout <u>15 s</u>.</li>
+              </ul>
+              <p>Once done, you can access the server via <span class="code code_cmd">ssh</span>. Use the server's <b>Public IP</b> address, instead of <b>Private IP</b>. <span class="code code_brand">AWS</span> <span class="code code_misc">EC2</span> are configured to use a certificate for authentication, not password (In fact, user <span class="code code_val">ubuntu</span> has no password). Use <span class="code code_cmd">-i</span> to supply the certificate.</p>
+            </div>
+          </div>
+
+          <hr/>
+          <div class="row" id="linux_cmd">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="glyphicon glyphicon-hdd"></span>&nbsp;&nbsp;Local Setup</h4>
+              <p>First, you need to install <span class="code code_cmd">gdrive</span> for <span class="code code_brand">Google Drive</span> connections. You can retrieve from the <span class="code code_path">backup/backup_config.tgz</span>, or download <a href="https://github.com/prasmussen/gdrive" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</p>
+              <br/>
+              <p>Commonly used commands are provided as aliases for shortcut. They are defined in <span class="code code_path">/home/ubuntu/.bash_profile</span>.</p>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td><span class="code code_cmd">upd</span></td><td>Updates <span class="code code_cmd">apt-get</span> and <span class="code code_cmd">pip</span> packages, cleans up old packages, and runs <span class="code code_cmd">dj_man versions</span> and <span class="code code_path">util_system_version.sh</span>.</td></tr>
+                      <tr><td><span class="code code_cmd">sync</span></td><td>Complete procedure for updating server code: pulls repository, runs <span class="code code_path">util_minify.sh</span>, <span class="code code_path">util_system_asset.sh</span>, <span class="code code_path">util_chmod.sh</span>, <span class="code code_path">util_systerm_version.sh</span> and restarts <span class="code code_brand">Apache</span> server.</td></tr>
+                      <tr><td><span class="code code_cmd">a2rs</span></td><td>Restarts <span class="code code_brand">Apache</span> server.</td></tr>
+                      <tr><td><span class="code code_cmd">swap_on</span>, <span class="code code_cmd">swap_off</span></td><td>Toggle <u>2 GB</u> of memory swap.</td></tr>
+                      <tr><td><span class="code code_cmd">dj_man</span></td><td>Shortcut for <span class="code code_misc">Django</span> management commands.</td></tr>
+                      <tr><td><span class="code code_cmd">dj_cron</span></td><td>Shortcut for <span class="code code_cmd">crontab</span> of <span class="code code_val">www-data</span> user.</td></tr>
+                      <tr><td><span class="code code_cmd">cl_a2a</span>, <span class="code code_cmd">cl_a2e</span></td><td>Show log of <span class="code code_brand">Apache</span> access / error.</td></tr>
+                      <tr><td><span class="code code_cmd">cl_cron</span></td><td>Show log of <span class="code code_cmd">crontab</span>.</td></tr>
+                      <tr><td><span class="code code_cmd">cl_dj</span></td><td>Show log of <span class="code code_misc">Django</span>.</td></tr>
+                      <tr><td colspan="2"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+      <div class="container-fluid li-green" role="main">
+        <div class="panel-green" id="apache">
+          <div class="panel-heading">
+            <span class="lead">
+              <span class="glyphicon glyphicon-grain"></span>&nbsp;&nbsp;<b><span class="sec">Section</span> <span class="num">#3</span>: Apache</b>
+            </span>
+          </div>
+          <br/>
+          <div class="row" id="apache_webauth">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;<span class="code code_misc">WebAuth</span> Setup</h4>
+              <ul>
+                <li>Install <span class="code code_misc">mod_webauth</span> following <a href="http://webauth.stanford.edu/download.html" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a> and <a href="http://webauth.stanford.edu/install.html" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>. More help <a href="http://webauth.stanford.edu/download.html http://webauth.stanford.edu/" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</li>
+                <li>Install <span class="code code_misc">Kerberos</span> following <a href="http://web.mit.edu/kerberos/www/dist/index.html" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</li>
+                <li>Get <span class="code code_spe">keytab</span> file following <a href=" http://webauth.stanford.edu/install-stanford.html" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>. The <span class="code code_brand">AWS</span> instance is not part of Stanford network, thus <span class="code code_cmd">wallet</span> will never be able to retrieve the <span class="code code_spe">keytab</span> file. Use the alternative method described on the page: <span class="code code_cmd">ssh</span> in to your <span class="code code_url">sunet_id@corn.stanford.edu</span>, get the <span class="code code_spe">keytab</span> file, and <span class="code code_cmd">scp</span> it to the instance.</li>
+              </ul>
+            </div>
+          </div>
+
+          <hr/>
+          <div class="row" id="apache_config">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;Configuration</h4>
+              <ul>
+                <li>Install <span class="code code_misc">mod_wsgi</span> through <span class="code code_cmd">apt-get</span>.</li>
+                <li>Have the following modules enabled (exactly): <span class="code code_val">access_compat</span>, <span class="code code_val">alias</span>, <span class="code code_val">auth_basic</span>, <span class="code code_val">authn_core</span>, <span class="code code_val">authn_file</span>, <span class="code code_val">authz_core</span>, <span class="code code_val">authz_groupfile</span>, <span class="code code_val">authz_host</span>, <span class="code code_val">authz_user</span>, <span class="code code_val">deflate</span>, <span class="code code_val">filter</span>, <span class="code code_val">mime</span>, <span class="code code_val">mpm_worker</span>, <span class="code code_val">negotiation</span>, <span class="code code_val">reqtimeout</span>, <span class="code code_val">setenvif</span>, <span class="code code_val">socache_shmcb</span>, <span class="code code_val">ssl</span>, <span class="code code_val">status</span>, <span class="code code_val">webauth</span>, <span class="code code_val">wsgi</span>.</li>
+                <li>Edit configuration files. It's recommend to recover and overwrite from the <span class="code code_path">backup/backup_apache.tgz</span>. These files are important: <span class="code code_path">apache.conf</span>, <span class="code code_path">deflate.conf</span>, <span class="code code_path">httpd.conf</span>, <span class="code code_path">ports.conf</span>, <span class="code code_path">webauth.conf</span>, <span class="code code_path">sites-enabled/000-default.conf</span>.</li>
+              </ul>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td><span class="code code_path">httpd.conf</span></td><td>Defines <span class="code code_misc">worker</span> numbers, server status page access, error handling pages. Do not use <span class="code code_misc">prefork</span> with <span class="code code_misc">mod_wsgi</span>!</td></tr>
+                      <tr><td><span class="code code_path">webauth.conf</span></td><td>Group access to <span class="code code_url">/group/</span> and <span class="code code_url">/admin/</span> through <span class="code code_misc">WebAuth</span>.</td></tr>
+                      <tr><td><span class="code code_path">sites-enabled/000-default.conf</span></td><td>Sets <span class="code code_misc">SSL</span>, non-HTTPS redirects, <span class="code code_misc">wsgi</span> app path, directory permissions, and <span class="code code_url">/favicon.ico</span> redirect.</td></tr>
+                      <tr><td><span class="code code_path">password</span></td><td>Stores <span class="code code_brand">Apache</span> user logins. Currently only <span class="code code_val">daslab</span>.</td></tr>
+                      <tr><td colspan="2"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+              <p><span class="code code_brand">Apache</span> related system path:</p>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td>configuration</td><td><span class="code code_path">/etc/apache2/</span></td></tr>
+                      <tr><td>log</td><td><span class="code code_path">/var/log/apache2/</span></td></tr>
+                      <tr><td colspan="2"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+      <div class="container-fluid li-warning" role="main">
+        <div class="panel-warning" id="mysql">
+          <div class="panel-heading">
+            <span class="lead">
+              <span class="glyphicon glyphicon-oil"></span>&nbsp;&nbsp;<b><span class="sec">Section</span> <span class="num">#4</span>: MySQL</b>
+            </span>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <ul>
+                <li>Restore the database from the <span class="code code_path">backup/backup_mysql.tgz</span>, or use <span class="code code_misc">six</span> for migration. The <span class="code code_brand">MySQL</span> user is <span class="code code_val">root</span>.</li>
+                <li>The database is named <span class="code code_val">daslab</span>, with these tables: <span class="code code_val">auth_group</span>, <span class="code code_val">auth_group_permissions</span>, <span class="code code_val">auth_message</span>, <span class="code code_val">auth_permission</span>, <span class="code code_val">auth_user</span>, <span class="code code_val">auth_user_groups</span>, <span class="code code_val">auth_user_user_permissions</span>, <span class="code code_val">django_admin_log</span>, <span class="code code_val">django_content_type</span>, <span class="code code_val">django_flatpage</span>, <span class="code code_val">django_flatpage_sites</span>, <span class="code code_val">django_migrations</span>, <span class="code code_val">django_session</span>, <span class="code code_val">django_site</span>, <span class="code code_val">src_eternayoutube</span>, <span class="code code_val">src_flashslide</span>, <span class="code code_val">src_journalclub</span>, <span class="code code_val">src_member</span>, <span class="code code_val">src_news</span>, <span class="code code_val">src_presentation</span>, <span class="code code_val">src_publication</span>, <span class="code code_val">src_rotationstudent</span>, <span class="code code_val">src_slackmessage</span>. Table schema are defined by <span class="code code_path">src/models.py</span>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+      <div class="container-fluid li-violet" role="main">
+        <div class="panel-violet" id="python">
+          <div class="panel-heading">
+            <span class="lead">
+              <span class="glyphicon glyphicon-tent"></span>&nbsp;&nbsp;<b><span class="sec">Section</span> <span class="num">#5</span>: Python</b>
+            </span>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <ul>
+                <li>Install <span class="code code_misc">django-filemanager</span> with the modified version (<u>0.0.2</u>). The source code are available from the <span class="code code_path">backup/backup_config.tgz</span>. The original (<u>0.0.1</u>) is <a href="https://github.com/IMGIITRoorkee/django-filemanager/" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</li>
+                <li>Install <span class="code code_misc">gviz-api.py</span>. The source code are available from the <span class="code code_path">backup/backup_config.tgz</span>, or download from <a href="https://github.com/google/google-visualization-python/" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</li>
+                <li>Other dependencies are described in <span class="code code_path">requirements.txt</span> and should be installed via <span class="code code_cmd">pip</span> system-wide.</li>
+              </ul>
+              <p>The following sections breaks down each directory and their contents.</p>
+            </div>
+          </div>
+
+          <hr/>
+          <div class="row" id="python_root">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="code code_path">/</span> (root)</h4>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td><span class="code code_path">requirements.txt</span></td><td>Description of <i>Python</i> package dependency.</td></tr>
+                      <tr><td><span class="code code_path">robots.txt</span></td><td>Instruction for web crawlers. See <a href="http://www.robotstxt.org/" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</td></tr>
+                      <tr><td><span class="code code_path">manage.py</span></td><td><span class="code code_misc">Django</span> script entry point. <b>Do not change</b>, unless syntax changes in newer <span class="code code_misc">Django</span> releases.</td></tr>
+                      <tr><td><span class="code code_path">util_chmod.sh</span></td><td>Runs <span class="code code_cmd">chmod</span> and <span class="code code_cmd">chown</span> to files and directories to set minimal required permissions. Most files are owned by <span class="code code_val">www-data</span> (the <span class="code code_brand">Apache</span> user). <span class="code code_path">config/bot.conf</span> and <span class="code code_path">config/cron.conf</span> are writable by <span class="code code_val">www-data</span>, while others are read-only. <span class="code code_spe">*.sh</span> are only accessible by <span class="code code_val">ubuntu</span>.</td></tr>
+                      <tr><td><span class="code code_path">util_minify.sh</span></td><td>Minifies <span class="code code_spe">*.css</span> and <span class="code code_spe">*.js</span> files for production. Required <span class="code code_path">../yuicompressor.jar</span>.</td></tr>
+                      <tr><td><span class="code code_path">util_prep_dir.sh</span></td><td>Prepares empty directories and log files for first time setup.</td></tr>
+                      <tr><td><span class="code code_path">util_system_asset.sh</span></td><td>Copies over essential system settings and packages into <span class="code code_path">config/sys/</span> that will later be zipped by <span class="code code_cmd">dj_man backup</span>.</td></tr>
+                      <tr><td><span class="code code_path">util_system_version.sh</span></td><td>Renders <span class="code code_path">/home/ubuntu/.ver.txt</span> based on information in <span class="code code_path">cache/stat_sys.txt</span>. It is displayed in <span class="code code_cmd">bash</span> upon login.</td></tr>
+                      <tr><td colspan="2"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+            </div>
+          </div>
+
+          <hr/>
+          <div class="row" id="python_backup">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="code code_path">backup/</span></h4>
+              <p>Contains <span class="code code_spe">*.tgz</span> backup files: <span class="code code_path">backup/backup_apache.tgz</span>, <span class="code code_path">backup/backup_config.tgz</span>, <span class="code code_path">backup/backup_mysql.tgz</span> and <span class="code code_path">backup/backup_static.tgz</span>. See <span class="code code_path">src/management/commands/backup.py</span> and <span class="code code_path">src/management/commands/restore.py</span> for usage.
+            </div>
+          </div>
+
+          <hr/>
+          <div class="row" id="python_cache">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="code code_path">cache/</span></h4>
+              <p>Contains cache results, <span class="code code_misc">cron</span> and <span class="code code_misc">Django</span> log files, as well as status text files.</p>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td><span class="code code_path">*.log</span></td><td>Log files for <span class="code code_misc">cron</span> and <span class="code code_misc">Django</span>.</td></tr>
+                      <tr><td><span class="code code_path">*.pickle</span></td><td>Cached analytics results of <span class="code code_brand">AWS</span>, <span class="code code_brand">Google Analytics</span>, <span class="code code_brand">GitHub</span> repository activities, <span class="code code_brand">Slack</span> activities, <span class="code code_brand">Dropbox</span> activities, <span class="code code_spe">Group Calendar</span>, <span class="code code_spe">Schedule Spreadsheet</span>, and <span class="code code_spe">Duty Spreadsheet</span>. Files are updated every <u>3/15/30</u> minutes by <span class="code code_misc">cron</span> jobs.</td></tr>
+                      <tr><td><span class="code code_path">*.txt</span></td><td>Status text files used for admin pages. <span class="code code_path">cache/stat_sys.txt</span> contains package versions currently installed, memory and disk capacity; used by <span class="code code_url">/admin/</span>. <span class="code code_path">cache/stat_backup.txt</span> contains <span class="code code_path">data/</span> folder sizes, and <span class="code code_val">daslab</span> <span class="code code_brand">Google Drive</span> file list; used by <span class="code code_url">/admin/backup/</span>.</td></tr>
+                      <tr><td colspan="2"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+            </div>
+          </div>
+
+          <hr/>
+          <div class="row" id="python_config">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="code code_path">config/</span></h4>
+              <p>Contains app settings and account information. <b>Do not include these files in <span class="code code_cmd">git</span>!</b> Template files <span class="code code_path">config/*.conf.example</span> are tracked instead.</p>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td><span class="code code_path">bot.conf</span></td><td colspan="2">Settings for <span class="code code_misc">Bot</span> in <span class="code code_key">JSON</span> format. Individual functions can be toggled in <span class="code code_url">/admin/bot/</span> page panels.</td></tr>
+                      <tr><td><span class="code code_path">cron.conf</span></td><td colspan="2">List of <span class="code code_misc">cron</span> jobs in <span class="code code_key">JSON</span> format. See <span class="code code_misc">django-crontab</span> <a href="https://github.com/kraiz/django-crontab" target="_blank">specs&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>. The suffix of each job is for logging into corresponding log files in <span class="code code_path">cache/</span>.</td></tr>
+                      <tr><td><span class="code code_path">env.conf</span></td><td colspan="2">Server secrets! Contains database and <span class="code code_brand">Apache</span> login. See <span class="code code_misc">django-environ</span> <a href="https://github.com/joke2k/django-environ" target="_blank">specs&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</td></tr>
+                      <tr><td><span class="code code_path">group.conf</span></td><td colspan="2">Group access control file for <span class="code code_brand">Apache</span> and <span class="code code_misc">WebAuth</span>. See <span class="code code_misc">mod_authz_groupfile</span> <a href="https://httpd.apache.org/docs/current/mod/mod_authz_groupfile.html" target="_blank">specs&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</td></tr>
+                      <tr><td><span class="code code_path">oauth.conf</span></td><td colspan="2">Access token and account information for third-party APIs in <span class="code code_key">JSON</span> format. All vendors are under <span class="code code_val">daslab</span> <span class="code code_brand">Gmail</span> account. It also records <span class="code code_spe">Schedule Spreadsheet</span>ID, <span class="code code_spe">Duty Spreadsheet</span>ID, <span class="code code_spe">Group Calendar</span> <span class="code code_key">ICS</span> link, <span class="code code_brand">AWS</span> IDs, and <span class="code code_brand">Google Analytics</span> ID.</td></tr>
+                      <tr><td><span class="code code_path">t47_dev.py</span></td><td colspan="2"><span class="code code_misc">Django</span> setting flags, isolated from all others. </td></tr>
+                      <tr><td></td><td><span class="code code_key">IS_DEVEL</span></td><td><span class="code code_key">DEBUG</span> flag. Use <span class="code code_val">1</span> for test server, <span class="code code_val">0</span> for production.</td></tr>
+                      <tr><td></td><td><span class="code code_key">IS_MAINTENANCE</span></td><td>Flag for temporary server downtime. Set to <span class="code code_val">1</span> for downtime, which returns <u>503</u> response to all urls.</td></tr>
+                      <tr><td></td><td><span class="code code_key">IS_SLACK</span></td><td>Flag for using <span class="code code_brand">Slack</span> for messaging. <b>No longer used</b>, moved to <span class="code code_path">config/bot.conf</span>.</td></tr>
+                      <tr><td colspan="3"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+            </div>
+          </div>
+
+          <hr/>
+          <div class="row" id="python_data">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="code code_path">data/</span></h4>
+              <p>Contains user uploaded data as well as publication export.</p>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td><span class="code code_path">news_img/</span></td><td>News images.</td></tr>
+                      <tr><td><span class="code code_path">ppl_img/</span></td><td>Member avatars.</td></tr>
+                      <tr><td><span class="code code_path">pub_data/</span></td><td>Publication extra data files.</td></tr>
+                      <tr><td><span class="code code_path">pub_img/</span></td><td>Publication images for <span class="code code_key">is_feature</span> entries.</td></tr>
+                      <tr><td><span class="code code_path">pub_pdf/</span></td><td>Publication <span class="code code_key">PDF</span> copies.</td></tr>
+                      <tr><td><span class="code code_path">rot_data/</span></td><td>Rotation student extra data files.</td></tr>
+                      <tr><td><span class="code code_path">rot_ppt/</span></td><td>Rotation student presentations.</td></tr>
+                      <tr><td><span class="code code_path">spe_ppt/</span></td><td>Archived presentations.</td></tr>
+                      <tr><td><span class="code code_path">export_citation.*</span></td><td>Temporary files for <span class="code code_url">/admin/export/</span> function (<span class="code code_key">HTML</span> or <span class="code code_key">DOCX</span>)</td></tr>
+                      <tr><td colspan="2"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+            </div>
+          </div>
+
+          <hr/>
+          <div class="row" id="python_media">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="code code_path">media/</span></h4>
+              <p>Contains front-end public files.</p>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td><span class="code code_path">admin/</span></td><td colspan="2">Admin related <span class="code code_key">HTML</span> files, as well as images (because of relative path used by <span class="code code_misc">Django</span> admin and <span class="code code_misc">django-filemanager</span> apps).</td></tr>
+                      <tr><td></td><td><span class="code code_path">base.html</span></td><td>Admin site <span class="code code_key">HTML</span> frame template.</td></tr>
+                      <tr><td></td><td><span class="code code_path">img/</span></td><td>Admin site <span class="code code_key">SVG</span> and <span class="code code_misc">django-filemanager</span> icons.</td></tr>
+                      <tr><td></td><td><span class="code code_path">js/</span></td><td>Admin site <span class="code code_key">JS</span> scripts.</td></tr>
+                      <tr><td><span class="code code_path">css/</span></td><td colspan="2"><span class="code code_key">CSS</span> styling spreadsheet files.</td></tr>
+                      <tr><td></td><td><span class="code code_path">DasStyles.css</span></td><td>For public site.</td></tr>
+                      <tr><td></td><td><span class="code code_path">theme.css</span>, <span class="code code_path">palette.css</span></td><td>For internal site; general and color schemes.</td></tr>
+                      <tr><td></td><td><span class="code code_path">clock.css</span></td><td>For animated clock on <span class="code code_url">/group/</span>.</td></tr>
+                      <tr><td></td><td><span class="code code_path">bootstrap.min.css</span>, <span class="code code_path">fullcalendar.min.css</span>, <span class="code code_path">_suit.css</span>, <span class="code code_path">_filemanager.css</span></td><td>Vendor files. <span class="code code_path">fullcalendar.min.css</span> is modified and truncated.</td></tr>
+                      <tr><td></td><td><span class="code code_path">min/</span></td><td>Folder of minified <span class="code code_key">CSS</span> files, for production only.</td></tr>
+                      <tr><td><span class="code code_path">fonts/</span></td><td colspan="2">Contains <span class="code code_misc">Glyphicons</span>, and local copy of fonts used by public and group sites: <span class="code code_spe">GillSans</span> and <span class="code code_spe">Helvetica</span>.</td></tr>
+                      <tr><td><span class="code code_path">html/</span></td><td colspan="2"><span class="code code_key">HTML</span> tempaltes.</td></tr>
+                      <tr><td></td><td><span class="code code_path">_internal.html</span>, <span class="code code_path">_external.html</span></td><td>Group and public sites frame templates.</td></tr>
+                      <tr><td></td><td><span class="code code_path">_login.html</span></td><td>Login page. Not used in production due to <span class="code code_misc">WebAuth</span>.</td></tr>
+                      <tr><td></td><td><span class="code code_path">admin_*.html</span></td><td>Admin console pages.</td></tr>
+                      <tr><td></td><td><span class="code code_path">error_*.html</span></td><td>Custom HTTP error pages.</td></tr>
+                      <tr><td></td><td><span class="code code_path">group_*.html</span></td><td>Group site pages.</td></tr>
+                      <tr><td></td><td><span class="code code_path">public_*.html</span></td><td>Public site pages.</td></tr>
+                      <tr><td><span class="code code_path">images/</span></td><td colspan="2">Image files.</td></tr>
+                      <tr><td><span class="code code_path">swf/</span></td><td colspan="2">Flash objects.</td></tr>
+                      <tr><td colspan="3"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+
+              <h4 id="python_js"><span class="code code_path">media/js/</span></h4>
+              <p>Contains <i>Javascript</i> files.</p>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td><span class="code code_path">*.min.js</span></td><td colspan="2">Vendor libraries (Bootstrap, jQuery, fullcalendar, Moment, SWFObject).</td></tr>
+                      <tr><td><span class="code code_path">admin/</span></td><td colspan="2">Admin <i>Javascript</i> files.</td></tr>
+                      <tr><td></td><td><span class="code code_path">_*.js</span></td><td>Vendor libraries for <span class="code code_misc">django-suit</span> and <span class="code code_misc">django-filemanager</span>.</td></tr>
+                      <tr><td></td><td><span class="code code_path">apache.js</span></td><td>Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/apache_stat/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">restyle_apache()</span> in <span class="code code_path">src/console.py</span>. The page refreshes every <u>3</u> seconds by <span class="code code_method">setTimeout()</span>.</td></tr>
+                      <tr><td></td><td><span class="code code_path">aws.js</span></td><td>Uses <span class="code code_misc">gviz-api.py</span>. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/aws_stat/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">aws_stats()</span> in <span class="code code_path">src/console.py</span>. Data is retrieved on the fly (not cached).</td></tr>
+                      <tr><td></td><td><span class="code code_path">backup.js</span></td><td>Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/get_backup/</span>, which passes to <span class="code code_method">get_backup()</span> in <span class="code code_path">src/admin.py</span>. Also makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/get_ver/</span>, which passes to <span class="code code_method">get_ver()</span> in <span class="code code_path">src/admin.py</span>.</td></tr>
+                      <tr><td></td><td><span class="code code_path">ga.js</span></td><td>Uses <span class="code code_misc">gviz-api.py</span>, not <span class="code code_brand">Google Analytics</span> API. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/ga_stat/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">ga_stats()</span> in <span class="code code_path">src/console.py</span>. Data is retrieved on the fly (not cached).</td></tr>
+                      <tr><td></td><td><span class="code code_path">git.js</span></td><td>Uses <span class="code code_misc">gviz-api.py</span>. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/git_stat/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">git_stats()</span> in <span class="code code_path">src/console.py</span>. Data is retrieved on the fly (not cached).</td></tr>
+                      <tr><td></td><td><span class="code code_path">group.js</span></td><td>Used by <span class="code code_url">/admin/auth/user/</span> page to render <span class="code code_path">config/group.conf</span> on the page. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/group_dash/</span>, which passes to <span class="code code_method">group_dash()</span> in <span class="code code_path">src/admin.py</span>.</td></tr>
+                      <tr><td></td><td><span class="code code_path">home.js</span></td><td>Similar to <span class="code code_path">backup.js</span>, makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/get_backup/</span> and <span class="code code_url">/admin/get_ver/</span>. Additionally, makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/backup_form/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">get_backup_form()</span> in <span class="code code_path">src/console.py</span>; <span class="code code_url">/admin/ssl_dash/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">dash_ssl()</span> in <span class="code code_path">src/dash.py</span>; and <span class="code code_url">/admin/dash_dash/</span>, which passes to <span class="code code_method">dash_dash()</span> in <span class="code code_path">src/admin.py</span>.</td></tr>
+                      <tr><td></td><td><span class="code code_path">menu.js</span>, <span class="code code_path">table.js</span></td><td>Injection of <i>Javascript</i> to format menu (sidebar, navbar, breadcrumb, highlighting, collapsing) and table (column width and icon for <code>&lt;th&gt;</code>, and Date/Time <code>&lt;input&gt;</code>) for admin pages.</td></tr>
+                      <tr><td></td><td><span class="code code_path">load.js</span></td><td>Loads vendor libraries using <span class="code code_spe">CDN</span>, or <b>fallback</b> to local files. Used by entire site (both public and group)! Makes <span class="code code_key">AJAX</span> call to <span class="code code_url">/get_js/</span>, which passes to <span class="code code_method">get_js()</span> in <span class="code code_path">src/views.py</span>. It checks <b>jQuery</b> availability from <span class="code code_url">https://cdnjs.com/</span> first, and decides whether to use it. Uses <span class="code code_method">document.write()</span> to dynamically add <code>&lt;script&gt;</code> and  <code>&lt;link&gt;</code> in <span class="code code_key">HTML</span>.</td></tr>
+
+                      <tr><td><span class="code code_path">group/</span></td><td colspan="2">Group <i>Javascript</i> files.</td></tr>
+
+
+                      <tr><td></td><td><span class="code code_path">_*.js</span></td><td></td></tr>
+                      <tr><td><span class="code code_path">data/news_img/</span></td><td>News images.</td></tr>
+                      <tr><td><span class="code code_path">data/news_img/</span></td><td>News images.</td></tr>
+                      <tr><td><span class="code code_path">data/news_img/</span></td><td>News images.</td></tr>
+                      <tr><td><span class="code code_path">data/news_img/</span></td><td>News images.</td></tr>
+                      <tr><td colspan="3"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <a href="#content-main" id="top" style="z-index:2000;">
+    <img style="position:fixed;display:block;left:-5%;bottom:100px;opacity:0.85;z-index:2000;" src="/site_media/images/nav_top_hover.png" name="top" height="60"/>
+  </a>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Reference</li>');
+    });
+  </script>
+  <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}doc{{DEBUG_STR}}.js"></script>
+{% endblock %}

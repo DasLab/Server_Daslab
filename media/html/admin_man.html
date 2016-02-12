@@ -4,7 +4,7 @@
 {% block content %}
 <div id="content-main" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
   <div class="row">
-    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" id="main">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="jumbotron">
         <div class="container">
           <h1>DasLab Admin Manual</h1>
@@ -16,7 +16,76 @@
           <h5>by <i>t47</i>, Feb 2016</h5>
         </div>
       </div>
+    </div>
+  </div>
 
+  <hr/>
+  <div class="row">
+    <div class="col-lg-3 col-md-3 hidden-sm hidden-xs" id="side">
+      <div id="side_con">
+        <div class="panel panel-success" id="sidebar" >
+          <div class="panel-heading">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-th-large"></span>&nbsp;&nbsp;Sections</h3>
+          </div>
+          <div class="panel-body scroll_nav">
+            <ul class="nav" role="tablist" id="scroll_nav">
+              <li class="li-orange">
+                  <a id="tab_1" href="#admin_setup">
+                    <span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;Section #1: 
+                    <br/>
+                    <b>New Admin Setup</b>
+                    <span class="glyphicon pull-right glyphicon-triangle-bottom" data-toggle="collapse" data-parent="#accordion" href="#collapse_tab_1" aria-expanded="true" aria-controls="collapse_tab_1"></span>
+                  </a>
+                  <ul id="collapse_tab_1" class="panel-collapse collapse nav" role="tabpanel" aria-labelledby="collapse_tab_1">
+                    <li><a id="tab_11" href="#admin_cred">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;Credentials</a></li>
+                    <li><a id="tab_12" href="#admin_trans">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Transitioning</a></li>
+                  </ul>
+              </li>
+              <li class="li-info">
+                  <a id="tab_2" href="#job">
+                    <span class="glyphicon glyphicon-sunglasses"></span>&nbsp;&nbsp;Section #2: 
+                    <br/>
+                    <b>Admin Responsibility</b>
+                    <span class="glyphicon pull-right glyphicon-triangle-bottom" data-toggle="collapse" data-parent="#accordion" href="#collapse_tab_2" aria-expanded="true" aria-controls="collapse_tab_2"></span>
+                  </a>
+                  <ul id="collapse_tab_2" class="panel-collapse collapse nav" role="tabpanel" aria-labelledby="collapse_tab_2">
+                    <li><a id="tab_21" href="#job_meet">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Meeting Schedule</a></li>
+                    <li><a id="tab_22" href="#job_new">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Member Management</a></li>
+                    <li><a id="tab_23" href="#job_exp">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;External Site</a></li>
+                    <li><a id="tab_24" href="#job_int">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Internal Duty</a></li>
+                    <li>
+                      <a id="tab_25" href="#job_bot">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Bot Configuration</a>
+                      <ul style="padding-left:60px;">
+                        <li><a id="tab_251" href="#bot_duty">Duty Reminders</a></li>
+                        <li><a id="tab_252" href="#bot_cache">Data Cache</a></li>
+                        <li><a id="tab_253" href="#bot_backup">Backup</a></li>
+                        <li><a id="tab_254" href="#bot_err">Error Report</a></li>
+                      </ul>
+                    </li>
+                    <li><a id="tab_26" href="#job_csl">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-hdd"></span>&nbsp;&nbsp;Server Maintenance</a></li>
+                  </ul>
+              </li>
+              <li class="li-violet">
+                  <a id="tab_3" href="#test_env">
+                    <span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Section #3: 
+                    <br/>
+                    <b>Server Environment</b>
+                    <span class="glyphicon pull-right glyphicon-triangle-bottom" data-toggle="collapse" data-parent="#accordion" href="#collapse_tab_3" aria-expanded="true" aria-controls="collapse_tab_3"></span>
+                  </a>
+                  <ul id="collapse_tab_3" class="panel-collapse collapse nav" role="tabpanel" aria-labelledby="collapse_tab_3">
+                    <li><a id="tab_31" href="#test_basc">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-console"></span>&nbsp;&nbsp;Server Basics</a></li>
+                    <li><a id="tab_32" href="#test_set">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Test Server Setup</a></li>
+                  </ul>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="pull-right col-lg-9 col-md-9 col-sm-12 col-xs-12" id="main">
       <div class="container-fluid li-orange" role="main">
         <div class="panel-orange" id="admin_setup">
           <div class="panel-heading">
@@ -39,7 +108,7 @@
           <div class="row" id="admin_trans">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
               <h4><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Transitioning</h4>
-              <p>Use <span class="code code_cmd">ssh</span> to remotely access the server. Use <span class="code code_cmd">-i</span> to supply the <span class="code code_misc">SSH Key</span>.</p>
+              <p>Use <span class="code code_cmd">ssh</span> to remotely access the server. Use <span class="code code_cmd">-i</span> to supply the <span class="code code_misc">SSH Key</span>: <span class="code code_cmd">ssh -i ~/amazon.pem ubuntu@52.25.214.40</span> (the server IP may differ).</p>
               <p>Please edit the following files to make you the new admin</p>
               <ul>
                 <li><span class="code code_path">config/group.conf</span>: Add your <span class="code code_key">sunet_id</span> to the <span class="code code_val">ADMIN</span> group. File is space-delimited.</li>
@@ -258,30 +327,47 @@
               </ul>
               <br/>
               <p><b><span class="code code_misc">Django</span> Commands</b></p>
-              <p>The following <span class="code code_misc">Django</span> commands are available. Run them with <span class="code code_cmd">dj_cron</span>, or in full-length, e.g. <span class="code code_cmd">python manage.py cache 15</span>.</p>
-              <ul>
-                <li><span class="code code_cmd">backup</span>: backs up <span class="code code_misc">static</span>files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files into <span class="code code_path">backup/</span> folder.</li>
-                <li><span class="code code_cmd">bday</span>: checks if anyone's birthday is today and sends out wishes in <span class="code code_brand">Slack</span>.</li>
-                <li><span class="code code_cmd">cache</span>: caches analytics data. Accepts an interval argument for category, choose from: <span class="code code_val">3</span>, <span class="code code_val">15</span>, or <span class="code code_val">30</span>.</li>
-                <li><span class="code code_cmd">duty</span>: checks if any duty reminders should be sent out today. Accepts an interval argument for category, choose from: <span class="code code_val">week</span>, <span class="code code_val">month</span>, or <span class="code code_val">quarter</span>.</li>
-                <li><span class="code code_cmd">gdrive</span>: uploads most recent backup onto <span class="code code_val">daslab</span> <span class="code code_brand">Google Drive</span> and cleans up obsolete backup files.</li>
-                <li><span class="code code_cmd">meeting</span>: sets up <span class="code code_class">Flash Slides</span> and sends out <span class="code code_spe">Group Meeting Reminder</span>.</li>
-                <li><span class="code code_cmd">report</span>: sends <span class="code code_misc">cron</span> error report to admin if not <span class="code code_key">IS_SLACK</span>. Also compresses <span class="code code_misc">cron</span> log and cleans up old <span class="code code_class">Slack Messages</span>.</li>
-                <li><span class="code code_cmd">restore</span>: restores <span class="code code_misc">static</span>files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files from local <span class="code code_path">backup/</span> files.</li>
-                <li><span class="code code_cmd">versions</span>: collects system installed package versions. Accepts a flag argument for overriding <span class="code code_key">IS_VERSIONS</span> in <span class="code code_path">config/bot.conf</span>, chooses from: <span class="code code_val">0</span> or <span class="code code_val">1</span>.</li>
-              </ul>
+              <p>The following <span class="code code_misc">Django</span> commands are available. Run them with <span class="code code_cmd">dj_man</span>, or in full-length, e.g. <span class="code code_cmd">python manage.py cache 15</span>.</p>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td><span class="code code_cmd">backup</span></td><td>Backs up <span class="code code_misc">static</span>files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files into <span class="code code_path">backup/</span> folder.</td></tr>
+                      <tr><td><span class="code code_cmd">bday</span></td><td>Checks if anyone's birthday is today and sends out wishes in <span class="code code_brand">Slack</span>.</td></tr>
+                      <tr><td><span class="code code_cmd">cache</span></td><td>Caches analytics data into <span class="code code_path">cache/</span>. Accepts an interval argument for category, choose from: <span class="code code_val">3</span>, <span class="code code_val">15</span>, or <span class="code code_val">30</span>.</td></tr>
+                      <tr><td><span class="code code_cmd">duty</span></td><td>Checks if any duty reminders should be sent out today. Accepts an interval argument for category, choose from: <span class="code code_val">week</span>, <span class="code code_val">month</span>, or <span class="code code_val">quarter</span>.</td></tr>
+                      <tr><td><span class="code code_cmd">gdrive</span></td><td>Uploads most recent backup onto <span class="code code_val">daslab</span> <span class="code code_brand">Google Drive</span> and cleans up obsolete backup files.</td></tr>
+                      <tr><td><span class="code code_cmd">meeting</span></td><td>Sets up <span class="code code_class">Flash Slides</span> and sends out <span class="code code_spe">Group Meeting Reminder</span>.</td></tr>
+                      <tr><td><span class="code code_cmd">report</span></td><td>Sends <span class="code code_misc">cron</span> error report to admin if not <span class="code code_key">IS_SLACK</span>. Also compresses <span class="code code_misc">cron</span> log and cleans up old <span class="code code_class">Slack Messages</span>.</td></tr>
+                      <tr><td><span class="code code_cmd">restore</span></td><td>Restores <span class="code code_misc">static</span>files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files from local <span class="code code_path">backup/</span> files.</td></tr>
+                      <tr><td><span class="code code_cmd">versions</span></td><td>Collects system installed package versions into <span class="code code_path">cache/stat_sys.txt</span>. Accepts a flag argument for overriding <span class="code code_key">IS_VERSIONS</span> in <span class="code code_path">config/bot.conf</span>, chooses from: <span class="code code_val">0</span> or <span class="code code_val">1</span>.</td></tr>
+                      <tr><td colspan="2"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
               <br/>
               <p><b>Environment Path</b></p>
-              <ul>
-                <li>Repository: <span class="code code_path">/home/ubuntu/Server_DasLab/</span></li>
-                <li><span class="code code_brand">Apache</span> settings: <span class="code code_path">/etc/apache2</span></li>
-                <li><span class="code code_misc">Kerberos</span> settings: <span class="code code_path">/etc/krb5.*</span></li>
-                <br/>
-                <li><span class="code code_brand">Apache</span> log: <span class="code code_path">/var/log/apache2/</span></li>
-                <li><span class="code code_misc">Django</span> and <span class="code code_misc">cron</span> log: <span class="code code_path">cache/</span></li>
-                <br/>
-                <li><span class="code code_misc">static</span> files: <span class="code code_path">data/</span></li>
-                <li>Secret / configurations: <span class="code code_path">config/</span></li>
+              <div class="row">
+                <div class="col-lg-2 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td>Repository</td><td><span class="code code_path">/home/ubuntu/Server_DasLab/</span></td></tr>
+                      <tr><td><span class="code code_brand">Apache</span> settings</td><td><span class="code code_path">/etc/apache2/</span></td></tr>
+                      <tr><td><span class="code code_misc">Kerberos</span> settings</td><td><span class="code code_path">/etc/krb5.*</span></td></tr>
+                      <tr><td><span class="code code_brand">Apache</span> log</td><td><span class="code code_path">/var/log/apache2/</span></td></tr>
+                      <tr><td><span class="code code_misc">Django</span> and <span class="code code_misc">cron</span> log</td><td><span class="code code_path">cache/</span></td></tr>
+                      <tr><td><span class="code code_misc">static</span> files</td><td><span class="code code_path">data/</span></td></tr>
+                      <tr><td>Secret / configurations</td><td><span class="code code_path">config/</span></td></tr>
+                      <tr><td colspan="2"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-2 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
               </ul>
             </div>
           </div>
@@ -320,76 +406,12 @@
 
         </div>
       </div>
-
     </div>
-
-    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-      <div class="panel panel-success" id="sidebar" >
-        <div class="panel-heading">
-          <h3 class="panel-title"><span class="glyphicon glyphicon-th-large"></span>&nbsp;&nbsp;Sections</h3>
-        </div>
-        <div class="panel-body scroll_nav">
-          <ul class="nav" role="tablist" id="scroll_nav">
-            <li class="li-orange">
-                <a id="tab_1" href="#admin_setup">
-                  <span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;Section #1: 
-                  <br/>
-                  <b>New Admin Setup</b>
-                  <span class="glyphicon pull-right glyphicon-triangle-bottom" data-toggle="collapse" data-parent="#accordion" href="#collapse_tab_1" aria-expanded="true" aria-controls="collapse_tab_1"></span>
-                </a>
-                <ul id="collapse_tab_1" class="panel-collapse collapse nav" role="tabpanel" aria-labelledby="collapse_tab_1">
-                  <li><a id="tab_11" href="#admin_cred">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;Credentials</a></li>
-                  <li><a id="tab_12" href="#admin_trans">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Transitioning</a></li>
-                </ul>
-            </li>
-            <li class="li-info">
-                <a id="tab_2" href="#job">
-                  <span class="glyphicon glyphicon-sunglasses"></span>&nbsp;&nbsp;Section #2: 
-                  <br/>
-                  <b>Admin Responsibility</b>
-                  <span class="glyphicon pull-right glyphicon-triangle-bottom" data-toggle="collapse" data-parent="#accordion" href="#collapse_tab_2" aria-expanded="true" aria-controls="collapse_tab_2"></span>
-                </a>
-                <ul id="collapse_tab_2" class="panel-collapse collapse nav" role="tabpanel" aria-labelledby="collapse_tab_2">
-                  <li><a id="tab_21" href="#job_meet">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Meeting Schedule</a></li>
-                  <li><a id="tab_22" href="#job_new">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Member Management</a></li>
-                  <li><a id="tab_23" href="#job_exp">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;External Site</a></li>
-                  <li><a id="tab_24" href="#job_int">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Internal Duty</a></li>
-                  <li>
-                    <a id="tab_25" href="#job_bot">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Bot Configuration</a>
-                    <ul style="padding-left:60px;">
-                      <li><a id="tab_251" href="#bot_duty">Duty Reminders</a></li>
-                      <li><a id="tab_252" href="#bot_cache">Data Cache</a></li>
-                      <li><a id="tab_253" href="#bot_backup">Backup</a></li>
-                      <li><a id="tab_254" href="#bot_err">Error Report</a></li>
-                    </ul>
-                  </li>
-                  <li><a id="tab_26" href="#job_csl">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-hdd"></span>&nbsp;&nbsp;Server Maintenance</a></li>
-                </ul>
-            </li>
-            <li class="li-violet">
-                <a id="tab_3" href="#test_env">
-                  <span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Section #3: 
-                  <br/>
-                  <b>Server Environment</b>
-                  <span class="glyphicon pull-right glyphicon-triangle-bottom" data-toggle="collapse" data-parent="#accordion" href="#collapse_tab_3" aria-expanded="true" aria-controls="collapse_tab_3"></span>
-                </a>
-                <ul id="collapse_tab_3" class="panel-collapse collapse nav" role="tabpanel" aria-labelledby="collapse_tab_3">
-                  <li><a id="tab_31" href="#test_basc">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-console"></span>&nbsp;&nbsp;Server Basics</a></li>
-                  <li><a id="tab_32" href="#test_set">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Test Server Setup</a></li>
-                </ul>
-            </li>
-
-          </ul>
-        </div>
-      </div>
-    </div>
-
   </div>
 
-  <a href="#" id="top" style="z-index:2000;">
+  <a href="#main" id="top" style="z-index:2000;">
     <img style="position:fixed;display:block;left:-5%;bottom:100px;opacity:0.85;z-index:2000;" src="/site_media/images/nav_top_hover.png" name="top" height="60"/>
   </a>
-
 </div>
 {% endblock %}
 
@@ -397,7 +419,6 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-scale"></span>&nbsp;&nbsp;Manual</li>');
-      $("#nav_toggle").trigger("click");
     });
   </script>
   <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}doc{{DEBUG_STR}}.js"></script>

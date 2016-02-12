@@ -448,7 +448,7 @@ h1.section > span.num {
 @media (min-width: 979px) {
   #sidebar.affix-top {
     position: static;
-    margin-top: 75px;
+    margin-top: 0px;
   }
   
   #sidebar.affix {
@@ -693,6 +693,10 @@ ul.breadcrumb > li.active {
     }
 
 }*/
+.scroll_nav > ul {
+  font-size: 12px;
+
+}
 .scroll_nav > ul > li > ul > li > a {
   padding: 5px;
   padding-left: 15px;
