@@ -114,10 +114,15 @@
                 <li><span class="code code_path">config/group.conf</span>: Add your <span class="code code_key">sunet_id</span> to the <span class="code code_val">ADMIN</span> group. File is space-delimited.</li>
                 <li><span class="code code_path">config/env.conf</span>: Change <span class="code code_key">ADMIN_NAME</span> and <span class="code code_key">ADMIN_EMAIL</span> to you.</li>
                 <li><span class="code code_path">config/oauth.conf</span>: Change <span class="code code_brand">Slack</span> <span class="code code_key">ADMIN_NAME</span> to your <span class="code code_brand">Slack</span> ID.</li>
-                <li>Log in to <span class="code code_val">daslab</span> <span class="code code_brand">Gmail</span> account, and change email forwarding (<span class="code code_brand">AWS</span> billing and alert) options to you.</li>
               </ul>
               <p>You need to restart <span class="code code_brand">Apache</span> for changes to take effect. Simply run <span class="code code_cmd">a2rs</span> from commmand-line.</p>
-              <p>You will also need to make yourself <span class="code code_brand">Slack</span> admin and <span class="code code_brand">Google Groups</span> owner, separately.</p>
+              <p>You will also need to:</p>
+              <ul>
+                <li>Make yourself <b>Owner</b> of <span class="code code_val">das-lab</span> <span class="code code_brand">Google Groups</span>.</li>
+                <li>Make yourself <b>Owner</b> of <span class="code code_url">https://github.com/DasLab/</span> <span class="code code_brand">GitHub</span> organization.</li>
+                <li>Make yourself <b>Admin</b> of <span class="code code_val">das-lab</span> <span class="code code_brand">Slack</span> team. You may ask the previous admin or <kbd>@rhiju</kbd> to grant these permissions to you.</li>
+                <li>Log in to <span class="code code_val">daslab</span> <span class="code code_brand">Gmail</span> account, and change email forwarding (<span class="code code_brand">AWS</span> billing and alert) options to you.</li>
+              </ul>
             </div>
           </div>             
         </div>
@@ -140,7 +145,8 @@
               <ul>
                 <li>Edit the Spreadsheet weekly, usually on <i>Friday</i> after meeting. <b>Keep it up-to-date</b> since the <span class="code code_misc">Bot</span> uses it for sending reminders to upcoming presenters.</li>
                 <li><b>Put the current one (this week) on the <u>first row</u> under header. Move the previous one (last week) to the <u>last row</u> of the "previous" section (very bottom).</b></li>
-                <li>Mark <span class="code code_class">Eterna Special</span>, <span class="code code_class">Journal Club</span>, and <span class="code code_cmd">Group Meeting</span> following the convention. Paste <span class="code code_class">Flash Slides</span> <span class="code code_brand">Google Presentation</span> links to the first column.</li>
+                <li>Mark <span class="code code_class">Eterna Special</span>, <span class="code code_class">Journal Club</span>, and <span class="code code_cmd">Group Meeting</span> following the convention, using tags of <span class="code code_brand">ES</span>, <span class="code code_key">GM</span>, <span class="code code_path">JC</span> and <span class="code code_method">N/A</span>.</li>
+                <li>Paste <span class="code code_class">Flash Slides</span> <span class="code code_brand">Google Presentation</span> links to the first column. And YouTube url for <span class="code code_class">Eternal Special</span>.</li>
                 <li>Always use non-abbreviated first-name to be compatible with <span class="code code_misc">Bot</span> name-matching.</li>
               </ul>
               <br/>
@@ -163,10 +169,11 @@
                 <li>Invite to join <span class="code code_val">das-lab</span> <span class="code code_brand">Slack</span> group and <span class="code code_brand">Google Groups</span>.</li>
                 <li>Add his/her <span class="code code_key">sunet_id</span> to appropriate group in <span class="code code_path">config/group.conf</span>.</li>
                 <li>Create <span class="code code_class">Member</span> entry in database through <span class="code code_url">/admin/src/member/</span>.</li>
+                <li>Add to <span class="code code_url">https://github.com/DasLab/</span> <span class="code code_brand">GitHub</span> organization as <b>Member</b> if needed.</li>
               </ul>
               <p>Similary, when a member leaves, please remeber to:</p>
               <ul>
-                <li>Revoke his/her <span class="code code_brand">Slack</span> access by disable in team.</li>
+                <li>Revoke his/her <span class="code code_brand">Slack</span> access by disabling member in the team.</li>
                 <li>Move his/her <span class="code code_key">sunet_id</span> to <span class="code code_val">ALUMNI</span> group in <span class="code code_path">config/group.conf</span>.</li>
                 <li>Toggle <span class="code code_key">is_visible</span> and/or <span class="code code_key">is_alumni</span> flags of the <span class="code code_class">Member</span> entry.</li>
               </ul>
@@ -273,7 +280,7 @@
               </ul>
               <p>Some messages could be ignored:</p>
               <ul>
-                <li>Cache failures that are due to vendor unavailability (e.g. <u>502</u> or <u>503</u> response, HTTP timeout; mostly seen from <span class="code code_brand">Github</span> and <span class="code code_brand">Slack</span>). If it fails reproducibly, you may need to investigate so that the caching results will be up-to-date.</li>
+                <li>Cache failures that are due to vendor unavailability (e.g. <u>502</u> or <u>503</u> response, HTTP timeout; mostly seen from <span class="code code_brand">GitHub</span> and <span class="code code_brand">Slack</span>). If it fails reproducibly, you may need to investigate so that the caching results will be up-to-date.</li>
                 <li>Success notes about <span class="code code_cmd">backup</span>, <i>etc.</i> tasks.</li>
               </ul>
             </div>
@@ -342,7 +349,7 @@
                       <tr><td><span class="code code_cmd">report</span></td><td>Sends <span class="code code_misc">cron</span> error report to admin if not <span class="code code_key">IS_SLACK</span>. Also compresses <span class="code code_misc">cron</span> log and cleans up old <span class="code code_class">Slack Messages</span>.</td></tr>
                       <tr><td><span class="code code_cmd">restore</span></td><td>Restores <span class="code code_misc">static</span>files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files from local <span class="code code_path">backup/</span> files.</td></tr>
                       <tr><td><span class="code code_cmd">versions</span></td><td>Collects system installed package versions into <span class="code code_path">cache/stat_sys.txt</span>. Accepts a flag argument for overriding <span class="code code_key">IS_VERSIONS</span> in <span class="code code_path">config/bot.conf</span>, chooses from: <span class="code code_val">0</span> or <span class="code code_val">1</span>.</td></tr>
-                      <tr><td colspan="2"></td></tr>
+                      <tr><td colspan="2" style="padding:0px;"></td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -362,7 +369,7 @@
                       <tr><td><span class="code code_misc">Django</span> and <span class="code code_misc">cron</span> log</td><td><span class="code code_path">cache/</span></td></tr>
                       <tr><td><span class="code code_misc">static</span> files</td><td><span class="code code_path">data/</span></td></tr>
                       <tr><td>Secret / configurations</td><td><span class="code code_path">config/</span></td></tr>
-                      <tr><td colspan="2"></td></tr>
+                      <tr><td colspan="2" style="padding:0px;"></td></tr>
                     </tbody>
                   </table>
                 </div>

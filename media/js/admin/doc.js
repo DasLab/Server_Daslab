@@ -7,17 +7,10 @@ function resize() {
     $("#main").addClass("col-lg-12 col-md-12").removeClass("pull-right col-lg-9 col-md-9");
     $("#sidebar").removeAttr("data-spy").removeClass("affix").removeClass("affix-top");
   } else {
+    degree = 2;
     $("#side").addClass("col-lg-3 col-md-3").removeClass("col-lg-12 col-md-12");
     $("#main").removeClass("col-lg-12 col-md-12").addClass("pull-right col-lg-9 col-md-9");
     $("#sidebar").attr("data-spy","affix").affix( { offset: { top: $("#main").position().top } } );
-
-    if ($("#nav_load").width() >= 1680) {
-      $("#main").removeClass("pull-right col-lg-9 col-md-9").addClass("col-lg-12 col-md-12");
-      degree = 3;
-    } else {
-      $("#main").addClass("pull-right col-lg-9 col-md-9").removeClass("col-lg-12 col-md-12");
-      degree = 2;
-    }
   }
 }
 
