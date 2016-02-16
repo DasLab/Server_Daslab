@@ -286,7 +286,7 @@
                 <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
                   <table class="table table-hover">
                     <tbody>
-                      <tr><td><span class="code code_path">requirements.txt</span></td><td>Description of <i>Python</i> package dependency.</td></tr>
+                      <tr><td><span class="code code_path">requirements.txt</span></td><td>Description of <span class="code code_cmd">python</span> package dependency.</td></tr>
                       <tr><td><span class="code code_path">robots.txt</span></td><td>Instruction for web crawlers. See <a href="http://www.robotstxt.org/" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</td></tr>
                       <tr><td><span class="code code_path">manage.py</span></td><td><span class="code code_misc">Django</span> script entry point. <b>Do not change</b>, unless syntax changes in newer <span class="code code_misc">Django</span> releases.</td></tr>
                       <tr><td><span class="code code_path">util_chmod.sh</span></td><td>Runs <span class="code code_cmd">chmod</span> and <span class="code code_cmd">chown</span> to files and directories to set minimal required permissions. Most files are owned by <span class="code code_val">www-data</span> (the <span class="code code_brand">Apache</span> user). <span class="code code_path">config/bot.conf</span> and <span class="code code_path">config/cron.conf</span> are writable by <span class="code code_val">www-data</span>, while others are read-only. <span class="code code_spe">*.sh</span> are only accessible by <span class="code code_val">ubuntu</span>.</td></tr>
@@ -427,14 +427,14 @@
               </div>
 
               <h4 id="python_js"><span class="code code_path">media/js/</span></h4>
-              <p>Contains <i>Javascript</i> files.</p>
+              <p>Contains <span class="code code_misc">Javascript</span> files.</p>
               <div class="row">
                 <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
                 <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
                   <table class="table table-hover">
                     <tbody>
                       <tr><td><span class="code code_path">*.min.js</span></td><td colspan="2">Vendor libraries (Bootstrap, jQuery, fullcalendar, Moment, SWFObject).</td></tr>
-                      <tr><td><span class="code code_path">admin/</span></td><td colspan="2">Admin <i>Javascript</i> files.</td></tr>
+                      <tr><td><span class="code code_path">admin/</span></td><td colspan="2">Admin <span class="code code_misc">Javascript</span> files.</td></tr>
                       <tr><td></td><td><span class="code code_path">_*.js</span></td><td>Vendor libraries for <span class="code code_misc">django-suit</span> and <span class="code code_misc">django-filemanager</span>.</td></tr>
                       <tr><td></td><td><span class="code code_path">apache.js</span></td><td>Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/apache_stat/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">restyle_apache()</span> in <span class="code code_path">src/console.py</span>. The page refreshes every <u>3</u> seconds by <span class="code code_method">setTimeout()</span>.</td></tr>
                       <tr><td></td><td><span class="code code_path">aws.js</span></td><td>Uses <span class="code code_misc">gviz-api.py</span>. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/aws_stat/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">aws_stats()</span> in <span class="code code_path">src/console.py</span>. Data is retrieved on the fly (not cached).</td></tr>
@@ -444,10 +444,10 @@
                       <tr><td></td><td><span class="code code_path">git.js</span></td><td>Uses <span class="code code_misc">gviz-api.py</span>. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/git_stat/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">git_stats()</span> in <span class="code code_path">src/console.py</span>. Data is retrieved on the fly (not cached).</td></tr>
                       <tr><td></td><td><span class="code code_path">group.js</span></td><td>Used by <span class="code code_url">/admin/auth/user/</span> page to render <span class="code code_path">config/group.conf</span> on the page. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/group_dash/</span>, which passes to <span class="code code_method">group_dash()</span> in <span class="code code_path">src/admin.py</span>.</td></tr>
                       <tr><td></td><td><span class="code code_path">home.js</span></td><td>Similar to <span class="code code_path">backup.js</span>, makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/get_backup/</span> and <span class="code code_url">/admin/get_ver/</span>. Additionally, makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/backup_form/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">get_backup_form()</span> in <span class="code code_path">src/console.py</span>; <span class="code code_url">/admin/ssl_dash/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">dash_ssl()</span> in <span class="code code_path">src/dash.py</span>; and <span class="code code_url">/admin/dash_dash/</span>, which passes to <span class="code code_method">dash_dash()</span> in <span class="code code_path">src/admin.py</span>.</td></tr>
-                      <tr><td></td><td><span class="code code_path">menu.js</span>, <span class="code code_path">table.js</span></td><td>Injection of <i>Javascript</i> to format menu (sidebar, navbar, breadcrumb, highlighting, collapsing) and table (column width and icon for <code>&lt;th&gt;</code>, and Date/Time <code>&lt;input&gt;</code>) for admin pages. Note that the <span class="code code_method">window.resize()</span> methods use <span class="code code_method">setTimeout()</span> to prevent overlapping trigger of the event that results in delay in updating the view.</td></tr>
+                      <tr><td></td><td><span class="code code_path">menu.js</span>, <span class="code code_path">table.js</span></td><td>Injection of <span class="code code_misc">Javascript</span> to format menu (sidebar, navbar, breadcrumb, highlighting, collapsing) and table (column width and icon for <code>&lt;th&gt;</code>, and Date/Time <code>&lt;input&gt;</code>) for admin pages. Note that the <span class="code code_method">window.resize()</span> methods use <span class="code code_method">setTimeout()</span> to prevent overlapping trigger of the event that results in delay in updating the view.</td></tr>
                       <tr><td></td><td><span class="code code_path">load.js</span></td><td>Loads vendor libraries using <span class="code code_spe">CDN</span>, or <b>fallback</b> to local files. Used by entire site (both public and group)! Makes <span class="code code_key">AJAX</span> call to <span class="code code_url">/get_js/</span>, which passes to <span class="code code_method">get_js()</span> in <span class="code code_path">src/views.py</span>. It checks <b>jQuery</b> availability from <span class="code code_url">https://cdnjs.com/</span> first, and decides whether to use it. Uses <span class="code code_method">document.write()</span> to dynamically add <code>&lt;script&gt;</code> and  <code>&lt;link&gt;</code> in <span class="code code_key">HTML</span>.</td></tr>
 
-                      <tr><td><span class="code code_path">group/</span></td><td colspan="2">Group <i>Javascript</i> files.</td></tr>
+                      <tr><td><span class="code code_path">group/</span></td><td colspan="2">Group <span class="code code_misc">Javascript</span> files.</td></tr>
                       <tr><td></td><td><span class="code code_path">aws.js</span></td><td>Uses <span class="code code_misc">gviz-api.py</span>. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/group/aws_dash/</span>, which passes through <span class="code code_path">src/views.py</span> to <span class="code code_method">dash_aws()</span> in <span class="code code_path">src/dash.py</span>. Data is retrieved from <span class="code code_path">cache/</span>. It renders the <span class="code code_key">HTML</span> backbone first, then query data for each <span class="code code_misc">EC2</span>, <span class="code code_misc">EBS</span>, and <span class="code code_misc">ELB</span>.</td></tr>
                       <tr><td></td><td><span class="code code_path">ga.js</span>, <span class="code code_path">git.js</span>, <span class="code code_path">dropbox.js</span>, <span class="code code_path">slack.js</span></td><td>Works in similar way as <span class="code code_path">aws.js</span>. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/group/*_dash/</span>, which passes through <span class="code code_path">src/views.py</span> to <span class="code code_method">dash_*()</span> in <span class="code code_path">src/dash.py</span>.</td></tr>
                       <tr><td></td><td><span class="code code_path">home.js</span></td><td>Works in similar way as <span class="code code_path">slack.js</span>. Additionally, makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/group/schedule_dash/</span>, which passes to <span class="code code_method">schedule_dash()</span> in <span class="code code_path">src/views.py</span> for recent events.</td></tr>
@@ -467,7 +467,7 @@
           <div class="row" id="python_src">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
               <h4><span class="code code_path">src/</span></h4>
-              <p>Contains <i>Python</i> scripts for the app.</p>
+              <p>Contains <span class="code code_cmd">python</span> scripts for the app.</p>
               <br/>
               <h4 id="src_admin"><span class="code code_path">src/admin.py</span></h4>
               <p>Handles admin related page requests and tasks.</p>
@@ -657,7 +657,7 @@
                       <tr><td><span class="code code_method">ping_test()</span></td><td>Returns an empty <u>200</u> response. Used by <span class="code code_brand">AWS</span> <span class="code code_misc">ELB</span> <b>Health Check</b>.</td></tr>
                       <tr><td><span class="code code_method">test()</span></td><td>Test handler for <b>test server</b>. Not accessible in production.</td></tr>
                       <tr><td><span class="code code_method">get_admin()</span>, <span class="code code_method">get_user()</span></td><td>Used by <u>403</u> error page only (<span class="code code_url">/error/403/</span>).</td></tr>
-                      <tr><td><span class="code code_method">get_js()</span></td><td>Used by <span class="code code_url">/admin/load.js</span>. Reads <span class="code code_path">cache/stat_sys.txt</span> and returns core <span class="code code_key">JS</span> vendor library versions.</td></tr>
+                      <tr><td><span class="code code_method">get_js()</span></td><td>Used by <span class="code code_url">/admin/load.js</span>. Reads <span class="code code_path">cache/stat_sys.txt</span> and returns core <span class="code code_key">JS</span> vendor library versions. The versions information is used to load libraries from <span class="code code_spe">CDN</span>.</td></tr>
                       <tr><td colspan="2" style="padding:0px;"></td></tr>
                     </tbody>
                   </table>
@@ -676,8 +676,111 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
               <h4><span class="code code_path">src/management/commands</span></h4>
               <p>Contains <span class="code code_misc">Django</span> management command scripts.</p>
-              <br/>
-
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr>
+                        <td><span class="code code_path">backup.py</span></td>
+                        <td>
+                          <ul>
+                            <li>Backs up <span class="code code_misc">static</span>files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files into <span class="code code_path">backup/</span> folder.</li>
+                            <li>Uses <span class="code code_method">subprocess.check_call()</span> for <span class="code code_cmd">mysqldump</span>, <span class="code code_misc">tarfile</span> for creating <span class="code code_key">TGZ</span> files.</li>
+                            <li>Due to lack of permissions of <span class="code code_val">www-data</span> user to <span class="code code_path">/etc/apache2/</span>, <span class="code code_brand">Apache</span> settings are archived by a <span class="code code_misc">cron</span> job under <span class="code code_val">ubuntu</span>. </li>
+                            <li>The <span class="code code_misc">cron</span> job is triggered <u>weekly</u>. <b>Summary</b> is sent to admin after job finish either via <b>email</b> or <span class="code code_brand">Slack</span>. </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="code code_path">bday.py</span></td>
+                        <td>
+                          <ul>
+                            <li>Checks if anyone's birthday is today and sends out wishes in <span class="code code_brand">Slack</span>. <b>Alumni</b> members are excluded.</li>
+                            <li>The <span class="code code_misc">cron</span> job is triggered <u>daily</u>.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="code code_path">cache.py</span></td>
+                        <td>
+                          <ul>
+                            <li>Caches analytics data into <span class="code code_path">cache/</span>. Accepts an interval argument for category, choose from: <span class="code code_val">3</span>, <span class="code code_val">15</span>, or <span class="code code_val">30</span>. </li>
+                            <li>Results are saved as <span class="code code_spe">*.pickle</span> files as a memory dump of variable. HTTP errors (<u>500</u>, <u>502</u>, <u>503</u>, connnection time-out) are reported to <span class="code code_brand">Slack</span> but with exemption.</li>
+                            <li>The <span class="code code_misc">cron</span> job is triggered every <u>3</u>, <u>15</u>, <u>30</u> minutes.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="code code_path">duty.py</span></td>
+                        <td>
+                          <ul>
+                            <li>Checks if any duty reminders should be sent out today. Accepts an interval argument for category, choose from: <span class="code code_val">week</span>, <span class="code code_val">month</span>, or <span class="code code_val">quarter</span>.</li>
+                            <li><span class="code code_brand">Dropbox</span> payment notice is sent on <u>October</u> <u>annually</u>.</li>
+                            <li><b>Birthday</b> reminder includes people's birthdays for the upcoming <u>60</u> days.</li>
+                            <li>In <span class="code code_key">DEBUG</span> mode, all <span class="code code_brand">Slack</span> messages will be sent to admin instead of original receiver.</li>
+                            <li>The <u>weekly</u> <span class="code code_misc">cron</span> job is triggered <u>daily</u> to capture the 2 <b>reminder</b> dates. The <u>monthly</u> and <u>quarterly</u> <span class="code code_misc">cron</span> job is also triggered <u>daily</u>, but only executed fully on <u>first week of each month</u> and the set date. Because checking time inside <span class="code code_cmd">python</span> is easier than coding in <span class="code code_cmd">bash</span>.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="code code_path">gdrive.py</span></td>
+                        <td>
+                          <ul>
+                            <li>Uploads most recent backup onto <span class="code code_val">daslab</span> <span class="code code_brand">Google Drive</span> and cleans up obsolete backup files.</li>
+                            <li>Uses <span class="code code_method">subprocess.check_call()</span> for <span class="code code_cmd">drive</span>. Files are renamed with <u>date</u> as prefix.</li>
+                            <li>Old files are determined by their <b>last modified date</b> and removed (default <u>45</u> days).</li>
+                            <li>The <span class="code code_misc">cron</span> job is triggered <u>weekly</u>. <b>Summary</b> is sent to admin after job finish either via <b>email</b> or <span class="code code_brand">Slack</span>. </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="code code_path">meeting.py</span></td>
+                        <td>
+                          <ul>
+                            <li>Sets up <span class="code code_class">Flash Slides</span> and sends out <span class="code code_spe">Group Meeting Reminder</span>.</li>
+                            <li>Only on weeks that are not <span class="code code_val">N/A</span> will <span class="code code_class">Flash Slides</span> be created. Instead of creating a <span class="code code_brand">Google Presentation</span>, it actually copies over an existing blank one specified by <span class="code code_key">TEMPLATE_PRESENTATION_ID</span> in <span class="code code_path">config/oauth.conf</span>, because it's easier this way to have the <b>aspect ratio</b> correct. </li>
+                            <li>The <span class="code code_spe">Group Meeting Reminder</span> describes the meeting <u>this week</u>, <u>next week</u>, as well as headers and footers. Presenters' names will be matched by <span class="code code_method">find_slack_id()</span> in <span class="code code_path">src/console.py</span>, and addressed in the message.</li>
+                            <li>Admin will be notified for adding <span class="code code_brand">MySQL</span> entries for <span class="code code_class">Eterna Special</span>, <span class="code code_class">Journal Club</span>, and <span class="code code_class">Rotation Student</span>. Presenter of <u>next week</u> will be notified for preparation.</li>
+                            <li>In <span class="code code_key">DEBUG</span> mode, all <span class="code code_brand">Slack</span> messages will be sent to admin instead of original receiver.</li>
+                            <li>The <span class="code code_misc">cron</span> job is triggered <u>daily</u>, but only executed fully on <u>day before meeting</u>. Because checking time inside <span class="code code_cmd">python</span> is easier than coding in <span class="code code_cmd">bash</span>.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="code code_path">report.py</span></td>
+                        <td>
+                          <ul>
+                            <li>Sends <span class="code code_misc">cron</span> error report to admin if not <span class="code code_key">IS_SLACK</span>. Also compresses <span class="code code_misc">cron</span> log and cleans up old <span class="code code_class">Slack Messages</span>.</li>
+                            <li>It zips <span class="code code_path">cache/log_cron.log</span>, and removes <span class="code code_class">Slack Messages</span> that are older than <u>15</u> days in <span class="code code_brand">MySQL</span> database.</li>
+                            <li>The <span class="code code_misc">cron</span> job is triggered <u>weekly</u>. <b>Summary</b> of <span class="code code_path">cache/log_alert_admin.log</span> is sent to admin after job finish either via <b>email</b> or <span class="code code_brand">Slack</span>. </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="code code_path">restore.py</span></td>
+                        <td>
+                          <ul>
+                            <li>Restores <span class="code code_misc">static</span>files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files from local <span class="code code_path">backup/</span> files.</li>
+                            <li>Uses <span class="code code_method">subprocess.check_call()</span> for <span class="code code_cmd">mysql</span>, <span class="code code_misc">tarfile</span> and <span class="code code_misc">shutil</span> for unpacking <span class="code code_key">TGZ</span> files.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="code code_path">versions.py</span></td>
+                        <td>
+                          <ul>
+                            <li>Collects system installed package versions into <span class="code code_path">cache/stat_sys.txt</span>. Accepts a flag argument for overriding <span class="code code_key">IS_VERSIONS</span> in <span class="code code_path">config/bot.conf</span>, chooses from: <span class="code code_val">0</span> or <span class="code code_val">1</span>.</li>
+                            <li>Uses <span class="code code_method">subprocess.Popen()</span> for <span class="code code_cmd">bash</span> commands. Some commands need to write to <span class="code code_path">cache/temp.txt</span> temporarily for output handling. Some values, e.g. <span class="code code_misc">WebAuth</span>, <span class="code code_misc">mod_wsgi</span>, and <span class="code code_misc">wallet</span> are implemented for <u>production</u> only. Commands for <b>memory</b> readings are dependent on <span class="code code_key">DEBUG</span> as well.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr><td colspan="2" style="padding:0px;"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
             </div>
           </div>
 

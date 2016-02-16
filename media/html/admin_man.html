@@ -228,7 +228,7 @@
           <div class="row" id="job_bot">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
               <h4><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;<span class="code code_misc">Bot</span> Configurations</h4>
-              <p><span class="code code_misc">Bot</span> is a set of <i>Python</i> scripts that takes care of routine server tasks and communicate to admin and members through <span class="code code_brand">Slack</span>. All settings can be configured at <span class="code code_url">/admin/bot/</span>.</p>
+              <p><span class="code code_misc">Bot</span> is a set of <span class="code code_cmd">python</span> scripts that takes care of routine server tasks and communicate to admin and members through <span class="code code_brand">Slack</span>. All settings can be configured at <span class="code code_url">/admin/bot/</span>.</p>
               <br/>
               <p id="bot_duty"><b>Duty Reminders</b></p>
               <p>It sends reminders to corresponding recipients for the following lab duty based from <span class="code code_spe">Duty Spreadsheet</span>:</p>
@@ -316,7 +316,7 @@
               <h4><span class="glyphicon glyphicon-console"></span>&nbsp;&nbsp;Server Basics</h4>
               <br/>
               <p>The server runs on <span class="code code_cmd">linux</span>(<span class="code code_brand">Ubuntu</span>) instance at <span class="code code_brand">AWS</span>. Information about <span class="code code_brand">AWS</span> is in <span class="code code_path">config/oauth.conf</span> under <span class="code code_key">AWS</span>.</p>
-              <p><span class="code code_brand">Apache</span> is the reverse proxy that sits between <span class="code code_misc">Django</span> (the app) and outside world. It handles HTTP requests and spawns <i>Python</i> processes. <span class="code code_misc">Django</span> is used for web framework. <span class="code code_brand">MySQL</span> is the database engine.</p>
+              <p><span class="code code_brand">Apache</span> is the reverse proxy that sits between <span class="code code_misc">Django</span> (the app) and outside world. It handles HTTP requests and spawns <span class="code code_cmd">python</span> processes. <span class="code code_misc">Django</span> is used for web framework. <span class="code code_brand">MySQL</span> is the database engine.</p>
               <p>The server uses Stanford <span class="code code_misc">WebAuth</span> module for access control. Thus members can login with their <span class="code code_key">sunet_id</span> instead of a separate login system. Access groups are defined in <span class="code code_path">config/group.conf</span>.</p>
               <br/>
               <p>When making changes to <span class="code code_misc">static</span> assets, including <span class="code code_spe">*.html</span>, <span class="code code_spe">*.css</span>, <span class="code code_spe">*.js</span>, <span class="code code_misc">images/pdf</span> files, as well as <span class="code code_brand">MySQL</span> database, you don't need to restart <span class="code code_brand">Apache</span>. Changes will be reflected upon browser refresh (sometimes browser cache may delay it).</p>
