@@ -33,7 +33,12 @@
                 <a id="tab_1" href="#overview">
                   <span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;Section #1: 
                   <b>Overview</b>
+                  <span class="glyphicon pull-right glyphicon-triangle-bottom" data-toggle="collapse" data-parent="#accordion" href="#collapse_tab_1" aria-expanded="true" aria-controls="collapse_tab_1"></span>
                 </a>
+                <ul id="collapse_tab_1" class="panel-collapse collapse nav" role="tabpanel" aria-labelledby="collapse_tab_1">
+                  <li><a id="tab_11" href="#arch">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Architecture</a></li>
+                  <li><a id="tab_12" href="#django">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;Django App</a></li>
+                </ul>
               </li>
               <li class="li-danger">
                 <a id="tab_2" href="#linux">
@@ -112,9 +117,153 @@
             </span>
           </div>
           <br/>
-          <div class="row">
-
+          <div class="row" id="arch">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Server Architecture</h4>
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                  <p>HTTP <span class="code code_method">Request</span> from internet</p>
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                  <p>Stanford <b>NetDB</b> alias (<span class="code code_url">daslab.stanford.edu</span>)</p>
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                  <p><span class="code code_brand">AWS</span> <span class="code code_misc">ELB</span> (<span class="code code_url">daslab-balancer-2088876925.us-west-2.elb.amazonaws.com</span>)</p>
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                  <p><span class="code code_brand">AWS</span> <span class="code code_misc">EC2</span> (<span class="code code_url">ec2-52-25-214-40.us-west-2.compute.amazonaws.com</span>)</p>
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                  <p>
+                    <span class="code code_brand">Apache</span> reverse proxy (<b>port</b> <span class="code code_val">443</span>)
+                    &nbsp;&nbsp;<span class="glyphicon glyphicon-transfer"></span>&nbsp;&nbsp;
+                    <span class="code code_misc">WebAuth</span>, <span class="code code_misc">wallet</span>
+                  </p>
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                  <p><span class="code code_brand">Apache</span> <span class="code code_misc">WSGI</span> worker</p>
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                  <p style="padding-left:125px;">
+                    <span class="code code_cmd">python</span> <span class="code code_misc">Django</span> App
+                    &nbsp;&nbsp;<span class="glyphicon glyphicon-transfer"></span>&nbsp;&nbsp;
+                    <span class="code code_brand">MySQL</span> database
+                  </p>
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                  <p>HTTP <span class="code code_method">Response</span> to client</p>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <hr/>
+          <div class="row" id="django">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;<span class="code code_misc">Django</span> App</h4>
+              <br/>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  <p>
+                    <span class="code code_brand">Apache</span>
+                    &nbsp;&nbsp;<span class="glyphicon glyphicon-transfer"></span>&nbsp;&nbsp;
+                    <span class="code code_path">wsgi.py</span>
+                  </p>
+                  <p>
+                    <span class="code code_brand">MySQL</span>
+                    &nbsp;&nbsp;<span class="glyphicon glyphicon-transfer"></span>&nbsp;&nbsp;
+                    <span class="code code_path">models.py</span>
+                  </p>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <p>&nbsp;</p>
+                  <p>HTTP <span class="code code_method">Request</span></p>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
+              </div>
+              <br/>
+              <div class="row" style="padding-bottom:5px;">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  App initiation
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
+              </div>
+
+              <div class="row" style="padding-bottom:5px;">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="code code_path">auth.py</span>
+                  <span class="glyphicon glyphicon-option-horizontal pull-right"></span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="code code_path">admin.py</span>
+                  <span class="glyphicon glyphicon-arrow-left pull-right"></span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="code code_path">urls.py</span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center"></div>
+              </div>
+              <div class="row" style="padding-bottom:5px;">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="glyphicon glyphicon-arrow-up"></span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="glyphicon glyphicon-sort"></span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center"></div>
+              </div>
+              <div class="row" style="padding-bottom:5px;">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="code code_path">settings.py</span>
+                  <span class="glyphicon glyphicon-transfer pull-right"></span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="code code_path">console.py</span>
+                  <span class="glyphicon glyphicon-arrow-left pull-right"></span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="code code_path">views.py</span>
+                  <span class="glyphicon glyphicon-arrow-right pull-right"></span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="code code_path">dash.py</span>
+                </div>
+              </div>
+              <div class="row" style="padding-bottom:5px;">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center"></div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="glyphicon glyphicon-arrow-up"></span>
+                </div>
+              </div>
+              <div class="row" style="padding-bottom:5px;">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="code code_path">env.py</span>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="glyphicon glyphicon-arrow-left pull-right"></span>
+                  <span class="code code_cmd">gdrive</span>
+                  <br/>
+                  <span class="code code_misc">pandoc</span>
+                  <br/>
+                  <span class="code code_misc">cron</span> job
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="code code_path">gdrive.py</span> job
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
+                  <span class="code code_path">cache.py</span> job
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
         </div>
       </div>
 
