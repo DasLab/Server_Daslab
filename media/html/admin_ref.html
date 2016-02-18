@@ -784,7 +784,7 @@
               <ul>
                 <li>Routes <span class="code code_url">/site_media/</span> to <span class="code code_path">media/</span>, and <span class="code code_url">/site_data/</span> to <span class="code code_path">data/</span>; to prevent direct access to files from path.</li>
                 <li>Redirect old and synonym urls to current ones with <u>301</u>. Exposes custom error handler pages, as well as <span class="code code_path">robots.txt</span> as <span class="code code_url">/robots.txt</span>.</li>
-                <li>Based on <span class="code code_key">IS_MAINTENANCE</span> in <span class="code code_path">config/t47_dev.py</span>, the server can run in either <b>normal</b> mode or <b>downtime</b> mode. In <b>downtimemode</b>, all requests are responded with HTTP code <u>503</u>.</li>
+                <li>Based on <span class="code code_key">IS_MAINTENANCE</span> in <span class="code code_path">config/t47_dev.py</span>, the server can run in either <b>normal</b> mode or <b>downtime</b> mode. In <b>downtime</b> mode, all requests are responded with HTTP code <u>503</u>.</li>
               </ul>
 
               <br/>
