@@ -5,6 +5,8 @@ function label_type(type) {
         return '<span class="label label-success">Journal Club</span>';
     } else if (type == 'ES') {
         return '<span class="label label-warning">EteRNA Special</span>';
+    } else if (type == 'FS') {
+        return '<span class="label label-orange">Flash Slides</span>';
     } else if (type == 'N/A') {
         return '<span class="label label-danger">No Meeting</span>';
     } else {
@@ -18,21 +20,21 @@ $.ajax({
     dataType: "json",
     success: function (data) {
         $("#this_type").html(label_type(data['this'][1]));
-        if (data['this'][1] == 'N/A') {
+        if (data['this'][1] == 'N/A' || data['this'][1] == 'FS') {
             $("#this_name").html('(' + data['this'][3] + ')').removeClass("label label-inverse").addClass("small");
         } else {
             $("#this_name").html(data['this'][2]);
         }
         $("#this_date").html(data['this'][0]);
         $("#last_type").html(label_type(data.last[1]));
-        if (data.last[1] == 'N/A') {
+        if (data.last[1] == 'N/A'|| data.last[1] == 'FS') {
             $("#last_name").html('(' + data.last[3] + ')').removeClass("label label-inverse").addClass("small");
         } else {
             $("#last_name").html(data.last[2]);
         }
         $("#last_date").html(data.last[0]);
         $("#next_type").html(label_type(data.next[1]));
-        if (data.next[1] == 'N/A') {
+        if (data.next[1] == 'N/A' || data.next[1] == 'FS') {
             $("#next_name").html('(' + data.next[3] + ')').removeClass("label label-inverse").addClass("small");
         } else {
             $("#next_name").html(data.next[2]);

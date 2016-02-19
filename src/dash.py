@@ -566,10 +566,10 @@ def cache_schedule():
             if this: 
                 next = (datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), row[2], row[3], row[5])
                 break
-            if len(row) >= 9 and row[8] == '[NEXT]':
+            if len(row) >= 7 and '[THIS WEEK]' in row[6]:
                 this = (datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), row[2], row[3], row[5])
                 
-        if not this: raise Exception('Error with parsing spreadsheet csv: no [NEXT] found.')
+        if not this: raise Exception('Error with parsing spreadsheet csv: no [THIS WEEK] found.')
         for row in reversed(lines):
             row = row.split(',')
             if len(row) == 10 and any(row):

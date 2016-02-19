@@ -57,7 +57,7 @@ function drawChart() {
             var html = "";
             for (var i = 0; i < data.channels.length; i++) {
                 var name = "", num_msgs = data.channels[i].num_msgs.toString();
-                if (data.channels[i].name == "general" || data.channels[i].name == "random") { 
+                if (data.channels[i].name == "general" || data.channels[i].name == "random" || data.channels[i].name == "papers") { 
                     name = '<span class="label label-info">' + data.channels[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-play-circle">';
                 } else if (data.channels[i].name == "dropbox" || data.channels[i].name == "github") { 
                     name = '<span class="label label-orange">' + data.channels[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-record">';
