@@ -164,7 +164,15 @@ def cache_ga(request):
         return simplejson.dumps(dict_ga, sort_keys=True, indent=' ' * 4)
     else:
         url_colon = urllib.quote(':')
-        temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%sdate&access_token=%s' % (url_colon, request['id'], url_colon, request['qs'], url_colon, request['access_token'])).json()['rows']
+        i = 0
+        while True:
+            temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%sdate&access_token=%s' % (url_colon, request['id'], url_colon, request['qs'], url_colon, request['access_token'])).json()
+            if temp.has_key('rows'):
+                temp = temp['rows']
+                break
+            time.sleep(2)
+            i += 1
+            if i == 3: return error500(request)
 
         data = []
         stats = ['Timestamp']
