@@ -33,7 +33,7 @@ The `django-filemanager` is a modified version of https://github.com/IMGIITRoork
 
 **DasLab Server** also requires proper setup of `mysql.server`, `apache2`, `mod_wsgi`, `mod_webauth`, `openssl`, `wallet`, `gdrive`, `pandoc`, `awscli`, and `cron` jobs.
 
-Lastly, assets preparation is required for the 1st time through running `sudo python manage.py versions`, `sudo python manage.py dist`, `util_prep_dir.sh`, `util_minify.sh`, `util_chmod.sh` and manually replacing `config/*.conf`. For full configuration, please refer to **Documentation**.
+Lastly, assets preparation is required for the 1st time through running `sudo python manage.py versions`, `util_prep_dir.sh`, `util_minify.sh`, `util_chmod.sh` and manually replacing `config/*.conf`. For full configuration, please refer to **Documentation**.
 
 
 ## Usage

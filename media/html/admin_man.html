@@ -349,7 +349,7 @@
                       <tr><td><span class="code code_cmd">meeting</span></td><td>Sets up <span class="code code_class">Flash Slides</span> and sends out <span class="code code_spe">Group Meeting Reminder</span>.</td></tr>
                       <tr><td><span class="code code_cmd">report</span></td><td>Sends <span class="code code_misc">cron</span> error report to admin if not <span class="code code_key">IS_SLACK</span>. Also compresses <span class="code code_misc">cron</span> log and cleans up old <span class="code code_class">Slack Messages</span>.</td></tr>
                       <tr><td><span class="code code_cmd">restore</span></td><td>Restores <span class="code code_misc">static</span>files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files from local <span class="code code_path">backup/</span> files.</td></tr>
-                      <tr><td><span class="code code_cmd">versions</span></td><td>Collects system installed package versions into <span class="code code_path">cache/stat_sys.txt</span>. Accepts a flag argument for overriding <span class="code code_key">IS_VERSIONS</span> in <span class="code code_path">config/bot.conf</span>, chooses from: <span class="code code_val">0</span> or <span class="code code_val">1</span>.</td></tr>
+                      <tr><td><span class="code code_cmd">versions</span></td><td>Collects system installed package versions into <span class="code code_path">cache/stat_sys.json</span>. Accepts a flag argument for overriding <span class="code code_key">IS_VERSIONS</span> in <span class="code code_path">config/bot.conf</span>, chooses from: <span class="code code_val">0</span> or <span class="code code_val">1</span>.</td></tr>
                       <tr><td colspan="2" style="padding:0px;"></td></tr>
                     </tbody>
                   </table>
@@ -396,7 +396,7 @@
               </ul>
               <br/>
               <p><b>Server Deployment</b></p>
-              <p>To set up a new server for production, you need to complete the following steps besides the ones above. Most of the system requirements/settings are in the <span class="code code_path">config/sys/</span> folder in the backup files, which are handled by <span class="code code_path">util_system_asset.sh</span>.</p>
+              <p>To set up a new server for production, you need to complete the following steps besides the ones above. Most of the system requirements/settings are in the <span class="code code_path">config/sys/</span> folder in the backup files, which are handled by <span class="code code_path">util_sys_asset.sh</span>.</p>
               <ul>
                 <li>Store <span class="code code_misc">SSL Certificate</span> on the server (currently at <span class="code code_path">/home/ubuntu/.ssl_cert/</span>). Use <span class="code code_cmd">aws iam</span> to register them to <span class="code code_brand">AWS</span> console. See <a href="http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/ssl-server-cert.html" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</li>
                 <li>Overwrite <span class="code code_brand">Apache</span> settings from backup. See <span class="code code_url">/admin/ref/</span> for more explanations.</li>
