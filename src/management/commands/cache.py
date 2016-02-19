@@ -195,7 +195,7 @@ class Command(BaseCommand):
             if IS_SLACK:
                 if ('pickle_git' in tb or 'cache_git' in tb) and ('ConnectionError' in tb or 'SSLError' in tb):
                     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *pickle_git()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
-                elif ('pickle_slack' in tb or 'cache_slack' in tb) and ('500' in tb and 'Internal Server Error' in tb) or ('503' in tb and 'Service Unavailable' in tb) or ('504' in tb and 'GATEWAY_TIMEOUT' in tb):
+                elif ('pickle_slack' in tb or 'cache_slack' in tb) and ('500' in tb and 'Internal Server Error' in tb) or ('503' in tb and 'Service' in tb and 'Unavailable' in tb) or ('504' in tb and 'GATEWAY_TIMEOUT' in tb):
                     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *pickle_slack()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
                 elif ('pickle_dropbox' in tb or 'cache_dropbox' in tb) and ('502' in tb and 'Bad Gateway' in tb) or ('503' in tb and 'Service Unavailable' in tb):
                     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *pickle_dropbox()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
