@@ -111,29 +111,29 @@ def get_folder_size(path):
 
 
 def get_backup_stat():
-    ver = '%s\t' % len(glob.glob('%s/data/news_img/*' % MEDIA_ROOT))
-    ver += humansize(get_folder_size('%s/data/news_img/*' % MEDIA_ROOT)) + '\t'
-    ver += '%s\t' % len(glob.glob('%s/data/ppl_img/*' % MEDIA_ROOT))
-    ver += humansize(get_folder_size('%s/data/ppl_img/*' % MEDIA_ROOT)) + '\t'
-    ver += '%s\t' % sum([len(glob.glob('%s/data/pub_pdf/*' % MEDIA_ROOT)), len(glob.glob('%s/data/pub_img/*' % MEDIA_ROOT)), len(glob.glob('%s/data/pub_data/*' % MEDIA_ROOT))])
-    ver += humansize(sum([get_folder_size('%s/data/pub_pdf/*' % MEDIA_ROOT), get_folder_size('%s/data/pub_img/*' % MEDIA_ROOT), get_folder_size('%s/data/pub_data/*' % MEDIA_ROOT)])) + '\t'
-    ver += '%s\t' % sum([len(glob.glob('%s/data/rot_ppt/*' % MEDIA_ROOT)), len(glob.glob('%s/data/rot_data/*' % MEDIA_ROOT))])
-    ver += humansize(sum([get_folder_size('%s/data/rot_ppt/*' % MEDIA_ROOT), get_folder_size('%s/data/rot_data/*' % MEDIA_ROOT)])) + '\t'
-    ver += '%s\t' % len(glob.glob('%s/data/spe_ppt/*' % MEDIA_ROOT))
-    ver += humansize(get_folder_size('%s/data/spe_ppt/*' % MEDIA_ROOT)) + '\t'
-
-    ver += humansize(os.path.getsize('%s/backup/backup_mysql.tgz' % MEDIA_ROOT)) + '\t'
-    ver += humansize(os.path.getsize('%s/backup/backup_static.tgz' % MEDIA_ROOT)) + '\t'
-    ver += humansize(os.path.getsize('%s/backup/backup_apache.tgz' % MEDIA_ROOT)) + '\t'
-    ver += humansize(os.path.getsize('%s/backup/backup_config.tgz' % MEDIA_ROOT)) + '\t'
-    ver += humansize(get_folder_size('%s/backup/*.*gz' % MEDIA_ROOT)) + '\t'
-    ver += '%s\t%s\t%s\t%s\t' % (os.path.join(MEDIA_ROOT, 'backup/backup_mysql.tgz'), os.path.join(MEDIA_ROOT, 'backup/backup_static.tgz'), os.path.join(MEDIA_ROOT, 'backup/backup_apache.tgz'), os.path.join(MEDIA_ROOT, 'backup/backup_config.tgz'))
+    ver = {
+        'news': [len(glob.glob('%s/data/news_img/*' % MEDIA_ROOT)), humansize(get_folder_size('%s/data/news_img/*' % MEDIA_ROOT))],
+        'ppl': [len(glob.glob('%s/data/ppl_img/*' % MEDIA_ROOT)), humansize(get_folder_size('%s/data/ppl_img/*' % MEDIA_ROOT))],
+        'pub': [sum([len(glob.glob('%s/data/pub_pdf/*' % MEDIA_ROOT)), len(glob.glob('%s/data/pub_img/*' % MEDIA_ROOT)), len(glob.glob('%s/data/pub_data/*' % MEDIA_ROOT))]), humansize(sum([get_folder_size('%s/data/pub_pdf/*' % MEDIA_ROOT), get_folder_size('%s/data/pub_img/*' % MEDIA_ROOT), get_folder_size('%s/data/pub_data/*' % MEDIA_ROOT)]))],
+        'roton': [sum([len(glob.glob('%s/data/rot_ppt/*' % MEDIA_ROOT)), len(glob.glob('%s/data/rot_data/*' % MEDIA_ROOT))]), humansize(sum([get_folder_size('%s/data/rot_ppt/*' % MEDIA_ROOT), get_folder_size('%s/data/rot_data/*' % MEDIA_ROOT)]))],
+        'arxiv': [len(glob.glob('%s/data/spe_ppt/*' % MEDIA_ROOT)), humansize(get_folder_size('%s/data/spe_ppt/*' % MEDIA_ROOT))],
+        'backup': {
+            'mysql': [os.path.join(MEDIA_ROOT, 'backup/backup_mysql.tgz'), humansize(os.path.getsize('%s/backup/backup_mysql.tgz' % MEDIA_ROOT))],
+            'data': [os.path.join(MEDIA_ROOT, 'backup/backup_static.tgz'), humansize(os.path.getsize('%s/backup/backup_static.tgz' % MEDIA_ROOT))],
+            'apache': [os.path.join(MEDIA_ROOT, 'backup/backup_apache.tgz'), humansize(os.path.getsize('%s/backup/backup_apache.tgz' % MEDIA_ROOT))],
+            'config': [os.path.join(MEDIA_ROOT, 'backup/backup_config.tgz'), humansize(os.path.getsize('%s/backup/backup_config.tgz' % MEDIA_ROOT))],
+            'all': humansize(get_folder_size('%s/backup/*.*gz' % MEDIA_ROOT)),
+        },
+        'gdrive': []
+    }
 
     gdrive_dir = 'echo'
     if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
-    ver += '~|~'.join(subprocess.Popen("%s && drive list -q \"title contains '%s_' and title contains '.tgz'\"" % (gdrive_dir, env('SERVER_NAME')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:])
+    gdrive = subprocess.Popen("%s && drive list -q \"title contains '%s_' and title contains '.tgz'\"" % (gdrive_dir, env('SERVER_NAME')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:]
+    for i in range(0, len(gdrive), 6):
+        ver['gdrive'].append([gdrive[i + 1], '%s %s' % (gdrive[i + 2], gdrive[i + 3]), '%s %s' % (gdrive[i + 4], gdrive[i + 5])])
 
-    open(os.path.join(MEDIA_ROOT, 'cache/stat_backup.txt'), 'w').write(ver)
+    open(os.path.join(MEDIA_ROOT, 'cache/stat_backup.json'), 'w').write(simplejson.dumps(ver, indent=' ' * 4, sort_keys=True))
     subprocess.Popen('rm %s' % os.path.join(MEDIA_ROOT, 'data/temp.txt'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 

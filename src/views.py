@@ -458,9 +458,8 @@ def get_user(request):
     return HttpResponse(simplejson.dumps({'user':user}, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 def get_js(request):
-    lines = open('%s/cache/stat_sys.txt' % MEDIA_ROOT, 'r').readlines()
-    lines = ''.join(lines).split('\t')
-    json = {'jquery':lines[11], 'bootstrap':lines[12], 'swfobj':lines[16], 'fullcal':lines[17], 'moment':lines[18]}
+    stats = simplejson.load(open('%s/cache/stat_sys.json' % MEDIA_ROOT, 'r'))
+    json = {'jquery':stats['jquery'], 'bootstrap':stats['bootstrap'], 'swfobj':stats['swfobj'], 'fullcal':stats['fullcal'], 'moment':stats['moment']}
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 
