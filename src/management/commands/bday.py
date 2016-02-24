@@ -1,5 +1,4 @@
 import datetime
-import subprocess
 import sys
 import time
 import traceback
@@ -38,7 +37,7 @@ class Command(BaseCommand):
             if ids and (not DEBUG):
                 msg_handles.append( ('#general', '', [{"fallback":'BDay', "mrkdwn_in": ["text"], "color":"ff912e", "text":'*Happy Birthday* to _%s_! %s' % (' and '.join(names), ', '.join( ['<@' + id + '>' for id in ids] ))}]) )
 
-        except:
+        except Exception:
             send_error_slack(traceback.format_exc(), 'Birthday Wishes', ' '.join(sys.argv), 'log_cron_bday.log')
             self.stdout.write("Finished with \033[41mERROR\033[0m!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))

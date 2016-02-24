@@ -41,7 +41,7 @@ class Command(BaseCommand):
             for msg in msgs:
                 msg.delete()
 
-        except:
+        except Exception:
             send_error_slack(traceback.format_exc(), 'Weekly Error Report', ' '.join(sys.argv), 'log_cron_report.log')
             self.stdout.write("Finished with \033[41mERROR\033[0m!")
             self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))

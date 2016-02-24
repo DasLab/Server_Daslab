@@ -586,7 +586,7 @@ def cache_schedule():
 
         subprocess.check_call("rm %s/cache/schedule.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return {'last':last, 'this':this, 'next':next, 'tp':tp, 'wd':week_day}
-    except:
+    except Exception:
         send_error_slack(traceback.format_exc(), 'Parse Schedule Spreadsheet', 'cache_schedule', 'log_cron_cache.log')
 
 def dash_schedule(request):
@@ -626,7 +626,7 @@ def cache_duty():
                     ppls[row[1].lower()][job] = (row[2], row[3])
         subprocess.check_call("rm %s/cache/duty.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return {'jobs':jobs, 'ppls':ppls}
-    except:
+    except Exception:
         send_error_slack(traceback.format_exc(), 'Parse Duty Spreadsheet', 'cache_duty', 'log_cron_cache.log')
 
 def dash_duty(request):
@@ -740,7 +740,7 @@ def cache_cal():
 
         subprocess.check_call("rm %s/cache/calendar.ics" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return simplejson.dumps(data, sort_keys=True, indent=' ' * 4)    
-    except:
+    except Exception:
         send_error_slack(traceback.format_exc(), 'Parse Calendar ICS', 'cache_cal', 'log_cron_cache.log')
 
         if os.path.exists('%s/cache/calendar.pickle' % MEDIA_ROOT):

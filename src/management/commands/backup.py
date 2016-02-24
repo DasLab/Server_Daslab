@@ -26,7 +26,7 @@ class Command(BaseCommand):
             subprocess.check_call('mysqldump --quick %s -u %s -p%s > %s/backup/backup_mysql' % (env.db()['NAME'], env.db()['USER'], env.db()['PASSWORD'], MEDIA_ROOT), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             tarfile.open('%s/backup/backup_mysql.tgz' % MEDIA_ROOT, 'w:gz').add('%s/backup/backup_mysql' % MEDIA_ROOT, arcname='backup_mysql')
             os.remove('%s/backup/backup_mysql' % MEDIA_ROOT)
-        except:
+        except Exception:
             send_error_slack(traceback.format_exc(), 'Backup MySQL Database', ' '.join(sys.argv), 'log_cron_backup.log')
             flag = True
         else:
@@ -38,7 +38,7 @@ class Command(BaseCommand):
         self.stdout.write("#2: Backing up static files...")
         try:
             tarfile.open('%s/backup/backup_static.tgz' % MEDIA_ROOT, 'w:gz').add('%s/data' % MEDIA_ROOT, arcname='data')
-        except:
+        except Exception:
             send_error_slack(traceback.format_exc(), 'Backup Static Files', ' '.join(sys.argv), 'log_cron_backup.log')
             flag = True
         else:
@@ -51,7 +51,7 @@ class Command(BaseCommand):
         try:
             pass
             # tarfile.open('%s/backup/backup_apache2.tgz' % MEDIA_ROOT, 'w:gz').add('/etc/apache2', arcname='apache2')
-        except:
+        except Exception:
             send_error_slack(traceback.format_exc(), 'Backup Apache2 Settings', ' '.join(sys.argv), 'log_cron_backup.log')
             flag = True
         else:
@@ -63,7 +63,7 @@ class Command(BaseCommand):
         self.stdout.write("#4: Backing up config settings...")
         try:
             tarfile.open('%s/backup/backup_config.tgz' % MEDIA_ROOT, 'w:gz').add('%s/config' % MEDIA_ROOT, arcname='config')
-        except:
+        except Exception:
             send_error_slack(traceback.format_exc(), 'Backup Config Settings', ' '.join(sys.argv), 'log_cron_backup.log')
             flag = True
         else:

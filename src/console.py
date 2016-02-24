@@ -72,7 +72,7 @@ def find_slack_id(name):
     (sunet_id, who_id) = ('none', '')
     for resp in users:
         if resp.has_key('is_bot') and resp['is_bot']: continue
-        if resp['profile']['real_name'][:len(name)].lower() == name.lower():
+        if resp['profile']['real_name'].lower().startswith(name.lower()):
             if sunet_id != 'none': 
                 sunet_id = 'ambiguous'
                 break

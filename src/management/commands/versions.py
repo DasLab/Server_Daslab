@@ -135,12 +135,12 @@ class Command(BaseCommand):
                 mem_str = subprocess.Popen('free -h', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split('\n')
                 mem_str = [x for x in mem_str[2].split(' ') if x]
                 mem_avail = mem_str[-1]
-                if mem_avail[-1] == 'G': 
+                if mem_avail.endswith('G'): 
                     mem_avail = str(float(mem_avail[:-1]) * 1024) + ' M'
                 else:
                     mem_avail = mem_avail[:-1] + ' M'
                 mem_used = mem_str[-2]
-                if mem_used[-1] == 'G': 
+                if mem_used.endswith('G'): 
                     mem_used = str(float(mem_used[:-1]) * 1024) + ' M'
                 else:
                     mem_used = mem_used[:-1] + ' M'
@@ -196,7 +196,7 @@ class Command(BaseCommand):
                 ver_txt = "$(tput setab 1) ubuntu %s | linux %s | screen %s | bash %s | ssh %s $(tput sgr 0)\n$(tput setab 172) gcc %s | make %s | cmake %s | ninja %s |$(tput sgr 0)$(tput setab 15)$(tput setaf 16) mysql %s | django %s $(tput sgr 0)\n$(tput setab 11)$(tput setaf 16) python %s | java %s | perl %s | php %s | ruby %s | go %s $(tput sgr 0)\n$(tput setab 2) coreutils %s | wget %s | tar %s | curl %s | gdrive %s | pandoc %s $(tput sgr 0)\n$(tput setab 22) tkinter %s | virtualenv %s | setuptools %s | requests %s | simplejson %s $(tput sgr 0)\n$(tput setab 39) jquery %s | bootstrap %s | swfobject %s | moment %s | fullcalendar %s $(tput sgr 0)\n$(tput setab 20) crontab %s | environ %s | suit %s | adminplus %s | filemanager %s $(tput sgr 0)\n$(tput setab 55) boto %s | pygithub %s | slacker %s | dropbox %s | icalendar %s | gviz %s $(tput sgr 0)\n$(tput setab 171) apache %s | wsgi %s | webauth %s | openssl %s | wallet %s | kerberos %s $(tput sgr 0)\n$(tput setab 8) git %s | pip %s | nano %s | imagemagick %s | htop %s | awscli %s $(tput sgr 0)\n\n\n$(tput setab 15)$(tput setaf 16) Das Lab Website Server $(tput sgr 0)\n$(tput setab 15)$(tput setaf 16) daslab.stanford.edu / $(tput setaf 1)52$(tput setaf 16).$(tput setaf 2)25$(tput setaf 16).$(tput setaf 172)214$(tput setaf 16).$(tput setaf 4)40 $(tput sgr 0)\n" % (ver['ubuntu'], ver['linux'], ver['screen'], ver['bash'], ver['ssh'], ver['gcc'], ver['make'], ver['cmake'], ver['ninja'], ver['mysql'], ver['django'], ver['python'], ver['java'], ver['perl'], ver['php'], ver['ruby'], ver['go'], ver['coreutils'], ver['wget'], ver['tar'], ver['curl'], ver['gdrive'], ver['pandoc'], ver['tkinter'], ver['virtualenv'], ver['setuptools'], ver['requests'], ver['simplejson'], ver['jquery'], ver['bootstrap'], ver['swfobj'], ver['moment'], ver['fullcal'], ver['django_crontab'], ver['django_environ'], ver['django_suit'], ver['django_adminplus'], ver['django_filemanager'], ver['boto'], ver['pygithub'], ver['slacker'], ver['dropbox'], ver['icalendar'], ver['gviz_api'], ver['apache'], ver['mod_wsgi'], ver['mod_webauth'], ver['openssl'], ver['wallet'], ver['kerberos'], ver['git'], ver['pip'], ver['nano'], ver['imagemagick'], ver['htop'], ver['aws_cli'])
                 subprocess.check_call('echo "%s" > %s/cache/sys_ver.txt' % (ver_txt, MEDIA_ROOT), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-        except:
+        except Exception:
             send_error_slack(traceback.format_exc(), 'Update System Versions', ' '.join(sys.argv), 'log_cron_version.log')
 
             self.stdout.write("Finished with \033[41mERROR\033[0m!")

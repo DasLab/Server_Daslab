@@ -319,7 +319,7 @@ def user_upload(request):
                 tmp.save()
                 send_mail('{%s} SYSTEM: Archive Upload Notice' % env('SERVER_NAME'), 'This is an automatic email notification for a user uploaded Presentation Archive item.\n\nThe description is:\nTitle:\t%s\nDate:\t%s\nPresenter:\t%s\nFile:\t%s\nLink:\t%s\n\nUploaded by:%s\n\n%s Website Admin\n' % (em_title, em_date, em_presenter, em_file, em_link, request.user.username, env('SERVER_NAME')), EMAIL_HOST_USER, [EMAIL_NOTIFY])
                 messages = 'success'
-            except:
+            except Exception:
                 print traceback.format_exc()
                 messages = 'invalid'
         else:
@@ -419,7 +419,7 @@ def user_dash(request):
         user.type = user_type
 
         json = {'id':user.sunet_id, 'type':user.type, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'email':user.email, 'phone':user.phone, 'bday':user.bday, 'cap':user.more_info, 'status':user.year()}
-    except:
+    except Exception:
         if request.META.has_key('WEBAUTH_USER'):
             json = {'id':sunet_id, 'type':user_type}
         else:

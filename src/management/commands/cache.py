@@ -190,7 +190,7 @@ class Command(BaseCommand):
                 self.stdout.write("#6: Skip \033[94mSchedule Spreadsheet\033[0m...")
                 self.stdout.write("#7: Skip \033[94mDuty Spreadsheet\033[0m...")
                 self.stdout.write("#8: Skip \033[94mGoogle Calendar\033[0m...")
-        except:
+        except Exception:
             tb = traceback.format_exc()
             if IS_SLACK:
                 if ('pickle_git' in tb or 'cache_git' in tb) and ('ConnectionError' in tb or 'SSLError' in tb):

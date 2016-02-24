@@ -1,6 +1,4 @@
 from datetime import datetime, timedelta
-import pickle
-import subprocess
 import sys
 import time
 import traceback
@@ -45,7 +43,7 @@ class Command(BaseCommand):
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
          
         if options['interval']:
-            if options['interval'][0][-2:] == 'ly':
+            if options['interval'][0].endswith('ly'):
                 flag = options['interval'][0]
             else:
                 flag = options['interval'][0] + 'ly'
@@ -147,7 +145,7 @@ class Command(BaseCommand):
                 if BOT['SLACK']['DUTY']['QUARTER']['MSG_GIT']:
                     self.compose_msg(ppls[flag]['github'], 'Mailing, Slack, GitHub', flag, '')
 
-        except:
+        except Exception:
             print traceback.format_exc()
             send_error_slack(traceback.format_exc(), 'Send Duty Reminders', ' '.join(sys.argv), 'log_cron_duty.log')
             self.stdout.write("Finished with \033[41mERROR\033[0m!")

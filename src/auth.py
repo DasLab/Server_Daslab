@@ -25,7 +25,7 @@ class AutomaticAdminLoginMiddleware(object):
             try:
                 sunet_id = request.META['WEBAUTH_USER']
                 is_admin = (sunet_id in USER_GROUP().ADMIN)
-            except:
+            except Exception:
                 is_admin = False
                 # print traceback.format_exc()
 
@@ -41,7 +41,7 @@ class ExceptionUserInfoMiddleware(object):
             if request.user.is_authenticated():
                 request.META['USERNAME'] = str(request.user.username)
                 request.META['USER_EMAIL'] = str(request.user.email)
-        except:
+        except Exception:
             pass
 
 
