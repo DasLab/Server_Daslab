@@ -133,6 +133,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
 
     'src.auth.ExceptionUserInfoMiddleware',
     'src.auth.AutomaticAdminLoginMiddleware',

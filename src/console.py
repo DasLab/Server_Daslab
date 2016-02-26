@@ -107,16 +107,31 @@ def humansize(nbytes):
 
 
 def get_folder_size(path):
-    return sum(os.path.getsize(f) for f in glob.glob(path) if os.path.isfile(f))
+    total = 0
+    for f in glob.glob(path):
+        if os.path.isfile(f):
+            total += os.path.getsize(f)
+        else:
+            total += get_folder_size(f + '/*')
+    return total
+
+def get_folder_num(path):
+    total = 0
+    for f in glob.glob(path):
+        if os.path.isfile(f):
+            total += 1
+        else:
+            total += get_folder_num(f + '/*')
+    return total
 
 
 def get_backup_stat():
     ver = {
-        'news': [len(glob.glob('%s/data/news_img/*' % MEDIA_ROOT)), humansize(get_folder_size('%s/data/news_img/*' % MEDIA_ROOT))],
-        'ppl': [len(glob.glob('%s/data/ppl_img/*' % MEDIA_ROOT)), humansize(get_folder_size('%s/data/ppl_img/*' % MEDIA_ROOT))],
-        'pub': [sum([len(glob.glob('%s/data/pub_pdf/*' % MEDIA_ROOT)), len(glob.glob('%s/data/pub_img/*' % MEDIA_ROOT)), len(glob.glob('%s/data/pub_data/*' % MEDIA_ROOT))]), humansize(sum([get_folder_size('%s/data/pub_pdf/*' % MEDIA_ROOT), get_folder_size('%s/data/pub_img/*' % MEDIA_ROOT), get_folder_size('%s/data/pub_data/*' % MEDIA_ROOT)]))],
-        'roton': [sum([len(glob.glob('%s/data/rot_ppt/*' % MEDIA_ROOT)), len(glob.glob('%s/data/rot_data/*' % MEDIA_ROOT))]), humansize(sum([get_folder_size('%s/data/rot_ppt/*' % MEDIA_ROOT), get_folder_size('%s/data/rot_data/*' % MEDIA_ROOT)]))],
-        'arxiv': [len(glob.glob('%s/data/spe_ppt/*' % MEDIA_ROOT)), humansize(get_folder_size('%s/data/spe_ppt/*' % MEDIA_ROOT))],
+        'news': [get_folder_num('%s/data/news_img/*' % MEDIA_ROOT), humansize(get_folder_size('%s/data/news_img/*' % MEDIA_ROOT))],
+        'ppl': [get_folder_num('%s/data/news_img/*' % MEDIA_ROOT), humansize(get_folder_size('%s/data/ppl_img/*' % MEDIA_ROOT))],
+        'pub': [sum([get_folder_num('%s/data/pub_pdf/*' % MEDIA_ROOT), get_folder_num('%s/data/pub_img/*' % MEDIA_ROOT), get_folder_num('%s/data/pub_data/*' % MEDIA_ROOT)]), humansize(sum([get_folder_size('%s/data/pub_pdf/*' % MEDIA_ROOT), get_folder_size('%s/data/pub_img/*' % MEDIA_ROOT), get_folder_size('%s/data/pub_data/*' % MEDIA_ROOT)]))],
+        'roton': [sum([get_folder_num('%s/data/rot_ppt/*' % MEDIA_ROOT), get_folder_num('%s/data/rot_data/*' % MEDIA_ROOT)]), humansize(sum([get_folder_size('%s/data/rot_ppt/*' % MEDIA_ROOT), get_folder_size('%s/data/rot_data/*' % MEDIA_ROOT)]))],
+        'arxiv': [get_folder_num('%s/data/spe_ppt/*' % MEDIA_ROOT), humansize(get_folder_size('%s/data/spe_ppt/*' % MEDIA_ROOT))],
         'backup': {
             'mysql': [os.path.join(MEDIA_ROOT, 'backup/backup_mysql.tgz'), humansize(os.path.getsize('%s/backup/backup_mysql.tgz' % MEDIA_ROOT))],
             'data': [os.path.join(MEDIA_ROOT, 'backup/backup_static.tgz'), humansize(os.path.getsize('%s/backup/backup_static.tgz' % MEDIA_ROOT))],
