@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response
 
+import re
+import traceback
+
 from filemanager import FileManager
 
 from src.models import *
