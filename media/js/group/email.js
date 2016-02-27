@@ -1,8 +1,4 @@
 $(document).ready(function () {
-	$("#id_email_from").addClass("form-control").attr("placeholder", "Your Email...");
-	$("#id_email_subject").addClass("form-control").attr("placeholder", "What's up?");
-	$("#id_email_content").addClass("form-control").attr("placeholder", "Tell me more...").attr("rows", 5);
-
      $("#form_email_clear").on("click", function() {
         $("#id_email_from").val('');
         $("#id_email_subject").val('');

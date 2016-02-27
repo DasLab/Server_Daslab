@@ -1,6 +1,6 @@
 # from src.settings import env
 
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 # import os
 # import traceback
 

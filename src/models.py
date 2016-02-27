@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 from django import forms
 from django.utils.html import format_html
@@ -383,9 +382,9 @@ class UploadForm(forms.Form):
     upload_link = forms.CharField(required=False)
 
 class ContactForm(forms.Form):
-    phone = forms.IntegerField(required=True)
-    email = forms.EmailField(required=True)
-    bday = forms.CharField(required=True)
+    contact_phone = forms.IntegerField(required=True)
+    contact_email = forms.EmailField(required=True)
+    contact_bday = forms.CharField(required=True)
 
 class EmailForm(forms.Form):
     email_from = forms.EmailField(required=True)

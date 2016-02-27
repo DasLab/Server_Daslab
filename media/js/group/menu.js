@@ -15,10 +15,6 @@ function navbar_collapse() {
         $("#nav_logo").css("width", "auto");
     } else {
         $("#nav_toggle").show();
-        // $("#nav_time").hover(
-        //   function(){ $("#nav_meetings").fadeIn(); },
-        //   function(){ $("#nav_meetings").fadeOut(); }
-        // );
         $("#nav_external").hover(
           function(){ $("#nav_external_text").fadeIn(250).siblings().css("color", "#ff912e"); },
           function(){ $("#nav_external_text").fadeOut(250).siblings().css("color", "#fff"); }
@@ -232,27 +228,26 @@ $(document).ready(function () {
                 if (data.email) {
                     $("#card_user_email").html(data.email);
                     $("#card_user_email").attr("href", "mailto:" + data.email);
-                    $("#form_change_email").val(data.email);
+                    $("#id_contact_email").val(data.email);
                 } else {
-                    $("#form_change_email").attr("disabled", "disabled");
+                    $("#id_contact_email").attr("disabled", "disabled");
                 }
                 if (data.phone) {
                     $("#card_user_phone").html(data.phone);
-                    $("#form_change_phone").val(data.phone.replace(/\D+/g, ''));
+                    $("#id_contact_phone").val(data.phone.replace(/\D+/g, ''));
                 } else{
-                    $("#form_change_phone").attr("disabled", "disabled");
+                    $("#id_contact_phone").attr("disabled", "disabled");
                     $("#form_change_submit").attr("disabled", "disabled");
                 }
                 if (data.bday) {
-                    $("#form_change_bday").val(data.bday);
+                    $("#id_contact_bday").val(data.bday);
                 } else{
-                    $("#form_change_bday").attr("disabled", "disabled");
+                    $("#id_contact_bday").attr("disabled", "disabled");
                 }
             }
         }
     });
 
-    // $('.left-nav > ul > li > ul > li > a[href="/admin/aws/"]').attr("disabled", "disabled").css("text-decoration", "line-through").attr("href", "");
 });
 
 

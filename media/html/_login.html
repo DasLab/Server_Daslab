@@ -1,4 +1,5 @@
 {% extends "media/html/_external.html" %}
+{% load widget_tweaks %}
 
 {% block header %}
   <script type="text/javascript">
@@ -19,17 +20,17 @@
 	        	<div style="margin-top:25px; width:300px;" class="center-block text-center">
 					<div class="input-group">
 						<span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-						{{form.username}}
+						{% render_field form.username class+="form-control" placeholder="Username" %}
 		            </div>
 	            </div>
 	        	<div style="margin-top:20px; width:300px;" class="center-block text-center">
 					<div class="input-group">
 						<span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-						{{form.password}}
+						{% render_field form.password class+="form-control" placeholder="Password" %}
 		            </div>
 	            </div>
 	            <p style="margin-top:20px;">
-	            	{{form.flag}}
+	            	{% render_field form.flag class="hidden" %}
 					<input type="submit" value="&nbsp;&nbsp;Sign In&nbsp;&nbsp;" class="btn btn-primary clickable"/>
 					&nbsp;&nbsp;
 					<button type="button" class="btn btn-default" onclick="location.href='/'">&nbsp;&nbsp;Cancel&nbsp;&nbsp;</button>
@@ -64,9 +65,6 @@
 		$("#DasICON").css({"top": "478px", "display": "inline"});
 		{% endif %}
 
-		$("#id_username").addClass("form-control").attr("placeholder", "Username");
-		$("#id_password").addClass("form-control").attr("placeholder", "Password");
-		$("#id_flag").css("display", "none");
 		if ($("#id_flag").val() == 'Admin') {
 			$("#form_header").html("This site is for internal administration.");
 		} else {

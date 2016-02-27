@@ -379,6 +379,10 @@ h1.section > span.num {
   color: #ff0;
 }
 
+.hidden {
+  display: none;
+}
+
 .comment {
   color: #080;
   font-style: italic;

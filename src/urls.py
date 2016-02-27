@@ -1,21 +1,20 @@
 from django.conf.urls import include, url, handler400, handler403, handler404, handler500
-# from django.conf.urls.static import static
 from django.contrib import admin
-# from django.contrib.auth.views import login
 from django.views.generic import RedirectView
 from django.views.static import serve
 
 from adminplus.sites import AdminSitePlus
 from filemanager import path_end
 
-from src.settings import MEDIA_ROOT, STATIC_ROOT, STATIC_URL, DEBUG, IS_MAINTENANCE, env
+from src.settings import MEDIA_ROOT, DEBUG, IS_MAINTENANCE, env
 from src import views
+from src import user
 
 admin.site = AdminSitePlus()
 admin.site.index_title = '%s Administration' % env('SERVER_NAME')
 admin.autodiscover()
-admin.site.login = views.user_login
-admin.site.logout = views.user_logout
+admin.site.login = user.user_login
+admin.site.logout = user.user_logout
 
 
 if IS_MAINTENANCE:
@@ -50,10 +49,10 @@ else:
         url(r'^groups/?$', RedirectView.as_view(url='/group/', permanent=True)),
         url(r'^admin$', RedirectView.as_view(url='/admin/', permanent=True)),
 
-        url(r'^signin/?$', views.user_login),
+        url(r'^signin/?$', user.user_login),
         url(r'^logout/?$', RedirectView.as_view(url='/index/', permanent=True)),
-        url(r'^signout/?$', views.user_logout),
-        url(r'^password/?$', views.user_password),
+        url(r'^signout/?$', user.user_logout),
+        url(r'^password/?$', user.user_password),
         url(r'^get_admin/?$', views.get_admin),
         url(r'^get_js/?$', views.get_js),
 
@@ -66,9 +65,9 @@ else:
         url(r'^group/calendar/?$', views.lab_calendar),
         url(r'^group/gdocs/?$', views.lab_resource_gdocs),
         url(r'^group/archive/?$', views.lab_resource_archive),
-        url(r'^group/archive/upload/?$', views.user_upload),
+        url(r'^group/archive/upload/?$', user.user_upload),
         url(r'^group/contact/?$', views.lab_resource_contact),
-        url(r'^group/contact/update/?$', views.user_contact),
+        url(r'^group/contact/update/?$', user.user_contact),
         url(r'^group/aws/?$', views.lab_server_aws),
         url(r'^group/ga/?$', views.lab_server_ga),
         url(r'^group/bot/?$', views.lab_service_bot),
@@ -77,7 +76,7 @@ else:
         url(r'^group/dropbox/?$', views.lab_service_dropbox),
         url(r'^group/misc/?$', views.lab_misc),
         url(r'^group/error/?$', views.lab_error),
-        url(r'^group/email_admin/?$', views.user_email),
+        url(r'^group/email_admin/?$', user.user_email),
         url(r'^group/get_user/?$', views.get_user),
 
         url(r'^group/aws_dash/?$', views.aws_dash),
@@ -100,10 +99,10 @@ else:
         url(r'^error/500/?$', views.error500),
         url(r'^error/503/?$', views.error503),
 
-        url(r'^admin/browse/' + path_end, views.browse),
+        url(r'^admin/browse/' + path_end, user.browse),
         url(r'^admin/', include(admin.site.urls)),
         url(r'^robots.txt$', serve, kwargs={'path': 'robots.txt', 'document_root': MEDIA_ROOT}),
-    ] #+ static(STATIC_URL, document_root=STATIC_ROOT)
+    ]
 
     if DEBUG: urlpatterns.append(url(r'^test/$', views.test))
 

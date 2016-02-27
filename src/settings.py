@@ -103,14 +103,13 @@ LOGGING = {
 
 # Application definition
 INSTALLED_APPS = (
-    # 'sslserver',
     'django_crontab',
 
     'filemanager',
     'adminplus',
     'suit',
-    # 'bootstrap_admin',
-    # 'django_admin_bootstrapped',
+    'widget_tweaks',
+
     'django.contrib.admin.apps.SimpleAdminConfig',
     # 'django.contrib.admin',
     'django.contrib.auth',

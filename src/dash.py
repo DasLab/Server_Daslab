@@ -1,14 +1,11 @@
-from django.http import HttpResponse
-
 from collections import defaultdict
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 import operator
 import os
 import pickle
 import pytz
 import simplejson
 import subprocess
-# import sys
 import time
 import traceback
 

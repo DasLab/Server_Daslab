@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.forms import ModelForm, widgets, DateField, DateInput
 from django.utils.html import format_html
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -9,8 +8,6 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.core.management import call_command
 
-# from suit.widgets import AutosizedTextarea
-# from suit.widgets import EnclosedInput, SuitDateWidget
 
 from src.console import *
 from src.dash import *
