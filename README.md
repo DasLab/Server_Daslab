@@ -16,6 +16,7 @@ django-crontab >= 0.7.0
 django-environ >= 0.4.0
 django-filemanager == 0.0.2
 django-suit >= 0.2.15
+django-widget-tweaks >= 1.4.1
 dropbox >= 4.0
 gviz-api.py == 1.8.2
 icalendar >= 3.9.1
