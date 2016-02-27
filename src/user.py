@@ -2,6 +2,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.shortcuts import render_to_response
 
 import re
