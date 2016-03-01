@@ -144,11 +144,11 @@ def apache_stat(request):
     return HttpResponse(restyle_apache(), content_type='application/json')
 
 def apache(request):
-    return render_to_response(PATH.HTML_PATH['admin_apache'], {'host_name':env('SSL_HOST')}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_apache'], {'host_name': env('SSL_HOST')}, context_instance=RequestContext(request))
 
 
 def aws(request):
-    return render_to_response(PATH.HTML_PATH['admin_aws'], {'timezone':TIME_ZONE}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_aws'], {'timezone': TIME_ZONE}, context_instance=RequestContext(request))
 
 def aws_stat(request):
     json = aws_stats(request)
@@ -156,7 +156,7 @@ def aws_stat(request):
     return HttpResponse(json, content_type='application/json')
 
 def ga(request):
-    return render_to_response(PATH.HTML_PATH['admin_ga'], {'ga_url':GA['LINK_URL']}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_ga'], {'ga_url': GA['LINK_URL']}, context_instance=RequestContext(request))
 
 def ga_stat(request):
     json = ga_stats(request)
@@ -164,7 +164,7 @@ def ga_stat(request):
     return HttpResponse(json, content_type='application/json')
 
 def git(request):
-    return render_to_response(PATH.HTML_PATH['admin_git'], {'timezone':TIME_ZONE, 'git_repo':GIT['REPOSITORY']}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_git'], {'timezone': TIME_ZONE, 'git_repo': GIT['REPOSITORY']}, context_instance=RequestContext(request))
 
 def git_stat(request):
     json = git_stats(request)
@@ -175,7 +175,7 @@ def ssl_dash(request):
     return HttpResponse(dash_ssl(request), content_type='application/json')
 
 def group_dash(request):
-    json = simplejson.dumps({'admin':GROUP.ADMIN, 'group':GROUP.GROUP, 'alumni':GROUP.ALUMNI, 'roton':GROUP.ROTON, 'other':GROUP.OTHER}, sort_keys=True, indent=' ' * 4)
+    json = simplejson.dumps({'admin': GROUP.ADMIN, 'group': GROUP.GROUP, 'alumni': GROUP.ALUMNI, 'roton': GROUP.ROTON, 'other': GROUP.OTHER}, sort_keys=True, indent=' ' * 4)
     return HttpResponse(json, content_type='application/json')
 
 def dash_dash(request):
@@ -187,7 +187,7 @@ def dash_dash(request):
     t_cal = format_dash_ts('calendar.pickle', BOT['CACHE']['INTERVAL_30'])
     t_sch = format_dash_ts('schedule.pickle', BOT['CACHE']['INTERVAL_30'])
     t_duty = format_dash_ts('duty.pickle', BOT['CACHE']['INTERVAL_30'])
-    json = {'t_aws':t_aws, 't_ga':t_ga, 't_git':t_git, 't_slack':t_slack, 't_dropbox':t_dropbox, 't_cal':t_cal, 't_sch':t_sch, 't_duty':t_duty}
+    json = {'t_aws': t_aws, 't_ga': t_ga, 't_git': t_git, 't_slack': t_slack, 't_dropbox': t_dropbox, 't_cal': t_cal, 't_sch': t_sch, 't_duty': t_duty}
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 def dash_stat(request):
@@ -208,7 +208,7 @@ def backup(request):
         flag = set_backup_form(request)
 
     form = BackupForm(initial=get_backup_form())
-    return render_to_response(PATH.HTML_PATH['admin_backup'], {'form':form, 'flag':flag, 'email':EMAIL_HOST_USER}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_backup'], {'form': form, 'flag': flag, 'email': EMAIL_HOST_USER}, context_instance=RequestContext(request))
 
 def bot(request):
     flag = -1
@@ -216,7 +216,7 @@ def bot(request):
         flag = set_bot_form(request)
 
     form = BotSettingForm(initial=get_bot_form())
-    return render_to_response(PATH.HTML_PATH['admin_bot'], {'form':form, 'flag':flag, 'BOT':BOT}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['admin_bot'], {'form': form, 'flag': flag, 'BOT': BOT}, context_instance=RequestContext(request))
 
 def dir(request):
     return render_to_response(PATH.HTML_PATH['admin_dir'], {}, context_instance=RequestContext(request))
@@ -225,7 +225,7 @@ def export(request):
     if request.method == 'POST':
         return export_citation(request)
     else:
-        return render_to_response(PATH.HTML_PATH['admin_export'], {'form':ExportForm()}, context_instance=RequestContext(request))
+        return render_to_response(PATH.HTML_PATH['admin_export'], {'form': ExportForm()}, context_instance=RequestContext(request))
 
 
 def man(request):

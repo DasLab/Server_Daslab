@@ -148,15 +148,13 @@ class Command(BaseCommand):
             ver['_cpu']= cpu.replace(' ', '').split('/')
 
             ver['_path'] = {
-                'root' : MEDIA_ROOT,
+                'root': MEDIA_ROOT,
                 'data': MEDIA_ROOT + '/data',
                 'media': MEDIA_ROOT + '/media'
             }
 
-            gdrive_dir = 'echo'
-            if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
-            prefix = ''
-            if DEBUG: prefix = '_DEBUG'
+            gdrive_dir = 'echo' if DEBUG else  'cd %s' % APACHE_ROOT
+            prefix = '_DEBUG' if DEBUG else ''
             ver['_drive'] = subprocess.Popen("%s && drive quota | awk '{ printf $2 \" G\t\"}'" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split('\t')
 
             if not DEBUG:
@@ -204,7 +202,7 @@ class Command(BaseCommand):
             sys.exit(1)
 
         if (not DEBUG) and BOT['SLACK']['ADMIN']['MSG_VERSION']:
-            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled weekly *Version* finished @ _%s_\n' % time.ctime()}])
+            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'SUCCESS', "mrkdwn_in": ["text"], "color": "good", "text": '*SUCCESS*: Scheduled weekly *Version* finished @ _%s_\n' % time.ctime()}])
         self.stdout.write("Time elapsed: %.1f s.\n" % (time.time() - t))
         self.stdout.write("\033[92mSUCCESS\033[0m: \033[94mVersions\033[0m recorded in cache/stat_sys.txt.")
         self.stdout.write("All done successfully!")

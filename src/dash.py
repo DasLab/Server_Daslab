@@ -23,7 +23,7 @@ from src.settings import *
 
 def cache_aws(request):
     if request['qs'] == 'init':
-        dict_aws = {'ec2':[], 'elb':[], 'ebs':[], 'table':[]}
+        dict_aws = {'ec2': [], 'elb': [], 'ebs': [], 'table': []}
         conn = boto.ec2.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
 
         resvs = conn.get_only_instances()
@@ -37,13 +37,13 @@ def cache_aws(request):
                 avg = avg / len(data)
             name = ''
             if resv.tags.has_key('Name'): name = resv.tags['Name']
-            dict_aws['ec2'].append({'name':name, 'type':resv.instance_type, 'dns':resv.dns_name, 'status':resv.state_code, 'arch':resv.architecture, 'region':resv.placement, 'credit': '%.1f' % avg, 'id':resv.id})
+            dict_aws['ec2'].append({'name': name, 'type': resv.instance_type, 'dns': resv.dns_name, 'status': resv.state_code, 'arch': resv.architecture, 'region': resv.placement, 'credit':  '%.1f' % avg, 'id': resv.id})
 
         resvs = conn.get_all_volumes()
         for i, resv in enumerate(resvs):
             name = ''
             if resv.tags.has_key('Name'): name = resv.tags['Name']
-            dict_aws['ebs'].append({'name':name, 'size':resv.size, 'type':resv.type, 'region':resv.zone, 'encrypted':resv.encrypted, 'status':resv.status, 'id':resv.id})
+            dict_aws['ebs'].append({'name': name, 'size': resv.size, 'type': resv.type, 'region': resv.zone, 'encrypted': resv.encrypted, 'status': resv.status, 'id': resv.id})
 
         conn = boto.ec2.elb.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
         resvs = conn.get_all_load_balancers()
@@ -55,7 +55,7 @@ def cache_aws(request):
                 if d[u'Maximum'] < 1: 
                     status = False
                     break
-            dict_aws['elb'].append({'name':resv.name, 'dns':resv.dns_name, 'region': ', '.join(resv.availability_zones), 'status':status})
+            dict_aws['elb'].append({'name': resv.name, 'dns': resv.dns_name, 'region': ', '.join(resv.availability_zones), 'status': status})
             
             if (not status) and BOT['SLACK']['ADMIN']['MSG_AWS_WARN']:
                 last_status = False
@@ -70,7 +70,7 @@ def cache_aws(request):
                     result = dash_duty(0)
                     ppls = result['ppls']
                     (who, _) = find_slack_id(ppls['monthly']['amazon'][0])
-                    send_notify_slack('@' + who, '', [{"fallback":'AWS WARNING', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`WARNING`*: AWS ELB Server `%s` has *NO* healthy host! @ _%s_\n' % (resv.name, time.ctime())}])
+                    send_notify_slack('@' + who, '', [{"fallback": 'AWS WARNING', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`WARNING`*: AWS ELB Server `%s` has *NO* healthy host! @ _%s_\n' % (resv.name, time.ctime())}])
 
 
         dict_aws['ec2'] = sorted(dict_aws['ec2'], key=operator.itemgetter(u'name'))
@@ -80,11 +80,11 @@ def cache_aws(request):
         for i in range(max(len(dict_aws['ec2']), len(dict_aws['elb']), len(dict_aws['ebs']))):
             temp = {}
             if i < len(dict_aws['ec2']):
-                temp.update({'ec2': {'name':dict_aws['ec2'][i]['name'], 'status':dict_aws['ec2'][i]['status'], 'id':dict_aws['ec2'][i]['id']}})
+                temp.update({'ec2': {'name': dict_aws['ec2'][i]['name'], 'status': dict_aws['ec2'][i]['status'], 'id': dict_aws['ec2'][i]['id']}})
             if i < len(dict_aws['ebs']):
-                temp.update({'ebs': {'name':dict_aws['ebs'][i]['name'], 'status':dict_aws['ebs'][i]['status'], 'id':dict_aws['ebs'][i]['id']}})
+                temp.update({'ebs': {'name': dict_aws['ebs'][i]['name'], 'status': dict_aws['ebs'][i]['status'], 'id': dict_aws['ebs'][i]['id']}})
             if i < len(dict_aws['elb']):
-                temp.update({'elb': {'name':dict_aws['elb'][i]['name'], 'status':dict_aws['elb'][i]['status']}})
+                temp.update({'elb': {'name': dict_aws['elb'][i]['name'], 'status': dict_aws['elb'][i]['status']}})
             dict_aws['table'].append(temp)
         return simplejson.dumps(dict_aws, sort_keys=True, indent=' ' * 4)
     else:
@@ -94,20 +94,20 @@ def cache_aws(request):
 
         conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
         if tp in ['ec2', 'elb', 'ebs']:
-            args = {'period':3600, 'start_time':datetime.utcnow() - timedelta(days=1), 'end_time':datetime.utcnow()}
+            args = {'period': 3600, 'start_time': datetime.utcnow() - timedelta(days=1), 'end_time': datetime.utcnow()}
         else:
             return error400(request)
 
         if qs == 'lat':
-            args.update({'metric':['Latency'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Seconds', 'calc_rate':False})
+            args.update({'metric': ['Latency'], 'namespace': 'AWS/ELB', 'cols': ['Maximum'], 'dims': {}, 'unit': 'Seconds', 'calc_rate': False})
         elif qs == 'req':
-            args.update({'metric':['RequestCount'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+            args.update({'metric': ['RequestCount'], 'namespace': 'AWS/ELB', 'cols': ['Sum'], 'dims': {}, 'unit': 'Count', 'calc_rate': False})
         elif qs == 'net':
-            args.update({'metric':['NetworkIn', 'NetworkOut'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
+            args.update({'metric': ['NetworkIn', 'NetworkOut'], 'namespace': 'AWS/EC2', 'cols': ['Sum'], 'dims': {}, 'unit': 'Bytes', 'calc_rate': True})
         elif qs == 'cpu':
-            args.update({'metric':['CPUUtilization'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Percent', 'calc_rate':False})
+            args.update({'metric': ['CPUUtilization'], 'namespace': 'AWS/EC2', 'cols': ['Average'], 'dims': {}, 'unit': 'Percent', 'calc_rate': False})
         elif qs == 'disk':
-            args.update({'metric':['VolumeWriteBytes', 'VolumeReadBytes'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
+            args.update({'metric': ['VolumeWriteBytes', 'VolumeReadBytes'], 'namespace': 'AWS/EBS', 'cols': ['Sum'], 'dims': {}, 'unit': 'Bytes', 'calc_rate': True})
 
     if args['namespace'] == 'AWS/ELB':
         args['dims'] = {'LoadBalancerName': id}
@@ -142,10 +142,10 @@ def cache_ga(request):
         list_proj = requests.get('https://www.googleapis.com/analytics/v3/management/accountSummaries?access_token=%s' % access_token).json()['items'][0]['webProperties'][::-1]
         url_colon = urllib.quote(':')
         url_comma = urllib.quote(',')
-        dict_ga = {'access_token':access_token, 'client_id':GA['CLIENT_ID'], 'projs':[]}
+        dict_ga = {'access_token': access_token, 'client_id': GA['CLIENT_ID'], 'projs': []}
 
         for proj in list_proj:
-            dict_ga['projs'].append({'id':proj['profiles'][0]['id'], 'track_id':proj['id'], 'name':proj['name'], 'url':proj['websiteUrl']})
+            dict_ga['projs'].append({'id': proj['profiles'][0]['id'], 'track_id': proj['id'], 'name': proj['name'], 'url': proj['websiteUrl']})
 
         for j, proj in enumerate(dict_ga['projs']):
             temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (url_colon, proj['id'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)).json()['totalsForAllResults']
@@ -174,10 +174,10 @@ def cache_ga(request):
         data = []
         stats = ['Timestamp']
         if request['qs'] == 'sessions':
-            desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+            desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', 'Count')}
             fields = ['Sessions']
         else:
-            desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Percent')}
+            desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', 'Percent')}
             fields = ['percentNewSessions']
 
         for row in temp:
@@ -238,8 +238,8 @@ def cache_git(request):
                 data.append({u'Contributors': au, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
 
             data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
-            repos.append({'url':repo.html_url, 'private':repo.private, 'data':data, 'name':repo.name, 'id':repo.full_name})
-        return simplejson.dumps({'git':repos}, sort_keys=True, indent=' ' * 4)
+            repos.append({'url': repo.html_url, 'private': repo.private, 'data': data, 'name': repo.name, 'id': repo.full_name})
+        return simplejson.dumps({'git': repos}, sort_keys=True, indent=' ' * 4)
     else:
         if qs == 'num':
             name = 'DasLab/' + request['repo']
@@ -253,12 +253,12 @@ def cache_git(request):
             num_branches = len(requests.get('https://api.github.com/repos/' + name + '/branches?access_token=%s' % GIT['ACCESS_TOKEN']).json())
             num_forks = len(requests.get('https://api.github.com/repos/' + name + '/forks?access_token=%s' % GIT['ACCESS_TOKEN']).json())
             num_downloads = len(requests.get('https://api.github.com/repos/' + name + '/downloads?access_token=%s' % GIT['ACCESS_TOKEN']).json())
-            return simplejson.dumps({'name':request['repo'], 'created_at':created_at, 'pushed_at':pushed_at, 'num_watchers':num_watchers, 'num_pulls':num_pulls, 'num_issues':num_issues, 'num_branches':num_branches, 'num_forks':num_forks, 'num_downloads':num_downloads}, sort_keys=True, indent=' ' * 4)
+            return simplejson.dumps({'name': request['repo'], 'created_at': created_at, 'pushed_at': pushed_at, 'num_watchers': num_watchers, 'num_pulls': num_pulls, 'num_issues': num_issues, 'num_branches': num_branches, 'num_forks': num_forks, 'num_downloads': num_downloads}, sort_keys=True, indent=' ' * 4)
 
         elif qs in ['c', 'ad']:
             repo = gh.get_repo('DasLab/' + request['repo'])
             data = []
-            desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+            desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', 'Count')}
             stats = ['Timestamp']
 
             if qs == 'c':
@@ -323,7 +323,7 @@ def cache_slack(request):
             if resp['name'] in ('slackbot', SLACK["BOT_NAME"]): continue
             presence = sh.users.get_presence(resp['id']).body['presence']
             presence = (presence == 'active')
-            temp = {'name':resp['profile']['real_name'], 'id':resp['name'], 'email':resp['profile']['email'], 'image':resp['profile']['image_24'], 'presence':presence}
+            temp = {'name': resp['profile']['real_name'], 'id': resp['name'], 'email': resp['profile']['email'], 'image': resp['profile']['image_24'], 'presence': presence}
             if qs == 'home':
                 if not resp['deleted']: users.append(temp)
             else:
@@ -335,26 +335,26 @@ def cache_slack(request):
                     admins.append(temp)
                 else:
                     users.append(temp)
-        json = {'users':users, 'admins':admins, 'owners':owners, 'gones':gones}
+        json = {'users': users, 'admins': admins, 'owners': owners, 'gones': gones}
     elif qs == 'channels':
         response = sh.channels.list().body['channels']
         channels, archives = [], []
         for resp in response:
-            temp = {'name':resp['name'], 'num_members':resp['num_members']}
+            temp = {'name': resp['name'], 'num_members': resp['num_members']}
             history = sh.channels.history(channel=resp['id'], count=1000, inclusive=1).body
-            temp.update({'num_msgs':len(history['messages']), 'has_more':history['has_more']})
+            temp.update({'num_msgs': len(history['messages']), 'has_more': history['has_more']})
             num_files = 0
             latest = 0
             for msg in history['messages']:
                 if msg.has_key('file'): num_files += 1
                 latest = max(latest, float(msg['ts']))
             latest = datetime.fromtimestamp(latest).strftime('%Y-%m-%d %H:%M:%S')
-            temp.update({'latest':latest, 'num_files':num_files})
+            temp.update({'latest': latest, 'num_files': num_files})
             if resp['is_archived']:
                 archives.append(temp)
             else:
                 channels.append(temp)
-        json = {'channels':channels, 'archives':archives}
+        json = {'channels': channels, 'archives': archives}
     elif qs == 'files':
         types = ['all', 'pdfs', 'images', 'gdocs', 'zips', 'posts', 'snippets']
         nums, sizes = [], []
@@ -367,10 +367,10 @@ def cache_slack(request):
                     size += p['size']
             nums.append(response['paging']['total'])
             sizes.append(size)
-        json = {'files':{'types':types, 'nums':nums, 'sizes':sizes}}
+        json = {'files':{'types': types, 'nums': nums, 'sizes': sizes}}
 
     elif qs in ["plot_files", "plot_msgs"]:
-        desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+        desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', 'Count')}
         stats = ['Timestamp']
         data = []
 
@@ -427,8 +427,8 @@ def cache_dropbox(request):
 
     if qs == 'sizes':
         account = dh.account_info()
-        json = {'quota_used':account['quota_info']['shared'], 'quota_all':account['quota_info']['quota']}
-        json.update({'quota_avail':(json['quota_all'] - json['quota_used'])})
+        json = {'quota_used': account['quota_info']['shared'], 'quota_all': account['quota_info']['quota']}
+        json.update({'quota_avail': (json['quota_all'] - json['quota_used'])})
         return simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
 
     elif qs == "folders":
@@ -460,11 +460,11 @@ def cache_dropbox(request):
             if folder == '/' or '/' in folder[1:]: continue
             result = dh.metadata(folder, list=False)
             latest = datetime.strptime(result['modified'][:-6], "%a, %d %b %Y %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime("%Y-%m-%d %H:%M:%S")
-            json.append({'name':result['path'][1:], 'nums':folder_nums[folder], 'sizes':folder_sizes[folder], 'shares':folder_shares[folder[1:]], 'latest':latest})
-        return simplejson.dumps({'folders':json}, sort_keys=True, indent=' ' * 4)
+            json.append({'name': result['path'][1: ], 'nums': folder_nums[folder], 'sizes': folder_sizes[folder], 'shares': folder_shares[folder[1: ]], 'latest': latest})
+        return simplejson.dumps({'folders': json}, sort_keys=True, indent=' ' * 4)
 
     elif qs == "history":
-        desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+        desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', 'Count')}
         stats = ['Timestamp']
         data = []
         fields = ['Files']
@@ -491,7 +491,7 @@ def cache_dropbox(request):
                         break
         data = []
         for ts in temp.keys():
-            data.append({u'Timestamp':ts, u'Files':temp[ts]})
+            data.append({u'Timestamp': ts, u'Files': temp[ts]})
 
         for field in fields:
             stats.append(field)
@@ -526,7 +526,7 @@ def dash_ssl(request):
         send_error_slack(traceback.format_exc(), 'Check SSL Certificate', 'dash_ssl', 'log_cron.log')
 
     exp_date = datetime.strptime(exp_date.replace('notAfter=', ''), "%b %d %H:%M:%S %Y %Z").strftime('%Y-%m-%d %H:%M:%S')
-    return simplejson.dumps({'exp_date':exp_date}, sort_keys=True, indent=' ' * 4)
+    return simplejson.dumps({'exp_date': exp_date}, sort_keys=True, indent=' ' * 4)
 
 
 def get_spreadsheet(prefix, id, suffix):
@@ -549,7 +549,7 @@ def cache_schedule():
         i += 1
 
     if not flag:
-        send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *cache_schedule()* Download Failure @ _%s_\n' % time.ctime()}])
+        send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`ERROR`*: *cache_schedule()* Download Failure @ _%s_\n' % time.ctime()}])
         # send_error_slack(traceback.format_exc(), 'Download Schedule Spreadsheet', 'cache_schedule', 'log_cron_cache.log')
         if os.path.exists('%s/cache/schedule.pickle' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
@@ -582,7 +582,7 @@ def cache_schedule():
                 break
 
         subprocess.check_call("rm %s/cache/schedule.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        return {'last':last, 'this':this, 'next':next, 'tp':tp, 'wd':week_day}
+        return {'last': last, 'this': this, 'next': next, 'tp': tp, 'wd': week_day}
     except Exception:
         send_error_slack(traceback.format_exc(), 'Parse Schedule Spreadsheet', 'cache_schedule', 'log_cron_cache.log')
 
@@ -602,7 +602,7 @@ def cache_duty():
         i += 1
 
     if not flag:
-        send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"ff69bc", "text":'*`ERROR`*: *cache_duty()* Download Failure @ _%s_\n' % time.ctime()}])
+        send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`ERROR`*: *cache_duty()* Download Failure @ _%s_\n' % time.ctime()}])
         # send_error_slack(traceback.format_exc(), 'Download Duty Spreadsheet', 'cache_duty', 'log_cron_cache.log')
         if os.path.exists('%s/cache/duty.pickle' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
@@ -622,7 +622,7 @@ def cache_duty():
                 if job in row[0].lower():
                     ppls[row[1].lower()][job] = (row[2], row[3])
         subprocess.check_call("rm %s/cache/duty.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        return {'jobs':jobs, 'ppls':ppls}
+        return {'jobs': jobs, 'ppls': ppls}
     except Exception:
         send_error_slack(traceback.format_exc(), 'Parse Duty Spreadsheet', 'cache_duty', 'log_cron_cache.log')
 
@@ -679,15 +679,12 @@ def cache_cal():
                 end = start + relativedelta(hours=1)
 
             all_day = (not isinstance(start, datetime))
-            if all_day:
-                color = "#29be92"
-            else:
-                color = "#5496d7"
+            color = "#29be92" if all_day else "#5496d7"
             if ("group meeting" in title.lower()) or ("das lab group" in title.lower()) or ("eterna dev meeting" in title.lower()):
                 color = "#ff5c2b"
             if "BD" in title or 'b-day' in title or 'birthday' in title.lower():
                 color = "#c28fdd"
-            data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
+            data.append({'title': title, 'start': datetime.strftime(start, format_UTC), 'end': datetime.strftime(end, format_UTC), 'allDay': all_day, 'color': color})
 
             if event.has_key('RRULE') and event.get('RRULE').has_key('FREQ'):
                 rrule = event.get('RRULE')
@@ -733,7 +730,7 @@ def cache_cal():
                     else:
                         if start.date() > until: break
 
-                    data.append({'title':title, 'start':datetime.strftime(start, format_UTC), 'end':datetime.strftime(end, format_UTC), 'allDay':all_day, 'color':color})
+                    data.append({'title': title, 'start': datetime.strftime(start, format_UTC), 'end': datetime.strftime(end, format_UTC), 'allDay': all_day, 'color': color})
 
         subprocess.check_call("rm %s/cache/calendar.ics" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return simplejson.dumps(data, sort_keys=True, indent=' ' * 4)    
@@ -744,7 +741,7 @@ def cache_cal():
             now = datetime.fromtimestamp(time.time())
             t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT))
             if ((now - t_cal).seconds >= 7200):
-                if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: *cache_cal()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
+                if IS_SLACK: send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "danger", "text": '*`ERROR`*: *cache_cal()* @ _%s_\n>```%s```\n' % (time.ctime(), err)}])
         subprocess.check_call("cp %s/cache/calendar.ics %s/cache/calendar_%s.ics" % (MEDIA_ROOT, MEDIA_ROOT, int(time.time())), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         subprocess.check_call("rm %s/cache/calendar.ics" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         raise Exception('Error with parsing calendar ICS.')

@@ -25,7 +25,7 @@ def news(request):
     for news in news_list:
         if news.image:
             news.image_link = os.path.basename(news.image.name)
-    return render_to_response(PATH.HTML_PATH['news'], {'news_list':news_list}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['news'], {'news_list': news_list}, context_instance=RequestContext(request))
 
 def people(request):
     member = Member.objects.filter(is_alumni=0, is_visible=1).order_by('last_name', 'first_name')
@@ -33,7 +33,7 @@ def people(request):
     for ppl in member:
         if ppl.image:
             ppl.image_link = os.path.basename(ppl.image.name)
-    return render_to_response(PATH.HTML_PATH['people'], {'current_member':member, 'past_member':almuni}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['people'], {'current_member': member, 'past_member': almuni}, context_instance=RequestContext(request))
 
 def publications(request):
     pub_list = Publication.objects.filter(is_visible=1).order_by('-display_date')
@@ -48,7 +48,7 @@ def publications(request):
             pub.year_tag = True
         if pub.year == 2009 and pub_list[i-1].year == 2010:
             pub.previous = True
-    return render_to_response(PATH.HTML_PATH['publications'], {'pub_list':pub_list}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['publications'], {'pub_list': pub_list}, context_instance=RequestContext(request))
 
 
 ############################################################################################################################################
@@ -70,7 +70,7 @@ def lab_meeting_flash(request):
             gp.label = colors[gp.date.month - 1]
         if i == len(flash_list) - 1 or flash_list[i + 1].date.month != gp.date.month:
             gp.month_end = True 
-    return render_to_response(PATH.HTML_PATH['lab_meeting_flash'], {'flash_list':flash_list}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['lab_meeting_flash'], {'flash_list': flash_list}, context_instance=RequestContext(request))
 
 # @login_required
 def lab_meeting_jc(request):
@@ -79,7 +79,7 @@ def lab_meeting_jc(request):
         gp.label = colors[11 - i % 12]
         if i == 0 or jc_list[i - 1].date.year != gp.date.year:
             gp.year_start = True
-    return render_to_response(PATH.HTML_PATH['lab_meeting_jc'], {'jc_list':jc_list}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['lab_meeting_jc'], {'jc_list': jc_list}, context_instance=RequestContext(request))
 
 # @login_required
 def lab_meeting_youtube(request):
@@ -88,7 +88,7 @@ def lab_meeting_youtube(request):
         gp.label = colors[11 - i % 12]
         if i == 0 or eterna_list[i - 1].date.year != gp.date.year:
             gp.year_start = True
-    return render_to_response(PATH.HTML_PATH['lab_meeting_eterna'], {'eterna_list':eterna_list}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['lab_meeting_eterna'], {'eterna_list': eterna_list}, context_instance=RequestContext(request))
 
 # @login_required
 def lab_meeting_rotation(request):
@@ -101,7 +101,7 @@ def lab_meeting_rotation(request):
             rot.ppt_link = os.path.basename(rot.ppt.name)
         if rot.data:
             rot.dat_link = os.path.basename(rot.data.name)
-    return render_to_response(PATH.HTML_PATH['lab_meeting_rotation'], {'rot_list':rot_list}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['lab_meeting_rotation'], {'rot_list': rot_list}, context_instance=RequestContext(request))
 
 # @login_required
 def lab_resource_gdocs(request):
@@ -115,7 +115,7 @@ def lab_resource_archive(request):
             arv.year_start = True
         if arv.ppt:
             arv.ppt_link = os.path.basename(arv.ppt.name).replace('C:\\fakepath\\', '')
-    return render_to_response(PATH.HTML_PATH['lab_resource_archive'], {'arv_list':arv_list}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['lab_resource_archive'], {'arv_list': arv_list}, context_instance=RequestContext(request))
 # @login_required
 def lab_resource_contact(request):
     member = Member.objects.filter(is_alumni=0).exclude(sunet_id=request.user.username).order_by('last_name', 'first_name')
@@ -141,7 +141,7 @@ def lab_resource_contact(request):
         if ppl.phone:
             ppl.phone = str(ppl.phone)
             ppl.phone = '(%s) %s-%s' % (ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
-    return render_to_response(PATH.HTML_PATH['lab_resource_contact'], {'current_member':member, 'past_member':almuni, 'contact_form': ContactForm()}, context_instance=RequestContext(request))
+    return render_to_response(PATH.HTML_PATH['lab_resource_contact'], {'current_member': member, 'past_member': almuni, 'contact_form':  ContactForm()}, context_instance=RequestContext(request))
 
 
 # @login_required
@@ -234,10 +234,10 @@ def user_dash(request):
             user.phone = '(%s) %s-%s' % (user.phone[:3], user.phone[3:6], user.phone[6:])
         user.type = user_type
 
-        json = {'id':user.sunet_id, 'type':user.type, 'title':user.affiliation(), 'name':user.full_name(), 'photo':user.image_tag(), 'email':user.email, 'phone':user.phone, 'bday':user.bday, 'cap':user.more_info, 'status':user.year()}
+        json = {'id': user.sunet_id, 'type': user.type, 'title': user.affiliation(), 'name': user.full_name(), 'photo': user.image_tag(), 'email': user.email, 'phone': user.phone, 'bday': user.bday, 'cap': user.more_info, 'status': user.year()}
     except Exception:
         if request.META.has_key('WEBAUTH_USER'):
-            json = {'id':sunet_id, 'type':user_type}
+            json = {'id': sunet_id, 'type': user_type}
         else:
             json = {}
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
@@ -246,36 +246,36 @@ def user_dash(request):
 def schedule_dash(request):
     json = dash_schedule(request)
     flash_slide = FlashSlide.objects.order_by('-date')[0]
-    flash_slide = {'url':flash_slide.link, 'date':flash_slide.date.strftime('%Y-%m-%d')}
+    flash_slide = {'url': flash_slide.link, 'date': flash_slide.date.strftime('%Y-%m-%d')}
     journal_club = JournalClub.objects.order_by('-date')[0]
-    journal_club = {'url':journal_club.link, 'date':journal_club.date.strftime('%Y-%m-%d'), 'name':journal_club.presenter, 'title':journal_club.title}
+    journal_club = {'url': journal_club.link, 'date': journal_club.date.strftime('%Y-%m-%d'), 'name': journal_club.presenter, 'title': journal_club.title}
     eterna = EternaYoutube.objects.order_by('-date')[0]
-    eterna = {'url':eterna.link, 'date':eterna.date.strftime('%Y-%m-%d'), 'name':eterna.presenter, 'title':eterna.title}
+    eterna = {'url': eterna.link, 'date': eterna.date.strftime('%Y-%m-%d'), 'name': eterna.presenter, 'title': eterna.title}
     rotation = RotationStudent.objects.order_by('-date')[0]
-    rotation = {'date':rotation.date.strftime('%Y-%m-%d'), 'name':rotation.full_name, 'title':rotation.title, 'url':os.path.basename(rotation.ppt.name)}
+    rotation = {'date': rotation.date.strftime('%Y-%m-%d'), 'name': rotation.full_name, 'title': rotation.title, 'url': os.path.basename(rotation.ppt.name)}
     archive = Presentation.objects.order_by('-date')[0]
     if archive.ppt:
         ar_link = os.path.basename(archive.ppt.name)
     else:
         ar_link = archive.link
-    archive = {'date':archive.date.strftime('%Y-%m-%d'), 'name':archive.presenter, 'title':archive.title, 'url':ar_link}
-    json.update({'flash_slide':flash_slide, 'journal_club':journal_club, 'eterna':eterna, 'rotation':rotation, 'archive':archive}) 
+    archive = {'date': archive.date.strftime('%Y-%m-%d'), 'name': archive.presenter, 'title': archive.title, 'url': ar_link}
+    json.update({'flash_slide': flash_slide, 'journal_club': journal_club, 'eterna': eterna, 'rotation': rotation, 'archive' :archive}) 
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 
 def get_admin(request):
-    return HttpResponse(simplejson.dumps({'email':EMAIL_NOTIFY}, sort_keys=True, indent=' ' * 4), content_type='application/json')
+    return HttpResponse(simplejson.dumps({'email': EMAIL_NOTIFY}, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 def get_user(request):
     if request.META.has_key('WEBAUTH_USER'):
         user = request.META['WEBAUTH_USER']
     else:
         user = 'unknown'
-    return HttpResponse(simplejson.dumps({'user':user}, sort_keys=True, indent=' ' * 4), content_type='application/json')
+    return HttpResponse(simplejson.dumps({'user': user}, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 def get_js(request):
     stats = simplejson.load(open('%s/cache/stat_sys.json' % MEDIA_ROOT, 'r'))
-    json = {'jquery':stats['jquery'], 'bootstrap':stats['bootstrap'], 'swfobj':stats['swfobj'], 'fullcal':stats['fullcal'], 'moment':stats['moment']}
+    json = {'jquery': stats['jquery'], 'bootstrap': stats['bootstrap'], 'swfobj': stats['swfobj'], 'fullcal': stats['fullcal'], 'moment': stats['moment']}
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 

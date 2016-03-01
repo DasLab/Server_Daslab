@@ -48,6 +48,6 @@ class Command(BaseCommand):
             sys.exit(1)
 
         if (not DEBUG) and BOT['SLACK']['ADMIN']['MSG_REPORT']:
-            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled weekly *Report* finished @ _%s_\n' % time.ctime()}])
+            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'SUCCESS', "mrkdwn_in": ["text"], "color": "good", "text": '*SUCCESS*: Scheduled weekly *Report* finished @ _%s_\n' % time.ctime()}])
         self.stdout.write("Finished with \033[92mSUCCESS\033[0m!")
         self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))

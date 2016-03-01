@@ -63,7 +63,7 @@ def send_error_slack(err, task='', fn='', log_file=''):
     open('%s/cache/log_alert_admin.log' % MEDIA_ROOT, 'a').write(ts)
     if log_file:
         open('%s/cache/%s' % (MEDIA_ROOT, log_file), 'a').write('%s\n%s\n' % (ts, err))
-    send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'ERROR', "mrkdwn_in": ["text"], "color":"danger", "text":'*`ERROR`*: %s*%s* @ _%s_\n>```%s```\n' % (task, fn, time.ctime(), err)}])
+    send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "danger", "text": '*`ERROR`*: %s*%s* @ _%s_\n>```%s```\n' % (task, fn, time.ctime(), err)}])
 
 
 def find_slack_id(name):
@@ -142,8 +142,7 @@ def get_backup_stat():
         'gdrive': []
     }
 
-    gdrive_dir = 'echo'
-    if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
+    gdrive_dir = 'echo' if DEBUG else 'cd %s' % APACHE_ROOT
     gdrive = subprocess.Popen("%s && drive list -q \"title contains '%s_' and title contains '.tgz'\"" % (gdrive_dir, env('SERVER_NAME')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:]
     for i in range(0, len(gdrive), 6):
         ver['gdrive'].append([gdrive[i + 1], '%s %s' % (gdrive[i + 2], gdrive[i + 3]), '%s %s' % (gdrive[i + 4], gdrive[i + 5])])
@@ -195,7 +194,7 @@ def set_sys_crontab():
 def get_backup_form():
     refresh_settings()
     (set_backup, set_upload, _, _, _, _, _) = get_sys_crontab()
-    return {'day_backup':set_backup[1], 'day_upload':set_upload[1], 'time_backup':set_backup[0], 'time_upload':set_upload[0], 'keep':settings._wrapped.KEEP_BACKUP}
+    return {'day_backup': set_backup[1], 'day_upload': set_upload[1], 'time_backup': set_backup[0], 'time_upload': set_upload[0], 'keep': settings._wrapped.KEEP_BACKUP}
 
 
 def set_backup_form(request):
@@ -227,14 +226,14 @@ def get_bot_form():
     (_, _, set_cache_3, set_cache_15, set_cache_30, set_duty_month, set_duty_quarter) = get_sys_crontab()
     tp = pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))['wd']
 
-    return {'is_slack':settings._wrapped.IS_SLACK, 'is_cache':BOT['CACHE']['IS_CACHE'], 'is_duty_bday':BOT['SLACK']['MSG_BDAY'], 'is_duty_breakfast':BOT['SLACK']['DUTY']['MONTH']['MSG_BDAY'], 'is_duty_aws':BOT['SLACK']['DUTY']['MONTH']['MSG_AWS'], 'is_duty_breakfast':BOT['SLACK']['DUTY']['MONTH']['MSG_BREAKFAST'], 'is_duty_schedule':BOT['SLACK']['DUTY']['MONTH']['MSG_SCHEDULE'], 'is_duty_website':BOT['SLACK']['DUTY']['MONTH']['MSG_WEBSITE'], 'is_duty_trip':BOT['SLACK']['DUTY']['QUARTER']['MSG_TRIP'], 'is_duty_git':BOT['SLACK']['DUTY']['QUARTER']['MSG_GIT'], 'is_admin_backup':BOT['SLACK']['ADMIN']['MSG_BACKUP'], 'is_admin_gdrive':BOT['SLACK']['ADMIN']['MSG_GDRIVE'], 'is_admin_version':BOT['SLACK']['ADMIN']['MSG_VERSION'], 'is_admin_report':BOT['SLACK']['ADMIN']['MSG_REPORT'], 'is_admin_aws_warn':BOT['SLACK']['ADMIN']['MSG_AWS_WARN'], 'is_version':BOT['SLACK']['IS_VERSION'], 'is_report':BOT['SLACK']['IS_REPORT'], 'is_bday':BOT['SLACK']['MSG_BDAY'], 'is_flash_slide':BOT['SLACK']['IS_FLASH_SETUP'], 'is_user_jc_1':BOT['SLACK']['REMINDER']['JC']['REMINDER_1'], 'is_user_jc_2':BOT['SLACK']['REMINDER']['JC']['REMINDER_2'], 'is_admin_jc':BOT['SLACK']['REMINDER']['JC']['REMINDER_ADMIN'], 'is_user_es_1':BOT['SLACK']['REMINDER']['ES']['REMINDER_1'], 'is_user_es_2':BOT['SLACK']['REMINDER']['ES']['REMINDER_2'], 'is_admin_es':BOT['SLACK']['REMINDER']['ES']['REMINDER_ADMIN'], 'is_user_rot_1':BOT['SLACK']['REMINDER']['ROT']['REMINDER_1'], 'is_user_rot_2':BOT['SLACK']['REMINDER']['ROT']['REMINDER_2'], 'is_admin_rot':BOT['SLACK']['REMINDER']['ROT']['REMINDER_ADMIN'], 'is_duty_mic':BOT['SLACK']['DUTY']['ETERNA']['MSG_MIC'], 'is_duty_broadcast':BOT['SLACK']['DUTY']['ETERNA']['MSG_BROADCAST'], 'is_duty_webnews':BOT['SLACK']['DUTY']['ETERNA']['MSG_NEWS'], 'day_duty_month':set_duty_month, 'day_duty_quarter':set_duty_quarter, 'day_meeting':tp, 'day_reminder_1':BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_1'], 'day_reminder_2':BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_2'], 'cache_3':set_cache_3, 'cache_15':set_cache_15, 'cache_30':set_cache_30}
+    return {'is_slack': settings._wrapped.IS_SLACK, 'is_cache': BOT['CACHE']['IS_CACHE'], 'is_duty_bday': BOT['SLACK']['MSG_BDAY'], 'is_duty_breakfast': BOT['SLACK']['DUTY']['MONTH']['MSG_BDAY'], 'is_duty_aws': BOT['SLACK']['DUTY']['MONTH']['MSG_AWS'], 'is_duty_breakfast': BOT['SLACK']['DUTY']['MONTH']['MSG_BREAKFAST'], 'is_duty_schedule': BOT['SLACK']['DUTY']['MONTH']['MSG_SCHEDULE'], 'is_duty_website': BOT['SLACK']['DUTY']['MONTH']['MSG_WEBSITE'], 'is_duty_trip': BOT['SLACK']['DUTY']['QUARTER']['MSG_TRIP'], 'is_duty_git': BOT['SLACK']['DUTY']['QUARTER']['MSG_GIT'], 'is_admin_backup': BOT['SLACK']['ADMIN']['MSG_BACKUP'], 'is_admin_gdrive': BOT['SLACK']['ADMIN']['MSG_GDRIVE'], 'is_admin_version': BOT['SLACK']['ADMIN']['MSG_VERSION'], 'is_admin_report': BOT['SLACK']['ADMIN']['MSG_REPORT'], 'is_admin_aws_warn': BOT['SLACK']['ADMIN']['MSG_AWS_WARN'], 'is_version': BOT['SLACK']['IS_VERSION'], 'is_report': BOT['SLACK']['IS_REPORT'], 'is_bday': BOT['SLACK']['MSG_BDAY'], 'is_flash_slide': BOT['SLACK']['IS_FLASH_SETUP'], 'is_user_jc_1': BOT['SLACK']['REMINDER']['JC']['REMINDER_1'], 'is_user_jc_2': BOT['SLACK']['REMINDER']['JC']['REMINDER_2'], 'is_admin_jc': BOT['SLACK']['REMINDER']['JC']['REMINDER_ADMIN'], 'is_user_es_1': BOT['SLACK']['REMINDER']['ES']['REMINDER_1'], 'is_user_es_2': BOT['SLACK']['REMINDER']['ES']['REMINDER_2'], 'is_admin_es': BOT['SLACK']['REMINDER']['ES']['REMINDER_ADMIN'], 'is_user_rot_1': BOT['SLACK']['REMINDER']['ROT']['REMINDER_1'], 'is_user_rot_2': BOT['SLACK']['REMINDER']['ROT']['REMINDER_2'], 'is_admin_rot': BOT['SLACK']['REMINDER']['ROT']['REMINDER_ADMIN'], 'is_duty_mic': BOT['SLACK']['DUTY']['ETERNA']['MSG_MIC'], 'is_duty_broadcast': BOT['SLACK']['DUTY']['ETERNA']['MSG_BROADCAST'], 'is_duty_webnews': BOT['SLACK']['DUTY']['ETERNA']['MSG_NEWS'], 'day_duty_month': set_duty_month, 'day_duty_quarter': set_duty_quarter, 'day_meeting': tp, 'day_reminder_1': BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_1'], 'day_reminder_2': BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_2'], 'cache_3': set_cache_3, 'cache_15': set_cache_15, 'cache_30': set_cache_30}
 
 
 def set_bot_form(request):
     form = BotSettingForm(request.POST)
     if not form.is_valid(): return 1
 
-    BOT = {"SLACK": {"IS_SLACK":form.cleaned_data['is_slack'], "IS_FLASH_SETUP":form.cleaned_data['is_flash_slide'], "IS_VERSION":form.cleaned_data['is_version'], "IS_REPORT":form.cleaned_data['is_report'], "MSG_BDAY":form.cleaned_data['is_bday'], "DUTY": {"MONTH": {"MSG_BDAY":form.cleaned_data['is_duty_bday'], "MSG_BREAKFAST":form.cleaned_data['is_duty_breakfast'], "MSG_AWS":form.cleaned_data['is_duty_aws'], "MSG_SCHEDULE":form.cleaned_data['is_duty_schedule'], "MSG_WEBSITE":form.cleaned_data['is_duty_website'], "WEEK_DAY":form.cleaned_data['day_duty_month']}, "QUARTER": {"MSG_TRIP":form.cleaned_data['is_duty_trip'], "MSG_GIT":form.cleaned_data['is_duty_git'], "WEEK_DAY":form.cleaned_data['day_duty_quarter']}, "ETERNA": {"MSG_MIC":form.cleaned_data['is_duty_mic'], "MSG_BROADCAST":form.cleaned_data['is_duty_broadcast'], "MSG_NEWS":form.cleaned_data['is_duty_webnews']} }, "REMINDER": {"DAY_BEFORE_REMINDER_1": form.cleaned_data['day_reminder_1'], "DAY_BEFORE_REMINDER_2": form.cleaned_data['day_reminder_2'], "JC": {"REMINDER_1":form.cleaned_data['is_user_jc_1'], "REMINDER_2":form.cleaned_data['is_user_jc_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_jc']}, "ES": {"REMINDER_1":form.cleaned_data['is_user_es_1'], "REMINDER_2":form.cleaned_data['is_user_es_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_es']}, "ROT": {"REMINDER_1":form.cleaned_data['is_user_rot_1'], "REMINDER_2":form.cleaned_data['is_user_rot_2'], "REMINDER_ADMIN":form.cleaned_data['is_admin_rot']} }, "ADMIN": {"MSG_BACKUP":form.cleaned_data['is_admin_backup'], "MSG_GDRIVE":form.cleaned_data['is_admin_gdrive'], "MSG_VERSION":form.cleaned_data['is_admin_version'], "MSG_REPORT":form.cleaned_data['is_admin_report'], "MSG_AWS_WARN":form.cleaned_data['is_admin_aws_warn']} }, "CACHE": { "IS_CACHE":form.cleaned_data['is_cache'], "INTERVAL_3":form.cleaned_data['cache_3'], "INTERVAL_15":form.cleaned_data['cache_15'], "INTERVAL_30":form.cleaned_data['cache_30']} }
+    BOT = {"SLACK":  {"IS_SLACK": form.cleaned_data['is_slack'], "IS_FLASH_SETUP": form.cleaned_data['is_flash_slide'], "IS_VERSION": form.cleaned_data['is_version'], "IS_REPORT": form.cleaned_data['is_report'], "MSG_BDAY": form.cleaned_data['is_bday'], "DUTY":  {"MONTH":  {"MSG_BDAY": form.cleaned_data['is_duty_bday'], "MSG_BREAKFAST": form.cleaned_data['is_duty_breakfast'], "MSG_AWS": form.cleaned_data['is_duty_aws'], "MSG_SCHEDULE": form.cleaned_data['is_duty_schedule'], "MSG_WEBSITE": form.cleaned_data['is_duty_website'], "WEEK_DAY": form.cleaned_data['day_duty_month']}, "QUARTER":  {"MSG_TRIP": form.cleaned_data['is_duty_trip'], "MSG_GIT": form.cleaned_data['is_duty_git'], "WEEK_DAY": form.cleaned_data['day_duty_quarter']}, "ETERNA":  {"MSG_MIC": form.cleaned_data['is_duty_mic'], "MSG_BROADCAST": form.cleaned_data['is_duty_broadcast'], "MSG_NEWS": form.cleaned_data['is_duty_webnews']} }, "REMINDER":  {"DAY_BEFORE_REMINDER_1":  form.cleaned_data['day_reminder_1'], "DAY_BEFORE_REMINDER_2":  form.cleaned_data['day_reminder_2'], "JC":  {"REMINDER_1": form.cleaned_data['is_user_jc_1'], "REMINDER_2": form.cleaned_data['is_user_jc_2'], "REMINDER_ADMIN": form.cleaned_data['is_admin_jc']}, "ES":  {"REMINDER_1": form.cleaned_data['is_user_es_1'], "REMINDER_2": form.cleaned_data['is_user_es_2'], "REMINDER_ADMIN": form.cleaned_data['is_admin_es']}, "ROT":  {"REMINDER_1": form.cleaned_data['is_user_rot_1'], "REMINDER_2": form.cleaned_data['is_user_rot_2'], "REMINDER_ADMIN": form.cleaned_data['is_admin_rot']} }, "ADMIN":  {"MSG_BACKUP": form.cleaned_data['is_admin_backup'], "MSG_GDRIVE": form.cleaned_data['is_admin_gdrive'], "MSG_VERSION": form.cleaned_data['is_admin_version'], "MSG_REPORT": form.cleaned_data['is_admin_report'], "MSG_AWS_WARN": form.cleaned_data['is_admin_aws_warn']} }, "CACHE":  { "IS_CACHE": form.cleaned_data['is_cache'], "INTERVAL_3": form.cleaned_data['cache_3'], "INTERVAL_15": form.cleaned_data['cache_15'], "INTERVAL_30": form.cleaned_data['cache_30']} }
 
     env_cron = simplejson.load(open('%s/config/cron.conf' % MEDIA_ROOT))
     for i in xrange(len(env_cron['CRONJOBS'])):
@@ -298,7 +297,7 @@ def restyle_apache():
     ssl_index = '%s of %s' % (ssl[5], ssl[4])
     port = response[len(response)-3].replace('</address>', '')[-3:]
 
-    json = {'title':title, 'ver_apache':ver[0], 'ver_wsgi':ver[3], 'ver_webauth':ver[2], 'ver_ssl':ver[1], 'mpm':mpm, 'time_build':time_build, 'time_current':time_current, 'time_restart':time_restart, 'time_up':time_up, 'server_load':server_load, 'total_access':total[0], 'total_traffic':'%s %s' % (total[1], total[2]), 'cpu_load':cpu_load, 'cpu_usage':cpu_usage, 'traffic':traffic, 'idle':workers[1], 'processing':workers[0], 'worker':worker, 'table':table, 'port':port, 'ssl_subcache':ssl_subcache, 'ssl_index':ssl_index, 'ssl_cache':ssl[0], 'ssl_mem': ssl[1], 'ssl_entry':ssl[2]}
+    json = {'title': title, 'ver_apache': ver[0], 'ver_wsgi': ver[3], 'ver_webauth': ver[2], 'ver_ssl': ver[1], 'mpm': mpm, 'time_build': time_build, 'time_current': time_current, 'time_restart': time_restart, 'time_up': time_up, 'server_load': server_load, 'total_access': total[0], 'total_traffic': '%s %s' % (total[1], total[2]), 'cpu_load': cpu_load, 'cpu_usage': cpu_usage, 'traffic': traffic, 'idle': workers[1], 'processing': workers[0], 'worker': worker, 'table': table, 'port': port, 'ssl_subcache': ssl_subcache, 'ssl_index': ssl_index, 'ssl_cache': ssl[0], 'ssl_mem':  ssl[1], 'ssl_entry': ssl[2]}
     return simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
     
 
@@ -311,7 +310,7 @@ def aws_result(results, args, req_id=None):
         if args['calc_rate'] and 'Sum' in args['cols']: 
             d.update({args['metric'][0] + u'Rate': d[u'Sum'] / args['period']})
         for j, r in enumerate(results):
-            if j == 0 and len(results) > 1 and args['calc_rate']: 
+            if j == 0 and len(results) > 1 and args['calc_rate']:
                 continue
             keys = r[i].keys()
             keys.remove(u'Timestamp')
@@ -319,13 +318,13 @@ def aws_result(results, args, req_id=None):
             for k in keys:
                 val = r[i][k]
                 name = args['metric'][j] + k
-                if args['calc_rate'] and k == u'Sum': 
+                if args['calc_rate'] and k == u'Sum':
                     val = val / args['period']
                     name = args['metric'][j] + u'Rate'
                 d[name] = val
                 if d.has_key(k): del d[k]
 
-    desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', args['unit'])}
+    desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', args['unit'])}
     stats = ['Timestamp']
     for i, me in enumerate(args['metric']):
         if len(args['cols']) == len(args['metric']) and len(args['cols']) > 1:
@@ -361,7 +360,7 @@ def aws_call(conn, args, qs, req_id=None):
         for t in (args['start_time'] + timedelta(seconds=n) for n in period):
             t = t.replace(second=0, microsecond=0)
             if (not t in temp):
-                data.append({u'Timestamp':t, u'Unit':args['unit'], unicode(args['cols'][0]):0})
+                data.append({u'Timestamp': t, u'Unit': args['unit'], unicode(args['cols'][0]): 0})
 
         if qs in ['lat', 'latency']:
             for d in data:
@@ -394,39 +393,39 @@ def aws_stats(request):
             stat3 = {k: stat[k] for k in ('dns_name', 'vpc_id', 'subnets', 'health_check')} 
             stat3['health_check'] = str(stat3['health_check']).replace('HealthCheck:', '')
 
-            return simplejson.dumps({'ec2':stat1, 'ebs':stat2, 'elb':stat3}, sort_keys=True, indent=' ' * 4)
+            return simplejson.dumps({'ec2': stat1, 'ebs': stat2, 'elb': stat3}, sort_keys=True, indent=' ' * 4)
 
         else:
             conn = boto.ec2.cloudwatch.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
             if sp == '7d':
-                args = {'period':7200, 'start_time':datetime.utcnow() - timedelta(days=7), 'end_time':datetime.utcnow()}
+                args = {'period': 7200, 'start_time': datetime.utcnow() - timedelta(days=7), 'end_time': datetime.utcnow()}
             elif sp == '48h':
-                args = {'period':720, 'start_time':datetime.utcnow() - timedelta(hours=48), 'end_time':datetime.utcnow()}
+                args = {'period': 720, 'start_time': datetime.utcnow() - timedelta(hours=48), 'end_time': datetime.utcnow()}
             else:
                 return error400(request)
 
             if qs == 'latency':
-                args.update({'metric':['Latency'], 'namespace':'AWS/ELB', 'cols':['Maximum'], 'dims':{}, 'unit':'Seconds', 'calc_rate':False})
+                args.update({'metric': ['Latency'], 'namespace': 'AWS/ELB', 'cols': ['Maximum'], 'dims': {}, 'unit': 'Seconds', 'calc_rate': False})
             elif qs == 'request':
-                args.update({'metric':['RequestCount'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+                args.update({'metric': ['RequestCount'], 'namespace': 'AWS/ELB', 'cols': ['Sum'], 'dims': {}, 'unit': 'Count', 'calc_rate': False})
             elif qs == '23xx':
-                args.update({'metric':['HTTPCode_Backend_2XX', 'HTTPCode_Backend_3XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+                args.update({'metric': ['HTTPCode_Backend_2XX', 'HTTPCode_Backend_3XX'], 'namespace': 'AWS/ELB', 'cols': ['Sum'], 'dims': {}, 'unit': 'Count', 'calc_rate': False})
             elif qs == '45xx':
-                args.update({'metric':['HTTPCode_Backend_4XX', 'HTTPCode_Backend_5XX'], 'namespace':'AWS/ELB', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+                args.update({'metric': ['HTTPCode_Backend_4XX', 'HTTPCode_Backend_5XX'], 'namespace': 'AWS/ELB', 'cols': ['Sum'], 'dims': {}, 'unit': 'Count', 'calc_rate': False})
             elif qs == 'host':
-                args.update({'metric':['HealthyHostCount', 'UnHealthyHostCount'], 'namespace':'AWS/ELB', 'cols':['Minimum', 'Maximum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+                args.update({'metric': ['HealthyHostCount', 'UnHealthyHostCount'], 'namespace': 'AWS/ELB', 'cols': ['Minimum', 'Maximum'], 'dims': {}, 'unit': 'Count', 'calc_rate': False})
             elif qs == 'status':
-                args.update({'metric':['BackendConnectionErrors', 'StatusCheckFailed_Instance', 'StatusCheckFailed_System'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+                args.update({'metric': ['BackendConnectionErrors', 'StatusCheckFailed_Instance', 'StatusCheckFailed_System'], 'namespace': 'AWS/EC2', 'cols': ['Sum'], 'dims': {}, 'unit': 'Count', 'calc_rate': False})
             elif qs == 'network':
-                args.update({'metric':['NetworkIn', 'NetworkOut'], 'namespace':'AWS/EC2', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
+                args.update({'metric': ['NetworkIn', 'NetworkOut'], 'namespace': 'AWS/EC2', 'cols': ['Sum'], 'dims': {}, 'unit': 'Bytes', 'calc_rate': True})
             elif qs == 'cpu':
-                args.update({'metric':['CPUUtilization'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Percent', 'calc_rate':False})
+                args.update({'metric': ['CPUUtilization'], 'namespace': 'AWS/EC2', 'cols': ['Average'], 'dims': {}, 'unit': 'Percent', 'calc_rate': False})
             elif qs == 'credit':
-                args.update({'metric':['CPUCreditUsage', 'CPUCreditBalance'], 'namespace':'AWS/EC2', 'cols':['Average'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+                args.update({'metric': ['CPUCreditUsage', 'CPUCreditBalance'], 'namespace': 'AWS/EC2', 'cols': ['Average'], 'dims': {}, 'unit': 'Count', 'calc_rate': False})
             elif qs == 'volops':
-                args.update({'metric':['VolumeWriteOps', 'VolumeReadOps'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Count', 'calc_rate':False})
+                args.update({'metric': ['VolumeWriteOps', 'VolumeReadOps'], 'namespace': 'AWS/EBS', 'cols': ['Sum'], 'dims': {}, 'unit': 'Count', 'calc_rate': False})
             elif qs == 'volbytes':
-                args.update({'metric':['VolumeWriteBytes', 'VolumeReadBytes'], 'namespace':'AWS/EBS', 'cols':['Sum'], 'dims':{}, 'unit':'Bytes', 'calc_rate':True})
+                args.update({'metric': ['VolumeWriteBytes', 'VolumeReadBytes'], 'namespace': 'AWS/EBS', 'cols': ['Sum'], 'dims': {}, 'unit': 'Bytes', 'calc_rate': True})
             else:
                 return error400(request)
     else:
@@ -468,7 +467,7 @@ def ga_stats(request):
                 else:
                     prev = '%d' % (int(temp[key]) - int(temp_prev[key]))
                     curr = '%d' % int(temp[key])
-                stats.update({ga_key:curr, (ga_key + '_prev'):prev})
+                stats.update({ga_key: curr, (ga_key + '_prev'): prev})
             return simplejson.dumps(stats, sort_keys=True, indent=' ' * 4)
         
         elif request.GET.has_key('sp'):
@@ -499,7 +498,7 @@ def ga_stats(request):
                     
                 data = []
                 stats = ['Timestamp', 'Sessions']
-                desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count'), 'Sessions':('number', 'Sessions')}
+                desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', 'Count'), 'Sessions': ('number', 'Sessions')}
 
                 for row in temp:
                     data.append({u'Timestamp': datetime.strptime(row[0], strpt), 'Sessions': float(row[1])})
@@ -532,7 +531,7 @@ def ga_stats(request):
 
                 data = []
                 stats = ['Category', field]
-                desp = {'Samples':('number', 'Samples'), 'Unit':('string', 'Count'), 'Category':('string', 'Category'), field:('number', field)}
+                desp = {'Samples': ('number', 'Samples'), 'Unit': ('string', 'Count'), 'Category': ('string', 'Category'), field: ('number', field)}
 
                 for row in temp:
                     data.append({'Category': row[0], field: float(row[1])})
@@ -558,7 +557,7 @@ def ga_stats(request):
 
             data = []
             stats = ['Country', 'Sessions']
-            desp = {'Samples':('number', 'Samples'), 'Unit':('string', 'Count'), 'Country':('string', 'Country'), 'Sessions':('number', 'Sessions')}
+            desp = {'Samples': ('number', 'Samples'), 'Unit': ('string', 'Count'), 'Country': ('string', 'Country'), 'Sessions': ('number', 'Sessions')}
 
             for row in temp:
                 data.append({'Country': row[0], 'Sessions': float(row[1])})
@@ -603,7 +602,7 @@ def git_stats(request):
                         au = '(None)'
                     data.append({u'Contributors': au, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
                 data = sorted(data, key=operator.itemgetter(u'Commits'))            
-                return simplejson.dumps({'contrib':data}, sort_keys=True, indent=' ' * 4)
+                return simplejson.dumps({'contrib': data}, sort_keys=True, indent=' ' * 4)
             else:
                 created_at = repo.created_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
                 pushed_at = repo.pushed_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
@@ -614,11 +613,11 @@ def git_stats(request):
                 num_branches = len(requests.get('https://api.github.com/repos/' + repo_name + '/branches?access_token=%s' % GIT['ACCESS_TOKEN']).json())
                 num_forks = len(requests.get('https://api.github.com/repos/' + repo_name + '/forks?access_token=%s' % GIT['ACCESS_TOKEN']).json())
                 num_downloads = len(requests.get('https://api.github.com/repos/' + repo_name + '/downloads?access_token=%s' % GIT['ACCESS_TOKEN']).json())
-                return simplejson.dumps({'created_at':created_at, 'pushed_at':pushed_at, 'num_watchers':num_watchers, 'num_pulls':num_pulls, 'num_issues':num_issues, 'num_branches':num_branches, 'num_forks':num_forks, 'num_downloads':num_downloads}, sort_keys=True, indent=' ' * 4)
+                return simplejson.dumps({'created_at': created_at, 'pushed_at': pushed_at, 'num_watchers': num_watchers, 'num_pulls': num_pulls, 'num_issues': num_issues, 'num_branches': num_branches, 'num_forks': num_forks, 'num_downloads': num_downloads}, sort_keys=True, indent=' ' * 4)
 
         else:
             data = []
-            desp = {'Timestamp':('datetime', 'Timestamp'), 'Samples':('number', 'Samples'), 'Unit':('string', 'Count')}
+            desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', 'Count')}
             stats = ['Timestamp']
 
             if qs == 'c':
@@ -684,7 +683,7 @@ def git_stats(request):
 
 def export_citation(request):
     form = ExportForm(request.POST)
-    if not form.is_valid(): return render_to_response(PATH.HTML_PATH['admin_export'], {'form':ExportForm()}, context_instance=RequestContext(request))
+    if not form.is_valid(): return render_to_response(PATH.HTML_PATH['admin_export'], {'form': ExportForm()}, context_instance=RequestContext(request))
 
     is_order_number = form.cleaned_data['order_number']
     is_quote_title = form.cleaned_data['quote_title']

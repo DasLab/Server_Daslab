@@ -18,10 +18,8 @@ class Command(BaseCommand):
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 
         d = time.strftime('%Y%m%d') #datetime.datetime.now().strftime('%Y%m%d')
-        gdrive_dir = 'echo'
-        if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
-        prefix = ''
-        if DEBUG: prefix = '_DEBUG'
+        gdrive_dir = 'echo' if DEBUG else 'cd %s' % APACHE_ROOT
+        prefix = '_DEBUG' if DEBUG else ''
 
         flag = False
         t = time.time()
@@ -106,8 +104,6 @@ class Command(BaseCommand):
                 self.stdout.write("\033[94m Uploaded to Google Drive. \033[0m")
             else:
                 (t_cron, d_cron, t_now) = get_date_time('gdrive')
-                gdrive_dir = 'echo'
-                if not DEBUG: gdrive_dir = 'cd %s' % APACHE_ROOT
                 gdrive_list = subprocess.Popen("%s && drive list -q \"title contains '%s_' and title contains '.tgz'\"" % (gdrive_dir, env('SERVER_NAME')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:]
                 html = 'File\t\t\t\tTime\t\t\t\tSize\n\n'
                 for i in range(0, len(gdrive_list), 6):
@@ -115,7 +111,7 @@ class Command(BaseCommand):
 
                 if IS_SLACK:
                     if (not DEBUG) and BOT['SLACK']['ADMIN']['MSG_GDRIVE']: 
-                        send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback":'SUCCESS', "mrkdwn_in": ["text"], "color":"good", "text":'*SUCCESS*: Scheduled weekly *Gdrive Sync* finished @ _%s_\n' % time.ctime()}])
+                        send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'SUCCESS', "mrkdwn_in": ["text"], "color": "good", "text": '*SUCCESS*: Scheduled weekly *Gdrive Sync* finished @ _%s_\n' % time.ctime()}])
                         send_notify_slack(SLACK['ADMIN_NAME'], '>```%s```\n' % html, '')
                 else:
                     send_notify_emails('{%s} SYSTEM: Weekly Sync Notice' % env('SERVER_NAME'), 'This is an automatic email notification for the success of scheduled weekly sync of the %s Website backup contents to Google Drive account.\n\nThe crontab job is scheduled at %s (UTC) on every %sday.\n\nThe last system backup was performed at %s (PDT).\n\n%s\n\n%s Website Admin\n' % (env('SERVER_NAME'), t_cron, d_cron, t_now, html, env('SERVER_NAME')))
