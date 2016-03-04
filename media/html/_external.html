@@ -31,25 +31,25 @@
           <tbody>
             <tr>
               <td width="73" align="left" valign="top">
-                <a id="nav-home" href="/" class="nav-hover"><img src="/site_media/images/nav_home.png"></a>
+                <a id="nav-home" href="/" class="nav-hover"><div class="nav_home"></div></a>
               </td>
               <td width="117" align="left" valign="top">
-                <a id="nav-research" href="/research/" class="nav-hover"><img src="/site_media/images/nav_research.png"></a>
+                <a id="nav-research" href="/research/" class="nav-hover"><div class="nav_research"></div></a>
               </td>
               <td width="73" align="left" valign="top">
-                <a id="nav-news" href="/news/" class="nav-hover"><img src="/site_media/images/nav_news.png"></a>
+                <a id="nav-news" href="/news/" class="nav-hover"><div class="nav_news"></div></a>
               </td>
               <td width="94" align="left" valign="top">
-                <a id="nav-people" href="/people/" class="nav-hover"><img src="/site_media/images/nav_people.png"></a>
+                <a id="nav-people" href="/people/" class="nav-hover"><div class="nav_people"></div></a>
               </td>
               <td width="159" align="left" valign="top">
-                <a id="nav-publications" href="/publications/" class="nav-hover"><img src="/site_media/images/nav_publications.png"></a>
+                <a id="nav-publications" href="/publications/" class="nav-hover"><div class="nav_publications"></div></a>
               </td>
               <td width="127" align="left" valign="top">
-                <a id="nav-resources" href="/resources/" class="nav-hover"><img src="/site_media/images/nav_resources.png"></a>
+                <a id="nav-resources" href="/resources/" class="nav-hover"><div class="nav_resources"></div></a>
               </td>
               <td width="77" align="left" valign="top">
-                <a id="nav-contact" href="/contact/" class="nav-hover"><img src="/site_media/images/nav_contact.png"></a>
+                <a id="nav-contact" href="/contact/" class="nav-hover"><div class="nav_contact"></div></a>
               </td>
             </tr>
           </tbody>
@@ -58,17 +58,17 @@
 
       {% block content %}{% endblock %}
       <div id="DasFOOTER" class="fix">
-        <img src="/site_media/images/footer_left.jpg" width="599" height="39" style="float:left;">
+        <div class="footer_left" style="float:left;"></div>
         <a href="/group/">
-          <img src="/site_media/images/footer_right.jpg" width="256" height="39" style="float:right;" id="img_group">
+          <div class="footer_right" style="float:right;" id="img_group"></div>
         </a>
       </div>
       <a href="#" id="top">
-        <img style="position:fixed; display:block; right:-5%; bottom:5%; opacity:0.85; z-index:100;" src="/site_media/images/nav_top.png" height="60"/>
+        <div style="position:fixed; display:block; right:-5%; bottom:5%; opacity:0.85; z-index:100;" class="nav_top"></div>
       </a>
 
       <div id="DasICON" class="fix">
-        <img src="/site_media/images/footer_link.jpg" width="729" height="54" border="0" usemap="#Map">
+        <img src="/site_media/images/public/nav_footer.jpg" width="729" height="54" border="0" usemap="#Map">
         <map name="Map" id="Map">
           <area shape="rect" coords="0,9,204,34" href="http://biochem.stanford.edu/" target="_blank">
           <area shape="rect" coords="226,9,381,46" href="http://med.stanford.edu/" target="_blank">
@@ -82,14 +82,9 @@
 
     <script type="text/javascript">
       $(document).ready(function () {
-        $("#top").hover(function () {
-          $(this).children().attr("src", "/site_media/images/nav_top_hover.png");
-        }, function () {
-          $(this).children().attr("src", "/site_media/images/nav_top.png");
-        });
         $("#top").on("click", function () {
           event.preventDefault()
-          $('#top > img').animate({'right':'-5%', 'opacity':'0'}, 125);
+          $('#top > div').animate({'right':'-5%', 'opacity':'0'}, 125);
           $("html, body").stop().animate({scrollTop: 0}, 250);
         });
 
@@ -98,20 +93,15 @@
         }, function () {
           $(this).children().css("border-bottom-color", "#fff");
         });
-        $("#img_group").hover(function () {
-          $(this).attr("src", "/site_media/images/footer_right_hover.jpg");
-        }, function () {
-          $(this).attr("src", "/site_media/images/footer_right.jpg");
-        });
       });
   
       $(window).on("scroll", function () {
         clearTimeout($.data(this, 'resizeTimer'));
         $.data(this, 'resizeTimer', setTimeout(function() {
           if ($(this).scrollTop() > $(window).height() / 2) {
-            $('#top > img').animate({'right':'5%', 'opacity':'0.85'}, 125);
+            $('#top > div').animate({'right':'5%', 'opacity':'0.85'}, 125);
           } else {
-            $('#top > img').animate({'right':'-5%', 'opacity':'0'}, 125);
+            $('#top > div').animate({'right':'-5%', 'opacity':'0'}, 125);
           }
         }, 200));
       });

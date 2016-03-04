@@ -12,8 +12,8 @@
 
 {% block content %}
   <div id="DasBANNER" class="fix">
-    <div id="DasHEADER" class="fix"><img src="/site_media/images/publications/icon_publications.png" width="349" height="111"></div>
-    <img src="/site_media/images/publications/logo_publications.jpg" width="973" height="221">
+    <div id="DasHEADER" class="fix"><img src="/site_media/images/public/icon_publications.png" width="349" height="111"></div>
+    <img src="/site_media/images/public/logo_publications.jpg" width="973" height="221">
   </div>
 
   <div class="BODY" id="pubBODY">
@@ -22,7 +22,7 @@
         <tr>
           <td width="38" height="15" align="left" valign="middle" class="HEAD publicationsH1">
             <a href="http://www.ncbi.nlm.nih.gov/pubmed?cmd=Search&term=Das%20Rhiju" target="_blank" id="arrow">
-              <img src="/site_media/images/publications/arrow.png" width="28" height="28" border="0">
+              <div class="imgsp_arrow"></div>
             </a>
           </td>
           <td width="807" height="15" align="left" valign="middle" class="HEAD publicationsH1" id="search">
@@ -39,7 +39,9 @@
                 <table>
                   <tbody>
                     <tr class="switch">
-                      <td width="38" height="15" align="left" valign="middle" class="HEAD publicationsH1"><a id="arrow2"><img src="/site_media/images/publications/arrow.png" width="28" height="28" border="0"/></a></td>
+                      <td width="38" height="15" align="left" valign="middle" class="HEAD publicationsH1">
+                        <a id="arrow2"><div class="imgsp_arrow"></div></a>
+                      </td>
                       <td height="15" align="left" valign="middle" class="HEAD publicationsH2" id="expand"><strong>Previous work by R. Das</strong></td>
                     </tr>
                   </tbody>
@@ -153,16 +155,6 @@
     $(document).ready(function() {
       $("table.previous").hide();
       $("p.previous").hide();
-      $("#arrow, #search").hover(function () {
-        $("#arrow").children().attr("src", "/site_media/images/publications/arrow_hover.png");
-      }, function () {
-        $("#arrow").children().attr("src", "/site_media/images/publications/arrow.png");
-      });
-      $("#arrow2, #expand").hover(function () {
-        $("#arrow2").children().attr("src", "/site_media/images/publications/arrow_hover.png");
-      }, function () {
-        $("#arrow2").children().attr("src", "/site_media/images/publications/arrow.png");
-      });
 
       $("#DasFOOTER").css({"top": $("table.current:last").offset().top + 200, "display": "inline"});
       $("#DasICON").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
@@ -175,20 +167,10 @@
         var flag = sign(($("table.previous").css("display") == "none") - 0.5);
 
         if (flag == -1) {
-          $("#arrow2").attr("src", "/site_media/images/publications/collapse_hover.png");
-          $("#arrow2, #expand").hover(function () {
-            $("#arrow2").children().attr("src", "/site_media/images/publications/collapse_hover.png");
-          }, function () {
-            $("#arrow2").children().attr("src", "/site_media/images/publications/collapse.png");
-          });
+          $("#arrow2").children().addClass("imgsp_collapse").removeClass("imgsp_arrow");
           $("#DasFOOTER").css("top", $("table.previous:last").offset().top + 200);
         } else {
-          $("#arrow2").attr("src", "/site_media/images/publications/arrow.png");
-          $("#arrow2, #expand").hover(function () {
-            $("#arrow2").children().attr("src", "/site_media/images/publications/arrow_hover.png");
-          }, function () {
-            $("#arrow2").children().attr("src", "/site_media/images/publications/arrow.png");
-          });
+          $("#arrow2").children().removeClass("imgsp_collapse").addClass("imgsp_arrow");
           $("#DasFOOTER").css("top", $("table.current:last").offset().top + 200);
         }
         $("#DasICON").css("top", parseInt($("#DasFOOTER").css("top")) + 55);

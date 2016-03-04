@@ -32,10 +32,6 @@ $(document).ready(function () {
   $('[id^=tab_], #top').on('click', function () {
     $('html, body').stop().animate({scrollTop: $($(this).attr("href")).offset().top - 75}, 500);
   });
-  $("#top").hover(
-    function(){ $("#top > img").attr("src", "/site_media/images/nav_top.png"); },
-    function(){ $("#top > img").attr("src", "/site_media/images/nav_top_hover.png"); }
-  );
   
   $('ul.panel-collapse').on('show.bs.collapse', function () {
     $(this).parent().find("a>span.glyphicon.pull-right")
@@ -55,9 +51,9 @@ $(window).on("scroll", function () {
   clearTimeout($.data(this, 'scrollTimer'));
   $.data(this, 'scrollTimer', setTimeout(function() {
     if ($(this).scrollTop() > $(window).height() / 2) {
-      $('#top > img').animate({'left':'0%', 'opacity':'1.0'}, 125);
+      $('#top > div').animate({'right':'0%', 'opacity':'1.0'}, 125);
     } else {
-      $('#top > img').animate({'left':'-5%', 'opacity':'0'}, 125);
+      $('#top > div').animate({'right':'-5%', 'opacity':'0'}, 125);
     }
     if (degree == 1) {
       $("#sidebar").removeAttr("data-spy").removeClass("affix").removeClass("affix-top");

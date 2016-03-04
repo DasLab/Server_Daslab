@@ -13,7 +13,7 @@
   <div id="DasBANNER" class="fix">
     <div id="researchBTN" class="fix">
       <a id="btn_research" href="/research/">
-        <img src="/site_media/images/btn_research.png" width="53" height="201" border="0">
+        <div class="imgsp_research"></div>
       </a>
     </div>
     <object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1022" height="355" style="visibility: inherit;">
@@ -33,20 +33,20 @@
         <param name="expressinstall" value="/site_media/swf/install.swf">
         <!-- The browser displays the following alternative content for users with Flash Player 6.0 and older. -->
         <div>
-      	  <img src="/site_media/images/home/logo_home.png" width="1022" border="0">
+      	  <img src="/site_media/images/public/logo_home.png" width="1022" border="0">
         </div>
       </object>
     </object>
   </div>
 
   <div class="researchH2 fix" id="divisionBar">
-    <img src="/site_media/images/footer_left.jpg" width="599" height="39" style="float:left;">
+    <div class="footer_left" style="float:left;"></div>
     <a href="/group/">
-      <img src="/site_media/images/footer_home.png" width="256" height="39" style="float:right;" id="img_group2">
+      <div class="footer_right" style="float:right;" id="img_group2"></div>
     </a>
   </div>
-  <div id="whatWeDo" class="fix"><img src="/site_media/images/home/what_we_do.png" width="119" height="70"></div>
-  <div id="weStrive" class="fix"><img src="/site_media/images/home/home_text_2.png" width="207" height="95"></div>
+  <div id="whatWeDo" class="fix"><div class="imgsp_home"></div></div>
+  <div id="weStrive" class="fix"><div class="imgsp_home2"></div></div>
   <div class="TEXT homeTEXT fix" id="homeTEXT">
     Our lab seeks an agile and predictive understanding of how RNAs code for information processing and replication in living systems. We are creating new computational and chemical tools to enable the precise modeling and design of these RNAs.
   </div>
@@ -59,17 +59,6 @@
     $(document).ready(function() {
       $("#DasICON").css({"top": "673px", "display": "inline"});
       $("#DasFOOTER").css("display", "none");
-      
-      $("#btn_research").hover(function () {
-        $(this).children().attr("src", "/site_media/images/btn_research_hover.png");
-      }, function () {
-        $(this).children().attr("src", "/site_media/images/btn_research.png");
-      });
-      $("#img_group2").hover(function () {
-        $(this).attr("src", "/site_media/images/footer_right_hover.jpg");
-      }, function () {
-        $(this).attr("src", "/site_media/images/footer_home.png");
-      });
     });
   </script>
 

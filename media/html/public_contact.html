@@ -12,8 +12,8 @@
 
 {% block content %}
   <div id="DasBANNER" class="fix">
-    <div id="DasHEADER" class="fix"><img src="/site_media/images/contact/icon_contact.png" width="349" height="111"></div>
-  	<img src="/site_media/images/contact/logo_contact.jpg" width="973" height="221">
+    <div id="DasHEADER" class="fix"><img src="/site_media/images/public/icon_contact.png" width="349" height="111" alt="contact"></div>
+  	<img src="/site_media/images/public/logo_contact.jpg" width="973" height="221" alt="contact logo">
   </div>
 
   <div class="TEXT BODY" id="contactBODY">
@@ -21,7 +21,7 @@
       	<tbody>
 	      	<tr>
 		        <td width="220" rowspan="2" align="left" valign="top">
-		        	<img src="/site_media/images/contact/connect_with_us.png" width="184" height="62">
+		        	<img src="/site_media/images/public/word_contact.png" width="184" height="62" alt="Connect With Us">
 		        </td>
 		        <td width="625" height="256" align="left" valign="top" class="TEXT">
 		        	<span class="contactH1">Rhiju Das is in B421A</span> (office) which is embedded in our
@@ -45,8 +45,8 @@
 			<tr>
 	        	<td align="left" valign="top" class="TEXT">
 	        		<a href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=279+Campus+Dr+W,+Stanford,+CA+94305&sll=37.425704,-122.181918&sspn=0.006586,0.013937&ie=UTF8&hq=&hnear=279+Campus+Dr+W,+Stanford,+Santa+Clara,+California+94305&z=17" target="_blank" id="map">
-	        			<img src="/site_media/images/contact/map.jpg" width="541" height="264" border="0">
-	        		</a>
+                        <div class="imgsp_map"></div>         
+                    </a>
 	        	</td>
 		    </tr>
 	    </tbody>
@@ -60,12 +60,6 @@
     $(document).ready(function() {
       $("#DasFOOTER").css({"top": "1013px", "display": "inline"});
       $("#DasICON").css({"top": "1068px", "display": "inline"});
-
-      $("#map").hover(function () {
-        $(this).children().attr("src", "/site_media/images/contact/map_hover.jpg");
-      }, function () {
-        $(this).children().attr("src", "/site_media/images/contact/map.jpg");
-      });
     });
   </script>
 {% endblock %}

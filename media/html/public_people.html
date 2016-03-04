@@ -12,8 +12,8 @@
 
 {% block content %}
   <div id="DasBANNER" class="fix">
-    <div id="DasHEADER" class="fix"><img src="/site_media/images/people/icon_people.png" width="349" height="111"></div>
-    <img src="/site_media/images/people/logo_people.jpg" width="973" height="221">
+    <div id="DasHEADER" class="fix"><img src="/site_media/images/public/icon_people.png" width="349" height="111"></div>
+    <img src="/site_media/images/public/logo_people.jpg" width="973" height="221">
   </div>
 
   <div class="homeTEXT BODY" id="pplBODY">
@@ -46,7 +46,7 @@
           </td>
           <td height="175" align="right" valign="bottom">
             <a href="{{ppl.more_info}}" target="_blank" class="btn_moreinfo">
-              <img src="/site_media/images/people/more_info.png" width="121" height="32" border="0" id="more_info_{{forloop.counter}}">
+              <div class="imgsp_more_info"></div>
             </a>
           </td>
         </tr>
@@ -70,7 +70,7 @@
           </td>
           <td height="175" align="right" valign="bottom">
             <a href="https://cap.stanford.edu/profiles/auth/frdActionServlet?choiceId=facProfile&fid=10421" target="_blank" class="btn_moreinfo">
-              <img src="/site_media/images/people/more_info.png" width="121" height="32" border="0" id="more_info_das">
+              <div class="imgsp_more_info"></div>
             </a>
           </td>
         </tr>
@@ -81,7 +81,7 @@
         <tr>
           <td align="left" valign="top">
             <br><br>
-            <img src="/site_media/images/people/alumni.png" width="140" height="36">
+            <img src="/site_media/images/public/word_people.png" width="140" height="36" alt="alumni">
           </td>
           <td colspan="2" align="left" valign="top">
             <p>&nbsp;</p>
@@ -111,12 +111,6 @@
 {% block script %}
   <script type="text/javascript">
     $(document).ready(function() {
-      $(".btn_moreinfo").hover(function () {
-        $(this).children().attr("src", "/site_media/images/people/more_info_hover.png");
-      }, function () {
-        $(this).children().attr("src", "/site_media/images/people/more_info.png");
-      });
-
       $("#DasFOOTER").css({"top": 700 + {{past_member|length}} * 60 + {{current_member|length}} * 200, "display": "inline"});
       $("#DasICON").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
       $(".DASpeople").css("height", parseInt($("#DasFOOTER").css("top")) + 150);

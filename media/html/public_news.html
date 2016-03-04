@@ -12,8 +12,8 @@
 
 {% block content %}
   <div id="DasBANNER" class="fix">
-    <div id="DasHEADER" class="fix"><img src="/site_media/images/news/icon_news.png" width="349" height="111"></div>
-    <img src="/site_media/images/news/logo_news.jpg" width="973" height="221">
+    <div id="DasHEADER" class="fix"><img src="/site_media/images/public/icon_news.png" width="349" height="111"></div>
+    <img src="/site_media/images/public/logo_news.jpg" width="973" height="221">
   </div>
 
   <div class="TEXT BODY" id="newsBODY">
@@ -35,7 +35,7 @@
           <td height="160" align="right" valign="bottom">
             {% if news.link %}
             <a href="{{news.link}}" target="_blank" class="btn_readmore">
-              <img src="/site_media/images/news/read_more.png" width="121" height="32" border="0" id="read more2{{forloop.counter}}">
+              <div class="imgsp_more_read"></div>
             {% endif %}
             </a>
           </td>
@@ -45,7 +45,9 @@
         </tr>
         {% if forloop.counter == 10 %}
           <tr class="switch">
-            <td width="38" height="15" align="left" valign="middle" class="publicationsH1"><a id="arrow"><img src="/site_media/images/publications/arrow.png" width="28" height="28" border="0" /></a></td>
+            <td width="38" height="15" align="left" valign="middle" class="publicationsH1">
+              <a id="arrow"><div class="imgsp_arrow"></div></a>
+            </td>
             <td height="15" align="left" valign="middle" class="HEAD publicationsH1" id="previous">Previous news from the Das Lab.</strong></td>
           </tr>
           <tr class="switch">
@@ -67,16 +69,6 @@
 
     $(document).ready(function() {
       $("tr.previous").hide();
-      $(".btn_readmore").hover(function () {
-        $(this).children().attr("src", "/site_media/images/news/read_more_hover.png");
-      }, function () {
-        $(this).children().attr("src", "/site_media/images/news/read_more.png");
-      });
-      $("#arrow, #previous").hover(function () {
-        $("#arrow").children().attr("src", "/site_media/images/publications/arrow_hover.png");
-      }, function () {
-        $("#arrow").children().attr("src", "/site_media/images/publications/arrow.png");
-      });
 
       $("#DasFOOTER").css({"top": $("tr.middle").offset().top + 200, "display": "inline"});
       $("#DasICON").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
@@ -87,20 +79,10 @@
         var flag = sign(($("tr.previous").css("display") == "none") - 0.5);
 
         if (flag == -1) {
-          $("#arrow").attr("src", "/site_media/images/publications/collapse_hover.png");
-          $("#arrow, #previous").hover(function () {
-            $("#arrow").children().attr("src", "/site_media/images/publications/collapse_hover.png");
-          }, function () {
-            $("#arrow").children().attr("src", "/site_media/images/publications/collapse.png");
-          });
+          $("#arrow").children().addClass("imgsp_collapse").removeClass("imgsp_arrow");
           $("#DasFOOTER").css("top", $("tr.last").offset().top + 200);
         } else {
-          $("#arrow").attr("src", "/site_media/images/publications/arrow.png");
-          $("#arrow, #previous").hover(function () {
-            $("#arrow").children().attr("src", "/site_media/images/publications/arrow_hover.png");
-          }, function () {
-            $("#arrow").children().attr("src", "/site_media/images/publications/arrow.png");
-          });
+          $("#arrow").children().removeClass("imgsp_collapse").addClass("imgsp_arrow");
           $("#DasFOOTER").css("top", $("tr.middle").offset().top + 200);
         }
         $("#DasICON").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
