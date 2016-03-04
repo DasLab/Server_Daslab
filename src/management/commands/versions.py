@@ -190,7 +190,7 @@ class Command(BaseCommand):
             ver['kerberos'] = subprocess.Popen("klist -V | sed 's/.*version //g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
 
 
-            open(os.path.join(MEDIA_ROOT, 'cache/stat_sys.json'), 'w').write(simplejson.dumps(ver, indent=' ' * 4, sort_keys=True))
+            simplejson.dump(ver, open(os.path.join(MEDIA_ROOT, 'cache/stat_sys.json'), 'w'), indent=' ' * 4, sort_keys=True)
             subprocess.Popen('rm %s' % os.path.join(MEDIA_ROOT, 'data/temp.txt'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             get_backup_stat()
 
