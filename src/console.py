@@ -284,7 +284,7 @@ def restyle_apache():
     cpu_usage = '%.2f / %.2f / %.2f / %.2f' % (float(cpu[0][1:]), float(cpu[1][1:]), float(cpu[2][2:]), float(cpu[3][2:]))
     cpu_load = '%1.4f' % float(cpu[4])
     traffic = response[18].replace('<dt>', '').replace('B/request</dt>', '').replace('requests/sec -', '').replace('B/second -', '').split()
-    if traffic[-1] in ('k', 'M', 'G'): 
+    if traffic[-1] in ('k', 'M', 'G'):
         traffic = '%1.2f / %.1f / %s' % (float(traffic[0]), float(traffic[-2]), traffic[-1])
     else:
         traffic = '%1.2f / %.1f' % (float(traffic[0]), float(traffic[-1]))

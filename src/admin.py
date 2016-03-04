@@ -179,14 +179,14 @@ def group_dash(request):
     return HttpResponse(json, content_type='application/json')
 
 def dash_dash(request):
-    t_aws = format_dash_ts('aws/init.pickle', BOT['CACHE']['INTERVAL_15'])
-    t_ga = format_dash_ts('ga/init.pickle', BOT['CACHE']['INTERVAL_15'])
-    t_git = format_dash_ts('git/init.pickle', BOT['CACHE']['INTERVAL_30'])
-    t_slack = format_dash_ts('slack/users.pickle', BOT['CACHE']['INTERVAL_30'])
-    t_dropbox = format_dash_ts('dropbox/sizes.pickle', BOT['CACHE']['INTERVAL_30'])
-    t_cal = format_dash_ts('calendar.pickle', BOT['CACHE']['INTERVAL_30'])
-    t_sch = format_dash_ts('schedule.pickle', BOT['CACHE']['INTERVAL_30'])
-    t_duty = format_dash_ts('duty.pickle', BOT['CACHE']['INTERVAL_30'])
+    t_aws = format_dash_ts('aws/init.json', BOT['CACHE']['INTERVAL_15'])
+    t_ga = format_dash_ts('ga/init.json', BOT['CACHE']['INTERVAL_15'])
+    t_git = format_dash_ts('git/init.json', BOT['CACHE']['INTERVAL_30'])
+    t_slack = format_dash_ts('slack/users.json', BOT['CACHE']['INTERVAL_30'])
+    t_dropbox = format_dash_ts('dropbox/sizes.json', BOT['CACHE']['INTERVAL_30'])
+    t_cal = format_dash_ts('calendar.json', BOT['CACHE']['INTERVAL_30'])
+    t_sch = format_dash_ts('schedule.json', BOT['CACHE']['INTERVAL_30'])
+    t_duty = format_dash_ts('duty.json', BOT['CACHE']['INTERVAL_30'])
     json = {'t_aws': t_aws, 't_ga': t_ga, 't_git': t_git, 't_slack': t_slack, 't_dropbox': t_dropbox, 't_cal': t_cal, 't_sch': t_sch, 't_duty': t_duty}
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 

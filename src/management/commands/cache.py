@@ -74,6 +74,7 @@ class Command(BaseCommand):
                     self.stdout.write("    SLACK: %s / %s (%s)..." % (i + 1, len(requests), request))
                     request = {'qs': request}
                     self.pickle_slack(request)
+                    self.stdout.write(" \033[92mSUCCESS\033[0m")
             else:
                 self.stdout.write("#4: Skip SLACK \033[94mhome\033[0m...")
 
