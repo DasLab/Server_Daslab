@@ -19,27 +19,27 @@ $.ajax({
     url : "/group/schedule_dash/",
     dataType: "json",
     success: function (data) {
-        $("#this_type").html(label_type(data['this'][1]));
-        if (data['this'][1] == 'N/A' || data['this'][1] == 'FS') {
-            $("#this_name").html('(' + data['this'][3] + ')').removeClass("label label-inverse").addClass("small");
+        $("#this_type").html(label_type(data['this'].type));
+        if (data['this'].type == 'N/A' || data['this'].type == 'FS') {
+            $("#this_name").html('(' + data['this'].note + ')').removeClass("label label-inverse").addClass("small");
         } else {
-            $("#this_name").html(data['this'][2]);
+            $("#this_name").html(data['this'].who);
         }
-        $("#this_date").html(data['this'][0]);
-        $("#last_type").html(label_type(data.last[1]));
-        if (data.last[1] == 'N/A'|| data.last[1] == 'FS') {
-            $("#last_name").html('(' + data.last[3] + ')').removeClass("label label-inverse").addClass("small");
+        $("#this_date").html(data['this'].date);
+        $("#last_type").html(label_type(data.last.type));
+        if (data.last.type == 'N/A'|| data.last.type == 'FS') {
+            $("#last_name").html('(' + data.last.note + ')').removeClass("label label-inverse").addClass("small");
         } else {
-            $("#last_name").html(data.last[2]);
+            $("#last_name").html(data.last.who);
         }
-        $("#last_date").html(data.last[0]);
-        $("#next_type").html(label_type(data.next[1]));
-        if (data.next[1] == 'N/A' || data.next[1] == 'FS') {
-            $("#next_name").html('(' + data.next[3] + ')').removeClass("label label-inverse").addClass("small");
+        $("#last_date").html(data.last.date);
+        $("#next_type").html(label_type(data.next.type));
+        if (data.next.type == 'N/A' || data.next.type == 'FS') {
+            $("#next_name").html('(' + data.next.note + ')').removeClass("label label-inverse").addClass("small");
         } else {
-            $("#next_name").html(data.next[2]);
+            $("#next_name").html(data.next.who);
         }
-        $("#next_date").html(data.next[0]);
+        $("#next_date").html(data.next.date);
         $("#tp").html('<b>' + data.tp.replace("[", "").replace("]", "") + '</b>');
 
         $("#recent_flash").html('<span class="label label-primary">' + data.flash_slide.date + '</span>&nbsp;&nbsp;<a href="' + data.flash_slide.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');

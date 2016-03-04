@@ -31,13 +31,21 @@ class Command(BaseCommand):
         subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     def pickle_slack(self, request):
-        f_name = '%s/cache/slack/%s.pickle' % (MEDIA_ROOT, request['qs'])
-        pickle.dump(cache_slack(request), open(f_name + '_tmp', 'wb'))
+        if request['qs'] in ['plot_files', 'plot_msgs']:
+            f_name = '%s/cache/slack/%s.pickle' % (MEDIA_ROOT, request['qs'])
+            pickle.dump(cache_slack(request), open(f_name + '_tmp', 'wb'))
+        else:
+            f_name = '%s/cache/slack/%s.json' % (MEDIA_ROOT, request['qs'])
+            simplejson.dump(cache_slack(request), open(f_name + '_tmp', 'wb'), sort_keys=True, indent=' ' * 4)
         subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     def pickle_dropbox(self, request):
-        f_name = '%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, request['qs'])
-        pickle.dump(cache_dropbox(request), open(f_name + '_tmp', 'wb'))
+        if request['qs'] == 'history':
+            f_name = '%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, request['qs'])
+            pickle.dump(cache_dropbox(request), open(f_name + '_tmp', 'wb'))
+        else:
+            f_name = '%s/cache/dropbox/%s.json' % (MEDIA_ROOT, request['qs'])
+            simplejson.dump(cache_dropbox(request), open(f_name + '_tmp', 'wb'), sort_keys=True, indent=' ' * 4)
         subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 
@@ -51,10 +59,9 @@ class Command(BaseCommand):
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 
         if options['interval']:
-            is_3, is_15, is_30 = False, False, False
-            is_3 = (options['interval'][0] == 3)
-            is_15 = (options['interval'][0] == 15)
-            is_30 = (options['interval'][0] == 30)
+            is_3 = 3 in options['interval']
+            is_15 = 15 in options['interval']
+            is_30 = 30 in options['interval']
         else:
             is_3, is_15, is_30 = True, True, True
 
@@ -76,8 +83,7 @@ class Command(BaseCommand):
                 self.stdout.write("#1: Requesting \033[94mAWS\033[0m...")
                 request = {'qs': 'init'}
                 aws_init = cache_aws(request)
-                pickle.dump(aws_init, open('%s/cache/aws/init.pickle' % MEDIA_ROOT, 'wb'))
-                aws_init = simplejson.loads(aws_init)
+                simplejson.dump(aws_init, open('%s/cache/aws/init.json' % MEDIA_ROOT, 'w'), sort_keys=True, indent=' ' * 4)
                 self.stdout.write("    AWS \033[94minit\033[0m finished with \033[92mSUCCESS\033[0m.")
 
                 # aws each
@@ -106,15 +112,14 @@ class Command(BaseCommand):
                 # ga init
                 self.stdout.write("#2: Requesting \033[94mGA\033[0m...")
                 request = {'qs': 'init'}
-                ga_init = cache_ga(request)
-                pickle.dump(ga_init, open('%s/cache/ga/init.pickle' % MEDIA_ROOT, 'wb'))
-                ga_init = simplejson.loads(ga_init)
+                (ga_init, access_token) = cache_ga(request)
+                simplejson.dump(ga_init, open('%s/cache/ga/init.json' % MEDIA_ROOT, 'w'), sort_keys=True, indent=' ' * 4)
                 self.stdout.write("    GA \033[94minit\033[0m finished with \033[92mSUCCESS\033[0m.")
 
                 # ga each
                 for i, ga in enumerate(ga_init['projs']):
                     self.stdout.write("    GA \033[94mtracker\033[0m: %s / %s (%s)..." % (i + 1, len(ga_init['projs']), ga['track_id']), ending='')
-                    request = {'qs': 'sessions', 'id': ga['id'], 'access_token': ga_init['access_token']}
+                    request = {'qs': 'sessions', 'id': ga['id'], 'access_token': access_token}
                     self.pickle_ga(request)
                     request.update({'qs': 'percentNewSessions'})
                     self.pickle_ga(request)
@@ -130,8 +135,7 @@ class Command(BaseCommand):
                 self.stdout.write("#3: Requesting \033[94mGIT\033[0m...")
                 request = {'qs': 'init'}
                 git_init = cache_git(request)
-                pickle.dump(git_init, open('%s/cache/git/init.pickle' % MEDIA_ROOT, 'wb'))
-                git_init = simplejson.loads(git_init)
+                simplejson.dump(git_init, open('%s/cache/git/init.json' % MEDIA_ROOT, 'w'), sort_keys=True, indent=' ' * 4)
                 self.stdout.write("    GIT \033[94minit\033[0m finished with \033[92mSUCCESS\033[0m.")
 
                 # git each
@@ -165,22 +169,22 @@ class Command(BaseCommand):
 
                 # schedule
                 self.stdout.write("#6: Requesting \033[94mSchedule Spreadsheet\033[0m...")
-                f_name = '%s/cache/schedule.pickle' % MEDIA_ROOT
-                pickle.dump(cache_schedule(), open(f_name + '_tmp', 'wb'))
+                f_name = '%s/cache/schedule.json' % MEDIA_ROOT
+                simplejson.dump(cache_schedule(), open(f_name + '_tmp', 'w'), sort_keys=True, indent=' ' * 4)
                 subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 self.stdout.write("    Schedule finished with \033[92mSUCCESS\033[0m.")
 
                 # duty
                 self.stdout.write("#7: Requesting \033[94mDuty Spreadsheet\033[0m...")
-                f_name = '%s/cache/duty.pickle' % MEDIA_ROOT
-                pickle.dump(cache_duty(), open(f_name + '_tmp', 'wb'))
+                f_name = '%s/cache/duty.json' % MEDIA_ROOT
+                simplejson.dump(cache_duty(), open(f_name + '_tmp', 'w'), sort_keys=True, indent=' ' * 4)
                 subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 self.stdout.write("    Duty finished with \033[92mSUCCESS\033[0m.")
 
                 # cal
                 self.stdout.write("#8: Requesting \033[94mGoogle Calendar\033[0m...")
-                f_name = '%s/cache/calendar.pickle' % MEDIA_ROOT
-                pickle.dump(cache_cal(), open(f_name + '_tmp', 'wb'))
+                f_name = '%s/cache/calendar.json' % MEDIA_ROOT
+                simplejson.dump(cache_cal(), open(f_name + '_tmp', 'w'), sort_keys=True, indent=' ' * 4)
                 subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 self.stdout.write("    Calendar finished with \033[92mSUCCESS\033[0m.")
             else:
@@ -192,7 +196,7 @@ class Command(BaseCommand):
                 self.stdout.write("#8: Skip \033[94mGoogle Calendar\033[0m...")
         except Exception:
             tb = traceback.format_exc()
-            if IS_SLACK:
+            if IS_SLACK and not DEBUG:
                 if ('pickle_git' in tb or 'cache_git' in tb) and ('ConnectionError' in tb or 'SSLError' in tb):
                     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`ERROR`*: *pickle_git()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
                 elif ('pickle_slack' in tb or 'cache_slack' in tb) and ('500' in tb and 'Internal Server Error' in tb) or ('503' in tb and 'Service' in tb and 'Unavailable' in tb) or ('504' in tb and 'GATEWAY_TIMEOUT' in tb):

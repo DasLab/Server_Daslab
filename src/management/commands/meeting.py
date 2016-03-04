@@ -67,7 +67,7 @@ class Command(BaseCommand):
                 flash_slides = FlashSlide(date=date, link='https://docs.google.com/presentation/d/%s/edit#slide=id.p' % ppt_id)
                 flash_slides.save()
                 self.stdout.write('\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) saved in MySQL.' % ppt_id)
-                
+
                 flag = result['this'][3].lower().replace(' ', '')
                 name = result['this'][2]
                 ids = []

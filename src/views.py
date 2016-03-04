@@ -200,11 +200,15 @@ def git_dash(request):
 
 # @login_required
 def slack_dash(request):
-    return HttpResponse(dash_slack(request), content_type='application/json')
+    json = dash_slack(request)
+    if isinstance(json, HttpResponse): return json
+    return HttpResponse(json, content_type='application/json')
 
 # @login_required
 def dropbox_dash(request):
-    return HttpResponse(dash_dropbox(request), content_type='application/json')
+    json = dash_dropbox(request)
+    if isinstance(json, HttpResponse): return json
+    return HttpResponse(json, content_type='application/json')
 
 # @login_required
 def gcal_dash(request):
@@ -259,7 +263,7 @@ def schedule_dash(request):
     else:
         ar_link = archive.link
     archive = {'date': archive.date.strftime('%Y-%m-%d'), 'name': archive.presenter, 'title': archive.title, 'url': ar_link}
-    json.update({'flash_slide': flash_slide, 'journal_club': journal_club, 'eterna': eterna, 'rotation': rotation, 'archive' :archive}) 
+    json.update({'flash_slide': flash_slide, 'journal_club': journal_club, 'eterna': eterna, 'rotation': rotation, 'archive': archive})
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 

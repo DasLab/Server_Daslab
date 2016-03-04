@@ -91,7 +91,7 @@ def find_slack_id(name):
 def get_date_time(keyword):
     t_cron = [c[0] for c in CRONJOBS if ''.join(c[2]).find(keyword) != -1][0]
     d_cron = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur'][int(t_cron.split(' ')[-1])]
-    t_cron = datetime.strptime(' '.join(t_cron.split(' ')[0:2]),'%M %H').strftime('%I:%M%p')
+    t_cron = datetime.strptime(' '.join(t_cron.split(' ')[0:2]), '%M %H').strftime('%I:%M%p')
     t_now = datetime.now().strftime('%b %d %Y (%a) @ %H:%M:%S')
     return (t_cron, d_cron, t_now)
 
@@ -299,7 +299,7 @@ def restyle_apache():
 
     json = {'title': title, 'ver_apache': ver[0], 'ver_wsgi': ver[3], 'ver_webauth': ver[2], 'ver_ssl': ver[1], 'mpm': mpm, 'time_build': time_build, 'time_current': time_current, 'time_restart': time_restart, 'time_up': time_up, 'server_load': server_load, 'total_access': total[0], 'total_traffic': '%s %s' % (total[1], total[2]), 'cpu_load': cpu_load, 'cpu_usage': cpu_usage, 'traffic': traffic, 'idle': workers[1], 'processing': workers[0], 'worker': worker, 'table': table, 'port': port, 'ssl_subcache': ssl_subcache, 'ssl_index': ssl_index, 'ssl_cache': ssl[0], 'ssl_mem':  ssl[1], 'ssl_entry': ssl[2]}
     return simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
-    
+
 
 def aws_result(results, args, req_id=None):
     data = []
@@ -307,7 +307,7 @@ def aws_result(results, args, req_id=None):
     for i, d in enumerate(data):
         ts = d[u'Timestamp'].replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
         d.update({u'Timestamp': ts})
-        if args['calc_rate'] and 'Sum' in args['cols']: 
+        if args['calc_rate'] and 'Sum' in args['cols']:
             d.update({args['metric'][0] + u'Rate': d[u'Sum'] / args['period']})
         for j, r in enumerate(results):
             if j == 0 and len(results) > 1 and args['calc_rate']:
@@ -337,7 +337,7 @@ def aws_result(results, args, req_id=None):
                 if col == 'Sum' and args['calc_rate']: col = 'Rate'
                 desp[me + col] = ('number', me + col)
                 stats.append(me + col)
-    
+
     data = sorted(data, key=operator.itemgetter(u'Timestamp'))
     data_table = gviz_api.DataTable(desp)
     data_table.LoadData(data)
@@ -385,12 +385,12 @@ def aws_stats(request):
             stat1 = {k: stat[k] for k in ('id', 'instance_type', 'private_dns_name', 'public_dns_name', 'vpc_id', 'subnet_id', 'image_id', 'architecture')} 
             resv = conn.get_all_volumes(volume_ids=AWS['EBS_VOLUME_ID'])
             stat = resv[0].__dict__
-            stat2 = {k: stat[k] for k in ('id', 'type', 'size', 'zone', 'snapshot_id', 'encrypted')} 
+            stat2 = {k: stat[k] for k in ('id', 'type', 'size', 'zone', 'snapshot_id', 'encrypted')}
 
             conn = boto.ec2.elb.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
             resv = conn.get_all_load_balancers(load_balancer_names=AWS['ELB_NAME'])
             stat = resv[0].__dict__
-            stat3 = {k: stat[k] for k in ('dns_name', 'vpc_id', 'subnets', 'health_check')} 
+            stat3 = {k: stat[k] for k in ('dns_name', 'vpc_id', 'subnets', 'health_check')}
             stat3['health_check'] = str(stat3['health_check']).replace('HealthCheck:', '')
 
             return simplejson.dumps({'ec2': stat1, 'ebs': stat2, 'elb': stat3}, sort_keys=True, indent=' ' * 4)
@@ -469,7 +469,7 @@ def ga_stats(request):
                     curr = '%d' % int(temp[key])
                 stats.update({ga_key: curr, (ga_key + '_prev'): prev})
             return simplejson.dumps(stats, sort_keys=True, indent=' ' * 4)
-        
+
         elif request.GET.has_key('sp'):
             sp = request.GET.get('sp')
 
@@ -495,7 +495,7 @@ def ga_stats(request):
                     time.sleep(2)
                     i += 1
                     if i == 3: return error500(request)
-                    
+
                 data = []
                 stats = ['Timestamp', 'Sessions']
                 desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', 'Count'), 'Sessions': ('number', 'Sessions')}
@@ -606,7 +606,7 @@ def git_stats(request):
             else:
                 created_at = repo.created_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
                 pushed_at = repo.pushed_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
-                
+
                 num_issues = len(requests.get('https://api.github.com/repos/' + repo_name + '/issues?access_token=%s' % GIT['ACCESS_TOKEN']).json())
                 num_pulls = len(requests.get('https://api.github.com/repos/' + repo_name + '/pulls?access_token=%s' % GIT['ACCESS_TOKEN']).json())
                 num_watchers = len(requests.get('https://api.github.com/repos/' + repo_name + '/watchers?access_token=%s' % GIT['ACCESS_TOKEN']).json())
@@ -671,7 +671,7 @@ def git_stats(request):
             for field in fields:
                 stats.append(field)
                 desp[field] = ('number', field)
-            
+
             data = sorted(data, key=operator.itemgetter(stats[0]))
             data_table = gviz_api.DataTable(desp)
             data_table.LoadData(data)
@@ -705,19 +705,19 @@ def export_citation(request):
         txt = ''
         for i, pub in enumerate(publications):
             order = ''
-            if is_order_number: 
+            if is_order_number:
                 if number_order:
                     order = '%d. ' % (len(publications) - i)
                 else:
                     order = '%d. ' % (i + 1)
-            
+
             title = pub.title
             if is_quote_title: title = '"%s"' % title
             number = pub.volume
             if pub.issue: number += '(%s)' % pub.issue
             page = ''
             if pub.begin_page: page += ': %s' % pub.begin_page
-            if pub.end_page: page += '-%s' % pub.end_page 
+            if pub.end_page: page += '-%s' % pub.end_page
             double_space = ''
             if is_double_space: double_space = '\n'
             txt += '%s%s (%s) %s %s %s%s\n%s' % (order, pub.authors, pub.year, title, pub.journal, number, page, double_space)
@@ -733,7 +733,7 @@ def export_citation(request):
         html = '<html><body>'
         for i, pub in enumerate(publications):
             order = ''
-            if is_order_number: 
+            if is_order_number:
                 if number_order:
                     order = '%d. ' % (len(publications) - i)
                 else:
@@ -760,7 +760,7 @@ def export_citation(request):
 
         html += '</body></html>'
         response = HttpResponse(html, content_type='text/html')
-        
+
 
     if request.POST['action'] == 'save':
         if text_type == '0':

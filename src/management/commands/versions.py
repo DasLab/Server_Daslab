@@ -78,10 +78,10 @@ class Command(BaseCommand):
             ver['swfobj'] = ver_swfobj[ver_swfobj.find('v')+1: ver_swfobj.find('<')].strip()
             ver_fullcall = open(os.path.join(MEDIA_ROOT, 'media/js/fullcalendar.min.js'), 'r').readlines()
             ver_fullcall = ver_fullcall[1]
-            ver['fullcal']= ver_fullcall[ver_fullcall.find('v')+1:].strip()
+            ver['fullcal'] = ver_fullcall[ver_fullcall.find('v')+1:].strip()
             ver_moment = open(os.path.join(MEDIA_ROOT, 'media/js/moment.min.js'), 'r').readlines()
             ver_moment = ver_moment[1]
-            ver['moment']= ver_moment[ver_moment.find(':')+2:].strip()
+            ver['moment'] = ver_moment[ver_moment.find(':')+2:].strip()
             # f = open(os.path.join(MEDIA_ROOT, 'media/js/dropzone.min.js'), 'r')
             # ver_dropz = ''.join(f.readlines())
             # ver_dropz = ver_dropz[ver_dropz.find('.version="') + 10 : ver_dropz.find('.version="') + 18]
@@ -89,7 +89,7 @@ class Command(BaseCommand):
             # f.close()
 
             open(os.path.join(MEDIA_ROOT, 'data/temp.txt'), 'w').write(subprocess.Popen('pip show icalendar', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip())
-            ver['icalendar']= subprocess.Popen('head -4 %s | tail -1 | sed %s' % (os.path.join(MEDIA_ROOT, 'data/temp.txt'),"'s/.*: //g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+            ver['icalendar'] = subprocess.Popen('head -4 %s | tail -1 | sed %s' % (os.path.join(MEDIA_ROOT, 'data/temp.txt'), "'s/.*: //g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
             ver['gviz_api'] = '1.8.2'
 
             open(os.path.join(MEDIA_ROOT, 'data/temp.txt'), 'w').write(subprocess.Popen('ssh -V', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip())
@@ -108,12 +108,12 @@ class Command(BaseCommand):
             open(os.path.join(MEDIA_ROOT, 'data/temp.txt'), 'w').write(subprocess.Popen('pip show pygithub', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip())
             ver['pygithub'] = subprocess.Popen("head -4 %s | tail -1 | sed 's/.*: //g'" % os.path.join(MEDIA_ROOT, 'data/temp.txt'), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
             open(os.path.join(MEDIA_ROOT, 'data/temp.txt'), 'w').write(subprocess.Popen('pip show slacker', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip())
-            ver['slacker'] = subprocess.Popen('head -4 %s | tail -1 | sed %s' % (os.path.join(MEDIA_ROOT, 'data/temp.txt'),"'s/.*: //g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-            ver['dropbox']= subprocess.Popen('python -c "import dropbox; print dropbox.__version__"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-            ver['requests']= subprocess.Popen('python -c "import requests; print requests.__version__"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-            ver['simplejson']= subprocess.Popen('python -c "import simplejson; print simplejson.__version__"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-            ver['virtualenv']= subprocess.Popen('python -c "import virtualenv; print virtualenv.__version__"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-            ver['pip']= subprocess.Popen('python -c "import pip; print pip.__version__"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+            ver['slacker'] = subprocess.Popen('head -4 %s | tail -1 | sed %s' % (os.path.join(MEDIA_ROOT, 'data/temp.txt'), "'s/.*: //g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+            ver['dropbox'] = subprocess.Popen('python -c "import dropbox; print dropbox.__version__"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+            ver['requests'] = subprocess.Popen('python -c "import requests; print requests.__version__"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+            ver['simplejson'] = subprocess.Popen('python -c "import simplejson; print simplejson.__version__"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+            ver['virtualenv'] = subprocess.Popen('python -c "import virtualenv; print virtualenv.__version__"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+            ver['pip'] = subprocess.Popen('python -c "import pip; print pip.__version__"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
 
             ver['yuicompressor'] = subprocess.Popen("java -jar %s/../yuicompressor.jar -V" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
 
@@ -122,12 +122,12 @@ class Command(BaseCommand):
             if DEBUG:
                 mem_str = subprocess.Popen('top -l 1 | head -n 10 | grep PhysMem', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
                 mem_avail = mem_str[mem_str.find(',')+1:mem_str.find('unused')].strip()
-                if 'M' in mem_avail: 
+                if 'M' in mem_avail:
                     mem_avail = '%.1f G' % (int(mem_avail[:-1]) / 1024.)
                 else:
                     mem_avail = mem_avail[:-1] + ' ' + mem_avail[-1]
                 mem_used = mem_str[mem_str.find(':')+1:mem_str.find('used')].strip()
-                if 'M' in mem_used: 
+                if 'M' in mem_used:
                     mem_used = '%.1f G' % (int(mem_used[:-1]) / 1024.)
                 else:
                     mem_used = mem_used[:-1] + ' ' + mem_used[-1]
@@ -135,17 +135,17 @@ class Command(BaseCommand):
                 mem_str = subprocess.Popen('free -h', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split('\n')
                 mem_str = [x for x in mem_str[2].split(' ') if x]
                 mem_avail = mem_str[-1]
-                if mem_avail.endswith('G'): 
+                if mem_avail.endswith('G'):
                     mem_avail = str(float(mem_avail[:-1]) * 1024) + ' M'
                 else:
                     mem_avail = mem_avail[:-1] + ' M'
                 mem_used = mem_str[-2]
-                if mem_used.endswith('G'): 
+                if mem_used.endswith('G'):
                     mem_used = str(float(mem_used[:-1]) * 1024) + ' M'
                 else:
                     mem_used = mem_used[:-1] + ' M'
             ver['_mem'] = [mem_avail, mem_used]
-            ver['_cpu']= cpu.replace(' ', '').split('/')
+            ver['_cpu'] = cpu.replace(' ', '').split('/')
 
             ver['_path'] = {
                 'root': MEDIA_ROOT,
@@ -153,7 +153,7 @@ class Command(BaseCommand):
                 'media': MEDIA_ROOT + '/media'
             }
 
-            gdrive_dir = 'echo' if DEBUG else  'cd %s' % APACHE_ROOT
+            gdrive_dir = 'echo' if DEBUG else 'cd %s' % APACHE_ROOT
             prefix = '_DEBUG' if DEBUG else ''
             ver['_drive'] = subprocess.Popen("%s && drive quota | awk '{ printf $2 \" G\t\"}'" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split('\t')
 

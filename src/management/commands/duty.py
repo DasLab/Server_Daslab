@@ -149,7 +149,7 @@ class Command(BaseCommand):
                 send_notify_slack(h[0], h[1], h[2])
                 if '@' in h[0]:
                     self.stdout.write('\033[92mSUCCESS\033[0m: PM\'ed duty reminder to \033[94m%s\033[0m in Slack.' % h[0])
-    
+
         if (not DEBUG) and len(self.msg_handles):
             send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'SUCCESS', "mrkdwn_in": ["text"], "color": "good", "text": '*SUCCESS*: Scheduled %s *Duty Reminder* finished @ _%s_\n' % (flag, time.ctime())}])
         self.stdout.write("Finished with \033[92mSUCCESS\033[0m!")

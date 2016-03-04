@@ -52,15 +52,15 @@ def cache_aws(request):
             data = sub_conn.get_metric_statistics(300, datetime.utcnow() - timedelta(minutes=30), datetime.utcnow(), 'HealthyHostCount', 'AWS/ELB', 'Maximum', {'LoadBalancerName': resv.name}, 'Count')
             status = True
             for d in data:
-                if d[u'Maximum'] < 1: 
+                if d[u'Maximum'] < 1:
                     status = False
                     break
             dict_aws['elb'].append({'name': resv.name, 'dns': resv.dns_name, 'region': ', '.join(resv.availability_zones), 'status': status})
-            
+
             if (not status) and BOT['SLACK']['ADMIN']['MSG_AWS_WARN']:
                 last_status = False
-                if os.path.exists('%s/cache/aws/init.pickle' % MEDIA_ROOT):
-                    init = pickle.load(open('%s/cache/aws/init.pickle' % MEDIA_ROOT, 'rb'))
+                if os.path.exists('%s/cache/aws/init.json' % MEDIA_ROOT):
+                    init = simplejson.load(open('%s/cache/aws/init.json' % MEDIA_ROOT, 'r'))
                     for elb in init['elb']:
                         if elb['name'] == resv.name:
                             if elb['status']: last_status = True
@@ -86,7 +86,7 @@ def cache_aws(request):
             if i < len(dict_aws['elb']):
                 temp.update({'elb': {'name': dict_aws['elb'][i]['name'], 'status': dict_aws['elb'][i]['status']}})
             dict_aws['table'].append(temp)
-        return simplejson.dumps(dict_aws, sort_keys=True, indent=' ' * 4)
+        return dict_aws
     else:
         qs = request['qs']
         id = request['id']
@@ -126,7 +126,7 @@ def dash_aws(request):
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
         if qs == 'init':
-            return pickle.load(open('%s/cache/aws/init.pickle' % MEDIA_ROOT, 'rb'))
+            return simplejson.dumps(simplejson.load(open('%s/cache/aws/init.json' % MEDIA_ROOT, 'r')))
         elif qs in ['cpu', 'net', 'lat', 'req', 'disk']:
             results = pickle.load(open('%s/cache/aws/%s_%s_%s.pickle' % (MEDIA_ROOT, tp, id, qs), 'rb'))
             return results.replace('__REQ_ID__', req_id)
@@ -142,7 +142,7 @@ def cache_ga(request):
         list_proj = requests.get('https://www.googleapis.com/analytics/v3/management/accountSummaries?access_token=%s' % access_token).json()['items'][0]['webProperties'][::-1]
         url_colon = urllib.quote(':')
         url_comma = urllib.quote(',')
-        dict_ga = {'access_token': access_token, 'client_id': GA['CLIENT_ID'], 'projs': []}
+        dict_ga = {'projs': []}
 
         for proj in list_proj:
             dict_ga['projs'].append({'id': proj['profiles'][0]['id'], 'track_id': proj['id'], 'name': proj['name'], 'url': proj['websiteUrl']})
@@ -158,7 +158,7 @@ def cache_ga(request):
                 else:
                     curr = '%d' % int(temp[key])
                 dict_ga['projs'][j][ga_key] = curr
-        return simplejson.dumps(dict_ga, sort_keys=True, indent=' ' * 4)
+        return (dict_ga, access_token)
     else:
         url_colon = urllib.quote(':')
         i = 0
@@ -185,7 +185,7 @@ def cache_ga(request):
         for field in fields:
             stats.append(field)
             desp[field] = ('number', field)
-        
+
         data = sorted(data, key=operator.itemgetter(stats[0]))
         data_table = gviz_api.DataTable(desp)
         data_table.LoadData(data)
@@ -199,7 +199,7 @@ def dash_ga(request):
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
         if qs == 'init':
-            return pickle.load(open('%s/cache/ga/init.pickle' % MEDIA_ROOT, 'rb'))
+            return simplejson.dumps(simplejson.load(open('%s/cache/ga/init.json' % MEDIA_ROOT, 'r')))
         elif qs in ['sessions', 'percentNewSessions']:
             results = pickle.load(open('%s/cache/ga/%s_%s.pickle' % (MEDIA_ROOT, id, qs), 'rb'))
             return results.replace('__REQ_ID__', req_id)
@@ -239,14 +239,14 @@ def cache_git(request):
 
             data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
             repos.append({'url': repo.html_url, 'private': repo.private, 'data': data, 'name': repo.name, 'id': repo.full_name})
-        return simplejson.dumps({'git': repos}, sort_keys=True, indent=' ' * 4)
+        return {'git': repos}
     else:
         if qs == 'num':
             name = 'DasLab/' + request['repo']
             repo = gh.get_repo(name)
             created_at = repo.created_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
             pushed_at = repo.pushed_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
-            
+
             num_issues = len(requests.get('https://api.github.com/repos/' + name + '/issues?access_token=%s' % GIT['ACCESS_TOKEN']).json())
             num_pulls = len(requests.get('https://api.github.com/repos/' + name + '/pulls?access_token=%s' % GIT['ACCESS_TOKEN']).json())
             num_watchers = len(requests.get('https://api.github.com/repos/' + name + '/watchers?access_token=%s' % GIT['ACCESS_TOKEN']).json())
@@ -270,7 +270,7 @@ def cache_git(request):
                     i += 1
                 if contribs is None: return error500(request)
                 fields = ['Commits']
-                for contrib in contribs: 
+                for contrib in contribs:
                     data.append({u'Timestamp': contrib.week, u'Commits': sum(contrib.days)})
             elif qs == 'ad':
                 i = 0
@@ -287,7 +287,7 @@ def cache_git(request):
             for field in fields:
                 stats.append(field)
                 desp[field] = ('number', field)
-            
+
             data = sorted(data, key=operator.itemgetter(stats[0]))
             data_table = gviz_api.DataTable(desp)
             data_table.LoadData(data)
@@ -301,7 +301,7 @@ def dash_git(request):
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
         if qs == 'init':
-            return pickle.load(open('%s/cache/git/init.pickle' % MEDIA_ROOT, 'rb'))
+            return simplejson.dumps(simplejson.load(open('%s/cache/git/init.json' % MEDIA_ROOT, 'r')))
         elif qs in ['c', 'ad', 'num']:
             results = pickle.load(open('%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, repo, qs), 'rb'))
             return results.replace('__REQ_ID__', req_id)
@@ -367,7 +367,7 @@ def cache_slack(request):
                     size += p['size']
             nums.append(response['paging']['total'])
             sizes.append(size)
-        json = {'files':{'types': types, 'nums': nums, 'sizes': sizes}}
+        json = {'files': {'types': types, 'nums': nums, 'sizes': sizes}}
 
     elif qs in ["plot_files", "plot_msgs"]:
         desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', 'Count')}
@@ -398,13 +398,13 @@ def cache_slack(request):
         for field in fields:
             stats.append(field)
             desp[field] = ('number', field)
-        
+
         data = sorted(data, key=operator.itemgetter(stats[0]))
         data_table = gviz_api.DataTable(desp)
         data_table.LoadData(data)
         return data_table.ToJSonResponse(columns_order=stats, order_by='Timestamp', req_id='__REQ_ID__')
 
-    return simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
+    return json
 
 
 def dash_slack(request):
@@ -412,7 +412,9 @@ def dash_slack(request):
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
-        if qs in ['users', 'home', 'channels', 'files', 'plot_files', 'plot_msgs']:
+        if qs in ['users', 'home', 'channels', 'files']:
+            return simplejson.dumps(simplejson.load(open('%s/cache/slack/%s.json' % (MEDIA_ROOT, qs), 'r')))
+        elif qs in ['plot_files', 'plot_msgs']:
             results = pickle.load(open('%s/cache/slack/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
             return results.replace('__REQ_ID__', req_id)
         else:
@@ -429,7 +431,7 @@ def cache_dropbox(request):
         account = dh.account_info()
         json = {'quota_used': account['quota_info']['shared'], 'quota_all': account['quota_info']['quota']}
         json.update({'quota_avail': (json['quota_all'] - json['quota_used'])})
-        return simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
+        return json
 
     elif qs == "folders":
         json = []
@@ -460,8 +462,8 @@ def cache_dropbox(request):
             if folder == '/' or '/' in folder[1:]: continue
             result = dh.metadata(folder, list=False)
             latest = datetime.strptime(result['modified'][:-6], "%a, %d %b %Y %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime("%Y-%m-%d %H:%M:%S")
-            json.append({'name': result['path'][1: ], 'nums': folder_nums[folder], 'sizes': folder_sizes[folder], 'shares': folder_shares[folder[1: ]], 'latest': latest})
-        return simplejson.dumps({'folders': json}, sort_keys=True, indent=' ' * 4)
+            json.append({'name': result['path'][1:], 'nums': folder_nums[folder], 'sizes': folder_sizes[folder], 'shares': folder_shares[folder[1:]], 'latest': latest})
+        return {'folders': json}
 
     elif qs == "history":
         desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', 'Count')}
@@ -480,7 +482,7 @@ def cache_dropbox(request):
         temp = {}
         for i in range(8):
             ts = (datetime.utcnow() - timedelta(days=i)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).replace(hour=0, minute=0, second=0, microsecond=0)
-            temp.update({ts:0})
+            temp.update({ts: 0})
         for path, ts in sizes.items():
                 ts = datetime.strptime(ts[:-6], "%a, %d %b %Y %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
                 for i in range(7):
@@ -496,7 +498,7 @@ def cache_dropbox(request):
         for field in fields:
             stats.append(field)
             desp[field] = ('number', field)
-        
+
         data = sorted(data, key=operator.itemgetter(stats[0]))
         data_table = gviz_api.DataTable(desp)
         data_table.LoadData(data)
@@ -508,8 +510,10 @@ def dash_dropbox(request):
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
-        if qs in ['sizes', 'folders', 'history']:
-            results = pickle.load(open('%s/cache/dropbox/%s.pickle' % (MEDIA_ROOT, qs), 'rb'))
+        if qs in ['sizes', 'folders']:
+            return simplejson.dumps(simplejson.load(open('%s/cache/dropbox/%s.json' % (MEDIA_ROOT, qs), 'r')))
+        elif qs == 'history':
+            results = pickle.load(open('%s/cache/dropbox/history.pickle' % MEDIA_ROOT, 'rb'))
             return results.replace('__REQ_ID__', req_id)
         else:
             return error400(request)
@@ -568,17 +572,17 @@ def cache_schedule():
 
         for row in lines:
             row = row.split(',')
-            if this: 
-                next = (datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), row[2], row[3], row[5])
+            if this:
+                next = {'date': datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), 'type': row[2], 'who': row[3], 'note': row[5]}
                 break
             if len(row) >= 7 and '[THIS WEEK]' in row[6]:
-                this = (datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), row[2], row[3], row[5])
-                
+                this = {'date': datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), 'type': row[2], 'who': row[3], 'note': row[5]}
+
         if not this: raise Exception('Error with parsing spreadsheet csv: no [THIS WEEK] found.')
         for row in reversed(lines):
             row = row.split(',')
             if len(row) == 10 and any(row):
-                last = (datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), row[2], row[3], row[5])
+                last = {'date': datetime.strptime(row[1], '%m/%d/%Y').strftime('%b %d'), 'type': row[2], 'who': row[3], 'note': row[5]}
                 break
 
         subprocess.check_call("rm %s/cache/schedule.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -587,7 +591,7 @@ def cache_schedule():
         send_error_slack(traceback.format_exc(), 'Parse Schedule Spreadsheet', 'cache_schedule', 'log_cron_cache.log')
 
 def dash_schedule(request):
-    return pickle.load(open('%s/cache/schedule.pickle' % MEDIA_ROOT, 'rb'))
+    return simplejson.load(open('%s/cache/schedule.json' % MEDIA_ROOT, 'r'))
 
 
 def cache_duty():
@@ -614,20 +618,20 @@ def cache_duty():
 
     try:
         lines = open('%s/cache/duty.csv' % MEDIA_ROOT, 'r').readlines()
-        ppls = {'weekly':{}, 'monthly':{}, 'quarterly':{}}
+        ppls = {'weekly': {}, 'monthly': {}, 'quarterly': {}}
         jobs = ['birthday', 'breakfast', 'eterna', 'group meeting', 'lab trips', 'amazon', 'website', 'github']
         for row in lines[1:-6]:
             row = row.split(',')
             for job in jobs:
                 if job in row[0].lower():
-                    ppls[row[1].lower()][job] = (row[2], row[3])
+                    ppls[row[1].lower()][job] = {'main': row[2], 'backup': row[3]}
         subprocess.check_call("rm %s/cache/duty.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return {'jobs': jobs, 'ppls': ppls}
     except Exception:
         send_error_slack(traceback.format_exc(), 'Parse Duty Spreadsheet', 'cache_duty', 'log_cron_cache.log')
 
 def dash_duty(request):
-    return pickle.load(open('%s/cache/duty.pickle' % MEDIA_ROOT, 'rb'))
+    return simplejson.dumps(simplejson.load(open('%s/cache/duty.json' % MEDIA_ROOT, 'r')))
 
 
 def get_calendar():
@@ -663,14 +667,14 @@ def cache_cal():
         for event in cal.walk('vevent'):
             title = event.get('SUMMARY')
             start = event.get('DTSTART').dt
-            if type(start) is datetime: 
+            if type(start) is datetime:
                 if event.get('DTSTART').params.has_key('TZID'):
                     start = start.replace(tzinfo=pytz.timezone(event.get('DTSTART').params['TZID'])).astimezone(pytz.timezone(TIME_ZONE))
                 else:
                     start = start.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
             if event.has_key('DTEND'):
                 end = event.get('DTEND').dt
-                if type(end) is datetime: 
+                if type(end) is datetime:
                     if event.get('DTEND').params.has_key('TZID'):
                         end = end.replace(tzinfo=pytz.timezone(event.get('DTSTART').params['TZID'])).astimezone(pytz.timezone(TIME_ZONE))
                     else:
@@ -721,7 +725,7 @@ def cache_cal():
                         break
 
                     until = (datetime.today() + relativedelta(years=2)).date()
-                    if rrule.has_key('UNTIL'): 
+                    if rrule.has_key('UNTIL'):
                         until = rrule['UNTIL'][0]
                         if isinstance(until, datetime): until = until.date()
 
@@ -733,7 +737,7 @@ def cache_cal():
                     data.append({'title': title, 'start': datetime.strftime(start, format_UTC), 'end': datetime.strftime(end, format_UTC), 'allDay': all_day, 'color': color})
 
         subprocess.check_call("rm %s/cache/calendar.ics" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        return simplejson.dumps(data, sort_keys=True, indent=' ' * 4)    
+        return data
     except Exception:
         send_error_slack(traceback.format_exc(), 'Parse Calendar ICS', 'cache_cal', 'log_cron_cache.log')
 
@@ -748,7 +752,7 @@ def cache_cal():
 
 
 def dash_cal():
-    return pickle.load(open('%s/cache/calendar.pickle' % MEDIA_ROOT, 'rb'))
+    return simplejson.dumps(simplejson.load(open('%s/cache/calendar.json' % MEDIA_ROOT, 'r')))
 
 
 def format_dash_ts(rel_path, interval):

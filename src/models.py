@@ -50,7 +50,7 @@ class News(models.Model):
         verbose_name_plural = 'News Items'
 
     def image_tag(self):
-        if self.image: 
+        if self.image:
             return u'<img class="well" src="/site_data/news_img/%s" width=150/>' % os.path.basename(self.image.url)
     image_tag.short_description = 'Preview'
     image_tag.allow_tags = True
@@ -90,7 +90,7 @@ class Member(models.Model):
         return '%s @ %s' % (self.role, self.department)
     affiliation.admin_order_field = 'role'
 
-    def year(self): 
+    def year(self):
         if self.is_alumni:
             string = '<span class="label label-danger">Alumni</span>'
         else:
@@ -103,7 +103,7 @@ class Member(models.Model):
     year.admin_order_field = 'is_alumni'
 
     def image_tag(self):
-        if self.image: 
+        if self.image:
             return u'<img class="thumbnail" src="/site_data/ppl_img/%s" width=120/>' % os.path.basename(self.image.url)
     image_tag.short_description = 'Preview'
     image_tag.allow_tags = True
@@ -140,7 +140,7 @@ class Publication(models.Model):
         verbose_name_plural = 'Publication Entries'
 
     def image_tag(self):
-        if self.image: 
+        if self.image:
             return u'<img class="well" src="/site_data/pub_img/%s" width=150/>' % os.path.basename(self.image.url)
     image_tag.short_description = 'Preview'
     image_tag.allow_tags = True
