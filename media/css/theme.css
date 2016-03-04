@@ -771,7 +771,7 @@ ul.breadcrumb > li.active {
 
 
 .i_aws_14_o, .i_aws_14, .i_bot_14_o, .i_bot_14, .i_bot2_14_o, .i_bot2_14, .i_dropbox_14_o, .i_dropbox_14, .i_ga_14_o, .i_ga_14, .i_gdrive_14_o, .i_gdrive_14, .i_git_14_o, .i_git_14, .i_linkedin_14_o, .i_linkedin_14, .i_slack_14_o, .i_slack_14 {
-  background: url("/site_media/images/nav_icon_14.png") no-repeat;
+  background: url("/site_media/images/group/nav_icon_14.png") no-repeat;
   width: 14px;
   height: 14px;
   display: inline-block;
@@ -796,7 +796,7 @@ ul.breadcrumb > li.active {
 .i_slack_14 { background-position: -70px -14px; }
 
 .i_aws_21_o, .i_aws_21, .i_bot_21_o, .i_bot_21, .i_bot2_21_o, .i_bot2_21, .i_dropbox_21_o, .i_dropbox_21, .i_ga_21_o, .i_ga_21, .i_gdrive_21_o, .i_gdrive_21, .i_git_21_o, .i_git_21, .i_linkedin_21_o, .i_linkedin_21, .i_slack_21_o, .i_slack_21 {
-  background: url("/site_media/images/nav_icon_21.png") no-repeat;
+  background: url("/site_media/images/group/nav_icon_21.png") no-repeat;
   width: 21px;
   height: 21px;
   display: inline-block;

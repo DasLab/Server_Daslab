@@ -272,7 +272,7 @@ table tbody tr td.year-top { border-top: 15px solid #fff; }
 	height: 201px;
 	background-position: 0 0;
 }
-.imgsp_research:hover { background-position: -54px 0; }
+.imgsp_research:hover { background-position: -53px 0; }
 
 .imgsp_arrow, .imgsp_collapse {
 	background: url("/site_media/images/public/nav_arrow.png") no-repeat;
@@ -291,9 +291,9 @@ table tbody tr td.year-top { border-top: 15px solid #fff; }
 }
 .nav_top:hover { background-position: -60px 0; }
 
-.nav_contact, .nav_home, .nav_news, .nav_people, .nav_publications, .nav_research, .nav_resources { background: url("/site_media/images/public/nav_navbar.png") no-repeat; }
+.nav_contact, .nav_home, .nav_news, .nav_people, .nav_publications, .nav_research, .nav_resources, .footer_home, .footer_left, .footer_right, .footer_plain, .nav_footer_biochem, .nav_footer_stfmed, .nav_footer_physics, .nav_footer_biox { background: url("/site_media/images/public/nav_banners.png") no-repeat; }
 .nav_contact {
-	background-position: -131px 0;
+	background-position: -684px 0;
 	width: 73px;
 	height: 14px;
 }
@@ -303,47 +303,73 @@ table tbody tr td.year-top { border-top: 15px solid #fff; }
 	height: 14px;
 }
 .nav_news {
-	background-position: -131px -30px;
+	background-position: -199px 0;
 	width: 39px;
 	height: 14px;
 }
 .nav_people {
-	background-position: 0 -15px;
+	background-position: -278px 0;
 	width: 61px;
 	height: 14px;
 }
 .nav_publications {
-	background-position: 0 -30px;
+	background-position: -377px 0;
 	width: 126px;
 	height: 14px;
 }
 .nav_research {
-	background-position: -44px 0;
+	background-position: -79px 0;
 	width: 83px;
 	height: 14px;
 }
 .nav_resources {
-	background-position: -66px -15px;
+	background-position: -550px 0;
 	width: 94px;
 	height: 14px;
 }
-.footer_home, .footer_left, .footer_right { background: url("/site_media/images/public/nav_banner.png") no-repeat; }
 .footer_home {
-	background-position: -514px -40px;
+	background-position: -514px -55px;
 	width: 263px;
 	height: 39px;
 }
 .footer_left {
-	background-position: 0 0;
+	background-position: 0 -15px;
 	width: 599px;
 	height: 39px;
 }
 .footer_right {
-	background-position: 0 -40px;
+	background-position: 0 -55px;
 	width: 256px;
 	height: 39px;
 }
-.footer_right:hover { background-position: -257px -40px; }
-
-
+.footer_plain {
+	background-position: -514px -55px;
+	width: 256px;
+	height: 39px;
+}
+.footer_right:hover,
+.footer_plain:hover { background-position: -257px -55px; }
+.nav_footer_biochem,
+.nav_footer_stfmed,
+.nav_footer_physics,
+.nav_footer_biox {
+	display: inline-block;
+	height: 54px;
+}
+.nav_footer_biochem {
+	background-position: 0 -96px;
+	width: 215px;
+}
+.nav_footer_stfmed {
+	background-position: -225px -96px;
+	width: 150px;
+}
+.nav_footer_physics {
+	background-position: -400px -96px;
+	width: 180px;
+}
+.nav_footer_biox {
+	background-position: -590px -96px;
+	width: 125px;
+}
 
