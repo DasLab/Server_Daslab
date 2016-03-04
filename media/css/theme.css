@@ -273,7 +273,7 @@ label {
 }
 
 .nav-icon {
-  padding-left: 30px;
+  margin-left: 30px;
 }
 ul.nav-li-sub {
   list-style-type: none;
@@ -768,3 +768,57 @@ ul.breadcrumb > li.active {
   background-position: 0 0;
 }
 .nav_top:hover { background-position: -60px 0; }
+
+
+.aws_14_o, .aws_14, .bot_14_o, .bot_14, .bot2_14_o, .bot2_14, .dropbox_14_o, .dropbox_14, .ga_14_o, .ga_14, .gdrive_14_o, .gdrive_14, .git_14_o, .git_14, .linkedin_14_o, .linkedin_14, .slack_14_o, .slack_14 {
+  background: url("/site_media/images/nav_icon_14.png") no-repeat;
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+}
+.aws_14_o { background-position: -14px 0; }
+.aws_14 { background-position: 0 0; }
+.bot_14_o { background-position: -42px 0; }
+.bot_14 { background-position: -28px 0; }
+.bot2_14_o { background-position: 0 -14px; }
+.bot2_14 { background-position: -14px -14px; }
+.dropbox_14_o { background-position: -28px -14px; }
+.dropbox_14 { background-position: -42px -14px; }
+.ga_14_o { background-position: -14px -28px; }
+.ga_14 { background-position: 0 -28px; }
+.gdrive_14_o { background-position: -42px -28px; }
+.gdrive_14 { background-position: -28px -28px; }
+.git_14_o { background-position: -70px 0; }
+.git_14 { background-position: -56px 0; }
+.linkedin_14_o { background-position: -70px -28px; }
+.linkedin_14 { background-position: -56px -28px; }
+.slack_14_o { background-position: -56px -14px; }
+.slack_14 { background-position: -70px -14px; }
+
+.aws_21_o, .aws_21, .bot_21_o, .bot_21, .bot2_21_o, .bot2_21, .dropbox_21_o, .dropbox_21, .ga_21_o, .ga_21, .gdrive_21_o, .gdrive_21, .git_21_o, .git_21, .linkedin_21_o, .linkedin_21, .slack_21_o, .slack_21 {
+  background: url("/site_media/images/nav_icon_21.png") no-repeat;
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+}
+.aws_21_o { background-position: -21px 0; }
+.aws_21 { background-position: 0 0; }
+.bot_21_o { background-position: -63px 0; }
+.bot_21 { background-position: -42px 0; }
+.bot2_21_o { background-position: 0 -21px; }
+.bot2_21 { background-position: -21px -21px; }
+.dropbox_21_o { background-position: -42px -21px; }
+.dropbox_21 { background-position: -63px -21px; }
+.ga_21_o { background-position: -21px -42px; }
+.ga_21 { background-position: 0 -42px; }
+.gdrive_21_o { background-position: -63px -42px; }
+.gdrive_21 { background-position: -42px -42px; }
+.git_21_o { background-position: -105px 0; }
+.git_21 { background-position: -84px 0; }
+.linkedin_21_o { background-position: -105px -42px; }
+.linkedin_21 { background-position: -84px -42px; }
+.slack_21_o { background-position: -84px -21px; }
+.slack_21 { background-position: -105px -21px; }
+
+
+

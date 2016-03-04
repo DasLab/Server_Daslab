@@ -208,9 +208,9 @@ $(document).ready(function () {
         $("td.field-receiver").each(function() { $(this).html("<a>" + $(this).html() + "</a>"); });
         $("td.field-message").each(function() { $(this).html('<div class="well well-sm excerpt" style="font-family:monospace; font-size:12px; margin-bottom:0px;">' + $(this).html() + "</div>");   });
 
-        $("div.col-md-6 > h2.legend").html('<img src="/site_media/images/icons/slack.png" style="vertical-align:text-top;" height="16px">&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
+        $("div.col-md-6 > h2.legend").html('<div class="slack_14"></div>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
         $("ul.breadcrumb > li:first").next().remove();
-        $("ul.breadcrumb > li:first").next().prepend('<img src="/site_media/images/icons/slack.png" height="21" style="vertical-align:text-top;">&nbsp;&nbsp;');
+        $("ul.breadcrumb > li:first").next().prepend('<div class="slack_21"></div>&nbsp;&nbsp;');
     } else if ($(location).attr("href").indexOf("admin/auth/user") != -1) {
         $("th.column-username").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
         $("th.column-email").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
