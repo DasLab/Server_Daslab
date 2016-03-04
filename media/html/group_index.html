@@ -25,59 +25,8 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-							<a href="/site_media/images/group/baking/6.jpg" target="_blank" class="thumbnail">
-								<img src="/site_media/images/group/baking/6.jpg" style="max-width:100%;">
-							</a>
-						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-							<a href="/site_media/images/group/baking/2.jpg" target="_blank" class="thumbnail">
-								<img src="/site_media/images/group/baking/2.jpg" style="max-width:100%;">
-							</a>
-						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-							<a href="/site_media/images/group/baking/4.jpg" target="_blank" class="thumbnail">
-								<img src="/site_media/images/group/baking/4.jpg" style="max-width:100%;">
-							</a>
-						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-							<a href="/site_media/images/group/baking/8.jpg" target="_blank" class="thumbnail">
-								<img src="/site_media/images/group/baking/8.jpg" style="max-width:100%;">
-							</a>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-							<a href="/site_media/images/group/baking/5.jpg" target="_blank" class="thumbnail">
-								<img src="/site_media/images/group/baking/5.jpg" style="max-width:100%;">
-							</a>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-							<a href="/site_media/images/group/baking/1.jpg" target="_blank" class="thumbnail">
-								<img src="/site_media/images/group/baking/1.jpg" style="max-width:100%;">
-							</a>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-							<a href="/site_media/images/group/baking/7.jpg" target="_blank" class="thumbnail">
-								<img src="/site_media/images/group/baking/7.jpg" style="max-width:100%;">
-							</a>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-							<a href="/site_media/images/group/baking/3.jpg" target="_blank" class="thumbnail">
-								<img src="/site_media/images/group/baking/3.jpg" style="max-width:100%;">
-							</a>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-							<a href="/site_media/images/group/baking/9.jpg" target="_blank" class="thumbnail">
-								<img src="/site_media/images/group/baking/9.jpg" style="max-width:100%;">
-							</a>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-							<a href="/site_media/images/group/baking/0.jpg" target="_blank" class="thumbnail">
-								<img src="/site_media/images/group/baking/0.jpg" style="max-width:100%;">
-							</a>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<img src="/site_media/images/group/baking/banner.jpg" class="thumbnail" style="max-width:100%;">
 						</div>
 					</div>					
 				</div>
@@ -193,8 +142,12 @@
 {% endblock %}
 
 {% block script %}
-	<script type="text/javascript" src="/site_media/js/group/{{DEBUG_DIR}}home{{DEBUG_STR}}.js"></script>
-    <script type="text/javascript" src="/site_media/js/group/{{DEBUG_DIR}}clock{{DEBUG_STR}}.js"></script>  
+	{% if DEBUG_DIR %}
+		<script type="text/javascript" src="/site_media/js/group/{{DEBUG_DIR}}home{{DEBUG_STR}}.js"></script>  
+	{% else %}
+		<script type="text/javascript" src="/site_media/js/group/home.js"></script>  
+		<script type="text/javascript" src="/site_media/js/group/clock.js"></script>  
+	{% endif %}
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#banner_div").on("click", function(event) {

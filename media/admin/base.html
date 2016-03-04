@@ -22,11 +22,16 @@
     {% endif %}
 
     {% block extrahead %}{% endblock %}
-    <script type="text/javascript" src="/site_media/js/suit/{{DEBUG_DIR}}core{{DEBUG_STR}}.js"></script>
-    <script type="text/javascript" src="/site_media/js/suit/{{DEBUG_DIR}}RelatedObjectLookups{{DEBUG_STR}}.js"></script>
-    <script type="text/javascript" src="/site_media/js/suit/{{DEBUG_DIR}}jquery.init{{DEBUG_STR}}.js"></script>
-    <script type="text/javascript" src="/site_media/js/suit/{{DEBUG_DIR}}actions{{DEBUG_STR}}.js"></script>
-    <script type="text/javascript" src="/site_media/js/suit/{{DEBUG_DIR}}DateTimeShortcuts{{DEBUG_STR}}.js"></script>
+    {% if DEBUG_DIR %}
+      <script type="text/javascript" src="/site_media/js/suit/{{DEBUG_DIR}}core{{DEBUG_STR}}.js"></script>
+    {% else %}
+      <script type="text/javascript" src="/site_media/js/suit/core.js"></script>
+      <script type="text/javascript" src="/site_media/js/suit/RelatedObjectLookups.js"></script>
+      <script type="text/javascript" src="/site_media/js/suit/jquery.init.js"></script>
+      <script type="text/javascript" src="/site_media/js/suit/actions.js"></script>
+      <script type="text/javascript" src="/site_media/js/suit/DateTimeShortcuts.js"></script>
+    {% endif %}
+
     {% block extratail %}{% endblock %}
 
     {% block blockbots %}
@@ -248,10 +253,15 @@
       <div id="push"></div>
     {% endif %}
 
-    <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}_suit{{DEBUG_STR}}.js"></script>
-    <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}table{{DEBUG_STR}}.js"></script>
-    <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}clock{{DEBUG_STR}}.js"></script>  
-    <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}menu{{DEBUG_STR}}.js"></script>
+    {% if DEBUG_DIR %}
+      <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}menu{{DEBUG_STR}}.js"></script>
+    {% else %}
+      <script type="text/javascript" src="/site_media/js/admin/_suit.js"></script>
+      <script type="text/javascript" src="/site_media/js/admin/table.js"></script>
+      <script type="text/javascript" src="/site_media/js/admin/clock.js"></script>  
+      <script type="text/javascript" src="/site_media/js/admin/menu.js"></script>
+    {% endif %}
+
     <script type="text/javascript">
       var scrollTimer, resizeTimer;
 

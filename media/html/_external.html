@@ -84,12 +84,6 @@
           $('#top > div').animate({'right':'-5%', 'opacity':'0'}, 125);
           $("html, body").stop().animate({scrollTop: 0}, 250);
         });
-
-        $("a.nav-hover").hover(function () {
-          $(this).children().css("border-bottom-color", "#008180");
-        }, function () {
-          $(this).children().css("border-bottom-color", "#fff");
-        });
       });
   
       $(window).on("scroll", function () {

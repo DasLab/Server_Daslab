@@ -356,7 +356,11 @@
   </script>
 
   {% block script %}{% endblock %}
+  {% if DEBUG_DIR %}
     <script type="text/javascript" src="/site_media/js/group/{{DEBUG_DIR}}menu{{DEBUG_STR}}.js"></script>  
-    <script type="text/javascript" src="/site_media/js/group/{{DEBUG_DIR}}email{{DEBUG_STR}}.js"></script>  
+  {% else %}
+    <script type="text/javascript" src="/site_media/js/group/menu.js"></script>  
+    <script type="text/javascript" src="/site_media/js/group/email.js"></script>  
+  {% endif %}
  </body>
 </html>
