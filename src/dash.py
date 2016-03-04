@@ -567,8 +567,13 @@ def cache_schedule():
         lines = open('%s/cache/schedule.csv' % MEDIA_ROOT, 'r').readlines()
         this = ''
         tp = lines[0].split(',')[5]
+        place = tp[tp.rfind('@')+1:].strip()[:-1]
         week_day = tp[1:tp.find('@')].strip().lower()
         week_day = ['sunday', 'monday', 'tueday', 'wednesday', 'thursday', 'friday', 'saturday'].index(week_day)
+
+        tp = tp[tp.find('@')+1:tp.rfind('@')].strip()
+        t_start = tp[:tp.find('-')].strip()
+        t_end = tp[tp.find('-')+1:].strip()
 
         for row in lines:
             row = row.split(',')
@@ -586,7 +591,7 @@ def cache_schedule():
                 break
 
         subprocess.check_call("rm %s/cache/schedule.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        return {'last': last, 'this': this, 'next': next, 'tp': tp, 'wd': week_day}
+        return {'last': last, 'this': this, 'next': next, 'place': place, 'time': {'start': t_start, 'end': t_end}, 'weekday': week_day}
     except Exception:
         send_error_slack(traceback.format_exc(), 'Parse Schedule Spreadsheet', 'cache_schedule', 'log_cron_cache.log')
 
@@ -631,7 +636,7 @@ def cache_duty():
         send_error_slack(traceback.format_exc(), 'Parse Duty Spreadsheet', 'cache_duty', 'log_cron_cache.log')
 
 def dash_duty(request):
-    return simplejson.dumps(simplejson.load(open('%s/cache/duty.json' % MEDIA_ROOT, 'r')))
+    return simplejson.load(open('%s/cache/duty.json' % MEDIA_ROOT, 'r'))
 
 
 def get_calendar():

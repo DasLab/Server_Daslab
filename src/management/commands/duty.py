@@ -23,12 +23,12 @@ class Command(BaseCommand):
 
 
     def compose_msg(self, task_tuple, task_name, interval, alt_text):
-        (who_main, _) = find_slack_id(task_tuple[0])
-        (who_bkup, _) = find_slack_id(task_tuple[1])
+        (who_main, _) = find_slack_id(task_tuple['main'])
+        (who_bkup, _) = find_slack_id(task_tuple['backup'])
         if who_main:
             msg = '*LAB DUTY*: Just a reminder for the _%s_ task of `%s`%s. If you are unable to do so, please inform the ' % (interval, task_name, alt_text)
             if who_bkup:
-                msg += 'backup person for this task: _%s_ <@%s>.' % (task_tuple[1], who_bkup)
+                msg += 'backup person for this task: _%s_ <@%s>.' % (task_tuple['backup'], who_bkup)
             else:
                 msg += 'site admin <@%s> since there is *NO* backup person for this task.' % SLACK['ADMIN_NAME']
             send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_main
@@ -40,7 +40,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
-         
+
         if options['interval']:
             if options['interval'][0].endswith('ly'):
                 flag = options['interval'][0]
@@ -61,34 +61,34 @@ class Command(BaseCommand):
             result = dash_schedule(0)
 
             if flag == 'weekly':
-                day_1 = (result['wd'] - int(BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_1']))
-                day_2 = (result['wd'] - int(BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_2']))
+                day_1 = (result['weekday'] - int(BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_1']))
+                day_2 = (result['weekday'] - int(BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_2']))
                 if day_1 < 0: day_1 += 7
                 if day_2 < 0: day_2 += 7
 
                 if datetime.utcnow().date().isoweekday() == day_1:
-                    if result['this'][1] != 'N/A':
+                    if result['this']['type'] != 'N/A':
                         if BOT['SLACK']['DUTY']['MONTH']['MSG_BREAKFAST']:
                             self.compose_msg(ppls[flag]['breakfast'], 'Breakfast', flag, ' to _Group Meeting_ tomorrow')
-                    if result['this'][1] == 'ES':
+                    if result['this']['type'] == 'ES':
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_MIC']:
                             self.compose_msg(ppls['monthly']['eterna'], 'Eterna Microphone Setup', flag, ' for the upcoming _Eterna Open Group Meeting_. Please arrive *30 min* early. The instructions are <https://docs.google.com/document/d/1bh5CYBklIdZl65LJDsBffC8m8J_3jKf4FY1qiYjRIw8/edit|here>')
                 elif datetime.utcnow().date().isoweekday() == day_2:
-                    if result['this'][1] == 'ES':
-                        who = result['this'][2]
+                    if result['this']['type'] == 'ES':
+                        who = result['this']['who']
                         (who_id, _) = find_slack_id(who)
                         send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
-                        
+
                         if BOT['SLACK']['REMINDER']['ES']['REMINDER_2']:
-                            (who_id2, _) = find_slack_id(ppls['monthly']['eterna'][0])
+                            (who_id2, _) = find_slack_id(ppls['monthly']['eterna']['main'])
                             self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "c28fdd", "text": '*LAB DUTY*: Just a reminder for sending a description of your upcoming _Eterna Open Group Meeting_ to <%s> and <@%s> for releasing news on both DasLab Website and EteRNA broadcast.' % (SLACK['ADMIN_NAME'], who_id2)}]) )
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_BROADCAST']:
                             self.compose_msg(ppls['monthly']['eterna'], 'Eterna Broadcast Posting', flag, ' for _Eterna Open Group Meeting_. If _%s_ <@%s> hasn\'t send out descriptions, please ask him/her!' % (who, who_id))
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_NEWS']:
-                            self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "c28fdd", "text": '*LAB DUTY*: Just a reminder for posting news on lab website about the upcoming _Eterna Open Group Meeing_ on *%s* by _%s_ <@%s>.' % (result['this'][0], who, who_id)}]) )
-                    elif result['this'][1] == 'JC':
+                            self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "c28fdd", "text": '*LAB DUTY*: Just a reminder for posting news on lab website about the upcoming _Eterna Open Group Meeing_ on *%s* by _%s_ <@%s>.' % (result['this']['date'], who, who_id)}]) )
+                    elif result['this']['type'] == 'JC':
                         if BOT['SLACK']['REMINDER']['JC']['REMINDER_2']:
-                            who = result['this'][2]
+                            who = result['this']['who']
                             (who_id, _) = find_slack_id(who)
                             send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
                             self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "c28fdd", "text": '*LAB DUTY*: Just a reminder for posting your paper of choice for the upcoming _Journal Club_ to `#general`.'}]) )
@@ -122,8 +122,8 @@ class Command(BaseCommand):
                     if not fields: fields.append({'title': 'Nobody', 'value': '_within next 60 days_', 'short': True})
 
                     birthday = ppls[flag]['birthday']
-                    (who_main, _) = find_slack_id(birthday[0])
-                    (who_bkup, _) = find_slack_id(birthday[1])
+                    (who_main, _) = find_slack_id(birthday['main'])
+                    (who_bkup, _) = find_slack_id(birthday['backup'])
                     send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_main
                     self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "ff912e", "text": '_Upcoming Birthdays_:', "fields": fields}]) )
 

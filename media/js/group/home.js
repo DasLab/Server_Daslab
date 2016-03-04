@@ -1,3 +1,5 @@
+var weekdayNames = new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+
 function label_type(type) {
     if (type == 'GM') {
         return '<span class="label label-primary">Group Meeting</span>';
@@ -40,7 +42,7 @@ $.ajax({
             $("#next_name").html(data.next.who);
         }
         $("#next_date").html(data.next.date);
-        $("#tp").html('<b>' + data.tp.replace("[", "").replace("]", "") + '</b>');
+        $("#tp").html('<b>' + weekdayNames[data.weekday] + ' @ ' + data.time.start + ' - ' + data.time.end + ' @ ' + data.place + '</b>');
 
         $("#recent_flash").html('<span class="label label-primary">' + data.flash_slide.date + '</span>&nbsp;&nbsp;<a href="' + data.flash_slide.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
         $("#recent_jc").html('<i>' + data.journal_club.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.journal_club.date + '</span>&nbsp;&nbsp;<a href="' + data.journal_club.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
