@@ -39,16 +39,6 @@ User-agent: Yandexbot
 User-agent: FacebookExternalHit
 
 # Directories
-Disallow: /.git/
-Disallow: /backup/
-Disallow: /cache/
-Disallow: /config/
-Disallow: /data/
-Disallow: /media/admin/
-Disallow: /media/fonts/
-Disallow: /media/js/
-Disallow: /media/_old/
-Disallow: /src/
 
 # Files
 Disallow: /*.py
@@ -63,13 +53,14 @@ Disallow: /group/
 Disallow: /login/
 Disallow: /logout/
 Disallow: /password/
+
+Disallow: /site_media/_old/
 Disallow: /site_data/_old/
 Disallow: /site_data/pub_data/
 Disallow: /site_data/rot_data/
 Disallow: /site_data/rot_ppt/
 Disallow: /site_data/spe_ppt/
-Disallow: /site_data/export_citation.html
-Disallow: /site_data/export_citation.docx
+Disallow: /site_data/export_citation.*
 
 Disallow: /ping_test/
 Disallow: /test/

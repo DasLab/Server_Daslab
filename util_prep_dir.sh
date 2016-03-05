@@ -4,7 +4,7 @@ mkdir cache
 mkdir cache/aws cache/dropbox cache/ga cache/git cache/slack
 touch cache/log_alert_admin.log cache/log_cron.log cache/log_django.log
 touch cache/log_cron_backup.log cache/log_cron_bday.log cache/log_cron_cache.log cache/log_cron_duty.log cache/log_cron_gdrive.log cache/log_cron_meeting.log cache/log_cron_report.log cache/log_cron_version.log
-touch cache/stat_backup.txt cache/stat_sys.txt
+touch cache/stat_backup.json cache/stat_sys.json
 
 cp -n config/cron.conf.example config/cron.conf
 cp -n config/env.conf.example config/env.conf
