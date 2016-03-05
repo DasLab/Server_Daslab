@@ -100,7 +100,7 @@ class Command(BaseCommand):
                     self.stdout.write("    AWS \033[94mELB\033[0m: %s / %s (%s)..." % (i + 1, len(aws_init['elb']), elb['name']), ending='')
                     request = {'qs': 'lat', 'tp': 'elb', 'id': elb['name']}
                     self.pickle_aws(request, elb['name'])
-                    request.update({'qs':'req'})
+                    request.update({'qs': 'req'})
                     self.pickle_aws(request, elb['name'])
                     self.stdout.write(" \033[92mSUCCESS\033[0m")
 

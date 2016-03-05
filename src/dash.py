@@ -36,13 +36,13 @@ def cache_aws(request):
             if len(data):
                 avg = avg / len(data)
             name = ''
-            if resv.tags.has_key('Name'): name = resv.tags['Name']
+            if 'Name' in resv.tags: name = resv.tags['Name']
             dict_aws['ec2'].append({'name': name, 'type': resv.instance_type, 'dns': resv.dns_name, 'status': resv.state_code, 'arch': resv.architecture, 'region': resv.placement, 'credit':  '%.1f' % avg, 'id': resv.id})
 
         resvs = conn.get_all_volumes()
         for i, resv in enumerate(resvs):
             name = ''
-            if resv.tags.has_key('Name'): name = resv.tags['Name']
+            if 'Name' in resv.tags: name = resv.tags['Name']
             dict_aws['ebs'].append({'name': name, 'size': resv.size, 'type': resv.type, 'region': resv.zone, 'encrypted': resv.encrypted, 'status': resv.status, 'id': resv.id})
 
         conn = boto.ec2.elb.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
@@ -119,7 +119,7 @@ def cache_aws(request):
 
 
 def dash_aws(request):
-    if request.GET.has_key('qs') and request.GET.has_key('id') and request.GET.has_key('tp') and request.GET.has_key('tqx'):
+    if 'qs' in request.GET and 'id' in request.GET and 'tp' in request.GET and 'tqx' in request.GET:
         qs = request.GET.get('qs')
         id = request.GET.get('id')
         tp = request.GET.get('tp')
@@ -164,7 +164,7 @@ def cache_ga(request):
         i = 0
         while True:
             temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%sdate&access_token=%s' % (url_colon, request['id'], url_colon, request['qs'], url_colon, request['access_token'])).json()
-            if temp.has_key('rows'):
+            if 'rows' in temp:
                 temp = temp['rows']
                 break
             time.sleep(2)
@@ -193,7 +193,7 @@ def cache_ga(request):
 
 
 def dash_ga(request):
-    if request.GET.has_key('qs') and request.GET.has_key('id') and request.GET.has_key('tqx'):
+    if 'qs' in request.GET and 'id' in request.GET and 'tqx' in request.GET:
         qs = request.GET.get('qs')
         id = request.GET.get('id')
         req_id = request.GET.get('tqx').replace('reqId:', '')
@@ -207,7 +207,6 @@ def dash_ga(request):
             return error400(request)
     else:
         return error400(request)
-
 
 
 def cache_git(request):
@@ -231,10 +230,7 @@ def cache_git(request):
                 for w in contrib.weeks:
                     a += w.a
                     d += w.d
-                if contrib.author:
-                    au = contrib.author.login
-                else:
-                    au = '(None)'
+                au = contrib.author.login if contrib.author else '(None)'
                 data.append({u'Contributors': au, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
 
             data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
@@ -295,7 +291,7 @@ def cache_git(request):
 
 
 def dash_git(request):
-    if request.GET.has_key('qs') and request.GET.has_key('repo') and request.GET.has_key('tqx'):
+    if 'qs' in request.GET and 'repo' in request.GET and 'tqx' in request.GET:
         qs = request.GET.get('qs')
         repo = request.GET.get('repo')
         req_id = request.GET.get('tqx').replace('reqId:', '')
@@ -319,7 +315,7 @@ def cache_slack(request):
         response = sh.users.list().body['members']
         owners, admins, users, gones = [], [], [], []
         for resp in response:
-            if resp.has_key('is_bot') and resp['is_bot']: continue
+            if 'is_bot' in resp and resp['is_bot']: continue
             if resp['name'] in ('slackbot', SLACK["BOT_NAME"]): continue
             presence = sh.users.get_presence(resp['id']).body['presence']
             presence = (presence == 'active')
@@ -346,7 +342,7 @@ def cache_slack(request):
             num_files = 0
             latest = 0
             for msg in history['messages']:
-                if msg.has_key('file'): num_files += 1
+                if 'file' in msg: num_files += 1
                 latest = max(latest, float(msg['ts']))
             latest = datetime.fromtimestamp(latest).strftime('%Y-%m-%d %H:%M:%S')
             temp.update({'latest': latest, 'num_files': num_files})
@@ -408,7 +404,7 @@ def cache_slack(request):
 
 
 def dash_slack(request):
-    if request.GET.has_key('qs') and request.GET.has_key('tqx'):
+    if 'qs' in request.GET and 'tqx' in request.GET:
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
@@ -506,7 +502,7 @@ def cache_dropbox(request):
 
 
 def dash_dropbox(request):
-    if request.GET.has_key('qs') and request.GET.has_key('tqx'):
+    if 'qs' in request.GET and 'tqx' in request.GET:
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
@@ -555,9 +551,9 @@ def cache_schedule():
     if not flag:
         send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`ERROR`*: *cache_schedule()* Download Failure @ _%s_\n' % time.ctime()}])
         # send_error_slack(traceback.format_exc(), 'Download Schedule Spreadsheet', 'cache_schedule', 'log_cron_cache.log')
-        if os.path.exists('%s/cache/schedule.pickle' % MEDIA_ROOT):
+        if os.path.exists('%s/cache/schedule.json' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
-            t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.pickle' % MEDIA_ROOT))
+            t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.json' % MEDIA_ROOT))
             if ((now - t_sch).seconds >= 7200):
                 raise Exception('Error with downloading schedule spreadsheet.')
             else:
@@ -613,9 +609,9 @@ def cache_duty():
     if not flag:
         send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`ERROR`*: *cache_duty()* Download Failure @ _%s_\n' % time.ctime()}])
         # send_error_slack(traceback.format_exc(), 'Download Duty Spreadsheet', 'cache_duty', 'log_cron_cache.log')
-        if os.path.exists('%s/cache/duty.pickle' % MEDIA_ROOT):
+        if os.path.exists('%s/cache/duty.json' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
-            t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/duty.pickle' % MEDIA_ROOT))
+            t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/duty.json' % MEDIA_ROOT))
             if ((now - t_sch).seconds >= 7200):
                 raise Exception('Error with downloading duty spreadsheet.')
             else:
@@ -656,9 +652,9 @@ def cache_cal():
 
     if not flag:
         send_error_slack(traceback.format_exc(), 'Download Calendar ICS', 'cache_cal', 'log_cron_cache.log')
-        if os.path.exists('%s/cache/calendar.pickle' % MEDIA_ROOT):
+        if os.path.exists('%s/cache/calendar.json' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
-            t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT))
+            t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.json' % MEDIA_ROOT))
             if ((now - t_cal).seconds >= 7200):
                 raise Exception('Error with downloading calendar ICS file.')
             else:
@@ -673,14 +669,14 @@ def cache_cal():
             title = event.get('SUMMARY')
             start = event.get('DTSTART').dt
             if type(start) is datetime:
-                if event.get('DTSTART').params.has_key('TZID'):
+                if 'TZID' in event.get('DTSTART').params:
                     start = start.replace(tzinfo=pytz.timezone(event.get('DTSTART').params['TZID'])).astimezone(pytz.timezone(TIME_ZONE))
                 else:
                     start = start.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
-            if event.has_key('DTEND'):
+            if 'DTEND' in event:
                 end = event.get('DTEND').dt
                 if type(end) is datetime:
-                    if event.get('DTEND').params.has_key('TZID'):
+                    if 'TZID' in event.get('DTEND').params:
                         end = end.replace(tzinfo=pytz.timezone(event.get('DTSTART').params['TZID'])).astimezone(pytz.timezone(TIME_ZONE))
                     else:
                         end = end.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
@@ -695,32 +691,32 @@ def cache_cal():
                 color = "#c28fdd"
             data.append({'title': title, 'start': datetime.strftime(start, format_UTC), 'end': datetime.strftime(end, format_UTC), 'allDay': all_day, 'color': color})
 
-            if event.has_key('RRULE') and event.get('RRULE').has_key('FREQ'):
+            if 'RRULE' in event and 'FREQ' in event.get('RRULE'):
                 rrule = event.get('RRULE')
                 while True:
                     if 'YEARLY' in rrule['FREQ']:
-                        if rrule.has_key('INTERVAL'):
+                        if 'INTERVAL' in rrule:
                             interval = rrule['INTERVAL'][0]
                         else:
                             interval = 1
                         start += relativedelta(years=interval)
                         end += relativedelta(years=interval)
                     elif 'MONTHLY' in rrule['FREQ']:
-                        if rrule.has_key('INTERVAL'):
+                        if 'INTERVAL' in rrule:
                             interval = rrule['INTERVAL'][0]
                         else:
                             interval = 1
                         start += relativedelta(months=interval)
                         end += relativedelta(months=interval)
                     elif 'WEEKLY' in rrule['FREQ']:
-                        if rrule.has_key('INTERVAL'):
+                        if 'INTERVAL' in rrule:
                             interval = rrule['INTERVAL'][0]
                         else:
                             interval = 1
                         start += timedelta(days=7*interval)
                         end += timedelta(days=7*interval)
                     elif 'DAILY' in rrule['FREQ']:
-                        if rrule.has_key('INTERVAL'):
+                        if 'INTERVAL' in rrule:
                             interval = rrule['INTERVAL'][0]
                         else:
                             interval = 1
@@ -730,7 +726,7 @@ def cache_cal():
                         break
 
                     until = (datetime.today() + relativedelta(years=2)).date()
-                    if rrule.has_key('UNTIL'):
+                    if 'UNTIL' in rrule:
                         until = rrule['UNTIL'][0]
                         if isinstance(until, datetime): until = until.date()
 

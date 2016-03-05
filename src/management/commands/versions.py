@@ -19,16 +19,12 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        if options['manual']:
-            flag = (options['manual'][0] == 1)
-        else:
-            flag = False
-
+        flag = (options['manual'][0] == 1) if options['manual'] else False
         if not (BOT['SLACK']['IS_VERSION'] or flag): return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 
-        d = time.strftime('%Y%m%d') #datetime.datetime.now().strftime('%Y%m%d')
+        d = time.strftime('%Y%m%d')  # datetime.datetime.now().strftime('%Y%m%d')
         t = time.time()
         ver = {}
         self.stdout.write("Checking system versions...")
@@ -154,7 +150,6 @@ class Command(BaseCommand):
             }
 
             gdrive_dir = 'echo' if DEBUG else 'cd %s' % APACHE_ROOT
-            prefix = '_DEBUG' if DEBUG else ''
             ver['_drive'] = subprocess.Popen("%s && drive quota | awk '{ printf $2 \" G\t\"}'" % gdrive_dir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split('\t')
 
             if not DEBUG:
@@ -180,7 +175,7 @@ class Command(BaseCommand):
             ver['php'] = subprocess.Popen("php --version | head -1 | sed 's/\-.*//g' | sed 's/[A-Z ]//g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
             ver['ruby'] = subprocess.Popen("ruby --version | sed 's/.*ruby //g' | sed 's/ (.*//g' | sed 's/[a-z]/./g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
             ver['go'] = subprocess.Popen("go version | sed 's/.*version go//g' | sed 's/ .*//g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
-            
+
             ver['coreutils'] = subprocess.Popen("tty --version | head -1 | sed 's/.*) //g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
             ver['wget'] = subprocess.Popen("wget --version | head -1 | sed 's/.*Wget//g' | sed 's/built.*//g' | sed 's/ //g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
             ver['tar'] = subprocess.Popen("tar --version | head -1 | sed 's/.*)//g' | sed 's/-.*//g' | sed 's/ //g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()

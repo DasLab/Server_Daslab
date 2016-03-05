@@ -17,7 +17,7 @@ class Command(BaseCommand):
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 
-        d = time.strftime('%Y%m%d') #datetime.datetime.now().strftime('%Y%m%d')
+        d = time.strftime('%Y%m%d')  # datetime.datetime.now().strftime('%Y%m%d')
         gdrive_dir = 'echo' if DEBUG else 'cd %s' % APACHE_ROOT
         prefix = '_DEBUG' if DEBUG else ''
 
@@ -110,7 +110,7 @@ class Command(BaseCommand):
                     html += '%s\t\t%s %s\t\t%s %s\n' % (gdrive_list[i+1], gdrive_list[i+4], gdrive_list[i+5], gdrive_list[i+2], gdrive_list[i+3])
 
                 if IS_SLACK:
-                    if (not DEBUG) and BOT['SLACK']['ADMIN']['MSG_GDRIVE']: 
+                    if (not DEBUG) and BOT['SLACK']['ADMIN']['MSG_GDRIVE']:
                         send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'SUCCESS', "mrkdwn_in": ["text"], "color": "good", "text": '*SUCCESS*: Scheduled weekly *Gdrive Sync* finished @ _%s_\n' % time.ctime()}])
                         send_notify_slack(SLACK['ADMIN_NAME'], '>```%s```\n' % html, '')
                 else:

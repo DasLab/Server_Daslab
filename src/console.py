@@ -73,7 +73,7 @@ def find_slack_id(name):
     for resp in users:
         if resp.has_key('is_bot') and resp['is_bot']: continue
         if resp['profile']['real_name'].lower().startswith(name.lower()):
-            if sunet_id != 'none': 
+            if sunet_id != 'none':
                 sunet_id = 'ambiguous'
                 break
             email = resp['profile']['email']
@@ -114,6 +114,7 @@ def get_folder_size(path):
         else:
             total += get_folder_size(f + '/*')
     return total
+
 
 def get_folder_num(path):
     total = 0
@@ -322,7 +323,7 @@ def aws_result(results, args, req_id=None):
                     val = val / args['period']
                     name = args['metric'][j] + u'Rate'
                 d[name] = val
-                if d.has_key(k): del d[k]
+                if k in d: del d[k]
 
     desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', args['unit'])}
     stats = ['Timestamp']
@@ -373,7 +374,7 @@ def aws_call(conn, args, qs, req_id=None):
 
 
 def aws_stats(request):
-    if request.GET.has_key('qs') and request.GET.has_key('sp') and request.GET.has_key('tqx'):
+    if 'qs' in request.GET and 'sp' in request.GET and 'tqx' in request.GET:
         qs = request.GET.get('qs')
         sp = request.GET.get('sp')
         req_id = request.GET.get('tqx').replace('reqId:', '')
@@ -382,7 +383,7 @@ def aws_stats(request):
             conn = boto.ec2.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
             resv = conn.get_only_instances(instance_ids=AWS['EC2_INSTANCE_ID'])
             stat = resv[0].__dict__
-            stat1 = {k: stat[k] for k in ('id', 'instance_type', 'private_dns_name', 'public_dns_name', 'vpc_id', 'subnet_id', 'image_id', 'architecture')} 
+            stat1 = {k: stat[k] for k in ('id', 'instance_type', 'private_dns_name', 'public_dns_name', 'vpc_id', 'subnet_id', 'image_id', 'architecture')}
             resv = conn.get_all_volumes(volume_ids=AWS['EBS_VOLUME_ID'])
             stat = resv[0].__dict__
             stat2 = {k: stat[k] for k in ('id', 'type', 'size', 'zone', 'snapshot_id', 'encrypted')}
@@ -442,7 +443,7 @@ def aws_stats(request):
 
 
 def ga_stats(request):
-    if request.GET.has_key('qs') and request.GET.has_key('tqx'):
+    if 'qs' in request.GET and 'tqx' in request.GET:
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
         access_token = requests.post('https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])).json()['access_token']
@@ -470,7 +471,7 @@ def ga_stats(request):
                 stats.update({ga_key: curr, (ga_key + '_prev'): prev})
             return simplejson.dumps(stats, sort_keys=True, indent=' ' * 4)
 
-        elif request.GET.has_key('sp'):
+        elif 'sp' in request.GET:
             sp = request.GET.get('sp')
 
             if qs == 'chart':
@@ -489,7 +490,7 @@ def ga_stats(request):
                 i = 0
                 while True:
                     temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=%s&end-date=%s&metrics=ga%ssessions&dimensions=ga%s%s&access_token=%s' % (url_colon, GA['ID'], d1, d2, url_colon, url_colon, dm, access_token)).json()
-                    if temp.has_key('rows'):
+                    if 'rows' in temp:
                         temp = temp['rows']
                         break
                     time.sleep(2)
@@ -522,7 +523,7 @@ def ga_stats(request):
                 i = 0
                 while True:
                     temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%s%s&access_token=%s' % (url_colon, GA['ID'], url_colon, me, url_colon, dm, access_token)).json()
-                    if temp.has_key('rows'):
+                    if 'rows' in temp:
                         temp = temp['rows']
                         break
                     time.sleep(2)
@@ -548,7 +549,7 @@ def ga_stats(request):
             i = 0
             while True:
                 temp = requests.get('https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessions&dimensions=ga%scountry&access_token=%s' % (url_colon, GA['ID'], url_colon, url_colon, access_token)).json()
-                if temp.has_key('rows'):
+                if 'rows' in temp:
                     temp = temp['rows']
                     break
                 time.sleep(2)
@@ -573,7 +574,7 @@ def ga_stats(request):
 
 
 def git_stats(request):
-    if request.GET.has_key('qs') and request.GET.has_key('tqx'):
+    if 'qs' in request.GET and 'tqx' in request.GET:
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
         gh = Github(login_or_token=GIT["ACCESS_TOKEN"])
@@ -596,12 +597,9 @@ def git_stats(request):
                     for w in contrib.weeks:
                         a += w.a
                         d += w.d
-                    if contrib.author:
-                        au = '<i>%s</i> <span style="color:#888">(%s)</span>' % (contrib.author.login, contrib.author.name)
-                    else:
-                        au = '(None)'
+                    au = '(None)' if not contrib.author else '<i>%s</i> <span style="color:#888">(%s)</span>' % (contrib.author.login, contrib.author.name)
                     data.append({u'Contributors': au, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
-                data = sorted(data, key=operator.itemgetter(u'Commits'))            
+                data = sorted(data, key=operator.itemgetter(u'Commits'))
                 return simplejson.dumps({'contrib': data}, sort_keys=True, indent=' ' * 4)
             else:
                 created_at = repo.created_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
@@ -657,10 +655,7 @@ def git_stats(request):
                     for w in contrib.weeks:
                         a += w.a
                         d += w.d
-                    if contrib.author:
-                        au = contrib.author.login
-                    else:
-                        au = '(None)'
+                    au = contrib.author.login if contrib.author else '(None)'
                     data.append({u'Contributors': au, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
                 stats = ['Contributors']
                 desp['Contributors'] = ('string', 'Name')
@@ -753,7 +748,7 @@ def export_citation(request):
             if pub.issue: number += '(%s)' % pub.issue
             page = ''
             if pub.begin_page: page += ': %s' % pub.begin_page
-            if pub.end_page: page += '-%s' % pub.end_page 
+            if pub.end_page: page += '-%s' % pub.end_page
             double_space = ''
             if is_double_space: double_space = '<br/>'
             html += '<p>%s%s (%s) %s %s %s%s</p>%s' % (order, authors, year, title, journal, number, page, double_space)

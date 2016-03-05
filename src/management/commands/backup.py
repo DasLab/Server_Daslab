@@ -85,7 +85,7 @@ class Command(BaseCommand):
                     html += '%s\t\t%s %s, %s\t\t%s\n' % (local_list[i+7], local_list[i+4], local_list[i+5], local_list[i+6], local_list[i+3])
 
                 if IS_SLACK:
-                    if (not DEBUG) and BOT['SLACK']['ADMIN']['MSG_BACKUP']: 
+                    if (not DEBUG) and BOT['SLACK']['ADMIN']['MSG_BACKUP']:
                         send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'SUCCESS', "mrkdwn_in": ["text"], "color": "good", "text": '*SUCCESS*: Scheduled weekly *Backup* finished @ _%s_\n' % time.ctime()}])
                         send_notify_slack(SLACK['ADMIN_NAME'], '>```%s```\n' % html, '')
                 else:

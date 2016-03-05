@@ -69,7 +69,7 @@ def lab_meeting_flash(request):
             gp.month_start = True
             gp.label = colors[gp.date.month - 1]
         if i == len(flash_list) - 1 or flash_list[i + 1].date.month != gp.date.month:
-            gp.month_end = True 
+            gp.month_end = True
     return render_to_response(PATH.HTML_PATH['lab_meeting_flash'], {'flash_list': flash_list}, context_instance=RequestContext(request))
 
 # @login_required
@@ -240,7 +240,7 @@ def user_dash(request):
 
         json = {'id': user.sunet_id, 'type': user.type, 'title': user.affiliation(), 'name': user.full_name(), 'photo': user.image_tag(), 'email': user.email, 'phone': user.phone, 'bday': user.bday, 'cap': user.more_info, 'status': user.year()}
     except Exception:
-        if request.META.has_key('WEBAUTH_USER'):
+        if 'WEBAUTH_USER' in request.META:
             json = {'id': sunet_id, 'type': user_type}
         else:
             json = {}
@@ -271,7 +271,7 @@ def get_admin(request):
     return HttpResponse(simplejson.dumps({'email': EMAIL_NOTIFY}, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 def get_user(request):
-    if request.META.has_key('WEBAUTH_USER'):
+    if 'WEBAUTH_USER' in request.META:
         user = request.META['WEBAUTH_USER']
     else:
         user = 'unknown'

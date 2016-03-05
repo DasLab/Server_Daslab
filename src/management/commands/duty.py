@@ -57,7 +57,7 @@ class Command(BaseCommand):
 
         try:
             result = dash_duty(0)
-            (jobs, ppls) = (result['jobs'], result['ppls'])
+            ppls = result['ppls']
             result = dash_schedule(0)
 
             if flag == 'weekly':
