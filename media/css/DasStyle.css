@@ -267,6 +267,13 @@ table tbody tr td.year-top { border-top: 15px solid #fff; }
 	width: 207px;
 	height: 95px;
 }
+.imgsp_home_center1, .imgsp_home_center2 {
+	background: url("/site_media/images/public/logo_home.png") no-repeat;
+	width: 1022px;
+	height: 348px;
+}
+.imgsp_home_center1 { background-position: 0 0; }
+.imgsp_home_center2 { background-position: 0 -348px; }
 .imgsp_research {
 	background: url("/site_media/images/public/nav_research.png") no-repeat;
 	width: 53px;
@@ -374,3 +381,24 @@ table tbody tr td.year-top { border-top: 15px solid #fff; }
 	width: 125px;
 }
 
+.carousel-fade .carousel-inner .item {
+	-webkit-transition: opacity 0.75s ease-in-out;
+	-moz-transition: color 0.75s ease-in-out;
+	-o-transition: opacity 0.75s ease-in-out;
+	-ms-transition: opacity 0.75s ease-in-out;
+  	overflow: hidden;
+}
+.carousel-fade .carousel-inner .item,
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right { opacity: 0; }
+.carousel-fade .carousel-inner .active,
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right { opacity: 1; }
+.carousel-fade .carousel-inner .next,
+.carousel-fade .carousel-inner .prev,
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+  left: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}

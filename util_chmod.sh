@@ -20,8 +20,6 @@ find data -type d | sudo xargs chmod 770
 
 find config -type f | sudo xargs chmod 640
 find config -type d | sudo xargs chmod 750
-sudo chmod 640 $(find config -type f)
-sudo chmod 750 $(find config -type d)
 sudo chown www-data config/cron.conf config/bot.conf
 
 sudo chown -R ubuntu:ubuntu *.sh

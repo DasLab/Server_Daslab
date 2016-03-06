@@ -16,27 +16,12 @@
         <div class="imgsp_research"></div>
       </a>
     </div>
-    <object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1022" height="355" style="visibility: inherit;">
-      <param name="movie" value="/site_media/swf/home.swf">
-      <param name="quality" value="high">
-      <param name="wmode" value="opaque">
-      <param name="swfversion" value="6.0.65.0">
-      <!-- This param tag prompts users with Flash Player 6.0 r65 and higher to download the latest version of Flash Player. Delete it if you don’t want users to see the prompt. -->
-      <param name="expressinstall" value="/site_media/swf/install.swf">
-      <!-- Next object tag is for non-IE browsers. So hide it from IE using IECC. -->
-      <!--[if !IE]>-->
-      <object type="application/x-shockwave-flash" data="/site_media/swf/home.swf" width="1022" height="355">
-        <!--<![endif]-->
-        <param name="quality" value="high">
-        <param name="wmode" value="opaque">
-        <param name="swfversion" value="6.0.65.0">
-        <param name="expressinstall" value="/site_media/swf/install.swf">
-        <!-- The browser displays the following alternative content for users with Flash Player 6.0 and older. -->
-        <div>
-      	  <img src="/site_media/images/public/logo_home.png" width="1022" border="0">
-        </div>
-      </object>
-    </object>
+    <div id="home_center" class="carousel slide carousel-fade" data-ride="carousel" style="width:1022px; height:348px;">
+      <div class="carousel-inner">
+        <div class="item active imgsp_home_center1"></div>
+        <div class="item imgsp_home_center2"></div>
+      </div>
+    </div>    
   </div>
 
   <div class="researchH2 fix" id="divisionBar">
@@ -59,20 +44,9 @@
     $(document).ready(function() {
       $("#DasICON").css({"top": "673px", "display": "inline"});
       $("#DasFOOTER").css("display", "none");
+
+      $("#home_center").carousel({'interval': 5000, 'keyboard': false, 'pause': 'none'});
     });
   </script>
-
-  <script type="text/javascript">
-    if (isCDN) {
-      document.write('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/swfobject/' + ver_swfobj + '/swfobject.min.js"><\/script>');
-    } else {
-      document.write('<script type="text/javascript" src="/site_media/js/swfobject.min.js"><\/script>');
-    }
-  </script>
-  <script type="text/javascript">
-    swfobject.registerObject("FlashID");
-  </script>
-  <style type="text/css" media="screen">#FlashID {visibility:hidden}</style>
-
 {% endblock %}
 
