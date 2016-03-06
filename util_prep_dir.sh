@@ -1,4 +1,5 @@
 mkdir backup
+mkdir config/sys
 
 mkdir cache
 mkdir cache/aws cache/dropbox cache/ga cache/git cache/slack
