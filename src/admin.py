@@ -171,9 +171,6 @@ def git_stat(request):
     if isinstance(json, HttpResponse): return json
     return HttpResponse(json, content_type='application/json')
 
-def ssl_dash(request):
-    return HttpResponse(dash_ssl(request), content_type='application/json')
-
 def group_dash(request):
     json = simplejson.dumps({'admin': GROUP.ADMIN, 'group': GROUP.GROUP, 'alumni': GROUP.ALUMNI, 'roton': GROUP.ROTON, 'other': GROUP.OTHER}, sort_keys=True, indent=' ' * 4)
     return HttpResponse(json, content_type='application/json')
@@ -236,8 +233,12 @@ def ref(request):
 
 
 def get_ver(request):
-    json = simplejson.load(open('%s/cache/stat_sys.json' % MEDIA_ROOT, 'r'))
+    json = simplejson.load(open('%s/cache/stat_ver.json' % MEDIA_ROOT, 'r'))
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
+
+def get_sys(request):
+    stats = simplejson.load(open('%s/cache/stat_sys.json' % MEDIA_ROOT, 'r'))
+    return HttpResponse(simplejson.dumps(stats, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 def get_backup(request):
     json = simplejson.load(open('%s/cache/stat_backup.json' % MEDIA_ROOT, 'r'))
@@ -262,8 +263,6 @@ admin.site.register_view('ga_stat/', view=ga_stat, visible=False)
 admin.site.register_view('git/', view=git, visible=False)
 admin.site.register_view('git_stat/', view=git_stat, visible=False)
 
-admin.site.register_view('sys_stat/', view=sys_stat, visible=False)
-admin.site.register_view('ssl_dash/', view=ssl_dash, visible=False)
 admin.site.register_view('group_dash/', view=group_dash, visible=False)
 admin.site.register_view('dash_dash/', view=dash_dash, visible=False)
 admin.site.register_view('dash_stat/', view=dash_stat, visible=False)
@@ -275,6 +274,8 @@ admin.site.register_view('export/', view=export, visible=False)
 admin.site.register_view('man/', view=man, visible=False)
 admin.site.register_view('ref/', view=ref, visible=False)
 
+admin.site.register_view('sys_stat/', view=sys_stat, visible=False)
 admin.site.register_view('get_ver/', view=get_ver, visible=False)
+admin.site.register_view('get_sys/', view=get_sys, visible=False)
 admin.site.register_view('get_backup/', view=get_backup, visible=False)
 

@@ -53,20 +53,27 @@ $(document).ready(function() {
 
             $("#id_curl").html(data.curl);
             $("#id_yui").html(data.yuicompressor);
-
-            var drive_used = parseFloat(data._drive[0]), drive_free = parseFloat(data._drive[1]), drive_total = parseFloat(data._drive[2]);
+        }
+    });
+    $.ajax({
+        url : "/admin/get_sys/",
+        dataType: "json",
+        success : function (data) {
+            var drive_used = parseFloat(data.drive[0]), drive_free = parseFloat(data.drive[1]), drive_total = parseFloat(data.drive[2]);
             $("#id_drive_space > div > div.progress-bar-success").css("width", (drive_free / drive_total * 100).toString() + '%' ).html(drive_free + ' G');
             $("#id_drive_space > div > div.progress-bar-danger").css("width", (100 - drive_free / drive_total * 100).toString() + '%' ).html(drive_used + ' G');
-            $("#id_disk_space > div > div.progress-bar-success").css("width", (parseFloat(data._disk[0]) / (parseFloat(data._disk[0]) + parseFloat(data._disk[1])) * 100).toString() + '%' ).html(data._disk[0]);
-            $("#id_disk_space > div > div.progress-bar-danger").css("width", (parseFloat(data._disk[1]) / (parseFloat(data._disk[0]) + parseFloat(data._disk[1])) * 100).toString() + '%' ).html(data._disk[1]);
-            $("#id_memory > div > div.progress-bar-success").css("width", (parseFloat(data._mem[0]) / (parseFloat(data._mem[0]) + parseFloat(data._mem[1])) * 100).toString() + '%' ).html(data._mem[0]);
-            $("#id_memory > div > div.progress-bar-danger").css("width", (parseFloat(data._mem[1]) / (parseFloat(data._mem[0]) + parseFloat(data._mem[1])) * 100).toString() + '%' ).html(data._mem[1]);
-            $("#id_cpu").html('<span style="color:#f00;">' + data._cpu[0] + '</span> | <span style="color:#080;">' + data._cpu[1] + '</span> | <span style="color:#00f;">' + data._cpu[2] + '</span>');
+            $("#id_disk_space > div > div.progress-bar-success").css("width", (parseFloat(data.disk[0]) / (parseFloat(data.disk[0]) + parseFloat(data.disk[1])) * 100).toString() + '%' ).html(data.disk[0]);
+            $("#id_disk_space > div > div.progress-bar-danger").css("width", (parseFloat(data.disk[1]) / (parseFloat(data.disk[0]) + parseFloat(data.disk[1])) * 100).toString() + '%' ).html(data.disk[1]);
+            $("#id_memory > div > div.progress-bar-success").css("width", (parseFloat(data.memory[0]) / (parseFloat(data.memory[0]) + parseFloat(data.memory[1])) * 100).toString() + '%' ).html(data.memory[0]);
+            $("#id_memory > div > div.progress-bar-danger").css("width", (parseFloat(data.memory[1]) / (parseFloat(data.memory[0]) + parseFloat(data.memory[1])) * 100).toString() + '%' ).html(data.memory[1]);
+            $("#id_cpu").html('<span style="color:#f00;">' + data.cpu[0] + '</span> | <span style="color:#080;">' + data.cpu[1] + '</span> | <span style="color:#00f;">' + data.cpu[2] + '</span>');
 
-            $("#id_base_dir").html('<code>' + data._path.root + '</code>');
-            $("#id_media_root").html('<code>' + data._path.media + '</code>');
-            $("#id_static_root").html('<code>' + data._path.data + '</code>');
-    	}
+            $("#id_base_dir").html('<code>' + data.path.root + '</code>');
+            $("#id_media_root").html('<code>' + data.path.media + '</code>');
+            $("#id_static_root").html('<code>' + data.path.data + '</code>');
+
+            $("#id_ssl_exp").html('<span class="label label-inverse">' + data.ssl_cert + '</span> (UTC)');
+        }
     });
     $.ajax({
         url : "/admin/get_backup/",
@@ -96,15 +103,7 @@ $(document).ready(function() {
         }
     });
 
-   $.ajax({
-        url : "/admin/ssl_dash/",
-        dataType: "json",
-        success : function (data) {
-            $("#id_ssl_exp").html('<span class="label label-inverse">' + data.exp_date + '</span> (UTC)');
-        }
-    });
-
-   $.ajax({
+    $.ajax({
         url : "/admin/dash_dash/",
         dataType: "json",
         success : function (data) {
