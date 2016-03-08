@@ -291,13 +291,23 @@ table tbody tr td.year-top { border-top: 15px solid #fff; }
 .imgsp_arrow:hover { background-position: -29px 0; }
 .imgsp_collapse { background-position: -58px 0; }
 .imgsp_collapse:hover { background-position: -87px 0; }
+
 .nav_top {
-	background: url("/site_media/images/nav_top.png") no-repeat;
-	width: 60px;
-	height: 60px;
-	background-position: 0 0;
+  max-width: 197px; 
+  max-height: 197px;
 }
-.nav_top:hover { background-position: -60px 0; }
+.nav_top::after {
+  content: ' '; 
+  display: inline-block; 
+  max-width: 100%;
+  background-image: url('/site_media/images/nav_top.png');
+  width: 100%; 
+  height: 0; 
+  padding-bottom: 100%;
+  background-position: 0 100%; 
+  background-size: 100% auto;
+}
+.nav_top:hover::after { background-position: 0 0; }
 
 .nav_contact, .nav_home, .nav_news, .nav_people, .nav_publications, .nav_research, .nav_resources, .footer_home, .footer_left, .footer_right, .footer_plain, .nav_footer_biochem, .nav_footer_stfmed, .nav_footer_physics, .nav_footer_biox { background: url("/site_media/images/public/nav_banners.png") no-repeat; }
 .nav_contact {
