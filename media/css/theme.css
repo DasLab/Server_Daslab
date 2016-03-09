@@ -780,7 +780,7 @@ ul.breadcrumb > li.active {
 
 .sprite { display: inline-block; }
 
-.logo_footer_stanford::after,
+.logo_footer_das::after,
 .logo_footer_eterna::after,
 .logo_footer_stanford::after {
   content: ' ';
