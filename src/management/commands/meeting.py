@@ -106,7 +106,7 @@ class Command(BaseCommand):
                     self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback": 'REMINDER', "mrkdwn_in": ["text"], "color": "warning", "text": '*REMINDER*: Add *EternaYoutube* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
 
                 send_to = SLACK['ADMIN_NAME'] if DEBUG else "#general"
-                super_prefix = '*Extended/Super*' if result['this']['type'] == 'FS' else ''
+                super_prefix = '*Extended/Super* ' if result['this']['type'] == 'FS' else ''
                 self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "good", "title": 'Group Meeting Reminder', "text": 'Hi all,\n\nThis is a reminder that group meeting will be %s*`%s`* for this week.\n' % (super_prefix, type_this), "thumb_url": 'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg', "fields": [{'title': 'Date', 'value': '_%s_' % datetime.strftime(date, '%b %d %Y (%a)'), 'short': True}, {'title': 'Time & Place', 'value': '_%s @ %s_' % (result['time']['start'], result['place']), 'short': True}, {'title': 'Type', 'value': '`%s`' % type_this, 'short': True}, {'title': 'Presenter', 'value': '%s' % ', \n'.join(ids), 'short': True}] }]) )
                 self.msg_handles.append( (send_to, '', [{"fallback": '%s' % title, "mrkdwn_in": ["text"], "color": "warning", "title": '%s' % title, "text": '*<https://docs.google.com/presentation/d/%s/edit#slide=id.p>*\nA <https://daslab.stanford.edu/group/flash_slide/|full list> of Flash Slide links is available on the DasLab Website.' % ppt_id}]) )
 
