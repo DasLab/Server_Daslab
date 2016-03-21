@@ -21,7 +21,7 @@ def contact(request):
     return render_to_response(PATH.HTML_PATH['contact'], {}, context_instance=RequestContext(request))
 
 def news(request):
-    news_list = News.objects.order_by('-date')
+    news_list = News.objects.filter(is_visible=1).order_by('-date')
     for news in news_list:
         if news.image:
             news.image_link = os.path.basename(news.image.name)
