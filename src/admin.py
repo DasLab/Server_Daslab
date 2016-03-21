@@ -29,7 +29,7 @@ class NewsAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
     fieldsets = [
-        (format_html('<span class="glyphicon glyphicon-comment"></span>&nbsp;Contents'), {'fields': ['date', 'content', ('image', 'image_tag')]}),
+        (format_html('<span class="glyphicon glyphicon-comment"></span>&nbsp;Contents'), {'fields': ['date', 'content', 'is_visible', ('image', 'image_tag')]}),
         (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['link', 'video']}),
     ]
 admin.site.register(News, NewsAdmin)
