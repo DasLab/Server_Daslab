@@ -21,14 +21,17 @@ function drawGIT(repo) {
             'vAxis': {
                 'title': 'Count (#)',
                 'titleTextStyle': {'bold': true},
+                'format': '#',
             },
             'hAxis': {
                 'gridlines': {'count': -1},
                 'textStyle': {'italic': true},
-                'format': 'MMM dd'
+                'format': 'MMM yy'
             },
+            'tooltip': {'showColorCode': true},
             'lineWidth': 2,
-            'pointSize': 3,
+            'pointSize': 5,
+            'pointShape': 'square',
             'colors': ['#3ed4e7'],
             'animation': {'startup': true, 'duration': 1000, 'easing': 'inAndOut'}
         }
@@ -49,12 +52,17 @@ function drawGIT(repo) {
             'vAxis': {
                 'title': 'Count (#)',
                 'titleTextStyle': {'bold': true},
+                'scaleType': 'mirrorLog',
+                'format': 'scientific',
+                'gridlines': {'count': 5}
             },
             'hAxis': {
                 'gridlines': {'count': -1},
                 'textStyle': {'italic': true},
-                'format': 'MMM dd'
+                'format': 'MMM yy'
             },
+            'tooltip': {'showColorCode': true},
+            'focusTarget': 'category',
             'lineWidth': 2,
             'pointSize': 3,
             'colors': ['#29be92', '#ff5c2b'],
