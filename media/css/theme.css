@@ -711,7 +711,7 @@ ul.breadcrumb > li.active {
   font-weight: bold;
 }
 .code {
-  font-family: monospace; 
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace; 
   font-weight: bold;
   border-radius: 0.25em;
   padding: 2px 5px;
