@@ -269,7 +269,7 @@
               <p>The server handles backup weekly. Settings can be configured at <span class="code code_url">/admin/backup/</span>.</p>
               <p>Every week, it runs:</p>
               <ul>
-                <li>Zip up <span class="code code_misc">static</span>files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files.</li>
+                <li>Zip up <span class="code code_misc">static</span> files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files.</li>
                 <li>Upload most recent backup onto <span class="code code_val">daslab</span> <span class="code code_brand">Google Drive</span>.</li>
                 <li>Clean up obsolete backup files in <span class="code code_brand">Google Drive</span>.</li>
               </ul>
@@ -343,14 +343,14 @@
                 <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
                   <table class="table table-hover">
                     <tbody>
-                      <tr><td><span class="code code_cmd">backup</span></td><td>Backs up <span class="code code_misc">static</span>files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files into <span class="code code_path">backup/</span> folder.</td></tr>
+                      <tr><td><span class="code code_cmd">backup</span></td><td>Backs up <span class="code code_misc">static</span> files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files into <span class="code code_path">backup/</span> folder.</td></tr>
                       <tr><td><span class="code code_cmd">bday</span></td><td>Checks if anyone's birthday is today and sends out wishes in <span class="code code_brand">Slack</span>.</td></tr>
                       <tr><td><span class="code code_cmd">cache</span></td><td>Caches analytics data into <span class="code code_path">cache/</span>. Accepts an interval argument for category, choose from: <span class="code code_val">3</span>, <span class="code code_val">15</span>, or <span class="code code_val">30</span>.</td></tr>
                       <tr><td><span class="code code_cmd">duty</span></td><td>Checks if any duty reminders should be sent out today. Accepts an interval argument for category, choose from: <span class="code code_val">week</span>, <span class="code code_val">month</span>, or <span class="code code_val">quarter</span>.</td></tr>
                       <tr><td><span class="code code_cmd">gdrive</span></td><td>Uploads most recent backup onto <span class="code code_val">daslab</span> <span class="code code_brand">Google Drive</span> and cleans up obsolete backup files.</td></tr>
                       <tr><td><span class="code code_cmd">meeting</span></td><td>Sets up <span class="code code_class">Flash Slides</span> and sends out <span class="code code_spe">Group Meeting Reminder</span>.</td></tr>
                       <tr><td><span class="code code_cmd">report</span></td><td>Sends <span class="code code_misc">cron</span> error report to admin if not <span class="code code_key">IS_SLACK</span>. Also compresses <span class="code code_misc">cron</span> log and cleans up old <span class="code code_class">Slack Messages</span>.</td></tr>
-                      <tr><td><span class="code code_cmd">restore</span></td><td>Restores <span class="code code_misc">static</span>files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files from local <span class="code code_path">backup/</span> files.</td></tr>
+                      <tr><td><span class="code code_cmd">restore</span></td><td>Restores <span class="code code_misc">static</span> files, <span class="code code_brand">MySQL</span>, <span class="code code_brand">Apache</span>, and local <span class="code code_path">config/</span> files from local <span class="code code_path">backup/</span> files.</td></tr>
                       <tr><td><span class="code code_cmd">versions</span></td><td>Collects system installed package versions into <span class="code code_path">cache/stat_sys.json</span> and <span class="code code_path">cache/stat_ver.json</span>. Accepts a flag argument for overriding <span class="code code_key">IS_VERSIONS</span> in <span class="code code_path">config/bot.conf</span>, chooses from: <span class="code code_val">0</span> or <span class="code code_val">1</span>.</td></tr>
                       <tr><td colspan="2" style="padding:0px;"></td></tr>
                     </tbody>
