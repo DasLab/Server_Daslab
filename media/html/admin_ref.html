@@ -303,10 +303,10 @@
                 <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
                   <table class="table table-hover">
                     <tbody>
-                      <tr><td><span class="code code_cmd">upd</span></td><td>Updates <span class="code code_cmd">apt-get</span> and <span class="code code_cmd">pip</span> packages, cleans up old packages, and runs <span class="code code_cmd">dj_man versions</span>.</td></tr>
+                      <tr><td><span class="code code_cmd">upd</span></td><td>Updates <span class="code code_cmd">apt-get</span> and <span class="code code_cmd">pip</span> packages, cleans up old packages, and runs <span class="code code_cmd">dj_man versions</span>. Afterwards, make sure <span class="code code_bran">Apache</span> is running with <span class="code code_misc">worker</span>, NOT <span class="code code_misc">prefork</span>!</td></tr>
                       <tr><td><span class="code code_cmd">sync</span></td><td>Complete procedure for updating server code: pulls repository, runs <span class="code code_path">util_minify.sh</span>, <span class="code code_path">util_sys_asset.sh</span>, <span class="code code_path">util_chmod.sh</span>, and restarts <span class="code code_brand">Apache</span> server.</td></tr>
                       <tr><td><span class="code code_cmd">a2rs</span></td><td>Restarts <span class="code code_brand">Apache</span> server.</td></tr>
-                      <tr><td><span class="code code_cmd">swap_on</span>, <span class="code code_cmd">swap_off</span></td><td>Toggle <u>2 GB</u> of memory swap.</td></tr>
+                      <tr><td><span class="code code_cmd">swap_on</span>, <span class="code code_cmd">swap_off</span></td><td>Toggle <u>2 GB</u> of memory swap. Use upon restart of the server.</td></tr>
                       <tr><td><span class="code code_cmd">dj_man</span></td><td>Shortcut for <span class="code code_misc">Django</span> management commands.</td></tr>
                       <tr><td><span class="code code_cmd">dj_cron</span></td><td>Shortcut for <span class="code code_cmd">crontab</span> of <span class="code code_val">www-data</span> user.</td></tr>
                       <tr><td><span class="code code_cmd">cl_a2a</span>, <span class="code code_cmd">cl_a2e</span></td><td>Show log of <span class="code code_brand">Apache</span> access / error.</td></tr>
