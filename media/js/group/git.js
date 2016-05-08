@@ -8,10 +8,10 @@ function readyHandler() {
     });
 }
 
-function drawGIT(repo) {
+function drawGIT(repo, org) {
     var chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/group/git_dash/?qs=c&repo=' + repo,
+        'dataSourceUrl': '/group/git_dash/?qs=c&repo=' + repo + '&org=' + org,
         'containerId': 'plot_c_' + repo,
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -42,7 +42,7 @@ function drawGIT(repo) {
 
     chart = new google.visualization.ChartWrapper({
         'chartType': 'AreaChart',
-        'dataSourceUrl': '/group/git_dash/?qs=ad&repo=' + repo,
+        'dataSourceUrl': '/group/git_dash/?qs=ad&repo=' + repo + '&org=' + org,
         'containerId': 'plot_ad_' + repo,
         'options': {
             'chartArea': {'width': '90%', 'left': '10%'},
@@ -77,14 +77,14 @@ function drawGIT(repo) {
 
 function drawChart() {
     $.ajax({
-        url : "/group/git_dash/?qs=init&repo=init&tqx=reqId%3A55",
+        url : "/group/git_dash/?qs=init&repo=init&org=init&tqx=reqId%3A55",
         dataType: "json",
         success: function (data) {
             var html = "";
             for (var i = 0; i < data.git.length; i++) {
                 var lb_private = (data.git[i]['private']) ? '<span class="label label-success">private</span>' : '<span class="label label-magenta">public</span>';
 
-                html += '<div class="row"><div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><p><span class="lead"><mark><b><u>' + data.git[i].id + '</u></b></mark></span>&nbsp;&nbsp;' + lb_private + '</p><p><a href="' + data.git[i].url + '" target="_blank"><code>' + data.git[i].url + '</code></a></p><p id="git-label-' + data.git[i].name + '"></p><table class="table table-hover"><thead><tr class="active"><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Account</th><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-circle-arrow-up"></span>&nbsp;&nbsp;Commits</th><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;Additions</th><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-minus-sign"></span>&nbsp;&nbsp;Deletions</th></tr></thead><tbody>';
+                html += '<div class="row"><div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><p><span class="lead"><mark><b><u>' + data.git[i].org + '/' + data.git[i].name + '</u></b></mark></span>&nbsp;&nbsp;' + lb_private + '</p><p><a href="' + data.git[i].url + '" target="_blank"><code>' + data.git[i].url + '</code></a></p><p id="git-label-' + data.git[i].name + '"></p><table class="table table-hover"><thead><tr class="active"><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Account</th><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-circle-arrow-up"></span>&nbsp;&nbsp;Commits</th><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;Additions</th><th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-minus-sign"></span>&nbsp;&nbsp;Deletions</th></tr></thead><tbody>';
 
                 for (var j = 0; j < data.git[i].data.length; j++) {
                     html += '<tr><td>' + data.git[i].data[j].Contributors + '</td><td><span class="pull-right" style="color:#00f;">' + data.git[i].data[j].Commits + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#080;">' + data.git[i].data[j].Additions + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="pull-right" style="color:#f00;">' + data.git[i].data[j].Deletions + '&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>';
@@ -97,13 +97,13 @@ function drawChart() {
             $("#git_body").html(html).removeClass("place_holder");
 
             for (var i = 0; i < data.git.length; i++) {
-                var name = data.git[i].name;
-                drawGIT(name);
+                var name = data.git[i].name, org = data.git[i].org;
+                drawGIT(name, org);
                 $.ajax({
-                    url : "/group/git_dash/?qs=num&repo=" + name + "&tqx=reqId%3A55",
+                    url : "/group/git_dash/?qs=num&repo=" + name + "&org=" + org + "&tqx=reqId%3A55",
                     dataType: "json",
                     success: function (data) {
-                        $("#git-label-" + data.name).html('<span class="label label-green">created</span>&nbsp;<span class="label label-primary">' + data.created_at + '</span>&nbsp;&nbsp;<span class="label label-dark-green">last pushed</span>&nbsp;<span class="label label-primary">' + data.pushed_at + '</span></p><p><span class="label label-danger">issue</span>&nbsp;' + data.num_issues + '&nbsp;&nbsp;<span class="label label-info">download</span>&nbsp;' + data.num_downloads + '&nbsp;&nbsp;<span class="label label-info">pull</span>&nbsp;' + data.num_pulls + '&nbsp;&nbsp;<span class="label label-orange">branch</span>&nbsp;' + data.num_branches + '&nbsp;&nbsp;<span class="label label-orange">fork</span>&nbsp;' + data.num_forks + '&nbsp;&nbsp;<span class="label label-violet">watcher</span>&nbsp;' + data.num_watchers);
+                        $("#git-label-" + data.name.split('/')[1]).html('<span class="label label-green">created</span>&nbsp;<span class="label label-primary">' + data.created_at + '</span>&nbsp;&nbsp;<span class="label label-dark-green">last pushed</span>&nbsp;<span class="label label-primary">' + data.pushed_at + '</span></p><p><span class="label label-danger">issue</span>&nbsp;' + data.num_issues + '&nbsp;&nbsp;<span class="label label-info">download</span>&nbsp;' + data.num_downloads + '&nbsp;&nbsp;<span class="label label-info">pull</span>&nbsp;' + data.num_pulls + '&nbsp;&nbsp;<span class="label label-orange">branch</span>&nbsp;' + data.num_branches + '&nbsp;&nbsp;<span class="label label-orange">fork</span>&nbsp;' + data.num_forks + '&nbsp;&nbsp;<span class="label label-violet">watcher</span>&nbsp;' + data.num_watchers);
                     }
                 });
             }

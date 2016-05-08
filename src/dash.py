@@ -216,29 +216,31 @@ def cache_git(request):
 
     if qs == 'init':
         repos = []
-        for repo in gh.get_organization('DasLab').get_repos():
-            i = 0
-            contribs = repo.get_stats_contributors()
-            while (contribs is None and i <= 5):
-                time.sleep(1)
+        orgs = ['DasLab', 'hitrace', 'ribokit']
+        for org in orgs:
+            for repo in gh.get_organization(org).get_repos():
+                i = 0
                 contribs = repo.get_stats_contributors()
-                i += 1
-            if contribs is None: return error500(request)
-            data = []
-            for contrib in contribs:
-                a, d = (0, 0)
-                for w in contrib.weeks:
-                    a += w.a
-                    d += w.d
-                au = contrib.author.login if contrib.author else '(None)'
-                data.append({u'Contributors': au, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
+                while (contribs is None and i <= 5):
+                    time.sleep(1)
+                    contribs = repo.get_stats_contributors()
+                    i += 1
+                if contribs is None: return error500(request)
+                data = []
+                for contrib in contribs:
+                    a, d = (0, 0)
+                    for w in contrib.weeks:
+                        a += w.a
+                        d += w.d
+                    au = contrib.author.login if contrib.author else '(None)'
+                    data.append({u'Contributors': au, u'Commits': contrib.total, u'Additions': a, u'Deletions': d})
 
-            data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
-            repos.append({'url': repo.html_url, 'private': repo.private, 'data': data, 'name': repo.name, 'id': repo.full_name})
+                data = sorted(data, key=operator.itemgetter(u'Commits'), reverse=True)[0:4]
+                repos.append({'url': repo.html_url, 'private': repo.private, 'data': data, 'name': repo.name, 'org': org})
         return {'git': repos}
     else:
         if qs == 'num':
-            name = 'DasLab/' + request['repo']
+            name = request['repo']
             repo = gh.get_repo(name)
             created_at = repo.created_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
             pushed_at = repo.pushed_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
@@ -252,7 +254,7 @@ def cache_git(request):
             return simplejson.dumps({'name': request['repo'], 'created_at': created_at, 'pushed_at': pushed_at, 'num_watchers': num_watchers, 'num_pulls': num_pulls, 'num_issues': num_issues, 'num_branches': num_branches, 'num_forks': num_forks, 'num_downloads': num_downloads}, sort_keys=True, indent=' ' * 4)
 
         elif qs in ['c', 'ad']:
-            repo = gh.get_repo('DasLab/' + request['repo'])
+            repo = gh.get_repo(request['repo'])
             data = []
             desp = {'Timestamp': ('datetime', 'Timestamp'), 'Samples': ('number', 'Samples'), 'Unit': ('string', 'Count')}
             stats = ['Timestamp']
@@ -291,15 +293,16 @@ def cache_git(request):
 
 
 def dash_git(request):
-    if 'qs' in request.GET and 'repo' in request.GET and 'tqx' in request.GET:
+    if 'qs' in request.GET and 'repo' in request.GET and 'org' in request.GET and 'tqx' in request.GET:
         qs = request.GET.get('qs')
         repo = request.GET.get('repo')
+        org = request.GET.get('org')
         req_id = request.GET.get('tqx').replace('reqId:', '')
 
         if qs == 'init':
             return simplejson.dumps(simplejson.load(open('%s/cache/git/init.json' % MEDIA_ROOT, 'r')))
         elif qs in ['c', 'ad', 'num']:
-            results = pickle.load(open('%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, repo, qs), 'rb'))
+            results = pickle.load(open('%s/cache/git/%s+%s_%s.pickle' % (MEDIA_ROOT, org, repo, qs), 'rb'))
             return results.replace('__REQ_ID__', req_id)
         else:
             return error400(request)

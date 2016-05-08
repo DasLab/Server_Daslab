@@ -26,7 +26,7 @@ class Command(BaseCommand):
         subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     def pickle_git(self, request):
-        f_name = '%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, request['repo'], request['qs'])
+        f_name = '%s/cache/git/%s_%s.pickle' % (MEDIA_ROOT, request['repo'].replace('/', '+'), request['qs'])
         pickle.dump(cache_git(request), open(f_name + '_tmp', 'wb'))
         subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
@@ -141,8 +141,8 @@ class Command(BaseCommand):
 
                 # git each
                 for i, repo in enumerate(git_init['git']):
-                    self.stdout.write("    GIT \033[94mrepo\033[0m: %s / %s (%s)..." % (i + 1, len(git_init['git']), repo['name']), ending='')
-                    request = {'qs': 'num', 'repo': repo['name']}
+                    self.stdout.write("    GIT \033[94mrepo\033[0m: %s / %s (%s/%s)..." % (i + 1, len(git_init['git']), repo['org'], repo['name']), ending='')
+                    request = {'qs': 'num', 'repo': '%s/%s' % (repo['org'], repo['name'])}
                     self.pickle_git(request)
                     request.update({'qs': 'c'})
                     self.pickle_git(request)
