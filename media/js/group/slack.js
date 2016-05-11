@@ -57,9 +57,9 @@ function drawChart() {
             var html = "";
             for (var i = 0; i < data.channels.length; i++) {
                 var name = "", num_msgs = data.channels[i].num_msgs.toString();
-                if (data.channels[i].name == "general" || data.channels[i].name == "random" || data.channels[i].name == "papers") { 
+                if (data.channels[i].name == "general" || data.channels[i].name == "random" || data.channels[i].name == "papers" || data.channels[i].name == "calendar") {
                     name = '<span class="label label-info">' + data.channels[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-play-circle">';
-                } else if (data.channels[i].name == "dropbox" || data.channels[i].name == "github") { 
+                } else if (data.channels[i].name == "dropbox" || data.channels[i].name == "github") {
                     name = '<span class="label label-orange">' + data.channels[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-record">';
                 } else {
                     name = '<span class="label label-inverse">' + data.channels[i].name + '</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-ok-circle">';
@@ -163,7 +163,7 @@ $(window).on("resize", function() {
     clearTimeout($(window).data(this, 'resizeTimer'));
     $(window).data(this, 'resizeTimer', setTimeout(function() {
         for (var i = 0; i < gviz_handles.length; i++) {
-            gviz_handles[i].draw(); 
+            gviz_handles[i].draw();
         }
     }, 200));
 });
