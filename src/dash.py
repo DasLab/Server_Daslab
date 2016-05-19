@@ -75,7 +75,7 @@ def cache_aws(request):
         dict_aws['ebs'] = sorted(dict_aws['ebs'], key=operator.itemgetter(u'name'))
         dict_aws['elb'] = sorted(dict_aws['elb'], key=operator.itemgetter(u'name'))
 
-        for i in range(max(len(dict_aws['ec2']), len(dict_aws['elb']), len(dict_aws['ebs']))):
+        for i in xrange(max(len(dict_aws['ec2']), len(dict_aws['elb']), len(dict_aws['ebs']))):
             temp = {}
             if i < len(dict_aws['ec2']):
                 temp.update({'ec2': {'name': dict_aws['ec2'][i]['name'], 'status': dict_aws['ec2'][i]['status'], 'id': dict_aws['ec2'][i]['id']}})
