@@ -4,19 +4,33 @@ from django.contrib.auth import authenticate, login
 # import os
 # import traceback
 
-from src.env import MEDIA_ROOT, env
+from src.env import MEDIA_ROOT, env, Singleton
 # MEDIA_ROOT = os.path.dirname(os.path.dirname(__file__))
 
 
-class USER_GROUP(object):
+class USER_GROUP(Singleton):
     def __init__(self):
         lines = open('%s/config/group.conf' % MEDIA_ROOT, 'r').readlines()
 
-        self.ADMIN = [ x.strip() for x in lines[0].replace('daslab_admin: ', '').split(' ')]
-        self.GROUP = [ x.strip() for x in lines[1].replace('daslab_group: ', '').split(' ')]
-        self.ALUMNI = [ x.strip() for x in lines[2].replace('daslab_alumni: ', '').split(' ')]
-        self.OTHER = [ x.strip() for x in lines[3].replace('daslab_other: ', '').split(' ')]
-        self.ROTON = [ x.strip() for x in lines[4].replace('daslab_roton: ', '').split(' ')]
+        self.ADMIN = [x.strip() for x in lines[0].replace('daslab_admin: ', '').split(' ')]
+        self.GROUP = [x.strip() for x in lines[1].replace('daslab_group: ', '').split(' ')]
+        self.ALUMNI = [x.strip() for x in lines[2].replace('daslab_alumni: ', '').split(' ')]
+        self.OTHER = [x.strip() for x in lines[3].replace('daslab_other: ', '').split(' ')]
+        self.ROTON = [x.strip() for x in lines[4].replace('daslab_roton: ', '').split(' ')]
+
+    def find_type(self, sunet_id):
+        if sunet_id in self.ADMIN:
+            return 'admin'
+        elif sunet_id in self.GROUP:
+            return 'group'
+        elif sunet_id in self.ALUMNI:
+            return 'alumni'
+        elif sunet_id in self.ROTON:
+            return 'roton'
+        elif sunet_id in self.OTHER:
+            return 'other'
+        else:
+            return 'unknown'
 
 
 class AutomaticAdminLoginMiddleware(object):
@@ -24,7 +38,7 @@ class AutomaticAdminLoginMiddleware(object):
         if not hasattr(request, 'user') or not request.user.is_authenticated():
             try:
                 sunet_id = request.META['WEBAUTH_USER']
-                is_admin = (sunet_id in USER_GROUP().ADMIN)
+                is_admin = USER_GROUP().find_type(sunet_id) == 'admin'
             except Exception:
                 is_admin = False
                 # print traceback.format_exc()
