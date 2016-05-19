@@ -219,19 +219,7 @@ def user_dash(request):
     # if request.user.username == u'daslab': return HttpResponseBadRequest('Fake admin login.')
     try:
         sunet_id = request.META['WEBAUTH_USER']
-        if sunet_id in GROUP.ADMIN:
-            user_type = 'admin'
-        elif sunet_id in GROUP.GROUP:
-            user_type = 'group'
-        elif sunet_id in GROUP.ALUMNI:
-            user_type = 'alumni'
-        elif sunet_id in GROUP.ROTON:
-            user_type = 'roton'
-        elif sunet_id in GROUP.OTHER:
-            user_type = 'other'
-        else:
-            user_type = 'unknown'
-
+        user_type = GROUP.find_type(sunet_id)
         user = Member.objects.get(sunet_id=sunet_id)
         if user.phone:
             user.phone = str(user.phone)

@@ -79,7 +79,7 @@ class Command(BaseCommand):
                     for name in names:
                         (who_id, sunet_id) = find_slack_id(name)
                         if flag == 'endofrotationtalk' and BOT['SLACK']['REMINDER']['ROT']['REMINDER_1']:
-                            if sunet_id in GROUP.ROTON:
+                            if GROUP.find_type(sunet_id) == 'roton':
                                 msg_who = 'Just a reminder: Please send your presentation to %s (site admin) for `archiving` *after* your presentation this _%s_.' % (SLACK['ADMIN_NAME'], datetime.strftime(date, '%A'))
                                 ids.append('_' + name + '_ <@' + who_id + '>')
                                 send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
@@ -91,7 +91,7 @@ class Command(BaseCommand):
                                     self.stdout.write('\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) is ambiguate (more than 1 match).' % name)
                                 else:
                                     self.stdout.write('\033[41mERROR\033[0m: rotation student (\033[94m%s\033[0m) not available in database.' % name)
-                        elif sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.OTHER:
+                        elif GROUP.find_type(sunet_id) in ['admin', 'group', 'alumni', 'other']:
                             ids.append('_' + name + '_ <@' + who_id + '>')
                         else:
                             ids.append('_%s_' % name)
@@ -147,7 +147,7 @@ class Command(BaseCommand):
                 if name:
                     for name in names:
                         (who_id, sunet_id) = find_slack_id(name)
-                        if sunet_id in GROUP.ADMIN or sunet_id in GROUP.GROUP or sunet_id in GROUP.ALUMNI or sunet_id in GROUP.ROTON or sunet_id in GROUP.OTHER:
+                        if GROUP.find_type(sunet_id) != 'unknown':
                             ids.append('_' + name + '_ <@' + who_id + '>')
 
                             if (result['next']['type'] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_1']) or (result['next']['type'] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_1']) or (result['next']['type'] == 'GM' and (BOT['SLACK']['REMINDER']['JC']['REMINDER_1'] or BOT['SLACK']['REMINDER']['ES']['REMINDER_1'] or BOT['SLACK']['REMINDER']['ROT']['REMINDER_1'])):
@@ -194,7 +194,7 @@ class Command(BaseCommand):
 
         else:
             for h in self.msg_handles:
-                send_notify_slack(h[0], h[1], h[2])
+                send_notify_slack(*h)
                 if '@' in h[0]:
                     self.stdout.write('\033[92mSUCCESS\033[0m: PM\'ed reminder to \033[94m%s\033[0m in Slack.' % h[0])
             self.stdout.write('\033[92mSUCCESS\033[0m: Google Presentation posted in Slack.')

@@ -145,7 +145,7 @@ def get_backup_stat():
 
     gdrive_dir = 'echo' if DEBUG else 'cd %s' % APACHE_ROOT
     gdrive = subprocess.Popen("%s && drive list -q \"title contains '%s_' and title contains '.tgz'\"" % (gdrive_dir, env('SERVER_NAME')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split()[4:]
-    for i in range(0, len(gdrive), 6):
+    for i in xrange(0, len(gdrive), 6):
         ver['gdrive'].append([gdrive[i + 1], '%s %s' % (gdrive[i + 2], gdrive[i + 3]), '%s %s' % (gdrive[i + 4], gdrive[i + 5])])
 
     simplejson.dump(ver, open(os.path.join(MEDIA_ROOT, 'cache/stat_backup.json'), 'w'), indent=' ' * 4, sort_keys=True)
@@ -163,8 +163,7 @@ def refresh_settings():
 def get_sys_crontab():
     cron = subprocess.Popen('crontab -l', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].split('\n')
     (set_backup, set_upload, set_cache_3, set_cache_15, set_cache_30, set_duty_month, set_duty_quarter) = (('', ''), ('', ''), '', '', '', '', '')
-    for i in xrange(len(cron)):
-        cron_job = cron[i]
+    for cron_job in cron:
         array = cron_job.split()
         if 'backup_weekly' in cron_job:
             set_backup = ('%s:%s' % (array[1], array[0]), array[4])
@@ -206,8 +205,7 @@ def set_backup_form(request):
     cron_upload = '%s * * %s' % (form.cleaned_data['time_upload'].strftime('%M %H'), form.cleaned_data['day_upload'])
 
     env_cron = simplejson.load(open('%s/config/cron.conf' % MEDIA_ROOT))
-    for i in xrange(len(env_cron['CRONJOBS'])):
-        cron_job = env_cron['CRONJOBS'][i]
+    for cron_job in env_cron['CRONJOBS']:
         if 'backup_weekly' in cron_job[-1]:
             cron_job[0] = cron_backup
         elif 'gdrive_weekly' in cron_job[-1]:
@@ -237,8 +235,7 @@ def set_bot_form(request):
     BOT = {"SLACK":  {"IS_SLACK": form.cleaned_data['is_slack'], "IS_FLASH_SETUP": form.cleaned_data['is_flash_slide'], "IS_VERSION": form.cleaned_data['is_version'], "IS_REPORT": form.cleaned_data['is_report'], "MSG_BDAY": form.cleaned_data['is_bday'], "DUTY":  {"MONTH":  {"MSG_BDAY": form.cleaned_data['is_duty_bday'], "MSG_BREAKFAST": form.cleaned_data['is_duty_breakfast'], "MSG_AWS": form.cleaned_data['is_duty_aws'], "MSG_SCHEDULE": form.cleaned_data['is_duty_schedule'], "MSG_WEBSITE": form.cleaned_data['is_duty_website'], "WEEK_DAY": form.cleaned_data['day_duty_month']}, "QUARTER":  {"MSG_TRIP": form.cleaned_data['is_duty_trip'], "MSG_GIT": form.cleaned_data['is_duty_git'], "WEEK_DAY": form.cleaned_data['day_duty_quarter']}, "ETERNA":  {"MSG_MIC": form.cleaned_data['is_duty_mic'], "MSG_BROADCAST": form.cleaned_data['is_duty_broadcast'], "MSG_NEWS": form.cleaned_data['is_duty_webnews']} }, "REMINDER":  {"DAY_BEFORE_REMINDER_1":  form.cleaned_data['day_reminder_1'], "DAY_BEFORE_REMINDER_2":  form.cleaned_data['day_reminder_2'], "JC":  {"REMINDER_1": form.cleaned_data['is_user_jc_1'], "REMINDER_2": form.cleaned_data['is_user_jc_2'], "REMINDER_ADMIN": form.cleaned_data['is_admin_jc']}, "ES":  {"REMINDER_1": form.cleaned_data['is_user_es_1'], "REMINDER_2": form.cleaned_data['is_user_es_2'], "REMINDER_ADMIN": form.cleaned_data['is_admin_es']}, "ROT":  {"REMINDER_1": form.cleaned_data['is_user_rot_1'], "REMINDER_2": form.cleaned_data['is_user_rot_2'], "REMINDER_ADMIN": form.cleaned_data['is_admin_rot']} }, "ADMIN":  {"MSG_BACKUP": form.cleaned_data['is_admin_backup'], "MSG_GDRIVE": form.cleaned_data['is_admin_gdrive'], "MSG_VERSION": form.cleaned_data['is_admin_version'], "MSG_REPORT": form.cleaned_data['is_admin_report'], "MSG_AWS_WARN": form.cleaned_data['is_admin_aws_warn']} }, "CACHE":  { "IS_CACHE": form.cleaned_data['is_cache'], "INTERVAL_3": form.cleaned_data['cache_3'], "INTERVAL_15": form.cleaned_data['cache_15'], "INTERVAL_30": form.cleaned_data['cache_30']} }
 
     env_cron = simplejson.load(open('%s/config/cron.conf' % MEDIA_ROOT))
-    for i in xrange(len(env_cron['CRONJOBS'])):
-        cron_job = env_cron['CRONJOBS'][i]
+    for cron_job in env_cron['CRONJOBS']:
         if 'cache_03' in cron_job[-1]:
             cron_job[0] = '*/%s * * * *' % form.cleaned_data['cache_3']
         elif 'cache_15' in cron_job[-1]:

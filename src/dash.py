@@ -35,14 +35,12 @@ def cache_aws(request):
                 avg += d[u'Average']
             if len(data):
                 avg = avg / len(data)
-            name = ''
-            if 'Name' in resv.tags: name = resv.tags['Name']
+            name = resv.tags['Name'] if 'Name' in resv.tags else ''
             dict_aws['ec2'].append({'name': name, 'type': resv.instance_type, 'dns': resv.dns_name, 'status': resv.state_code, 'arch': resv.architecture, 'region': resv.placement, 'credit':  '%.1f' % avg, 'id': resv.id})
 
         resvs = conn.get_all_volumes()
         for i, resv in enumerate(resvs):
-            name = ''
-            if 'Name' in resv.tags: name = resv.tags['Name']
+            name = resv.tags['Name'] if 'Name' in resv.tags else ''
             dict_aws['ebs'].append({'name': name, 'size': resv.size, 'type': resv.type, 'region': resv.zone, 'encrypted': resv.encrypted, 'status': resv.status, 'id': resv.id})
 
         conn = boto.ec2.elb.connect_to_region(AWS['REGION'], aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True)
@@ -360,7 +358,7 @@ def cache_slack(request):
         for t in types:
             response = sh.files.list(count=100, types=t).body
             size = 0
-            for i in range(response['paging']['pages']):
+            for i in xrange(response['paging']['pages']):
                 page = sh.files.list(count=100, types=t, page=i).body['files']
                 for p in page:
                     size += p['size']
@@ -375,8 +373,8 @@ def cache_slack(request):
 
         if qs == 'plot_files':
             fields = ['Files']
-            for i in range(7):
-                start_time = datetime.today() - timedelta(days=i+1)
+            for i in xrange(7):
+                start_time = datetime.today() - timedelta(days=i + 1)
                 end_time = start_time + timedelta(days=1)
                 num = sh.files.list(types="all", ts_from=time.mktime(start_time.timetuple()), ts_to=time.mktime(end_time.timetuple())).body['paging']['total']
                 data.append({u'Timestamp': end_time.replace(hour=0, minute=0, second=0, microsecond=0), u'Files': num})
@@ -385,7 +383,7 @@ def cache_slack(request):
             response = sh.channels.list().body['channels']
             for resp in response:
                 if resp['is_archived']: continue
-                for i in range(7):
+                for i in xrange(7):
                     start_time = datetime.today() - timedelta(days=i+1)
                     end_time = start_time + timedelta(days=1)
                     num = len(sh.channels.history(channel=resp['id'], latest=time.mktime(end_time.timetuple()), oldest=time.mktime(start_time.timetuple()), count=1000).body['messages'])
@@ -446,7 +444,7 @@ def cache_dropbox(request):
         folder_nums = defaultdict(lambda: 0)
         for path, size in sizes.items():
             segments = path.split('/')
-            for i in range(1, len(segments)):
+            for i in xrange(1, len(segments)):
                 folder = '/'.join(segments[:i])
                 if folder == '': folder = '/'
                 folder_sizes[folder] += size
@@ -479,17 +477,17 @@ def cache_dropbox(request):
             cursor = result['cursor']
 
         temp = {}
-        for i in range(8):
+        for i in xrange(8):
             ts = (datetime.utcnow() - timedelta(days=i)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).replace(hour=0, minute=0, second=0, microsecond=0)
             temp.update({ts: 0})
         for path, ts in sizes.items():
-                ts = datetime.strptime(ts[:-6], "%a, %d %b %Y %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
-                for i in range(7):
-                    ts_u = (datetime.utcnow() - timedelta(days=i)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).replace(hour=0, minute=0, second=0, microsecond=0)
-                    ts_l = (datetime.utcnow() - timedelta(days=i+1)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).replace(hour=0, minute=0, second=0, microsecond=0)
-                    if ts <= ts_u and ts > ts_l:
-                        temp[ts_u] += 1
-                        break
+            ts = datetime.strptime(ts[:-6], "%a, %d %b %Y %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
+            for i in xrange(7):
+                ts_u = (datetime.utcnow() - timedelta(days=i)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).replace(hour=0, minute=0, second=0, microsecond=0)
+                ts_l = (datetime.utcnow() - timedelta(days=i+1)).replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).replace(hour=0, minute=0, second=0, microsecond=0)
+                if ts_l < ts <= ts_u:
+                    temp[ts_u] += 1
+                    break
         data = []
         for ts in temp.keys():
             data.append({u'Timestamp': ts, u'Files': temp[ts]})
@@ -671,14 +669,14 @@ def cache_cal():
         for event in cal.walk('vevent'):
             title = event.get('SUMMARY')
             start = event.get('DTSTART').dt
-            if type(start) is datetime:
+            if isinstance(start, datetime):
                 if 'TZID' in event.get('DTSTART').params:
                     start = start.replace(tzinfo=pytz.timezone(event.get('DTSTART').params['TZID'])).astimezone(pytz.timezone(TIME_ZONE))
                 else:
                     start = start.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE))
             if 'DTEND' in event:
                 end = event.get('DTEND').dt
-                if type(end) is datetime:
+                if isinstance(end, datetime):
                     if 'TZID' in event.get('DTEND').params:
                         end = end.replace(tzinfo=pytz.timezone(event.get('DTSTART').params['TZID'])).astimezone(pytz.timezone(TIME_ZONE))
                     else:

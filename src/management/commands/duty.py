@@ -146,7 +146,7 @@ class Command(BaseCommand):
 
         else:
             for h in self.msg_handles:
-                send_notify_slack(h[0], h[1], h[2])
+                send_notify_slack(*h)
                 if '@' in h[0]:
                     self.stdout.write('\033[92mSUCCESS\033[0m: PM\'ed duty reminder to \033[94m%s\033[0m in Slack.' % h[0])
 
