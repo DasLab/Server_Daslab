@@ -229,20 +229,17 @@ $(document).ready(function () {
                     $("#card_user_email").html(data.email);
                     $("#card_user_email").attr("href", "mailto:" + data.email);
                     $("#id_contact_email").val(data.email);
-                } else {
-                    $("#id_contact_email").attr("disabled", "disabled");
                 }
                 if (data.phone) {
                     $("#card_user_phone").html(data.phone);
                     $("#id_contact_phone").val(data.phone.replace(/\D+/g, ''));
-                } else{
-                    $("#id_contact_phone").attr("disabled", "disabled");
-                    $("#form_change_submit").attr("disabled", "disabled");
                 }
-                if (data.bday) {
-                    $("#id_contact_bday").val(data.bday);
-                } else{
+                if (data.bday) { $("#id_contact_bday").val(data.bday); }
+                if (data.type == 'roton' || data.type == 'other' || data.type == 'unknown') {
+                    $("#id_contact_email").attr("disabled", "disabled");
+                    $("#id_contact_phone").attr("disabled", "disabled");
                     $("#id_contact_bday").attr("disabled", "disabled");
+                    $("#form_change_submit").attr("disabled", "disabled");
                 }
             }
         }
