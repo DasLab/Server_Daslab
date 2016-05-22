@@ -9,7 +9,7 @@ function change_view() {
   var tab = parse_location();
   $("a.nav-hover").removeClass().addClass("nav-hover");
   $("#nav-"+ tab).addClass("active");
-  $("#main").removeClass().removeProp("height").addClass("DASmain DAS" + tab);
+  $("#main").removeClass().removeAttr("style").addClass("DASmain DAS" + tab);
   if (!$("#DasFOOTER").is(":visible")) {
     $("#DasFOOTER").css("display", "inline");
   }
@@ -19,18 +19,18 @@ function change_view() {
     $("p.previous").hide();
     $(".DASpublications").css("height", $("table.current:last").offset().top + 300);
 
-    $("#search").on("click", function () { $("#arrow")[0].click(); });
-    $("#arrow2, #expand").on("click", function () {
-      $("table.previous").toggle();
-      $("p.previous").toggle();
-
-      if ($("table.previous").is(":visible")) {
-        $("#arrow2").children().addClass("imgsp_collapse").removeClass("imgsp_arrow");
-        $(".DASpublications").css("height", $("table.previous:last").offset().top + 200);
-      } else {
-        $("#arrow2").children().removeClass("imgsp_collapse").addClass("imgsp_arrow");
-        $(".DASpublications").css("height", $("table.current:last").offset().top + 300);
-      }
+    $("#search").on("click", function() { $("#arrow")[0].click(); });
+    $("#arrow2, #expand").on("click", function() {
+      $("p.previous").fadeToggle(150);
+      $("table.previous").fadeToggle(150, function() {
+        if ($(this).is(":visible")) {
+          $("#arrow2").children().addClass("imgsp_collapse").removeClass("imgsp_arrow");
+          $(".DASpublications").css("height", $("table.previous:last").offset().top + 200);
+        } else {
+          $("#arrow2").children().removeClass("imgsp_collapse").addClass("imgsp_arrow");
+          $(".DASpublications").css("height", $("table.current:last").offset().top + 300);
+        }
+      });
     });
 
   } else if (tab == 'people') {
@@ -43,29 +43,26 @@ function change_view() {
     $("tr.previous").hide();
     $(".DASnews").css("height", $("tr.middle").offset().top + 200);
 
-    $("#arrow, #previous").on("click", function () {
-      $("tr.previous").toggle();
-
-      if ($("tr.previous").is(":visible")) {
-        $("#arrow").children().addClass("imgsp_collapse").removeClass("imgsp_arrow");
-        $(".DASnews").css("height", $("tr.last").offset().top + 200);
-      } else {
-        $("#arrow").children().removeClass("imgsp_collapse").addClass("imgsp_arrow");
-        $(".DASnews").css("height", $("tr.middle").offset().top + 200);
-      }
+    $("#arrow, #previous").on("click", function() {
+      $("tr.previous").fadeToggle(150, function() {
+        if ($(this).is(":visible")) {
+          $("#arrow").children().addClass("imgsp_collapse").removeClass("imgsp_arrow");
+          $(".DASnews").css("height", $("tr.last").offset().top + 200);
+        } else {
+          $("#arrow").children().removeClass("imgsp_collapse").addClass("imgsp_arrow");
+          $(".DASnews").css("height", $("tr.middle").offset().top + 200);
+        }
+      });
     });
 
-  } else if (tab == 'home') {
+  } else if (tab == 'home' && window.location.pathname == '/') {
     $("#DasFOOTER").css("display", "none");
-
-    if (window.location.pathname == '/') {
-      $("#home_center").carousel({'interval': 5000, 'keyboard': false, 'pause': 'none'});
-    }
+    $("#home_center").carousel({'interval': 5000, 'keyboard': false, 'pause': 'none'});
   }
 }
 
 
-$(document).ready(function () {
+$(document).ready(function() {
   change_view();
 
   $("#top").on("click", function (event) {
@@ -93,7 +90,7 @@ $(document).ready(function () {
 });
 
 
-$(window).on("scroll", function () {
+$(window).on("scroll", function() {
   clearTimeout($.data(this, 'resizeTimer'));
   $.data(this, 'resizeTimer', setTimeout(function() {
     if ($(this).scrollTop() > $(window).height() / 2) {

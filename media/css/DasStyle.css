@@ -59,8 +59,6 @@ a.nav-hover:hover > div { border-bottom: 6px solid #008180 !important; }
 .DASresearch { height: 1450px !important; }
 .DASresources { height: 1600px !important; }
 .DAScontact { height: 1100px !important; }
-.DASerr { height: 500px !important; }
-.DASpwd { height: 700px !important; }
 
 
 .TEXT {
@@ -193,17 +191,10 @@ table tbody tr td.year-top { border-top: 15px solid #fff; }
 }
 .BODY-ERR {
 	position: absolute;
-	left: 72px; top: 100px;
+	left: 72px; top: 150px;
 	width: 856px;
 	z-index: 8;
 }
-#contactBODY { height: 529px; }
-#newsBODY { height: 830px; }
-#pplBODY { height: 2000px; }
-#pubBODY { height: 4133px; }
-#researchBODY { height: 814px; top: 423px;}
-#resourcesBODY { height: 1082px; }
-
 
 .imgsp_map {
 	background: url("/site_media/images/public/img_contact_map.jpg") no-repeat;
