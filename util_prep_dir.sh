@@ -17,6 +17,6 @@ mkdir data
 mkdir data/news_img data/ppl_img data/pub_data data/pub_img data/pub_pdf data/rot_data data/rot_ppt data/spe_ppt
 
 mkdir media/css/min
-mkdir media/js/admin/min media/js/group/min media/js/suit/min
+mkdir media/js/admin/min media/js/group/min media/js/public/min media/js/suit/min
 
 ./util_chmod.sh

@@ -56,7 +56,8 @@
         </table>
       </div>
 
-      {% block content %}{% endblock %}
+      <div id="DasCONTENT">{% block content %}{% endblock %}</div>
+      
       <div id="DasFOOTER" class="fix">
         <div class="footer_left" style="float:left;"></div>
         <a href="/group/">
@@ -76,27 +77,7 @@
     </div>
 
     {% block script %}{% endblock %}
-
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $("#top").on("click", function () {
-          event.preventDefault()
-          $('#top > div').animate({'right':'-5%', 'opacity':'0'}, 125);
-          $("html, body").stop().animate({scrollTop: 0}, 250);
-        });
-      });
-  
-      $(window).on("scroll", function () {
-        clearTimeout($.data(this, 'resizeTimer'));
-        $.data(this, 'resizeTimer', setTimeout(function() {
-          if ($(this).scrollTop() > $(window).height() / 2) {
-            $('#top > div').animate({'right':'5%', 'opacity':'0.85'}, 125);
-          } else {
-            $('#top > div').animate({'right':'-5%', 'opacity':'0'}, 125);
-          }
-        }, 200));
-      });
-    </script>
+    <script type="text/javascript" src="/site_media/js/public/{{DEBUG_DIR}}main{{DEBUG_STR}}.js"></script>
   </body>
 </html>
 

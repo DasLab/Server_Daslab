@@ -6,6 +6,10 @@ sudo rm media/js/group/min/*.min.js
 java -jar ../yuicompressor.jar -o '.js$:.min.js' media/js/group/*.js
 mv media/js/group/*.min.js media/js/group/min/
 
+sudo rm media/js/public/min/*.min.js
+java -jar ../yuicompressor.jar -o '.js$:.min.js' media/js/public/*.js
+mv media/js/public/*.min.js media/js/public/min/
+
 sudo rm media/js/suit/min/*.min.js
 java -jar ../yuicompressor.jar -o '.js$:.min.js' media/js/suit/*.js
 mv media/js/suit/*.min.js media/js/suit/min/

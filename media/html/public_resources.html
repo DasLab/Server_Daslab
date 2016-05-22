@@ -1,15 +1,5 @@
 {% extends "media/html/_external.html" %}
 
-{% block header %}
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#main").addClass("DASresources");
-      $("#nav-resources").addClass("active");
-    });
-  </script>
-{% endblock %}
-
-
 {% block content %}
   <div id="DasBANNER" class="fix">
     <div id="DasHEADER" class="fix"><img src="/site_media/images/public/icon_resources.png" width="349" height="111" alt="resources"></div>
@@ -206,15 +196,5 @@
       </tbody>
     </table>
   </div>
-{% endblock %}
-
-
-{% block script%}
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#DasFOOTER").css({"top": "1565px", "display": "inline"});
-      $("#DasICON").css({"top": "1620px", "display": "inline"});
-    });
-  </script>
 {% endblock %}
 

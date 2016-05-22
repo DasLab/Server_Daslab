@@ -1,15 +1,5 @@
 {% extends "media/html/_external.html" %}
 
-{% block header %}
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#main").addClass("DASnews");
-      $("#nav-news").addClass("active");
-    });
-  </script>
-{% endblock %}
-
-
 {% block content %}
   <div id="DasBANNER" class="fix">
     <div id="DasHEADER" class="fix"><img src="/site_media/images/public/icon_news.png" width="349" height="111"></div>
@@ -61,35 +51,3 @@
     </table>
   </div>
 {% endblock %}
-
-
-{% block script %}
-  <script type="text/javascript">
-    function sign(x){return x>0?1:x<0?-1:x;}
-
-    $(document).ready(function() {
-      $("tr.previous").hide();
-
-      $("#DasFOOTER").css({"top": $("tr.middle").offset().top + 200, "display": "inline"});
-      $("#DasICON").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
-      $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
-
-      $("#arrow, #previous").on("click", function () {
-        $("tr.previous").toggle();
-        var flag = sign(($("tr.previous").css("display") == "none") - 0.5);
-
-        if (flag == -1) {
-          $("#arrow").children().addClass("imgsp_collapse").removeClass("imgsp_arrow");
-          $("#DasFOOTER").css("top", $("tr.last").offset().top + 200);
-        } else {
-          $("#arrow").children().removeClass("imgsp_collapse").addClass("imgsp_arrow");
-          $("#DasFOOTER").css("top", $("tr.middle").offset().top + 200);
-        }
-        $("#DasICON").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
-        $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
-      });
-
-    });
-  </script>
-{% endblock %}
-

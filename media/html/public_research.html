@@ -1,15 +1,5 @@
 {% extends "media/html/_external.html" %}
 
-{% block header %}
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#main").addClass("DASresearch");
-      $("#nav-research").addClass("active");
-    });
-  </script>
-{% endblock %}
-
-
 {% block content %}
   <div id="DasBANNER" class="fix">
     <div id="DasHEADER" class="fix"><img src="/site_media/images/public/icon_research.png" width="349" height="111"></div>
@@ -70,15 +60,3 @@
     </a>
   </div>
 {% endblock %}
-
-
-{% block script %}
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#DasFOOTER").css({"top": "1346px", "display": "inline"});
-      $("#DasICON").css({"top": "1401px", "display": "inline"});
-    });
-  </script>
-{% endblock %}
-
-

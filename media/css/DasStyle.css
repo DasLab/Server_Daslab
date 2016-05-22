@@ -55,15 +55,15 @@ a.nav-hover:hover > div { border-bottom: 6px solid #008180 !important; }
 	width: 975px;
 	margin-left: auto; margin-right: auto;
 }
-.DAShome { height: 800px; }
+.DAShome { height: 800px !important; }
 .DASresearch,
-.DASnews { height: 1500px; }
-.DASpeople { height: 2500px; }
-.DASpub { height: 4250px; }
-.DASresources { height: 1725px; }
-.DAScontact { height: 1160px; }
-.DASerr { height: 500px; }
-.DASpwd { height: 700px; }
+.DASnews { height: 1500px !important; }
+.DASpeople { height: 2500px !important; }
+.DASpub { height: 4250px !important; }
+.DASresources { height: 1725px !important; }
+.DAScontact { height: 1160px !important; }
+.DASerr { height: 500px !important; }
+.DASpwd { height: 700px !important; }
 
 
 .TEXT {
