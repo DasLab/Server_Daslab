@@ -1,104 +1,72 @@
-function sign(x){return x>0?1:x<0?-1:x;}
+function parse_location() {
+  var urls = ['news', 'research', 'people', 'publications', 'resources', 'contact'],
+      tab = urls.filter(function(val) { return window.location.pathname.indexOf('/' + val) != -1; });
+  if (!tab.length) { return 'home'; }
+  return tab[0];
+}
 
-function change_view(href) {
+function change_view() {
+  var tab = parse_location();
   $("a.nav-hover").removeClass().addClass("nav-hover");
-  $("#main").removeClass().addClass("DASmain");
+  $("#nav-"+ tab).addClass("active");
+  $("#main").removeClass().removeProp("height").addClass("DASmain DAS" + tab);
+  if (!$("#DasFOOTER").is(":visible")) {
+    $("#DasFOOTER").css("display", "inline");
+  }
 
-  if (href.indexOf('/contact') != -1) {
-    $("#main").addClass("DAScontact");
-    $("#nav-contact").addClass("active");
-    $("#DasFOOTER").css({"top": "1013px", "display": "inline"});
-    $("#DasICON").css({"top": "1068px", "display": "inline"});
-
-  } else if (href.indexOf('/resources') != -1) {
-    $("#main").addClass("DASresources");
-    $("#nav-resources").addClass("active");
-    $("#DasFOOTER").css({"top": "1500px", "display": "inline"});
-    $("#DasICON").css({"top": "1555px", "display": "inline"});
-
-  } else if (href.indexOf('/publications') != -1) {
-    $("#main").addClass("DASpub");
-    $("#nav-publications").addClass("active");
+  if (tab == 'publications') {
     $("table.previous").hide();
     $("p.previous").hide();
-
-    $("#DasFOOTER").css({"top": $("table.current:last").offset().top + 200, "display": "inline"});
-    $("#DasICON").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
-    $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+    $(".DASpublications").css("height", $("table.current:last").offset().top + 300);
 
     $("#search").on("click", function () { $("#arrow")[0].click(); });
     $("#arrow2, #expand").on("click", function () {
       $("table.previous").toggle();
       $("p.previous").toggle();
-      var flag = sign(($("table.previous").css("display") == "none") - 0.5);
 
-      if (flag == -1) {
+      if ($("table.previous").is(":visible")) {
         $("#arrow2").children().addClass("imgsp_collapse").removeClass("imgsp_arrow");
-        $("#DasFOOTER").css("top", $("table.previous:last").offset().top + 200);
+        $(".DASpublications").css("height", $("table.previous:last").offset().top + 200);
       } else {
         $("#arrow2").children().removeClass("imgsp_collapse").addClass("imgsp_arrow");
-        $("#DasFOOTER").css("top", $("table.current:last").offset().top + 200);
+        $(".DASpublications").css("height", $("table.current:last").offset().top + 300);
       }
-      $("#DasICON").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
-      $(".DASpub").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
     });
 
-  } else if (href.indexOf('/people') != -1) {
-    $("#main").addClass("DASpeople");
-    $("#nav-people").addClass("active");
-
+  } else if (tab == 'people') {
     var current_member = $("tr.current_member").length - 1,
         past_member = $("span.past_member").length,
         height_adjust = current_member * 200 + past_member * 60;
-    $("#DasFOOTER").css({"top": 750 + height_adjust, "display": "inline"});
-    $("#DasICON").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
-    $(".DASpeople").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+    $(".DASpeople").css("height", height_adjust + 850);
 
-  } else if (href.indexOf('/news') != -1) {
-    $("#main").addClass("DASnews");
-    $("#nav-news").addClass("active");
+  } else if (tab == 'news') {
     $("tr.previous").hide();
-
-    $("#DasFOOTER").css({"top": $("tr.middle").offset().top + 50, "display": "inline"});
-    $("#DasICON").css({"top": parseInt($("#DasFOOTER").css("top")) + 55, "display": "inline"});
-    $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
+    $(".DASnews").css("height", $("tr.middle").offset().top + 200);
 
     $("#arrow, #previous").on("click", function () {
       $("tr.previous").toggle();
-      var flag = sign(($("tr.previous").css("display") == "none") - 0.5);
 
-      if (flag == -1) {
+      if ($("tr.previous").is(":visible")) {
         $("#arrow").children().addClass("imgsp_collapse").removeClass("imgsp_arrow");
-        $("#DasFOOTER").css("top", $("tr.last").offset().top + 50);
+        $(".DASnews").css("height", $("tr.last").offset().top + 200);
       } else {
         $("#arrow").children().removeClass("imgsp_collapse").addClass("imgsp_arrow");
-        $("#DasFOOTER").css("top", $("tr.middle").offset().top + 50);
+        $(".DASnews").css("height", $("tr.middle").offset().top + 200);
       }
-      $("#DasICON").css("top", parseInt($("#DasFOOTER").css("top")) + 55);
-      $(".DASnews").css("height", parseInt($("#DasFOOTER").css("top")) + 150);
     });
 
-  } else if (href.indexOf('/research') != -1) {
-    $("#main").addClass("DASresearch");
-    $("#nav-research").addClass("active");
-    $("#DasFOOTER").css({"top": "1346px", "display": "inline"});
-    $("#DasICON").css({"top": "1401px", "display": "inline"});
-
-  } else {
-    console.log(href)
-    $("#main").addClass("DAShome");
-    $("#nav-home").addClass("active");
-    $("#DasICON").css({"top": "673px", "display": "inline"});
+  } else if (tab == 'home') {
     $("#DasFOOTER").css("display", "none");
 
-    $("#home_center").carousel({'interval': 5000, 'keyboard': false, 'pause': 'none'});
+    if (window.location.pathname == '/') {
+      $("#home_center").carousel({'interval': 5000, 'keyboard': false, 'pause': 'none'});
+    }
   }
-
 }
 
 
 $(document).ready(function () {
-  change_view(window.location.href);
+  change_view();
 
   $("#top").on("click", function (event) {
     event.preventDefault();
@@ -107,16 +75,19 @@ $(document).ready(function () {
   });
 
   $("#DasNAV a.nav-hover").on("click", function(event) {
+    var href = $(this).attr("href");
     event.preventDefault();
-    $("#DasCONTENT").fadeOut(150);
-    if (window.history.replaceState) {
-      window.history.replaceState({} , '', $(this).attr("href"));
-    } else {
-      window.location.hrefhref = $(this).attr("href");
-    }
-    $("#DasCONTENT").load($(this).attr("href") + " #DasCONTENT", function() {
-      change_view(window.location.href);
-      $("#DasCONTENT").fadeIn(100);
+
+    $("#DasCONTENT").fadeTo(100, 0, function() {
+      if (window.history.replaceState) {
+        window.history.replaceState({} , '', href);
+      } else {
+        window.location.href = href;
+      }
+      $("#DasCONTENT").load(href + " #DasCONTENT", function() {
+        change_view();
+        $("#DasCONTENT").fadeTo(100, 1);
+      });
     });
   });
 });

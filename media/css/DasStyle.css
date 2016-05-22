@@ -55,13 +55,10 @@ a.nav-hover:hover > div { border-bottom: 6px solid #008180 !important; }
 	width: 975px;
 	margin-left: auto; margin-right: auto;
 }
-.DAShome { height: 800px !important; }
-.DASresearch,
-.DASnews { height: 1500px !important; }
-.DASpeople { height: 2500px !important; }
-.DASpub { height: 4250px !important; }
-.DASresources { height: 1725px !important; }
-.DAScontact { height: 1160px !important; }
+.DAShome { height: 700px !important; }
+.DASresearch { height: 1450px !important; }
+.DASresources { height: 1600px !important; }
+.DAScontact { height: 1100px !important; }
 .DASerr { height: 500px !important; }
 .DASpwd { height: 700px !important; }
 
@@ -143,14 +140,14 @@ table tbody tr td.year-top { border-top: 15px solid #fff; }
 	z-index: 1;
 }
 #DasICON {
-	display: none;
-	left: 128px; top: 3864px;
+	display: inline;
+	left: 128px; bottom: 0px;
 	width: 729px; height: 54px;
 	z-index: 5;
 }
 #DasFOOTER {
-	display: none;
-	left: 57px; top: 3809px;
+	display: inline;
+	left: 57px; bottom: 55px;
 	width: 855px; height: 53px;
 	z-index: 9;
 }
