@@ -7,46 +7,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{% block title %}DasLab Website Administration{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}"/>
-    <link rel="stylesheet" type="text/css" href="/site_media/css/{{DEBUG_DIR}}_suit{{DEBUG_STR}}.css" media="all">
+    <style type="text/css">body>div:not(#wait){opacity:0;}</style>
     {% block extrastyle %}{% endblock %}
     
     <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
     <script type="text/javascript">
-      var DEBUG_DIR = "{{DEBUG_DIR}}", DEBUG_STR = "{{DEBUG_STR}}";
+      var app = {DEBUG_DIR: "{{DEBUG_DIR}}", DEBUG_STR: "{{DEBUG_STR}}", js_ver: {% autoescape off %}{{js_ver}}{% endautoescape %}};
     </script>
-    <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}load{{DEBUG_STR}}.js"></script>  
-    <script type="text/javascript">var Suit = { $: $.noConflict() }; if (!$) $ = Suit.$; </script>
+    <script type="text/javascript" src="/site_media/js/head.load.min.js" data-headjs-load="/site_media/js/admin/{{DEBUG_DIR}}load{{DEBUG_STR}}.js"></script>
 
     {% if 'SHOW_REQUIRED_ASTERISK'|suit_conf %}
       <style type="text/css">.required:after { content: '*'; margin: 0 0 0 5px; position: absolute; color: #ccc;}</style>
     {% endif %}
-
-    {% block extrahead %}{% endblock %}
-    {% if DEBUG_DIR %}
-      <script type="text/javascript" src="/site_media/js/suit/{{DEBUG_DIR}}core{{DEBUG_STR}}.js"></script>
-    {% else %}
-      <script type="text/javascript" src="/site_media/js/suit/core.js"></script>
-      <script type="text/javascript" src="/site_media/js/suit/RelatedObjectLookups.js"></script>
-      <script type="text/javascript" src="/site_media/js/suit/jquery.init.js"></script>
-      <script type="text/javascript" src="/site_media/js/suit/jquery.formset.js"></script>
-      <script type="text/javascript" src="/site_media/js/suit/actions.js"></script>
-      <script type="text/javascript" src="/site_media/js/suit/DateTimeShortcuts.js"></script>
-    {% endif %}
-
     {% block extratail %}{% endblock %}
 
     {% block blockbots %}
       <meta name="robots" content="NONE,NOARCHIVE"/>
     {% endblock %}
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', '{{TRACKING_ID}}', 'auto');
+      ga('send', 'pageview');
+    </script>
   </head>
   {% load i18n %}
 
   <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
-
-    <div id="wait" class="modal"></div>
-    <script type="text/javascript">
-      django.jQuery("#wait").fadeIn(250);
-    </script>
+    <div id="wait" class="modal" style="display:block; position:fixed; z-index:-1; top:0; left:0; height:100%; width:100%; opacity:0.75;">
+      <img src="/site_media/images/group/fg_load_2.gif" style="position:absolute; top:50%; left:50%; margin-top:-96px; margin-left:-96px; height:192px; width:192px;" />
+    </div>
 
     <!-- Container -->
     {% block container %}
@@ -159,7 +152,7 @@
             <ul class="nav-li-sub">
               <li id="nav_news" class="nav-li"><span class="glyphicon glyphicon-picture nav-icon"></span><a href="/admin/src/news/">&nbsp;&nbsp;News Items</a></li>
               <li id="nav_member" class="nav-li"><span class="glyphicon glyphicon-user nav-icon"></span><a href="/admin/src/member/">&nbsp;&nbsp;Member Management</a></li>
-              <li id="nav_pub" class="nav-li"><span class="glyphicon glyphicon-education nav-icon"></span><a href="/admin/src/publication/">&nbsp;&nbsp;Publication Entries</a></li>
+              <li id="nav_publication" class="nav-li"><span class="glyphicon glyphicon-education nav-icon"></span><a href="/admin/src/publication/">&nbsp;&nbsp;Publication Entries</a></li>
               <li id="nav_export" class="nav-li"><span class="glyphicon glyphicon-floppy-save nav-icon"></span><a href="/admin/export/">&nbsp;&nbsp;Publication Export</a></li>
             </ul>
           </li>
@@ -171,12 +164,12 @@
             <a href="/admin/auth/user/"><span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Internal Site</a>
             <ul class="nav-li-sub">
               <li id="nav_auth" class="nav-li"><span class="glyphicon glyphicon-lock nav-icon"></span><a href="/admin/auth/user/">&nbsp;&nbsp;User Autherization</a></li>
-              <li id="nav_flash" class="nav-li"><span class="glyphicon glyphicon-blackboard nav-icon"></span><a href="/admin/src/flashslide/">&nbsp;&nbsp;Flash Slides</a></li>
-              <li id="nav_jc" class="nav-li"><span class="glyphicon glyphicon-book nav-icon"></span><a href="/admin/src/journalclub/">&nbsp;&nbsp;Journal Clubs</a></li>
-              <li id="nav_eterna" class="nav-li"><span class="glyphicon glyphicon-facetime-video nav-icon"></span><a href="/admin/src/eternayoutube/">&nbsp;&nbsp;EteRNA Videos</a></li>
-              <li id="nav_rot" class="nav-li"><span class="glyphicon glyphicon-retweet nav-icon"></span><a href="/admin/src/rotationstudent/">&nbsp;&nbsp;Rotation Students</a></li>
-              <li id="nav_archive" class="nav-li"><span class="glyphicon glyphicon-cd nav-icon"></span><a href="/admin/src/presentation/">&nbsp;&nbsp;Archived Presentations</a></li>
-              <li id="nav_slack" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_slack_o"></i></div><a href="/admin/src/slackmessage/">&nbsp;&nbsp;Slack Messages</a></li>
+              <li id="nav_flashslide" class="nav-li"><span class="glyphicon glyphicon-blackboard nav-icon"></span><a href="/admin/src/flashslide/">&nbsp;&nbsp;Flash Slides</a></li>
+              <li id="nav_journalclub" class="nav-li"><span class="glyphicon glyphicon-book nav-icon"></span><a href="/admin/src/journalclub/">&nbsp;&nbsp;Journal Clubs</a></li>
+              <li id="nav_eternayoutube" class="nav-li"><span class="glyphicon glyphicon-facetime-video nav-icon"></span><a href="/admin/src/eternayoutube/">&nbsp;&nbsp;EteRNA Videos</a></li>
+              <li id="nav_rotationstudent" class="nav-li"><span class="glyphicon glyphicon-retweet nav-icon"></span><a href="/admin/src/rotationstudent/">&nbsp;&nbsp;Rotation Students</a></li>
+              <li id="nav_presentation" class="nav-li"><span class="glyphicon glyphicon-cd nav-icon"></span><a href="/admin/src/presentation/">&nbsp;&nbsp;Archived Presentations</a></li>
+              <li id="nav_slackmessage" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_slack_o"></i></div><a href="/admin/src/slackmessage/">&nbsp;&nbsp;Slack Messages</a></li>
             </ul>
           </li>
 
@@ -224,7 +217,7 @@
         <!-- Content -->
         <div class="page-content">
           <div class="container-fluid" id="content">
-            <div class="row">
+            <div class="row" id="content_wrapper">
               {% block pretitle %}{% endblock %}
               {% block content_title %}{% if title %}
                 <h2 class="content-title">{{ title }}</h2>
@@ -253,30 +246,8 @@
       <!-- Sticky footer push -->
       <div id="push"></div>
     {% endif %}
-
-    {% if DEBUG_DIR %}
-      <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}menu{{DEBUG_STR}}.js"></script>
-    {% else %}
-      <script type="text/javascript" src="/site_media/js/admin/_suit.js"></script>
-      <script type="text/javascript" src="/site_media/js/admin/table.js"></script>
-      <script type="text/javascript" src="/site_media/js/admin/clock.js"></script>  
-      <script type="text/javascript" src="/site_media/js/admin/menu.js"></script>
-    {% endif %}
-
-    <script type="text/javascript">
-      var scrollTimer, resizeTimer;
-
-      $(document).ready(function(){
-        $("#wait").fadeOut(250);
-        var today = new Date();
-        $("#cp_year").text(today.getFullYear());
-      });
-
-      $(window).on("beforeunload", function () {
-        $("#wait").fadeIn(250);
-      });
-    </script>
     {% block extrajs %}{% endblock %}
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js" ></script>
   </body>
 </html>
