@@ -168,6 +168,7 @@ TEMPLATES = [{
             "src.models.email_form",
             "src.models.debug_flag",
             "src.models.ga_tracker",
+            "src.models.js_ver"
         ]
     }
 }]

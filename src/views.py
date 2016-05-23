@@ -255,20 +255,12 @@ def schedule_dash(request):
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 
-def get_admin(request):
-    return HttpResponse(simplejson.dumps({'email': EMAIL_NOTIFY}, sort_keys=True, indent=' ' * 4), content_type='application/json')
-
-def get_user(request):
+def get_staff(request):
     if 'WEBAUTH_USER' in request.META:
         user = request.META['WEBAUTH_USER']
     else:
         user = 'unknown'
-    return HttpResponse(simplejson.dumps({'user': user}, sort_keys=True, indent=' ' * 4), content_type='application/json')
-
-def get_js(request):
-    stats = simplejson.load(open('%s/cache/stat_ver.json' % MEDIA_ROOT, 'r'))
-    json = {'jquery': stats['jquery'], 'bootstrap': stats['bootstrap'], 'swfobj': stats['swfobj'], 'fullcal': stats['fullcal'], 'moment': stats['moment']}
-    return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
+    return HttpResponse(simplejson.dumps({'user': user, 'admin': EMAIL_NOTIFY}, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 
 
