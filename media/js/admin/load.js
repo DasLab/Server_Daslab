@@ -39,11 +39,13 @@ head.load('https://cdnjs.cloudflare.com/ajax/libs/jquery/' + app.js_ver.jquery +
             $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'clock' + app.DEBUG_STR + '.js');
         }
         $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'menu' + app.DEBUG_STR + '.js');
-        google.charts.load('visualization', '1', {packages: ['corechart']});
+        if (!app.DEBUG_DIR) {
+            $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'table' + app.DEBUG_STR + '.js');
+        }
+
+        google.charts.load('visualization', '1', {packages: ['corechart', 'calendar', 'map']});
 
         $("head").append('<link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />');
         $("head").append('<link rel="icon" type-"image/gif" href="/site_media/images/icon_daslab.png" />');
     });
 });
-
-    // <script type="text/javascript">var Suit = { $: $.noConflict() }; if (!$) $ = Suit.$; </script>

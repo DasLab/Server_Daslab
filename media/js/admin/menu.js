@@ -1,4 +1,4 @@
-var scrollTimer, resizeTimer, side_toggle = true;
+var scrollTimer, resizeTimer, side_toggle = true, apache_interval;
 
 app.fnParseLocation = function() {
     var urls = {
