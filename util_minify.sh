@@ -46,3 +46,5 @@ cat media/css/bootstrap.min.css media/css/min/theme.min.css media/css/min/palett
 cat media/css/min/theme.min.css media/css/min/palette.min.css > media/css/min/theme.css
 rm media/css/min/theme.min.css media/css/min/palette.min.css
 mv media/css/min/theme.css media/css/min/theme.min.css
+
+mv media/css/min/_suit.min.css media/css/min/suit.min.css
