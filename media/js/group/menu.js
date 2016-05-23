@@ -11,7 +11,7 @@ app.fnParseLocation = function() {
     };
     app.page = window.location.pathname.replace('/group', '').replace(/\//g, '');
     for (var key in urls) {
-        if (urls[key].indexOf(app.page) != -1) { 
+        if (urls[key].indexOf(app.page) != -1) {
             app.key = key;
             return;
         }
@@ -104,7 +104,40 @@ app.fnChangeLocation = function(href) {
     } else {
         window.location.href = href;
     }
-    $("#content").load(href + " #content > div.row", app.fnChangeView);
+    $("#content_wrapper").load(href + " #content_wrapper > *", app.fnChangeView);
+};
+
+app.fnNavCollapse = function() {
+    if ($("#nav_collapse").is(":visible")) {
+        side_toggle = true;
+        $("#nav_toggle").trigger("click");
+        $("#nav_toggle").hide();
+        $("#nav_external").unbind();
+        $("#nav_admin").unbind();
+        $("#nav_time").unbind();
+        $("#nav_email").unbind();
+        $("#nav_upload").unbind();
+        $("#nav_profile").unbind();
+
+        $("#nav_logo").css("width", "auto");
+    } else {
+        $("#nav_toggle").show();
+        $("#nav_external").hover(
+          function(){ $("#nav_external_text").fadeIn(250).siblings().css("color", "#ff912e"); },
+          function(){ $("#nav_external_text").fadeOut(250).siblings().css("color", "#fff"); }
+        );
+        $("#nav_admin").hover(
+          function(){ $("#nav_admin_text").fadeIn(250).siblings().css("color", "#ff5c2b"); },
+          function(){ $("#nav_admin_text").fadeOut(250).siblings().css("color", "#fff"); }
+        );
+
+        $(".dropdown-toggle").dropdown();
+        $(".dropdown").hover(
+          function(){ $(this).addClass("open"); },
+          function(){ $(this).removeClass("open"); }
+        );
+        $("#nav_logo").css("width", parseInt($("#nav_logo").css("width")) + 250 - parseInt($("#nav_external").position().left));
+    }
 };
 
 
@@ -113,7 +146,6 @@ $(document).ready(function() {
     $("ul.breadcrumb > li:first").prepend('<span style="color: #000;" class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;');
     app.fnChangeView();
 
-    // $("#wait").fadeOut(500);
     var today = new Date();
     $("#cp_year").text(today.getFullYear());
 
@@ -139,6 +171,98 @@ $(document).ready(function() {
             app.fnChangeLocation(href);
         });
     });
+
+    $("#nav_toggle").on("click", function() {
+        if (side_toggle) {
+            $(".nav-ul").hide();
+            $(".nav-ul-lg").show();
+            $("#wrapper").css("padding-left", "50px");
+            $("#sidebar-wrapper").css({"margin-left":"-65px", "left":"65px", "width":"65px"});
+        } else {
+            $("#wrapper").css("padding-left", "235px");
+            $("#sidebar-wrapper").css({"margin-left":"-250px", "left":"250px", "width":"250px"});
+            setTimeout(function() {
+                $(".nav-ul-lg").hide();
+                $(".nav-ul").not(".nav-ul-lg").show();
+            }, 400);
+        }
+        side_toggle = !side_toggle;
+    });
+    $("#wrapper").css("width", (parseInt($("#wrapper").css("width")) + 15).toString() + "px");
+    app.fnNavCollapse();
+
+    $.ajax({
+        url : "/get_staff/",
+        dataType: "json",
+        success: function (data) {
+            $("#form_email_to").val(data.admin);
+            $("#form_email_to_disp").val(data.admin);
+        }
+    });
+
+    $.ajax({
+        url : "/group/user_dash/",
+        dataType: "json",
+        success: function (data) {
+            if (data.photo) {
+                $("#nav_user_photo").html(data.photo);
+            } else {
+                $("#nav_user_photo").html('<img src="/site_media/images/icon_default_avatar.png" width="119" style="padding-bottom:50px;">');
+            }
+            $("#nav_user_name").html(data.name);
+            $("#nav_user_id").html(data.id);
+            $("#nav_user_aff").html(data.title);
+            $("#nav_user_stat").html(data.status);
+            $("#nav_user_cap").attr("href", data.cap);
+            $("#id_email_from").val(data.email);
+            $("#nav_user_email").html(data.email);
+            $("#nav_user_email").attr("href", "mailto:" + data.email);
+
+            if (data.type == 'admin') {
+                $("#nav_user_type").addClass("label-violet").html('<span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;Administrator');
+            } else if (data.type == 'group') {
+                $("#nav_user_type").addClass("label-green").html('<span class="glyphicon glyphicon-queen" aria-hidden="true"></span>&nbsp;&nbsp;Current Member');
+            } else if (data.type == 'alumni') {
+                $("#nav_user_type").addClass("label-info").html('<span class="glyphicon glyphicon-pawn" aria-hidden="true"></span>&nbsp;&nbsp;Alumni Member');
+            } else if (data.type == 'roton') {
+                $("#nav_user_type").addClass("label-orange").html('<span class="glyphicon glyphicon-bishop" aria-hidden="true"></span>&nbsp;&nbsp;Rotation Student');
+            } else if (data.type == 'other') {
+                $("#nav_user_type").addClass("label-magenta").html('<span class="glyphicon glyphicon-knight" aria-hidden="true"></span>&nbsp;&nbsp;Visitor');
+            } else {
+                $("#nav_user_type").addClass("label-default").html('<span class="glyphicon glyphicon-glass" aria-hidden="true"></span>&nbsp;&nbsp;Unknown');
+            }
+
+            if ($(location).attr("href").indexOf("group/contact") != -1) {
+                if (data.photo) {
+                    $("#card_user_photo").html(data.photo);
+                } else {
+                    $("#card_user_photo").html('<img src="/site_media/images/icon_default_avatar.png" width="119">');
+                }
+                $("#card_user_photo > img").css("max-width", "100%");
+                $("#card_user_name").html(data.name);
+                $("#card_user_id").html(data.id);
+                $("#card_user_aff").html(data.title);
+                $("#card_user_stat").html(data.status);
+                $("#card_user_cap").attr("href", data.cap);
+                if (data.email) {
+                    $("#card_user_email").html(data.email);
+                    $("#card_user_email").attr("href", "mailto:" + data.email);
+                    $("#id_contact_email").val(data.email);
+                }
+                if (data.phone) {
+                    $("#card_user_phone").html(data.phone);
+                    $("#id_contact_phone").val(data.phone.replace(/\D+/g, ''));
+                }
+                if (data.bday) { $("#id_contact_bday").val(data.bday); }
+                if (data.type == 'roton' || data.type == 'other' || data.type == 'unknown') {
+                    $("#id_contact_email").attr("disabled", "disabled");
+                    $("#id_contact_phone").attr("disabled", "disabled");
+                    $("#id_contact_bday").attr("disabled", "disabled");
+                    $("#form_change_submit").attr("disabled", "disabled");
+                }
+            }
+        }
+    });
 });
 
 
@@ -157,11 +281,11 @@ $(window).on("scroll", function() {
   }, 200));
 });
 
-// $(window).on("resize", function() {
-//     clearTimeout($.data(this, 'resizeTimer'));
-//     $.data(this, 'resizeTimer', setTimeout(function() {
-//         navbar_collapse();
-//         $("#wrapper").css("width", $(window).width() - $("#sidebar-wrapper").width() - 20);
-//     }, 200));
-// });
+$(window).on("resize", function() {
+    clearTimeout($.data(this, 'resizeTimer'));
+    $.data(this, 'resizeTimer', setTimeout(function() {
+        navbar_collapse();
+        $("#wrapper").css("width", $(window).width() - $("#sidebar-wrapper").width() - 20);
+    }, 200));
+});
 

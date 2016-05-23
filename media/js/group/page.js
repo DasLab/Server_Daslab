@@ -89,10 +89,10 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "youtube
         var max_height = 0;
         $("div.profile-card").each(function () {
             if (parseInt($(this).css("height")) > max_height) { max_height = parseInt($(this).css("height")); }
-        }); 
+        });
         $("div.profile-card").each(function () {
             $(this).css("height", max_height.toString() + "px");
-        }); 
+        });
 
         var toggle_flag = false;
         $("#btn_toggle").on("click", function () {
@@ -124,7 +124,7 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "youtube
     }
 } else if (app.key == "service") {
     if (app.page == "bot") {
-        $.getScript('/site_media/css/fullcalendar.min.css');
+        head.load('/site_media/css/fullcalendar.min.css');
     } else if (app.page == "git") {
         $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'git' + app.DEBUG_STR + '.js');
     } else if (app.page == "slack") {
@@ -140,13 +140,14 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "youtube
         });
     }
 } else if (app.key == "home") {
+    head.load('/site_media/css/' + app.DEBUG_DIR + 'clock' + app.DEBUG_STR + '.css');
+    $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'home' + app.DEBUG_STR + '.js');
+    if (!app.DEBUG_DIR) {
+        $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'clock' + app.DEBUG_STR + '.js');
+    }
     $("#banner_div").on("click", function(event) {
         $("#baking-modal").modal("show");
         event.preventDefault();
     });
-    $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'home' + app.DEBUG_STR + '.js');
-    if (app.DEBUG_DIR) {
-        $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'clock' + app.DEBUG_STR + '.js');
-    }
 }
 
