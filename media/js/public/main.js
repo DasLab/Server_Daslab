@@ -1,12 +1,12 @@
-function parse_location() {
+app.fnParseLocation = function() {
   var urls = ['news', 'research', 'people', 'publications', 'resources', 'contact'],
       tab = urls.filter(function(val) { return window.location.pathname.indexOf('/' + val) != -1; });
   if (!tab.length) { return 'home'; }
   return tab[0];
-}
+};
 
-function change_view() {
-  var tab = parse_location();
+app.fnChangeView = function() {
+  var tab = app.fnParseLocation();
   $("a.nav-hover").removeClass().addClass("nav-hover");
   $("#nav-"+ tab).addClass("active");
   $("#main").removeClass().removeAttr("style").addClass("DASmain DAS" + tab);
@@ -62,14 +62,23 @@ function change_view() {
   }
 
   $("#DasCONTENT").fadeTo(100, 1);
-}
+  if (typeof this.callbackChangeView === "function") {
+    this.callbackChangeView();
+  }
+};
+
+app.fnChangeLocation = function(href) {
+  if (window.history.replaceState) {
+    window.history.replaceState({} , '', href);
+  } else {
+    window.location.href = href;
+  }
+  $("#DasCONTENT").load(href + " #content_wrapper", app.fnChangeView);
+};
 
 
 $(document).ready(function() {
-  change_view();
-  if (typeof change_view_callback === "function") {
-    change_view_callback();
-  }
+  app.fnChangeView();
 
   $("#top").on("click", function (event) {
     event.preventDefault();
@@ -82,12 +91,7 @@ $(document).ready(function() {
     event.preventDefault();
 
     $("#DasCONTENT").fadeTo(100, 0, function() {
-      if (window.history.replaceState) {
-        window.history.replaceState({} , '', href);
-      } else {
-        window.location.href = href;
-      }
-      $("#DasCONTENT").load(href + " #content_wrapper", change_view);
+      app.fnChangeLocation(href);
     });
   });
 });
