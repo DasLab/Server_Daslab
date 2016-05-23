@@ -31,10 +31,14 @@
     font-weight: bold; font-style: oblique;
 }
 
-* { font-family: "Gill Sans", Arial, sans-serif; }
+* { 
+	font-family: "Gill Sans", Arial, sans-serif; 
+}
 body {
-	margin-left: 0px; margin-top: 50px;
+	margin: 50px 0 0 0 !important;
+	padding: 50px 15px 30px 15px;
 	-webkit-text-size-adjust: none;
+	line-height: 1.42857143;
 }
 
 a { text-decoration: none; }
@@ -48,11 +52,13 @@ a.nav-hover > div {
 }
 a.nav-hover.active > div,
 a.nav-hover:hover > div { border-bottom: 6px solid #008180 !important; }
-
+table { border-collapse: collapse; }
+td { padding: 0; }
+p { margin: 0 0 10px; }
 
 .DASmain {
 	position: relative;
-	width: 975px;
+	width: 975px; height: 1000px;
 	margin-left: auto; margin-right: auto;
 }
 .DAShome { height: 700px !important; }
