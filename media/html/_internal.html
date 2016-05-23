@@ -6,6 +6,7 @@
 <head>
     <meta name="robots" content="NONE,NOARCHIVE"/>
     <title>Das Lab: Group Member Website</title>
+    <style type="text/css">body>div:not(#wait){opacity:0;}</style>
     <script type="text/javascript">
       var app = {DEBUG_DIR: "{{DEBUG_DIR}}", DEBUG_STR: "{{DEBUG_STR}}", js_ver: {% autoescape off %}{{js_ver}}{% endautoescape %}};
     </script>
@@ -24,7 +25,9 @@
 </head>
 
 <body>
-  <div id="wait" class="modal"></div>
+  <div id="wait" class="modal" style="display:block; position:fixed; z-index:-1; top:0; left:0; height:100%; width:100%; opacity:0.75;">
+    <img src="/site_media/images/group/fg_load_2.gif" style="position:absolute; top:50%; left:50%; margin-top:-96px; margin-left:-96px; height:192px; width:192px;" />
+  </div>
 
   <div class="navbar navbar-fixed-top" id="nav_load">
     <div class="container-fluid">

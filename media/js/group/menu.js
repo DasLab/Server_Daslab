@@ -98,13 +98,13 @@ app.fnChangeView = function() {
     }
 };
 
-app.fnChangeLocation = function(href) {
+app.fnChangeLocation = function() {
     if (window.history.replaceState) {
-        window.history.replaceState({} , '', href);
+        window.history.replaceState({} , '', app.href);
     } else {
-        window.location.href = href;
+        window.location.href = app.href;
     }
-    $("#content_wrapper").load(href + " #content_wrapper > *", app.fnChangeView);
+    $("#content_wrapper").load(app.href + " #content_wrapper > *", app.fnChangeView);
 };
 
 app.fnNavCollapse = function() {
@@ -164,18 +164,15 @@ $(document).ready(function() {
     });
 
     $("#sidebar-wrapper a").on("click", function(event) {
-        var href = $(this).attr("href");
         event.preventDefault();
-
-        $("#content").fadeTo(100, 0, function() {
-            app.fnChangeLocation(href);
-        });
+        app.href = $(this).attr("href");
+        $("#content").fadeTo(100, 0,  app.fnChangeLocation);
     });
 
     $("#nav_toggle").on("click", function() {
         if (side_toggle) {
             $(".nav-ul").hide();
-            $(".nav-ul-lg").show();
+            $(".nav-ul-lg").fadeIn(500);
             $("#wrapper").css("padding-left", "50px");
             $("#sidebar-wrapper").css({"margin-left":"-65px", "left":"65px", "width":"65px"});
         } else {
@@ -183,7 +180,7 @@ $(document).ready(function() {
             $("#sidebar-wrapper").css({"margin-left":"-250px", "left":"250px", "width":"250px"});
             setTimeout(function() {
                 $(".nav-ul-lg").hide();
-                $(".nav-ul").not(".nav-ul-lg").show();
+                $(".nav-ul").not(".nav-ul-lg").fadeIn(100);
             }, 400);
         }
         side_toggle = !side_toggle;
@@ -263,12 +260,14 @@ $(document).ready(function() {
             }
         }
     });
+
+    $("body > div:not(#wait)").fadeTo(150, 1);
 });
 
 
-// $(window).on("beforeunload", function() {
-//   $("#wait").fadeIn(250);
-// });
+$(window).on("beforeunload", function() {
+  $("#wait").fadeIn(250);
+});
 
 $(window).on("scroll", function() {
   clearTimeout($.data(this, 'scrollTimer'));
@@ -284,7 +283,7 @@ $(window).on("scroll", function() {
 $(window).on("resize", function() {
     clearTimeout($.data(this, 'resizeTimer'));
     $.data(this, 'resizeTimer', setTimeout(function() {
-        navbar_collapse();
+        app.fnNavCollapse();
         $("#wrapper").css("width", $(window).width() - $("#sidebar-wrapper").width() - 20);
     }, 200));
 });

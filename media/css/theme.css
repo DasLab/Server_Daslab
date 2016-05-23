@@ -33,12 +33,7 @@
 
 * { font-family: "Helvetica", Arial, sans-serif; }
 
-body {
-  padding-top: 50px;
-  padding-bottom: 30px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
+body { padding: 50px 15px 30px 15px; }
 
 .bgimg {
   background-image: url("/site_media/images/group/bg_rna.png");
@@ -421,22 +416,6 @@ h1.section > span.num {
   background-repeat: no-repeat;
   background-image: url("/site_media/images/group/fg_load_2.gif");  
   background-position: center;
-}
-
-#wait.modal {
-  display:    none;
-  position:   fixed;
-  z-index:    99999;
-  top:        0;
-  left:       0;
-  height:     100%;
-  width:      100%;
-  background-position: center center;
-  background-size: 192px;
-  opacity: 0.5;
-  background-color: #fff;
-  background-repeat: no-repeat;
-  background-image: url("/site_media/images/group/fg_load_2.gif");  
 }
 
 .modal-dialog { 
