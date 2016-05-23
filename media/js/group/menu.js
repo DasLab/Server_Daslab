@@ -4,12 +4,12 @@ app.fnParseLocation = function() {
     var urls = {
         "meeting": ["schedule", "flash_slide", "journal_club", "youtube", "rotation"],
         "calendar": ["calendar"],
-        "res": ["gdocs", "archive", "contact"],
+        "res": ["gdocs", "archive", "archive/upload", "contact"],
         "server": ["aws", "ga"],
         "service": ["bot", "git", "slack", "dropbox"],
         "misc": ["misc", "error"]
     };
-    app.page = window.location.pathname.replace('/group', '').replace(/\//g, '');
+    app.page = window.location.pathname.replace('/group', '').replace(/\/$/, '').replace(/^\//, '');
     for (var key in urls) {
         if (urls[key].indexOf(app.page) != -1) {
             app.key = key;
@@ -44,8 +44,12 @@ app.fnChangeBreadcrumb = function() {
         $('<li><span style="color: #000;" class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;<a href="">Resources</a></li>').insertAfter($("ul.breadcrumb > li:first"));
         if (app.page == "gdocs") {
             $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_gdrive"></i></div>&nbsp;&nbsp;Google Documents</li>');
-        } else if (app.page == "archive") {
+        } else if (app.page.startsWith("archive")) {
             $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;Presentations Archive</li>');
+            if (app.page == "archive/upload") {
+                $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-open"></span>&nbsp;&nbsp;Upload</li>');
+                $('#nav_res-archive').addClass("active");
+            }
         } else if (app.page == "contact") {
             $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;Contacts</li>');
         }
@@ -163,7 +167,7 @@ $(document).ready(function() {
         $("html, body").stop().animate({'scrollTop': 0}, 250);
     });
 
-    $("#sidebar-wrapper a").on("click", function(event) {
+    $("#sidebar-wrapper a, #nav_upload > a").on("click", function(event) {
         event.preventDefault();
         app.href = $(this).attr("href");
         $("#content").fadeTo(100, 0,  app.fnChangeLocation);

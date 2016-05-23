@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
      $("#form_email_clear").on("click", function() {
         $("#id_email_from").val('');
         $("#id_email_subject").val('');
@@ -6,6 +6,8 @@ $(document).ready(function () {
     });
 
     $("#form_email").submit(function(event) {
+        event.preventDefault();
+
         $("#form_email_msg").parent().addClass("alert-warning").removeClass("alert-danger").removeClass("alert-success");
         $("#form_email_notice > div > div > p > span").removeClass("glyphicon-remove-sign").removeClass("glyphicon-ok-sign").addClass("glyphicon-hourglass");
         $("#form_email_notice > div > div > p > b").html('SENDING');
@@ -36,8 +38,6 @@ $(document).ready(function () {
                 $("#form_email_msg").html('Internal Server Error.');
              }
         });
-
-        event.preventDefault();
     });
 
 });

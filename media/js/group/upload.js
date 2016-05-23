@@ -1,13 +1,13 @@
-$(document).ready(function () {
+$(document).ready(function() {
     $("#form_upload_browse").on("click", function(event) {
         event.preventDefault();
         $("#id_upload_file").trigger("click");
     });
-    $("#id_upload_file").on("change", function () {
+    $("#id_upload_file").on("change", function() {
         $("#form_upload_disp").val($(this).val().replace("C:\\fakepath\\", ""));
     });
-    $("#form_upload_today").on("click", function () {
-        $("#id_upload_date").val(new Date().toJSON().slice(0,10));
+    $("#form_upload_today").on("click", function() {
+        $("#id_upload_date").val(new Date().toJSON().slice(0, 10));
     });
 
     $("#form_upload_clear").on("click", function() {

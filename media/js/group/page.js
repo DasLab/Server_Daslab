@@ -51,10 +51,7 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "youtube
             'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/' + app.js_ver.fullcal + '/fullcalendar.min.js'
         ];
     } else {
-        var cal_js = [
-            '/site_media/js/moment.min.js',
-            '/site_media/js/fullcalendar.min.js'
-        ];
+        var cal_js = ['/site_media/js/public/min/cal.min.js'];
     }
     cal_js = cal_js.concat(['/site_media/css/fullcalendar.min.css']);
     head.test($.fullCalendar, [], cal_js, function(flag) {
@@ -83,8 +80,8 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "youtube
     });
 
 } else if (app.key == "res") {
-    if (app.page == "gdocs") {
-    } else if (app.page == "archive") {
+    if (app.page == "archive/upload") {
+        $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'upload' + app.DEBUG_STR + '.js');
     } else if (app.page == "contact") {
         var max_height = 0;
         $("div.profile-card").each(function () {

@@ -1,10 +1,10 @@
 var more_success, more_fail;
 
 if (app.DEBUG_DIR) {
-    more_success = ['/site_media/css/theme.min.css'];
+    more_success = ['/site_media/css/min/theme.min.css'];
     more_fail = [
         '/site_media/js/public/min/core.min.js',
-        '/site_media/css/core.min.css'
+        '/site_media/css/min/core.min.css'
     ];
 } else {
     more_success = [

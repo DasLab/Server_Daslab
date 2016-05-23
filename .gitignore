@@ -10,6 +10,7 @@ backup/*.*gz
 
 media/js/admin/min/*.js
 media/js/group/min/*.js
+media/js/public/min/*.js
 media/js/suit/min/*.js
 media/css/min/*.css
 
