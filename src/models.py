@@ -43,7 +43,7 @@ class News(models.Model):
     content = models.TextField(blank=True, verbose_name='Main Text Content', help_text='<span class="glyphicon glyphicon-edit"></span>&nbsp;HTML supported.')
     link = models.URLField(max_length=255, blank=True, verbose_name='URL', help_text='<span class="glyphicon glyphicon-globe"></span>&nbsp;For the "read more" link.')
     image = models.ImageField(upload_to=get_news_image, blank=True, null=True, max_length=255, verbose_name='Display Image', help_text='<span class="glyphicon glyphicon-picture"></span>&nbsp; For non-EteRNA news displayed as thumbnail. Use <span class="label label-info">png/jpg</span> format, low resolution (<span class="label label-danger">NO</span> larger than <span class="label label-inverse">200x300 72dpi</span>).')
-    video = models.URLField(max_length=255, blank=True, null=True, verbose_name='YouTube Video Link', help_text='<span class="glyphicon glyphicon-facetime-video"></span>&nbsp;For EteRNA news displayed as thumbnail. <span class="label label-success">Example</span>: <u>https://www.youtube.com<b>/embed/</b>Lp_KozzV5Po</u>; <span class="label label-danger">NOT</span>&nbsp;<b>/channel/</b>.')
+    video = models.URLField(max_length=255, blank=True, null=True, verbose_name='YouTube Video ID', help_text='<span class="glyphicon glyphicon-facetime-video"></span>&nbsp;For EteRNA news displayed as thumbnail. <span class="label label-success">Example</span>: <u>Lp_KozzV5Po</u>; ID only, <span class="label label-danger">NOT</span>&nbsp;<b>URL</b>.')
     is_visible = models.BooleanField(default=True, verbose_name='Is Visible?', help_text='<span class="glyphicon glyphicon-check"></span>&nbsp; Uncheck to hide from public site.')
 
     class Meta():

@@ -24,7 +24,12 @@ head.load('https://cdnjs.cloudflare.com/ajax/libs/jquery/' + js_ver.jquery + '/j
         'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/' + js_ver.bootstrap + '/js/bootstrap.min.js'
     ].concat(more_success), more_fail, function() {
         $.ajaxSetup({'cache': true});
-        $.getScript('/site_media/js/public/' + DEBUG_DIR + 'main' + DEBUG_STR + '.js');
+        if (window.location.pathname.indexOf('/group') != -1) {
+            $.getScript('/site_media/js/group/' + DEBUG_DIR + 'menu' + DEBUG_STR + '.js');
+
+        } else {
+            $.getScript('/site_media/js/public/' + DEBUG_DIR + 'main' + DEBUG_STR + '.js');
+        }
         $("head").append('<link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />');
         $("head").append('<link rel="icon" type-"image/gif" href="/site_media/images/icon_daslab.png" />');
     });
