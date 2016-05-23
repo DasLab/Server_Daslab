@@ -31,9 +31,7 @@
     font-weight: bold; font-style: oblique;
 }
 
-* { 
-	font-family: "Gill Sans", Arial, sans-serif; 
-}
+* { font-family: "Gill Sans", Arial, sans-serif !important; }
 body {
 	margin: 50px 0 0 0 !important;
 	padding: 50px 15px 30px 15px;
@@ -61,7 +59,7 @@ p { margin: 0 0 10px; }
 	width: 975px; height: 1000px;
 	margin-left: auto; margin-right: auto;
 }
-.DAShome { height: 700px !important; }
+.DAShome { height: 600px !important; }
 .DASresearch { height: 1450px !important; }
 .DASresources { height: 1600px !important; }
 .DAScontact { height: 1100px !important; }
@@ -155,6 +153,7 @@ table tbody tr td.year-top { border-top: 15px solid #fff; }
 	width: 855px; height: 53px;
 	z-index: 9;
 }
+#DasCONTENT { opacity: 0; }
 
 
 #homeTEXT {
@@ -197,7 +196,7 @@ table tbody tr td.year-top { border-top: 15px solid #fff; }
 }
 .BODY-ERR {
 	position: absolute;
-	left: 72px; top: 150px;
+	left: 72px; top: 100px;
 	width: 856px;
 	z-index: 8;
 }

@@ -57,13 +57,19 @@ function change_view() {
 
   } else if (tab == 'home' && window.location.pathname == '/') {
     $("#DasFOOTER").css("display", "none");
+    $("#main").prop("style", "height: 700px !important");
     $("#home_center").carousel({'interval': 5000, 'keyboard': false, 'pause': 'none'});
   }
+
+  $("#DasCONTENT").fadeTo(100, 1);
 }
 
 
 $(document).ready(function() {
   change_view();
+  if (typeof change_view_callback === "function") {
+    change_view_callback();
+  }
 
   $("#top").on("click", function (event) {
     event.preventDefault();
@@ -81,10 +87,7 @@ $(document).ready(function() {
       } else {
         window.location.href = href;
       }
-      $("#DasCONTENT").load(href + " #DasCONTENT", function() {
-        change_view();
-        $("#DasCONTENT").fadeTo(100, 1);
-      });
+      $("#DasCONTENT").load(href + " #content_wrapper", change_view);
     });
   });
 });

@@ -33,23 +33,18 @@
 
 {% block script %}
   <script type="text/javascript">
-    $(document).ready(function () {
-      $.ajax({
-        url : "/get_admin/",
-        dataType: "json",
-        success: function (data) {
-          $("#admin_email").html(data.email);
-          $("#admin_email").parent().attr("href", "mailto:" + data.email);
-        }
-      });
-
-      $.ajax({
-        url : "/group/get_user/",
-        dataType: "json",
-        success: function (data) {
-          $("#user_1").html(data.user);
-          $("#user_2").html(data.user);  
-        }
+    head.ready('jquery.min.js', function() {
+      $(document).ready(function() {
+        $.ajax({
+          url : "/get_staff/",
+          dataType: "json",
+          success: function (data) {
+            $("#user_1").html(data.user);
+            $("#user_2").html(data.user);  
+            $("#admin_email").html(data.admin);
+            $("#admin_email").parent().attr("href", "mailto:" + data.admin);
+          }
+        });
       });
     });
   </script>

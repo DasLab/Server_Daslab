@@ -8,7 +8,7 @@
       var DEBUG_DIR = "{{DEBUG_DIR}}", DEBUG_STR = "{{DEBUG_STR}}",
           js_ver = {% autoescape off %}{{js_ver}}{% endautoescape %};
     </script>
-    <script type="text/javascript" src="/site_media/js/head.load.min.js" data-headjs-load="/site_media/js/admin/{{DEBUG_DIR}}load{{DEBUG_STR}}.js"></script>
+    <script type="text/javascript" src="/site_media/js/head.load.min.js" data-headjs-load="/site_media/js/public/{{DEBUG_DIR}}load{{DEBUG_STR}}.js"></script>
     {% block header %}{% endblock %}
 
     <script type="text/javascript">
@@ -57,7 +57,9 @@
         </table>
       </div>
 
-      <div id="DasCONTENT">{% block content %}{% endblock %}</div>
+      <div id="DasCONTENT">
+        <div id="content_wrapper">{% block content %}{% endblock %}</div>
+      </div>
       
       <div id="DasFOOTER" class="fix">
         <div class="footer_left" style="float:left;"></div>
