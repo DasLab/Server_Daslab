@@ -112,26 +112,16 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "youtube
         $("#btn_toggle").trigger("click");
         $("img").css("max-width", "100%");
     }
-} else if (app.key == "server") {
-    if (app.page == "aws") {
-        $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'aws' + app.DEBUG_STR + '.js', function() {
-            $("[id^=aws_]").on('click', function() {
-                $('html, body').stop().animate({scrollTop: $($(this).attr("href")).offset().top - 75}, 500);
-            });
+} else if (app.key == "server" && app.page == "aws") {
+    $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'gapi' + app.DEBUG_STR + '.js', function() {
+        $("[id^=aws_]").on('click', function() {
+            $('html, body').stop().animate({scrollTop: $($(this).attr("href")).offset().top - 75}, 500);
         });
-    } else if (app.page == "ga") {
-        $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'ga' + app.DEBUG_STR + '.js');
-    }
-} else if (app.key == "service") {
-    if (app.page == "bot") {
-        head.load('/site_media/css/fullcalendar.min.css');
-    } else if (app.page == "git") {
-        $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'git' + app.DEBUG_STR + '.js');
-    } else if (app.page == "slack") {
-        $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'slack' + app.DEBUG_STR + '.js');
-    } else if (app.page == "dropbox") {
-        $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'dropbox' + app.DEBUG_STR + '.js');
-    }
+    });
+} else if ((app.key == "server" && app.page == "ga") || (app.key == "service" && (app.page == "git" || app.page == "slack" || app.page == "dropbox"))) {
+    $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'gapi' + app.DEBUG_STR + '.js');
+} else if (app.key == "service" && app.page == "bot") {
+    head.load('/site_media/css/fullcalendar.min.css');
 } else if (app.key == "misc") {
     if (app.page == "error") {
         $("#iframe").css("width", parseInt($("#content").css("width")) - 50);

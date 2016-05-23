@@ -636,6 +636,7 @@ ul.breadcrumb > li.active {
 #wrapper {
   padding-left: 235px;
   transition: all 0.4s ease 0s;
+  z-index: 1;
   /*margin: 0px 0px;*/
 }
 #sidebar-wrapper {
@@ -653,6 +654,8 @@ ul.breadcrumb > li.active {
 #content {
   padding-right: 20px;
   opacity: 0;
+  background-color: #fff;
+  min-height: 100%;
 }
 /*
 @media (max-width:767px) {

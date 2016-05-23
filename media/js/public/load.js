@@ -30,6 +30,7 @@ head.load('https://cdnjs.cloudflare.com/ajax/libs/jquery/' + app.js_ver.jquery +
             if (!app.DEBUG_DIR) {
                 $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'email' + app.DEBUG_STR + '.js');
             }
+            google.charts.load('visualization', '1', {packages: ['corechart']});
         } else {
             $.getScript('/site_media/js/public/' + app.DEBUG_DIR + 'main' + app.DEBUG_STR + '.js');
         }
