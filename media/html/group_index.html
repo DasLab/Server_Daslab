@@ -140,22 +140,3 @@
     </div>
 </div>
 {% endblock %}
-
-{% block script %}
-	{% if DEBUG_DIR %}
-		<script type="text/javascript" src="/site_media/js/group/{{DEBUG_DIR}}home{{DEBUG_STR}}.js"></script>  
-	{% else %}
-		<script type="text/javascript" src="/site_media/js/group/home.js"></script>  
-		<script type="text/javascript" src="/site_media/js/group/clock.js"></script>  
-	{% endif %}
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#banner_div").on("click", function(event) {
-				$("#baking-modal").modal("show");
-				event.preventDefault();
-			});
-		});
-	</script>
-
-{% endblock %}
-

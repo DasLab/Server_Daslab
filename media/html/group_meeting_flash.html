@@ -43,35 +43,3 @@
 	</div>
 </div>
 {% endblock %}
-
-
-{% block script %}
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#flash_list > div.subpanel:first > div.panel-collapse").collapse("show");
-
-			$('div.panel-collapse').on('shown.bs.collapse', function () {
-				$(this).prev().children().first().removeClass("glyphicon-chevron-left").addClass("glyphicon-chevron-down");
-				$(this).prev().css("color", "#555");
-
-				$(this).children().each(function() {
-					var max_height = 0, row = $(this);
-					row.children().each(function() {
-						var well = $(this).children().children().last();
-						if (parseInt(well.css("height")) > max_height) { max_height = parseInt(well.css("height")); }
-					});
-					row.children().each(function() {
-						var well = $(this).children().children().last();
-						well.css("height", max_height.toString() + "px");
-					});
-				});
-			});
-			$('div.panel-collapse').on('hidden.bs.collapse', function () {
-				$(this).prev().children().first().removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-left");
-				$(this).prev().css("color", "#ddd");
-			});
-
-		});
-	</script>
-
-{% endblock %}

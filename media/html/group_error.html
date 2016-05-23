@@ -73,16 +73,3 @@
 	<iframe src="/error/500/?status=false" width="800" height="600" frameborder="0" scrolling="auto" seamless="true" id="iframe" class="thumbnail center-block"></iframe>
 </div>
 {% endblock %}
-
-
-{% block script %}
-	<script type="text/javascript">
-		$(document).ready(function() {
-	    	$("#iframe").css("width", parseInt($("#content").css("width")) - 50);
-			$("input:radio").on("change", function () {
-				$("#iframe").attr("src", "/error/" + $(this).val() + '/?status=false');
-			});
-		});
-	</script>
-
-{% endblock %}

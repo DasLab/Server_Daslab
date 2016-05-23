@@ -4,14 +4,3 @@
 	<iframe src="https://docs.google.com/spreadsheets/d/1GWOBc8rRhLNMEsf8pQMUXkqqgRiYTLo22t1eKP83p80/pubhtml?widget=true&amp;headers=false" width="800" height="600" frameborder="0" scrolling="auto" seamless="true" id="iframe" class="well center-block"></iframe>
 </div>
 {% endblock %}
-
-
-{% block script %}
-	<script type="text/javascript">
-		$(document).ready(function() {
-
-	    	$("#iframe").css("width", parseInt($("#content").css("width")) - 50);
-		});
-	</script>
-
-{% endblock %}

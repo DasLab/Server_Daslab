@@ -23,6 +23,7 @@ head.load('https://cdnjs.cloudflare.com/ajax/libs/jquery/' + app.js_ver.jquery +
         'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/' + app.js_ver.bootstrap + '/css/bootstrap.min.css',
         'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/' + app.js_ver.bootstrap + '/js/bootstrap.min.js'
     ].concat(more_success), more_fail, function(flag) {
+        app.isCDN = flag;
         $.ajaxSetup({'cache': true});
         if (window.location.pathname.indexOf('/group') != -1) {
             $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'menu' + app.DEBUG_STR + '.js');
