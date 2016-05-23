@@ -5,8 +5,7 @@
     <title>DAS LAB + Stanford Biochemistry Department + Stanford University</title>
     <link href="/site_media/css/{{DEBUG_DIR}}DasStyle{{DEBUG_STR}}.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
-      var DEBUG_DIR = "{{DEBUG_DIR}}", DEBUG_STR = "{{DEBUG_STR}}",
-          js_ver = {% autoescape off %}{{js_ver}}{% endautoescape %};
+      var app = {DEBUG_DIR: "{{DEBUG_DIR}}", DEBUG_STR: "{{DEBUG_STR}}", js_ver: {% autoescape off %}{{js_ver}}{% endautoescape %}};
     </script>
     <script type="text/javascript" src="/site_media/js/head.load.min.js" data-headjs-load="/site_media/js/public/{{DEBUG_DIR}}load{{DEBUG_STR}}.js"></script>
     {% block header %}{% endblock %}

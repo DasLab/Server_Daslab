@@ -7,7 +7,7 @@ app.fnParseLocation = function() {
 
 app.fnChangeView = function() {
   var tab = app.fnParseLocation();
-  $("a.nav-hover").removeClass().addClass("nav-hover");
+  $("a.nav-hover.active").removeClass("active");
   $("#nav-"+ tab).addClass("active");
   $("#main").removeClass().removeAttr("style").addClass("DASmain DAS" + tab);
   if (!$("#DasFOOTER").is(":visible")) {

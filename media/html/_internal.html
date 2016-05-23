@@ -7,9 +7,9 @@
     <meta name="robots" content="NONE,NOARCHIVE"/>
     <title>Das Lab: Group Member Website</title>
     <script type="text/javascript">
-      var DEBUG_DIR = "{{DEBUG_DIR}}", DEBUG_STR = "{{DEBUG_STR}}";
+      var app = {DEBUG_DIR: "{{DEBUG_DIR}}", DEBUG_STR: "{{DEBUG_STR}}", js_ver: {% autoescape off %}{{js_ver}}{% endautoescape %}};
     </script>
-    <script type="text/javascript" src="/site_media/js/admin/{{DEBUG_DIR}}load{{DEBUG_STR}}.js"></script>  
+    <script type="text/javascript" src="/site_media/js/head.load.min.js" data-headjs-load="/site_media/js/public/{{DEBUG_DIR}}load{{DEBUG_STR}}.js"></script>
     {% block head %}{% endblock %}
 
     <script type="text/javascript">
@@ -25,9 +25,6 @@
 
 <body>
   <div id="wait" class="modal"></div>
-  <script type="text/javascript">
-    $("#wait").fadeIn(250);
-  </script>
 
   <div class="navbar navbar-fixed-top" id="nav_load">
     <div class="container-fluid">
@@ -215,11 +212,11 @@
         <li id="nav_meeting" class="nav-ul li-danger">
           <a href="/group/schedule/"><span class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;Group Meetings</a>
           <ul class="nav-li-sub">
-            <li id="nav_schedule" class="nav-li"><span class="glyphicon glyphicon-time nav-icon"></span><a href="/group/schedule/">&nbsp;&nbsp;Schedule</a></li>
-            <li id="nav_flash" class="nav-li"><span class="glyphicon glyphicon-blackboard nav-icon"></span><a href="/group/flash_slide/">&nbsp;&nbsp;Flash Slides</a></li>
-            <li id="nav_jc" class="nav-li"><span class="glyphicon glyphicon-book nav-icon"></span><a href="/group/journal_club/">&nbsp;&nbsp;Journal Clubs</a></li>
-            <li id="nav_eterna" class="nav-li"><span class="glyphicon glyphicon-facetime-video nav-icon"></span><a href="/group/youtube/">&nbsp;&nbsp;EteRNA Videos</a></li>
-            <li id="nav_rotation" class="nav-li"><span class="glyphicon glyphicon-retweet nav-icon"></span><a href="/group/rotation/">&nbsp;&nbsp;Rotation Students</a></li>
+            <li id="nav_meeting-schedule" class="nav-li"><span class="glyphicon glyphicon-time nav-icon"></span><a href="/group/schedule/">&nbsp;&nbsp;Schedule</a></li>
+            <li id="nav_meeting-flash_slide" class="nav-li"><span class="glyphicon glyphicon-blackboard nav-icon"></span><a href="/group/flash_slide/">&nbsp;&nbsp;Flash Slides</a></li>
+            <li id="nav_meeting-journal_club" class="nav-li"><span class="glyphicon glyphicon-book nav-icon"></span><a href="/group/journal_club/">&nbsp;&nbsp;Journal Clubs</a></li>
+            <li id="nav_meeting-youtube" class="nav-li"><span class="glyphicon glyphicon-facetime-video nav-icon"></span><a href="/group/youtube/">&nbsp;&nbsp;EteRNA Videos</a></li>
+            <li id="nav_meeting-rotation" class="nav-li"><span class="glyphicon glyphicon-retweet nav-icon"></span><a href="/group/rotation/">&nbsp;&nbsp;Rotation Students</a></li>
           </ul>
         </li>
 
@@ -232,9 +229,9 @@
         <li id="nav_res" class="nav-ul li-warning">
           <a href="/group/gdocs/"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Resources</a>
           <ul class="nav-li-sub">
-            <li id="nav_gdocs" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_gdrive_o"></i></div><a href="/group/gdocs/">&nbsp;&nbsp;Google Docs</a></li>
-            <li id="nav_archive" class="nav-li"><span class="glyphicon glyphicon-cd nav-icon"></span><a href="/group/archive/">&nbsp;&nbsp;Presentations Archive</a></li>
-            <li id="nav_contact" class="nav-li"><span class="glyphicon glyphicon-earphone nav-icon"></span><a href="/group/contact/">&nbsp;&nbsp;Contacts</a></li>
+            <li id="nav_res-gdocs" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_gdrive_o"></i></div><a href="/group/gdocs/">&nbsp;&nbsp;Google Docs</a></li>
+            <li id="nav_res-archive" class="nav-li"><span class="glyphicon glyphicon-cd nav-icon"></span><a href="/group/archive/">&nbsp;&nbsp;Presentations Archive</a></li>
+            <li id="nav_res-contact" class="nav-li"><span class="glyphicon glyphicon-earphone nav-icon"></span><a href="/group/contact/">&nbsp;&nbsp;Contacts</a></li>
           </ul>
         </li>
 
@@ -244,8 +241,8 @@
         <li id="nav_server" class="nav-ul li-green">
           <a href="/group/aws/"><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Servers</a>
           <ul class="nav-li-sub">
-            <li id="nav_aws" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_aws_o"></i></div><a href="/group/aws/">&nbsp;&nbsp;Amazon Web Services</a></li>
-            <li id="nav_ga" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_ga_o"></i></div><a href="/group/ga/">&nbsp;&nbsp;Google Analytics</a></li>
+            <li id="nav_server-aws" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_aws_o"></i></div><a href="/group/aws/">&nbsp;&nbsp;Amazon Web Services</a></li>
+            <li id="nav_server-ga" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_ga_o"></i></div><a href="/group/ga/">&nbsp;&nbsp;Google Analytics</a></li>
           </ul>
         </li>
         <li id="nav_service_lg" class="nav-ul nav-ul-lg li-orange">
@@ -254,10 +251,10 @@
         <li id="nav_service" class="nav-ul li-orange">
           <a href="/group/bot/"><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Services</a>
           <ul class="nav-li-sub">
-            <li id="nav_bot" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_bot_o"></i></div><a href="/group/bot/">&nbsp;&nbsp;DasLab Bot</a></li>
+            <li id="nav_service-bot" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_bot_o"></i></div><a href="/group/bot/">&nbsp;&nbsp;DasLab Bot</a></li>
             <li id="nav_git" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_git_o"></i></div><a href="/group/git/">&nbsp;&nbsp;GitHub</a></li>
-            <li id="nav_slack" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_slack_o"></i></div><a href="/group/slack/">&nbsp;&nbsp;Slack</a></li>
-            <li id="nav_dropbox" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_dropbox_o"></i></div><a href="/group/dropbox/">&nbsp;&nbsp;Dropbox</a></li>
+            <li id="nav_service-slack" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_slack_o"></i></div><a href="/group/slack/">&nbsp;&nbsp;Slack</a></li>
+            <li id="nav_service-dropbox" class="nav-li"><div class="sprite i_14 nav-icon"><i class="i_dropbox_o"></i></div><a href="/group/dropbox/">&nbsp;&nbsp;Dropbox</a></li>
           </ul>
         </li>
 
@@ -267,8 +264,8 @@
         <li id="nav_misc" class="nav-ul li-primary">
           <a href="/group/misc/"><span class="glyphicon glyphicon-magnet"></span>&nbsp;&nbsp;Miscellaneous</a>
           <ul class="nav-li-sub">
-            <li id="nav_onboard" class="nav-li"><span class="glyphicon glyphicon-hand-right nav-icon"></span><a href="/group/misc/">&nbsp;&nbsp;Onboarding</a></li>
-            <li id="nav_error" class="nav-li"><span class="glyphicon glyphicon-volume-off nav-icon"></span><a href="/group/error/">&nbsp;&nbsp;Error Pages</a></li>
+            <li id="nav_misc-misc" class="nav-li"><span class="glyphicon glyphicon-hand-right nav-icon"></span><a href="/group/misc/">&nbsp;&nbsp;Onboarding</a></li>
+            <li id="nav_misc-error" class="nav-li"><span class="glyphicon glyphicon-volume-off nav-icon"></span><a href="/group/error/">&nbsp;&nbsp;Error Pages</a></li>
           </ul>
         </li>
 
@@ -311,56 +308,6 @@
     <div style="position:fixed; display:block; right:-5%; bottom:100px; opacity:0.85; z-index:2000; width:60px; height:60px;"><i class="nav_top"></i></div>
   </a>
 
-  <script type="text/javascript">
-    var scrollTimer, resizeTimer;
-
-    $(document).ready(function () {
-      $("#wait").fadeOut(500);
-      var today = new Date();
-      $("#cp_year").text(today.getFullYear());
-
-      $(".dropdown-toggle").dropdown();
-      $(".dropdown").hover(
-        function(){ $(this).addClass("open"); },
-        function(){ $(this).removeClass("open"); }
-      );
-      $("[data-toggle='popover']").popover({trigger: "hover"});
-      $("[data-toggle='tooltip']").tooltip();
-
-      $("#top").on("click", function () {
-        event.preventDefault();
-        $('#top > div').animate({'right':'-5%', 'opacity':'0'}, 125);
-        $("html, body").stop().animate({scrollTop: 0}, 250);
-      });
-
-      // $(".navbar-collapse > div.pull-right").css("height", "50px");
-      // $("ul.nav.navbar-nav").css("height", "50px");
-    });
-
-    $(window).on("beforeunload", function () {
-      $("#wait").fadeIn(250);
-    });
-    $(window).on("scroll", function () {
-      clearTimeout($.data(this, 'scrollTimer'));
-      $.data(this, 'scrollTimer', setTimeout(function() {
-        if ($(this).scrollTop() > $(window).height() / 2) {
-          $('#top > div').animate({'right':'0%', 'opacity':'1.0'}, 125);
-        } else {
-          $('#top > div').animate({'right':'-5%', 'opacity':'0'}, 125);
-        }
-      }, 200));
-    });
-    $(window).on("beforeunload", function () {
-      $("#wait").fadeIn(250);
-    });
-  </script>
-
   {% block script %}{% endblock %}
-  {% if DEBUG_DIR %}
-    <script type="text/javascript" src="/site_media/js/group/{{DEBUG_DIR}}menu{{DEBUG_STR}}.js"></script>  
-  {% else %}
-    <script type="text/javascript" src="/site_media/js/group/menu.js"></script>  
-    <script type="text/javascript" src="/site_media/js/group/email.js"></script>  
-  {% endif %}
  </body>
 </html>

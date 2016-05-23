@@ -324,7 +324,7 @@ li.nav-ul > a.active:focus {
   font-weight: bold !important;
   text-shadow: 2px 2px 5px #7cafd3;
 }
-.nav-ul-lg {
+ul.nav > .nav-ul-lg {
   display: none;
 }
 .nav-ul-lg > a > span.lead {
@@ -673,6 +673,7 @@ ul.breadcrumb > li.active {
 }
 #content {
   padding-right: 20px;
+  opacity: 0;
 }
 /*
 @media (max-width:767px) {

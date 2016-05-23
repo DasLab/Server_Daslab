@@ -1,258 +1,164 @@
-var side_toggle = true;
+var scrollTimer, resizeTimer, side_toggle = true;
 
-function navbar_collapse() {
-    if ($("#nav_collapse").is(":visible")) {
-        side_toggle = true;
-        $("#nav_toggle").trigger("click");
-        $("#nav_toggle").hide();
-        $("#nav_external").unbind();
-        $("#nav_admin").unbind();
-        $("#nav_time").unbind();
-        $("#nav_email").unbind();
-        $("#nav_upload").unbind();
-        $("#nav_profile").unbind();
-
-        $("#nav_logo").css("width", "auto");
-    } else {
-        $("#nav_toggle").show();
-        $("#nav_external").hover(
-          function(){ $("#nav_external_text").fadeIn(250).siblings().css("color", "#ff912e"); },
-          function(){ $("#nav_external_text").fadeOut(250).siblings().css("color", "#fff"); }
-        );
-        $("#nav_admin").hover(
-          function(){ $("#nav_admin_text").fadeIn(250).siblings().css("color", "#ff5c2b"); },
-          function(){ $("#nav_admin_text").fadeOut(250).siblings().css("color", "#fff"); }
-        );
-
-        $(".dropdown-toggle").dropdown();
-        $(".dropdown").hover(
-          function(){ $(this).addClass("open"); },
-          function(){ $(this).removeClass("open"); }
-        );
-        $("#nav_logo").css("width", parseInt($("#nav_logo").css("width")) + 250 - parseInt($("#nav_external").position().left));
+app.fnParseLocation = function() {
+    var urls = {
+        "meeting": ["schedule", "flash_slide", "journal_club", "youtube", "rotation"],
+        "calendar": ["calendar"],
+        "res": ["gdocs", "archive", "contact"],
+        "server": ["aws", "ga"],
+        "service": ["bot", "git", "slack", "dropbox"],
+        "misc": ["misc", "error"]
+    },
+        tab = window.location.pathname.replace('/group', '').replace(/\//g, '');
+    for (var key in urls) {
+        if (urls[key].indexOf(tab) != -1) { return [key, tab]; }
     }
+    return ['home', tab];
+};
 
-}
+app.fnChangeBreadcrumb = function(tab) {
+    var key = tab[0], page = tab[1];
+    $("ul.breadcrumb li:not(:first-child)").remove();
+    if (key == "meeting") {
+        $("ul.breadcrumb").css("border-bottom", "5px solid #ff5c2b");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;<a href="">Group Meeting</a></li>').insertAfter($("ul.breadcrumb > li:first"));
 
-
-$(document).ready(function () {
-    $(".nav-ul-lg").css("display", "none");
-
-    if ($(location).attr("href").indexOf("group/schedule") != -1) {
-        $("#nav_schedule").addClass("active");
-        $("#nav_meeting").addClass("active");
-        $("#nav_meeting_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #ff5c2b");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;<a href="">Group Meeting</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/flash_slide") != -1) {
-        $("#nav_flash").addClass("active");
-        $("#nav_meeting").addClass("active");
-        $("#nav_meeting_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #ff5c2b");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;<a href="">Group Meeting</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/journal_club") != -1) {
-        $("#nav_jc").addClass("active");
-        $("#nav_meeting").addClass("active");
-        $("#nav_meeting_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #ff5c2b");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;<a href="">Group Meeting</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/youtube") != -1) {
-        $("#nav_eterna").addClass("active");
-        $("#nav_meeting").addClass("active");
-        $("#nav_meeting_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #ff5c2b");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;<a href="">Group Meeting</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/rotation") != -1) {
-        $("#nav_rotation").addClass("active");
-        $("#nav_meeting").addClass("active");
-        $("#nav_meeting_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #ff5c2b");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;<a href="">Group Meeting</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/gdocs") != -1) {
-        $("#nav_gdocs").addClass("active");
-        $("#nav_res").addClass("active");
-        $("#nav_res_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #eeb211");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;<a href="">Resources</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/archive") != -1) {
-        $("#nav_archive").addClass("active");
-        $("#nav_res").addClass("active");
-        $("#nav_res_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #eeb211");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;<a href="">Resources</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/contact") != -1) {
-        $("#nav_contact").addClass("active");
-        $("#nav_res").addClass("active");
-        $("#nav_res_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #eeb211");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;<a href="">Resources</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/aws") != -1) {
-        $("#nav_aws").addClass("active");
-        $("#nav_server").addClass("active");
-        $("#nav_server_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #50cc32");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;<a href="">Servers</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/ga") != -1) {
-        $("#nav_ga").addClass("active");
-        $("#nav_server").addClass("active");
-        $("#nav_server_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #50cc32");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;<a href="">Servers</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/bot") != -1) {
-        $("#nav_bot").addClass("active");
-        $("#nav_service").addClass("active");
-        $("#nav_service_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #ff912e");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;<a href="">Services</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/git") != -1) {
-        $("#nav_git").addClass("active");
-        $("#nav_service").addClass("active");
-        $("#nav_service_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #ff912e");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;<a href="">Services</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/slack") != -1) {
-        $("#nav_slack").addClass("active");
-        $("#nav_service").addClass("active");
-        $("#nav_service_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #ff912e");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;<a href="">Services</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/dropbox") != -1) {
-        $("#nav_dropbox").addClass("active");
-        $("#nav_service").addClass("active");
-        $("#nav_service_lg").addClass("active");
-        $("ul.breadcrumb").css("border-bottom", "5px solid #ff912e");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;<a href="">Services</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-    } else if ($(location).attr("href").indexOf("group/calendar") != -1) {
-        $("#nav_cal").addClass("active");
-        $("#nav_cal_lg").addClass("active");
+        if (page == "schedule") {
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;<a href="https://docs.google.com/spreadsheets/d/1GWOBc8rRhLNMEsf8pQMUXkqqgRiYTLo22t1eKP83p80/edit#gid=1" target="_blank">Google Spreadsheet&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size:14px;"></span></a></li>');
+        } else if (page == "flash_slide") {
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;Flash Slides</li>');
+        } else if (page == "journal_club") {
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Journal Club Presentations</li>');
+        } else if (page == "youtube") {
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;<a href="https://www.youtube.com/channel/UCt811OXJqe35TDhe9hPYzJg/" target="_blank">Eterna Dev <span class="label" style="color:#000;">You</span><span class="label label-danger">Tube</span> Channel&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size:14px;"></span></a></li>');
+        } else if (page == "rotation") {
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;Rotation Student Presentations</li>');
+        }
+    } else if (key == "calendar") {
         $("ul.breadcrumb").css("border-bottom", "5px solid #c28fdd");
-    } else if ($(location).attr("href").indexOf("group/misc") != -1) {
-        $("#nav_onboard").addClass("active");
-        $("#nav_misc").addClass("active");
-        $("#nav_misc_lg").addClass("active");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-magnet"></span>&nbsp;&nbsp;<a href="">Miscellaneous</a></li>').insertAfter($("ul.breadcrumb > li:first"));
+        $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;<a href="https://www.google.com/calendar/embed?src=a53lhn4i0fgrkcs9c6i85fdmdo%40group.calendar.google.com&ctz=America/Los_Angeles" target="_blank">Google Calendar&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size:14px;"></span></a></li>');
+    } else if (key == "res") {
+        $("ul.breadcrumb").css("border-bottom", "5px solid #eeb211");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;<a href="">Resources</a></li>').insertAfter($("ul.breadcrumb > li:first"));
+        if (page == "gdocs") {
+            $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_gdrive"></i></div>&nbsp;&nbsp;Google Documents</li>');
+        } else if (page == "archive") {
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;Presentations Archive</li>');
+        } else if (page == "contact") {
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;Contacts</li>');
+        }
+    } else if (key == "server") {
+        $("ul.breadcrumb").css("border-bottom", "5px solid #50cc32");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;<a href="">Servers</a></li>').insertAfter($("ul.breadcrumb > li:first"));
+        if (page == "aws") {
+            $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_aws"></i></div>&nbsp;&nbsp;Amazon Web Services</li>');
+        } else if (page == "ga") {
+            $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_ga"></i></div>&nbsp;&nbsp;Google Analytics</li>');
+        }
+    } else if (key == "service") {
+        $("ul.breadcrumb").css("border-bottom", "5px solid #ff912e");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;<a href="">Services</a></li>').insertAfter($("ul.breadcrumb > li:first"));
+        if (page == "bot") {
+            $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_bot"></i></div>&nbsp;&nbsp;DasLab Bot</li>');
+        } else if (page == "git") {
+            $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_git"></i></div>&nbsp;&nbsp;<a href="https://www.github.com/DasLab/" target="_blank">GitHub Repositories&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size:14px;"></span></a></li>');
+        } else if (page == "slack") {
+            $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_slack"></i></div>&nbsp;&nbsp;<a href="https://das-lab.slack.com/" target="_blank">Slack&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size:14px;"></span></a></li>');
+        } else if (page == "dropbox") {
+            $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_dropbox"></i></div>&nbsp;&nbsp;<a href="https://www.dropbox.com/" target="_blank">Dropbox&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size:14px;"></span></a></li>');
+        }
+    } else if (key == "misc") {
         $("ul.breadcrumb").css("border-bottom", "5px solid #5496d7");
-    } else if ($(location).attr("href").indexOf("group/error") != -1) {
-        $("#nav_error").addClass("active");
-        $("#nav_misc").addClass("active");
-        $("#nav_misc_lg").addClass("active");
         $('<li><span style="color: #000;" class="glyphicon glyphicon-magnet"></span>&nbsp;&nbsp;<a href="">Miscellaneous</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-        $("ul.breadcrumb").css("border-bottom", "5px solid #5496d7");
+        if (page == "misc") {
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;Onboarding Instructions</li>');
+        } else if (page == "error") {
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-volume-off"></span>&nbsp;&nbsp;HTTP Error Pages</li>');
+        }
     } else {
-        $("#nav_home").addClass("active");
-        $("#nav_home_lg").addClass("active");
         $("ul.breadcrumb").css("border-bottom", "5px solid #3ed4e7");
     }
+};
 
-    $("#nav_toggle").on("click", function() {
-        if (side_toggle) {
-            $(".nav-ul").hide();
-            $(".nav-ul-lg").show();
-            $("#wrapper").css("padding-left", "50px");
-            $("#sidebar-wrapper").css({"margin-left":"-65px", "left":"65px", "width":"65px"});
-        } else {
-            $("#wrapper").css("padding-left", "235px");
-            $("#sidebar-wrapper").css({"margin-left":"-250px", "left":"250px", "width":"250px"});
-            setTimeout(function() {
-                $(".nav-ul-lg").hide();
-                $(".nav-ul").not(".nav-ul-lg").show();
-            }, 400);
-        }
-        side_toggle = !side_toggle;
-    });
-    $("#wrapper").css("width", (parseInt($("#wrapper").css("width")) + 15).toString() + "px");
+app.fnChangeView = function() {
+    var tab = app.fnParseLocation();
+    $("#sidebar-wrapper ul li.active").removeClass("active");
+    $("#sidebar-wrapper a[href='" + window.location.pathname + "']").parent().addClass("active");
+    $("#nav_" + tab[0]).addClass("active");
+    $("#nav_" + tab[0] + "_lg").addClass("active");
 
+    app.fnChangeBreadcrumb(tab);
+
+    $("#content").fadeTo(100, 1);
+    if (typeof this.callbackChangeView === "function") {
+        this.callbackChangeView();
+    }
+};
+
+app.fnChangeLocation = function(href) {
+    if (window.history.replaceState) {
+        window.history.replaceState({} , '', href);
+    } else {
+        window.location.href = href;
+    }
+    $("#content").load(href + " #content > div.row", app.fnChangeView);
+};
+
+
+$(document).ready(function() {
     $("ul.breadcrumb").css({"border-radius":"0px", "height":"50px"}).addClass("lead");
     $("ul.breadcrumb > li:first").prepend('<span style="color: #000;" class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;');
+    app.fnChangeView();
+
+    // $("#wait").fadeOut(500);
+    var today = new Date();
+    $("#cp_year").text(today.getFullYear());
 
     $(".dropdown-toggle").dropdown();
     $(".dropdown").hover(
-      function(){ $(this).addClass("open"); },
-      function(){ $(this).removeClass("open"); }
+        function(){ $(this).addClass("open"); },
+        function(){ $(this).removeClass("open"); }
     );
-    navbar_collapse();
+    $("[data-toggle='popover']").popover({trigger: "hover"});
+    $("[data-toggle='tooltip']").tooltip();
 
-    $.ajax({
-        url : "/get_admin/",
-        dataType: "json",
-        success: function (data) {
-            $("#form_email_to").val(data.email);
-            $("#form_email_to_disp").val(data.email);
-        }
+    $("#top").on("click", function() {
+        event.preventDefault();
+        $('#top > div').animate({'right':'-5%', 'opacity':'0'}, 125);
+        $("html, body").stop().animate({'scrollTop': 0}, 250);
     });
 
-    $.ajax({
-        url : "/group/user_dash/",
-        dataType: "json",
-        success: function (data) {
-            if (data.photo) {
-                $("#nav_user_photo").html(data.photo);
-            } else {
-                $("#nav_user_photo").html('<img src="/site_media/images/icon_default_avatar.png" width="119" style="padding-bottom:50px;">');
-            }
-            $("#nav_user_name").html(data.name);
-            $("#nav_user_id").html(data.id);
-            $("#nav_user_aff").html(data.title);
-            $("#nav_user_stat").html(data.status);
-            $("#nav_user_cap").attr("href", data.cap);
-            $("#id_email_from").val(data.email);
-            $("#nav_user_email").html(data.email);
-            $("#nav_user_email").attr("href", "mailto:" + data.email);
+    $("#sidebar-wrapper a").on("click", function(event) {
+        var href = $(this).attr("href");
+        event.preventDefault();
 
-            if (data.type == 'admin') {
-                $("#nav_user_type").addClass("label-violet").html('<span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;Administrator');
-            } else if (data.type == 'group') {
-                $("#nav_user_type").addClass("label-green").html('<span class="glyphicon glyphicon-queen" aria-hidden="true"></span>&nbsp;&nbsp;Current Member');
-            } else if (data.type == 'alumni') {
-                $("#nav_user_type").addClass("label-info").html('<span class="glyphicon glyphicon-pawn" aria-hidden="true"></span>&nbsp;&nbsp;Alumni Member');
-            } else if (data.type == 'roton') {
-                $("#nav_user_type").addClass("label-orange").html('<span class="glyphicon glyphicon-bishop" aria-hidden="true"></span>&nbsp;&nbsp;Rotation Student');
-            } else if (data.type == 'other') {
-                $("#nav_user_type").addClass("label-magenta").html('<span class="glyphicon glyphicon-knight" aria-hidden="true"></span>&nbsp;&nbsp;Visitor');
-            } else {
-                $("#nav_user_type").addClass("label-default").html('<span class="glyphicon glyphicon-glass" aria-hidden="true"></span>&nbsp;&nbsp;Unknown');
-            }
-
-            if ($(location).attr("href").indexOf("group/contact") != -1) {
-                if (data.photo) {
-                    $("#card_user_photo").html(data.photo);
-                } else {
-                    $("#card_user_photo").html('<img src="/site_media/images/icon_default_avatar.png" width="119">');
-                }
-                $("#card_user_photo > img").css("max-width", "100%");
-                $("#card_user_name").html(data.name);
-                $("#card_user_id").html(data.id);
-                $("#card_user_aff").html(data.title);
-                $("#card_user_stat").html(data.status);
-                $("#card_user_cap").attr("href", data.cap);
-                if (data.email) {
-                    $("#card_user_email").html(data.email);
-                    $("#card_user_email").attr("href", "mailto:" + data.email);
-                    $("#id_contact_email").val(data.email);
-                }
-                if (data.phone) {
-                    $("#card_user_phone").html(data.phone);
-                    $("#id_contact_phone").val(data.phone.replace(/\D+/g, ''));
-                }
-                if (data.bday) { $("#id_contact_bday").val(data.bday); }
-                if (data.type == 'roton' || data.type == 'other' || data.type == 'unknown') {
-                    $("#id_contact_email").attr("disabled", "disabled");
-                    $("#id_contact_phone").attr("disabled", "disabled");
-                    $("#id_contact_bday").attr("disabled", "disabled");
-                    $("#form_change_submit").attr("disabled", "disabled");
-                }
-            }
-        }
+        $("#content").fadeTo(100, 0, function() {
+            app.fnChangeLocation(href);
+        });
     });
-
 });
 
 
-$(window).on("resize", function() {
-    clearTimeout($.data(this, 'resizeTimer'));
-    $.data(this, 'resizeTimer', setTimeout(function() {
-        navbar_collapse();
-        $("#wrapper").css("width", $(window).width() - $("#sidebar-wrapper").width() - 20);
-    }, 200));
+// $(window).on("beforeunload", function() {
+//   $("#wait").fadeIn(250);
+// });
+
+$(window).on("scroll", function() {
+  clearTimeout($.data(this, 'scrollTimer'));
+  $.data(this, 'scrollTimer', setTimeout(function() {
+    if ($(this).scrollTop() > $(window).height() / 2) {
+      $('#top > div').animate({'right':'0%', 'opacity':'1.0'}, 125);
+    } else {
+      $('#top > div').animate({'right':'-5%', 'opacity':'0'}, 125);
+    }
+  }, 200));
 });
+
+// $(window).on("resize", function() {
+//     clearTimeout($.data(this, 'resizeTimer'));
+//     $.data(this, 'resizeTimer', setTimeout(function() {
+//         navbar_collapse();
+//         $("#wrapper").css("width", $(window).width() - $("#sidebar-wrapper").width() - 20);
+//     }, 200));
+// });
 

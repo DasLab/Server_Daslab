@@ -117,12 +117,7 @@
 
 {% block script %}
     <script type="text/javascript" src="/site_media/js/group/{{DEBUG_DIR}}upload{{DEBUG_STR}}.js"></script>  
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('.dropdown-toggle').removeClass("active");
-			$("ul.breadcrumb").append('<li><span style="color: #000;" class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;<a href="/group/archive/">Presentations Archive</a></li><li class="active"><span style="color: #000;" class="glyphicon glyphicon-open"></span>&nbsp;&nbsp;Upload</li>');
-		});
-	</script>
+            $("ul.breadcrumb").append('<li><span style="color: #000;" class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;<a href="/group/archive/">Presentations Archive</a></li><li class="active"><span style="color: #000;" class="glyphicon glyphicon-open"></span>&nbsp;&nbsp;Upload</li>');
 
 {% endblock %}
 

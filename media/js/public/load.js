@@ -19,14 +19,16 @@ if (app.DEBUG_DIR) {
 }
 
 head.load('https://cdnjs.cloudflare.com/ajax/libs/jquery/' + app.js_ver.jquery + '/jquery.min.js', function() {
-    head.test(window.jQuery, [
+    head.test(window.$, [
         'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/' + app.js_ver.bootstrap + '/css/bootstrap.min.css',
         'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/' + app.js_ver.bootstrap + '/js/bootstrap.min.js'
     ].concat(more_success), more_fail, function(flag) {
         $.ajaxSetup({'cache': true});
         if (window.location.pathname.indexOf('/group') != -1) {
             $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'menu' + app.DEBUG_STR + '.js');
-
+            if (!app.DEBUG_DIR) {
+                $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'email' + app.DEBUG_STR + '.js');
+            }
         } else {
             $.getScript('/site_media/js/public/' + app.DEBUG_DIR + 'main' + app.DEBUG_STR + '.js');
         }
