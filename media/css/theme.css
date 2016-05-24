@@ -427,6 +427,7 @@ h1.section > span.num {
     -ms-transform: translate(-50%, -50%) !important;
     -webkit-transform: translate(-50%, -50%) !important;
 }
+.modal-backdrop.in { opacity: 0.5 !important;}
 
 @media (min-width: 979px) {
   #sidebar.affix-top {

@@ -9,12 +9,22 @@ if (app.DEBUG_DIR) {
     more_fail = [
         '/site_media/js/public/min/core.min.js',
         '/site_media/js/suit/min/core.min.js',
+        '/site_media/js/suit/min/form.min.js',
         '/site_media/css/suit.min.css',
         '/site_media/css/min/core.min.css'
     ];
 } else {
     more_success = [
         '/site_media/js/suit/core.js',
+        '/site_media/js/suit/RelatedObjectLookups.js',
+        '/site_media/js/suit/jquery.init.js',
+        '/site_media/js/suit/jquery.formset.js',
+        '/site_media/js/suit/actions.js',
+        '/site_media/js/suit/DateTimeShortcuts.js',
+        '/site_media/js/suit/calendar.js',
+        '/site_media/js/suit/RelatedWidgetWrapper.js',
+        '/site_media/js/suit/SelectBox.js',
+        '/site_media/js/suit/SelectFilter2.js',
         '/site_media/css/_suit.css',
         '/site_media/css/theme.css',
         '/site_media/css/palette.css'

@@ -171,7 +171,7 @@ if (typeof app.fnFormatInput !== "function") {
     };
 }
 app.fnFormatInput();
-$(window).load(app.fnFormatInput2);
+app.fnFormatInput2();
 
 
 if (app.page == "apache") {
