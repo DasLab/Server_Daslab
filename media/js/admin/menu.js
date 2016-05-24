@@ -174,8 +174,8 @@ $(document).ready(function() {
 
     $(".dropdown-toggle").dropdown();
     $(".dropdown").hover(
-        function(){ $(this).addClass("open"); },
-        function(){ $(this).removeClass("open"); }
+        function() { $(this).addClass("open"); },
+        function() { $(this).removeClass("open"); }
     );
 
     $('i[class^="icon"]').each(function() {
@@ -185,7 +185,7 @@ $(document).ready(function() {
     $("#sidebar-wrapper a, #nav_upload > a").on("click", function(event) {
         event.preventDefault();
         app.href = $(this).attr("href");
-        $("#content").fadeTo(100, 0,  app.fnChangeLocation);
+        $("#content").fadeTo(100, 0, app.fnChangeLocation);
     });
 
     $("#nav_toggle").on("click", function() {

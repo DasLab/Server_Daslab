@@ -155,8 +155,8 @@ $(document).ready(function() {
 
     $(".dropdown-toggle").dropdown();
     $(".dropdown").hover(
-        function(){ $(this).addClass("open"); },
-        function(){ $(this).removeClass("open"); }
+        function() { $(this).addClass("open"); },
+        function() { $(this).removeClass("open"); }
     );
     $("[data-toggle='popover']").popover({trigger: "hover"});
     $("[data-toggle='tooltip']").tooltip();

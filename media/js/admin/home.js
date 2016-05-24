@@ -115,5 +115,6 @@ $(document).ready(function() {
         }
     });
 
+    $("#btn_grp_dash > a, #btn_sys_stat").on("click", function() { $("#content").html(''); });
 });
 

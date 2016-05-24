@@ -54,13 +54,13 @@ if (app.page == "backup") {
         var time = $("#id_time_backup").val();
         var backup = new Date(Date.UTC(2000, 0, parseInt($("#id_day_backup").val()) + 2, time.split(':')[0], time.split(':')[1], 0));
         $("#time_backup_pdt").html(backup.toLocaleTimeString());
-        $("#day_backup_pdt").html(weekdayNames[backup.getDay()]);
+        $("#day_backup_pdt").html(weekNames[backup.getDay()]);
     });
     $("#id_time_upload, #id_day_upload").on("change", function() {
         var time = $("#id_time_upload").val();
         var backup = new Date(Date.UTC(2000, 0, parseInt($("#id_day_upload").val()) + 2, time.split(':')[0], time.split(':')[1], 0));
         $("#time_upload_pdt").html(backup.toLocaleTimeString());
-        $("#day_upload_pdt").html(weekdayNames[backup.getDay()]);
+        $("#day_upload_pdt").html(weekNames[backup.getDay()]);
     });
 
     if (!$("#id_time_backup").val() || !$("#id_day_backup").val()) {
@@ -72,10 +72,12 @@ if (app.page == "backup") {
         $("#sign_sync").removeClass("glyphicon-ok-sign").addClass("glyphicon-remove-sign");
     }
 
+    $("#modal_backup").html('On <span class="label label-primary">' + $("#id_time_backup").val() + '</span> every <span class="label label-inverse">' + weekNames[$("#id_day_backup").val()] + '</span> (UTC).');
+    $("#modal_upload").html('On <span class="label label-primary">' + $("#id_time_upload").val() + '</span> every <span class="label label-inverse">' + weekNames[$("#id_day_upload").val()] + '</span> (UTC).');
+
+    $("#btn_backup_now, #btn_upload_now, #btn_backup_stat").on("click", function() { $("#content").html(''); });
     $("#id_time_backup").trigger("change");
     $("#id_time_upload").trigger("change");
-    $("#modal_backup").html('On <span class="label label-primary">' + $("#id_time_backup").val() + '</span> every <span class="label label-inverse">' + weekdayNames[$("#id_day_backup").val()] + '</span> (UTC).');
-    $("#modal_upload").html('On <span class="label label-primary">' + $("#id_time_upload").val() + '</span> every <span class="label label-inverse">' + weekdayNames[$("#id_day_upload").val()] + '</span> (UTC).');
 
 } else if (app.page == "bot") {
     $("#id_day_meeting").prop("disabled", true);

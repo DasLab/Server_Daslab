@@ -201,7 +201,12 @@ if (app.page == "backup" || app.page == "bot" || app.page == "export") {
     $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'home' + app.DEBUG_STR + '.js');
 }
 
-if (["apache", "aws", "ga", "git", "dir", "backup", "export", "man", "ref"].indexOf(app.page) == -1) {
+if (["apache", "aws", "ga", "git", "dir", "backup", "export", "man", "ref"].indexOf(app.page) == -1 && app.key != 'home') {
     $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'table' + app.DEBUG_STR + '.js');
+    $("#content a").on("click", function(event) {
+        event.preventDefault();
+        app.href = $(this).attr("href");
+        $("#content").fadeTo(100, 0, app.fnChangeLocation);
+    });
 }
 
