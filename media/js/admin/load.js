@@ -1,16 +1,17 @@
-var more_success, more_fail;
+var more_success, more_fail, Suit;
 
 if (app.DEBUG_DIR) {
     more_success = [
         '/site_media/js/suit/min/core.min.js',
-        '/site_media/css/_suit.css',
+        '/site_media/js/suit/min/form.min.js',
+        '/site_media/css/min/suit.min.css',
         '/site_media/css/min/theme.min.css'
     ];
     more_fail = [
         '/site_media/js/public/min/core.min.js',
         '/site_media/js/suit/min/core.min.js',
         '/site_media/js/suit/min/form.min.js',
-        '/site_media/css/suit.min.css',
+        '/site_media/css/min/suit.min.css',
         '/site_media/css/min/core.min.css'
     ];
 } else {
@@ -37,6 +38,8 @@ if (app.DEBUG_DIR) {
 }
 
 head.load('https://cdnjs.cloudflare.com/ajax/libs/jquery/' + app.js_ver.jquery + '/jquery.min.js', function() {
+    Suit = { $: $.noConflict() }; if (!$) $ = Suit.$;
+
     head.test(window.$, [
         'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/' + app.js_ver.bootstrap + '/css/bootstrap.min.css',
         'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/' + app.js_ver.bootstrap + '/js/bootstrap.min.js'
@@ -45,7 +48,6 @@ head.load('https://cdnjs.cloudflare.com/ajax/libs/jquery/' + app.js_ver.jquery +
         $.ajaxSetup({'cache': true});
         if (!app.DEBUG_DIR) {
             $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + '_suit' + app.DEBUG_STR + '.js');
-            $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'table' + app.DEBUG_STR + '.js');
             $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'clock' + app.DEBUG_STR + '.js');
         }
         $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'menu' + app.DEBUG_STR + '.js');

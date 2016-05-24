@@ -41,8 +41,8 @@ cat media/js/suit/min/calendar.min.js media/js/suit/min/RelatedWidgetWrapper.min
 rm media/js/suit/min/calendar.min.js media/js/suit/min/RelatedWidgetWrapper.min.js media/js/suit/min/SelectBox.min.js media/js/suit/min/SelectFilter2.min.js
 mv media/js/suit/min/form.js media/js/suit/min/form.min.js
 
-cat media/js/admin/min/_suit.min.js media/js/admin/min/table.min.js media/js/admin/min/clock.min.js media/js/admin/min/menu.min.js > media/js/admin/min/menu.js
-rm media/js/admin/min/_suit.min.js media/js/admin/min/table.min.js media/js/admin/min/clock.min.js media/js/admin/min/menu.min.js
+cat media/js/admin/min/_suit.min.js media/js/admin/min/clock.min.js media/js/admin/min/menu.min.js > media/js/admin/min/menu.js
+rm media/js/admin/min/_suit.min.js media/js/admin/min/clock.min.js media/js/admin/min/menu.min.js
 mv media/js/admin/min/menu.js media/js/admin/min/menu.min.js
 
 cat media/css/bootstrap.min.css media/css/min/theme.min.css media/css/min/palette.min.css > media/css/min/core.min.css
