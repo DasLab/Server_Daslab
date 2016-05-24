@@ -256,10 +256,10 @@ $(document).ready(function() {
                 }
                 if (data.bday) { $("#id_contact_bday").val(data.bday); }
                 if (data.type == 'roton' || data.type == 'other' || data.type == 'unknown') {
-                    $("#id_contact_email").attr("disabled", "disabled");
-                    $("#id_contact_phone").attr("disabled", "disabled");
-                    $("#id_contact_bday").attr("disabled", "disabled");
-                    $("#form_change_submit").attr("disabled", "disabled");
+                    $("#id_contact_email").prop("disabled", true);
+                    $("#id_contact_phone").prop("disabled", true);
+                    $("#id_contact_bday").prop("disabled", true);
+                    $("#form_change_submit").prop("disabled", true);
                 }
             }
         }

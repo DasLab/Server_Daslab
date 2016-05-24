@@ -231,7 +231,7 @@ def user_dash(request):
         if 'WEBAUTH_USER' in request.META:
             json = {'id': sunet_id, 'type': user_type}
         else:
-            json = {}
+            json = {'type': 'unknown'}
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 # @login_required
