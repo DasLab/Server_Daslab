@@ -318,7 +318,21 @@ def cache_slack(request):
         for resp in response:
             if 'is_bot' in resp and resp['is_bot']: continue
             if resp['name'] in ('slackbot', SLACK["BOT_NAME"]): continue
-            presence = sh.users.get_presence(resp['id']).body['presence']
+            if qs == 'home':
+                try:
+                    presence = sh.users.get_presence(resp['id']).body['presence']
+                except Exception:
+                    if os.path.exists('%s/cache/slack/home.json' % MEDIA_ROOT):
+                        now = datetime.fromtimestamp(time.time())
+                        t_home = datetime.fromtimestamp(os.path.getmtime('%s/cache/slack/home.json' % MEDIA_ROOT))
+                        if ((now - t_home).seconds >= 7200):
+                            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`ERROR`*: *pickle_slack()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
+                    else:
+                        send_error_slack(traceback.format_exc(), 'Cache Dashboard Results', '', 'log_cron_cache.log')
+                    return {}
+            else:
+                presence = sh.users.get_presence(resp['id']).body['presence']
+
             presence = (presence == 'active')
             temp = {'name': resp['profile']['real_name'], 'id': resp['name'], 'email': resp['profile']['email'], 'image': resp['profile']['image_24'], 'presence': presence}
             if qs == 'home':

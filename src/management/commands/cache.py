@@ -36,7 +36,11 @@ class Command(BaseCommand):
             pickle.dump(cache_slack(request), open(f_name + '_tmp', 'wb'))
         else:
             f_name = '%s/cache/slack/%s.json' % (MEDIA_ROOT, request['qs'])
-            simplejson.dump(cache_slack(request), open(f_name + '_tmp', 'wb'), sort_keys=True, indent=' ' * 4)
+            result = cache_slack(request)
+            if result:
+                simplejson.dump(result, open(f_name + '_tmp', 'wb'), sort_keys=True, indent=' ' * 4)
+            else:
+                return
         subprocess.check_call("mv %s_tmp %s" % (f_name, f_name), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     def pickle_dropbox(self, request):
@@ -200,7 +204,7 @@ class Command(BaseCommand):
             if IS_SLACK and not DEBUG:
                 if ('pickle_git' in tb or 'cache_git' in tb) and ('ConnectionError' in tb or 'SSLError' in tb):
                     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`ERROR`*: *pickle_git()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
-                elif ('pickle_slack' in tb or 'cache_slack' in tb) and ('500' in tb and 'Internal Server Error' in tb) or ('503' in tb and 'Service' in tb and 'Unavailable' in tb) or ('504' in tb and 'GATEWAY_TIMEOUT' in tb) or ('HTTPSConnectionPool' in tb):
+                elif ('pickle_slack' in tb or 'cache_slack' in tb) and ('500' in tb and 'Internal Server Error' in tb) or ('503' in tb and 'Service' in tb and 'Unavailable' in tb) or ('504' in tb and 'gateway' in tb.lower()) or ('HTTPSConnectionPool' in tb):
                     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`ERROR`*: *pickle_slack()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
                 elif ('pickle_dropbox' in tb or 'cache_dropbox' in tb) and ('502' in tb and 'Bad Gateway' in tb) or ('503' in tb and 'Service Unavailable' in tb):
                     send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`ERROR`*: *pickle_dropbox()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
