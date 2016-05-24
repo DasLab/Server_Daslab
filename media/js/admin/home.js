@@ -27,7 +27,7 @@ $(document).ready(function() {
             $("#id_django_suit").html(data.django_suit);
             $("#id_django_adminplus").html(data.django_adminplus);
             $("#id_django_filemanager").html(data.django_filemanager);
-            $("#id_swfobj").html(data.swfobj);
+            $("#id_head").html(data.head);
             $("#id_fullcal").html(data.fullcal);
             $("#id_moment").html(data.moment);
             $("#id_ical").html(data.icalendar);
