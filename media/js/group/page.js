@@ -108,6 +108,40 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "youtube
         });
         $("#btn_toggle").trigger("click");
         $("img").css("max-width", "100%");
+
+        var user_dash_timeout = setTimeout(function() {
+            if (app.user !== undefined) {
+                clearTimeout(user_dash_timeout);
+
+                if (app.user.photo) {
+                    $("#card_user_photo").html(app.user.photo);
+                } else {
+                    $("#card_user_photo").html('<img src="/site_media/images/icon_default_avatar.png" width="119">');
+                }
+                $("#card_user_photo > img").css("max-width", "100%");
+                $("#card_user_name").html(app.user.name);
+                $("#card_user_id").html(app.user.id);
+                $("#card_user_aff").html(app.user.title);
+                $("#card_user_stat").html(app.user.status);
+                $("#card_user_cap").attr("href", app.user.cap);
+                if (app.user.email) {
+                    $("#card_user_email").html(app.user.email);
+                    $("#card_user_email").attr("href", "mailto:" + app.user.email);
+                    $("#id_contact_email").val(app.user.email);
+                }
+                if (app.user.phone) {
+                    $("#card_user_phone").html(app.user.phone);
+                    $("#id_contact_phone").val(app.user.phone.replace(/\D+/g, ''));
+                }
+                if (app.user.bday) { $("#id_contact_bday").val(app.user.bday); }
+                if (app.user.type == 'roton' || app.user.type == 'other' || app.user.type == 'unknown') {
+                    $("#id_contact_email").prop("disabled", true);
+                    $("#id_contact_phone").prop("disabled", true);
+                    $("#id_contact_bday").prop("disabled", true);
+                    $("#form_change_submit").prop("disabled", true);
+                }
+            }
+        }, 500);
     }
 } else if (app.key == "server" && app.page == "aws") {
     $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'gapi' + app.DEBUG_STR + '.js', function() {

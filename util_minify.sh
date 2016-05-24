@@ -52,3 +52,5 @@ rm media/css/min/theme.min.css media/css/min/palette.min.css
 mv media/css/min/theme.css media/css/min/theme.min.css
 
 mv media/css/min/_suit.min.css media/css/min/suit.min.css
+mv media/css/min/_filemanager.min.css media/css/min/filemanager.min.css
+

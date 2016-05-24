@@ -42,7 +42,7 @@ body {
 a { text-decoration: none; }
 a:link,
 a:visited,
-a:active { color: #00837F; }
+a:active { color: #00837F !important; }
 a:hover { color: #333; }
 a.nav-hover > div {
 	box-sizing: content-box;

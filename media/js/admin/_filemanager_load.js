@@ -4,13 +4,15 @@ if (app.DEBUG_DIR) {
     more_success = [
         'https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.2.1/jquery-migrate.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/zclip/1.1.2/jquery.zclip.min.js',
-        '/site_media/css/min/theme.min.css'
+        '/site_media/css/min/theme.min.css',
+        '/site_media/css/min/filemanager.min.css'
     ];
     more_fail = [
         '/site_media/js/public/min/core.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.2.1/jquery-migrate.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/zclip/1.1.2/jquery.zclip.min.js',
-        '/site_media/css/min/core.min.css'
+        '/site_media/css/min/core.min.css',
+        '/site_media/css/min/filemanager.min.css'
     ];
 } else {
     more_success = [

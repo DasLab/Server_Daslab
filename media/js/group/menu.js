@@ -205,6 +205,7 @@ $(document).ready(function() {
         url : "/group/user_dash/",
         dataType: "json",
         success: function (data) {
+            app.user = data;
             if (data.photo) {
                 $("#nav_user_photo").html(data.photo);
             } else {
@@ -231,36 +232,6 @@ $(document).ready(function() {
                 $("#nav_user_type").addClass("label-magenta").html('<span class="glyphicon glyphicon-knight" aria-hidden="true"></span>&nbsp;&nbsp;Visitor');
             } else {
                 $("#nav_user_type").addClass("label-default").html('<span class="glyphicon glyphicon-glass" aria-hidden="true"></span>&nbsp;&nbsp;Unknown');
-            }
-
-            if ($(location).attr("href").indexOf("group/contact") != -1) {
-                if (data.photo) {
-                    $("#card_user_photo").html(data.photo);
-                } else {
-                    $("#card_user_photo").html('<img src="/site_media/images/icon_default_avatar.png" width="119">');
-                }
-                $("#card_user_photo > img").css("max-width", "100%");
-                $("#card_user_name").html(data.name);
-                $("#card_user_id").html(data.id);
-                $("#card_user_aff").html(data.title);
-                $("#card_user_stat").html(data.status);
-                $("#card_user_cap").attr("href", data.cap);
-                if (data.email) {
-                    $("#card_user_email").html(data.email);
-                    $("#card_user_email").attr("href", "mailto:" + data.email);
-                    $("#id_contact_email").val(data.email);
-                }
-                if (data.phone) {
-                    $("#card_user_phone").html(data.phone);
-                    $("#id_contact_phone").val(data.phone.replace(/\D+/g, ''));
-                }
-                if (data.bday) { $("#id_contact_bday").val(data.bday); }
-                if (data.type == 'roton' || data.type == 'other' || data.type == 'unknown') {
-                    $("#id_contact_email").prop("disabled", true);
-                    $("#id_contact_phone").prop("disabled", true);
-                    $("#id_contact_bday").prop("disabled", true);
-                    $("#form_change_submit").prop("disabled", true);
-                }
             }
         }
     });
