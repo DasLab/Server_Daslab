@@ -24,7 +24,6 @@ $.ajax({
         }
         html += '</td></tr><tr><td colspan="2" style="padding: 0px;"></td></tr></tbody></table>';
         $("#changelist-form").append($(html));
-
     }
 });
 

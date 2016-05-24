@@ -51,40 +51,40 @@ app.fnChangeBreadcrumb = function() {
         } else {
             $("ul.breadcrumb").css("border-bottom", "5px solid #50cc32");
             $("ul.breadcrumb > li:first").next().remove();
-        }
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;<a href="">Global Site</a></li>').insertAfter($("ul.breadcrumb > li:first"));
 
-        if (app.page == "news") {
-            $("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;');
-        } else if (app.page == "member") {
-            $("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;');
-        } else if (app.page == "publication") {
-            $("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;');
-        } 
+            if (app.page == "news") {
+                $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;News Items</li>');
+            } else if (app.page == "member") {
+                $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Member Management</li>');
+            } else if (app.page == "publication") {
+                $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;Publication Entries</li>');
+            }
+        }
+
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;<a href="">Global Site</a></li>').insertAfter($("ul.breadcrumb > li:first"));
 
     } else if (app.key == "internal") {
         if (app.page == "auth") {
             $("ul.breadcrumb").css("border-bottom", "5px solid #ff912e");
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;User Autherization</li>');
         } else {
             $("ul.breadcrumb").css("border-bottom", "5px solid #eeb211");
+
+            if (app.page == "flashslide") {
+                $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;Flash Slides</li>');
+            } else if (app.page == "journalclub") {
+                $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Journal Clubs</li>');
+            } else if (app.page == "eternayoutube") {
+                $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;EteRNA Videos</li>');
+            } else if (app.page == "rotationstudent") {
+                $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;Rotation Students</li>');
+            } else if (app.page == "presentation") {
+                $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;Archived Presentations</li>');
+            } else if (app.page == "slackmessage") {
+                $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_slack"></i></div>&nbsp;&nbsp;Slack Messages</li>');
+            }
         }
         $('<li><span style="color: #000;" class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;<a href="">Internal Site</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-
-        if (app.page == "auth") {
-            $("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;');
-        } else if (app.page == "flashslide") {
-            $("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;');
-        } else if (app.page == "journalclub") {
-            $("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;');
-        } else if (app.page == "eternayoutube") {
-            $("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;');
-        } else if (app.page == "rotationstudent") {
-            $("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;');
-        } else if (app.page == "presentation") {
-            $("ul.breadcrumb > li:first").next().prepend('<span style="color: #000;" class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;');
-        } else if (app.page == "slackmessage") {
-            $("ul.breadcrumb > li:first").next().prepend('<div class="sprite i_21"><i class="i_slack"></i></div>&nbsp;&nbsp;');
-        }
 
     } else if (app.key == "doc") {
         $("#nav_doc_lg").addClass("active");
@@ -206,13 +206,6 @@ $(document).ready(function() {
     });
     $("#wrapper").css("width", (parseInt($("#wrapper").css("width")) + 15).toString() + "px");
     app.fnNavCollapse();
-
-    // if ($(location).attr("pathname") == "/admin/auth/user/" || $(location).attr("pathname") == "/admin/auth/user") {
-    //     $("body").append('<script type="text/javascript" src="/site_media/js/admin/group.js"></script>');
-    // }
-    // if ($(location).attr("pathname") == "/admin/src/slackmessage/" || $(location).attr("pathname") == "/admin/slack/slackmessage") {
-    //     $("div.object-tools > a").attr("disabled", "disabled").attr("onclick", "return false;");
-    // }
 
     $("body > div:not(#wait)").fadeTo(150, 1);
 });

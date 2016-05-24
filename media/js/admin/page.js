@@ -188,6 +188,20 @@ if (app.page == "backup" || app.page == "bot" || app.page == "export") {
     $("#iframe").css("height", 800);
 } else if (app.page == "aws" || app.page == "ga" || app.page == "git") {
     $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'gapi' + app.DEBUG_STR + '.js');
+
 } else if (app.page == "man" || app.page == "ref") {
     $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'doc' + app.DEBUG_STR + '.js');
+
+} else if (app.page == "auth") {
+    $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'group' + app.DEBUG_STR + '.js');
+} else if (app.page == "slackmessage") {
+    $("div.object-tools > a").attr("disabled", "disabled").attr("onclick", "return false;");
+
+} else if (window.location.pathname.replace(/\/$/, '') == '/admin') {
+    $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'home' + app.DEBUG_STR + '.js');
 }
+
+if (["apache", "aws", "ga", "git", "dir", "backup", "export", "man", "ref"].indexOf(app.page) == -1) {
+    $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'table' + app.DEBUG_STR + '.js');
+}
+

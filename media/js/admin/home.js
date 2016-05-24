@@ -1,6 +1,3 @@
-var $ = django.jQuery;
-var weekdayNames = new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-
 $(document).ready(function() {
   $("ul.breadcrumb > li.active").text("System Dashboard");
 
@@ -87,8 +84,8 @@ $(document).ready(function() {
         url : "/admin/backup_form/",
         dataType: "json",
         success : function (data) {
-            $("#id_week_backup").html($("#id_week_backup").html() + '<br/>On <span class="label label-primary">' + data.time_backup + '</span> every <span class="label label-inverse">' + weekdayNames[data.day_backup] + '</span> (UTC)');
-            $("#id_week_upload").html($("#id_week_upload").html() + '<br/>On <span class="label label-primary">' + data.time_upload + '</span> every <span class="label label-inverse">' + weekdayNames[data.day_upload] + '</span> (UTC)');
+            $("#id_week_backup").html($("#id_week_backup").html() + '<br/>On <span class="label label-primary">' + data.time_backup + '</span> every <span class="label label-inverse">' + weekNames[data.day_backup] + '</span> (UTC)');
+            $("#id_week_upload").html($("#id_week_upload").html() + '<br/>On <span class="label label-primary">' + data.time_upload + '</span> every <span class="label label-inverse">' + weekNames[data.day_upload] + '</span> (UTC)');
 
             if (data.time_backup) {
                 $("#id_week_backup_stat").html('<p class="lead"><span class="label label-green"><span class="glyphicon glyphicon-ok-sign"></span></span></p>');
@@ -117,8 +114,6 @@ $(document).ready(function() {
             $("#id_dash_duty").html(data.t_duty + '<span class="label label-violet pull-right"><span class="glyphicon glyphicon-leaf"></span></span>');
         }
     });
-
-
 
 });
 
