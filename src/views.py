@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 
 from src.console import *
 from src.dash import *
@@ -12,20 +12,20 @@ colors = ('brown', 'dark-red', 'danger', 'orange', 'warning', 'green', 'success'
 
 
 def index(request):
-    return render_to_response(PATH.HTML_PATH['index'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['index'])
 def research(request):
-    return render_to_response(PATH.HTML_PATH['research'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['research'])
 def resources(request):
-    return render_to_response(PATH.HTML_PATH['resources'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['resources'])
 def contact(request):
-    return render_to_response(PATH.HTML_PATH['contact'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['contact'])
 
 def news(request):
     news_list = News.objects.filter(is_visible=1).order_by('-date')
     for news in news_list:
         if news.image:
             news.image_link = os.path.basename(news.image.name)
-    return render_to_response(PATH.HTML_PATH['news'], {'news_list': news_list}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['news'], {'news_list': news_list})
 
 def people(request):
     member = Member.objects.filter(is_alumni=0, is_visible=1).order_by('last_name', 'first_name')
@@ -33,7 +33,7 @@ def people(request):
     for ppl in member:
         if ppl.image:
             ppl.image_link = os.path.basename(ppl.image.name)
-    return render_to_response(PATH.HTML_PATH['people'], {'current_member': member, 'past_member': almuni}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['people'], {'current_member': member, 'past_member': almuni})
 
 def publications(request):
     pub_list = Publication.objects.filter(is_visible=1).order_by('-display_date')
@@ -48,14 +48,14 @@ def publications(request):
             pub.year_tag = True
         if pub.year == 2009 and pub_list[i-1].year == 2010:
             pub.previous = True
-    return render_to_response(PATH.HTML_PATH['publications'], {'pub_list': pub_list}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['publications'], {'pub_list': pub_list})
 
 
 ############################################################################################################################################
 
 # @login_required
 def lab_meeting_schedule(request):
-    return render_to_response(PATH.HTML_PATH['lab_meeting_schedule'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_meeting_schedule'])
 
 # @login_required
 def lab_meeting_flash(request):
@@ -70,7 +70,7 @@ def lab_meeting_flash(request):
             gp.label = colors[gp.date.month - 1]
         if i == len(flash_list) - 1 or flash_list[i + 1].date.month != gp.date.month:
             gp.month_end = True
-    return render_to_response(PATH.HTML_PATH['lab_meeting_flash'], {'flash_list': flash_list}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_meeting_flash'], {'flash_list': flash_list})
 
 # @login_required
 def lab_meeting_jc(request):
@@ -79,7 +79,7 @@ def lab_meeting_jc(request):
         gp.label = colors[11 - i % 12]
         if i == 0 or jc_list[i - 1].date.year != gp.date.year:
             gp.year_start = True
-    return render_to_response(PATH.HTML_PATH['lab_meeting_jc'], {'jc_list': jc_list}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_meeting_jc'], {'jc_list': jc_list})
 
 # @login_required
 def lab_meeting_youtube(request):
@@ -88,7 +88,7 @@ def lab_meeting_youtube(request):
         gp.label = colors[11 - i % 12]
         if i == 0 or eterna_list[i - 1].date.year != gp.date.year:
             gp.year_start = True
-    return render_to_response(PATH.HTML_PATH['lab_meeting_eterna'], {'eterna_list': eterna_list}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_meeting_eterna'], {'eterna_list': eterna_list})
 
 # @login_required
 def lab_meeting_rotation(request):
@@ -101,11 +101,11 @@ def lab_meeting_rotation(request):
             rot.ppt_link = os.path.basename(rot.ppt.name)
         if rot.data:
             rot.dat_link = os.path.basename(rot.data.name)
-    return render_to_response(PATH.HTML_PATH['lab_meeting_rotation'], {'rot_list': rot_list}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_meeting_rotation'], {'rot_list': rot_list})
 
 # @login_required
 def lab_resource_gdocs(request):
-    return render_to_response(PATH.HTML_PATH['lab_resource_gdocs'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_resource_gdocs'])
 # @login_required
 def lab_resource_archive(request):
     arv_list = Presentation.objects.order_by('-date')
@@ -115,7 +115,7 @@ def lab_resource_archive(request):
             arv.year_start = True
         if arv.ppt:
             arv.ppt_link = os.path.basename(arv.ppt.name).replace('C:\\fakepath\\', '')
-    return render_to_response(PATH.HTML_PATH['lab_resource_archive'], {'arv_list': arv_list}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_resource_archive'], {'arv_list': arv_list})
 # @login_required
 def lab_resource_contact(request):
     member = Member.objects.filter(is_alumni=0).exclude(sunet_id=request.user.username).order_by('last_name', 'first_name')
@@ -141,39 +141,39 @@ def lab_resource_contact(request):
         if ppl.phone:
             ppl.phone = str(ppl.phone)
             ppl.phone = '(%s) %s-%s' % (ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
-    return render_to_response(PATH.HTML_PATH['lab_resource_contact'], {'current_member': member, 'past_member': almuni, 'contact_form':  ContactForm()}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_resource_contact'], {'current_member': member, 'past_member': almuni, 'contact_form':  ContactForm()})
 
 
 # @login_required
 def lab_home(request):
-    return render_to_response(PATH.HTML_PATH['lab_home'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_home'])
 # @login_required
 def lab_calendar(request):
-    return render_to_response(PATH.HTML_PATH['lab_calendar'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_calendar'])
 # @login_required
 def lab_server_aws(request):
-    return render_to_response(PATH.HTML_PATH['lab_server_aws'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_server_aws'])
 # @login_required
 def lab_server_ga(request):
-    return render_to_response(PATH.HTML_PATH['lab_server_ga'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_server_ga'])
 # @login_required
 def lab_service_bot(request):
-    return render_to_response(PATH.HTML_PATH['lab_service_bot'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_service_bot'])
 # @login_required
 def lab_service_git(request):
-    return render_to_response(PATH.HTML_PATH['lab_service_git'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_service_git'])
 # @login_required
 def lab_service_slack(request):
-    return render_to_response(PATH.HTML_PATH['lab_service_slack'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_service_slack'])
 # @login_required
 def lab_service_dropbox(request):
-    return render_to_response(PATH.HTML_PATH['lab_service_dropbox'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_service_dropbox'])
 # @login_required
 def lab_misc(request):
-    return render_to_response(PATH.HTML_PATH['lab_misc'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_misc'])
 # @login_required
 def lab_error(request):
-    return render_to_response(PATH.HTML_PATH['lab_error'], {}, context_instance=RequestContext(request))
+    return render(request, PATH.HTML_PATH['lab_error'])
 
 
 def ping_test(request):

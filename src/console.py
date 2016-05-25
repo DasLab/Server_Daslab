@@ -24,7 +24,7 @@ from slacker import Slacker
 
 from django.core.management import call_command
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import RequestContext
 from django.conf import settings
 
@@ -677,7 +677,7 @@ def git_stats(request):
 
 def export_citation(request):
     form = ExportForm(request.POST)
-    if not form.is_valid(): return render_to_response(PATH.HTML_PATH['admin_export'], {'form': ExportForm()}, context_instance=RequestContext(request))
+    if not form.is_valid(): return render(request, PATH.HTML_PATH['admin_export'], {'form': ExportForm()})
 
     is_order_number = form.cleaned_data['order_number']
     is_quote_title = form.cleaned_data['quote_title']

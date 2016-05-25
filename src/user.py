@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 
 import re
 import traceback
@@ -39,14 +39,14 @@ def user_login(request):
                         return HttpResponseRedirect('/group/')
                 else:
                     messages = 'Inactive/disabled account. Please contact us.'
-        return render_to_response(PATH.HTML_PATH['login'], {'form': form, 'messages': messages}, context_instance=RequestContext(request))
+        return render(request, PATH.HTML_PATH['login'], {'form': form, 'messages': messages})
     else:
         if 'next' in request.GET and 'admin' in request.GET.get('next'):
             flag = 'Admin'
         else:
             flag = 'Member'
         form = LoginForm(initial={'flag': flag})
-        return render_to_response(PATH.HTML_PATH['login'], {'form': form}, context_instance=RequestContext(request))
+        return render(request, PATH.HTML_PATH['login'], {'form': form})
 
 # @login_required
 def user_password(request):
@@ -58,9 +58,9 @@ def user_password(request):
             password_new = form.cleaned_data['password_new']
             password_new_rep = form.cleaned_data['password_new_rep']
             if password_new != password_new_rep:
-                return render_to_response(PATH.HTML_PATH['password'], {'form': form, 'messages': 'New password does not match. Please try again.'}, context_instance=RequestContext(request))
+                return render(request, PATH.HTML_PATH['password'], {'form': form, 'messages': 'New password does not match. Please try again.'})
             if password_new == password_old:
-                return render_to_response(PATH.HTML_PATH['password'], {'form': form, 'messages': 'New password is the same as current. Please try again.'}, context_instance=RequestContext(request))
+                return render(request, PATH.HTML_PATH['password'], {'form': form, 'messages': 'New password is the same as current. Please try again.'})
 
             user = authenticate(username=username, password=password_old)
             if user is not None:
@@ -68,12 +68,12 @@ def user_password(request):
                 u.set_password(password_new)
                 u.save()
                 logout(request)
-                return render_to_response(PATH.HTML_PATH['password'], {'form': form, 'notices': 'Password change successful. Please sign in using new credentials.'}, context_instance=RequestContext(request))
+                return render(request, PATH.HTML_PATH['password'], {'form': form, 'notices': 'Password change successful. Please sign in using new credentials.'})
         form = PasswordForm(initial={'username': request.user.username})
-        return render_to_response(PATH.HTML_PATH['password'], {'form': form, 'messages': 'Invalid username and/or current password, or missing new password.<br/>Please try again.'}, context_instance=RequestContext(request))
+        return render(request, PATH.HTML_PATH['password'], {'form': form, 'messages': 'Invalid username and/or current password, or missing new password.<br/>Please try again.'})
     else:
         form = PasswordForm(initial={'username': request.user.username})
-        return render_to_response(PATH.HTML_PATH['password'], {'form': form}, context_instance=RequestContext(request))
+        return render(request, PATH.HTML_PATH['password'], {'form': form})
 
 # @login_required
 def user_contact(request):
@@ -152,9 +152,9 @@ def user_upload(request):
         else:
             messages = 'error'
 
-        return render_to_response(PATH.HTML_PATH['upload'], {'upload_form': form, 'messages': messages}, context_instance=RequestContext(request))
+        return render(request, PATH.HTML_PATH['upload'], {'upload_form': form, 'messages': messages})
     else:
-        return render_to_response(PATH.HTML_PATH['upload'], {'upload_form': UploadForm(), 'messages': ''}, context_instance=RequestContext(request))
+        return render(request, PATH.HTML_PATH['upload'], {'upload_form': UploadForm(), 'messages': ''})
 
 # @login_required
 # def user_profile(request):
@@ -174,7 +174,7 @@ def user_upload(request):
 #             profile.alumni = '<span class="label label-success">Current</span>'
 #     else:
 #         profile = []
-#     return render_to_response(PATH.HTML_PATH['profile'], {'profile':profile}, context_instance=RequestContext(request))
+#     return render(request, PATH.HTML_PATH['profile'], {'profile':profile})
 
 def user_logout(request):
     logout(request)
