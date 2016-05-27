@@ -56,7 +56,7 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "youtube
     cal_js = cal_js.concat(['/site_media/css/fullcalendar.min.css']);
     head.test($.fullCalendar, [], cal_js, function(flag) {
         $.ajax({
-            url : "/group/gcal_dash/",
+            url : "/group/dash/gcal/",
             dataType: "json",
             success : function (data) {
                 $('#calendar').fullCalendar({

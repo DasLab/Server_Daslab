@@ -2,7 +2,7 @@ var scrollTimer, resizeTimer, side_toggle = true;
 
 app.fnParseLocation = function() {
     var urls = {
-        "meeting": ["schedule", "flash_slide", "journal_club", "youtube", "rotation"],
+        "meeting": ["schedule", "flash_slide", "journal_club", "eterna_youtube", "rotation"],
         "calendar": ["calendar"],
         "res": ["gdocs", "archive", "archive/upload", "contact"],
         "server": ["aws", "ga"],
@@ -31,7 +31,7 @@ app.fnChangeBreadcrumb = function() {
             $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;Flash Slides</li>');
         } else if (app.page == "journal_club") {
             $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Journal Club Presentations</li>');
-        } else if (app.page == "youtube") {
+        } else if (app.page == "eterna_youtube") {
             $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;<a href="https://www.youtube.com/channel/UCt811OXJqe35TDhe9hPYzJg/" target="_blank">Eterna Dev <span class="label" style="color:#000;">You</span><span class="label label-danger">Tube</span> Channel&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size:14px;"></span></a></li>');
         } else if (app.page == "rotation") {
             $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;Rotation Student Presentations</li>');
@@ -202,7 +202,7 @@ $(document).ready(function() {
     });
 
     $.ajax({
-        url : "/group/user_dash/",
+        url : "/group/dash/user/",
         dataType: "json",
         success: function (data) {
             app.user = data;

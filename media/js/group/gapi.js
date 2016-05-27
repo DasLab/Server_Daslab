@@ -18,7 +18,7 @@ var gapi = {
     'fnRenderPage': function() {
         if (app.page == 'aws') {
             $.ajax({
-                url : "/group/aws_dash/?qs=init&id=init&tp=init&tqx=reqId%3A55",
+                url : "/group/dash/aws/?qs=init&id=init&tp=init&tqx=reqId%3A55",
                 dataType: "json",
                 success: function (data) {
                     var html = "";
@@ -120,7 +120,7 @@ var gapi = {
 
         } else if (app.page == 'ga') {
             $.ajax({
-                url : "/group/ga_dash/?qs=init&id=init&tqx=reqId%3A55",
+                url : "/group/dash/ga/?qs=init&id=init&tqx=reqId%3A55",
                 dataType: "json",
                 success: function (data) {
                     var html = "";
@@ -141,7 +141,7 @@ var gapi = {
 
         } else if (app.page == 'git') {
             $.ajax({
-                url : "/group/git_dash/?qs=init&repo=init&org=init&tqx=reqId%3A55",
+                url : "/group/dash/git/?qs=init&repo=init&org=init&tqx=reqId%3A55",
                 dataType: "json",
                 success: function (data) {
                     var html = "";
@@ -164,7 +164,7 @@ var gapi = {
                         var name = data.git[i].name, org = data.git[i].org;
                         gapi.fnDrawEachChart(name, org, '');
                         $.ajax({
-                            url : "/group/git_dash/?qs=num&repo=" + name + "&org=" + org + "&tqx=reqId%3A55",
+                            url : "/group/dash/git/?qs=num&repo=" + name + "&org=" + org + "&tqx=reqId%3A55",
                             dataType: "json",
                             success: function (data) {
                                 $("#git-label-" + data.name.split('/')[1]).html('<span class="label label-green">created</span>&nbsp;<span class="label label-primary">' + data.created_at + '</span>&nbsp;&nbsp;<span class="label label-dark-green">last pushed</span>&nbsp;<span class="label label-primary">' + data.pushed_at + '</span></p><p><span class="label label-danger">issue</span>&nbsp;' + data.num_issues + '&nbsp;&nbsp;<span class="label label-info">download</span>&nbsp;' + data.num_downloads + '&nbsp;&nbsp;<span class="label label-info">pull</span>&nbsp;' + data.num_pulls + '&nbsp;&nbsp;<span class="label label-orange">branch</span>&nbsp;' + data.num_branches + '&nbsp;&nbsp;<span class="label label-orange">fork</span>&nbsp;' + data.num_forks + '&nbsp;&nbsp;<span class="label label-violet">watcher</span>&nbsp;' + data.num_watchers);
@@ -176,7 +176,7 @@ var gapi = {
 
         } else if (app.page == 'slack') {
             $.ajax({
-                url : "/group/slack_dash/?qs=users&tqx=reqId%3A52",
+                url : "/group/dash/slack/?qs=users&tqx=reqId%3A52",
                 dataType: "json",
                 success: function (data) {
                     var html = "", presence;
@@ -207,7 +207,7 @@ var gapi = {
             });
 
             $.ajax({
-                url : "/group/slack_dash/?qs=channels&tqx=reqId%3A53",
+                url : "/group/dash/slack/?qs=channels&tqx=reqId%3A53",
                 dataType: "json",
                 success: function (data) {
                     var html = "";
@@ -241,7 +241,7 @@ var gapi = {
             });
 
             $.ajax({
-                url : "/group/slack_dash/?qs=files&tqx=reqId%3A54",
+                url : "/group/dash/slack/?qs=files&tqx=reqId%3A54",
                 dataType: "json",
                 success: function (data) {
                     var html = "";
@@ -259,7 +259,7 @@ var gapi = {
          
             var chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/group/slack_dash/?qs=plot_msgs',
+                'dataSourceUrl': '/group/dash/slack/?qs=plot_msgs',
                 'containerId': 'plot_slack_msgs',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -287,7 +287,7 @@ var gapi = {
 
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/group/slack_dash/?qs=plot_files',
+                'dataSourceUrl': '/group/dash/slack/?qs=plot_files',
                 'containerId': 'plot_slack_files',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -315,7 +315,7 @@ var gapi = {
 
         } else if (app.page == 'dropbox') {
             $.ajax({
-                url : "/group/dropbox_dash/?qs=sizes&tqx=reqId%3A56",
+                url : "/group/dash/dropbox/?qs=sizes&tqx=reqId%3A56",
                 dataType: "json",
                 success: function (data) {
                     var ratio = data.quota_used / data.quota_all;
@@ -324,7 +324,7 @@ var gapi = {
                 }
             });
             $.ajax({
-                url : "/group/dropbox_dash/?qs=folders&tqx=reqId%3A57",
+                url : "/group/dash/dropbox/?qs=folders&tqx=reqId%3A57",
                 dataType: "json",
                 success: function (data) {
                     var html = "";
@@ -338,7 +338,7 @@ var gapi = {
 
             var chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/group/dropbox_dash/?qs=history',
+                'dataSourceUrl': '/group/dash/dropbox/?qs=history',
                 'containerId': 'plot_dropbox_files',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -370,7 +370,7 @@ var gapi = {
             if (type == 'ec2') {
                 var chart = new google.visualization.ChartWrapper({
                     'chartType': 'AreaChart',
-                    'dataSourceUrl': '/group/aws_dash/?qs=cpu&tp=ec2&id=' + id,
+                    'dataSourceUrl': '/group/dash/aws/?qs=cpu&tp=ec2&id=' + id,
                     'containerId': 'plot_cpu_' + id,
                     'options': {
                         'chartArea': {'width': '90%', 'left': '10%'},
@@ -397,7 +397,7 @@ var gapi = {
 
                 chart = new google.visualization.ChartWrapper({
                     'chartType': 'AreaChart',
-                    'dataSourceUrl': '/group/aws_dash/?qs=net&tp=ec2&id=' + id,
+                    'dataSourceUrl': '/group/dash/aws/?qs=net&tp=ec2&id=' + id,
                     'containerId': 'plot_net_'+ id,
                     'options': {
                         'chartArea': {'width': '90%', 'left': '10%'},
@@ -424,7 +424,7 @@ var gapi = {
             } else if (type == 'elb') {
                 var chart = new google.visualization.ChartWrapper({
                     'chartType': 'AreaChart',
-                    'dataSourceUrl': '/group/aws_dash/?qs=lat&tp=elb&id=' + id,
+                    'dataSourceUrl': '/group/dash/aws/?qs=lat&tp=elb&id=' + id,
                     'containerId': 'plot_lat_' + id,
                     'options': {
                         'chartArea': {'width': '90%', 'left': '10%'},
@@ -451,7 +451,7 @@ var gapi = {
 
                 chart = new google.visualization.ChartWrapper({
                     'chartType': 'AreaChart',
-                    'dataSourceUrl': '/group/aws_dash/?qs=req&tp=elb&id=' + id,
+                    'dataSourceUrl': '/group/dash/aws/?qs=req&tp=elb&id=' + id,
                     'containerId': 'plot_req_'+ id,
                     'options': {
                         'chartArea': {'width': '90%', 'left': '10%'},
@@ -478,7 +478,7 @@ var gapi = {
             } else if (type == 'ebs') {
                 var chart = new google.visualization.ChartWrapper({
                     'chartType': 'AreaChart',
-                    'dataSourceUrl': '/group/aws_dash/?qs=disk&tp=ebs&id=' + id,
+                    'dataSourceUrl': '/group/dash/aws/?qs=disk&tp=ebs&id=' + id,
                     'containerId': 'plot_disk_' + id,
                     'options': {
                         'chartArea': {'width': '90%', 'left': '10%'},
@@ -507,7 +507,7 @@ var gapi = {
         } else if (app.page == 'ga') {
             var chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/group/ga_dash/?qs=sessions&id=' + id,
+                'dataSourceUrl': '/group/dash/ga/?qs=sessions&id=' + id,
                 'containerId': 'chart_session_' + id,
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -535,7 +535,7 @@ var gapi = {
 
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/group/ga_dash/?qs=percentNewSessions&id=' + id,
+                'dataSourceUrl': '/group/dash/ga/?qs=percentNewSessions&id=' + id,
                 'containerId': 'chart_visitor_' + id,
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -563,7 +563,7 @@ var gapi = {
         } else if (app.page == 'git') {
             var chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/group/git_dash/?qs=c&repo=' + id + '&org=' + org,
+                'dataSourceUrl': '/group/dash/git/?qs=c&repo=' + id + '&org=' + org,
                 'containerId': 'plot_c_' + id,
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -594,7 +594,7 @@ var gapi = {
 
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/group/git_dash/?qs=ad&repo=' + id + '&org=' + org,
+                'dataSourceUrl': '/group/dash/git/?qs=ad&repo=' + id + '&org=' + org,
                 'containerId': 'plot_ad_' + id,
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
