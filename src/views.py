@@ -13,6 +13,7 @@ def index(request):
     return render(request, PATH.HTML_PATH['index'])
 
 def pages(request, keyword):
+    keyword = keyword.strip('/')
     json = {}
     if keyword == 'news':
         news_list = News.objects.filter(is_visible=1).order_by('-date')
