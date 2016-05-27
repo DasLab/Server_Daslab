@@ -52,7 +52,6 @@ else:
         url(r'^group/?$', views.group_index),
         url(r'^group/dash/(?P<keyword>.*)/?$', views.group_dash),
         url(r'^group/archive/upload/?$', user.user_upload),
-        url(r'^group/contact/update/?$', user.user_contact),
         url(r'^group/email_admin/?$', user.user_email),
         url(r'^group/(?P<path>.*)/?$', views.group_pages),
 

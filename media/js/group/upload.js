@@ -19,4 +19,9 @@ $(document).ready(function() {
         $("#id_upload_link").val('');
     });
 
+    $("#form_upload").submit(function() {
+        $("#page-content-wrapper").html('');
+        $("#sidebar-wrapper").fadeOut(150);
+        $("#nav_load").fadeOut(150);
+    });
 });

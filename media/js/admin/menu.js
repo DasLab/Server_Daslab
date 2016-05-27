@@ -182,7 +182,7 @@ $(document).ready(function() {
         $(this).replaceWith('<span class="glyphicon glyph' + $(this).attr("class") + '"></span>&nbsp;&nbsp;');
     });
 
-    $("#sidebar-wrapper a, #nav_upload > a").on("click", function(event) {
+    $("#sidebar-wrapper a, #nav_admin > a").on("click", function(event) {
         event.preventDefault();
         app.href = $(this).attr("href");
         $("#content").fadeTo(100, 0, app.fnChangeLocation);

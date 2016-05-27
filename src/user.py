@@ -15,6 +15,14 @@ from src.models import *
 from src.env import error400, error403
 
 
+def user_sunetid(request):
+    # return 't47'
+    if 'WEBAUTH_USER' in request.META:
+        return request.META['WEBAUTH_USER']
+    else:
+        return None
+
+
 def user_login(request):
     if request.user.is_authenticated():
         if 'next' in request.GET and 'admin' in request.GET.get('next'):
@@ -97,7 +105,7 @@ def user_contact(request):
         else:
             return error400(request)
 
-        member = Member.objects.get(sunet_id=request.META['WEBAUTH_USER'])
+        member = Member.objects.get(sunet_id=user_sunetid(request))
         member.phone = phone
         member.email = email
         member.bday = bday

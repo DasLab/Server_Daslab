@@ -7,6 +7,7 @@ from src.dash import *
 from src.env import error400, error401, error403, error404, error500, error503
 from src.models import *
 from src.settings import *
+from src.user import user_contact, user_sunetid
 
 
 def index(request):
@@ -53,11 +54,11 @@ def group_index(request):
 
 # @login_required
 def group_pages(request, path):
+    path = path.strip('/')
     for key in PATH.GROUP_PATH:
         if path in PATH.GROUP_PATH[key]:
             break
-    page = path
-    if key != path: page = '%s_%s' % (key, path)
+    page = '%s_%s' % (key, path) if key != path else path
     json = {}
 
     if path == 'flash_slide':
@@ -113,6 +114,8 @@ def group_pages(request, path):
         json = {'arv_list': arv_list}
 
     elif path == 'contact':
+        if request.method == 'POST': return user_contact(request)
+
         member = Member.objects.filter(is_alumni=0).exclude(sunet_id=request.user.username).order_by('last_name', 'first_name')
         for i, ppl in enumerate(member):
             ppl.label = PATH.COLOR[11 - i % 12]
@@ -140,6 +143,7 @@ def group_pages(request, path):
     return render(request, PATH.HTML_PATH['group_pages'].replace('xxx', page), json)
 
 def group_dash(request, keyword):
+    keyword = keyword.strip('/')
     if keyword == 'aws':
         json = dash_aws(request)
     elif keyword == 'ga':
@@ -152,6 +156,7 @@ def group_dash(request, keyword):
         json = dash_dropbox(request)
     elif keyword == 'gcal':
         json = dash_cal()
+
     elif keyword == 'schedule':
         json = dash_schedule(request)
         flash_slide = FlashSlide.objects.order_by('-date')[0]
@@ -170,9 +175,10 @@ def group_dash(request, keyword):
         archive = {'date': archive.date.strftime('%Y-%m-%d'), 'name': archive.presenter, 'title': archive.title, 'url': ar_link}
         json.update({'flash_slide': flash_slide, 'journal_club': journal_club, 'eterna': eterna, 'rotation': rotation, 'archive': archive})
         json = simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
+
     elif keyword == 'user':
         try:
-            sunet_id = request.META['WEBAUTH_USER']
+            sunet_id = user_sunetid(request)
             user_type = GROUP.find_type(sunet_id)
             user = Member.objects.get(sunet_id=sunet_id)
             if user.phone:
@@ -182,10 +188,7 @@ def group_dash(request, keyword):
 
             json = {'id': user.sunet_id, 'type': user.type, 'title': user.affiliation(), 'name': user.full_name(), 'photo': user.image_tag(), 'email': user.email, 'phone': user.phone, 'bday': user.bday, 'cap': user.more_info, 'status': user.year()}
         except Exception:
-            if 'WEBAUTH_USER' in request.META:
-                json = {'id': sunet_id, 'type': user_type}
-            else:
-                json = {'type': 'unknown'}
+            json = {'type': 'unknown'} if sunet_id is None else {'id': sunet_id, 'type': user_type}
         json = simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
 
     if isinstance(json, HttpResponse): return json
