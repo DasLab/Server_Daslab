@@ -99,7 +99,6 @@ class SYS_PATH(Singleton):
             'SPE_PPT_DIR': MEDIA_ROOT + '/data/spe_ppt/',
 
             'TMPDIR': MEDIA_ROOT + '/temp/',
-
         }
 
         self.GROUP_PATH = {

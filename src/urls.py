@@ -31,12 +31,7 @@ if IS_MAINTENANCE:
 else:
     urlpatterns = [
         url(r'^$', views.index),
-        url(r'^research/?$', views.research),
-        url(r'^news/?$', views.news),
-        url(r'^people/?$', views.people),
-        url(r'^publications/?$', views.publications),
-        url(r'^resources/?$', views.resources),
-        url(r'^contact/?$', views.contact),
+        url(r'^(research|news|people|publications|resources|contact)/?$', views.pages),
 
         url(r'^(index\.html|home|index)/?$', RedirectView.as_view(url='/', permanent=True)),
         url(r'^(das_research\.html|science)/?$', RedirectView.as_view(url='/research/', permanent=True)),
@@ -49,17 +44,17 @@ else:
         url(r'^admin$', RedirectView.as_view(url='/admin/', permanent=True)),
 
         url(r'^signin/?$', user.user_login),
-        url(r'^logout/?$', RedirectView.as_view(url='/index/', permanent=True)),
         url(r'^signout/?$', user.user_logout),
+        url(r'^logout/?$', RedirectView.as_view(url='/index/', permanent=True)),
         url(r'^password/?$', user.user_password),
         url(r'^get_staff/?$', views.get_staff),
 
         url(r'^group/?$', views.group_index),
         url(r'^group/dash/(?P<keyword>.*)/$', views.group_dash),
-        url(r'^group/(?P<path>.*)/$', views.group_pages),
         url(r'^group/archive/upload/?$', user.user_upload),
         url(r'^group/contact/update/?$', user.user_contact),
         url(r'^group/email_admin/?$', user.user_email),
+        url(r'^group/(?P<path>.*)/$', views.group_pages),
 
         url(r'^ping_test/?$', views.ping_test),
         url(r'^site_media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT + '/media'}),

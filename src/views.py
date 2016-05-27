@@ -13,45 +13,41 @@ colors = ('brown', 'dark-red', 'danger', 'orange', 'warning', 'green', 'success'
 
 def index(request):
     return render(request, PATH.HTML_PATH['index'])
-def research(request):
-    return render(request, PATH.HTML_PATH['research'])
-def resources(request):
-    return render(request, PATH.HTML_PATH['resources'])
-def contact(request):
-    return render(request, PATH.HTML_PATH['contact'])
 
-def news(request):
-    news_list = News.objects.filter(is_visible=1).order_by('-date')
-    for news in news_list:
-        if news.image:
-            news.image_link = os.path.basename(news.image.name)
-    return render(request, PATH.HTML_PATH['news'], {'news_list': news_list})
+def pages(request, keyword):
+    json = {}
+    if keyword == 'news':
+        news_list = News.objects.filter(is_visible=1).order_by('-date')
+        for news in news_list:
+            if news.image:
+                news.image_link = os.path.basename(news.image.name)
+        json = {'news_list': news_list}
 
-def people(request):
-    member = Member.objects.filter(is_alumni=0, is_visible=1).order_by('last_name', 'first_name')
-    almuni = Member.objects.filter(is_alumni=1, is_visible=1).order_by('finish_year', 'start_year')
-    for ppl in member:
-        if ppl.image:
-            ppl.image_link = os.path.basename(ppl.image.name)
-    return render(request, PATH.HTML_PATH['people'], {'current_member': member, 'past_member': almuni})
+    elif keyword == 'people':
+        member = Member.objects.filter(is_alumni=0, is_visible=1).order_by('last_name', 'first_name')
+        almuni = Member.objects.filter(is_alumni=1, is_visible=1).order_by('finish_year', 'start_year')
+        for ppl in member:
+            if ppl.image:
+                ppl.image_link = os.path.basename(ppl.image.name)
+        json = {'current_member': member, 'past_member': almuni}
 
-def publications(request):
-    pub_list = Publication.objects.filter(is_visible=1).order_by('-display_date')
-    for i, pub in enumerate(pub_list):
-        if pub.image:
-            pub.image_link = os.path.basename(pub.image.name)
-        if pub.pdf:
-            pub.pdf_link = os.path.basename(pub.pdf.name)
-        if pub.extra_file:
-            pub.file_link = os.path.basename(pub.extra_file.name)
-        if i == 0 or pub_list[i-1].year != pub.year:
-            pub.year_tag = True
-        if pub.year == 2009 and pub_list[i-1].year == 2010:
-            pub.previous = True
-    return render(request, PATH.HTML_PATH['publications'], {'pub_list': pub_list})
+    elif keyword == 'publications':
+        pub_list = Publication.objects.filter(is_visible=1).order_by('-display_date')
+        for i, pub in enumerate(pub_list):
+            if pub.image:
+                pub.image_link = os.path.basename(pub.image.name)
+            if pub.pdf:
+                pub.pdf_link = os.path.basename(pub.pdf.name)
+            if pub.extra_file:
+                pub.file_link = os.path.basename(pub.extra_file.name)
+            if i == 0 or pub_list[i-1].year != pub.year:
+                pub.year_tag = True
+            if pub.year == 2009 and pub_list[i-1].year == 2010:
+                pub.previous = True
+        json = {'pub_list': pub_list}
 
+    return render(request, PATH.HTML_PATH[keyword], json)
 
-############################################################################################################################################
 
 # @login_required
 def group_index(request):
@@ -79,6 +75,7 @@ def group_pages(request, path):
             if i == len(flash_list) - 1 or flash_list[i + 1].date.month != gp.date.month:
                 gp.month_end = True
         json = {'flash_list': flash_list}
+
     elif path == 'journal_club':
         jc_list = JournalClub.objects.order_by('-date')
         for i, gp in enumerate(jc_list):
@@ -86,6 +83,7 @@ def group_pages(request, path):
             if i == 0 or jc_list[i - 1].date.year != gp.date.year:
                 gp.year_start = True
         json = {'jc_list': jc_list}
+
     elif path == 'eterna_youtube':
         eterna_list = EternaYoutube.objects.order_by('-date')
         for i, gp in enumerate(eterna_list):
@@ -93,6 +91,7 @@ def group_pages(request, path):
             if i == 0 or eterna_list[i - 1].date.year != gp.date.year:
                 gp.year_start = True
         json = {'eterna_list': eterna_list}
+
     elif path == 'rotation':
         rot_list = RotationStudent.objects.order_by('-date')
         for i, rot in enumerate(rot_list):
@@ -104,6 +103,7 @@ def group_pages(request, path):
             if rot.data:
                 rot.dat_link = os.path.basename(rot.data.name)
         json = {'rot_list': rot_list}
+
     elif path == 'archive':
         arv_list = Presentation.objects.order_by('-date')
         for i, arv in enumerate(arv_list):
@@ -113,6 +113,7 @@ def group_pages(request, path):
             if arv.ppt:
                 arv.ppt_link = os.path.basename(arv.ppt.name).replace('C:\\fakepath\\', '')
         json = {'arv_list': arv_list}
+
     elif path == 'contact':
         member = Member.objects.filter(is_alumni=0).exclude(sunet_id=request.user.username).order_by('last_name', 'first_name')
         for i, ppl in enumerate(member):
