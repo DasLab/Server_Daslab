@@ -1,5 +1,4 @@
 from django.http import HttpResponseRedirect, HttpResponse
-from django.template import RequestContext
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -142,7 +141,6 @@ def user_email(request):
 # @login_required
 def user_upload(request):
     if request.method == 'POST':
-        print request.POST, request.FILES
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             em_title = form.cleaned_data['upload_title']

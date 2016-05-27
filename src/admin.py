@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.shortcuts import render
-from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 # from django.contrib.admin import AdminSite
 from django.contrib.auth.admin import UserAdmin

@@ -41,6 +41,7 @@ $(document).ready(function() {
                     $("#form_upload_notice > div > div > p > span").addClass("glyphicon-ok-sign").removeClass("glyphicon-remove-sign").removeClass("glyphicon-hourglass");
                     $("#form_upload_notice > div > div > p > b").html('SUCCESS');
                     $("#form_upload_msg").html('File uploaded. Everyone can see it now!');
+                    $("#form_upload_clear").trigger("click");
                 } else {
                     $("#form_upload_msg").parent().addClass("alert-danger").removeClass("alert-warning").removeClass("alert-success");
                     $("#form_upload_notice > div > div > p > span").addClass("glyphicon-remove-sign").removeClass("glyphicon-ok-sign").removeClass("glyphicon-hourglass");
