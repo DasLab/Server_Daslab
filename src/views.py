@@ -8,8 +8,6 @@ from src.env import error400, error401, error403, error404, error500, error503
 from src.models import *
 from src.settings import *
 
-colors = ('brown', 'dark-red', 'danger', 'orange', 'warning', 'green', 'success', 'light-blue', 'info', 'primary', 'dark-blue', 'violet')
-
 
 def index(request):
     return render(request, PATH.HTML_PATH['index'])
@@ -71,7 +69,7 @@ def group_pages(request, path):
                 gp.year_end = True
             if i == 0 or flash_list[i - 1].date.month != gp.date.month:
                 gp.month_start = True
-                gp.label = colors[gp.date.month - 1]
+                gp.label = PATH.COLOR[gp.date.month - 1]
             if i == len(flash_list) - 1 or flash_list[i + 1].date.month != gp.date.month:
                 gp.month_end = True
         json = {'flash_list': flash_list}
@@ -79,7 +77,7 @@ def group_pages(request, path):
     elif path == 'journal_club':
         jc_list = JournalClub.objects.order_by('-date')
         for i, gp in enumerate(jc_list):
-            gp.label = colors[11 - i % 12]
+            gp.label = PATH.COLOR[11 - i % 12]
             if i == 0 or jc_list[i - 1].date.year != gp.date.year:
                 gp.year_start = True
         json = {'jc_list': jc_list}
@@ -87,7 +85,7 @@ def group_pages(request, path):
     elif path == 'eterna_youtube':
         eterna_list = EternaYoutube.objects.order_by('-date')
         for i, gp in enumerate(eterna_list):
-            gp.label = colors[11 - i % 12]
+            gp.label = PATH.COLOR[11 - i % 12]
             if i == 0 or eterna_list[i - 1].date.year != gp.date.year:
                 gp.year_start = True
         json = {'eterna_list': eterna_list}
@@ -95,7 +93,7 @@ def group_pages(request, path):
     elif path == 'rotation':
         rot_list = RotationStudent.objects.order_by('-date')
         for i, rot in enumerate(rot_list):
-            rot.label = colors[11 - i % 12]
+            rot.label = PATH.COLOR[11 - i % 12]
             if i == 0 or rot_list[i - 1].date.year != rot.date.year:
                 rot.year_start = True
             if rot.ppt:
@@ -107,7 +105,7 @@ def group_pages(request, path):
     elif path == 'archive':
         arv_list = Presentation.objects.order_by('-date')
         for i, arv in enumerate(arv_list):
-            arv.label = colors[11 - i % 12]
+            arv.label = PATH.COLOR[11 - i % 12]
             if i == 0 or arv_list[i - 1].date.year != arv.date.year:
                 arv.year_start = True
             if arv.ppt:
@@ -117,7 +115,7 @@ def group_pages(request, path):
     elif path == 'contact':
         member = Member.objects.filter(is_alumni=0).exclude(sunet_id=request.user.username).order_by('last_name', 'first_name')
         for i, ppl in enumerate(member):
-            ppl.label = colors[11 - i % 12]
+            ppl.label = PATH.COLOR[11 - i % 12]
             ppl.name = ppl.full_name()
             ppl.photo = ppl.image_tag()
             ppl.title = ppl.affiliation()
@@ -127,7 +125,7 @@ def group_pages(request, path):
                 ppl.phone = '(%s) %s-%s' % (ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
         almuni = Member.objects.filter(is_alumni=1).order_by('-finish_year', '-start_year')
         for i, ppl in enumerate(almuni):
-            ppl.label = colors[11 - i % 12]
+            ppl.label = PATH.COLOR[11 - i % 12]
             if i == 0 or almuni[i - 1].finish_year != ppl.finish_year:
                 ppl.year_start = True
             ppl.name = ppl.full_name()

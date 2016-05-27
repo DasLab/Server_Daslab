@@ -110,6 +110,8 @@ class SYS_PATH(Singleton):
             'misc': ['misc', 'error']
         }
 
+        self.COLOR = ('brown', 'dark-red', 'danger', 'orange', 'warning', 'green', 'success', 'light-blue', 'info', 'primary', 'dark-blue', 'violet')
+
 
 root = environ.Path(os.path.dirname(os.path.dirname(__file__)))
 MEDIA_ROOT = root()
