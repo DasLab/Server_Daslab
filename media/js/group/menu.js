@@ -240,10 +240,6 @@ $(document).ready(function() {
 });
 
 
-$(window).on("beforeunload", function() {
-  $("#wait").fadeIn(250);
-});
-
 $(window).on("scroll", function() {
   clearTimeout($.data(this, 'scrollTimer'));
   $.data(this, 'scrollTimer', setTimeout(function() {

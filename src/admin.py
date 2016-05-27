@@ -120,31 +120,19 @@ admin.site.register(SlackMessage, SlackMessageAdmin)
 
 ############################################################################################################################################
 
-def sys_stat(request):
-    call_command('versions', '1')
-    return HttpResponseRedirect('/admin/')
-
-def backup_stat(request):
-    get_backup_stat()
-    return HttpResponseRedirect('/admin/backup/')
-
 def backup_form(request):
     return HttpResponse(simplejson.dumps(get_backup_form(), sort_keys=True, indent=' ' * 4), content_type='application/json')
 
-def backup_now(request):
-    call_command('backup')
-    return backup_stat(request)
+def admin_cmd(request, keyword):
+    call_command(keyword.strip('/'))
+    return refresh_stat(request, 'backup')
 
-def upload_now(request):
-    call_command('gdrive')
-    return backup_stat(request)
-
-
-def apache_stat(request):
-    return HttpResponse(restyle_apache(), content_type='application/json')
 
 def apache(request):
     return render(request, PATH.HTML_PATH['admin_apache'], {'host_name': env('SSL_HOST')})
+
+def apache_stat(request):
+    return HttpResponse(restyle_apache(), content_type='application/json')
 
 
 def aws(request):
@@ -187,17 +175,6 @@ def dash_dash(request):
     json = {'t_aws': t_aws, 't_ga': t_ga, 't_git': t_git, 't_slack': t_slack, 't_dropbox': t_dropbox, 't_cal': t_cal, 't_sch': t_sch, 't_duty': t_duty}
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
-def dash_stat(request):
-    if 'QUERY_STRING' in request.META:
-        flag = request.META['QUERY_STRING'].replace('int=', '')
-        if flag in ('3', '15', '30'):
-            call_command('cache', flag)
-        else:
-            return error400(request)
-    else:
-        return error400(request)
-    return HttpResponseRedirect('/admin/')
-
 
 def backup(request):
     flag = -1
@@ -232,40 +209,45 @@ def ref(request):
     return render(request, PATH.HTML_PATH['admin_ref'], {})
 
 
-def get_ver(request):
-    json = simplejson.load(open('%s/cache/stat_ver.json' % MEDIA_ROOT, 'r'))
+def get_stat(request, keyword):
+    json = simplejson.load(open('%s/cache/stat_%s.json' % (MEDIA_ROOT, keyword.strip('/')), 'r'))
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
-def get_sys(request):
-    stats = simplejson.load(open('%s/cache/stat_sys.json' % MEDIA_ROOT, 'r'))
-    return HttpResponse(simplejson.dumps(stats, sort_keys=True, indent=' ' * 4), content_type='application/json')
-
-def get_backup(request):
-    json = simplejson.load(open('%s/cache/stat_backup.json' % MEDIA_ROOT, 'r'))
-    return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
+def refresh_stat(request, keyword):
+    keyword = keyword.strip('/')
+    if keyword == 'sys':
+        call_command('versions', '1')
+        return HttpResponseRedirect('/admin/')
+    elif keyword == 'backup':
+        get_backup_stat()
+        return HttpResponseRedirect('/admin/backup/')
+    elif keyword == 'dash':
+        if 'QUERY_STRING' in request.META:
+            flag = request.META['QUERY_STRING'].replace('int=', '')
+            if flag in ('3', '15', '30'):
+                call_command('cache', flag)
+            else:
+                return error400(request)
+        else:
+            return error400(request)
+        return HttpResponseRedirect('/admin/')
 
 
 admin.site.register_view('backup/', view=backup, visible=False)
-admin.site.register_view('backup_stat/', view=backup_stat, visible=False)
-admin.site.register_view('backup_form/', view=backup_form, visible=False)
-admin.site.register_view('backup_now/', view=backup_now, visible=False)
-admin.site.register_view('upload_now/', view=upload_now, visible=False)
+admin.site.register_view('backup/form/', view=backup_form, visible=False)
+admin.site.register_view(r'cmd/(upload|backup)/?$', view=admin_cmd, visible=False)
 
-admin.site.register_view('apache_stat/', view=apache_stat, visible=False)
 admin.site.register_view('apache/', view=apache, visible=False)
-
 admin.site.register_view('aws/', view=aws, visible=False)
-admin.site.register_view('aws_stat/', view=aws_stat, visible=False)
-
 admin.site.register_view('ga/', view=ga, visible=False)
-admin.site.register_view('ga_stat/', view=ga_stat, visible=False)
-
 admin.site.register_view('git/', view=git, visible=False)
-admin.site.register_view('git_stat/', view=git_stat, visible=False)
 
-admin.site.register_view('group_dash/', view=group_dash, visible=False)
-admin.site.register_view('dash_dash/', view=dash_dash, visible=False)
-admin.site.register_view('dash_stat/', view=dash_stat, visible=False)
+admin.site.register_view('dash/apache/', view=apache_stat, visible=False)
+admin.site.register_view('dash/aws/', view=aws_stat, visible=False)
+admin.site.register_view('dash/ga/', view=ga_stat, visible=False)
+admin.site.register_view('dash/git/', view=git_stat, visible=False)
+admin.site.register_view('dash/group/', view=group_dash, visible=False)
+admin.site.register_view('dash/dash/', view=dash_dash, visible=False)
 
 admin.site.register_view('dir/', view=dir, visible=False)
 admin.site.register_view('bot/', view=bot, visible=False)
@@ -274,8 +256,5 @@ admin.site.register_view('export/', view=export, visible=False)
 admin.site.register_view('man/', view=man, visible=False)
 admin.site.register_view('ref/', view=ref, visible=False)
 
-admin.site.register_view('sys_stat/', view=sys_stat, visible=False)
-admin.site.register_view('get_ver/', view=get_ver, visible=False)
-admin.site.register_view('get_sys/', view=get_sys, visible=False)
-admin.site.register_view('get_backup/', view=get_backup, visible=False)
-
+admin.site.register_view(r'stat/(ver|sys|backup)/?$', view=get_stat, visible=False)
+admin.site.register_view(r'stat/(sys|backup|dash)/refresh/?$', view=refresh_stat, visible=False)

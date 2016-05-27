@@ -1,6 +1,6 @@
 function get_apache_stat() {
     $.ajax({
-        url : "/admin/apache_stat/",
+        url : "/admin/dash/apache/",
         dataType: "json",
         success : function (data) {
             // console.log(data);

@@ -4,7 +4,7 @@ if (app.page == "backup") {
     $("lspan").remove();
 
     $.ajax({
-        url : "/admin/get_backup/",
+        url : "/admin/stat/backup/",
         dataType: "json",
         success : function (data) {
             $("#id_news_n").html('<i>' + data.news[0] + '</i>');
@@ -38,7 +38,7 @@ if (app.page == "backup") {
     });
 
     $.ajax({
-        url : "/admin/get_sys/",
+        url : "/admin/stat/sys/",
         dataType: "json",
         success : function (data) {
             var drive_used = parseFloat(data.drive[0]), drive_free = parseFloat(data.drive[1]), drive_total = parseFloat(data.drive[2]);
@@ -75,7 +75,11 @@ if (app.page == "backup") {
     $("#modal_backup").html('On <span class="label label-primary">' + $("#id_time_backup").val() + '</span> every <span class="label label-inverse">' + weekNames[$("#id_day_backup").val()] + '</span> (UTC).');
     $("#modal_upload").html('On <span class="label label-primary">' + $("#id_time_upload").val() + '</span> every <span class="label label-inverse">' + weekNames[$("#id_day_upload").val()] + '</span> (UTC).');
 
-    $("#btn_backup_now, #btn_upload_now, #btn_backup_stat").on("click", function() { $("#content").html(''); });
+    $("#btn_backup_now, #btn_upload_now, #btn_backup_stat").on("click", function() {
+        $("#page-content-wrapper").html('');
+        $("#sidebar-wrapper").fadeOut(150);
+        $("#nav_load").fadeOut(150);
+    });
     $("#id_time_backup").trigger("change");
     $("#id_time_upload").trigger("change");
 

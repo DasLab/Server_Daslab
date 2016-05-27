@@ -211,10 +211,6 @@ $(document).ready(function() {
 });
 
 
-$(window).on("beforeunload", function() {
-  $("#wait").fadeIn(250);
-});
-
 $(window).on("resize", function() {
     clearTimeout($.data(this, 'resizeTimer'));
     $.data(this, 'resizeTimer', setTimeout(function() {

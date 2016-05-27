@@ -18,7 +18,7 @@ var gapi = {
     'fnRenderPage': function() {
         if (app.page == 'aws') {
             $.ajax({
-                url : "/admin/aws_stat/?qs=init&sp=init&tqx=reqId%3A52",
+                url : "/admin/dash/aws/?qs=init&sp=init&tqx=reqId%3A52",
                 dataType: "json",
                 success: function (data) {
                     $("#aws_table_body").parent().remove();
@@ -49,7 +49,7 @@ var gapi = {
 
             var chart = new google.visualization.ChartWrapper({
                 'chartType': 'ColumnChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=latency&sp=48h',
+                'dataSourceUrl': '/admin/dash/aws/?qs=latency&sp=48h',
                 'containerId': 'plot_lat1',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -74,7 +74,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=latency&sp=7d',
+                'dataSourceUrl': '/admin/dash/aws/?qs=latency&sp=7d',
                 'containerId': 'plot_lat2',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -102,7 +102,7 @@ var gapi = {
 
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'ColumnChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=request&sp=48h',
+                'dataSourceUrl': '/admin/dash/aws/?qs=request&sp=48h',
                 'containerId': 'plot_req1',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -127,7 +127,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=request&sp=7d',
+                'dataSourceUrl': '/admin/dash/aws/?qs=request&sp=7d',
                 'containerId': 'plot_req2',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -155,7 +155,7 @@ var gapi = {
 
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'ColumnChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=cpu&sp=48h',
+                'dataSourceUrl': '/admin/dash/aws/?qs=cpu&sp=48h',
                 'containerId': 'plot_cpu1',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -180,7 +180,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=cpu&sp=7d',
+                'dataSourceUrl': '/admin/dash/aws/?qs=cpu&sp=7d',
                 'containerId': 'plot_cpu2',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -208,7 +208,7 @@ var gapi = {
 
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=host&sp=7d',
+                'dataSourceUrl': '/admin/dash/aws/?qs=host&sp=7d',
                 'containerId': 'plot_host',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -237,7 +237,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=credit&sp=7d',
+                'dataSourceUrl': '/admin/dash/aws/?qs=credit&sp=7d',
                 'containerId': 'plot_credit',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -265,7 +265,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=status&sp=7d',
+                'dataSourceUrl': '/admin/dash/aws/?qs=status&sp=7d',
                 'containerId': 'plot_status',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -294,7 +294,7 @@ var gapi = {
 
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=network&sp=7d',
+                'dataSourceUrl': '/admin/dash/aws/?qs=network&sp=7d',
                 'containerId': 'plot_net',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -321,7 +321,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=volbytes&sp=7d',
+                'dataSourceUrl': '/admin/dash/aws/?qs=volbytes&sp=7d',
                 'containerId': 'plot_vol',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -349,7 +349,7 @@ var gapi = {
 
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=23xx&sp=7d',
+                'dataSourceUrl': '/admin/dash/aws/?qs=23xx&sp=7d',
                 'containerId': 'plot_23xx',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -376,7 +376,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/aws_stat/?qs=45xx&sp=7d',
+                'dataSourceUrl': '/admin/dash/aws/?qs=45xx&sp=7d',
                 'containerId': 'plot_45xx',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -404,7 +404,7 @@ var gapi = {
 
         } else if (app.page == 'ga') {
             $.ajax({
-                url : "/admin/ga_stat/?qs=init&tqx=reqId%3A52",
+                url : "/admin/dash/ga/?qs=init&tqx=reqId%3A52",
                 dataType: "json",
                 success: function (data) {
                     $("#br").html(data.bounceRate + ' %').removeClass('place_holder');
@@ -475,7 +475,7 @@ var gapi = {
 
             var chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/ga_stat/?qs=chart&sp=24h',
+                'dataSourceUrl': '/admin/dash/ga/?qs=chart&sp=24h',
                 'containerId': 'chart_24h',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -501,7 +501,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/ga_stat/?qs=chart&sp=7d',
+                'dataSourceUrl': '/admin/dash/ga/?qs=chart&sp=7d',
                 'containerId': 'chart_7d',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -527,7 +527,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/ga_stat/?qs=chart&sp=1m',
+                'dataSourceUrl': '/admin/dash/ga/?qs=chart&sp=1m',
                 'containerId': 'chart_1m',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -553,7 +553,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/ga_stat/?qs=chart&sp=3m',
+                'dataSourceUrl': '/admin/dash/ga/?qs=chart&sp=3m',
                 'containerId': 'chart_3m',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -580,7 +580,7 @@ var gapi = {
 
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'PieChart',
-                'dataSourceUrl': '/admin/ga_stat/?qs=pie&sp=session',
+                'dataSourceUrl': '/admin/dash/ga/?qs=pie&sp=session',
                 'containerId': 'pie_session',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -597,7 +597,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'PieChart',
-                'dataSourceUrl': '/admin/ga_stat/?qs=pie&sp=user',
+                'dataSourceUrl': '/admin/dash/ga/?qs=pie&sp=user',
                 'containerId': 'pie_user',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -614,7 +614,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'PieChart',
-                'dataSourceUrl': '/admin/ga_stat/?qs=pie&sp=browser',
+                'dataSourceUrl': '/admin/dash/ga/?qs=pie&sp=browser',
                 'containerId': 'pie_browser',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -631,7 +631,7 @@ var gapi = {
             gapi.gviz_handles.push(chart);
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'PieChart',
-                'dataSourceUrl': '/admin/ga_stat/?qs=pie&sp=pageview',
+                'dataSourceUrl': '/admin/dash/ga/?qs=pie&sp=pageview',
                 'containerId': 'pie_pageview',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -649,7 +649,7 @@ var gapi = {
 
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'GeoChart',
-                'dataSourceUrl': '/admin/ga_stat/?qs=geo',
+                'dataSourceUrl': '/admin/dash/ga/?qs=geo',
                 'containerId': 'geo_session',
                 'options': {
                     'height': 300,
@@ -667,7 +667,7 @@ var gapi = {
 
         } else if (app.page == 'git') {
             $.ajax({
-                url : "/admin/git_stat/?qs=init&tqx=reqId%3A52",
+                url : "/admin/dash/git/?qs=init&tqx=reqId%3A52",
                 dataType: "json",
                 success: function (data) {
                     var html = "";
@@ -680,7 +680,7 @@ var gapi = {
             });
 
             $.ajax({
-                url : "/admin/git_stat/?qs=num&tqx=reqId%3A53",
+                url : "/admin/dash/git/?qs=num&tqx=reqId%3A53",
                 dataType: "json",
                 success: function (data) {
                     $("#git_num_body").html('<tr><td><span class="label label-green">created</span></td><td><span class="label label-primary">' + data.created_at + '</span></td></tr><tr><td><span class="label label-dark-green">last pushed</span></td><td><span class="label label-primary">' + data.pushed_at + '</span></td></tr><tr><td><span class="label label-danger">issue</span></td><td>' + data.num_issues + '</td></tr><tr><td><span class="label label-info">download</span></td><td>' + data.num_downloads + '</td></tr><tr><td><span class="label label-info">pull</span></td><td>' + data.num_pulls + '</td></tr><tr><td><span class="label label-orange">branch</span></td><td>' + data.num_branches + '</td></tr><tr><td><span class="label label-orange">fork</span></td><td>' + data.num_forks + '</td></tr><tr><td><span class="label label-violet">watcher</span></td><td>' + data.num_watchers + '</td></tr><tr><td colspan="2" style="padding: 0px;"></td></tr>').removeClass('place_holder');
@@ -689,7 +689,7 @@ var gapi = {
 
             var chart = new google.visualization.ChartWrapper({
                 'chartType': 'Calendar',
-                'dataSourceUrl': '/admin/git_stat/?qs=c',
+                'dataSourceUrl': '/admin/dash/git/?qs=c',
                 'containerId': 'plot_c',
                 'options': {
                     'title': 'Last Year',
@@ -715,7 +715,7 @@ var gapi = {
 
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'AreaChart',
-                'dataSourceUrl': '/admin/git_stat/?qs=ad',
+                'dataSourceUrl': '/admin/dash/git/?qs=ad',
                 'containerId': 'plot_ad',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},
@@ -748,7 +748,7 @@ var gapi = {
 
             chart = new google.visualization.ChartWrapper({
                 'chartType': 'PieChart',
-                'dataSourceUrl': '/admin/git_stat/?qs=au',
+                'dataSourceUrl': '/admin/dash/git/?qs=au',
                 'containerId': 'plot_pie',
                 'options': {
                     'chartArea': {'width': '90%', 'left': '10%'},

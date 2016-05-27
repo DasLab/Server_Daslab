@@ -7,7 +7,7 @@ $(document).ready(function() {
   $("lspan").remove();
 
   $.ajax({
-        url : "/admin/get_ver/",
+        url : "/admin/stat/ver/",
         dataType: "json",
         success : function (data) {
             $("#id_linux").html(data.linux);
@@ -53,7 +53,7 @@ $(document).ready(function() {
         }
     });
     $.ajax({
-        url : "/admin/get_sys/",
+        url : "/admin/stat/sys/",
         dataType: "json",
         success : function (data) {
             var drive_used = parseFloat(data.drive[0]), drive_free = parseFloat(data.drive[1]), drive_total = parseFloat(data.drive[2]);
@@ -73,7 +73,7 @@ $(document).ready(function() {
         }
     });
     $.ajax({
-        url : "/admin/get_backup/",
+        url : "/admin/stat/backup/",
         dataType: "json",
         success : function (data) {
             $("#id_backup").html('<span style="color:#00f;">' + data.backup.all + '</span>');
@@ -81,7 +81,7 @@ $(document).ready(function() {
     });
 
     $.ajax({
-        url : "/admin/backup_form/",
+        url : "/admin/backup/form/",
         dataType: "json",
         success : function (data) {
             $("#id_week_backup").html($("#id_week_backup").html() + '<br/>On <span class="label label-primary">' + data.time_backup + '</span> every <span class="label label-inverse">' + weekNames[data.day_backup] + '</span> (UTC)');
@@ -101,7 +101,7 @@ $(document).ready(function() {
     });
 
     $.ajax({
-        url : "/admin/dash_dash/",
+        url : "/admin/dash/dash/",
         dataType: "json",
         success : function (data) {
             $("#id_dash_aws").html(data.t_aws + '<span class="label label-orange pull-right"><span class="glyphicon glyphicon-fire"></span></span>');
@@ -115,6 +115,10 @@ $(document).ready(function() {
         }
     });
 
-    $("#btn_grp_dash > a, #btn_sys_stat").on("click", function() { $("#content").html(''); });
+    $("#btn_grp_dash > a, #btn_sys_stat").on("click", function() {
+        $("#page-content-wrapper").html('');
+        $("#sidebar-wrapper").fadeOut(150);
+        $("#nav_load").fadeOut(150);
+    });
 });
 
