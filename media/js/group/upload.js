@@ -19,9 +19,42 @@ $(document).ready(function() {
         $("#id_upload_link").val('');
     });
 
-    $("#form_upload").submit(function() {
-        $("#page-content-wrapper").html('');
-        $("#sidebar-wrapper").fadeOut(150);
-        $("#nav_load").fadeOut(150);
+    $("#form_upload").submit(function(event) {
+        event.preventDefault();
+        var formData = new FormData($(this)[0]);
+
+        $("#form_upload_msg").parent().addClass("alert-warning").removeClass("alert-danger").removeClass("alert-success");
+        $("#form_upload_notice > div > div > p > span").removeClass("glyphicon-remove-sign").removeClass("glyphicon-ok-sign").addClass("glyphicon-hourglass");
+        $("#form_upload_notice > div > div > p > b").html('SENDING');
+        $("#form_upload_msg").html('');
+        $("#form_upload_notice").fadeIn(250);
+
+        $.ajax({
+            type: "POST",
+            url: $(this).attr("action"),
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                if (data.messages == 'success') {
+                    $("#form_upload_msg").parent().addClass("alert-success").removeClass("alert-warning").removeClass("alert-danger");
+                    $("#form_upload_notice > div > div > p > span").addClass("glyphicon-ok-sign").removeClass("glyphicon-remove-sign").removeClass("glyphicon-hourglass");
+                    $("#form_upload_notice > div > div > p > b").html('SUCCESS');
+                    $("#form_upload_msg").html('File uploaded. Everyone can see it now!');
+                } else {
+                    $("#form_upload_msg").parent().addClass("alert-danger").removeClass("alert-warning").removeClass("alert-success");
+                    $("#form_upload_notice > div > div > p > span").addClass("glyphicon-remove-sign").removeClass("glyphicon-ok-sign").removeClass("glyphicon-hourglass");
+                    $("#form_upload_notice > div > div > p > b").html('ERROR');
+                    $("#form_upload_msg").html('Incomplete upload fields. Please try again.');
+                }
+                setTimeout(function() { $("#form_upload_notice").fadeOut(250); }, 2500);
+            },
+            error: function() {
+                $("#form_upload_msg").parent().addClass("alert-danger").removeClass("alert-warning").removeClass("alert-success");
+                $("#form_upload_notice > div > div > p > span").addClass("glyphicon-remove-sign").removeClass("glyphicon-ok-sign").removeClass("glyphicon-hourglass");
+                $("#form_upload_notice > div > div > p > b").html('ERROR');
+                $("#form_upload_msg").html('Internal Server Error.');
+             }
+        });
     });
 });

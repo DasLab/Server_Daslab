@@ -142,6 +142,7 @@ def user_email(request):
 # @login_required
 def user_upload(request):
     if request.method == 'POST':
+        print request.POST, request.FILES
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             em_title = form.cleaned_data['upload_title']
@@ -160,7 +161,7 @@ def user_upload(request):
         else:
             messages = 'error'
 
-        return render(request, PATH.HTML_PATH['upload'], {'upload_form': form, 'messages': messages})
+        return HttpResponse(simplejson.dumps({'messages': messages}, sort_keys=True, indent=' ' * 4), content_type='application/json')
     else:
         return render(request, PATH.HTML_PATH['upload'], {'upload_form': UploadForm(), 'messages': ''})
 

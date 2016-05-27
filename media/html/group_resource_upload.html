@@ -87,28 +87,20 @@
     </div>
   </form>
 
-  {% if messages %}
-  <div class="row">
-	<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+  <div class="row" style="display:none;" id="form_upload_notice">
+	 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
   	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
       <br/>
-      <div class="alert alert-{% if messages == 'success' %}success{% else %}danger{% endif %}" role="alert">
+      <div class="alert alert-warning" role="alert">
         <p>
-          <span class="glyphicon glyphicon-{% if messages == 'success' %}ok-sign{% else %}remove-sign{% endif %}" aria-hidden="true"></span>&nbsp;&nbsp;
-          <b>{% if messages == 'success' %}SUCCESS{% else %}ERROR{% endif %}</b>: The following messages were produced:
+          <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;
+          <b>UPLOADING</b>: The following messages were produced:
         </p>
-        <p>
-          {% if messages == 'success' %}
-        	File uploaded. Everyone can see it now!
-          {% else %}
-        	Incomplete upload fields. Please try again.
-          {% endif %}
-        </p>
+        <p id="form_upload_msg"></p>
       </div>
     </div>
     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
   </div>
-  {% endif %}
   <br/>
 
 </div>
