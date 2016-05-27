@@ -38,8 +38,8 @@ def reload_conf(DEBUG, MEDIA_ROOT):
 
 
 class Singleton(object):
-    """Base class for singleton pattern
-    """
+    '''Base class for singleton pattern
+    '''
 
     _instance = None
 
@@ -65,24 +65,8 @@ class SYS_PATH(Singleton):
             'upload': MEDIA_ROOT + '/media/html/group_resource_upload.html',
             # 'profile': MEDIA_ROOT + '/media/html/group_profile.html',
 
-            'lab_home': MEDIA_ROOT + '/media/html/group_index.html',
-            'lab_meeting_schedule': MEDIA_ROOT + '/media/html/group_meeting_schedule.html',
-            'lab_meeting_flash': MEDIA_ROOT + '/media/html/group_meeting_flash.html',
-            'lab_meeting_jc': MEDIA_ROOT + '/media/html/group_meeting_jc.html',
-            'lab_meeting_eterna': MEDIA_ROOT + '/media/html/group_meeting_eterna.html',
-            'lab_meeting_rotation': MEDIA_ROOT + '/media/html/group_meeting_rotation.html',
-            'lab_calendar': MEDIA_ROOT + '/media/html/group_calendar.html',
-            'lab_resource_gdocs': MEDIA_ROOT + '/media/html/group_resource_document.html',
-            'lab_resource_archive': MEDIA_ROOT + '/media/html/group_resource_archive.html',
-            'lab_resource_contact': MEDIA_ROOT + '/media/html/group_resource_contact.html',
-            'lab_server_aws': MEDIA_ROOT + '/media/html/group_server_aws.html',
-            'lab_server_ga': MEDIA_ROOT + '/media/html/group_server_ga.html',
-            'lab_service_bot': MEDIA_ROOT + '/media/html/group_service_bot.html',
-            'lab_service_git': MEDIA_ROOT + '/media/html/group_service_git.html',
-            'lab_service_slack': MEDIA_ROOT + '/media/html/group_service_slack.html',
-            'lab_service_dropbox': MEDIA_ROOT + '/media/html/group_service_dropbox.html',
-            'lab_misc': MEDIA_ROOT + '/media/html/group_misc.html',
-            'lab_error': MEDIA_ROOT + '/media/html/group_error.html',
+            'group_index': MEDIA_ROOT + '/media/html/group_index.html',
+            'group_pages': MEDIA_ROOT + '/media/html/group_xxx.html',
 
             'admin_apache': MEDIA_ROOT + '/media/html/admin_apache.html',
             'admin_aws': MEDIA_ROOT + '/media/html/admin_aws.html',
@@ -118,13 +102,22 @@ class SYS_PATH(Singleton):
 
         }
 
+        self.GROUP_PATH = {
+            'meeting': ['schedule', 'flash_slide', 'journal_club', 'eterna_youtube', 'rotation'],
+            'calendar': ['calendar'],
+            'resource': ['gdocs', 'archive', 'archive/upload', 'contact'],
+            'server': ['aws', 'ga'],
+            'service': ['bot', 'git', 'slack', 'dropbox'],
+            'misc': ['misc', 'error']
+        }
+
 
 root = environ.Path(os.path.dirname(os.path.dirname(__file__)))
 MEDIA_ROOT = root()
 # Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/"
+# Example: '/home/media/media.lawrence.com/'
 PATH = SYS_PATH(MEDIA_ROOT)
-# MEDIA_ROOT = os.path.join(os.path.abspath("."))
+# MEDIA_ROOT = os.path.join(os.path.abspath('.'))
 FILEMANAGER_STATIC_ROOT = root('media/admin') + '/'
 
 (env, AWS, GA, GCAL, DRIVE, GIT, SLACK, DROPBOX, APACHE_ROOT, CRONJOBS, CRONTAB_LOCK_JOBS, KEEP_BACKUP, BOT, IS_SLACK) = reload_conf(DEBUG, MEDIA_ROOT)
