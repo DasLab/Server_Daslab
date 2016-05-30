@@ -1,4 +1,4 @@
-if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "youtube" || app.page == "rotation")) || (app.key == "res" && app.page == "archive")) {
+if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "eterna_youtube" || app.page == "rotation")) || (app.key == "res" && app.page == "archive")) {
     var toggle_flag = false;
     $("#btn_toggle").on("click", function() {
         if (toggle_flag) {

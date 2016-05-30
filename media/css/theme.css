@@ -319,12 +319,8 @@ li.nav-ul > a.active:focus {
   font-weight: bold !important;
   text-shadow: 2px 2px 5px #7cafd3;
 }
-ul.nav > .nav-ul-lg {
-  display: none;
-}
-.nav-ul-lg > a > span.lead {
-  margin-bottom: 0px;
-}
+ul.nav > .nav-ul-lg { display: none; }
+.nav-ul-lg > a > span.lead { margin-bottom: 0px; }
 
 .nav-panel{
     border-style: solid;
@@ -338,9 +334,7 @@ ul.nav > .nav-ul-lg {
   color: #000;
 }
 
-.tutorial{
-  opacity:0.5;
-}
+.tutorial{ opacity:0.5; }
 
 
 a:link,
