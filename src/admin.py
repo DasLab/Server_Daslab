@@ -130,49 +130,14 @@ def admin_cmd(request, keyword):
 def apache(request):
     return render(request, PATH.HTML_PATH['admin_apache'], {'host_name': env('SSL_HOST')})
 
-def apache_stat(request):
-    return HttpResponse(restyle_apache(), content_type='application/json')
-
-
 def aws(request):
     return render(request, PATH.HTML_PATH['admin_aws'], {'timezone': TIME_ZONE})
-
-def aws_stat(request):
-    json = aws_stats(request)
-    if isinstance(json, HttpResponse): return json
-    return HttpResponse(json, content_type='application/json')
 
 def ga(request):
     return render(request, PATH.HTML_PATH['admin_ga'], {'ga_url': GA['LINK_URL']})
 
-def ga_stat(request):
-    json = ga_stats(request)
-    if isinstance(json, HttpResponse): return json
-    return HttpResponse(json, content_type='application/json')
-
 def git(request):
     return render(request, PATH.HTML_PATH['admin_git'], {'timezone': TIME_ZONE, 'git_repo': GIT['REPOSITORY']})
-
-def git_stat(request):
-    json = git_stats(request)
-    if isinstance(json, HttpResponse): return json
-    return HttpResponse(json, content_type='application/json')
-
-def group_dash(request):
-    json = simplejson.dumps({'admin': GROUP.ADMIN, 'group': GROUP.GROUP, 'alumni': GROUP.ALUMNI, 'roton': GROUP.ROTON, 'other': GROUP.OTHER}, sort_keys=True, indent=' ' * 4)
-    return HttpResponse(json, content_type='application/json')
-
-def dash_dash(request):
-    t_aws = format_dash_ts('aws/init.json', BOT['CACHE']['INTERVAL_15'])
-    t_ga = format_dash_ts('ga/init.json', BOT['CACHE']['INTERVAL_15'])
-    t_git = format_dash_ts('git/init.json', BOT['CACHE']['INTERVAL_30'])
-    t_slack = format_dash_ts('slack/users.json', BOT['CACHE']['INTERVAL_30'])
-    t_dropbox = format_dash_ts('dropbox/sizes.json', BOT['CACHE']['INTERVAL_30'])
-    t_cal = format_dash_ts('calendar.json', BOT['CACHE']['INTERVAL_30'])
-    t_sch = format_dash_ts('schedule.json', BOT['CACHE']['INTERVAL_30'])
-    t_duty = format_dash_ts('duty.json', BOT['CACHE']['INTERVAL_30'])
-    json = {'t_aws': t_aws, 't_ga': t_ga, 't_git': t_git, 't_slack': t_slack, 't_dropbox': t_dropbox, 't_cal': t_cal, 't_sch': t_sch, 't_duty': t_duty}
-    return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 
 def backup(request):
@@ -231,6 +196,31 @@ def refresh_stat(request, keyword):
             return error400(request)
         return HttpResponseRedirect('/admin/')
 
+def get_dash(request, keyword):
+    if keyword == 'apache':
+        json = restyle_apache()
+    elif keyword == 'aws':
+        json = aws_stats(request)
+    elif keyword == 'ga':
+        json = ga_stats(request)
+    elif keyword == 'git':
+        json = git_stats(request)
+    elif keyword == 'group':
+        json = simplejson.dumps({'admin': GROUP.ADMIN, 'group': GROUP.GROUP, 'alumni': GROUP.ALUMNI, 'roton': GROUP.ROTON, 'other': GROUP.OTHER}, sort_keys=True, indent=' ' * 4)
+    elif keyword == 'dash':
+        t_aws = format_dash_ts('aws/init.json', BOT['CACHE']['INTERVAL_15'])
+        t_ga = format_dash_ts('ga/init.json', BOT['CACHE']['INTERVAL_15'])
+        t_git = format_dash_ts('git/init.json', BOT['CACHE']['INTERVAL_30'])
+        t_slack = format_dash_ts('slack/users.json', BOT['CACHE']['INTERVAL_30'])
+        t_dropbox = format_dash_ts('dropbox/sizes.json', BOT['CACHE']['INTERVAL_30'])
+        t_cal = format_dash_ts('calendar.json', BOT['CACHE']['INTERVAL_30'])
+        t_sch = format_dash_ts('schedule.json', BOT['CACHE']['INTERVAL_30'])
+        t_duty = format_dash_ts('duty.json', BOT['CACHE']['INTERVAL_30'])
+        json = simplejson.dumps({'t_aws': t_aws, 't_ga': t_ga, 't_git': t_git, 't_slack': t_slack, 't_dropbox': t_dropbox, 't_cal': t_cal, 't_sch': t_sch, 't_duty': t_duty}, sort_keys=True, indent=' ' * 4)
+
+    if isinstance(json, HttpResponse): return json
+    return HttpResponse(json, content_type='application/json')
+
 
 admin.site.register_view('backup/', view=backup, visible=False)
 admin.site.register_view('backup/form/', view=backup_form, visible=False)
@@ -241,13 +231,6 @@ admin.site.register_view('aws/', view=aws, visible=False)
 admin.site.register_view('ga/', view=ga, visible=False)
 admin.site.register_view('git/', view=git, visible=False)
 
-admin.site.register_view('dash/apache/', view=apache_stat, visible=False)
-admin.site.register_view('dash/aws/', view=aws_stat, visible=False)
-admin.site.register_view('dash/ga/', view=ga_stat, visible=False)
-admin.site.register_view('dash/git/', view=git_stat, visible=False)
-admin.site.register_view('dash/group/', view=group_dash, visible=False)
-admin.site.register_view('dash/dash/', view=dash_dash, visible=False)
-
 admin.site.register_view('dir/', view=dir, visible=False)
 admin.site.register_view('bot/', view=bot, visible=False)
 admin.site.register_view('export/', view=export, visible=False)
@@ -255,5 +238,6 @@ admin.site.register_view('export/', view=export, visible=False)
 admin.site.register_view('man/', view=man, visible=False)
 admin.site.register_view('ref/', view=ref, visible=False)
 
+admin.site.register_view(r'dash/(apache|aws|ga|git|group|dash)/?$', view=get_dash, visible=False)
 admin.site.register_view(r'stat/(ver|sys|backup)/?$', view=get_stat, visible=False)
 admin.site.register_view(r'stat/(sys|backup|dash)/refresh/?$', view=refresh_stat, visible=False)
