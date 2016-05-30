@@ -54,7 +54,7 @@ head.load('https://cdnjs.cloudflare.com/ajax/libs/jquery/' + app.js_ver.jquery +
 
         google.charts.load('visualization', '1', {packages: ['corechart', 'calendar', 'map']});
 
-        $("head").append('<link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />');
-        $("head").append('<link rel="icon" type-"image/gif" href="/site_media/images/icon_daslab.png" />');
+        $("head").append('<link rel="shortcut icon" type="image/gif" href="/site_media/images/icon_daslab.png" />');
+        $("head").append('<link rel="icon" type="image/gif" href="/site_media/images/icon_daslab.png" />');
     });
 });

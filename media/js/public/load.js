@@ -34,7 +34,7 @@ head.load('https://cdnjs.cloudflare.com/ajax/libs/jquery/' + app.js_ver.jquery +
         } else {
             $.getScript('/site_media/js/public/' + app.DEBUG_DIR + 'main' + app.DEBUG_STR + '.js');
         }
-        $("head").append('<link rel="shortcut icon" href="/site_media/images/icon_daslab.png" />');
-        $("head").append('<link rel="icon" type-"image/gif" href="/site_media/images/icon_daslab.png" />');
+        $("head").append('<link rel="shortcut icon" type="image/gif" href="/site_media/images/icon_daslab.png" />');
+        $("head").append('<link rel="icon" type="image/gif" href="/site_media/images/icon_daslab.png" />');
     });
 });

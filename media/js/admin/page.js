@@ -194,8 +194,9 @@ if (app.page == "backup" || app.page == "bot" || app.page == "export") {
 
 } else if (app.page == "auth") {
     $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'group' + app.DEBUG_STR + '.js');
+    $("div.object-tools > a").attr({"disabled": "disabled", "onclick": "return false;", "id": "btn-auth-add"});
 } else if (app.page == "slackmessage") {
-    $("div.object-tools > a").attr("disabled", "disabled").attr("onclick", "return false;");
+    $("div.object-tools > a").attr({"disabled": "disabled", "onclick": "return false;", "id": "btn-slack-add"});
 
 } else if (window.location.pathname.replace(/\/$/, '') == '/admin') {
     $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'home' + app.DEBUG_STR + '.js');
@@ -203,7 +204,7 @@ if (app.page == "backup" || app.page == "bot" || app.page == "export") {
 
 if (["apache", "aws", "ga", "git", "dir", "backup", "export", "man", "ref"].indexOf(app.page) == -1 && app.key != 'home') {
     $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'table' + app.DEBUG_STR + '.js');
-    $("#content a").on("click", function(event) {
+    $("#content a:not(#btn-slack-add):not(#btn-auth-add)").on("click", function(event) {
         event.preventDefault();
         app.href = $(this).attr("href");
         $("#content").fadeTo(100, 0, app.fnChangeLocation);

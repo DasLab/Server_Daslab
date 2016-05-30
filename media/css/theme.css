@@ -265,6 +265,7 @@ label {
 }
 .nav-pills > li > a {
   border-radius: 0;
+  text-decoration: none;
 }
 
 .nav-icon {
