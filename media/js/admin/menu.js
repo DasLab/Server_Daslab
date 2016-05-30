@@ -163,30 +163,10 @@ app.fnNavCollapse = function() {
     }
 };
 
-
-$(document).ready(function() {
+app.fnOnLoad = function() {
     $("ul.breadcrumb").css({"border-radius":"0px", "height":"50px"}).addClass("lead");
     $("ul.breadcrumb > li:first").prepend('<span style="color: #000;" class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;');
     app.fnChangeView();
-
-    var today = new Date();
-    $("#cp_year").text(today.getFullYear());
-
-    $(".dropdown-toggle").dropdown();
-    $(".dropdown").hover(
-        function() { $(this).addClass("open"); },
-        function() { $(this).removeClass("open"); }
-    );
-
-    $('i[class^="icon"]').each(function() {
-        $(this).replaceWith('<span class="glyphicon glyph' + $(this).attr("class") + '"></span>&nbsp;&nbsp;');
-    });
-
-    $("#sidebar-wrapper a, #nav_admin > a").on("click", function(event) {
-        event.preventDefault();
-        app.href = $(this).attr("href");
-        $("#content").fadeTo(100, 0, app.fnChangeLocation);
-    });
 
     $("#nav_toggle").on("click", function() {
         if (side_toggle) {
@@ -207,7 +187,35 @@ $(document).ready(function() {
     $("#wrapper").css("width", (parseInt($("#wrapper").css("width")) + 15).toString() + "px");
     app.fnNavCollapse();
 
-    $("body > div:not(#wait)").fadeTo(150, 1);
+    $("#page-content-wrapper").css("opacity", 0);
+    $("#nav_load").css({"opacity": 1, "top": "-50px"}).animate({"top": "0px"}, {"duration": 200, "queue": false});
+    $("body > div").css("opacity", 1);
+    $("#sidebar-wrapper").animate({"left": "0px"}, {"duration": 200, "queue": false});
+    $("#page-content-wrapper").delay(500).fadeTo(150, 1);
+};
+
+
+$(document).ready(function() {
+    var today = new Date();
+    $("#cp_year").text(today.getFullYear());
+
+    $(".dropdown-toggle").dropdown();
+    $(".dropdown").hover(
+        function() { $(this).addClass("open"); },
+        function() { $(this).removeClass("open"); }
+    );
+
+    $('i[class^="icon"]').each(function() {
+        $(this).replaceWith('<span class="glyphicon glyph' + $(this).attr("class") + '"></span>&nbsp;&nbsp;');
+    });
+
+    $("#sidebar-wrapper a, #nav_admin > a").on("click", function(event) {
+        event.preventDefault();
+        app.href = $(this).attr("href");
+        $("#content").fadeTo(100, 0, app.fnChangeLocation);
+    });
+
+    app.fnOnLoad();
 });
 
 

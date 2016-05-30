@@ -641,7 +641,8 @@ ul.breadcrumb > li.active {
   /*margin: 0px 0px;*/
 }
 #sidebar-wrapper {
-  margin-left: -250px; left: 250px;
+  /*margin-left: -250px;*/
+  left: -250px;
   width: 250px; height: 100%;
   background-color: #112539;
   position: fixed; overflow-y: auto;
