@@ -172,7 +172,7 @@
                 <li>Invite to join <span class="code code_val">das-lab</span> <span class="code code_brand">Slack</span> group and <span class="code code_brand">Google Groups</span>, using their <b>Stanford</b> email address only.</li>
                 <li>Add his/her <span class="code code_key">sunet_id</span> to appropriate group in <span class="code code_path">config/group.conf</span>.</li>
                 <li>Create <span class="code code_class">Member</span> entry in database through <span class="code code_url">/admin/src/member/</span>.</li>
-                <li>Add to <span class="code code_url">https://github.com/DasLab/</span> <span class="code code_brand">GitHub</span> organization as <b>Member</b> if needed.</li>
+                <li>Add to <span class="code code_url">https://github.com/DasLab/</span> <span class="code code_brand">GitHub</span> organization as <b>Owner</b> if needed.</li>
               </ul>
               <p>Similary, when a member leaves, please remeber to:</p>
               <ul>
@@ -280,7 +280,7 @@
               <p>Server reports to admin for any runtime error it encounters, either through email or <span class="code code_brand">Slack</span>. If <span class="code code_key">IS_SLACK</span> is enabled, all messages can be found at <span class="code code_url">/admin/src/slackmessage/</span>. Messages that are older than <u>15</u> days are removed weekly.</p>
               <p>Important error messages are:</p>
               <ul>
-                <li><span class="code code_class">Flash Slides</span> setup failure. <b>Should be fixed right away.</b></li>
+                <li><span class="code code_class">Flash Slides</span> setup failure. <b>Must be fixed right away.</b></li>
                 <li>Duty or birthday message error.</li>
               </ul>
               <p>Some messages could be ignored:</p>
@@ -297,7 +297,7 @@
               <h4><span class="glyphicon glyphicon-hdd"></span>&nbsp;&nbsp;Server Monitoring</h4>
               <ul>
                 <li>Most of analytics, inclduing <span class="code code_brand">Apache</span>, <span class="code code_brand">AWS</span>, <span class="code code_brand">Google Analytics</span> and <span class="code code_brand">GitHub</span>, are available in admin console. No need to login at vendors to see statistics. Alternatively, you can login at vendor's using <span class="code code_val">daslab</span> <span class="code code_brand">Gmail</span> account.</li>
-                <li>For server package upgrade, run <span class="code code_cmd">upd</span>, which is a shortcut that updates both <span class="code code_cmd">apt-get</span> and <span class="code code_cmd">pip</span>. Afterwards, make sure <span class="code code_bran">Apache</span> is running with <span class="code code_misc">worker</span>, NOT <span class="code code_misc">prefork</span>!</li>
+                <li>For server package upgrade, run <span class="code code_cmd">upd</span>, which is a shortcut that updates both <span class="code code_cmd">apt-get</span> and <span class="code code_cmd">pip</span>. Afterwards, make sure <span class="code code_brand">Apache</span> is running with <span class="code code_misc">worker</span>, NOT <span class="code code_misc">prefork</span>!</li>
                 <li>To restart the server, use <span class="code code_cmd">sudo reboot</span>. Turn on <span class="code code_cmd">swap</span> to expand the instance's memory, use command <span class="code code_cmd">swap_on</span>.</li>
               </ul>
             </div>
