@@ -51,7 +51,7 @@ class Command(BaseCommand):
             if DEBUG:
                 ver['mod_webauth'] = 'N/A'
             else:
-                ver['mod_webauth'] = subprocess.Popen('apt-cache show libapache2-webauth | grep Version | sed %s | sed %s' % ("'s/.*: //g'", "'s/-.*//g'"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
+                ver['mod_webauth'] = subprocess.Popen("apt-cache show libapache2-webauth | grep Version | head -1 | sed 's/.*: //g' | sed 's/-.*//g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
             ver['openssl'] = subprocess.Popen("openssl version | sed 's/.*OpenSSL //g' | sed 's/[a-z].*//g'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip()
             if DEBUG:
                 ver['wallet'] = 'N/A'
