@@ -200,10 +200,8 @@ def ping_test(request):
 
 
 def get_staff(request):
-    if 'WEBAUTH_USER' in request.META:
-        user = request.META['WEBAUTH_USER']
-    else:
-        user = 'unknown'
+    user = user_sunetid(request)
+    user = 'unknown' if user is None else user
     return HttpResponse(simplejson.dumps({'user': user, 'admin': EMAIL_NOTIFY}, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 

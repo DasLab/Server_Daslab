@@ -25,7 +25,7 @@ head.load('https://cdnjs.cloudflare.com/ajax/libs/jquery/' + app.js_ver.jquery +
     ].concat(more_success), more_fail, function(flag) {
         app.isCDN = flag;
         $.ajaxSetup({'cache': true});
-        if (window.location.pathname.indexOf('/group') != -1) {
+        if (window.location.pathname.indexOf('/group') != -1 && $("div.BODY-ERR").length == 0) {
             $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'menu' + app.DEBUG_STR + '.js');
             if (!app.DEBUG_DIR) {
                 $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'email' + app.DEBUG_STR + '.js');
