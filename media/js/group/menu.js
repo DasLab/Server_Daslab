@@ -211,7 +211,7 @@ app.fnOnLoad = function() {
             }
             if (data.type != 'admin') {
                 $("#nav_admin").css("opacity", "0.25");
-            } 
+            }
         }
     });
 

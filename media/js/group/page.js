@@ -109,6 +109,10 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "eterna_
         $("#btn_toggle").trigger("click");
         $("img").css("max-width", "100%");
 
+        $("#id_contact_email").prop("disabled", true);
+        $("#id_contact_phone").prop("disabled", true);
+        $("#id_contact_bday").prop("disabled", true);
+        $("#form_change_submit").prop("disabled", true);
         var user_dash_timeout = setTimeout(function() {
             if (app.user !== undefined) {
                 clearTimeout(user_dash_timeout);
@@ -134,11 +138,11 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "eterna_
                     $("#id_contact_phone").val(app.user.phone.replace(/\D+/g, ''));
                 }
                 if (app.user.bday) { $("#id_contact_bday").val(app.user.bday); }
-                if (app.user.type == 'roton' || app.user.type == 'other' || app.user.type == 'unknown') {
-                    $("#id_contact_email").prop("disabled", true);
-                    $("#id_contact_phone").prop("disabled", true);
-                    $("#id_contact_bday").prop("disabled", true);
-                    $("#form_change_submit").prop("disabled", true);
+                if (app.user.type == 'admin' || app.user.type == 'group' || app.user.type == 'alumni') {
+                    $("#id_contact_email").prop("disabled", false);
+                    $("#id_contact_phone").prop("disabled", false);
+                    $("#id_contact_bday").prop("disabled", false);
+                    $("#form_change_submit").prop("disabled", false);
                 }
             }
         }, 500);

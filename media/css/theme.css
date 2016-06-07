@@ -71,10 +71,7 @@ div.input-group > select.form-control {
 }
 
 
-.checkbox > label {
-  padding-left: 0px;
-}
-
+.checkbox > label { padding-left: 0px; }
 .checkbox label:after, 
 .radio label:after {
     content: '';
@@ -93,11 +90,7 @@ div.input-group > select.form-control {
     float: left;
     /*margin-right: .5em;*/
 }
-
-.radio .cr {
-    border-radius: 50%;
-}
-
+.radio .cr { border-radius: 50%; }
 .checkbox .cr .cr-icon,
 .radio .cr .cr-icon {
     position: absolute;
@@ -106,16 +99,9 @@ div.input-group > select.form-control {
     top: 50%;
     left: 15%;
 }
-
-.radio .cr .cr-icon {
-    margin-left: 0.04em;
-}
-
+.radio .cr .cr-icon { margin-left: 0.04em; }
 .checkbox label input[type="checkbox"],
-.radio label input[type="radio"] {
-    display: none;
-}
-
+.radio label input[type="radio"] { display: none; }
 .checkbox label input[type="checkbox"] + .cr > .cr-icon,
 .radio label input[type="radio"] + .cr > .cr-icon {
     transform: scale(3) rotateZ(-20deg);
@@ -123,44 +109,27 @@ div.input-group > select.form-control {
     transition: all .3s ease-in;
     color: #fff;
 }
-
 .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
 .radio label input[type="radio"]:checked + .cr > .cr-icon {
     transform: scale(1) rotateZ(0deg);
     opacity: 1;
 }
-
 .checkbox label input[type="checkbox"]:checked + .cr,
-.radio label input[type="radio"]:checked + .cr {
-    background-color: #5496d7;
-}
-
+.radio label input[type="radio"]:checked + .cr { background-color: #5496d7; }
 .checkbox label input[type="checkbox"]:disabled + .cr,
-.radio label input[type="radio"]:disabled + .cr {
-    opacity: .5;
-}
+.radio label input[type="radio"]:disabled + .cr { opacity: 0.5; }
 
 
-html { 
-  overflow-y: scroll; 
-}
-
-label {
-  font-weight: normal;
-}
-
-.starter-template {
-  padding: 40px 15px 15px 15px;
-}
+html {  overflow-y: scroll; }
+label { font-weight: normal;}
+.starter-template { padding: 40px 15px 15px 15px; }
 
 .theme-dropdown .dropdown-menu {
   position: static;
   display: block;
   margin-bottom: 20px;
 }
-.theme-showcase > p > .btn {
-  margin: 5px 0;
-}
+.theme-showcase > p > .btn { margin: 5px 0; }
 
 .navbar {
   background-color: #00b3a0;
@@ -178,9 +147,6 @@ label {
   color: #fec78a;
   text-decoration: blink;
 }
-/*.navbar .navbar-icon {
-  border-left: 1px solid #75ded2;
-}*/
 .navbar .navbar-nav > li > a {
   height: 50px;
   color: #fff;
@@ -215,10 +181,7 @@ label {
   padding: 0px;
   border-radius: 0px;
 }
-.navbar-toggle > li > a {
-  padding: 15px;
-}
-
+.navbar-toggle > li > a { padding: 15px; }
 .navbar .navbar-toggle:hover,
 .navbar .navbar-toggle:focus {
   background-color: #75ded2;
@@ -233,20 +196,12 @@ label {
   border-color: #75ded2;
   color: #fff;
 }
-.navbar .navbar-link {
-  color: #7cafd3;
-}
-.navbar .navbar-link:hover {
-  color: #fff;
-}
+.navbar .navbar-link { color: #7cafd3; }
+.navbar .navbar-link:hover { color: #fff; }
 @media (max-width: 767px) {
-  .navbar .navbar-nav .open .dropdown-menu > li > a {
-    color: #7cafd3;
-  }
+  .navbar .navbar-nav .open .dropdown-menu > li > a { color: #7cafd3; }
   .navbar .navbar-nav .open .dropdown-menu > li > a:hover,
-  .navbar .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #fff;
-  }
+  .navbar .navbar-nav .open .dropdown-menu > li > a:focus { color: #fff; }
   .navbar .navbar-nav .open .dropdown-menu > .active > a,
   .navbar .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar .navbar-nav .open .dropdown-menu > .active > a:focus {
@@ -255,22 +210,15 @@ label {
   }
 }
 .navbar-collapse.collapse.in > ul > li,
-.navbar-collapse.collapse.in > div > ul > li {
-  display: inline-block;
-}
+.navbar-collapse.collapse.in > div > ul > li { display: inline-block; }
 
 
-.nav-pills {
-  color: #fff;
-}
+.nav-pills { color: #fff; }
 .nav-pills > li > a {
   border-radius: 0;
   text-decoration: none;
 }
-
-.nav-icon {
-  margin-left: 30px;
-}
+.nav-icon { margin-left: 30px; }
 ul.nav-li-sub {
   list-style-type: none;
   padding-left: 5px;
@@ -360,30 +308,19 @@ h1.section {
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
 }
+h1.section > span.sec { color: #fff; }
+h1.section > span.num { color: #ff0; }
 
-h1.section > span.sec {
-  color: #fff;
-}
-
-h1.section > span.num {
-  color: #ff0;
-}
-
-.hidden {
-  display: none;
-}
-
+.hidden { display: none; }
 .comment {
   color: #080;
   font-style: italic;
 }
-
 .excerpt {
   overflow: hidden;
   text-overflow: ellipsis;
   max-height: 5em;
 }
-
 .excerpt:hover {
   height: auto;
   max-height: none;
@@ -395,7 +332,6 @@ h1.section > span.num {
     color: #fff;
     opacity:0.9;
 }
-
 .popover-content {
     background-color: #000;
     border-color: #fbad24;
@@ -436,9 +372,7 @@ h1.section > span.num {
   }
 }
 
-.affix,.affix-top {
-   position:static;
-}
+.affix,.affix-top { position:static; }
 
 .fileUpload {
   position: relative;
@@ -468,13 +402,8 @@ h1.section > span.num {
   color: #fff;
 }
 
-a.btn {
-  color: #fff !important;
-}
-
-a.btn-default {
-  color: #000 !important;
-}
+a.btn { color: #fff !important; }
+a.btn-default { color: #000 !important; }
 
 img.logo {
   clear: both;
@@ -489,9 +418,7 @@ ul.breadcrumb > li.active {
   font-weight: bold;
 }
 
-.test {
-  border: #0f0 solid 2px;
-}
+.test { border: #0f0 solid 2px; }
 
 span.presence_no { color: #808080; }
 span.presence_yes { color: #50cc32; }
@@ -530,9 +457,7 @@ span.presence_yes:hover { color: #ff5c2b; }
   content: " ";
   display: table;
 }
-.timeline > li:after {
-  clear: both;
-}
+.timeline > li:after { clear: both; }
 .timeline > li > .timeline-panel {
   width: 46%;
   float: left;
@@ -591,12 +516,8 @@ span.presence_yes:hover { color: #ff5c2b; }
   position: absolute;
   left: 60%;
 }
-.timeline > li.timeline-inverted > .timeline-year {
-  left: 22%;
-}
-.timeline > li.timeline-inverted > .timeline-panel {
-  float: right;
-}
+.timeline > li.timeline-inverted > .timeline-year { left: 22%; }
+.timeline > li.timeline-inverted > .timeline-panel { float: right; }
 .timeline > li.timeline-inverted > .timeline-panel:before {
   border-left-width: 0;
   border-right-width: 15px;
@@ -614,12 +535,8 @@ span.presence_yes:hover { color: #ff5c2b; }
   color: inherit;
 }
 .timeline-body > p,
-.timeline-body > ul {
-  margin-bottom: 0;
-}
-.timeline-body > p + p {
-  margin-top: 5px;
-}
+.timeline-body > ul { margin-bottom: 0; }
+.timeline-body > p + p { margin-top: 5px; }
 
 .profile-card {
   border: 1px solid #d4d4d4;
