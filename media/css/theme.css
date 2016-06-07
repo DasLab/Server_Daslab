@@ -493,7 +493,10 @@ ul.breadcrumb > li.active {
   border: #0f0 solid 2px;
 }
 
-
+span.presence_no { color: #808080; }
+span.presence_yes { color: #50cc32; }
+span.presence_no:hover,
+span.presence_yes:hover { color: #ff5c2b; }
 
 .timeline {
   list-style: none;

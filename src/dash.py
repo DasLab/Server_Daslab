@@ -313,6 +313,9 @@ def cache_slack(request):
     sh = Slacker(SLACK["ACCESS_TOKEN"])
 
     if qs in ['users', 'home']:
+        if qs == 'home':
+            home_json = simplejson.load(open('%s/cache/slack/home.json' % MEDIA_ROOT))
+
         response = sh.users.list().body['members']
         owners, admins, users, gones = [], [], [], []
         for resp in response:
@@ -336,6 +339,13 @@ def cache_slack(request):
             presence = (presence == 'active')
             temp = {'name': resp['profile']['real_name'], 'id': resp['name'], 'email': resp['profile']['email'], 'image': resp['profile']['image_24'], 'presence': presence}
             if qs == 'home':
+                for obj in home_json['users']:
+                    if obj['id'] == temp['id']:
+                        if presence:
+                            temp['last_seen'] = datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+                        elif 'last_seen' in obj:
+                            temp['last_seen'] = obj['last_seen']
+                        break
                 if not resp['deleted']: users.append(temp)
             else:
                 if resp['deleted']:
