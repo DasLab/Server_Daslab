@@ -209,6 +209,9 @@ app.fnOnLoad = function() {
             } else {
                 $("#nav_user_type").addClass("label-default").html('<span class="glyphicon glyphicon-glass" aria-hidden="true"></span>&nbsp;&nbsp;Unknown');
             }
+            if (data.type != 'admin') {
+                $("#nav_admin").css("opacity", "0.25");
+            } 
         }
     });
 

@@ -163,7 +163,7 @@ label {
 }
 
 .navbar {
-  background-color: #2da89c;
+  background-color: #00b3a0;
   /*border-color: #112d52;*/
 }
 .navbar .navbar-brand {
@@ -179,7 +179,7 @@ label {
   text-decoration: blink;
 }
 /*.navbar .navbar-icon {
-  border-left: 1px solid #209874;
+  border-left: 1px solid #75ded2;
 }*/
 .navbar .navbar-nav > li > a {
   height: 50px;
@@ -188,14 +188,14 @@ label {
 .navbar .navbar-nav > li > a:hover,
 .navbar .navbar-nav > li > a:focus {
   color: #fff;
-  background-color: #209874;
+  background-color: #75ded2;
   text-shadow: 2px 2px 5px #7cafd3;
 }
 .navbar .navbar-nav > .active > a,
 .navbar .navbar-nav > .active > a:hover,
 .navbar .navbar-nav > .active > a:focus {
   color: #fff;
-  background-color: #209874;
+  background-color: #75ded2;
   text-decoration: underline;
   text-shadow: 2px 2px 5px #ff0;
 }
@@ -203,10 +203,10 @@ label {
 .navbar .navbar-nav > .open > a:hover,
 .navbar .navbar-nav > .open > a:focus {
   color: #fff;
-  background-color: #209874;
+  background-color: #75ded2;
 }
 .navbar .navbar-toggle {
-  border: #209874;
+  border: #75ded2;
   color: #fff;
 }
 .navbar-toggle {
@@ -221,16 +221,16 @@ label {
 
 .navbar .navbar-toggle:hover,
 .navbar .navbar-toggle:focus {
-  background-color: #209874;
+  background-color: #75ded2;
   color: #fff;
 }
 .navbar .navbar-toggle .i_bar {
-  background-color: #2da89c;
+  background-color: #00b3a0;
   color: #fff;
 }
 .navbar .navbar-collapse,
 .navbar .navbar-form {
-  border-color: #209874;
+  border-color: #75ded2;
   color: #fff;
 }
 .navbar .navbar-link {
