@@ -284,11 +284,11 @@ ul.nav > .nav-ul-lg { display: none; }
   padding-left: 20px;
   color: #000;
 }
-#nav_home.active > span {
+#nav_logo.active > span {
   color: #fff400;
   text-decoration: underline;
 }
-#nav_home.active > span:hover { color: #fff; }
+#nav_logo.active > span:hover { color: #fff; }
 .tutorial{ opacity:0.5; }
 
 
