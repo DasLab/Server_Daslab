@@ -241,7 +241,7 @@ $(document).ready(function() {
         $("html, body").stop().animate({'scrollTop': 0}, 250);
     });
 
-    $("#sidebar-wrapper a, #nav_upload > a, #nav_internal > a, #nav_upload_archive").on("click", function(event) {
+    $("#sidebar-wrapper a, #nav_upload > a, #nav_internal > a, #nav_upload_archive, #nav_home").on("click", function(event) {
         event.preventDefault();
         app.href = $(this).attr("href");
         $("#content").fadeTo(100, 0, app.fnChangeLocation);
