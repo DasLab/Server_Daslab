@@ -51,7 +51,14 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "eterna_
             'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/' + app.js_ver.fullcal + '/fullcalendar.min.js'
         ];
     } else {
-        var cal_js = ['/site_media/js/public/min/cal.min.js'];
+        if (app.DEBUG_DIR) {
+            var cal_js = ['/site_media/js/public/min/cal.min.js'];
+        } else {
+            var cal_js = [
+                '/site_media/js/moment.min.js',
+                '/site_media/js/fullcalendar.min.js'
+            ];
+        }
     }
     cal_js = cal_js.concat(['/site_media/css/fullcalendar.min.css']);
     head.test($.fullCalendar, [], cal_js, function(flag) {

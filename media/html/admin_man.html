@@ -261,7 +261,7 @@
               <p>The server caches analytics data from <span class="code code_brand">AWS CloudWatch</span>, <span class="code code_brand">Google Analytics</span>, <span class="code code_brand">GitHub</span> repositories, <span class="code code_brand">Slack</span> and <span class="code code_brand">Dropbox</span> activities. This is to reduce loading time for pages like <span class="code code_url">/group/aws/</span>.</p>
               <p>Caching has 3 intervals:</p>
               <ul>
-                <li>Every <b>3</b> mintues: <span class="code code_brand">Slack</span> presence. Used in group home page <span class="code code_url">/group/</span>.</li>
+                <li>Every <b>3</b> mintues: <span class="code code_brand">Slack</span> presence, including <span class="code code_key">last_seen</span> timestamp. Used in group home page <span class="code code_url">/group/</span>.</li>
                 <li>Every <b>15</b> minutes: <span class="code code_brand">AWS CloudWatch</span> and <span class="code code_brand">Google Analytics</span>.</li>
                 <li>Every <b>30</b> minutes: <span class="code code_brand">GitHub</span>, <span class="code code_brand">Slack</span>, <span class="code code_brand">Dropbox</span>, <span class="code code_spe">Schedule Spreadsheet</span>, <span class="code code_spe">Duty Spreadsheet</span> and <span class="code code_spe">Group Calendar</span>.</li>
               </ul>
