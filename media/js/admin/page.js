@@ -57,8 +57,8 @@ if (typeof app.fnFormatInput !== "function") {
         $(".sortremove").html('<span class="glyphicon glyphicon-remove"></span>');
         $(".sortoptions").addClass("pull-right").removeClass("sortoptions");
         $("div.pagination-info").html("<br/>&nbsp;&nbsp;&nbsp;&nbsp;" + $("div.pagination-info").html());
-    };
-    app.fnFormatInput2 = function() {
+
+
         setTimeout(function() {
             $(".vDateField").each(function () {
                 $(this).next().detach().appendTo($(this).parent());
@@ -93,6 +93,7 @@ if (typeof app.fnFormatInput !== "function") {
                 $(this).next().detach().appendTo(p);
                 $(this).detach().prependTo(p);
                 $("span.timezonewarning").addClass("label label-default");
+                $("div.input-group-btn").css("display", "");
             });
 
             $(".vTimeField").each(function () {
@@ -128,6 +129,7 @@ if (typeof app.fnFormatInput !== "function") {
                 $(this).next().detach().appendTo(p);
                 $(this).detach().prependTo(p);
                 $("span.timezonewarning").addClass("label label-default");
+                $("div.input-group-btn").css("display", "");
             });
 
 
@@ -171,7 +173,6 @@ if (typeof app.fnFormatInput !== "function") {
     };
 }
 app.fnFormatInput();
-app.fnFormatInput2();
 
 
 if (app.page == "apache") {
