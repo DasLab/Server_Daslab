@@ -65,9 +65,8 @@ app.fnChangeView = function() {
   }
 
   $("#DasCONTENT").fadeTo(100, 1);
-  if (typeof this.callbackChangeView === "function") {
-    this.callbackChangeView();
-  }
+  if (window.location.hash) { $('html, body').stop().animate({"scrollTop": $(window.location.hash).offset().top - 75}, 500); }
+  if (typeof app.callbackChangeView === "function") { app.callbackChangeView(); }
 };
 
 app.fnChangeLocation = function() {
@@ -76,6 +75,7 @@ app.fnChangeLocation = function() {
   } else {
     window.location.href = app.href;
   }
+  $("html, body").scrollTop(0);
   $("#DasCONTENT").load(app.href + " #content_wrapper", app.fnChangeView);
 };
 
