@@ -123,6 +123,7 @@ def group_pages(request, path):
             ppl.photo = ppl.image_tag()
             ppl.title = ppl.affiliation()
             ppl.status = ppl.year()
+            ppl.type = GROUP.find_type(ppl.sunet_id)
             if ppl.phone:
                 ppl.phone = str(ppl.phone)
                 ppl.phone = '(%s) %s-%s' % (ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])

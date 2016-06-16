@@ -124,11 +124,14 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "eterna_
             if (app.user !== undefined) {
                 clearTimeout(user_dash_timeout);
 
+                var photo_html = '';
                 if (app.user.photo) {
-                    $("#card_user_photo").html(app.user.photo);
+                    photo_html = app.user.photo;
                 } else {
-                    $("#card_user_photo").html('<img src="/site_media/images/icon_default_avatar.png" width="119">');
+                    photo_html = '<img src="/site_media/images/icon_default_avatar.png" width="119">';
                 }
+                if (app.user.type === 'admin') { photo_html += '<p class="text-center"><span class="label label-magenta"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;Administrator</span></p>'; }
+                $("#card_user_photo").html(photo_html);
                 $("#card_user_photo > img").css("max-width", "100%");
                 $("#card_user_name").html(app.user.name);
                 $("#card_user_id").html(app.user.id);

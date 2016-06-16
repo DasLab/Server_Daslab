@@ -102,7 +102,7 @@
 	</span>
 	<br/><br/>
 	<div id="toggle_card">
-	    <h1><span class="label label-teal">Current Members</span><span style="font-size:14px;"><i>&nbsp;&nbsp;(Everyone Else)</i></span></h1>
+	    <h1><span class="label label-success">Current Members</span><span style="font-size:14px;"><i>&nbsp;&nbsp;(Everyone Else)</i></span></h1>
 
 		<div class="row">
 	        {% for ppl in current_member %}
@@ -113,7 +113,10 @@
 							{% if ppl.photo %}
 								{% autoescape off %}{{ ppl.photo }}{% endautoescape %}
 							{% else %}
-				              <img src="/site_media/images/icon_default_avatar.png" width="119"> 
+				             	<img src="/site_media/images/icon_default_avatar.png" width="119"> 
+							{% endif %}
+							{% if ppl.type == 'admin' %}
+								<p class="text-center"><span class="label label-magenta"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;Administrator</span></p>
 							{% endif %}
 						</div>
 						<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
@@ -151,7 +154,7 @@
 	    </div>
 
 	    <hr/>
-	    <h1><span class="label label-magenta">Alumni</span></h1>
+	    <h1><span class="label label-orange">Alumni</span></h1>
 
 		<div class="row" id="toggle_timeline">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -169,7 +172,7 @@
 										{% if ppl.photo %}
 											{% autoescape off %}{{ ppl.photo }}{% endautoescape %}
 										{% else %}
-							              <img src="/site_media/images/icon_default_avatar.png" width="119"> 
+							            	<img src="/site_media/images/icon_default_avatar.png" width="119"> 
 										{% endif %}
 									</div>
 									<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
@@ -231,7 +234,7 @@
 					<tr {% if forloop.counter|divisibleby:2 %} class="info" {% endif %}>
 						<td><b>{{ppl.name}}</b></td>
 						<td>{{ppl.status}}</td>
-						<td><kbd>{{ppl.sunet_id}}</kbd></td>
+						<td><kbd {% if ppl.type == 'admin' %}style="color:#ff69bc;"{% endif %}>{{ppl.sunet_id}}</kbd></td>
 						<td>{{ppl.phone}}</td>
 						<td><i><u>{{ppl.email}}</u></i></td>
 						<td>{{ppl.title}}{% if ppl.description %}, {{ ppl.description }}{% endif %}</td>
