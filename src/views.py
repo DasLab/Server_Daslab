@@ -115,9 +115,8 @@ def group_pages(request, path):
 
     elif path == 'contact':
         if request.method == 'POST': return user_contact(request)
-        sunet_id = user_sunetid(request)
 
-        member = Member.objects.filter(is_alumni=0).exclude(sunet_id=sunet_id).order_by('last_name', 'first_name')
+        member = Member.objects.filter(is_alumni=0).order_by('last_name', 'first_name')
         for i, ppl in enumerate(member):
             ppl.label = PATH.COLOR[11 - i % 12]
             ppl.name = ppl.full_name()
@@ -140,7 +139,7 @@ def group_pages(request, path):
             if ppl.phone:
                 ppl.phone = str(ppl.phone)
                 ppl.phone = '(%s) %s-%s' % (ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
-        json = {'current_member': member, 'past_member': almuni, 'contact_form':  ContactForm()}
+        json = {'current_member': member, 'past_member': almuni, 'contact_form':  ContactForm(), 'sunet_id': user_sunetid(request)}
 
     return render(request, PATH.HTML_PATH['group_pages'].replace('xxx', page), json)
 

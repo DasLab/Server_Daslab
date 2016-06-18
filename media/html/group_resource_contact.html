@@ -106,50 +106,52 @@
 
 		<div class="row">
 	        {% for ppl in current_member %}
-			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-				<div class="profile-card li-{{ppl.label}}">
-					<div class="row">
-						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-							{% if ppl.photo %}
-								{% autoescape off %}{{ ppl.photo }}{% endautoescape %}
-							{% else %}
-				             	<img src="/site_media/images/icon_default_avatar.png" width="119"> 
-							{% endif %}
-							{% if ppl.type == 'admin' %}
-								<p><span class="label label-magenta"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;Administrator</span></p>
-							{% endif %}
-						</div>
-						<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-							<p><b class="lead">{{ ppl.name }}</b><span class="pull-right"><kbd>{{ ppl.sunet_id }}</kbd></span></p>
-							<p style="line-height:25px;">
-								<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;
-								<span>{{ ppl.title }}</span>
-								{% if ppl.description %}
-									<br/>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									{{ ppl.description }}
+		        {% if ppl.sunet_id != sunet_id %}
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					<div class="profile-card li-{{ppl.label}}">
+						<div class="row">
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+								{% if ppl.photo %}
+									{% autoescape off %}{{ ppl.photo }}{% endautoescape %}
+								{% else %}
+					             	<img src="/site_media/images/icon_default_avatar.png" width="119"> 
 								{% endif %}
-								{% if ppl.joint_lab %}
-									<br/>
-									<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>&nbsp;&nbsp;
-									Joint with <a href="{{ ppl.joint_link }}" target="_blank">{{ ppl.joint_lab }} lab</a>
+								{% if ppl.type == 'admin' %}
+									<p><span class="label label-magenta"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;Administrator</span></p>
 								{% endif %}
-								<br/>
-								<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span>{{ ppl.status }}</span>
-								<span class="pull-right"><a href="{{ ppl.more_info }}" target="_blank"><span class="label label-warning">CAP Profile</span></a></span>
-							</p>
-							<p style="line-height:25px; margin-top:30px;">
-								<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
-								Phone:&nbsp;&nbsp;{{ ppl.phone }}
-								<br/>
-								<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
-								Email:&nbsp;&nbsp;<a href="mailto:{{ ppl.email }}" target="_blank" style="text-decoration:underline;">{{ ppl.email }}</a>
+							</div>
+							<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+								<p><b class="lead">{{ ppl.name }}</b><span class="pull-right"><kbd>{{ ppl.sunet_id }}</kbd></span></p>
+								<p style="line-height:25px;">
+									<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;
+									<span>{{ ppl.title }}</span>
+									{% if ppl.description %}
+										<br/>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										{{ ppl.description }}
+									{% endif %}
+									{% if ppl.joint_lab %}
+										<br/>
+										<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>&nbsp;&nbsp;
+										Joint with <a href="{{ ppl.joint_link }}" target="_blank">{{ ppl.joint_lab }} lab</a>
+									{% endif %}
+									<br/>
+									<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span>{{ ppl.status }}</span>
+									<span class="pull-right"><a href="{{ ppl.more_info }}" target="_blank"><span class="label label-warning">CAP Profile</span></a></span>
+								</p>
+								<p style="line-height:25px; margin-top:30px;">
+									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
+									Phone:&nbsp;&nbsp;{{ ppl.phone }}
+									<br/>
+									<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
+									Email:&nbsp;&nbsp;<a href="mailto:{{ ppl.email }}" target="_blank" style="text-decoration:underline;">{{ ppl.email }}</a>
 
-							</p>
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+				{% endif %}
 	        {% endfor %}
 	    </div>
 
@@ -231,7 +233,7 @@
 				</thead>
 				<tbody>
 				{% for ppl in current_member %}
-					<tr {% if forloop.counter|divisibleby:2 %} class="info" {% endif %}>
+					<tr {% if ppl.sunet_id == sunet_id %} class="warning" {% else %}{% if forloop.counter|divisibleby:2 %} class="info" {% endif %}{% endif %}>
 						<td><b>{{ppl.name}}</b></td>
 						<td>{{ppl.status}}</td>
 						<td><kbd {% if ppl.type == 'admin' %}style="color:#ff69bc;"{% endif %}>{{ppl.sunet_id}}</kbd></td>
