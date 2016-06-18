@@ -115,8 +115,9 @@ def group_pages(request, path):
 
     elif path == 'contact':
         if request.method == 'POST': return user_contact(request)
+        sunet_id = user_sunetid(request)
 
-        member = Member.objects.filter(is_alumni=0).exclude(sunet_id=request.user.username).order_by('last_name', 'first_name')
+        member = Member.objects.filter(is_alumni=0).exclude(sunet_id=sunet_id).order_by('last_name', 'first_name')
         for i, ppl in enumerate(member):
             ppl.label = PATH.COLOR[11 - i % 12]
             ppl.name = ppl.full_name()

@@ -130,7 +130,7 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "eterna_
                 } else {
                     photo_html = '<img src="/site_media/images/icon_default_avatar.png" width="119">';
                 }
-                if (app.user.type === 'admin') { photo_html += '<p class="text-center"><span class="label label-magenta"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;Administrator</span></p>'; }
+                if (app.user.type === 'admin') { photo_html += '<p><span class="label label-magenta"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;Administrator</span></p>'; }
                 $("#card_user_photo").html(photo_html);
                 $("#card_user_photo > img").css("max-width", "100%");
                 $("#card_user_name").html(app.user.name);
