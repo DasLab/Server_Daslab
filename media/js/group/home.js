@@ -47,8 +47,8 @@ $.ajax({
         $("#recent_flash").html('<span class="label label-primary">' + data.flash_slide.date + '</span>&nbsp;&nbsp;<a href="' + data.flash_slide.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
         $("#recent_jc").html('<i>' + data.journal_club.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.journal_club.date + '</span>&nbsp;&nbsp;<a href="' + data.journal_club.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
         $("#recent_eterna").html('<i>' + data.eterna.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.eterna.date + '</span>&nbsp;&nbsp;<a href="' + data.eterna.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
-        $("#recent_rotation").html('<i>' + data.rotation.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.rotation.date + '</span>&nbsp;&nbsp;<a href="' + data.rotation.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
-        $("#recent_archive").html('<i>' + data.archive.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.archive.date + '</span>&nbsp;&nbsp;<a href="' + data.archive.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_rotation").html('<i>' + data.rotation.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.rotation.date + '</span>&nbsp;&nbsp;<a href="/site_data/rot_ppt/' + data.rotation.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_archive").html('<i>' + data.archive.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.archive.date + '</span>&nbsp;&nbsp;<a href="/site_data/spe_ppt/' + data.archive.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
     }
 });
 
