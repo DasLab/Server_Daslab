@@ -80,12 +80,7 @@
                   <li><a id="tab_53" href="#python_cache">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">cache/</span></a></li>
                   <li><a id="tab_54" href="#python_config">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">config/</span></a></li>
                   <li><a id="tab_55" href="#python_data">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">data/</span></a></li>
-                  <li>
-                    <a id="tab_56" href="#python_media">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">media/</span></a>
-                    <ul style="padding-left:60px;">
-                      <li><a id="tab_561" href="#python_js"><span class="code code_path">media/js/</span></a></li>
-                    </ul>
-                  </li>
+                  <li><a id="tab_56" href="#python_media">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">media/</span></a></li>
                   <li>
                     <a id="tab_57" href="#python_src">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">src/</span></a>
                     <ul style="padding-left:60px;">
@@ -98,6 +93,18 @@
                     </ul>
                   </li>
                   <li><a id="tab_58" href="#man_cmd">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code code_path">src/management/commands/</span></a></li>
+                </ul>
+              </li>
+              <li class="li-default">
+                <a id="tab_6" href="#js">
+                  <span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;Section #6: 
+                  <b>Javascript</b>
+                  <span class="glyphicon pull-right glyphicon-triangle-bottom" data-toggle="collapse" data-parent="#accordion" href="#collapse_tab_6" aria-expanded="true" aria-controls="collapse_tab_6"></span>
+                </a>
+                <ul id="collapse_tab_6" class="panel-collapse collapse nav" role="tabpanel" aria-labelledby="collapse_tab_6">
+                  <li><a id="tab_61" href="#js_public">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;Public Site</a></li>
+                  <li><a id="tab_62" href="#js_group">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Group Site</a></li>
+                  <li><a id="tab_63" href="#js_admin">&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tower"></span>&nbsp;&nbsp;Admin Site</a></li>
                 </ul>
               </li>
 
@@ -365,7 +372,7 @@
                 <li>Set <span class="code code_misc">ELB</span> <b>Monitoring Alarm</b> for <u>Healthy Host &lt; 1</u> sending email to <span class="code code_val">daslab</span> <span class="code code_brand">Gmail</span>.</li>
               </ul>
               <p>Once done, you can access the server via <span class="code code_cmd">ssh</span>. Use the server's <b>Public IP</b> address, instead of <b>Private IP</b>. <span class="code code_brand">AWS</span> <span class="code code_misc">EC2</span> are configured to use a certificate for authentication, not password (In fact, user <span class="code code_val">ubuntu</span> has no password). Use <span class="code code_cmd">-i</span> to supply the certificate.</p>
-              <p>When the server's <span class="code code_misc">Django</span> or <span class="code code_brand">Apache</span> mulfunctions, you should receive an alert email forwaraded from <span class="code code_val">daslab</span> <span class="code code_brand">Gmail</span>. After fixing the issue, you may need to reset the <span class="code code_misc">ELB</span> <b>Health Check</b> to force instant recheck (e.g. set interval to <u>300s</u> and then back to <u>180s</u>).</p>
+              <p>When the server's <span class="code code_misc">Django</span> or <span class="code code_brand">Apache</span> malfunctions, you should receive an alert email forwarded from <span class="code code_val">daslab</span> <span class="code code_brand">Gmail</span>. After fixing the issue, you may need to reset the <span class="code code_misc">ELB</span> <b>Health Check</b> to force instant recheck (e.g. set interval to <u>300s</u> and then back to <u>180s</u>).</p>
             </div>
           </div>
 
@@ -650,64 +657,8 @@
                       <tr><td></td><td><span class="code code_path">group_*.html</span></td><td>Group site pages.</td></tr>
                       <tr><td></td><td><span class="code code_path">public_*.html</span></td><td>Public site pages.</td></tr>
                       <tr><td><span class="code code_path">images/</span></td><td colspan="2">Image files. Public site images and group icons are consolidated into sprite images for fewer requests.</td></tr>
+                      <tr><td><span class="code code_path">js/</span></td><td colspan="2"><span class="code code_misc">Javascript</span> files, see <a href="#js" class="btn-spa">here</a>.</td></tr>
                       <tr><td><span class="code code_path">swf/</span></td><td colspan="2">Flash objects (deprecated). Now using Bootstrap <a href="http://getbootstrap.com/javascript/#carousel" target="_blank">carousel&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</td></tr>
-                      <tr><td colspan="3" style="padding:0px;"></td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
-              </div>
-
-              <h4 id="python_js"><span class="code code_path">media/js/</span></h4>
-              <p>Contains <span class="code code_misc">Javascript</span> files.</p>
-              <div class="row">
-                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
-                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                  <table class="table table-hover">
-                    <tbody>
-                      <tr><td><span class="code code_path">*.min.js</span></td><td colspan="2">Vendor libraries (Bootstrap, jQuery, fullcalendar, Moment, Head.load).</td></tr>
-                      <tr><td><span class="code code_path">admin/</span></td><td colspan="2">Admin <span class="code code_misc">Javascript</span> files.</td></tr>
-                      <tr><td></td><td><span class="code code_path">_*.js</span></td><td>Vendor libraries for <span class="code code_misc">django-suit</span> and <span class="code code_misc">django-filemanager</span>.</td></tr>
-                      <tr><td></td><td><span class="code code_path">apache.js</span></td><td>Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/stat/apache/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">restyle_apache()</span> in <span class="code code_path">src/console.py</span>. The page refreshes every <u>3</u> seconds by <span class="code code_method">setTimeout()</span>.</td></tr>
-                      <tr><td></td><td><span class="code code_path">clock.js</span></td><td>Displays real-time clock on navigation bar.</td></tr>
-                      <tr><td></td><td><span class="code code_path">doc.js</span></td><td>Used by <span class="code code_url">/admin/man/</span> and <span class="code code_url">/admin/ref/</span> pages for <span class="code code_misc">scrollSpy</span> side-bar resizing according to <span class="code code_method">window.width()</span>.</td></tr>
-                      <tr><td></td><td><span class="code code_path">gapi.js</span></td><td>Uses <span class="code code_misc">gviz-api.py</span> (not <span class="code code_brand">Google Analytics</span> API) for <span class="code code_url">/admin/aws/</span>, <span class="code code_url">/admin/ga/</span>, and <span class="code code_url">/admin/git/</span> page dashboard. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/stat/(aws|ga|git)/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">aws_stats()</span>, <span class="code code_method">ga_stats()</span>, and <span class="code code_method">git_stats()</span> in <span class="code code_path">src/console.py</span>. Data is retrieved on the fly (not cached).</td></tr>
-                      <tr><td></td><td><span class="code code_path">group.js</span></td><td>Used by <span class="code code_url">/admin/auth/user/</span> page to render <span class="code code_path">config/group.conf</span> on the page. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/dash/group/</span>, which passes to <span class="code code_method">get_dash()</span> in <span class="code code_path">src/admin.py</span>.</td></tr>
-                      <tr><td></td><td><span class="code code_path">home.js</span></td><td>Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/stat/sys/</span>, <span class="code code_url">/admin/stat/backup/</span> and <span class="code code_url">/admin/stat/ver/</span>. Additionally, makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/backup/form/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">get_backup_form()</span> in <span class="code code_path">src/console.py</span>; and <span class="code code_url">/admin/dash/dash/</span>, which passes to <span class="code code_method">get_dash()</span> in <span class="code code_path">src/admin.py</span>.</td></tr>
-                      <tr><td></td><td><span class="code code_path">load.js</span></td><td>Loads vendor libraries using <span class="code code_spe">CDN</span>, or <b>fallback</b> to local files. Uses <span class="code code_spe">head.load</span> library. It checks <b>jQuery</b> availability from <span class="code code_url">https://cdnjs.com/</span> first, and decides <span class="code code_spe">CDN</span> availability and saves to <span class="code code_key">app.isCDN</span>. Uses <span class="code code_method">head.test()</span> to dynamically load all <span class="code code_misc">Javascript</span> dependencies. <b>All <span class="code code_misc">Javascript</span> files should be loaded from here, <i>i.e.</i> no more <code>&lt;script&gt;</code> tag in <span class="code code_key">HTML</span>!</b></td></tr>
-                      <tr>
-                        <td></td><td><span class="code code_path">menu.js</span></td>
-                        <td>
-                          Main script for the <b>admin app</b>, switching page without reloading.
-                          <ul>
-                            <li><span class="code code_key">app.fnOnLoad</span> initiates the view with animation;</li>
-                            <li><span class="code code_key">app.fnNavCollapse</span> controls navigation bar behavior on resize;</li>
-                            <li><span class="code code_key">app.fnChangeLocation</span> updates the <span class="code code_key">app.href</span> and reloads the page content (excluding navigation). Calls <span class="code code_key">app.fnChangeView</span>;</li>
-                            <li><span class="code code_key">app.fnChangeView</span> updates side navigation highlighting, calls <span class="code code_key">app.fnParseLocation</span> and <span class="code code_key">app.fnChangeBreadcrumb</span>, runs <span class="code code_path">page.js</span> for new content, and calls <span class="code code_key">app.callbackChangeView</span> if defined;</li>
-                            <li><span class="code code_key">app.fnChangeBreadcrumb</span> updates breadcrumb banner for each page;</li>
-                            <li><span class="code code_key">app.fnParseLocation</span> figures out the current page path and stores to <span class="code code_key">app.key</span> and <span class="code code_key">app.page</span>.</li>
-                          </ul>
-                          Note that the <span class="code code_method">window.resize()</span> methods use <span class="code code_method">setTimeout()</span> to prevent overlapping trigger of the event that results in delay in updating the view.
-                        </td>
-                      </tr>
-                      <tr><td></td><td><span class="code code_path">page.js</span></td><td>Formats menu (sidebar, navbar, breadcrumb, highlighting, collapsing), and Date/Time <code>&lt;input&gt;</code>) for admin pages. Loads required additional <code>&lt;script&gt;</code> for pages. Called by <span class="code code_path">menu.js</span>.</td></tr>
-                      <tr><td></td><td><span class="code code_path">table.js</span></td><td>Injection of <span class="code code_misc">Javascript</span> to format table (column width and icon for <code>&lt;th&gt;</code>).</td></tr>
-                      <tr><td></td><td><span class="code code_path">util.js</span></td><td>Used by <span class="code code_url">/admin/backup/</span>, <span class="code code_url">/admin/bot/</span>, and <span class="code code_url">/admin/export/</span> pages. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/stat/backup/</span> and <span class="code code_url">/admin/stat/ver/</span>, which passes to <span class="code code_method">get_ver()</span> in <span class="code code_path">src/admin.py</span>. Controls page behavior and responses.</td></tr>
-
-                      <tr><td><span class="code code_path">group/</span></td><td colspan="2">Group <span class="code code_misc">Javascript</span> files.</td></tr>
-                      <tr><td></td><td><span class="code code_path">gapi.js</span></td><td>Uses <span class="code code_misc">gviz-api.py</span>. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/group/*_dash/</span>, which passes through <span class="code code_path">src/views.py</span> to <span class="code code_method">dash_*()</span> in <span class="code code_path">src/dash.py</span>. Data is retrieved from <span class="code code_path">cache/</span>. For <span class="code code_url">/group/aws/</span> and <span class="code code_url">/group/git/</span>, it renders the <span class="code code_key">HTML</span> backbone first, then query data for each entry.</td></tr>
-                      <tr><td></td><td><span class="code code_path">home.js</span></td><td>Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/group/dash/schedule/</span>, which passes to <span class="code code_method">schedule_dash()</span> in <span class="code code_path">src/views.py</span> for recent events. Also retrieves <span class="code code_brand">Slack</span> presence via <span class="code code_url">/group/dash/slack/</span>.</td></tr>
-                      <tr><td></td><td><span class="code code_path">load.js</span></td><td>Loads vendor libraries using <span class="code code_spe">CDN</span>, or <b>fallback</b> to local files. Similar to <span class="code code_path">media/js/admin/load.js</span>.</td></tr>
-                      <tr><td></td><td><span class="code code_path">menu.js</span></td><td>Main script for the <b>group app</b>, switching page without reloading. Works in similar way as <span class="code code_path">media/js/admin/menu.js</span>.</td></tr>
-                      <tr><td></td><td><span class="code code_path">page.js</span></td><td>Formats menu for the <b>group app</b>, applying page-specific scripts. Works in similar way as <span class="code code_path">media/js/admin/page.js</span>. Specifically, it binds the <i>toggle view</i> between table and timeline; flash slides panels; calendar vendor library loading and interface; contact page current user form; and loads other scripts including <span class="code code_path">email.js</span>, <span class="code code_path">clock.js</span><span class="code code_path">upload.js</span>, <span class="code code_path">home.js</span> and <span class="code code_path">gapi.js</span>.</td></tr>
-                      <tr><td></td><td><span class="code code_path">email.js</span>, <span class="code code_path">upload.js</span></td><td>Handles <span class="code code_spe">POST</span> calls for member email to admin and upload archive presentations. Makes <span class="code code_key">AJAX</span> to <span class="code code_url">/group/email_admin/</span> and <span class="code code_url">/group/archive/upload/</span>, which passes to <span class="code code_method">user_email()</span> and <span class="code code_method">user_upload()</span> in <span class="code code_path">src/views.py</span>.</li>
-
-                      <tr><td><span class="code code_path">public/</span></td><td colspan="2">Public <span class="code code_misc">Javascript</span> files.</td></tr>
-                      <tr><td></td><td><span class="code code_path">ga.js</span></td><td>Local copy of <span class="code code_brand">Google Analytics</span> script.</td></tr>
-                      <tr><td></td><td><span class="code code_path">load.js</span></td><td>Loads vendor libraries using <span class="code code_spe">CDN</span>, or <b>fallback</b> to local files. Similar to <span class="code code_path">media/js/admin/load.js</span>.</td></tr>
-                      <tr><td></td><td><span class="code code_path">main.js</span></td><td>Main script for the public pages, switching page without reloading. Works in similar way as <span class="code code_path">media/js/admin/menu.js</span>.</td></tr>
-
-                      <tr><td><span class="code code_path">suit/</span></td><td colspan="2">Vendor of <span class="code code_misc">django-suit</span> scripts. Only <span class="code code_path">*.min.js</span> are used.</td></tr>
                       <tr><td colspan="3" style="padding:0px;"></td></tr>
                     </tbody>
                   </table>
@@ -1063,11 +1014,134 @@
             </div>
           </div>
 
-
         </div>
       </div>
-    </div>
 
+      <hr/>
+      <div class="container-fluid li-default" role="main">
+        <div class="panel-default" id="js">
+          <div class="panel-heading">
+            <span class="lead">
+              <span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;<b><span class="sec">Section</span> <span class="num">#6</span>: Javascript</b>
+            </span>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4><span class="code code_path">media/js/</span></h4>
+              <p>Contains <span class="code code_misc">Javascript</span> files.</p>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td><span class="code code_path">*.min.js</span></td><td colspan="2">Vendor libraries (Bootstrap, jQuery, fullcalendar, Moment, Head.load).</td></tr>
+                      <tr><td><span class="code code_path">suit/</span></td><td colspan="2">Vendor of <span class="code code_misc">django-suit</span> scripts. Only <span class="code code_path">*.min.js</span> are used.</td></tr>
+                      <tr><td colspan="3" style="padding:0px;"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+            </div>
+          </div>
+
+          <hr/>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4 id="js_public"><span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;Public Site</h4>
+              <p><span class="code code_path">media/js/public/</span>: Contains <span class="code code_misc">Javascript</span> files for the public site.</p>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td><span class="code code_path">ga.js</span></td><td>Local copy of <span class="code code_brand">Google Analytics</span> script.</td></tr>
+                      <tr><td><span class="code code_path">load.js</span></td><td>Loads vendor libraries using <span class="code code_spe">CDN</span>, or <b>fallback</b> to local files. Similar to <span class="code code_path">media/js/admin/load.js</span>.</td></tr>
+                      <tr><td><span class="code code_path">main.js</span></td><td>Main script for the public pages, switching page without reloading. Works in similar way as <span class="code code_path">media/js/admin/menu.js</span>.</td></tr>
+                      <tr><td colspan="2" style="padding:0px;"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+            </div>
+          </div>
+
+          <hr/>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4 id="js_group"><span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Group Site</h4>
+              <p><span class="code code_path">media/js/group/</span>: Contains <span class="code code_misc">Javascript</span> files for the group site.</p>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td></td><td><span class="code code_path">gapi.js</span></td><td>Uses <span class="code code_misc">gviz-api.py</span>. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/group/*_dash/</span>, which passes through <span class="code code_path">src/views.py</span> to <span class="code code_method">dash_*()</span> in <span class="code code_path">src/dash.py</span>. Data is retrieved from <span class="code code_path">cache/</span>. For <span class="code code_url">/group/aws/</span> and <span class="code code_url">/group/git/</span>, it renders the <span class="code code_key">HTML</span> backbone first, then query data for each entry.</td></tr>
+                      <tr><td></td><td><span class="code code_path">home.js</span></td><td>Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/group/dash/schedule/</span>, which passes to <span class="code code_method">schedule_dash()</span> in <span class="code code_path">src/views.py</span> for recent events. Also retrieves <span class="code code_brand">Slack</span> presence via <span class="code code_url">/group/dash/slack/</span>.</td></tr>
+                      <tr><td></td><td><span class="code code_path">load.js</span></td><td>Loads vendor libraries using <span class="code code_spe">CDN</span>, or <b>fallback</b> to local files. Similar to <span class="code code_path">media/js/admin/load.js</span>.</td></tr>
+                      <tr><td></td><td><span class="code code_path">menu.js</span></td><td>Main script for the <b>group app</b>, switching page without reloading. Works in similar way as <span class="code code_path">media/js/admin/menu.js</span>.</td></tr>
+                      <tr><td></td><td><span class="code code_path">page.js</span></td><td>Formats menu for the <b>group app</b>, applying page-specific scripts. Works in similar way as <span class="code code_path">media/js/admin/page.js</span>. Specifically, it binds the <i>toggle view</i> between table and timeline; flash slides panels; calendar vendor library loading and interface; contact page current user form; and loads other scripts including <span class="code code_path">email.js</span>, <span class="code code_path">clock.js</span><span class="code code_path">upload.js</span>, <span class="code code_path">home.js</span> and <span class="code code_path">gapi.js</span>.</td></tr>
+                      <tr><td></td><td><span class="code code_path">email.js</span>, <span class="code code_path">upload.js</span></td><td>Handles <span class="code code_spe">POST</span> calls for member email to admin and upload archive presentations. Makes <span class="code code_key">AJAX</span> to <span class="code code_url">/group/email_admin/</span> and <span class="code code_url">/group/archive/upload/</span>, which passes to <span class="code code_method">user_email()</span> and <span class="code code_method">user_upload()</span> in <span class="code code_path">src/views.py</span>.</li>
+
+                      <tr><td colspan="2" style="padding:0px;"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+            </div>
+          </div>
+
+          <hr/>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
+              <h4 id="js_admin"><span class="glyphicon glyphicon-tower"></span>&nbsp;&nbsp;Admin Site</h4>
+              <p><span class="code code_path">media/js/admin/</span>: Contains <span class="code code_misc">Javascript</span> files for the Admin site.</p>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr><td><span class="code code_path">_*.js</span></td><td>Vendor libraries for <span class="code code_misc">django-suit</span> and <span class="code code_misc">django-filemanager</span>.</td></tr>
+                      <tr><td><span class="code code_path">apache.js</span></td><td>Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/stat/apache/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">restyle_apache()</span> in <span class="code code_path">src/console.py</span>. The page refreshes every <u>3</u> seconds by <span class="code code_method">setTimeout()</span>.</td></tr>
+                      <tr><td><span class="code code_path">clock.js</span></td><td>Displays real-time clock on navigation bar.</td></tr>
+                      <tr><td><span class="code code_path">doc.js</span></td><td>Used by <span class="code code_url">/admin/man/</span> and <span class="code code_url">/admin/ref/</span> pages for <span class="code code_misc">scrollSpy</span> side-bar resizing according to <span class="code code_method">window.width()</span>.</td></tr>
+                      <tr><td><span class="code code_path">gapi.js</span></td><td>Uses <span class="code code_misc">gviz-api.py</span> (not <span class="code code_brand">Google Analytics</span> API) for <span class="code code_url">/admin/aws/</span>, <span class="code code_url">/admin/ga/</span>, and <span class="code code_url">/admin/git/</span> page dashboard. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/stat/(aws|ga|git)/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">aws_stats()</span>, <span class="code code_method">ga_stats()</span>, and <span class="code code_method">git_stats()</span> in <span class="code code_path">src/console.py</span>. Data is retrieved on the fly (not cached).</td></tr>
+                      <tr><td><span class="code code_path">group.js</span></td><td>Used by <span class="code code_url">/admin/auth/user/</span> page to render <span class="code code_path">config/group.conf</span> on the page. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/dash/group/</span>, which passes to <span class="code code_method">get_dash()</span> in <span class="code code_path">src/admin.py</span>.</td></tr>
+                      <tr><td><span class="code code_path">home.js</span></td><td>Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/stat/sys/</span>, <span class="code code_url">/admin/stat/backup/</span> and <span class="code code_url">/admin/stat/ver/</span>. Additionally, makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/backup/form/</span>, which passes through <span class="code code_path">src/admin.py</span> to <span class="code code_method">get_backup_form()</span> in <span class="code code_path">src/console.py</span>; and <span class="code code_url">/admin/dash/dash/</span>, which passes to <span class="code code_method">get_dash()</span> in <span class="code code_path">src/admin.py</span>.</td></tr>
+                      <tr><td><span class="code code_path">load.js</span></td><td>Loads vendor libraries using <span class="code code_spe">CDN</span>, or <b>fallback</b> to local files. Uses <span class="code code_spe">head.load</span> library. It checks <b>jQuery</b> availability from <span class="code code_url">https://cdnjs.com/</span> first, and decides <span class="code code_spe">CDN</span> availability and saves to <span class="code code_key">app.isCDN</span>. Uses <span class="code code_method">head.test()</span> to dynamically load all <span class="code code_misc">Javascript</span> dependencies. <b>All <span class="code code_misc">Javascript</span> files should be loaded from here, <i>i.e.</i> no more <code>&lt;script&gt;</code> tag in <span class="code code_key">HTML</span>!</b></td></tr>
+                      <tr>
+                        <td><span class="code code_path">menu.js</span></td>
+                        <td>
+                          Main script for the <b>admin app</b>, switching page without reloading.
+                          <ul>
+                            <li><span class="code code_key">app.fnOnLoad</span> initiates the view with animation;</li>
+                            <li><span class="code code_key">app.fnNavCollapse</span> controls navigation bar behavior on resize;</li>
+                            <li><span class="code code_key">app.fnChangeLocation</span> updates the <span class="code code_key">app.href</span> and reloads the page content (excluding navigation). Calls <span class="code code_key">app.fnChangeView</span>;</li>
+                            <li><span class="code code_key">app.fnChangeView</span> updates side navigation highlighting, calls <span class="code code_key">app.fnParseLocation</span> and <span class="code code_key">app.fnChangeBreadcrumb</span>, runs <span class="code code_path">page.js</span> for new content, and calls <span class="code code_key">app.callbackChangeView</span> if defined;</li>
+                            <li><span class="code code_key">app.fnChangeBreadcrumb</span> updates breadcrumb banner for each page;</li>
+                            <li><span class="code code_key">app.fnParseLocation</span> figures out the current page path and stores to <span class="code code_key">app.key</span> and <span class="code code_key">app.page</span>.</li>
+                          </ul>
+                          Note that the <span class="code code_method">window.resize()</span> methods use <span class="code code_method">setTimeout()</span> to prevent overlapping trigger of the event that results in delay in updating the view.
+                        </td>
+                      </tr>
+                      <tr><td><span class="code code_path">page.js</span></td><td>Formats menu (sidebar, navbar, breadcrumb, highlighting, collapsing), and Date/Time <code>&lt;input&gt;</code>) for admin pages. Loads required additional <code>&lt;script&gt;</code> for pages. Called by <span class="code code_path">menu.js</span>.</td></tr>
+                      <tr><td><span class="code code_path">table.js</span></td><td>Injection of <span class="code code_misc">Javascript</span> to format table (column width and icon for <code>&lt;th&gt;</code>).</td></tr>
+                      <tr><td><span class="code code_path">util.js</span></td><td>Used by <span class="code code_url">/admin/backup/</span>, <span class="code code_url">/admin/bot/</span>, and <span class="code code_url">/admin/export/</span> pages. Makes <span class="code code_key">AJAX</span> calls to <span class="code code_url">/admin/stat/backup/</span> and <span class="code code_url">/admin/stat/ver/</span>, which passes to <span class="code code_method">get_ver()</span> in <span class="code code_path">src/admin.py</span>. Controls page behavior and responses.</td></tr>
+                      <tr><td colspan="2" style="padding:0px;"></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
   </div>
 
