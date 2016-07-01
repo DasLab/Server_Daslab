@@ -50,25 +50,19 @@ $(document).ready(function() {
 
 });
 
-$(window).on("scroll", function() {
-  clearTimeout($.data(this, 'scrollTimer'));
-  $.data(this, 'scrollTimer', setTimeout(function() {
-    if ($(this).scrollTop() > $(window).height() / 2) {
-      $('#top > div').animate({'right':'0%', 'opacity':'1.0'}, 125);
-    } else {
-      $('#top > div').animate({'right':'-5%', 'opacity':'0'}, 125);
-    }
-    if (degree == 1) {
-      $("#sidebar").removeAttr("data-spy").removeClass("affix").removeClass("affix-top");
-      // $('body').scrollspy('clear');
-    }
-  }, 200));
 
+$(window).on("scroll", throttle(function() {
+  if ($(this).scrollTop() > $(window).height() / 2) {
+    $('#top > div').animate({'right': '0%', 'opacity': 0.85}, 125);
+  } else {
+    $('#top > div').animate({'right': '-5%', 'opacity': 0}, 125);
+  }
+  if (degree == 1) {
+    $("#sidebar").removeAttr("data-spy").removeClass("affix").removeClass("affix-top");
+    // $('body').scrollspy('clear');
+  }
   $("#sidebar").css("width", $("#side_con").css("width"));
-});
+}, 200, 500));
 
-$(window).on("resize", function() {
-  clearTimeout($.data(this, 'collapseTimer'));
-  $.data(this, 'collapseTimer', setTimeout(resize, 200));
-});
+$(window).on("resize", throttle(resize, 200, 1000));
 

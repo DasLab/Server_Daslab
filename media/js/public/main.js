@@ -1,3 +1,18 @@
+var throttle = function(func, delay, at_least) {
+  var timer = null, previous = null;
+  return function() {
+    var now = +new Date();
+    if (!previous) { previous = now; }
+    if (now - previous > at_least) {
+      func();
+      previous = now;
+    } else {
+      clearTimeout(timer);
+      timer = setTimeout(func, delay);
+    }
+  };
+};
+
 app.fnParseLocation = function() {
   var urls = ['news', 'research', 'people', 'publications', 'resources', 'contact'],
       tab = urls.filter(function(val) { return window.location.pathname.indexOf('/' + val) != -1; });
@@ -97,15 +112,12 @@ $(document).ready(function() {
 });
 
 
-$(window).on("scroll", function() {
-  clearTimeout($.data(this, 'resizeTimer'));
-  $.data(this, 'resizeTimer', setTimeout(function() {
-    if ($(this).scrollTop() > $(window).height() / 2) {
-      $('#top > div').animate({'right': '5%', 'opacity': 0.85}, 125);
-    } else {
-      $('#top > div').animate({'right': '-5%', 'opacity': 0}, 125);
-    }
-  }, 200));
-});
+$(window).on("scroll", throttle(function() {
+  if ($(this).scrollTop() > $(window).height() / 2) {
+    $('#top > div').animate({'right': '5%', 'opacity': 0.85}, 125);
+  } else {
+    $('#top > div').animate({'right': '-5%', 'opacity': 0}, 125);
+  }
+}, 200, 500));
 
 window.onpopstate = function() { location.reload(); };
