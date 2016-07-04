@@ -1117,12 +1117,12 @@
                         <td>
                           Main script for the <b>admin app</b>, switching page without reloading.
                           <ul>
-                            <li><span class="code code_key">app.fnOnLoad</span> initiates the view with animation;</li>
-                            <li><span class="code code_key">app.fnNavCollapse</span> controls navigation bar behavior on resize;</li>
-                            <li><span class="code code_key">app.fnChangeLocation</span> updates the <span class="code code_key">app.href</span> and reloads the page content (excluding navigation). Calls <span class="code code_key">app.fnChangeView</span>;</li>
-                            <li><span class="code code_key">app.fnChangeView</span> updates side navigation highlighting, calls <span class="code code_key">app.fnParseLocation</span> and <span class="code code_key">app.fnChangeBreadcrumb</span>, runs <span class="code code_path">page.js</span> for new content, and calls <span class="code code_key">app.callbackChangeView</span> if defined;</li>
-                            <li><span class="code code_key">app.fnChangeBreadcrumb</span> updates breadcrumb banner for each page;</li>
-                            <li><span class="code code_key">app.fnParseLocation</span> figures out the current page path and stores to <span class="code code_key">app.key</span> and <span class="code code_key">app.page</span>.</li>
+                            <li><span class="code code_method">app.fnOnLoad()</span> initiates the view with animation;</li>
+                            <li><span class="code code_method">app.fnNavCollapse()</span> controls navigation bar behavior on resize;</li>
+                            <li><span class="code code_method">app.fnChangeLocation()</span> updates the <span class="code code_key">app.href</span> and reloads the page content (excluding navigation). Calls <span class="code code_method">app.fnChangeView()</span>;</li>
+                            <li><span class="code code_method">app.fnChangeView()</span> updates side navigation highlighting, calls <span class="code code_method">app.fnParseLocation()</span> and <span class="code code_method">app.fnChangeBreadcrumb()</span>, runs <span class="code code_path">page.js</span> for new content, and calls <span class="code code_method">app.callbackChangeView()</span> if defined;</li>
+                            <li><span class="code code_method">app.fnChangeBreadcrumb()</span> updates breadcrumb banner for each page;</li>
+                            <li><span class="code code_method">app.fnParseLocation()</span> figures out the current page path and stores to <span class="code code_key">app.key</span> and <span class="code code_key">app.page</span>.</li>
                           </ul>
                           Note that the <span class="code code_method">window.resize()</span> methods use <span class="code code_method">setTimeout()</span> to prevent overlapping trigger of the event that results in delay in updating the view.
                         </td>
