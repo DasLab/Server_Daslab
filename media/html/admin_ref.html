@@ -381,7 +381,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
               <h4><span class="glyphicon glyphicon-hdd"></span>&nbsp;&nbsp;Local Setup</h4>
               <p>First, you need to install <span class="code code_cmd">gdrive</span> for <span class="code code_brand">Google Drive</span> connections. You can retrieve from the <span class="code code_path">backup/backup_config.tgz</span>, or download <a href="https://github.com/prasmussen/gdrive" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</p>
-              <p>Other package archives we use to keep <span class="code code_cmd">git</span>, <span class="code code_brand">Apache</span> and <span class="code code_brand">MySQL</span> up to date are <span class="code code_val">git-core/ppa</span>, <span class="code code_val">ondrej/apache2</span> and <span class="code code_val">ondrej/mysql-5_7</span>. Use <span class="code code_cmd">sudo add-apt-repository ppa:<i><u>ppa_name</u></i></span> to add to system.</p>
+              <p>Other package archives we use to keep <span class="code code_cmd">git</span>, <span class="code code_brand">Apache</span> and <span class="code code_brand">MySQL</span> up to date are <span class="code code_val">git-core/ppa</span>, <span class="code code_val">ondrej/apache2</span> and <strike><span class="code code_val">ondrej/mysql-5_7</span></strike>. Use <span class="code code_cmd">sudo add-apt-repository ppa:<i><u>ppa_name</u></i></span> to add to system.</p>
               <br/>
               <p>Commonly used commands are provided as aliases for shortcut. They are defined in <span class="code code_path">/home/ubuntu/.bash_profile</span>.</p>
               <div class="row">
@@ -491,6 +491,7 @@
                   <li><span class="code code_val">django_admin_log</span>, <span class="code code_val">django_content_type</span>, <span class="code code_val">django_flatpage</span>, <span class="code code_val">django_flatpage_sites</span>, <span class="code code_val">django_migrations</span>, <span class="code code_val">django_session</span>, <span class="code code_val">django_site</span></li>
                   <li><span class="code code_val">src_eternayoutube</span>, <span class="code code_val">src_flashslide</span>, <span class="code code_val">src_journalclub</span>, <span class="code code_val">src_member</span>, <span class="code code_val">src_news</span>, <span class="code code_val">src_presentation</span>, <span class="code code_val">src_publication</span>, <span class="code code_val">src_rotationstudent</span>, <span class="code code_val">src_slackmessage</span></li>
                 </ul>
+                <li>Configuration file is located at <span class="code code_path">/etc/mysql/my.cnf</span>. <span class="code code_brand">MySQL</span> version <u>5.7</u> is known to be memory-hungry, with all limits enforced, still gradually increase its memory usage to above <u>700 MB</u>. Thus, we have downgraded to version <u>5.6</u>.</li>
               </ul>
             </div>
           </div>
