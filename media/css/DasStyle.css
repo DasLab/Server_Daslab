@@ -1,37 +1,74 @@
 @charset "UTF-8";
 /* CSS Document */
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,400italic,500,500italic,800,800italic);
+
 @font-face {
-    font-family: "Gill Sans";
-    src: local("Gill Sans"), url("/site_media/fonts/GillSans/GillSans.ttf");
-    font-weight: normal; font-style: normal;
-}
-@font-face {
-    font-family: "Gill Sans";
-    src: local("Gill Sans Bold"), local("GillSans-Bold"), url("/site_media/fonts/GillSans/GillSans-Bold.ttf");
-    font-weight: bold; font-style: normal;
-}
-@font-face {
-    font-family: "Gill Sans";
-    src: local("Gill Sans Italic"), local("GillSans-Italic"), url("/site_media/fonts/GillSans/GillSans-Italic.ttf");
-    font-weight: normal; font-style: italic;
-}
-@font-face {
-    font-family: "Gill Sans";
-    src: local("Gill Sans Italic"), local("GillSans-Italic"), url("/site_media/fonts/GillSans/GillSans-Italic.ttf");
-    font-weight: normal; font-style: oblique;
-}
-@font-face {
-    font-family: "Gill Sans";
-    src: local("Gill Sans Bold Italic"), local("GillSans-BoldItalic"), url("/site_media/fonts/GillSans/GillSans-BoldItalic.ttf");
-    font-weight: bold; font-style: italic;
-}
-@font-face {
-    font-family: "Gill Sans";
-    src: local("Gill Sans Bold Italic"), local("GillSans-BoldItalic"), url("/site_media/fonts/GillSans/GillSans-BoldItalic.ttf");
-    font-weight: bold; font-style: oblique;
+  font-family: 'Raleway Local';
+  src: url("/site_media/fonts/Raleway/raleway-extrabold-webfont.eot");
+  src: url("/site_media/fonts/Raleway/raleway-extrabold-webfont.eot?#iefix") format("embedded-opentype"),
+       url("/site_media/fonts/Raleway/raleway-extrabold-webfont.woff2") format("woff2"),
+       url("/site_media/fonts/Raleway/raleway-extrabold-webfont.woff") format("woff"),
+       url("/site_media/fonts/Raleway/raleway-extrabold-webfont.ttf") format("truetype"),
+       url("/site_media/fonts/Raleway/raleway-extrabold-webfont.svg#RalewayBold") format("svg");
+  font-weight: bold; font-style: normal;
 }
 
-*:not(.glyphicon) { font-family: "Gill Sans", Arial, sans-serif !important; }
+@font-face {
+  font-family: 'Raleway Local';
+  src: url("/site_media/fonts/Raleway/raleway-extrabolditalic-webfont.eot");
+  src: url("/site_media/fonts/Raleway/raleway-extrabolditalic-webfont.eot?#iefix") format("embedded-opentype"),
+       url("/site_media/fonts/Raleway/raleway-extrabolditalic-webfont.woff2") format("woff2"),
+       url("/site_media/fonts/Raleway/raleway-extrabolditalic-webfont.woff") format("woff"),
+       url("/site_media/fonts/Raleway/raleway-extrabolditalic-webfont.ttf") format("truetype"),
+       url("/site_media/fonts/Raleway/raleway-extrabolditalic-webfont.svg#RalewayBoldItalic") format("svg");
+  font-weight: bold; font-style: italic;
+}
+
+@font-face {
+  font-family: 'Raleway Local';
+  src: url("/site_media/fonts/Raleway/raleway-medium-webfont.eot");
+  src: url("/site_media/fonts/Raleway/raleway-medium-webfont.eot?#iefix") format("embedded-opentype"),
+       url("/site_media/fonts/Raleway/raleway-medium-webfont.woff2") format("woff2"),
+       url("/site_media/fonts/Raleway/raleway-medium-webfont.woff") format("woff"),
+       url("/site_media/fonts/Raleway/raleway-medium-webfont.ttf") format("truetype"),
+       url("/site_media/fonts/Raleway/raleway-medium-webfont.svg#RalewayBold") format("svg");
+  font-weight: 500; font-style: normal;
+}
+
+@font-face {
+  font-family: 'Raleway Local';
+  src: url("/site_media/fonts/Raleway/raleway-mediumitalic-webfont.eot");
+  src: url("/site_media/fonts/Raleway/raleway-mediumitalic-webfont.eot?#iefix") format("embedded-opentype"),
+       url("/site_media/fonts/Raleway/raleway-mediumitalic-webfont.woff2") format("woff2"),
+       url("/site_media/fonts/Raleway/raleway-mediumitalic-webfont.woff") format("woff"),
+       url("/site_media/fonts/Raleway/raleway-mediumitalic-webfont.ttf") format("truetype"),
+       url("/site_media/fonts/Raleway/raleway-mediumitalic-webfont.svg#RalewayBoldItalic") format("svg");
+  font-weight: 500; font-style: italic;
+}
+
+@font-face {
+  font-family: 'Raleway Local';
+  src: url("/site_media/fonts/Raleway/raleway-italic-webfont.eot");
+  src: url("/site_media/fonts/Raleway/raleway-italic-webfont.eot?#iefix") format("embedded-opentype"),
+       url("/site_media/fonts/Raleway/raleway-italic-webfont.woff2") format("woff2"),
+       url("/site_media/fonts/Raleway/raleway-italic-webfont.woff") format("woff"),
+       url("/site_media/fonts/Raleway/raleway-italic-webfont.ttf") format("truetype"),
+       url("/site_media/fonts/Raleway/raleway-italic-webfont.svg#RalewayItalic") format("svg");
+  font-weight: normal; font-style: italic;
+}
+
+@font-face {
+  font-family: 'Raleway Local';
+  src: url("/site_media/fonts/Raleway/raleway-regular-webfont.eot");
+  src: url("/site_media/fonts/Raleway/raleway-regular-webfont.eot?#iefix") format("embedded-opentype"),
+       url("/site_media/fonts/Raleway/raleway-regular-webfont.woff2") format("woff2"),
+       url("/site_media/fonts/Raleway/raleway-regular-webfont.woff") format("woff"),
+       url("/site_media/fonts/Raleway/raleway-regular-webfont.ttf") format("truetype"),
+       url("/site_media/fonts/Raleway/raleway-regular-webfont.svg#RalewayRegular") format("svg");
+  font-weight: normal; font-style: normal;
+}
+
+*:not(.glyphicon) { font-family: "Raleway", "Raleway Local", Arial, sans-serif !important; }
 body {
 	margin: 50px 0 0 0 !important;
 	padding: 50px 15px 30px 15px;
@@ -42,14 +79,14 @@ body {
 a { text-decoration: none; }
 a:link,
 a:visited,
-a:active { color: #00837F !important; }
+a:active { color: #009B96 !important; }
 a:hover { color: #333; }
 a.nav-hover > div {
 	box-sizing: content-box;
 	border-bottom: 6px solid #fff;
 }
 a.nav-hover.active > div,
-a.nav-hover:hover > div { border-bottom: 6px solid #008180 !important; }
+a.nav-hover:hover > div { border-bottom: 6px solid #009B96 !important; }
 table { border-collapse: collapse; }
 td { padding: 0; }
 p { margin: 0 0 10px; }
@@ -74,13 +111,13 @@ p { margin: 0 0 10px; }
 	text-align: justify;
 }
 .peopleTEXT {
-	line-height: 14px;
+	line-height: 16px;
 	color: #666;
 }
 .yearTEXT {
 	font-size: 14px;
 	font-weight: normal;
-	color: #00817D;
+	color: #009B96;
 }
 
 
@@ -95,14 +132,14 @@ p { margin: 0 0 10px; }
 .peopleH2 {
 	font-size: 20px; line-height: 20px;
 	font-weight: bold;
-	color: #00837F;
+	color: #009B96;
 }
 .publicationsH1 { font-weight: normal; }
 .publicationsH2 { font-weight: bold; }
 table tbody tr td.year-top { border-top: 15px solid #fff; }
 .yearH2 {
 	font-size: 36px;
-	color: #00817D;
+	color: #009B96;
 }.contactH1 {
 	font-size: 14px; line-height: 14px;
 	font-weight: bold;
