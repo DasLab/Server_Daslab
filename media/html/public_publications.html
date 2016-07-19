@@ -98,12 +98,12 @@
                       </td>
                       <td width="386" align="center" valign="top" class="year-top">
                         <p class="TEXT">
-                          {{pub.authors}} ({{pub.year}}) "<u>{{pub.title}}</u>" <i>{{pub.journal}}</i>
+                          {{pub.authors}} ({{pub.year}}) "<u style="font-weight:500;">{{pub.title}}</u>" <i>{{pub.journal}}</i>
                           {% if pub.volume %} {{pub.volume}} {% endif %} 
                           {% if pub.issue %} ({{pub.issue}}) {% endif %} 
                           {% if pub.begin_page %}: {{pub.begin_page}} {% endif %} 
                           {% if pub.end_page %} - {{pub.end_page}} {% endif %}
-                          <span class="yearTEXT">
+                          <span class="yearTEXT" style="font-weight:500;">
                             {% if pub.pdf %} 
                               | <a href="/site_data/pub_pdf/{{pub.pdf_link}}" target="_blank">Paper</a>
                             {% endif %}

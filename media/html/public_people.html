@@ -20,12 +20,13 @@
           </td>
           <td height="175" align="left" valign="middle">
             <p class="HEAD peopleH2">{{ppl.first_name}} {{ppl.last_name}}</p>
-            <p class="peopleTEXT TEXT">{{ppl.role}}
+            <p class="peopleTEXT TEXT">
+              <span style="font-weight:500;">{{ppl.role}}</span>
               <br>
               {{ppl.department}}
               <br>
               {% if ppl.joint_lab %}
-              Joint: <a href="{{ppl.joint_link}}" target="_blank">{{ppl.joint_lab}} Lab</a>
+              Joint: <a href="{{ppl.joint_link}}" target="_blank"><i>{{ppl.joint_lab}} Lab</i></a>
               <br>
               {% endif %}
               {% if ppl.description %}
@@ -80,7 +81,7 @@
               <span class="HEAD peopleH2 past_member">{{ppl.first_name}} {{ppl.last_name}}</span>
               <br>
               <span class="peopleTEXT TEXT">
-              {{ppl.role}}, 
+              <span style="font-weight:500;">{{ppl.role}}</span>, 
               {% if ppl.start_year != ppl.finish_year %}
                 {{ppl.start_year}}-{{ppl.finish_year}}
               {% else %}
