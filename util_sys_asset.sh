@@ -10,7 +10,6 @@ sudo cp -r ../.ssl_cert config/sys/ssl_cert
 sudo cp ../.aws-credential config/sys/aws-credential
 
 sudo cp -r ../django-filemanager config/sys/
-sudo cp -r ../django-webauth config/sys/
 sudo cp ../yuicompressor.jar config/sys/
 
 sudo cp /etc/krb5.conf config/sys/
