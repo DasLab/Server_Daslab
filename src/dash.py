@@ -224,7 +224,10 @@ def cache_git(request):
                     time.sleep(1)
                     contribs = repo.get_stats_contributors()
                     i += 1
-                if contribs is None: return error500(request)
+                if contribs is None:
+                    print '\033[41mERROR\033[0m: Failed to get Stats Contributors for repository \033[94m%s\033[0m.' % repo.name
+                    continue
+
                 data = []
                 for contrib in contribs:
                     a, d = (0, 0)
@@ -265,7 +268,9 @@ def cache_git(request):
                     time.sleep(1)
                     contribs = repo.get_stats_commit_activity()
                     i += 1
-                if contribs is None: return error500(request)
+                if contribs is None:
+                    print '\033[41mERROR\033[0m: Failed to get Stats Commit Activity for repository \033[94m%s\033[0m.' % repo.name
+                    return None
                 fields = ['Commits']
                 for contrib in contribs:
                     data.append({u'Timestamp': contrib.week, u'Commits': sum(contrib.days)})
@@ -276,7 +281,9 @@ def cache_git(request):
                     time.sleep(1)
                     contribs = repo.get_stats_code_frequency()
                     i += 1
-                if contribs is None: return error500(request)
+                if contribs is None:
+                    print '\033[41mERROR\033[0m: Failed to get Stats Code Frequency for repository \033[94m%s\033[0m.' % repo.name
+                    return None
                 fields = ['Additions', 'Deletions']
                 for contrib in contribs:
                     data.append({u'Timestamp': contrib.week, u'Additions': contrib.additions, u'Deletions': contrib.deletions})
