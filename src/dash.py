@@ -57,15 +57,15 @@ def cache_aws(request):
             dict_aws['elb'].append({'name': resv.name, 'dns': resv.dns_name, 'region': ', '.join(resv.availability_zones), 'status': status})
 
             if (not status) and BOT['SLACK']['ADMIN']['MSG_AWS_WARN']:
-                last_status = False
+                last_status = True
                 if os.path.exists('%s/cache/aws/init.json' % MEDIA_ROOT):
                     init = simplejson.load(open('%s/cache/aws/init.json' % MEDIA_ROOT, 'r'))
                     for elb in init['elb']:
                         if elb['name'] == resv.name:
-                            if elb['status']: last_status = True
+                            last_status = elb['status']
                             break
 
-                if not last_status:
+                if last_status:
                     result = dash_duty(0)
                     ppls = result['ppls']
                     (who, _) = find_slack_id(ppls['monthly']['amazon']['main'])
