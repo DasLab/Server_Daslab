@@ -44,7 +44,7 @@ class AutomaticAdminLoginMiddleware(object):
                 # print traceback.format_exc()
 
             if is_admin:
-                user = authenticate(username=env('APACHE_USER'), password=env('APACHE_PASSWORD'))
+                user = authenticate(username=env('DJANGO_USER'), password=env('DJANGO_PASSWORD'))
                 request.user = user
                 login(request, user)
 
