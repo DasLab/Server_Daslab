@@ -1,6 +1,6 @@
 # Das Lab Website Server
 
-<img src="https://daslab.stanford.edu/site_media/images/logo_das.png" alt="DasLab Logo" align="right" width="242">
+<img src="https://daslab.stanford.edu/site_media/images/logo_das.png" alt="DasLab Logo" align="right" width="200" />
 
 This is the _Source Code_ repository for **DasLab** Website **Server**. The production server is freely accessible at https://daslab.stanford.edu/.
 
