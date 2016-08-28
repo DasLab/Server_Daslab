@@ -50,7 +50,7 @@ python manage.py runserver
 
 - Documentation is available at admin [manual](https://daslab.stanford.edu/admin/man/) and [reference](https://daslab.stanford.edu/admin/ref/).
 
-- Alternatively, read the repository [**Wiki**](https://github.com/DasLab/Server_DasLab/wiki/).
+- Alternatively, read the repository [**Wiki**](https://github.com/t47io/Django-Server-Daslab/wiki/).
 
 ## License
 
