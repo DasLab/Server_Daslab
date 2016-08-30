@@ -97,6 +97,9 @@ class Command(BaseCommand):
                             self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "c28fdd", "text": '*LAB DUTY*: Just a reminder for posting your paper of choice for the upcoming _Journal Club_ to `#general`.'}]) )
                     else:
                         return
+                elif datetime.utcnow().date().isoweekday() == result['weekday']:
+                    if BOT['SLACK']['DUTY']['MONTH']['MSG_SCHEDULE']:
+                        self.compose_msg(ppls[flag]['group meeting'], 'Meeting Scheduling', flag, '')
                 else:
                     return
 
@@ -106,8 +109,6 @@ class Command(BaseCommand):
                     self.compose_msg(ppls[flag]['amazon'], 'Amazon Web Services', flag, '')
                 if BOT['SLACK']['DUTY']['MONTH']['MSG_WEBSITE']:
                     self.compose_msg(ppls[flag]['website'], 'Website', flag, '')
-                if BOT['SLACK']['DUTY']['MONTH']['MSG_SCHEDULE']:
-                    self.compose_msg(ppls[flag]['group meeting'], 'Meeting Scheduling', flag, '')
 
                 if BOT['SLACK']['DUTY']['MONTH']['MSG_BDAY']:
                     self.compose_msg(ppls[flag]['birthday'], 'Birthday Celebrations', flag, '')
@@ -133,14 +134,19 @@ class Command(BaseCommand):
                 if datetime.utcnow().date().month == 10:
                     (who_id, _) = find_slack_id(ppls['quarterly']['github']['main'])
                     send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
-                    self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "3ed4e7", "text": '*REMINDER*: Renewal of `Dropbox` membership _annually_. Please check the payment status.'}]) )
+                    self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "3ed4e7", "text": '*REMINDER*: Renewal of `Dropbox` membership _annually_. Please renew and check the payment status.'}]) )
+                    self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "3ed4e7", "text": '*REMINDER*: Renewal of `GitHub` membership _annually_. Please renew and check the payment status.'}]) )
+                elif datetime.utcnow().date().month == 8:
+                    (who_id, _) = find_slack_id(ppls[flag]['amazon']['main'])
+                    send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
+                    self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "3ed4e7", "text": '*REMINDER*: Renewal of `AWS` reserved instances [all upfront] _annually_. Please renew and check the payment status.'}]) )
 
 
             elif flag == 'quarterly':
                 if BOT['SLACK']['DUTY']['QUARTER']['MSG_TRIP']:
-                    self.compose_msg(ppls[flag]['lab trips'], 'Lab Outing/Trips', flag, '')
+                    self.compose_msg(ppls[flag]['lab trips'], 'Lab Outing / Trips', flag, '')
                 if BOT['SLACK']['DUTY']['QUARTER']['MSG_GIT']:
-                    self.compose_msg(ppls[flag]['github'], 'Mailing, Slack, GitHub', flag, '')
+                    self.compose_msg(ppls[flag]['github'], 'Mailing / Slack / GitHub', flag, '')
 
         except Exception:
             print traceback.format_exc()

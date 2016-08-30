@@ -660,6 +660,7 @@ def cache_duty():
             for job in jobs:
                 if job in row[0].lower():
                     ppls[row[1].lower()][job] = {'main': row[2], 'backup': row[3]}
+                    break
         subprocess.check_call("rm %s/cache/duty.csv" % MEDIA_ROOT, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         return {'jobs': jobs, 'ppls': ppls}
     except Exception:
