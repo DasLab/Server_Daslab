@@ -257,8 +257,7 @@ def set_bot_form(request):
 
 
 def restyle_apache():
-    # response = requests.get('https://%s/server-status/' % env('SSL_HOST'), auth=requests.auth.HTTPBasicAuth(env('APACHE_USER'), env('APACHE_PASSWORD'))).text.split('\n')
-    response = subprocess.Popen('curl -J -L -u %s:%s https://%s/server-status/' % (env('APACHE_USER'), env('APACHE_PASSWORD'), env('SSL_HOST')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()[0].strip().split('\n')
+    response = requests.get('https://%s/server-status/' % env('SSL_HOST'), auth=requests.auth.HTTPBasicAuth(env('APACHE_USER'), env('APACHE_PASSWORD'))).text.split('\n')
 
     title = 'Apache Server Status for <code>%s</code> (via <kbd>%s</kbd> )' % (env('SSL_HOST'), response[4].replace(')</h1>', '')[-13:].replace('via ', ''))
     ver = response[6].replace('<dl><dt>Server Version: Apache/', '').replace('(Ubuntu) OpenSSL/', '').replace('WebAuth/', '').replace('mod_wsgi/', '').replace('Python/', '').replace('</dt>', '').split()
