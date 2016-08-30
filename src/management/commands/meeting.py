@@ -10,6 +10,7 @@ from django.core.management.base import BaseCommand
 from src.settings import *
 from src.models import FlashSlide
 from src.console import send_notify_emails, send_notify_slack, send_error_slack, find_slack_id
+from src.dash import dash_schedule, dash_duty
 
 
 class Command(BaseCommand):
@@ -27,7 +28,9 @@ class Command(BaseCommand):
         flag_mismatch = False
 
         try:
-            result = simplejson.load(open('%s/cache/schedule.json' % MEDIA_ROOT, 'r'))
+            result = dash_duty(0)
+            ppls = result['ppls']
+            result = dash_schedule(0)
             offset_1 = int(BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_1'])
             offset_2 = int(BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_2'])
             day_1 = (result['weekday'] - offset_1)
@@ -50,7 +53,9 @@ class Command(BaseCommand):
             else:
                 type_this = types[result['this']['type']]
                 if (datetime.utcnow() + timedelta(days=offset_1)).date() != date.date():
-                    send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "warning", "text": 'Mismatch in Schedule Spreadsheet date. It seems to be not up-to-date.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.'}])
+                    (who_id, _) = find_slack_id(ppls['weekly']['group meeting']['main'])
+                    send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
+                    send_notify_slack(send_to, '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "warning", "text": 'Mismatch in Schedule Spreadsheet date. It seems to be not up-to-date.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.'}])
                     flag_mismatch = True
                     sys.exit(1)
 
@@ -98,12 +103,14 @@ class Command(BaseCommand):
                 else:
                     ids = ['_(None)_']
 
+                (who_id, _) = find_slack_id(ppls['monthly']['website']['main'])
+                send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
                 if flag == 'endofrotationtalk' and BOT['SLACK']['REMINDER']['ROT']['REMINDER_ADMIN']:
-                    self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback": 'REMINDER', "mrkdwn_in": ["text"], "color": "warning", "text": '*REMINDER*: Add *RotationStudent* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
+                    self.msg_handles.append( (send_to, '', [{"fallback": 'REMINDER', "mrkdwn_in": ["text"], "color": "warning", "text": '*REMINDER*: Add *RotationStudent* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
                 if result['this']['type'] == 'JC' and BOT['SLACK']['REMINDER']['JC']['REMINDER_ADMIN']:
-                    self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback": 'REMINDER', "mrkdwn_in": ["text"], "color": "warning", "text": '*REMINDER*: Add *JournalClub* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
+                    self.msg_handles.append( (send_to, '', [{"fallback": 'REMINDER', "mrkdwn_in": ["text"], "color": "warning", "text": '*REMINDER*: Add *JournalClub* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
                 elif result['this']['type'] == 'ES' and BOT['SLACK']['REMINDER']['ES']['REMINDER_ADMIN']:
-                    self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback": 'REMINDER', "mrkdwn_in": ["text"], "color": "warning", "text": '*REMINDER*: Add *EternaYoutube* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
+                    self.msg_handles.append( (send_to, '', [{"fallback": 'REMINDER', "mrkdwn_in": ["text"], "color": "warning", "text": '*REMINDER*: Add *EternaYoutube* entry for _%s_.' % datetime.strftime(date, '%b %d %Y (%a)')}]) )
 
                 send_to = SLACK['ADMIN_NAME'] if DEBUG else "#general"
                 super_prefix = '*Extended/Super* ' if result['this']['type'] == 'FS' else ''
@@ -111,7 +118,9 @@ class Command(BaseCommand):
                 self.msg_handles.append( (send_to, '', [{"fallback": '%s' % title, "mrkdwn_in": ["text"], "color": "warning", "title": '%s' % title, "text": '*<https://docs.google.com/presentation/d/%s/edit#slide=id.p>*\nA <https://daslab.stanford.edu/group/flash_slide/|full list> of Flash Slide links is available on the DasLab Website.' % ppt_id}]) )
 
             if result['last']['note'].lower().replace(' ', '') == 'endofrotationtalk' and BOT['SLACK']['REMINDER']['ROT']['REMINDER_2']:
-                self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback": 'REMINDER', "mrkdwn_in": ["text"], "color": "warning", "text": '*REMINDER*: Revoke permissions (_Group Website_ and _Slack Membership_) of recent finished *RotationStudent*.'}]) )
+                (who_id, _) = find_slack_id(ppls['quarterly']['github']['main'])
+                send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
+                self.msg_handles.append( (send_to, '', [{"fallback": 'REMINDER', "mrkdwn_in": ["text"], "color": "warning", "text": '*REMINDER*: Revoke permissions (_Group Website_ and _Slack Membership_) of recent finished *RotationStudent*.'}]) )
 
 
             if result['next']['type'] == 'N/A':
@@ -169,7 +178,8 @@ class Command(BaseCommand):
                 date = datetime.strptime("%s %s" % (result['next']['date'], year), '%b %d %Y')
                 self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "439fe0", "text": 'For next week: \n', "thumb_url": 'https: //daslab.stanford.edu/site_media/images/group/logo_bot.jpg', "fields": [{'title': 'Date', 'value': '_%s_' % datetime.strftime(date, '%b %d %Y (%a)'), 'short': True}, {'title': 'Time & Place', 'value': '_%s @ %s_' % (result['time']['start'], result['place']), 'short': True}, {'title': 'Type', 'value': '`%s`' % type_next, 'short': True}, {'title': 'Presenter', 'value': '%s' % ', \n'.join(ids), 'short': True}] }]) )
 
-            self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text"], "color": "danger", "text": 'The <https://daslab.stanford.edu/group/schedule/|full schedule> is available on the DasLab Website. For questions regarding the schedule, please contact <%s> (site admin). Thanks for your attention.''' % SLACK['ADMIN_NAME']}]) )
+            (who_id, _) = find_slack_id(ppls['weekly']['group meeting']['main'])
+            self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text"], "color": "danger", "text": 'The <https://daslab.stanford.edu/group/schedule/|full schedule> is available on the DasLab Website. For questions regarding the schedule, please contact <%s> or <%s> (site admin). Thanks for your attention.''' % (who_id, SLACK['ADMIN_NAME'])}]) )
 
         except Exception:
             if flag_mismatch: return
@@ -184,7 +194,9 @@ class Command(BaseCommand):
                 self.stdout.write('\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) removed in MySQL.' % ppt_id)
 
             if IS_SLACK:
-                send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "warning", "text": 'FlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.'}])
+                (who_id, _) = find_slack_id(ppls['weekly']['flash slide']['main'])
+                send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
+                send_notify_slack(send_to, '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "warning", "text": 'FlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.'}])
             else:
                 send_notify_emails('{%s} ERROR: Weekly Meeting Setup' % env('SERVER_NAME'), 'This is an automatic email notification for the failure of scheduled weekly flash slides setup. The following error occurred:\n\n%s\n\n%s\n\nFlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\n\n** Flash Slide has NOT been setup yet for this week! Please investigate and fix the setup immediately.\n\n%s Website Admin' % (ts, err, env('SERVER_NAME')))
 
@@ -201,7 +213,9 @@ class Command(BaseCommand):
             self.stdout.write('\033[92mSUCCESS\033[0m: Meeting Reminder posted in Slack.')
 
         if (not DEBUG):
-            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'SUCCESS', "mrkdwn_in": ["text"], "color": "good", "text": '*SUCCESS*: Scheduled weekly *Flash Slides Setup* finished @ _%s_\n' % time.ctime()}])
+            (who_id, _) = find_slack_id(ppls['weekly']['flash slide']['main'])
+            send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
+            send_notify_slack(send_to, '', [{"fallback": 'SUCCESS', "mrkdwn_in": ["text"], "color": "good", "text": '*SUCCESS*: Scheduled weekly *Flash Slides Setup* finished @ _%s_\n' % time.ctime()}])
         self.stdout.write("Finished with \033[92mSUCCESS\033[0m!")
         self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
 

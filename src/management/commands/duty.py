@@ -10,6 +10,7 @@ from src.models import Member
 from src.console import send_notify_slack, send_error_slack, find_slack_id
 from src.dash import dash_schedule, dash_duty
 
+
 class Command(BaseCommand):
     help = 'Send out individual Responsibility Reminder notifications in Slack.'
 
@@ -85,7 +86,9 @@ class Command(BaseCommand):
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_BROADCAST']:
                             self.compose_msg(ppls['monthly']['eterna'], 'Eterna Broadcast Posting', flag, ' for _Eterna Open Group Meeting_. If _%s_ <@%s> hasn\'t send out descriptions, please ask him/her!' % (who, who_id))
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_NEWS']:
-                            self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "c28fdd", "text": '*LAB DUTY*: Just a reminder for posting news on lab website about the upcoming _Eterna Open Group Meeing_ on *%s* by _%s_ <@%s>.' % (result['this']['date'], who, who_id)}]) )
+                            (who_id, _) = find_slack_id(ppls['monthly']['website']['main'])
+                            send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
+                            self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "c28fdd", "text": '*LAB DUTY*: Just a reminder for posting news on lab website about the upcoming _Eterna Open Group Meeing_ on *%s* by _%s_ <@%s>.' % (result['this']['date'], who, who_id)}]) )
                     elif result['this']['type'] == 'JC':
                         if BOT['SLACK']['REMINDER']['JC']['REMINDER_2']:
                             who = result['this']['who']
@@ -128,7 +131,9 @@ class Command(BaseCommand):
                     self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "ff912e", "text": '_Upcoming Birthdays_:', "fields": fields}]) )
 
                 if datetime.utcnow().date().month == 10:
-                    self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "3ed4e7", "text": '*REMINDER*: Renewal of `Dropbox` membership _annually_. Please check the payment status.'}]) )
+                    (who_id, _) = find_slack_id(ppls['quarterly']['github']['main'])
+                    send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
+                    self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "3ed4e7", "text": '*REMINDER*: Renewal of `Dropbox` membership _annually_. Please check the payment status.'}]) )
 
 
             elif flag == 'quarterly':

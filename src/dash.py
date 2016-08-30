@@ -653,8 +653,9 @@ def cache_duty():
     try:
         lines = open('%s/cache/duty.csv' % MEDIA_ROOT, 'r').readlines()
         ppls = {'weekly': {}, 'monthly': {}, 'quarterly': {}}
-        jobs = ['birthday', 'breakfast', 'eterna', 'group meeting', 'lab trips', 'amazon', 'website', 'github']
-        for row in lines[1:-6]:
+        jobs = ['birthday', 'breakfast', 'eterna', 'group meeting', 'flash slide', 'lab trips', 'amazon', 'website', 'github']
+        n_jobs = next(i for (i, x) in enumerate(lines) if not x.strip().replace(',', ''))
+        for row in lines[1:n_jobs]:
             row = row.split(',')
             for job in jobs:
                 if job in row[0].lower():
