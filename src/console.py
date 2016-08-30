@@ -14,7 +14,6 @@ import textwrap
 import time
 import traceback
 import urllib
-import urllib2
 
 from icalendar import Calendar
 import boto.ec2.cloudwatch, boto.ec2.elb
@@ -258,18 +257,7 @@ def set_bot_form(request):
 
 
 def restyle_apache():
-    # password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
-    # apache_url = 
-    # password_mgr.add_password(None, apache_url, )
-    # handler = urllib2.HTTPBasicAuthHandler(password_mgr)
-    # opener = urllib2.build_opener(handler)
-    # urllib2.install_opener(opener)
-
-    # request = urllib2.urlopen(apache_url)
-    # response = request.read().split('\n')
-    t0 = time.time()
-    response = requests.get('http://%s/server-status/' % env('SSL_HOST'), auth=requests.auth.HTTPBasicAuth(env('APACHE_USER'), env('APACHE_PASSWORD'))).split('\n')
-    print time.time() - t0
+    response = requests.get('http://%s/server-status/' % env('SSL_HOST'), auth=requests.auth.HTTPBasicAuth(env('APACHE_USER'), env('APACHE_PASSWORD'))).text.split('\n')
 
     title = 'Apache Server Status for <code>%s</code> (via <kbd>%s</kbd> )' % (env('SSL_HOST'), response[4].replace(')</h1>', '')[-13:].replace('via ', ''))
     ver = response[6].replace('<dl><dt>Server Version: Apache/', '').replace('(Ubuntu) OpenSSL/', '').replace('WebAuth/', '').replace('mod_wsgi/', '').replace('Python/', '').replace('</dt>', '').split()
