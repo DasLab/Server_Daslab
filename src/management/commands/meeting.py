@@ -179,7 +179,7 @@ class Command(BaseCommand):
                 self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "439fe0", "text": 'For next week: \n', "thumb_url": 'https: //daslab.stanford.edu/site_media/images/group/logo_bot.jpg', "fields": [{'title': 'Date', 'value': '_%s_' % datetime.strftime(date, '%b %d %Y (%a)'), 'short': True}, {'title': 'Time & Place', 'value': '_%s @ %s_' % (result['time']['start'], result['place']), 'short': True}, {'title': 'Type', 'value': '`%s`' % type_next, 'short': True}, {'title': 'Presenter', 'value': '%s' % ', \n'.join(ids), 'short': True}] }]) )
 
             (who_id, _) = find_slack_id(ppls['weekly']['group meeting']['main'])
-            self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text"], "color": "danger", "text": 'The <https://daslab.stanford.edu/group/schedule/|full schedule> is available on the DasLab Website. For questions regarding the schedule, please contact <%s> or <%s> (site admin). Thanks for your attention.''' % (who_id, SLACK['ADMIN_NAME'])}]) )
+            self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text"], "color": "danger", "text": 'The <https://daslab.stanford.edu/group/schedule/|full schedule> is available on the DasLab Website. For questions regarding the schedule, please contact <@%s>. Thanks for your attention.\n\nSite Admin: <%s>' % (who_id, SLACK['ADMIN_NAME'])}]) )
 
         except Exception:
             if flag_mismatch: return

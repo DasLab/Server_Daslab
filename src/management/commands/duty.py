@@ -28,7 +28,7 @@ class Command(BaseCommand):
         (who_bkup, _) = find_slack_id(task_tuple['backup'])
         if who_main:
             msg = '*LAB DUTY*: Just a reminder for the _%s_ task of `%s`%s. If you are unable to do so, please inform the ' % (interval, task_name, alt_text)
-            if who_bkup:
+            if who_bkup and who_bkup != who_main:
                 msg += 'backup person for this task: _%s_ <@%s>.' % (task_tuple['backup'], who_bkup)
             else:
                 msg += 'site admin <@%s> since there is *NO* backup person for this task.' % SLACK['ADMIN_NAME']
