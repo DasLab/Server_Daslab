@@ -133,6 +133,7 @@ def get_backup_stat():
         'pub': [sum([get_folder_num('%s/data/pub_pdf/*' % MEDIA_ROOT), get_folder_num('%s/data/pub_img/*' % MEDIA_ROOT), get_folder_num('%s/data/pub_data/*' % MEDIA_ROOT)]), humansize(sum([get_folder_size('%s/data/pub_pdf/*' % MEDIA_ROOT), get_folder_size('%s/data/pub_img/*' % MEDIA_ROOT), get_folder_size('%s/data/pub_data/*' % MEDIA_ROOT)]))],
         'roton': [sum([get_folder_num('%s/data/rot_ppt/*' % MEDIA_ROOT), get_folder_num('%s/data/rot_data/*' % MEDIA_ROOT)]), humansize(sum([get_folder_size('%s/data/rot_ppt/*' % MEDIA_ROOT), get_folder_size('%s/data/rot_data/*' % MEDIA_ROOT)]))],
         'arxiv': [get_folder_num('%s/data/spe_ppt/*' % MEDIA_ROOT), humansize(get_folder_size('%s/data/spe_ppt/*' % MEDIA_ROOT))],
+        'defpos': [get_folder_num('%s/data/def_img/*' % MEDIA_ROOT), humansize(get_folder_size('%s/data/def_img/*' % MEDIA_ROOT))],
         'backup': {
             'mysql': [os.path.join(MEDIA_ROOT, 'backup/backup_mysql.tgz'), humansize(os.path.getsize('%s/backup/backup_mysql.tgz' % MEDIA_ROOT))],
             'data': [os.path.join(MEDIA_ROOT, 'backup/backup_static.tgz'), humansize(os.path.getsize('%s/backup/backup_static.tgz' % MEDIA_ROOT))],

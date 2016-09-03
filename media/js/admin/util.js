@@ -17,6 +17,8 @@ if (app.page == "backup") {
             $("#id_rot_s").html('<span style="color:#00f;">' + data.roton[1] + '</span>');
             $("#id_spe_n").html('<i>' + data.arxiv[0] + '</i>');
             $("#id_spe_s").html('<span style="color:#00f;">' + data.arxiv[1] + '</span>');
+            $("#id_def_n").html('<i>' + data.defpos[0] + '</i>');
+            $("#id_def_s").html('<span style="color:#00f;">' + data.defpos[1] + '</span>');
 
             $("#id_mysql_s").html('<span style="color:#00f;">' + data.backup.mysql[1] + '</span>');
             $("#id_static_s").html('<span style="color:#00f;">' + data.backup.data[1] + '</span>');
