@@ -10,35 +10,64 @@ import os
 def get_member_image(instance, filename):
     name = instance.first_name.strip() + instance.last_name[0].strip()
     ext = filename[filename.rfind('.'):]
-    return PATH.DATA_DIR['MEMBER_IMG_DIR'] + '%s%s' % (name, ext)
+    filename = PATH.DATA_DIR['MEMBER_IMG_DIR'] + '%s%s' % (name, ext)
+    if os.path.exists(filename):
+        os.remove(filename)
+    return filename
 
 def get_pub_pdf(instance, filename):
-    return PATH.DATA_DIR['PUB_PDF_DIR'] + '%s' % filename
+    filename = PATH.DATA_DIR['PUB_PDF_DIR'] + '%s' % filename
+    if os.path.exists(filename):
+        os.remove(filename)
+    return filename
 
 def get_pub_image(instance, filename):
-    return PATH.DATA_DIR['PUB_IMG_DIR'] + '%s' % filename
+    filename = PATH.DATA_DIR['PUB_IMG_DIR'] + '%s' % filename
+    if os.path.exists(filename):
+        os.remove(filename)
+    return filename
 
 def get_pub_data(instance, filename):
-    return PATH.DATA_DIR['PUB_DAT_DIR'] + '%s' % filename
+    filename = PATH.DATA_DIR['PUB_DAT_DIR'] + '%s' % filename
+    if os.path.exists(filename):
+        os.remove(filename)
+    return filename
 
 def get_news_image(instance, filename):
-    return PATH.DATA_DIR['NEWS_IMG_DIR'] + '%s' % filename
+    filename = PATH.DATA_DIR['NEWS_IMG_DIR'] + '%s' % filename
+    if os.path.exists(filename):
+        os.remove(filename)
+    return filename
 
 def get_rot_ppt(instance, filename):
     name = instance.date.strftime('%Y%m%d') + '_' + instance.full_name.replace(' ', '')
     ext = filename[filename.rfind('.'):]
-    return PATH.DATA_DIR['ROT_PPT_DIR'] + '%s%s' % (name, ext)
+    filename = PATH.DATA_DIR['ROT_PPT_DIR'] + '%s%s' % (name, ext)
+    if os.path.exists(filename):
+        os.remove(filename)
+    return filename
 
 def get_rot_data(instance, filename):
     name = instance.date.strftime('%Y%m%d') + '_' + instance.full_name.replace(' ', '')
     ext = filename[filename.rfind('.'):]
-    return PATH.DATA_DIR['ROT_DAT_DIR'] + '%s%s' % (name, ext)
+    filename = PATH.DATA_DIR['ROT_DAT_DIR'] + '%s%s' % (name, ext)
+    if os.path.exists(filename):
+        os.remove(filename)
+    return filename
 
 def get_spe_ppt(instance, filename):
-    return PATH.DATA_DIR['SPE_PPT_DIR'] + '%s' % filename
+    filename = PATH.DATA_DIR['SPE_PPT_DIR'] + '%s' % filename
+    if os.path.exists(filename):
+        os.remove(filename)
+    return filename
 
 def get_def_image(instance, filename):
-    return PATH.DATA_DIR['DEF_IMG_DIR'] + '%s' % filename
+    name = instance.date.strftime('%Y%m%d') + '_' + instance.presenter.replace(' ', '')
+    ext = filename[filename.rfind('.'):]
+    filename = PATH.DATA_DIR['DEF_IMG_DIR'] + '%s%s' % (name, ext)
+    if os.path.exists(filename):
+        os.remove(filename)
+    return filename
 
 
 class News(models.Model):
