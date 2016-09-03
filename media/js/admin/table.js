@@ -1,6 +1,3 @@
-function replace_path(string) {
-    return string.replace('/home/ubuntu/Server_DasLab/data/', '/site_data/').replace('/Website_Server/Daslab/data/', '/site_data/');
-}
 
 $(document).ready(function () {
     // $('script[src="/static/admin/js/admin/DateTimeShortcuts.js"]').remove();
@@ -120,6 +117,18 @@ $(document).ready(function () {
         $("th.column-title > div.text > a").html('<span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Title');
 
         $("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-cd"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
+    } else if ($(location).attr("href").indexOf("admin/src/defenseposter") != -1) {
+        $("th.column-date").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+        $("th.column-presenter").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
+        $("th.column-title").addClass("col-lg-6 col-md-6 col-sm-6 col-xs-6");
+
+        $("td.field-presenter").css("font-weight", "bold");
+
+        $("th.column-date > div.text > a").html('<span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Date');
+        $("th.column-presenter > div.text > a").html('<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Student');
+        $("th.column-title > div.text > a").html('<span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Title');
+
+        $("div.col-md-6 > h2.legend").html('<span class="glyphicon glyphicon-scissors"></span>&nbsp;' + $("div.col-md-6 > h2.legend").html() + '<span class="pull-right" style="font-weight:normal; font-size: 12px;">(Click values in first column to edit)</span>');
     } else if ($(location).attr("href").indexOf("admin/src/slackmessage") != -1) {
         $("th.column-date").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");
         $("th.column-receiver").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-2");

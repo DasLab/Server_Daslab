@@ -107,6 +107,15 @@ class PresentationAdmin(admin.ModelAdmin):
     ]
 admin.site.register(Presentation, PresentationAdmin)
 
+class DefensePosterAdmin(admin.ModelAdmin):
+    list_display = ('date', 'presenter', 'title',)
+    ordering = ('-date',)
+
+    fieldsets = [
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'presenter', 'title', 'poster']}),
+    ]
+admin.site.register(DefensePoster, DefensePosterAdmin)
+
 class SlackMessageAdmin(admin.ModelAdmin):
     list_display = ('date', 'receiver', 'message')
     ordering = ('-date',)

@@ -96,6 +96,7 @@ class SYS_PATH(Singleton):
             'ROT_PPT_DIR': MEDIA_ROOT + '/data/rot_ppt/',
             'ROT_DAT_DIR': MEDIA_ROOT + '/data/rot_data/',
             'SPE_PPT_DIR': MEDIA_ROOT + '/data/spe_ppt/',
+            'DEF_IMG_DIR': MEDIA_ROOT + '/data/def_img/',
 
             'TMPDIR': MEDIA_ROOT + '/temp/',
         }

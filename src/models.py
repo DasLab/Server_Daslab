@@ -37,6 +37,9 @@ def get_rot_data(instance, filename):
 def get_spe_ppt(instance, filename):
     return PATH.DATA_DIR['SPE_PPT_DIR'] + '%s' % filename
 
+def get_def_image(instance, filename):
+    return PATH.DATA_DIR['DEF_IMG_DIR'] + '%s' % filename
+
 
 class News(models.Model):
     date = models.DateField(verbose_name='Display Date')
@@ -205,6 +208,17 @@ class Presentation(models.Model):
     class Meta():
         verbose_name = 'Archived Presentation'
         verbose_name_plural = 'Archived Presentations'
+
+
+class DefensePoster(models.Model):
+    date = models.DateField(verbose_name='Defense Date')
+    presenter = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Do <span class="label label-danger">NOT</span> use "CamelCase / InterCaps / CapWords". Only capitalize the first word.')
+    poster = models.FileField(upload_to=get_def_image, blank=True, max_length=255, verbose_name='Image Upload', help_text='<span class="glyphicon glyphicon-film"></span>&nbsp; Link to poster on server. <span class="label label-danger">NO</span> spaces in file name.')
+
+    class Meta():
+        verbose_name = 'Defense Poster'
+        verbose_name_plural = 'Defense Posters'
 
 
 class SlackMessage(models.Model):
