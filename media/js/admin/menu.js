@@ -18,7 +18,7 @@ app.fnParseLocation = function() {
     var urls = {
         "sys": ["apache", "aws", "ga", "git", "dir", "backup", "bot"],
         "global": ["news", "member", "publication", "export"],
-        "internal": ["auth", "flashslide", "journalclub", "eternayoutube", "rotationstudent", "presentation", "slackmessage"],
+        "internal": ["auth", "flashslide", "journalclub", "eternayoutube", "rotationstudent", "presentation", "defenseposter", "slackmessage"],
         "doc": ["man", "ref"]
     };
     var page = window.location.pathname.replace('/admin', '').replace(/^\//, '').split('/');
@@ -94,6 +94,8 @@ app.fnChangeBreadcrumb = function() {
                 $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;Rotation Students</li>');
             } else if (app.page == "presentation") {
                 $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;Archived Presentations</li>');
+            } else if (app.page == "defenseposter") {
+                $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-scissors"></span>&nbsp;&nbsp;Defense Posters</li>');
             } else if (app.page == "slackmessage") {
                 $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_slack"></i></div>&nbsp;&nbsp;Slack Messages</li>');
             }
@@ -241,6 +243,5 @@ $(document).ready(function() {
 
 
 $(window).on("resize", throttle(app.fnNavCollapse, 200, 1000));
-
 window.onpopstate = function() { location.reload(); };
 

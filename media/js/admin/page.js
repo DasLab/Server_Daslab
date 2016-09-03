@@ -1,4 +1,8 @@
 if (typeof app.fnFormatInput !== "function") {
+    function replace_path(string) {
+        return string.replace('home/ubuntu/Server_DasLab/data/', '/site_data/').replace('Website_Server/Daslab/data/', '/site_data/');
+    }
+
     app.fnFormatInput = function() {
         $("label.required").css("font-weight", "bold");
         $("table").addClass("table-hover").removeClass("table-bordered table-condensed");
@@ -33,7 +37,7 @@ if (typeof app.fnFormatInput !== "function") {
         });
 
         $('p.file-upload > a').each(function() {
-            $(this).replaceWith('<div class="form-inline"><label>Current:&nbsp;&nbsp;</label><input class="form-control" disabled="disabled" style="cursor:text;" value="' + $(this).attr("href") + '">&nbsp;&nbsp;<a href="'+ replace_path($(this).attr("href")) + '" class="btn btn-default" target="_blank"><span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;View&nbsp;&nbsp;</a></div>');
+            $(this).replaceWith('<div class="form-inline"><label>Current:&nbsp;&nbsp;</label><input class="form-control" disabled="disabled" style="cursor:text;" value="' + $(this).attr("href") + '">&nbsp;&nbsp;<a href="'+ replace_path($(this).attr("href")) + '" class="form-file-view btn btn-default" target="_blank"><span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;View&nbsp;&nbsp;</a></div>');
         });
         $('.clearable-file-input').each(function() {
             $(this).appendTo($(this).prev());
@@ -205,7 +209,7 @@ if (app.page == "backup" || app.page == "bot" || app.page == "export") {
 
 if (["apache", "aws", "ga", "git", "dir", "backup", "export", "man", "ref"].indexOf(app.page) == -1 && app.key != 'home') {
     $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'table' + app.DEBUG_STR + '.js');
-    $("#content a:not(#btn-slack-add):not(#btn-auth-add)").on("click", function(event) {
+    $("#content a:not(#btn-slack-add):not(#btn-auth-add):not(.form-file-view)").on("click", function(event) {
         event.preventDefault();
         app.href = $(this).attr("href");
         $("#content").fadeTo(100, 0, app.fnChangeLocation);
