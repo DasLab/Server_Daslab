@@ -206,7 +206,7 @@ class JournalClub(models.Model):
 
 class RotationStudent(models.Model):
     date = models.DateField(verbose_name='Presentation Date')
-    full_name = models.CharField(max_length=255, verbose_name='Full Name')
+    full_name = models.CharField(max_length=255, verbose_name='Student')
     title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Do <span class="label label-danger">NOT</span> use "CamelCase / InterCaps / CapWords". Only capitalize the first word.')
     ppt = models.FileField(upload_to=get_rot_ppt, blank=True, max_length=255, verbose_name='Slides Upload', help_text='<span class="glyphicon glyphicon-film"></span>&nbsp; Link to slides on server. Use file name format <span class="label label-inverse">DATE_FULLNAME.pptx</span>: date in 8-digits(yyyymmdd), full name (no space). <span class="label label-success">Example</span>: 20120321_SiqiTian.pptx.')
     data = models.FileField(upload_to=get_rot_data, blank=True, max_length=255, verbose_name='Extra Data', help_text='<span class="glyphicon glyphicon-hdd"></span>&nbsp; Link to extra data file.')
@@ -241,9 +241,9 @@ class Presentation(models.Model):
 
 class DefensePoster(models.Model):
     date = models.DateField(verbose_name='Defense Date')
-    presenter = models.CharField(max_length=255)
+    presenter = models.CharField(max_length=255, verbose_name='Student')
     title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Do <span class="label label-danger">NOT</span> use "CamelCase / InterCaps / CapWords". Only capitalize the first word.')
-    poster = models.FileField(upload_to=get_def_image, blank=True, max_length=255, verbose_name='Image Upload', help_text='<span class="glyphicon glyphicon-film"></span>&nbsp; Link to poster on server. <span class="label label-danger">NO</span> spaces in file name.')
+    poster = models.ImageField(upload_to=get_def_image, blank=True, max_length=255, verbose_name='Image Upload', help_text='<span class="glyphicon glyphicon-film"></span>&nbsp; Link to poster on server. <span class="label label-danger">NO</span> spaces in file name.')
 
     class Meta():
         verbose_name = 'Defense Poster'

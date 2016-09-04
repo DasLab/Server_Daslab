@@ -104,7 +104,7 @@ class SYS_PATH(Singleton):
         self.GROUP_PATH = {
             'meeting': ['schedule', 'flash_slide', 'journal_club', 'eterna_youtube', 'rotation'],
             'calendar': ['calendar'],
-            'resource': ['gdocs', 'archive', 'archive/upload', 'contact'],
+            'resource': ['gdocs', 'archive', 'archive/upload', 'defense', 'contact'],
             'server': ['aws', 'ga'],
             'service': ['bot', 'git', 'slack', 'dropbox'],
             'misc': ['misc', 'error']

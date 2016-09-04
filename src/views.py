@@ -113,6 +113,16 @@ def group_pages(request, path):
                 arv.ppt_link = os.path.basename(arv.ppt.name).replace('C:\\fakepath\\', '')
         json = {'arv_list': arv_list}
 
+    elif path == 'defense':
+        pos_list = DefensePoster.objects.order_by('-date')
+        for i, pos in enumerate(pos_list):
+            pos.label = PATH.COLOR[11 - i % 12]
+            if i == 0 or pos_list[i - 1].date.year != pos.date.year:
+                pos.year_start = True
+            if pos.poster:
+                pos.poster_link = os.path.basename(pos.poster.name).replace('C:\\fakepath\\', '')
+        json = {'pos_list': pos_list}
+
     elif path == 'contact':
         if request.method == 'POST': return user_contact(request)
 
