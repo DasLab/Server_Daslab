@@ -243,7 +243,7 @@ class DefensePoster(models.Model):
     date = models.DateField(verbose_name='Defense Date')
     presenter = models.CharField(max_length=255, verbose_name='Student')
     title = models.CharField(max_length=255, verbose_name='Presentation Title', help_text='<span class="glyphicon glyphicon-bullhorn"></span>&nbsp; Do <span class="label label-danger">NOT</span> use "CamelCase / InterCaps / CapWords". Only capitalize the first word.')
-    poster = models.ImageField(upload_to=get_def_image, blank=True, max_length=255, verbose_name='Poster Image', help_text='<span class="glyphicon glyphicon-film"></span>&nbsp; Link to poster on server. <span class="label label-danger">NO</span> spaces in file name.')
+    image = models.ImageField(upload_to=get_def_image, blank=True, max_length=255, verbose_name='Poster Image', help_text='<span class="glyphicon glyphicon-film"></span>&nbsp; Link to poster on server. <span class="label label-danger">NO</span> spaces in file name.')
 
     class Meta():
         verbose_name = 'Defense Poster'
