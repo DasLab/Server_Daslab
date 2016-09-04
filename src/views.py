@@ -119,8 +119,8 @@ def group_pages(request, path):
             pos.label = PATH.COLOR[11 - i % 12]
             if i == 0 or pos_list[i - 1].date.year != pos.date.year:
                 pos.year_start = True
-            if pos.poster:
-                pos.poster_link = os.path.basename(pos.poster.name).replace('C:\\fakepath\\', '')
+            if pos.image:
+                pos.image_link = os.path.basename(pos.image.name).replace('C:\\fakepath\\', '')
         json = {'pos_list': pos_list}
 
     elif path == 'contact':

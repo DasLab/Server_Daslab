@@ -110,9 +110,10 @@ admin.site.register(Presentation, PresentationAdmin)
 class DefensePosterAdmin(admin.ModelAdmin):
     list_display = ('date', 'presenter', 'title',)
     ordering = ('-date',)
+    readonly_fields = ('image_tag',)
 
     fieldsets = [
-        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'presenter', 'title', 'poster']}),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'presenter', 'title', 'image', 'image_tag']}),
     ]
 admin.site.register(DefensePoster, DefensePosterAdmin)
 
