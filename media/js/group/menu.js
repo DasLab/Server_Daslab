@@ -18,7 +18,7 @@ app.fnParseLocation = function() {
     var urls = {
         "meeting": ["schedule", "flash_slide", "journal_club", "eterna_youtube", "rotation"],
         "calendar": ["calendar"],
-        "res": ["gdocs", "archive", "archive/upload", "contact"],
+        "res": ["gdocs", "archive", "archive/upload", "defense", "contact"],
         "server": ["aws", "ga"],
         "service": ["bot", "git", "slack", "dropbox"],
         "misc": ["misc", "error"]
@@ -64,6 +64,8 @@ app.fnChangeBreadcrumb = function() {
                 $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-open"></span>&nbsp;&nbsp;Upload</li>');
                 $('#nav_res-archive').addClass("active");
             }
+        } else if (app.page == "defense") {
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-scissors"></span>&nbsp;&nbsp;Defense Posters</li>');
         } else if (app.page == "contact") {
             $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;Contacts</li>');
         }

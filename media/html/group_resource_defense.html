@@ -1,0 +1,64 @@
+{% extends "media/html/_internal.html" %}
+{% block content %}
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	<div class="row">
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+			<button class="btn btn-warning" id="btn_toggle"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Toggle View</button>
+			&nbsp;&nbsp;<span class="glyphicon glyphicon-road"></span>&nbsp;&nbsp;<span id="label_timeline">Timeline</span>&nbsp;&nbsp;/&nbsp;&nbsp;<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;<span id="label_table">Table</span>
+		</div>
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+	</div>
+
+	<div class="row" id="toggle_timeline">
+		<div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+		<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+		    <ul class="timeline">
+				{% for pos in pos_list %}
+		        <li {% if forloop.counter|divisibleby:2 %} class="timeline-inverted" {% endif %}>
+					<div class="timeline-badge timeline-{{pos.label}}"><span class="glyphicon glyphicon-scissors"></span></div>
+					{% if pos.year_start %}
+					<div class="timeline-year">{{pos.date.year}}</div>
+					{% endif %}
+					<div class="timeline-panel">
+						<div class="timeline-body">
+							<img src="/site_data/def_img/{{pos.poster_link}}" style="max-width:100%;" />
+						</div>
+					</div>
+		        </li>
+				{% endfor %}
+		    </ul>
+		</div>
+		<div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+	</div>
+
+	<div class="row" id="toggle_table">
+		<br/>
+		<div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+		<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+			<table class="table table-hover">
+				<thead>
+					<tr class="active">
+						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Date</th>
+						<th class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Student</th>
+						<th class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Title</th>
+						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><span class="glyphicon glyphicon-scissors"></span>&nbsp;&nbsp;Poster</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for pos in pos_list %}
+					<tr {% if forloop.counter|divisibleby:2 %} class="active" {% endif %}>
+						<td><i>{{pos.date|date:"b d Y"|title}}</i></td>
+						<td><b>{{pos.presenter}}</b></td>
+						<td>{{pos.title}}</td>
+						<td><a href="/site_data/def_img/{{pos.poster_link}}" target="_blank"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+					</tr>
+				{% endfor %}
+					<tr><td colspan="5" style="padding: 0px;"></td></tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+	</div>
+</div>
+{% endblock %}
