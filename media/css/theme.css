@@ -515,7 +515,7 @@ span.presence_yes:hover { color: #ff5c2b; }
   top: 16px;
   left: 50%;
   margin-left: -25px;
-  padding-top: 14px;
+  padding-top: 4px;
   /*background-color: #999999;*/
   z-index: 100;
   border-top-right-radius: 50%;
