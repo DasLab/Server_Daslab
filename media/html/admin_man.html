@@ -146,7 +146,7 @@
               <ul>
                 <li>Edit the Spreadsheet weekly, usually on <i>Friday</i> after meeting. <b>Keep it up-to-date</b> since the <span class="code code_misc">Bot</span> uses it for sending reminders to upcoming presenters.</li>
                 <li><b>Put the current one (this week) on the <u>first row</u> under header. Move the previous one (last week) to the <u>last row</u> of the "previous" section (very bottom).</b></li>
-                <li>Mark <span class="code code_class">Eterna Special</span>, <span class="code code_class">Journal Club</span>, and <span class="code code_cmd">Group Meeting</span> following the convention, using tags of <span class="code code_brand">ES</span>, <span class="code code_class">FS</span>, <span class="code code_key">GM</span>, <span class="code code_path">JC</span> and <span class="code code_method">N/A</span>. (As of <i>Feb 2016</i>), <span class="code code_brand">ES</span> has been discontinued, and <span class="code code_class">FS</span> takes place every other week.</li>
+                <li>Mark <strike><span class="code code_class">Eterna Special</span></strike>, <span class="code code_class">Journal Club</span>, and <span class="code code_cmd">Group Meeting</span> following the convention, using tags of <strike><span class="code code_brand">ES</span></strike>, <span class="code code_class">FS</span>, <span class="code code_key">GM</span>, <span class="code code_path">JC</span> and <span class="code code_method">N/A</span>. (As of <i>Feb 2016</i>), <span class="code code_brand">ES</span> has been discontinued, and <span class="code code_class">FS</span> takes place every other week.</li>
                 <li>Paste <span class="code code_class">Flash Slides</span> <span class="code code_brand">Google Presentation</span> links to the first column. And YouTube url for <span class="code code_class">Eterna Special</span>.</li>
                 <li>Always use non-abbreviated first-name to be compatible with <span class="code code_misc">Bot</span> name-matching.</li>
               </ul>
@@ -169,16 +169,18 @@
               <h4><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Member Management</h4>
               <p>Follow these steps to onboard a new <span class="code code_class">Member</span> / <span class="code code_class">Rotation Student</span> / <span class="code code_cmd">Visitor</span>:</p>
               <ul>
-                <li>Invite to join <span class="code code_val">das-lab</span> <span class="code code_brand">Slack</span> group and <span class="code code_brand">Google Groups</span>, using their <b>Stanford</b> email address only.</li>
+                <li>Invite to join <span class="code code_val">das-lab</span> <span class="code code_brand">Slack</span> group and <span class="code code_brand">Google Groups</span>, using their <u><b>Stanford</b> email address only</u>.</li>
                 <li>Add his/her <span class="code code_key">sunet_id</span> to appropriate group in <span class="code code_path">config/group.conf</span>.</li>
-                <li>Create <span class="code code_class">Member</span> entry in database through <span class="code code_url">/admin/src/member/</span>.</li>
+                <li>Create <span class="code code_class">Member</span> entry in database through <span class="code code_url">/admin/src/member/</span>. Only required for permanent <span class="code code_class">Member</span> only (grad students &amp; postdocs), not <span class="code code_class">Rotation Student</span> or <span class="code code_cmd">Visitor</span>!</li>
                 <li>Add to <span class="code code_url">https://github.com/DasLab/</span> <span class="code code_brand">GitHub</span> organization as <b>Owner</b> if needed.</li>
+                <li>Add to <span class="code code_val">das-lab</span> <span class="code code_brand">Google Groups</span> and <span class="code code_spe">Group Calendar</span>.</li>
               </ul>
               <p>Similary, when a member leaves, please remeber to:</p>
               <ul>
                 <li>Revoke his/her <span class="code code_brand">Slack</span> access by disabling member in the team.</li>
                 <li>Move his/her <span class="code code_key">sunet_id</span> to <span class="code code_val">ALUMNI</span> group in <span class="code code_path">config/group.conf</span>.</li>
                 <li>Toggle <span class="code code_key">is_visible</span> and/or <span class="code code_key">is_alumni</span> flags of the <span class="code code_class">Member</span> entry.</li>
+                <li>Downgrade to <b>Member</b> on <span class="code code_brand">GitHub</span>, <b>no email</b> on <span class="code code_brand">Google Group</span>, and <b>see only busy/free</b> on <span class="code code_spe">Group Calendar</span>.</li>
               </ul>
             </div>
           </div>  
@@ -199,7 +201,7 @@
               <br/>
               <p><span class="code code_class">News</span> <b>class</b></p>
               <ul>
-                <li>Post a news item for upcoming <span class="code code_class">Eterna Special</span> with <span class="code code_brand">YouTube</span> channel link and video link.</li>
+                <li><strike>Post a news item for upcoming <span class="code code_class">Eterna Special</span> with <span class="code code_brand">YouTube</span> channel link and video link.</strike></li>
                 <li>News content is HTML-enabled.</li>
               </ul>
               <br/>
@@ -220,11 +222,11 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
               <h4><span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Maintaining Group Site</h4>
               <ul>
-                <li>Post <span class="code code_class">News</span> for <span class="code code_class">Eterna Special</span> events.</li>
-                <li>Add entries of <span class="code code_class">Journal Club</span>, <span class="code code_class">Eterna Special</span>, and <span class="code code_class">Rotation Student</span> to database when occurs.</li>
-                <li>Add important <span class="code code_class">Presentation</span> to archive through <span class="code code_url">/admin/src/presentation/</span>.</li>
+                <li><strike>Post <span class="code code_class">News</span> for <span class="code code_class">Eterna Special</span> events.</strike></li>
+                <li>Add entries of <span class="code code_class">Journal Club</span>, <strike><span class="code code_class">Eterna Special</span></strike>, and <span class="code code_class">Rotation Student</span> to database when occurs.</li>
+                <li>Add important <span class="code code_class">Presentation</span> to archive through <span class="code code_url">/admin/src/presentation/</span>. Archive <span class="code code_class">Defense Poster</span> when occurs.</li>
                 <li>Maintain <span class="code code_spe">Duty Spreadsheet</span>.</li>
-                <li>Watch out for <span class="code code_brand">Dropbox</span> annual subscription bill.</li>
+                <li>Watch out for <span class="code code_brand">Dropbox</span> and <span class="code code_brand">GitHub</span> annual subscription bill (around <i>October</i>).</li>
               </ul>
             </div>
           </div>
@@ -239,20 +241,20 @@
               <p>It sends reminders to corresponding recipients for the following lab duty based from <span class="code code_spe">Duty Spreadsheet</span>:</p>
               <ul>
                 <li><b>Quarterly</b>: Lab outings, and <span class="code code_brand">Slack</span> / <span class="code code_brand">GitHub</span> maintenance.</li>
-                <li><b>Monthly</b>: Birthday wishes, <span class="code code_brand">AWS</span> maintenance, website content maintenance, and meeting scheduling.</li>
-                <li><b>Weekly</b>: Breakfast, Microphone setup for <span class="code code_class">Eterna Special</span>, <span class="code code_class">News</span> posting for <span class="code code_class">Eterna Special</span>.</li>
+                <li><b>Monthly</b>: Birthday wishes, <span class="code code_brand">AWS</span> maintenance, and website content maintenance.</li>
+                <li><b>Weekly</b>: Breakfast, meeting schedule updates, <strike>Microphone setup for <span class="code code_class">Eterna Special</span>, <span class="code code_class">News</span> posting for <span class="code code_class">Eterna Special</span></strike>.</li>
               </ul>
               <p>It sends <span class="code code_spe">Group Meeting Reminder</span> to <span class="code code_val">#general</span>.</p>
               <p>It sends individual reminders to presenters for:</p>
               <ul>
                 <li>Upcoming <span class="code code_class">Journal Club</span>: announce paper of choice.</li>
-                <li>Upcoming <span class="code code_class">Eterna Special</span>: announce title for posting.</li>
+                <li><strike>Upcoming <span class="code code_class">Eterna Special</span>: announce title for posting.</strike></li>
                 <li>Upcoming <span class="code code_class">Rotation Student</span> presentation: send slides to admin.</li>
               </ul>
               <p>It sends reminders or messages to admin for:</p>
               <ul>
                 <li>Status of system jobs: <span class="code code_cmd">backup</span>, <span class="code code_cmd">gdrive</span>, <span class="code code_cmd">report</span>, and <span class="code code_cmd">versions</span>.</li>
-                <li>Upcoming <span class="code code_class">Journal Club</span>, <span class="code code_class">Eterna Special</span>, <span class="code code_class">Rotation Student</span> presentation: add to database.</li>
+                <li>Upcoming <span class="code code_class">Journal Club</span>, <strike><span class="code code_class">Eterna Special</span></strike>, <span class="code code_class">Rotation Student</span> presentation: add to database.</li>
                 <li>Error <span class="code code_misc">traceback</span>.</li>
               </ul>
               <p>It sends individual wishes on everyone's <u>birthday</u>.</p>
@@ -297,7 +299,7 @@
               <h4><span class="glyphicon glyphicon-hdd"></span>&nbsp;&nbsp;Server Monitoring</h4>
               <ul>
                 <li>Most of analytics, inclduing <span class="code code_brand">Apache</span>, <span class="code code_brand">AWS</span>, <span class="code code_brand">Google Analytics</span> and <span class="code code_brand">GitHub</span>, are available in admin console. No need to login at vendors to see statistics. Alternatively, you can login at vendor's using <span class="code code_val">daslab</span> <span class="code code_brand">Gmail</span> account.</li>
-                <li>For server package upgrade, run <span class="code code_cmd">upd</span>, which is a shortcut that updates both <span class="code code_cmd">apt-get</span> and <span class="code code_cmd">pip</span>. Afterwards, make sure <span class="code code_brand">Apache</span> is running with <span class="code code_misc">worker</span>, NOT <span class="code code_misc">prefork</span>!</li>
+                <li>For server package upgrade, run <span class="code code_cmd">upd</span>, which is a shortcut that updates both <span class="code code_cmd">apt-get</span> and <span class="code code_cmd">pip</span>. Afterwards, make sure <span class="code code_brand">Apache</span> is running with <span class="code code_misc">worker</span>, <b>NOT</b> <span class="code code_misc">prefork</span>!</li>
                 <li>To restart the server, <span class="code code_cmd">swap_off</span> first and use <span class="code code_cmd">sudo reboot</span>. Turn on <span class="code code_cmd">swap</span> to expand the instance's memory, use command <span class="code code_cmd">swap_on</span>.</li>
               </ul>
             </div>

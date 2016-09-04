@@ -176,12 +176,12 @@
                   </p>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
-                  <p>&nbsp;</p>
                   <p>HTTP <span class="code code_method">Request</span></p>
+                  <p><span class="glyphicon glyphicon-arrow-down"></span></p>
+                  <p><span class="code code_brand">Apache</span> <span class="code code_misc">WebAuth</span></p>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
               </div>
-              <br/>
               <div class="row" style="padding-bottom:5px;">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                   App initiation
@@ -392,6 +392,7 @@
                       <tr><td><span class="code code_cmd">upd</span></td><td>Updates <span class="code code_cmd">apt-get</span> and <span class="code code_cmd">pip</span> packages, cleans up old packages, and runs <span class="code code_cmd">dj_man versions</span>. Afterwards, make sure <span class="code code_brand">Apache</span> is running with <span class="code code_misc">worker</span>, NOT <span class="code code_misc">prefork</span>!</td></tr>
                       <tr><td><span class="code code_cmd">sync</span></td><td>Complete procedure for updating server code: pulls repository, runs <span class="code code_path">util_minify.sh</span>, <span class="code code_path">util_sys_asset.sh</span>, <span class="code code_path">util_chmod.sh</span>, and restarts <span class="code code_brand">Apache</span> server.</td></tr>
                       <tr><td><span class="code code_cmd">a2rs</span></td><td>Restarts <span class="code code_brand">Apache</span> server.</td></tr>
+                      <tr><td><span class="code code_cmd">a2st</span></td><td>Full status of <span class="code code_brand">Apache</span> server.</td></tr>
                       <tr><td><span class="code code_cmd">swap_on</span>, <span class="code code_cmd">swap_off</span></td><td>Toggle <u>2 GB</u> of memory swap. Use upon restart of the server.</td></tr>
                       <tr><td><span class="code code_cmd">dj_man</span></td><td>Shortcut for <span class="code code_misc">Django</span> management commands.</td></tr>
                       <tr><td><span class="code code_cmd">dj_cron</span></td><td>Shortcut for <span class="code code_cmd">crontab</span> of <span class="code code_val">www-data</span> user.</td></tr>
@@ -422,7 +423,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 30px;">
               <h4><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;<span class="code code_misc">WebAuth</span> Setup</h4>
               <ul>
-                <li>Install <span class="code code_misc">mod_webauth</span> following <a href="http://webauth.stanford.edu/download.html" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a> and <a href="http://webauth.stanford.edu/install.html" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>. More help <a href="http://webauth.stanford.edu/download.html http://webauth.stanford.edu/" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</li>
+                <li>Install <span class="code code_misc">mod_webauth</span> by <span class="code code_cmd">sudo apt-get install libapache2-mod-webauth</span>, following <a href="http://webauth.stanford.edu/download.html" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a> and <a href="http://webauth.stanford.edu/install.html" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>. More help <a href="http://webauth.stanford.edu/download.html http://webauth.stanford.edu/" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</li>
                 <li>Install <span class="code code_misc">Kerberos</span> following <a href="http://web.mit.edu/kerberos/www/dist/index.html" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</li>
                 <li>Get <span class="code code_spe">keytab</span> file following <a href=" http://webauth.stanford.edu/install-stanford.html" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>. The <span class="code code_brand">AWS</span> instance is not part of Stanford network, thus <span class="code code_cmd">wallet</span> will never be able to retrieve the <span class="code code_spe">keytab</span> file. Use the alternative method described on the page: <span class="code code_cmd">ssh</span> in to your <span class="code code_url">sunet_id@corn.stanford.edu</span>, get the <span class="code code_spe">keytab</span> file, and <span class="code code_cmd">scp</span> it to the instance.</li>
               </ul>
@@ -444,7 +445,7 @@
                   <table class="table table-hover">
                     <tbody>
                       <tr><td><span class="code code_path">httpd.conf</span></td><td>Defines <span class="code code_misc">worker</span> numbers, <span class="code code_url">/server-status/</span> page access, <span class="code code_key">Expires</span> header, and error handling pages. Do not use <span class="code code_misc">prefork</span> with <span class="code code_misc">mod_wsgi</span>!</td></tr>
-                      <tr><td><span class="code code_path">webauth.conf</span></td><td>Group access to <span class="code code_url">/group/</span> and <span class="code code_url">/admin/</span> through <span class="code code_misc">WebAuth</span>.</td></tr>
+                      <tr><td><span class="code code_path">webauth.conf</span></td><td><span class="code code_val">GROUP</span> access to <span class="code code_url">/group/</span>, <span class="code code_url">/site_data/rot_*</span>, <span class="code code_url">/site_data/spe_ppt</span>, and <span class="code code_url">/site_data/def_img/</span>; <span class="code code_val">ADMIN</span>acess to <span class="code code_url">/admin/</span> through <span class="code code_misc">WebAuth</span> referrin to <span class="code code_path">config/group.conf</span>.</td></tr>
                       <tr><td><span class="code code_path">sites-enabled/000-default.conf</span></td><td>Sets <span class="code code_misc">SSL</span>, non-HTTPS redirects, <span class="code code_misc">wsgi</span> app path, directory permissions, and <span class="code code_url">/favicon.ico</span> redirect.</td></tr>
                       <tr><td><span class="code code_path">password</span></td><td>Stores <span class="code code_brand">Apache</span> user logins. Currently only <span class="code code_val">daslab</span>.</td></tr>
                       <tr><td colspan="2" style="padding:0px;"></td></tr>
@@ -489,7 +490,7 @@
                 <ul>
                   <li><span class="code code_val">auth_group</span>, <span class="code code_val">auth_group_permissions</span>, <span class="code code_val">auth_message</span>, <span class="code code_val">auth_permission</span>, <span class="code code_val">auth_user</span>, <span class="code code_val">auth_user_groups</span>, <span class="code code_val">auth_user_user_permissions</span></li>
                   <li><span class="code code_val">django_admin_log</span>, <span class="code code_val">django_content_type</span>, <span class="code code_val">django_flatpage</span>, <span class="code code_val">django_flatpage_sites</span>, <span class="code code_val">django_migrations</span>, <span class="code code_val">django_session</span>, <span class="code code_val">django_site</span></li>
-                  <li><span class="code code_val">src_eternayoutube</span>, <span class="code code_val">src_flashslide</span>, <span class="code code_val">src_journalclub</span>, <span class="code code_val">src_member</span>, <span class="code code_val">src_news</span>, <span class="code code_val">src_presentation</span>, <span class="code code_val">src_publication</span>, <span class="code code_val">src_rotationstudent</span>, <span class="code code_val">src_slackmessage</span></li>
+                  <li><span class="code code_val">src_defenseposter</span>, <span class="code code_val">src_eternayoutube</span>, <span class="code code_val">src_flashslide</span>, <span class="code code_val">src_journalclub</span>, <span class="code code_val">src_member</span>, <span class="code code_val">src_news</span>, <span class="code code_val">src_presentation</span>, <span class="code code_val">src_publication</span>, <span class="code code_val">src_rotationstudent</span>, <span class="code code_val">src_slackmessage</span></li>
                 </ul>
                 <li>Configuration file is located at <span class="code code_path">/etc/mysql/my.cnf</span>. <strike><span class="code code_brand">MySQL</span> version <u>5.7</u> is known to be memory-hungry, with all limits enforced, still gradually increase its memory usage to above <u>700 MB</u>. Thus, we have downgraded to version <u>5.6</u>.</strike> (Solved now by <span class="code code_brand">MySQL</span> <u>5.7.13+</u>.)</li>
               </ul>
@@ -619,6 +620,7 @@
                       <tr><td><span class="code code_path">rot_data/</span></td><td>Rotation student extra data files.</td></tr>
                       <tr><td><span class="code code_path">rot_ppt/</span></td><td>Rotation student presentations.</td></tr>
                       <tr><td><span class="code code_path">spe_ppt/</span></td><td>Archived presentations.</td></tr>
+                      <tr><td><span class="code code_path">def_img/</span></td><td>Defense posters.</td></tr>
                       <tr><td><span class="code code_path">export_citation.*</span></td><td>Temporary files for <span class="code code_url">/admin/export/</span> function (<span class="code code_key">HTML</span> or <span class="code code_key">DOCX</span>)</td></tr>
                       <tr><td colspan="2" style="padding:0px;"></td></tr>
                     </tbody>
@@ -823,7 +825,7 @@
                     <tbody>
                       <tr><td><span class="code code_class">models.Model</span></td><td colspan="2">Database table schema. See <a href="https://docs.djangoproject.com/es/1.9/ref/models/fields/" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</td></tr>
                       <tr><td></td><td>Public site</td><td><span class="code code_class">News</span>, <span class="code code_class">Member</span>, and <span class="code code_class">Publication</span>.</td></tr>
-                      <tr><td></td><td>Group site</td><td><span class="code code_class">FlashSlide</span>, <span class="code code_class">JournalClub</span>, <span class="code code_class">EternaYoutube</span>, <span class="code code_class">RotationStudent</span>, <span class="code code_class">Presentation</span>, and <span class="code code_class">SlackMessage</span>.</td></tr>
+                      <tr><td></td><td>Group site</td><td><span class="code code_class">FlashSlide</span>, <span class="code code_class">JournalClub</span>, <span class="code code_class">EternaYoutube</span>, <span class="code code_class">RotationStudent</span>, <span class="code code_class">Presentation</span>, <span class="code code_class">DefensePoster</span>, and <span class="code code_class">SlackMessage</span>.</td></tr>
                       <tr><td><span class="code code_class">forms.Form</span></td><td colspan="2">Front-end in-page forms. See <a href="https://docs.djangoproject.com/en/1.9/ref/forms/fields/" target="_blank">here&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>.</td></tr>
                       <tr><td></td><td>Admin site</td><td><span class="code code_class">BackupForm</span>, <span class="code code_class">ExportForm</span>, and <span class="code code_class">BotSettingForm</span>.</td></tr>
                       <tr><td></td><td>Group site</td><td><span class="code code_class">UploadForm</span>, <span class="code code_class">ContactForm</span>, and <span class="code code_class">EmailForm</span>.</td></tr>
@@ -944,7 +946,7 @@
                         <td>
                           <ul>
                             <li>Checks if any duty reminders should be sent out today. Accepts an interval argument for category, choose from: <span class="code code_val">week</span>, <span class="code code_val">month</span>, or <span class="code code_val">quarter</span>.</li>
-                            <li><span class="code code_brand">Dropbox</span> payment notice is sent on <u>October</u> <u>annually</u>.</li>
+                            <li><span class="code code_brand">Dropbox</span> and <span class="code code_brand">GitHub</span> payment notice is sent on <u>October</u> <u>annually</u>.</li>
                             <li><b>Birthday</b> reminder includes people's birthdays for the upcoming <u>60</u> days.</li>
                             <li>In <span class="code code_key">DEBUG</span> mode, all <span class="code code_brand">Slack</span> messages will be sent to admin instead of original receiver.</li>
                             <li>The <u>weekly</u> <span class="code code_misc">cron</span> job is triggered <u>daily</u> to capture the 2 <b>reminder</b> dates. The <u>monthly</u> and <u>quarterly</u> <span class="code code_misc">cron</span> jobs are also triggered <u>daily</u>, but only executed fully on <u>first week of each month</u> and the set date. Because checking time inside <span class="code code_cmd">python</span> is easier than coding in <span class="code code_cmd">bash</span>.</li>
@@ -969,7 +971,7 @@
                             <li>Sets up <span class="code code_class">Flash Slides</span> and sends out <span class="code code_spe">Group Meeting Reminder</span>.</li>
                             <li>Only on weeks that are not <span class="code code_val">N/A</span> will <span class="code code_class">Flash Slides</span> be created. Instead of creating a <span class="code code_brand">Google Presentation</span>, it actually copies over an existing blank one specified by <span class="code code_key">TEMPLATE_PRESENTATION_ID</span> in <span class="code code_path">config/oauth.conf</span>, because it's easier this way to have the <b>aspect ratio</b> correct. </li>
                             <li>The <span class="code code_spe">Group Meeting Reminder</span> describes the meeting <u>this week</u>, <u>next week</u>, as well as headers and footers. Presenters' names will be matched by <span class="code code_method">find_slack_id()</span> in <span class="code code_path">src/console.py</span>, and addressed in the message.</li>
-                            <li>Admin will be notified for adding <span class="code code_brand">MySQL</span> entries for <span class="code code_class">Eterna Special</span>, <span class="code code_class">Journal Club</span>, and <span class="code code_class">Rotation Student</span>. Presenter of <u>next week</u> will be notified for preparation.</li>
+                            <li>Admin will be notified for adding <span class="code code_brand">MySQL</span> entries for <strike><span class="code code_class">Eterna Special</span></strike>, <span class="code code_class">Journal Club</span>, and <span class="code code_class">Rotation Student</span>. Presenter of <u>next week</u> will be notified for preparation.</li>
                             <li>In <span class="code code_key">DEBUG</span> mode, all <span class="code code_brand">Slack</span> messages will be sent to admin instead of original receiver.</li>
                             <li>The <span class="code code_misc">cron</span> job is triggered <u>daily</u>, but only executed fully on <u>day before meeting</u>. Because checking time inside <span class="code code_cmd">python</span> is easier than coding in <span class="code code_cmd">bash</span>.</li>
                           </ul>
