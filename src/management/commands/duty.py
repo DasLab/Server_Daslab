@@ -35,7 +35,7 @@ class Command(BaseCommand):
             send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_main
             self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text"], "color": "c28fdd", "text": msg }]) )
         else:
-            self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback": 'Reminder', "mrkdwn_in": ["text"], "color": "ff912e", "text": '*WARNING*: No one is primarily assigned for the duty of _%s_ check of `%s`. *NO* reminder sent.' % (intern, task_name) }]) )
+            self.msg_handles.append( (SLACK['ADMIN_NAME'], '', [{"fallback": 'Reminder', "mrkdwn_in": ["text"], "color": "ff912e", "text": '*WARNING*: No one [%s?] is primarily assigned for the duty of _%s_ check of `%s`. *NO* reminder sent.' % (task_tuple['main'], interval, task_name) }]) )
 
 
     def handle(self, *args, **options):
