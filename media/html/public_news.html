@@ -17,7 +17,7 @@
             {% if news.video %}
             <div class="youtube_video">
               <img src="https://img.youtube.com/vi/{{news.video}}/mqdefault.jpg" width="190">
-              <a href="https://www.youtube.com/watch?v={{news.video}}" target="_blank"></a>
+              <a href="https://www.youtube.com/watch?v={{news.video}}" target="_blank" rel="noopener noreferrer external"></a>
             </div>
             {% endif %}
           </td>
@@ -29,7 +29,7 @@
           </td>
           <td height="160" align="right" valign="bottom">
             {% if news.link %}
-            <a href="{{news.link}}" target="_blank" class="btn_readmore">
+            <a href="{{news.link}}" target="_blank" rel="noopener noreferrer external" class="btn_readmore">
               <div class="imgsp_more_read"></div>
             {% endif %}
             </a>

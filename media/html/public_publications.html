@@ -11,7 +11,7 @@
       <tbody>
         <tr>
           <td width="38" height="15" align="left" valign="middle" class="HEAD publicationsH1">
-            <a href="http://www.ncbi.nlm.nih.gov/pubmed?cmd=Search&term=Das%20Rhiju" target="_blank" id="arrow">
+            <a href="http://www.ncbi.nlm.nih.gov/pubmed?cmd=Search&term=Das%20Rhiju" target="_blank" rel="noopener noreferrer external" id="arrow">
               <div class="imgsp_arrow"></div>
             </a>
           </td>
@@ -65,21 +65,21 @@
                         <br>
                         <span class="yearTEXT"><strong>
                           {% if pub.pdf %} 
-                            <a href="/site_data/pub_pdf/{{pub.pdf_link}}" target="_blank">
+                            <a href="/site_data/pub_pdf/{{pub.pdf_link}}" target="_blank" rel="noopener">
                               {% if pub.is_preprint %} Preprint {% else %} Paper {% endif %}
                             </a>
                           {% endif %}
                           {% if pub.link %} 
-                            | <a href="{{pub.link}}" target="_blank">Link</a>
+                            | <a href="{{pub.link}}" target="_blank" rel="noopener noreferrer external">Link</a>
                           {% endif %}
                           {% if pub.extra_field %} 
-                            | <a href="{{pub.extra_link}}" target="_blank">{{pub.extra_field}}</a>
+                            | <a href="{{pub.extra_link}}" target="_blank" rel="noopener noreferrer external">{{pub.extra_field}}</a>
                           {% endif %}
                           {% if pub.extra_field_2 %} 
-                            | <a href="{{pub.extra_link_2}}" target="_blank">{{pub.extra_field_2}}</a>
+                            | <a href="{{pub.extra_link_2}}" target="_blank" rel="noopener noreferrer external">{{pub.extra_field_2}}</a>
                           {% endif %}
                           {% if pub.extra_field_3 %} 
-                            | <a href="/site_data/pub_data/{{pub.file_link}}" target="_blank">{{pub.extra_field_3}}</a>
+                            | <a href="/site_data/pub_data/{{pub.file_link}}" target="_blank" rel="noopener">{{pub.extra_field_3}}</a>
                           {% endif %}
                         </strong></span>
                       </td>
@@ -105,21 +105,21 @@
                           {% if pub.end_page %} - {{pub.end_page}} {% endif %}
                           <span class="yearTEXT" style="font-weight:500;">
                             {% if pub.pdf %} 
-                              | <a href="/site_data/pub_pdf/{{pub.pdf_link}}" target="_blank">Paper</a>
+                              | <a href="/site_data/pub_pdf/{{pub.pdf_link}}" target="_blank" rel="noopener">Paper</a>
                             {% endif %}
                             {% if pub.link %} 
-                              | <a href="{{pub.link}}" target="_blank">
+                              | <a href="{{pub.link}}" target="_blank" rel="noopener noreferrer external">
                                 {% if pub.is_preprint %} Preprint {% else %} Link {% endif %}
                               </a>
                             {% endif %}
                             {% if pub.extra_field %} 
-                              | <a href="{{pub.extra_link}}" target="_blank">{{pub.extra_field}}</a>
+                              | <a href="{{pub.extra_link}}" target="_blank" rel="noopener noreferrer external">{{pub.extra_field}}</a>
                             {% endif %}
                             {% if pub.extra_field_2 %} 
-                              | <a href="{{pub.extra_link_2}}" target="_blank">{{pub.extra_field_2}}</a>
+                              | <a href="{{pub.extra_link_2}}" target="_blank" rel="noopener noreferrer external">{{pub.extra_field_2}}</a>
                             {% endif %}
                             {% if pub.extra_field_3 %} 
-                              | <a href="/site_data/pub_data/{{pub.file_link}}" target="_blank">{{pub.extra_field_3}}</a>
+                              | <a href="/site_data/pub_data/{{pub.file_link}}" target="_blank" rel="noopener">{{pub.extra_field_3}}</a>
                             {% endif %}
                           </span>
                         </p>

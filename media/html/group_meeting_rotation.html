@@ -25,10 +25,10 @@
 							<h4 class="timeline-title">
 								{{rot.title}}
 								{% if rot.ppt %}
-								&nbsp;&nbsp;<a href="/site_data/rot_ppt/{{rot.ppt_link}}" target="_blank"><span class="glyphicon glyphicon-download-alt" style="font-size:14px;"></span></a>
+								&nbsp;&nbsp;<a href="/site_data/rot_ppt/{{rot.ppt_link}}" target="_blank" rel="noopener"><span class="glyphicon glyphicon-download-alt" style="font-size:14px;"></span></a>
 								{% endif %}
 								{% if rot.data %}
-								&nbsp;&nbsp;<a href="/site_data/rot_data/{{rot.dat_link}}" target="_blank"><span class="glyphicon glyphicon-floppy-save" style="font-size:14px;"</span></a>
+								&nbsp;&nbsp;<a href="/site_data/rot_data/{{rot.dat_link}}" target="_blank" rel="noopener"><span class="glyphicon glyphicon-floppy-save" style="font-size:14px;"</span></a>
 								{% endif %}
 							</h4>
 						</div>
@@ -67,10 +67,10 @@
 						<td><b>{{rot.full_name}}</b></td>
 						<td>{{rot.title}}</td>
 						<td>
-							{% if rot.ppt %} <a href="/site_data/rot_ppt/{{rot.ppt_link}}" target="_blank"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a> {% endif %}
+							{% if rot.ppt %} <a href="/site_data/rot_ppt/{{rot.ppt_link}}" target="_blank" rel="noopener"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a> {% endif %}
 						</td>
 						<td>
-							{% if rot.data %} <a href="/site_data/rot_data/{{rot.dat_link}}" target="_blank"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span></a> {% endif %}
+							{% if rot.data %} <a href="/site_data/rot_data/{{rot.dat_link}}" target="_blank" rel="noopener"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span></a> {% endif %}
 						</td>
 					</tr>
 				{% endfor %}

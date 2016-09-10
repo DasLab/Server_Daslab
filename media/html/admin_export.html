@@ -5,7 +5,7 @@
 
 {% block content %}
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		<form enctype="multipart/form-data" action="/admin/export/" method="post" target="_blank">
+		<form enctype="multipart/form-data" action="/admin/export/" method="post" target="_blank" rel="noopener">
 			{% csrf_token %}
 			<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
 				<div class="thumbnail" style="padding:10px 20px;">

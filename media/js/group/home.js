@@ -44,11 +44,11 @@ $.ajax({
         $("#next_date").html(data.next.date);
         $("#tp").html('<b>' + weekdayNames[data.weekday] + ' @ ' + data.time.start + ' - ' + data.time.end + ' @ ' + data.place + '</b>');
 
-        $("#recent_flash").html('<span class="label label-primary">' + data.flash_slide.date + '</span>&nbsp;&nbsp;<a href="' + data.flash_slide.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
-        $("#recent_jc").html('<i>' + data.journal_club.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.journal_club.date + '</span>&nbsp;&nbsp;<a href="' + data.journal_club.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
-        $("#recent_eterna").html('<i>' + data.eterna.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.eterna.date + '</span>&nbsp;&nbsp;<a href="' + data.eterna.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
-        $("#recent_rotation").html('<i>' + data.rotation.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.rotation.date + '</span>&nbsp;&nbsp;<a href="/site_data/rot_ppt/' + data.rotation.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
-        $("#recent_archive").html('<i>' + data.archive.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.archive.date + '</span>&nbsp;&nbsp;<a href="/site_data/spe_ppt/' + data.archive.url + '" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_flash").html('<span class="label label-primary">' + data.flash_slide.date + '</span>&nbsp;&nbsp;<a href="' + data.flash_slide.url + '" target="_blank" rel="noopener noreferrer external"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_jc").html('<i>' + data.journal_club.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.journal_club.date + '</span>&nbsp;&nbsp;<a href="' + data.journal_club.url + '" target="_blank" rel="noopener noreferrer external"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_eterna").html('<i>' + data.eterna.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.eterna.date + '</span>&nbsp;&nbsp;<a href="' + data.eterna.url + '" target="_blank" rel="noopener noreferrer external"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_rotation").html('<i>' + data.rotation.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.rotation.date + '</span>&nbsp;&nbsp;<a href="/site_data/rot_ppt/' + data.rotation.url + '" target="_blank" rel="noopener"><span class="glyphicon glyphicon-new-window"></span></a>');
+        $("#recent_archive").html('<i>' + data.archive.name + '</i>&nbsp;&nbsp;<span class="label label-primary">' + data.archive.date + '</span>&nbsp;&nbsp;<a href="/site_data/spe_ppt/' + data.archive.url + '" target="_blank" rel="noopener"><span class="glyphicon glyphicon-new-window"></span></a>');
     }
 });
 
@@ -62,12 +62,12 @@ $.ajax({
             var presence1 = '<span class="slack_presence presence_no" data-toggle="tooltip" data-placement="bottom" title="Last Seen: __TS__"><span class="glyphicon glyphicon-unchecked"></span>', presence2 = presence1;
             var u1 = data.users[i], u2 = data.users[i + Math.ceil(data.users.length / 2)];
             if (u1.presence) { presence1 = presence1.replace('presence_no', 'presence_yes').replace('unchecked', 'check'); }
-            html += '<tr><td><a target="_blank" href="mailto:' + u1.email + '"><span class="glyphicon glyphicon-envelope"></span></a>&nbsp;&nbsp;' + presence1.replace('__TS__', u1.last_seen) + '</span>&nbsp;&nbsp;<img src="' + u1.image + '"/>&nbsp;&nbsp;<i>' + u1.name + '</i></td>';
+            html += '<tr><td><a target="_blank" rel="noopener noreferrer external" href="mailto:' + u1.email + '"><span class="glyphicon glyphicon-envelope"></span></a>&nbsp;&nbsp;' + presence1.replace('__TS__', u1.last_seen) + '</span>&nbsp;&nbsp;<img src="' + u1.image + '"/>&nbsp;&nbsp;<i>' + u1.name + '</i></td>';
             if (typeof u2 === "undefined") {
                 html += '<td></td></tr>';
             } else {
                 if (u2.presence) { presence2 = presence2.replace('presence_no', 'presence_yes').replace('unchecked', 'check'); }
-                html += '<td><a target="_blank" href="mailto:' + u2.email + '"><span class="glyphicon glyphicon-envelope"></span></a>&nbsp;&nbsp;' + presence2.replace('__TS__', u2.last_seen) + '</span>&nbsp;&nbsp;<img src="' + u2.image + '"/>&nbsp;&nbsp;<i>' + u2.name + '</i></td></tr>';
+                html += '<td><a target="_blank" rel="noopener noreferrer external" href="mailto:' + u2.email + '"><span class="glyphicon glyphicon-envelope"></span></a>&nbsp;&nbsp;' + presence2.replace('__TS__', u2.last_seen) + '</span>&nbsp;&nbsp;<img src="' + u2.image + '"/>&nbsp;&nbsp;<i>' + u2.name + '</i></td></tr>';
             }
         }
         html += '<tr><td colspan="2" style="padding: 0px;"></td></tr>';

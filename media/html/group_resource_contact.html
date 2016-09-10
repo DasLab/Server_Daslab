@@ -21,18 +21,18 @@
 							{% if ppl.joint_lab %}
 								<br/>
 								<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>&nbsp;&nbsp;
-								Joint with <a href="{{ ppl.joint_link }}" target="_blank">{{ ppl.joint_lab }} lab</a>
+								Joint with <a href="{{ ppl.joint_link }}" target="_blank" rel="noopener noreferrer external">{{ ppl.joint_lab }} lab</a>
 							{% endif %}
 							<br/>
 							<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span id="card_user_stat">Unknown</span>
-							<span class="pull-right"><a id="card_user_cap" target="_blank"><span class="label label-warning">CAP Profile</span></a></span>
+							<span class="pull-right"><a id="card_user_cap" target="_blank" rel="noopener noreferrer external"><span class="label label-warning">CAP Profile</span></a></span>
 						</p>
 						<p style="line-height:25px; margin-top:30px;">
 							<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
 							Phone:&nbsp;&nbsp;<span id="card_user_phone">Unknown</span>
 							<br/>
 							<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
-							Email:&nbsp;&nbsp;<a target="_blank" style="text-decoration:underline;" id="card_user_email"></a>
+							Email:&nbsp;&nbsp;<a target="_blank" rel="noopener noreferrer external" style="text-decoration:underline;" id="card_user_email"></a>
 
 						</p>
 					</div>
@@ -133,18 +133,18 @@
 									{% if ppl.joint_lab %}
 										<br/>
 										<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>&nbsp;&nbsp;
-										Joint with <a href="{{ ppl.joint_link }}" target="_blank">{{ ppl.joint_lab }} lab</a>
+										Joint with <a href="{{ ppl.joint_link }}" target="_blank" rel="noopener noreferrer external">{{ ppl.joint_lab }} lab</a>
 									{% endif %}
 									<br/>
 									<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span>{{ ppl.status }}</span>
-									<span class="pull-right"><a href="{{ ppl.more_info }}" target="_blank"><span class="label label-warning">CAP Profile</span></a></span>
+									<span class="pull-right"><a href="{{ ppl.more_info }}" target="_blank" rel="noopener noreferrer external"><span class="label label-warning">CAP Profile</span></a></span>
 								</p>
 								<p style="line-height:25px; margin-top:30px;">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
 									Phone:&nbsp;&nbsp;{{ ppl.phone }}
 									<br/>
 									<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
-									Email:&nbsp;&nbsp;<a href="mailto:{{ ppl.email }}" target="_blank" style="text-decoration:underline;">{{ ppl.email }}</a>
+									Email:&nbsp;&nbsp;<a href="mailto:{{ ppl.email }}" target="_blank" rel="noopener noreferrer external" style="text-decoration:underline;">{{ ppl.email }}</a>
 
 								</p>
 							</div>
@@ -190,12 +190,12 @@
 											{% if ppl.joint_lab %}
 												<br/>
 												<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>&nbsp;&nbsp;
-												Joint with <a href="{{ ppl.joint_link }}" target="_blank">{{ ppl.joint_lab }} lab</a>
+												Joint with <a href="{{ ppl.joint_link }}" target="_blank" rel="noopener noreferrer external">{{ ppl.joint_lab }} lab</a>
 											{% endif %}
 											<br/>
 											<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span>{{ ppl.status }}</span>
 											{% if ppl.more_info %}
-												<span class="pull-right"><a href="{{ ppl.more_info }}" target="_blank"><span class="label label-warning">CAP Profile</span></a></span>
+												<span class="pull-right"><a href="{{ ppl.more_info }}" target="_blank" rel="noopener noreferrer external"><span class="label label-warning">CAP Profile</span></a></span>
 											{% endif %}
 										</p>
 										<p style="line-height:25px; margin-top:30px;">
@@ -203,7 +203,7 @@
 											Phone:&nbsp;&nbsp;{{ ppl.phone }}
 											<br/>
 											<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
-											Email:&nbsp;&nbsp;<a href="mailto:{{ ppl.email }}" target="_blank" style="text-decoration:underline;">{{ ppl.email }}</a>
+											Email:&nbsp;&nbsp;<a href="mailto:{{ ppl.email }}" target="_blank" rel="noopener noreferrer external" style="text-decoration:underline;">{{ ppl.email }}</a>
 
 										</p>
 									</div>
