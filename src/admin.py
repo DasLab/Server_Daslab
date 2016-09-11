@@ -189,7 +189,9 @@ def key(request):
 
 def get_stat(request, keyword):
     if keyword == "pem":
-        return HttpResponse(''.join(open('%s/config/amazon.pem' % MEDIA_ROOT).readlines()), content_type='application/x-pem-file')
+        response = HttpResponse(''.join(open('%s/config/amazon.pem' % MEDIA_ROOT).readlines()), content_type='application/x-pem-file')
+        response["Content-Disposition"] = "attachment; filename=amazon.pem"
+        return response
     elif keyword == "key":
         (gmail, db) = (env.email_url(), env.db())
         json = {'mysql': {'user': db['USER'], 'password': db['PASSWORD']}, 'apache': {'user': env('APACHE_USER'), 'password': env('APACHE_PASSWORD')}, 'django': {'user': env('DJANGO_USER'), 'password': env('DJANGO_PASSWORD')}, 'gmail': {'user': gmail['EMAIL_HOST_USER'], 'password': gmail['EMAIL_HOST_PASSWORD']}, 'vendor': {'user': gmail['EMAIL_HOST_USER'], 'password': GIT['PASSWORD']}}
