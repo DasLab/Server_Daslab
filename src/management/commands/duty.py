@@ -74,7 +74,16 @@ class Command(BaseCommand):
                     if result['this']['type'] == 'ES':
                         if BOT['SLACK']['DUTY']['ETERNA']['MSG_MIC']:
                             self.compose_msg(ppls['monthly']['eterna'], 'Eterna Microphone Setup', flag, ' for the upcoming _Eterna Open Group Meeting_. Please arrive *30 min* early. The instructions are <https://docs.google.com/document/d/1bh5CYBklIdZl65LJDsBffC8m8J_3jKf4FY1qiYjRIw8/edit|here>')
+
                 elif datetime.utcnow().date().isoweekday() == day_2:
+                    offset = int(BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_2'])
+                    year = (datetime.utcnow() + timedelta(days=offset)).date().year
+                    date = datetime.strptime("%s %s" % (dash_schedule(0)['this']['date'], year), '%b %d %Y')
+                    if (datetime.utcnow() + timedelta(days=offset)).date() != date.date():
+                        (who_id, _) = find_slack_id(ppls['weekly']['group meeting']['main'])
+                        send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
+                        send_notify_slack(send_to, '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "warning", "text": 'Mismatch in Schedule Spreadsheet date. It seems to be not up-to-date. Please fix the Spreadsheet immediately!'}])
+
                     if result['this']['type'] == 'ES':
                         who = result['this']['who']
                         (who_id, _) = find_slack_id(who)
