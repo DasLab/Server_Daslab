@@ -19,7 +19,7 @@ app.fnParseLocation = function() {
         "sys": ["apache", "aws", "ga", "git", "dir", "backup", "bot"],
         "global": ["news", "member", "publication", "export"],
         "internal": ["auth", "flashslide", "journalclub", "eternayoutube", "rotationstudent", "presentation", "defenseposter", "slackmessage"],
-        "doc": ["man", "ref"]
+        "doc": ["man", "ref", "key"]
     };
     var page = window.location.pathname.replace('/admin', '').replace(/^\//, '').split('/');
     app.page = (page[0] == "src")? page[1] : page[0];
@@ -110,6 +110,8 @@ app.fnChangeBreadcrumb = function() {
             $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-scale"></span>&nbsp;&nbsp;Manual</li>');
         } else if (app.page == "ref") {
             $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Reference</li>');
+        } else if (app.page == "key") {
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Secrets</li>');
         }
 
     } else {

@@ -621,6 +621,12 @@ span.presence_yes:hover { color: #ff5c2b; }
   background-color: #eee;
   font-weight: bold;
 }
+
+input.monospace {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace !important;
+  font-weight: bold;
+  font-size: 16px;
+}
 .code {
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace; 
   font-weight: bold;
