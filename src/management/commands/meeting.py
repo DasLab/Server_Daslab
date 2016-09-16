@@ -215,7 +215,7 @@ class Command(BaseCommand):
         if (not DEBUG):
             (who_id, _) = find_slack_id(ppls['weekly']['flash slide']['main'])
             send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
-            send_notify_slack(send_to, '', [{"fallback": 'SUCCESS', "mrkdwn_in": ["text"], "color": "good", "text": '*SUCCESS*: Scheduled weekly *Flash Slides Setup* finished @ _%s_\n' % time.ctime()}])
+            send_notify_slack(send_to, '', [{"fallback": 'SUCCESS', "mrkdwn_in": ["text"], "color": "good", "text": '*SUCCESS*: Scheduled weekly *Flash Slides Setup* finished @ _%s_. Please also paste the link in the Schedule Spreadsheet.\n' % time.ctime()}])
         self.stdout.write("Finished with \033[92mSUCCESS\033[0m!")
         self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
 

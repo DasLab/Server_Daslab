@@ -108,7 +108,7 @@ class Command(BaseCommand):
                         return
                 elif datetime.utcnow().date().isoweekday() == result['weekday']:
                     if BOT['SLACK']['DUTY']['MONTH']['MSG_SCHEDULE']:
-                        self.compose_msg(ppls[flag]['group meeting'], 'Meeting Scheduling', flag, '')
+                        self.compose_msg(ppls[flag]['group meeting'], 'Meeting Scheduling', flag, ' (move current down to bottom, and move next up top)')
                 else:
                     return
 
