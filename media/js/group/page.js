@@ -25,18 +25,6 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "eterna_
         $('div.panel-collapse').on('shown.bs.collapse', function() {
             $(this).prev().children().first().removeClass("glyphicon-chevron-left").addClass("glyphicon-chevron-down");
             $(this).prev().css("color", "#555");
-
-            $(this).children().each(function() {
-                var max_height = 0, row = $(this);
-                row.children().each(function() {
-                    var well = $(this).children().children().last();
-                    if (parseInt(well.css("height")) > max_height) { max_height = parseInt(well.css("height")); }
-                });
-                row.children().each(function() {
-                    var well = $(this).children().children().last();
-                    well.css("height", max_height.toString() + "px");
-                });
-            });
         });
         $('div.panel-collapse').on('hidden.bs.collapse', function() {
             $(this).prev().children().first().removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-left");
@@ -90,14 +78,6 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "eterna_
     if (app.page == "archive/upload") {
         $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'upload' + app.DEBUG_STR + '.js');
     } else if (app.page == "contact") {
-        var max_height = 0;
-        $("div.profile-card").each(function () {
-            if (parseInt($(this).css("height")) > max_height) { max_height = parseInt($(this).css("height")); }
-        });
-        $("div.profile-card").each(function () {
-            $(this).css("height", max_height.toString() + "px");
-        });
-
         var toggle_flag = false;
         $("#btn_toggle").on("click", function () {
             if (toggle_flag) {

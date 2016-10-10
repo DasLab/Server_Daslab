@@ -552,6 +552,33 @@ span.presence_yes:hover { color: #ff5c2b; }
 .timeline-body > ul { margin-bottom: 0; }
 .timeline-body > p + p { margin-top: 5px; }
 
+.equal {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  -moz-flex-flow: row wrap;
+  -mos-flex-flow: row wrap;
+  flex-flow: row wrap;
+
+}
+.equal > div[class*='col-'] {
+  -webkit-flex: 1 1 auto;
+  flex: 0 1 auto;
+  display: flex;
+}
+.equal > div > div.panel {
+  display: flex;
+  flex-direction: column;
+  align-content: stretch; 
+  flex-grow: 1;
+}
+.equal > div > div.panel > div.panel-body,
+.equal > div > div.panel > div.well,
+.equal > div > div.profile-card { flex-grow: 1; }
+
 .profile-card {
   border: 1px solid #d4d4d4;
   border-radius: 2px;

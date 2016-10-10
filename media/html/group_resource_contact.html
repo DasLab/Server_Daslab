@@ -3,12 +3,12 @@
 
 {% block content %}
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<div class="row">
-		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+	<div class="row equal">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 			<div class="profile-card li-default">
 				<div class="row">
 					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" id="card_user_photo"></div>
-					<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+					<div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
 						<p><b class="lead" id="card_user_name">Unknown</b><span class="pull-right"><kbd id="card_user_id">N/A</kbd></span></p>
 						<p style="line-height:25px;">
 							<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;
@@ -39,8 +39,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-			<div class="panel panel-default">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			<div class="panel panel-default" style="margin: 10px 0px;">
 				<div class="panel-heading">
 					<h3 class="panel-title"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;Update Contact Information</h3>
 				</div>
@@ -104,10 +104,10 @@
 	<div id="toggle_card">
 	    <h1><span class="label label-success">Current Members</span><span style="font-size:14px;"><i>&nbsp;&nbsp;(Everyone Else)</i></span></h1>
 
-		<div class="row">
+		<div class="row equal">
 	        {% for ppl in current_member %}
 		        {% if ppl.sunet_id != sunet_id %}
-				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					<div class="profile-card li-{{ppl.label}}">
 						<div class="row">
 							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
@@ -120,7 +120,7 @@
 									<p><span class="label label-magenta"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;Administrator</span></p>
 								{% endif %}
 							</div>
-							<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+							<div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
 								<p><b class="lead">{{ ppl.name }}</b><span class="pull-right"><kbd>{{ ppl.sunet_id }}</kbd></span></p>
 								<p style="line-height:25px;">
 									<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;
