@@ -16,4 +16,6 @@ media/css/min/*.css
 
 config/t47_dev.py
 config/*.conf
+config/*.pem
 config/sys/*
+

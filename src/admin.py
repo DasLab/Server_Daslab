@@ -211,7 +211,7 @@ def refresh_stat(request, keyword):
         if 'QUERY_STRING' in request.META:
             flag = request.META['QUERY_STRING'].replace('int=', '')
             if flag in ('3', '15', '30'):
-                call_command('cache', '--item %s' % flag)
+                call_command('cache', item=[int(flag)])
             else:
                 return error400(request)
         else:
