@@ -202,7 +202,7 @@ def get_stat(request, keyword):
 def refresh_stat(request, keyword):
     keyword = keyword.strip('/')
     if keyword == 'sys':
-        call_command('versions', '1')
+        call_command('versions', '--force')
         return HttpResponseRedirect('/admin/')
     elif keyword == 'backup':
         get_backup_stat()
@@ -211,7 +211,7 @@ def refresh_stat(request, keyword):
         if 'QUERY_STRING' in request.META:
             flag = request.META['QUERY_STRING'].replace('int=', '')
             if flag in ('3', '15', '30'):
-                call_command('cache', flag)
+                call_command('cache', '--item %s' % flag)
             else:
                 return error400(request)
         else:
