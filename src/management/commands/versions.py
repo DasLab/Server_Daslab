@@ -15,12 +15,10 @@ class Command(BaseCommand):
     help = 'Collects system version information and outputs to cache/stat_sys.txt. Existing file will be overwritten.'
 
     def add_arguments(self, parser):
-        # Positional arguments
-        parser.add_argument('manual', nargs='+', type=int, help='Flag for if force to run, choose from (0, 1).')
-
+        parser.add_argument('--force', action='store_true', help='Flag to override SLACK BOT settings.')
 
     def handle(self, *args, **options):
-        flag = (options['manual'][0] == 1) if options['manual'] else False
+        flag = (options['force'] == 1) if options['force'] else False
         if not (BOT['SLACK']['IS_VERSION'] or flag): return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))

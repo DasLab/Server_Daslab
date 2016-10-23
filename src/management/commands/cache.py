@@ -54,18 +54,17 @@ class Command(BaseCommand):
 
 
     def add_arguments(self, parser):
-        # Positional arguments
-        parser.add_argument('interval', nargs='+', type=int, help='Interval, choose from (3, 15, 30).')
+        parser.add_argument('--item', nargs='+', type=int, help='List of interval items, choose from (3, 15, 30).')
 
     def handle(self, *args, **options):
         if not BOT['CACHE']['IS_CACHE']: return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 
-        if options['interval']:
-            is_3 = 3 in options['interval']
-            is_15 = 15 in options['interval']
-            is_30 = 30 in options['interval']
+        if options['item']:
+            is_3 = 3 in options['item']
+            is_15 = 15 in options['item']
+            is_30 = 30 in options['item']
         else:
             is_3, is_15, is_30 = True, True, True
 
