@@ -38,7 +38,10 @@ suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 def send_notify_slack(msg_channel, msg_content, msg_attachment):
     if not settings._wrapped.IS_SLACK: return
     sh = Slacker(SLACK["ACCESS_TOKEN"])
-    sh.chat.post_message(msg_channel, msg_content, attachments=msg_attachment, as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
+    if msg_channel not in ['@', '@nobody']:
+        sh.chat.post_message(msg_channel, msg_content, attachments=msg_attachment, as_user=False, parse='none', username='DasLab Bot', icon_url='https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg')
+    else:
+        msg_channel = '[undesignated admin]'
 
     msg = SlackMessage(date=datetime.now(), receiver=msg_channel, content=msg_content, attachment=msg_attachment)
     msg.save()
