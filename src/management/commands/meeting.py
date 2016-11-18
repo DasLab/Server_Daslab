@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-import pickle
 import requests
 import sys
 import time
@@ -64,7 +63,15 @@ class Command(BaseCommand):
                 temp = requests.post('https://www.googleapis.com/drive/v2/files/%s/copy?access_token=%s' % (DRIVE['TEMPLATE_PRESENTATION_ID'], access_token), json={"title": "%s" % title})
                 ppt_id = temp.json()['id']
                 temp = requests.post('https://www.googleapis.com/drive/v2/files/%s/permissions?sendNotificationEmails=false&access_token=%s' % (ppt_id, access_token), json={"role": "writer", "type": "group", "value": "das-lab@googlegroups.com"})
-                self.stdout.write('\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) created and shared.' % ppt_id)
+                if temp.status_code != 200:
+                    self.stdout.write('\033[41mERROR\033[0m: Google Presentation (\033[94m%s\033[0m) created but NOT shared.' % ppt_id)
+                    if IS_SLACK:
+                        (who_id, _) = find_slack_id(ppls['weekly']['flash slide']['main'])
+                        send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
+                        send_notify_slack(send_to, '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "warning", "text": 'FlashSlide was created but failed on sharing to the group.\nFlash Slide setup is *`NOT`* complete! Please investigate and fix the setup immediately.'}])
+                        send_error_slack(temp.json(), 'Group Meeting Setup', ' '.join(sys.argv), 'log_cron_cache.log')
+                else:
+                    self.stdout.write('\033[92mSUCCESS\033[0m: Google Presentation (\033[94m%s\033[0m) created and shared.' % ppt_id)
 
                 flash_slides = FlashSlide(date=date, link='https://docs.google.com/presentation/d/%s/edit#slide=id.p' % ppt_id)
                 flash_slides.save()
