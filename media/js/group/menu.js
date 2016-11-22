@@ -19,8 +19,8 @@ app.fnParseLocation = function() {
         "meeting": ["schedule", "flash_slide", "journal_club", "eterna_youtube", "rotation"],
         "calendar": ["calendar"],
         "res": ["gdocs", "archive", "archive/upload", "defense", "contact"],
-        "server": ["aws", "ga"],
         "service": ["bot", "secret", "git", "slack", "dropbox"],
+        "server": ["aws", "ga"],
         "misc": ["misc", "error"]
     };
     app.page = window.location.pathname.replace('/group', '').replace(/\/$/, '').replace(/^\//, '');
@@ -69,16 +69,8 @@ app.fnChangeBreadcrumb = function() {
         } else if (app.page == "contact") {
             $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;Contacts</li>');
         }
-    } else if (app.key == "server") {
-        $("ul.breadcrumb").css("border-bottom", "5px solid #50cc32");
-        $('<li><span style="color: #000;" class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;<a href="">Servers</a></li>').insertAfter($("ul.breadcrumb > li:first"));
-        if (app.page == "aws") {
-            $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_aws"></i></div>&nbsp;&nbsp;Amazon Web Services</li>');
-        } else if (app.page == "ga") {
-            $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_ga"></i></div>&nbsp;&nbsp;Google Analytics</li>');
-        }
     } else if (app.key == "service") {
-        $("ul.breadcrumb").css("border-bottom", "5px solid #ff912e");
+        $("ul.breadcrumb").css("border-bottom", "5px solid #50cc32");
         $('<li><span style="color: #000;" class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;<a href="">Services</a></li>').insertAfter($("ul.breadcrumb > li:first"));
         if (app.page == "bot") {
             $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_bot"></i></div>&nbsp;&nbsp;DasLab Bot</li>');
@@ -90,6 +82,14 @@ app.fnChangeBreadcrumb = function() {
             $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_slack"></i></div>&nbsp;&nbsp;<a href="https://das-lab.slack.com/" target="_blank" rel="noopener noreferrer external">Slack&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size:14px;"></span></a></li>');
         } else if (app.page == "dropbox") {
             $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_dropbox"></i></div>&nbsp;&nbsp;<a href="https://www.dropbox.com/" target="_blank" rel="noopener noreferrer external">Dropbox&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size:14px;"></span></a></li>');
+        }
+    } else if (app.key == "server") {
+        $("ul.breadcrumb").css("border-bottom", "5px solid #ff912e");
+        $('<li><span style="color: #000;" class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;<a href="">Servers</a></li>').insertAfter($("ul.breadcrumb > li:first"));
+        if (app.page == "aws") {
+            $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_aws"></i></div>&nbsp;&nbsp;Amazon Web Services</li>');
+        } else if (app.page == "ga") {
+            $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_ga"></i></div>&nbsp;&nbsp;Google Analytics</li>');
         }
     } else if (app.key == "misc") {
         $("ul.breadcrumb").css("border-bottom", "5px solid #5496d7");

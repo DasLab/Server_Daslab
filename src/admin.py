@@ -255,5 +255,5 @@ admin.site.register_view('man/', view=man, visible=False)
 admin.site.register_view('ref/', view=ref, visible=False)
 
 admin.site.register_view(r'dash/(apache|aws|ga|git|group|dash)/?$', view=get_dash, visible=False)
-admin.site.register_view(r'stat/(ver|sys|backup|pem|key)/?$', view=get_stat, visible=False)
+admin.site.register_view(r'stat/(ver|sys|backup|pem)/?$', view=get_stat, visible=False)
 admin.site.register_view(r'stat/(sys|backup|dash)/refresh/?$', view=refresh_stat, visible=False)
