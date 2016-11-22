@@ -185,7 +185,7 @@ if (app.page == "apache") {
     clearTimeout(apache_interval);
 }
 
-if (app.page == "backup" || app.page == "bot" || app.page == "export" || app.page == "key") {
+if (app.page == "backup" || app.page == "bot" || app.page == "export") {
     $.getScript('/site_media/js/admin/' + app.DEBUG_DIR + 'util' + app.DEBUG_STR + '.js');
 } else if (app.page == "dir") {
     $("#iframe").css("width", parseInt($("#content").css("width")) - 50);

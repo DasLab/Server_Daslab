@@ -20,7 +20,7 @@ app.fnParseLocation = function() {
         "calendar": ["calendar"],
         "res": ["gdocs", "archive", "archive/upload", "defense", "contact"],
         "server": ["aws", "ga"],
-        "service": ["bot", "git", "slack", "dropbox"],
+        "service": ["bot", "secret", "git", "slack", "dropbox"],
         "misc": ["misc", "error"]
     };
     app.page = window.location.pathname.replace('/group', '').replace(/\/$/, '').replace(/^\//, '');
@@ -82,6 +82,8 @@ app.fnChangeBreadcrumb = function() {
         $('<li><span style="color: #000;" class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;<a href="">Services</a></li>').insertAfter($("ul.breadcrumb > li:first"));
         if (app.page == "bot") {
             $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_bot"></i></div>&nbsp;&nbsp;DasLab Bot</li>');
+        } else if (app.page == "secret") {
+            $("ul.breadcrumb").append('<li class="active"><span style="color: #000;" class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Shared Secrets</li>');
         } else if (app.page == "git") {
             $("ul.breadcrumb").append('<li class="active"><div class="sprite i_21"><i class="i_git"></i></div>&nbsp;&nbsp;<a href="https://www.github.com/DasLab/" target="_blank" rel="noopener noreferrer external">GitHub Repositories&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size:14px;"></span></a></li>');
         } else if (app.page == "slack") {

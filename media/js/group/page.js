@@ -145,8 +145,41 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "eterna_
     });
 } else if ((app.key == "server" && app.page == "ga") || (app.key == "service" && (app.page == "git" || app.page == "slack" || app.page == "dropbox"))) {
     $.getScript('/site_media/js/group/' + app.DEBUG_DIR + 'gapi' + app.DEBUG_STR + '.js');
-} else if (app.key == "service" && app.page == "bot") {
-    head.load('/site_media/css/fullcalendar.min.css');
+} else if (app.key == "service") {
+    if (app.page == "bot") {
+        head.load('/site_media/css/fullcalendar.min.css');
+    } else if (app.page == "secret") {
+        var toggle_flag = false;
+
+        $(document).ready(function() {
+            $.ajax({
+                url : "/group/dash/secret/",
+                dataType: "json",
+                success : function (data) {
+                    $("#id_login_gmail").val(data.gmail.user);
+                    $("#id_passwd_gmail").val(data.gmail.password);
+                    $("#id_login_vendor").val(data.vendor.user);
+                    $("#id_passwd_vendor").val(data.vendor.password);
+                    $("#id_login_mysql").val(data.mysql.user);
+                    $("#id_passwd_mysql").val(data.mysql.password);
+                    $("#id_login_apache").val(data.apache.user);
+                    $("#id_passwd_apache").val(data.apache.password);
+                    $("#id_login_django").val(data.django.user);
+                    $("#id_passwd_django").val(data.django.password);
+                }
+            });
+            $("#btn_toggle").on("click", function() {
+                if (!toggle_flag) {
+                    $("input[readonly]").attr("type", "text");
+                    $(this).addClass("btn-danger").html('<span class="glyphicon glyphicon-eye-close"></span>&nbsp;&nbsp;Hide Password').removeClass("btn-blue");
+                } else {
+                    $("input[readonly]").attr("type", "password");
+                    $(this).addClass("btn-blue").html('<span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;Show Password').removeClass("btn-danger");
+                }
+                toggle_flag = !toggle_flag;
+            });
+        });
+    }
 } else if (app.key == "misc") {
     if (app.page == "error") {
         $("#iframe").css("width", parseInt($("#content").css("width")) - 50);

@@ -202,6 +202,11 @@ def group_dash(request, keyword):
             json = {'type': 'unknown'} if sunet_id is None else {'id': sunet_id, 'type': user_type}
         json = simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
 
+    elif keyword == 'secret':
+        (gmail, db) = (env.email_url(), env.db())
+        json = {'mysql': {'user': db['USER'], 'password': db['PASSWORD']}, 'apache': {'user': env('APACHE_USER'), 'password': env('APACHE_PASSWORD')}, 'django': {'user': env('DJANGO_USER'), 'password': env('DJANGO_PASSWORD')}, 'gmail': {'user': gmail['EMAIL_HOST_USER'], 'password': gmail['EMAIL_HOST_PASSWORD']}, 'vendor': {'user': gmail['EMAIL_HOST_USER'], 'password': GIT['PASSWORD']}}
+        json = simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
+
     if isinstance(json, HttpResponse): return json
     return HttpResponse(json, content_type='application/json')
 

@@ -183,18 +183,12 @@ def man(request):
 def ref(request):
     return render(request, PATH.HTML_PATH['admin_ref'], {})
 
-def key(request):
-    return render(request, PATH.HTML_PATH['admin_secret'], {})
-
 
 def get_stat(request, keyword):
     if keyword == "pem":
         response = HttpResponse(''.join(open('%s/config/amazon.pem' % MEDIA_ROOT).readlines()), content_type='application/x-pem-file')
         response["Content-Disposition"] = "attachment; filename=amazon.pem"
         return response
-    elif keyword == "key":
-        (gmail, db) = (env.email_url(), env.db())
-        json = {'mysql': {'user': db['USER'], 'password': db['PASSWORD']}, 'apache': {'user': env('APACHE_USER'), 'password': env('APACHE_PASSWORD')}, 'django': {'user': env('DJANGO_USER'), 'password': env('DJANGO_PASSWORD')}, 'gmail': {'user': gmail['EMAIL_HOST_USER'], 'password': gmail['EMAIL_HOST_PASSWORD']}, 'vendor': {'user': gmail['EMAIL_HOST_USER'], 'password': GIT['PASSWORD']}}
     else:
         json = simplejson.load(open('%s/cache/stat_%s.json' % (MEDIA_ROOT, keyword.strip('/')), 'r'))
     return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
@@ -259,7 +253,6 @@ admin.site.register_view('export/', view=export, visible=False)
 
 admin.site.register_view('man/', view=man, visible=False)
 admin.site.register_view('ref/', view=ref, visible=False)
-admin.site.register_view('key/', view=key, visible=False)
 
 admin.site.register_view(r'dash/(apache|aws|ga|git|group|dash)/?$', view=get_dash, visible=False)
 admin.site.register_view(r'stat/(ver|sys|backup|pem|key)/?$', view=get_stat, visible=False)

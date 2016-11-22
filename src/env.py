@@ -107,7 +107,7 @@ class SYS_PATH(Singleton):
             'calendar': ['calendar'],
             'resource': ['gdocs', 'archive', 'archive/upload', 'defense', 'contact'],
             'server': ['aws', 'ga'],
-            'service': ['bot', 'git', 'slack', 'dropbox'],
+            'service': ['bot', 'secret', 'git', 'slack', 'dropbox'],
             'misc': ['misc', 'error']
         }
 
