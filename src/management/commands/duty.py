@@ -140,7 +140,7 @@ class Command(BaseCommand):
                     send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_main
                     self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "ff912e", "text": '_Upcoming Birthdays_:', "fields": fields}]) )
 
-                if datetime.utcnow().date().month == 10:
+                if datetime.utcnow().date().month == 11:
                     (who_id, _) = find_slack_id(ppls['quarterly']['github']['main'])
                     send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who_id
                     self.msg_handles.append( (send_to, '', [{"fallback": 'Reminder', "mrkdwn_in": ["text", "fields"], "color": "3ed4e7", "text": '*REMINDER*: Renewal of `Dropbox` membership _annually_. Please renew and check the payment status.'}]) )

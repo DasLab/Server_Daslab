@@ -800,5 +800,5 @@ def format_dash_ts(rel_path, interval):
         else:
             t = '<span class="label label-primary">' + t.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     else:
-        t = '<span class="label label-primary">N/A</span>'
+        t = '<span class="label label-default">N/A</span>'
     return t
