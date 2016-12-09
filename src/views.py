@@ -24,7 +24,7 @@ def pages(request, keyword):
 
     elif keyword == 'people':
         member = Member.objects.filter(is_alumni=0, is_visible=1).order_by('last_name', 'first_name')
-        almuni = Member.objects.filter(is_alumni=1, is_visible=1).order_by('finish_year', 'start_year')
+        almuni = Member.objects.filter(is_alumni=1, is_visible=1).order_by('finish_year', '-start_year')
         for ppl in member:
             if ppl.image:
                 ppl.image_link = os.path.basename(ppl.image.name)
