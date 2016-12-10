@@ -339,6 +339,8 @@ h1.section > span.num { color: #ff0; }
 }
 .excerpt {
   overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-word;
   text-overflow: ellipsis;
   max-height: 5em;
 }
