@@ -201,17 +201,22 @@ class Command(BaseCommand):
         except Exception:
             tb = traceback.format_exc()
             if IS_SLACK and not DEBUG:
-                if ('pickle_git' in tb or 'cache_git' in tb) and ('ConnectionError' in tb or 'SSLError' in tb or 'timed out' in tb):
+                if ('pickle_aws' in tb or 'cache_aws' in tb) and ('BotoServerError' in tb or '500' in tb or 'Internal Server Error' in tb):
+                    if os.path.exists('%s/cache/aws/init.json' % MEDIA_ROOT):
+                        t = datetime.fromtimestamp(os.path.getmtime('%s/cache/aws/init.json' % MEDIA_ROOT))
+                        if ((now - t).seconds >= 60 * 2.5 * 60):
+                            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`ERROR`*: *pickle_aws()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
+                elif ('pickle_git' in tb or 'cache_git' in tb) and ('ConnectionError' in tb or 'SSLError' in tb or 'timed out' in tb):
                     if os.path.exists('%s/cache/git/init.json' % MEDIA_ROOT):
                         t = datetime.fromtimestamp(os.path.getmtime('%s/cache/git/init.json' % MEDIA_ROOT))
                         if ((now - t).seconds >= 60 * 2.5 * 60):
                             send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`ERROR`*: *pickle_git()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
-                elif ('pickle_slack' in tb or 'cache_slack' in tb) and ('500' in tb and 'Internal Server Error' in tb) or ('503' in tb and 'Service' in tb and 'Unavailable' in tb) or ('504' in tb and 'gateway' in tb.lower()) or ('HTTPSConnectionPool' in tb):
+                elif ('pickle_slack' in tb or 'cache_slack' in tb) and (('500' in tb and 'Internal Server Error' in tb) or ('503' in tb and 'Service' in tb and 'Unavailable' in tb) or ('504' in tb and 'gateway' in tb.lower()) or ('HTTPSConnectionPool' in tb) or ('solr_failed' in tb)):
                     if os.path.exists('%s/cache/slack/users.json' % MEDIA_ROOT):
                         t = datetime.fromtimestamp(os.path.getmtime('%s/cache/slack/users.json' % MEDIA_ROOT))
                         if ((now - t).seconds >= 60 * 2.5 * 60):
                             send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'ERROR', "mrkdwn_in": ["text"], "color": "ff69bc", "text": '*`ERROR`*: *pickle_slack()* Connection/SSL Error @ _%s_\n' % time.ctime()}])
-                elif ('pickle_dropbox' in tb or 'cache_dropbox' in tb) and ('502' in tb and 'Bad Gateway' in tb) or ('503' in tb and 'Service Unavailable' in tb):
+                elif ('pickle_dropbox' in tb or 'cache_dropbox' in tb) and (('500' in tb and 'server' in tb) or ('502' in tb and 'Bad Gateway' in tb) or ('503' in tb and 'Service Unavailable' in tb)):
                     if os.path.exists('%s/cache/dropbox/folders.json' % MEDIA_ROOT):
                         t = datetime.fromtimestamp(os.path.getmtime('%s/cache/dropbox/folders.json' % MEDIA_ROOT))
                         if ((now - t).seconds >= 60 * 2.5 * 60):
