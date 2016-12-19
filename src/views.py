@@ -137,7 +137,7 @@ def group_pages(request, path):
             if ppl.phone:
                 ppl.phone = str(ppl.phone)
                 ppl.phone = '(%s) %s-%s' % (ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
-        almuni = Member.objects.filter(is_alumni=1).order_by('-finish_year', '-start_year')
+        almuni = Member.objects.filter(is_alumni=1).order_by('-finish_year', 'start_year')
         for i, ppl in enumerate(almuni):
             ppl.label = PATH.COLOR[11 - i % 12]
             if i == 0 or almuni[i - 1].finish_year != ppl.finish_year:
