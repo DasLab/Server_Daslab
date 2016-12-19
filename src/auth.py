@@ -61,6 +61,8 @@ class ExceptionUserInfoMiddleware(object):
 
 GROUP = USER_GROUP()
 MANAGERS = ADMINS = ( (env('ADMIN_NAME'), env('ADMIN_EMAIL')), )
+if bool(int(env('EXTRA_NOTIFY'))):
+    ADMINS = ( ADMINS[0], (env('EXTRA_NAME'), env('EXTRA_EMAIL')) )
 EMAIL_NOTIFY = env('ADMIN_EMAIL')
 (EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_USE_TLS, EMAIL_PORT, EMAIL_HOST) = [v for k, v in env.email_url().items() if k in ['EMAIL_HOST_PASSWORD', 'EMAIL_HOST_USER', 'EMAIL_USE_TLS', 'EMAIL_PORT', 'EMAIL_HOST']]
 EMAIL_SUBJECT_PREFIX = '{%s}' % env('SERVER_NAME')
