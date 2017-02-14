@@ -69,27 +69,24 @@
         </tr>
 
         <tr>
-          <td align="left" valign="top">
+          <td style="vertical-align:top;">
             <br><br>
             <img src="/site_media/images/public/word_people.png" width="140" height="36" alt="alumni">
           </td>
-          <td colspan="2" align="left" valign="top">
+          <td colspan="2" style="vertical-align:top;">
             <p>&nbsp;</p>
-            <p style="line-height:18px;">
-              {% for ppl in past_member %}
-              <span class="HEAD peopleH2 past_member">{{ppl.first_name}} {{ppl.last_name}}</span>
-              <br>
-              <span class="peopleTEXT TEXT">
+            <br/>
+            {% for ppl in past_member %}
+            <p class="HEAD peopleH2 past_member" style="margin-bottom:4px;">{{ppl.first_name}} {{ppl.last_name}}</p>
+            <p class="peopleTEXT TEXT" style="line-height:18px; margin-bottom:20px;">
               <span style="font-weight:500;">{{ppl.role}}</span>, 
               {% if ppl.start_year != ppl.finish_year %}
                 {{ppl.start_year}}-{{ppl.finish_year}}
               {% else %}
                 {{ppl.start_year}}
               {% endif %}
-              </span>
-              <br><br>
-              {% endfor %}
-        	  </p>
+            </p>
+            {% endfor %}
           </td>
         </tr>
       </tbody>
