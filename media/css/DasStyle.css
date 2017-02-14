@@ -136,11 +136,16 @@ p { margin: 0 0 10px; }
 }
 .publicationsH1 { font-weight: normal; }
 .publicationsH2 { font-weight: bold; }
-table tbody tr td.year-top { border-top: 15px solid #fff; }
+.publicationFeatured td:not(:first-child) {
+  background-color: #CCDFE0;
+  border-top: 15px solid #fff;
+ }
+.publicationFeatured td:first-child  { vertical-align: top; }
 .yearH2 {
 	font-size: 36px;
 	color: #009B96;
-}.contactH1 {
+}
+.contactH1 {
 	font-size: 14px; line-height: 14px;
 	font-weight: bold;
 }
