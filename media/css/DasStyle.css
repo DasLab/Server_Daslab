@@ -129,18 +129,25 @@ p { margin: 0 0 10px; }
 	line-height: 31px;
 	font-weight: normal;
 }
+.newsTable td { vertical-align: middle; }
+.newsTable td:last-child { vertical-align: bottom; }
+.newsTable td:first-child { text-align: center; }
+.newsTable tr.switch td { vertical-align: middle; }
 .peopleH2 {
 	font-size: 20px; line-height: 20px;
 	font-weight: bold;
 	color: #009B96;
 }
+.current_member td { vertical-align: middle; }
+.current_member td:last-child { vertical-align: bottom; }
 .publicationsH1 { font-weight: normal; }
 .publicationsH2 { font-weight: bold; }
 .publicationFeatured td:not(:first-child) {
   background-color: #CCDFE0;
   border-top: 15px solid #fff;
  }
-.publicationFeatured td:first-child  { vertical-align: top; }
+.publicationFeatured td:first-child { vertical-align: top; }
+.publicationFeatured td:last-child { padding: 20px 20px 20px 0px; }
 .yearH2 {
 	font-size: 36px;
 	color: #009B96;
@@ -266,6 +273,7 @@ p { margin: 0 0 10px; }
 	width: 121px;
 	height: 32px;
 	background-position: 0 0;
+  margin-bottom: 12px;
 }
 .imgsp_more_info:hover { background-position: -122px 0; }
 .imgsp_more_read {

@@ -7,13 +7,12 @@
   </div>
 
   <div class="TEXT BODY">
-    <table width="855" height="820" border="0">
+    <table class="newsTable" width="855" height="820" border="0">
       <tbody>
-
         {% for news in news_list %}
         <tr {% if forloop.counter <= 10 %} class="current" {% else %} class="previous" {% endif %}>
-          <td width="225" align="middle" valign="left">
-            {% if news.image %} <img src="/site_data/news_img/{{news.image_link}}" width="190"> {% endif %}
+          <td width="225">
+            {% if news.image %} <img src="/site_data/news_img/{{news.image_link}}" width="190" style="padding:20px 0px;"> {% endif %}
             {% if news.video %}
             <div class="youtube_video">
               <img src="https://img.youtube.com/vi/{{news.video}}/mqdefault.jpg" width="190">
@@ -21,13 +20,13 @@
             </div>
             {% endif %}
           </td>
-          <td width="500" align="left" valign="top" class="TEXT">
+          <td width="500" class="TEXT">
             <p class="yearTEXT"><i>{{news.date|date:"F d, Y"|title}}</i></p>
             <p class="TEXT">
               {% autoescape off %}{{news.content}}{% endautoescape %}
             </p>
           </td>
-          <td height="160" align="right" valign="bottom">
+          <td height="160" align="right">
             {% if news.link %}
             <a href="{{news.link}}" target="_blank" rel="noopener noreferrer external" class="btn_readmore">
               <div class="imgsp_more_read"></div>
@@ -40,18 +39,17 @@
         </tr>
         {% if forloop.counter == 10 %}
           <tr class="switch">
-            <td width="38" height="15" align="left" valign="middle" class="publicationsH1">
+            <td width="38" height="48" class="publicationsH1">
               <a id="arrow"><div class="imgsp_arrow"></div></a>
             </td>
-            <td height="15" align="left" valign="middle" class="HEAD publicationsH1" id="previous">Previous news from the Das Lab.</strong></td>
+            <td height="48" class="HEAD publicationsH1" id="previous">Previous news from the Das Lab.</strong></td>
           </tr>
           <tr class="switch">
-            <td height="20" colspan="3"><div class="divisionLine"></div></td>
+            <td height="2" colspan="3"><div class="divisionLine"></div></td>
           </tr>
         {% endif %}
 
         {% endfor %}
-
       </tbody>
     </table>
   </div>

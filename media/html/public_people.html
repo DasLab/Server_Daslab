@@ -11,14 +11,14 @@
       <tbody>
         {% for ppl in current_member %}
         <tr class="current_member">
-          <td height="175" align="left" valign="middle">
+          <td height="175">
             {% if ppl.image %}
               <img src="/site_data/ppl_img/{{ppl.image_link}}" width="119"> 
             {% else %}
               <img src="/site_media/images/icon_default_avatar.png" width="119"> 
             {% endif %}
           </td>
-          <td height="175" align="left" valign="middle">
+          <td height="175">
             <p class="HEAD peopleH2">{{ppl.first_name}} {{ppl.last_name}}</p>
             <p class="peopleTEXT TEXT">
               <span style="font-weight:500;">{{ppl.role}}</span>
@@ -35,21 +35,20 @@
               {% endif %}
             </p>
           </td>
-          <td height="175" align="right" valign="bottom">
-            <a href="{{ppl.more_info}}" target="_blank" rel="noopener noreferrer external" class="btn_moreinfo">
+          <td height="175" align="right">
+            <a href="{{ppl.more_info}}" target="_blank" rel="noopener noreferrer external">
               <div class="imgsp_more_info"></div>
             </a>
           </td>
         </tr>
         <tr>
-          <td height="20" colspan="3" align="left" valign="middle"><div class="divisionLine"></div></td>
+          <td height="20" colspan="3"><div class="divisionLine"></div></td>
         </tr>
         {% endfor %}
 
-
-        <tr>
-          <td height="175" align="left" valign="middle"><img src="/site_data/ppl_img/RhijuD.jpg" width="119" height="157"></td>
-          <td height="175" align="left" valign="middle">
+        <tr class="current_member">
+          <td height="175"><img src="/site_data/ppl_img/RhijuD.jpg" width="119" height="157"></td>
+          <td height="175">
             <p class="HEAD peopleH2">Rhiju Das</p>
             <p class="peopleTEXT TEXT">
               <strong>Principal Investigator</strong>
@@ -59,14 +58,14 @@
               <a href="http://eterna.stanford.edu/web/blog/" target="_blank" rel="noopener noreferrer external">Eterna Blog</a>
             </p>
           </td>
-          <td height="175" align="right" valign="bottom">
-            <a href="https://cap.stanford.edu/profiles/auth/frdActionServlet?choiceId=facProfile&fid=10421" target="_blank" rel="noopener noreferrer external" class="btn_moreinfo">
+          <td height="175" align="right">
+            <a href="https://cap.stanford.edu/profiles/auth/frdActionServlet?choiceId=facProfile&fid=10421" target="_blank" rel="noopener noreferrer external">
               <div class="imgsp_more_info"></div>
             </a>
           </td>
         </tr>
         <tr>
-          <td height="20" colspan="3" align="left" valign="middle"><div class="divisionLine"></div></td>
+          <td height="20" colspan="3"><div class="divisionLine"></div></td>
         </tr>
 
         <tr>
