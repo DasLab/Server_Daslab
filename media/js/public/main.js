@@ -36,6 +36,11 @@ app.fnChangeView = function() {
     $("table.previous").hide();
     $("p.previous").hide();
     $(".DASpublications").css("height", $("table.current:last").offset().top + 300);
+    setTimeout(function() {
+      if (!$("table.previous").is(":visible")) {
+        $(".DASpublications").css("height", $("table.current:last").offset().top + 300);
+      }
+    }, 1500);
 
     $("#search").on("click", function() { $("#arrow")[0].click(); });
     $("#arrow2, #expand").on("click", function() {
@@ -60,6 +65,11 @@ app.fnChangeView = function() {
   } else if (app.page == 'news') {
     $("tr.previous").hide();
     $(".DASnews").css("height", $("tr.middle").offset().top + 200);
+    setTimeout(function() {
+      if (!$("tr.previous").is(":visible")) {
+        $(".DASnews").css("height", $("tr.middle").offset().top + 200);
+      }
+    }, 1500);
 
     $("#arrow, #previous").on("click", function() {
       $("tr.previous").fadeToggle(150, function() {
