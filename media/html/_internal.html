@@ -9,7 +9,7 @@
     <script type="text/javascript">
       var app = {DEBUG_DIR: "{{DEBUG_DIR}}", DEBUG_STR: "{{DEBUG_STR}}", js_ver: {% autoescape off %}{{js_ver}}{% endautoescape %}};
     </script>
-    <script type="text/javascript" src="/site_media/js/head.load.min.js" data-headjs-load="/site_media/js/public/{{DEBUG_DIR}}load{{DEBUG_STR}}.js"></script>
+    <script type="text/javascript" src="/site_media/js/head.load.min.js" data-headjs-load="/site_media/js/group/{{DEBUG_DIR}}load{{DEBUG_STR}}.js"></script>
     {% block head %}{% endblock %}
 
     <script type="text/javascript">
