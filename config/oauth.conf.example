@@ -43,7 +43,7 @@
 	},
 
 	"GIT": {
-		"REPOSITORY": "org_name/repo_name",
+		"REPOSITORY": "DasLab/Server_Daslab",
 
 		"USERNAME": "login",
 		"PASSWORD": "password",
