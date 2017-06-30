@@ -454,11 +454,11 @@ def dash_slack(request):
 
 def cache_dropbox(request):
     qs = request['qs']
-    dh = dropbox.client.DropboxClient(DROPBOX["ACCESS_TOKEN"])
+    dh = dropbox.Dropbox(DROPBOX["ACCESS_TOKEN"])
 
     if qs == 'sizes':
-        account = dh.account_info()
-        json = {'quota_used': account['quota_info']['shared'], 'quota_all': account['quota_info']['quota']}
+        usage = dh.users_get_space_usage()
+        json = {'quota_used': usage.used, 'quota_all': usage.allocation.get_individual().allocated}
         json.update({'quota_avail': (json['quota_all'] - json['quota_used'])})
         return json
 
@@ -466,11 +466,12 @@ def cache_dropbox(request):
         json = []
         sizes = {}
         cursor = None
-        while cursor is None or result['has_more']:
-            result = dh.delta(cursor)
-            for path, metadata in result['entries']:
-                sizes[path] = metadata['bytes'] if metadata else 0
-            cursor = result['cursor']
+        result = dh.files_list_folder('', recursive=True, include_media_info=True)
+        while result.has_more:
+            for metadata in result.entries:
+                if isinstance(metadata, dropbox.files.FileMetadata):
+                    sizes[metadata.path_display] = metadata.size
+            result = dh.files_list_folder_continue(result.cursor)
 
         folder_sizes = defaultdict(lambda: 0)
         folder_nums = defaultdict(lambda: 0)
@@ -482,10 +483,17 @@ def cache_dropbox(request):
                 folder_sizes[folder] += size
                 folder_nums[folder] += 1
 
-        shares = requests.get("https://api.dropboxapi.com/1/shared_folders/?include_membership=True&access_token=%s" % DROPBOX["ACCESS_TOKEN"]).json()
+        # shares = requests.get("https://api.dropboxapi.com/1/shared_folders/?include_membership=True&access_token=%s" % DROPBOX["ACCESS_TOKEN"]).json()
+
         folder_shares = defaultdict(lambda: 0)
-        for f in shares:
-            folder_shares[f['shared_folder_name'].lower()] = len(f['membership'])
+        result = dh.sharing_list_folders()
+        for metadata in result.entries:
+            folder_shares[metadata.name] = len(f['membership'])
+        while result.cursor:
+            for metadata in result.entries:
+                print metadata
+            result = dh.sharing_list_folders_continue(result.cursor)
+
 
         for folder in sorted(folder_sizes.keys()):
             if folder == '/' or '/' in folder[1:]: continue

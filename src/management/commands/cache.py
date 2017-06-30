@@ -164,7 +164,9 @@ class Command(BaseCommand):
 
                 # dropbox
                 self.stdout.write("#5: Requesting \033[94mDROPBOX\033[0m...")
-                requests = ['sizes', 'folders', 'history']
+                self.stdout.write("\033[94mDROPBOX\033[0m API v1 is \033[41mDEPRECATED\033[0m! Skipping folders/history JSON retrieval.")
+                requests = ['sizes']
+                # requests = ['sizes', 'folders', 'history']
                 for i, request in enumerate(requests):
                     self.stdout.write("    DROPBOX: %s / %s (%s)..." % (i + 1, len(requests), request), ending='')
                     request = {'qs': request}
