@@ -57,7 +57,6 @@ class Command(BaseCommand):
         parser.add_argument('--item', nargs='+', type=int, help='List of interval items, choose from (3, 15, 30).')
 
     def handle(self, *args, **options):
-        if not BOT['CACHE']['IS_CACHE']: return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 
@@ -69,7 +68,7 @@ class Command(BaseCommand):
             is_3, is_15, is_30 = True, True, True
 
         try:
-            if is_3:
+            if is_3 and BOT['CACHE']['IS_CACHE']:
                 # slack
                 self.stdout.write("#4: Requesting \033[94mSLACK\033[0m...")
                 requests = ['home']
@@ -82,7 +81,7 @@ class Command(BaseCommand):
                 self.stdout.write("#4: Skip SLACK \033[94mhome\033[0m...")
 
 
-            if is_15:
+            if is_15 and BOT['CACHE']['IS_CACHE']:
                 # aws init
                 self.stdout.write("#1: Requesting \033[94mAWS\033[0m...")
                 request = {'qs': 'init'}
@@ -135,43 +134,44 @@ class Command(BaseCommand):
 
 
             if is_30:
-                # git init
-                self.stdout.write("#3: Requesting \033[94mGIT\033[0m...")
-                request = {'qs': 'init'}
-                git_init = cache_git(request)
-                simplejson.dump(git_init, open('%s/cache/git/init.json' % MEDIA_ROOT, 'w'), sort_keys=True, indent=' ' * 4)
-                self.stdout.write("    GIT \033[94minit\033[0m finished with \033[92mSUCCESS\033[0m.")
+                if BOT['CACHE']['IS_CACHE']:
+                    # git init
+                    self.stdout.write("#3: Requesting \033[94mGIT\033[0m...")
+                    request = {'qs': 'init'}
+                    git_init = cache_git(request)
+                    simplejson.dump(git_init, open('%s/cache/git/init.json' % MEDIA_ROOT, 'w'), sort_keys=True, indent=' ' * 4)
+                    self.stdout.write("    GIT \033[94minit\033[0m finished with \033[92mSUCCESS\033[0m.")
 
-                # git each
-                for i, repo in enumerate(git_init['git']):
-                    self.stdout.write("    GIT \033[94mrepo\033[0m: %s / %s (%s/%s)..." % (i + 1, len(git_init['git']), repo['org'], repo['name']), ending='')
-                    request = {'qs': 'num', 'repo': '%s/%s' % (repo['org'], repo['name'])}
-                    self.pickle_git(request)
-                    request.update({'qs': 'c'})
-                    self.pickle_git(request)
-                    request.update({'qs': 'ad'})
-                    self.pickle_git(request)
-                    self.stdout.write(" \033[92mSUCCESS\033[0m")
+                    # git each
+                    for i, repo in enumerate(git_init['git']):
+                        self.stdout.write("    GIT \033[94mrepo\033[0m: %s / %s (%s/%s)..." % (i + 1, len(git_init['git']), repo['org'], repo['name']), ending='')
+                        request = {'qs': 'num', 'repo': '%s/%s' % (repo['org'], repo['name'])}
+                        self.pickle_git(request)
+                        request.update({'qs': 'c'})
+                        self.pickle_git(request)
+                        request.update({'qs': 'ad'})
+                        self.pickle_git(request)
+                        self.stdout.write(" \033[92mSUCCESS\033[0m")
 
-                # slack
-                self.stdout.write("#4: Requesting \033[94mSLACK\033[0m...")
-                requests = ['users', 'channels', 'files', 'plot_files', 'plot_msgs']
-                for i, request in enumerate(requests):
-                    self.stdout.write("    SLACK: %s / %s (%s)..." % (i + 1, len(requests), request), ending='')
-                    request = {'qs': request}
-                    self.pickle_slack(request)
-                    self.stdout.write(" \033[92mSUCCESS\033[0m")
+                    # slack
+                    self.stdout.write("#4: Requesting \033[94mSLACK\033[0m...")
+                    requests = ['users', 'channels', 'files', 'plot_files', 'plot_msgs']
+                    for i, request in enumerate(requests):
+                        self.stdout.write("    SLACK: %s / %s (%s)..." % (i + 1, len(requests), request), ending='')
+                        request = {'qs': request}
+                        self.pickle_slack(request)
+                        self.stdout.write(" \033[92mSUCCESS\033[0m")
 
-                # dropbox
-                self.stdout.write("#5: Requesting \033[94mDROPBOX\033[0m...")
-                self.stdout.write("\033[94mDROPBOX\033[0m API v1 is \033[41mDEPRECATED\033[0m! Skipping folders/history JSON retrieval.")
-                requests = ['sizes']
-                # requests = ['sizes', 'folders', 'history']
-                for i, request in enumerate(requests):
-                    self.stdout.write("    DROPBOX: %s / %s (%s)..." % (i + 1, len(requests), request), ending='')
-                    request = {'qs': request}
-                    self.pickle_dropbox(request)
-                    self.stdout.write(" \033[92mSUCCESS\033[0m")
+                    # dropbox
+                    self.stdout.write("#5: Requesting \033[94mDROPBOX\033[0m...")
+                    self.stdout.write("\033[94mDROPBOX\033[0m API v1 is \033[41mDEPRECATED\033[0m! Skipping folders/history JSON retrieval.")
+                    requests = ['sizes']
+                    # requests = ['sizes', 'folders', 'history']
+                    for i, request in enumerate(requests):
+                        self.stdout.write("    DROPBOX: %s / %s (%s)..." % (i + 1, len(requests), request), ending='')
+                        request = {'qs': request}
+                        self.pickle_dropbox(request)
+                        self.stdout.write(" \033[92mSUCCESS\033[0m")
 
                 # schedule
                 self.stdout.write("#6: Requesting \033[94mSchedule Spreadsheet\033[0m...")
