@@ -457,4 +457,4 @@ def ga_tracker(request):
 def js_ver(request):
     stats = simplejson.load(open('%s/cache/stat_ver.json' % MEDIA_ROOT, 'r'))
     json = {'jquery': stats['jquery'], 'bootstrap': stats['bootstrap'], 'fullcal': stats['fullcal'], 'moment': stats['moment']}
-    return {'js_ver': json}
+    return {'js_ver': { str(k):str(v) for (k, v) in json.items() }}
