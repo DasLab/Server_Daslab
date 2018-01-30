@@ -30,16 +30,32 @@ class Command(BaseCommand):
                 (who, _) = find_slack_id(ppl.first_name)
                 if who:
                     send_to = SLACK['ADMIN_NAME'] if DEBUG else '@' + who
-                    msg_handles.append( (send_to, '', [{"fallback": 'BDay', "mrkdwn_in": ["text"], "color": "ff912e", "text": '*Happy Birthday*, _%s_!' % ppl.first_name}]) )
+                    msg_handles.append((
+                        send_to, '',
+                        [{
+                            'fallback': 'BDay',
+                            'mrkdwn_in': ['text'],
+                            'color': 'ff912e',
+                            'text': '*Happy Birthday*, _%s_!' % ppl.first_name,
+                        }]
+                    ))
                     ids.append(who)
                     names.append(ppl.first_name)
             if ids and (not DEBUG):
-                msg_handles.append( ('#general', '', [{"fallback": 'BDay', "mrkdwn_in": ["text"], "color": "ff912e", "text": '*Happy Birthday* to _%s_! %s' % (' and '.join(names), ', '.join( ['<@' + id + '>' for id in ids] ))}]) )
+                msg_handles.append((
+                    '#general', '',
+                    [{
+                        'fallback': 'BDay',
+                        'mrkdwn_in': ['text'],
+                        'color': 'ff912e',
+                        'text': '*Happy Birthday* to _%s_! %s' % (' and '.join(names), ', '.join( ['<@' + id + '>' for id in ids] )),
+                    }]
+                ))
 
         except Exception:
             send_error_slack(traceback.format_exc(), 'Birthday Wishes', ' '.join(sys.argv), 'log_cron_bday.log')
-            self.stdout.write("Finished with \033[41mERROR\033[0m!")
-            self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
+            self.stdout.write('Finished with \033[41mERROR\033[0m!')
+            self.stdout.write('Time elapsed: %.1f s.' % (time.time() - t0))
             sys.exit(1)
 
         else:
@@ -48,6 +64,15 @@ class Command(BaseCommand):
                 if '@' in h[0]:
                     self.stdout.write('\033[92mSUCCESS\033[0m: PM\'ed birthday wish to \033[94m%s\033[0m in Slack.' % h[0])
         if (not DEBUG) and msg_handles:
-            send_notify_slack(SLACK['ADMIN_NAME'], '', [{"fallback": 'SUCCESS', "mrkdwn_in": ["text"], "color": "good", "text": '*SUCCESS*: Scheduled *Birthday Wishes* sent to `%s` @ _%s_\n' % (' '.join(ids), time.ctime())}])
-            self.stdout.write("Finished with \033[92mSUCCESS\033[0m!")
-            self.stdout.write("Time elapsed: %.1f s." % (time.time() - t0))
+            send_notify_slack(
+                SLACK['ADMIN_NAME'],
+                '',
+                [{
+                    'fallback': 'SUCCESS',
+                    'mrkdwn_in': ['text'],
+                    'color': 'good',
+                    'text': '*SUCCESS*: Scheduled *Birthday Wishes* sent to `%s` @ _%s_\n' % (' '.join(ids), time.ctime()),
+                }]
+            )
+            self.stdout.write('Finished with \033[92mSUCCESS\033[0m!')
+            self.stdout.write('Time elapsed: %.1f s.' % (time.time() - t0))

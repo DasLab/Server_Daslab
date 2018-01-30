@@ -17,7 +17,7 @@ class Command(BaseCommand):
         if len(sys.argv) != 2:
             self.stdout.write('Usage:')
             self.stdout.write('    %s <flag>' % sys.argv[0])
-            self.stdout.write('    <flag> is chosen from "dev" or "release", indicating the target.')
+            self.stdout.write('    <flag> is chosen from \'dev\' or \'release\', indicating the target.')
             exit()
 
         target = sys.argv[1]
@@ -30,25 +30,25 @@ class Command(BaseCommand):
         else:
             self.stdout.write('Usage:')
             self.stdout.write('    %s <flag>' % sys.argv[0])
-            self.stdout.write('    <flag> is chosen from "dev" or "release", indicating the target.')
+            self.stdout.write('    <flag> is chosen from \'dev\' or \'release\', indicating the target.')
             exit()
 
 
-        self.stdout.write("Converting database path to \033[94m%s\033[0m..." % target)
+        self.stdout.write('Converting database path to \033[94m%s\033[0m...' % target)
 
         entries = News.objects.all()
         for e in entries:
             if e.image:
                 e.image = e.image.url.replace(old, new)
                 e.save()
-        self.stdout.write("\033[92mSUCCESS\033[0m: ", len(entries), "of News image converted.\033[0m")
+        self.stdout.write('\033[92mSUCCESS\033[0m: ', len(entries), 'of News image converted.\033[0m')
 
         entries = Member.objects.all()
         for e in entries:
             if e.image:
                 e.image = e.image.url.replace(old, new)
                 e.save()
-        self.stdout.write("\033[92mSUCCESS\033[0m: ", len(entries), "of Member image converted.\033[0m")
+        self.stdout.write('\033[92mSUCCESS\033[0m: ', len(entries), 'of Member image converted.\033[0m')
 
         entries = Publication.objects.all()
         for e in entries:
@@ -61,7 +61,7 @@ class Command(BaseCommand):
             if e.image:
                 e.image = e.image.url.replace(old, new)
                 e.save()
-        self.stdout.write("\033[92mSUCCESS\033[0m: ", len(entries), "of Publication pdf, extra_file, image converted.\033[0m")
+        self.stdout.write('\033[92mSUCCESS\033[0m: ', len(entries), 'of Publication pdf, extra_file, image converted.\033[0m')
 
         entries = RotationStudent.objects.all()
         for e in entries:
@@ -71,13 +71,13 @@ class Command(BaseCommand):
             if e.data:
                 e.data = e.data.url.replace(old, new)
                 e.save()
-        self.stdout.write("\033[92mSUCCESS\033[0m: ", len(entries), "of RotationStudent ppt, data converted.\033[0m")
+        self.stdout.write('\033[92mSUCCESS\033[0m: ', len(entries), 'of RotationStudent ppt, data converted.\033[0m')
 
         entries = Presentation.objects.all()
         for e in entries:
             if e.ppt:
                 e.ppt = e.ppt.url.replace(old, new)
                 e.save()
-        self.stdout.write("\033[92mSUCCESS\033[0m: ", len(entries), "of Presentation ppt converted.\033[0m")
-        self.stdout.write("All done!"
+        self.stdout.write('\033[92mSUCCESS\033[0m: ', len(entries), 'of Presentation ppt converted.\033[0m')
+        self.stdout.write('All done!'
 
