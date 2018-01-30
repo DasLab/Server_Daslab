@@ -28,7 +28,10 @@ def pages(request, keyword):
         for ppl in member:
             if ppl.image:
                 ppl.image_link = os.path.basename(ppl.image.name)
-        json = {'current_member': member, 'past_member': almuni}
+        json = {
+            'current_member': member,
+            'past_member': almuni,
+        }
 
     elif keyword == 'publications':
         pub_list = Publication.objects.filter(is_visible=1).order_by('-display_date')
@@ -149,7 +152,12 @@ def group_pages(request, path):
             if ppl.phone:
                 ppl.phone = str(ppl.phone)
                 ppl.phone = '(%s) %s-%s' % (ppl.phone[:3], ppl.phone[3:6], ppl.phone[6:])
-        json = {'current_member': member, 'past_member': almuni, 'contact_form':  ContactForm(), 'sunet_id': user_sunetid(request)}
+        json = {
+            'current_member': member,
+            'past_member': almuni,
+            'contact_form':  ContactForm(),
+            'sunet_id': user_sunetid(request),
+        }
 
     return render(request, PATH.HTML_PATH['group_pages'].replace('xxx', page), json)
 
@@ -171,20 +179,49 @@ def group_dash(request, keyword):
     elif keyword == 'schedule':
         json = dash_schedule(request)
         flash_slide = FlashSlide.objects.order_by('-date')[0]
-        flash_slide = {'url': flash_slide.link, 'date': flash_slide.date.strftime('%Y-%m-%d')}
+        flash_slide = {
+            'url': flash_slide.link,
+            'date': flash_slide.date.strftime('%Y-%m-%d'),
+        }
         journal_club = JournalClub.objects.order_by('-date')[0]
-        journal_club = {'url': journal_club.link, 'date': journal_club.date.strftime('%Y-%m-%d'), 'name': journal_club.presenter, 'title': journal_club.title}
+        journal_club = {
+            'url': journal_club.link,
+            'date': journal_club.date.strftime('%Y-%m-%d'),
+            'name': journal_club.presenter,
+            'title': journal_club.title,
+        }
         eterna = EternaYoutube.objects.order_by('-date')[0]
-        eterna = {'url': eterna.link, 'date': eterna.date.strftime('%Y-%m-%d'), 'name': eterna.presenter, 'title': eterna.title}
+        eterna = {
+            'url': eterna.link,
+            'date': eterna.date.strftime('%Y-%m-%d'),
+            'name': eterna.presenter,
+            'title': eterna.title,
+        }
         rotation = RotationStudent.objects.order_by('-date')[0]
-        rotation = {'date': rotation.date.strftime('%Y-%m-%d'), 'name': rotation.full_name, 'title': rotation.title, 'url': os.path.basename(rotation.ppt.name)}
+        rotation = {
+            'date': rotation.date.strftime('%Y-%m-%d'),
+            'name': rotation.full_name,
+            'title': rotation.title,
+            'url': os.path.basename(rotation.ppt.name),
+        }
         archive = Presentation.objects.order_by('-date')[0]
         if archive.ppt:
             ar_link = os.path.basename(archive.ppt.name)
         else:
             ar_link = archive.link
-        archive = {'date': archive.date.strftime('%Y-%m-%d'), 'name': archive.presenter, 'title': archive.title, 'url': ar_link}
-        json.update({'flash_slide': flash_slide, 'journal_club': journal_club, 'eterna': eterna, 'rotation': rotation, 'archive': archive})
+        archive = {
+            'date': archive.date.strftime('%Y-%m-%d'),
+            'name': archive.presenter,
+            'title': archive.title,
+            'url': ar_link,
+        }
+        json.update({
+            'flash_slide': flash_slide,
+            'journal_club': journal_club,
+            'eterna': eterna,
+            'rotation': rotation,
+            'archive': archive,
+        })
         json = simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
 
     elif keyword == 'user':
@@ -197,14 +234,46 @@ def group_dash(request, keyword):
                 user.phone = '(%s) %s-%s' % (user.phone[:3], user.phone[3:6], user.phone[6:])
             user.type = user_type
 
-            json = {'id': user.sunet_id, 'type': user.type, 'title': user.affiliation(), 'name': user.full_name(), 'photo': user.image_tag(), 'email': user.email, 'phone': user.phone, 'bday': user.bday, 'cap': user.more_info, 'status': user.year()}
+            json = {
+                'id': user.sunet_id,
+                'type': user.type,
+                'title': user.affiliation(),
+                'name': user.full_name(),
+                'photo': user.image_tag(),
+                'email': user.email,
+                'phone': user.phone,
+                'bday': user.bday,
+                'cap': user.more_info,
+                'status': user.year(),
+            }
         except Exception:
             json = {'type': 'unknown'} if sunet_id is None else {'id': sunet_id, 'type': user_type}
         json = simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
 
     elif keyword == 'secret':
         (gmail, db) = (env.email_url(), env.db())
-        json = {'mysql': {'user': db['USER'], 'password': db['PASSWORD']}, 'apache': {'user': env('APACHE_USER'), 'password': env('APACHE_PASSWORD')}, 'django': {'user': env('DJANGO_USER'), 'password': env('DJANGO_PASSWORD')}, 'gmail': {'user': gmail['EMAIL_HOST_USER'], 'password': gmail['EMAIL_HOST_PASSWORD']}, 'vendor': {'user': gmail['EMAIL_HOST_USER'], 'password': GIT['PASSWORD']}}
+        json = {
+            'mysql': {
+                'user': db['USER'],
+                'password': db['PASSWORD'],
+            },
+            'apache': {
+                'user': env('APACHE_USER'),
+                'password': env('APACHE_PASSWORD'),
+            },
+            'django': {
+                'user': env('DJANGO_USER'),
+                'password': env('DJANGO_PASSWORD'),
+            },
+            'gmail': {
+                'user': gmail['EMAIL_HOST_USER'],
+                'password': gmail['EMAIL_HOST_PASSWORD'],
+            },
+            'vendor': {
+                'user': gmail['EMAIL_HOST_USER'],
+                'password': GIT['PASSWORD'],
+            },
+        }
         json = simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
 
     if isinstance(json, HttpResponse): return json
@@ -212,13 +281,17 @@ def group_dash(request, keyword):
 
 
 def ping_test(request):
-    return HttpResponse(content="", status=200)
+    return HttpResponse(content='', status=200)
 
 
 def get_staff(request):
     user = user_sunetid(request)
     user = 'unknown' if user is None else user
-    return HttpResponse(simplejson.dumps({'user': user, 'admin': EMAIL_NOTIFY}, sort_keys=True, indent=' ' * 4), content_type='application/json')
+    json = {
+        'user': user,
+        'admin': EMAIL_NOTIFY,
+    }
+    return HttpResponse(simplejson.dumps(json, sort_keys=True, indent=' ' * 4), content_type='application/json')
 
 
 
@@ -229,5 +302,5 @@ def test(request):
     return error400(request)
     # send_notify_emails('test', 'test')
     # send_mail('text', 'test', EMAIL_HOST_USER, [EMAIL_NOTIFY])
-    return HttpResponse(content="", status=200)
+    return HttpResponse(content='', status=200)
 

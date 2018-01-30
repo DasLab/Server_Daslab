@@ -28,8 +28,20 @@ class NewsAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
     fieldsets = [
-        (format_html('<span class="glyphicon glyphicon-comment"></span>&nbsp;Contents'), {'fields': ['date', 'content', 'is_visible', ('image', 'image_tag')]}),
-        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['link', 'video']}),
+        (format_html('<span class="glyphicon glyphicon-comment"></span>&nbsp;Contents'), {
+            'fields': [
+                'date',
+                'content',
+                'is_visible',
+                ('image', 'image_tag'),
+            ],
+        }),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {
+            'fields': [
+                'link',
+                'video',
+            ],
+        }),
     ]
 admin.site.register(News, NewsAdmin)
 
@@ -39,10 +51,33 @@ class MemberAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
     fieldsets = [
-        (format_html('<span class="glyphicon glyphicon-user"></span>&nbsp;Personal Information'), {'fields': [('first_name', 'last_name'), 'role', ('image', 'image_tag'), 'description', 'more_info']}),
-        (format_html('<span class="glyphicon glyphicon-home"></span>&nbsp;Affiliation'), {'fields': ['department', ('joint_lab', 'joint_link')]}),
-        (format_html('<span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact'), {'fields': [('email', 'bday'), ('sunet_id', 'phone')]}),
-        (format_html('<span class="glyphicon glyphicon-road"></span>&nbsp;Alumni Information'), {'fields': [('is_alumni', 'is_visible'), ('start_year', 'finish_year')]}),
+        (format_html('<span class="glyphicon glyphicon-user"></span>&nbsp;Personal Information'), {
+            'fields': [
+                ('first_name', 'last_name'),
+                'role',
+                ('image', 'image_tag'),
+                'description',
+                'more_info',
+            ],
+        }),
+        (format_html('<span class="glyphicon glyphicon-home"></span>&nbsp;Affiliation'), {
+            'fields': [
+                'department',
+                ('joint_lab', 'joint_link'),
+            ],
+        }),
+        (format_html('<span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact'), {
+            'fields': [
+                ('email', 'bday'),
+                ('sunet_id', 'phone'),
+            ],
+        }),
+        (format_html('<span class="glyphicon glyphicon-road"></span>&nbsp;Alumni Information'), {
+            'fields': [
+                ('is_alumni', 'is_visible'),
+                ('start_year', 'finish_year'),
+            ],
+        }),
     ]
 admin.site.register(Member, MemberAdmin)
 
@@ -52,9 +87,36 @@ class PublicationAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
     fieldsets = [
-        (format_html('<span class="glyphicon glyphicon-book"></span>&nbsp;Citation'), {'fields': ['title', ('year', 'display_date'), 'authors', 'journal', ('volume', 'issue'), ('begin_page', 'end_page')]}),
-        (format_html('<span class="glyphicon glyphicon-th-large"></span>&nbsp;Media'), {'fields': ['pdf', 'is_preprint', 'is_visible', 'is_feature', ('image', 'image_tag')]}),
-        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['link', 'extra_field', 'extra_link', 'extra_field_2', 'extra_link_2', 'extra_field_3', 'extra_file']}),
+        (format_html('<span class="glyphicon glyphicon-book"></span>&nbsp;Citation'), {
+            'fields': [
+                'title',
+                ('year', 'display_date'),
+                'authors',
+                'journal',
+                ('volume', 'issue'),
+                ('begin_page', 'end_page'),
+            ],
+        }),
+        (format_html('<span class="glyphicon glyphicon-th-large"></span>&nbsp;Media'), {
+            'fields': [
+                'pdf',
+                'is_preprint',
+                'is_visible',
+                'is_feature',
+                ('image', 'image_tag'),
+            ],
+        }),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {
+            'fields': [
+                'link',
+                'extra_field',
+                'extra_link',
+                'extra_field_2',
+                'extra_link_2',
+                'extra_field_3',
+                'extra_file',
+            ],
+        }),
     ]
 admin.site.register(Publication, PublicationAdmin)
 
@@ -66,7 +128,9 @@ class FlashSlideAdmin(admin.ModelAdmin):
     ordering = ('-date',)
 
     fieldsets = [
-        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'link']}),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {
+            'fields': ['date', 'link'],
+        }),
     ]
 admin.site.register(FlashSlide, FlashSlideAdmin)
 
@@ -75,7 +139,16 @@ class JournalClubAdmin(admin.ModelAdmin):
     ordering = ('-date',)
 
     fieldsets = [
-        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'presenter', 'link', 'title', ('authors', 'year'), 'citation']}),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {
+            'fields': [
+                'date',
+                'presenter',
+                'link',
+                'title',
+                ('authors', 'year'),
+                'citation',
+            ],
+        }),
     ]
 admin.site.register(JournalClub, JournalClubAdmin)
 
@@ -84,8 +157,12 @@ class RotationStudentAdmin(admin.ModelAdmin):
     ordering = ('-date',)
 
     fieldsets = [
-        (format_html('<span class="glyphicon glyphicon-user"></span>&nbsp;Personal Information'), {'fields': ['date', 'full_name', 'title']}),
-        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['ppt', 'data']}),
+        (format_html('<span class="glyphicon glyphicon-user"></span>&nbsp;Personal Information'), {
+            'fields': ['date', 'full_name', 'title'],
+        }),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {
+            'fields': ['ppt', 'data'],
+        }),
     ]
 admin.site.register(RotationStudent, RotationStudentAdmin)
 
@@ -94,7 +171,9 @@ class EternaYoutubeAdmin(admin.ModelAdmin):
     ordering = ('-date',)
 
     fieldsets = [
-        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'presenter', 'title', 'link']}),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {
+            'fields': ['date', 'presenter', 'title', 'link'],
+        }),
     ]
 admin.site.register(EternaYoutube, EternaYoutubeAdmin)
 
@@ -103,7 +182,9 @@ class PresentationAdmin(admin.ModelAdmin):
     ordering = ('-date',)
 
     fieldsets = [
-        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'presenter', 'title', 'ppt', 'link']}),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {
+            'fields': ['date', 'presenter', 'title', 'ppt', 'link'],
+        }),
     ]
 admin.site.register(Presentation, PresentationAdmin)
 
@@ -113,7 +194,9 @@ class DefensePosterAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
     fieldsets = [
-        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {'fields': ['date', 'presenter', 'title', 'image', 'image_tag']}),
+        (format_html('<span class="glyphicon glyphicon-share"></span>&nbsp;Links'), {
+            'fields': ['date', 'presenter', 'title', 'image', 'image_tag'],
+        }),
     ]
 admin.site.register(DefensePoster, DefensePosterAdmin)
 
@@ -122,7 +205,9 @@ class SlackMessageAdmin(admin.ModelAdmin):
     ordering = ('-date',)
 
     fieldsets = [
-        (format_html('<span class="glyphicon glyphicon-comment"></span>&nbsp;Contents'), {'fields': ['date', 'receiver', 'content', 'attachment']}),
+        (format_html('<span class="glyphicon glyphicon-comment"></span>&nbsp;Contents'), {
+            'fields': ['date', 'receiver', 'content', 'attachment'],
+        }),
     ]
 admin.site.register(SlackMessage, SlackMessageAdmin)
 
@@ -222,7 +307,13 @@ def get_dash(request, keyword):
     elif keyword == 'git':
         json = git_stats(request)
     elif keyword == 'group':
-        json = simplejson.dumps({'admin': GROUP.ADMIN, 'group': GROUP.GROUP, 'alumni': GROUP.ALUMNI, 'roton': GROUP.ROTON, 'other': GROUP.OTHER}, sort_keys=True, indent=' ' * 4)
+        json = simplejson.dumps({
+            'admin': GROUP.ADMIN,
+            'group': GROUP.GROUP,
+            'alumni': GROUP.ALUMNI,
+            'roton': GROUP.ROTON,
+            'other': GROUP.OTHER,
+        }, sort_keys=True, indent=' ' * 4)
     elif keyword == 'dash':
         t_aws = format_dash_ts('aws/init.json', BOT['CACHE']['INTERVAL_15'])
         t_ga = format_dash_ts('ga/init.json', BOT['CACHE']['INTERVAL_15'])
@@ -232,7 +323,16 @@ def get_dash(request, keyword):
         t_cal = format_dash_ts('calendar.json', BOT['CACHE']['INTERVAL_30'])
         t_sch = format_dash_ts('schedule.json', BOT['CACHE']['INTERVAL_30'])
         t_duty = format_dash_ts('duty.json', BOT['CACHE']['INTERVAL_30'])
-        json = simplejson.dumps({'t_aws': t_aws, 't_ga': t_ga, 't_git': t_git, 't_slack': t_slack, 't_dropbox': t_dropbox, 't_cal': t_cal, 't_sch': t_sch, 't_duty': t_duty}, sort_keys=True, indent=' ' * 4)
+        json = simplejson.dumps({
+            't_aws': t_aws,
+            't_ga': t_ga,
+            't_git': t_git,
+            't_slack': t_slack,
+            't_dropbox': t_dropbox,
+            't_cal': t_cal,
+            't_sch': t_sch,
+            't_duty': t_duty,
+        }, sort_keys=True, indent=' ' * 4)
 
     if isinstance(json, HttpResponse): return json
     return HttpResponse(json, content_type='application/json')

@@ -1,4 +1,4 @@
-"""
+'''
 Django settings for repository project.
 
 For more information on this file, see
@@ -6,7 +6,7 @@ https://docs.djangoproject.com/en/1.7/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
-"""
+'''
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from src.env import *
@@ -14,7 +14,7 @@ from src.auth import *
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
+# Examples: 'http://media.lawrence.com', 'http://example.com/media/'
 MEDIA_URL = ''
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -140,7 +140,7 @@ if not DEBUG: MIDDLEWARE_CLASSES.insert(0, 'django.middleware.security.SecurityM
 
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Put strings here, like '/home/html/django_templates' or 'C:/www/django/templates'.
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     'DIRS': [
@@ -155,18 +155,18 @@ TEMPLATES = [{
             'django.template.loaders.app_directories.Loader',
         ],
         'context_processors': [
-            "django.contrib.auth.context_processors.auth",
-            "django.template.context_processors.debug",
-            "django.template.context_processors.i18n",
-            "django.template.context_processors.request",
-            "django.template.context_processors.media",
-            "django.template.context_processors.static",
-            "django.contrib.messages.context_processors.messages",
+            'django.contrib.auth.context_processors.auth',
+            'django.template.context_processors.debug',
+            'django.template.context_processors.i18n',
+            'django.template.context_processors.request',
+            'django.template.context_processors.media',
+            'django.template.context_processors.static',
+            'django.contrib.messages.context_processors.messages',
 
-            "src.models.email_form",
-            "src.models.debug_flag",
-            "src.models.ga_tracker",
-            "src.models.js_ver"
+            'src.models.email_form',
+            'src.models.debug_flag',
+            'src.models.ga_tracker',
+            'src.models.js_ver'
         ]
     }
 }]

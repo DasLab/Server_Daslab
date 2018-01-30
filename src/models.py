@@ -447,14 +447,28 @@ def email_form(request):
 
 def debug_flag(request):
     if DEBUG:
-        return {'DEBUG_STR': '', 'DEBUG_DIR': ''}
+        return {
+            'DEBUG_STR': '',
+            'DEBUG_DIR': '',
+        }
     else:
-        return {'DEBUG_STR': '.min', 'DEBUG_DIR': 'min/'}
+        return {
+            'DEBUG_STR': '.min',
+            'DEBUG_DIR': 'min/',
+        }
 
 def ga_tracker(request):
     return {'TRACKING_ID': GA['TRACKING_ID']}
 
 def js_ver(request):
     stats = simplejson.load(open('%s/cache/stat_ver.json' % MEDIA_ROOT, 'r'))
-    json = {'jquery': stats['jquery'], 'bootstrap': stats['bootstrap'], 'fullcal': stats['fullcal'], 'moment': stats['moment']}
-    return {'js_ver': { str(k):str(v) for (k, v) in json.items() }}
+    json = {
+        field: stats[field]
+        for field in ['jquery', 'bootstrap', 'fullcal', 'moment']
+    }
+    return {
+        'js_ver': {
+            str(k):str(v)
+            for (k, v) in json.items()
+        }
+    }

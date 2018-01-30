@@ -40,7 +40,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    if flag == "Admin":
+                    if flag == 'Admin':
                         return HttpResponseRedirect('/admin/')
                     else:
                         return HttpResponseRedirect('/group/')
@@ -129,7 +129,11 @@ def user_email(request):
             http_header += request.body
 
             em_content = 'Contact Admin from %s Website Internal\n\nFrom: %s: %s\nSubject: %s\n%s\n\nREQUEST:\n%s' % (env('SERVER_NAME'), request.user, em_from, em_subject, em_content, http_header)
-            send_mail('{%s} SYSTEM: Internal Email Notice' % env('SERVER_NAME'), em_content, EMAIL_HOST_USER, [EMAIL_NOTIFY])
+            send_mail(
+                '{%s} SYSTEM: Internal Email Notice' % env('SERVER_NAME'),
+                em_content,
+                EMAIL_HOST_USER, [EMAIL_NOTIFY]
+            )
             messages = 'success'
         else:
             messages = 'invalid'
@@ -151,7 +155,11 @@ def user_upload(request):
             try:
                 tmp = Presentation(title=em_title, presenter=em_presenter, date=em_date, ppt=em_file, link=em_link)
                 tmp.save()
-                send_mail('{%s} SYSTEM: Archive Upload Notice' % env('SERVER_NAME'), 'This is an automatic email notification for a user uploaded Presentation Archive item.\n\nThe description is:\nTitle:\t%s\nDate:\t%s\nPresenter:\t%s\nFile:\t%s\nLink:\t%s\n\nUploaded by:%s\n\n%s Website Admin\n' % (em_title, em_date, em_presenter, em_file, em_link, request.user.username, env('SERVER_NAME')), EMAIL_HOST_USER, [EMAIL_NOTIFY])
+                send_mail(
+                    '{%s} SYSTEM: Archive Upload Notice' % env('SERVER_NAME'),
+                    'This is an automatic email notification for a user uploaded Presentation Archive item.\n\nThe description is:\nTitle:\t%s\nDate:\t%s\nPresenter:\t%s\nFile:\t%s\nLink:\t%s\n\nUploaded by:%s\n\n%s Website Admin\n' % (em_title, em_date, em_presenter, em_file, em_link, request.user.username, env('SERVER_NAME')),
+                    EMAIL_HOST_USER, [EMAIL_NOTIFY]
+                )
                 messages = 'success'
             except Exception:
                 print traceback.format_exc()
@@ -176,16 +184,16 @@ def user_upload(request):
 #         if not profile.start_year: profile.start_year = '(N/A)'
 #         if not profile.finish_year: profile.finish_year = '(N/A)'
 #         if profile.alumni:
-#             profile.alumni = '<span class="label label-danger">Almuni</span>'
+#             profile.alumni = '<span class='label label-danger'>Almuni</span>'
 #         else:
-#             profile.alumni = '<span class="label label-success">Current</span>'
+#             profile.alumni = '<span class='label label-success'>Current</span>'
 #     else:
 #         profile = []
 #     return render(request, PATH.HTML_PATH['profile'], {'profile':profile})
 
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect('/')
 
 
 @user_passes_test(lambda u: u.is_superuser)
