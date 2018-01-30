@@ -218,7 +218,7 @@ def get_backup_stat():
             ],
             'all': humansize(get_folder_size('%s/backup/*.*gz' % MEDIA_ROOT)),
         },
-        'gdrive': []
+        'gdrive': [],
     }
 
     gdrive_dir = 'echo' if DEBUG else 'cd %s' % APACHE_ROOT
@@ -545,7 +545,8 @@ def aws_result(results, args, req_id=None):
                     val = val / args['period']
                     name = args['metric'][j] + u'Rate'
                 d[name] = round(val, 3)
-                if k in d: del d[k]
+                if k in d:
+                    del d[k]
 
     desp = {
         'Timestamp': ('datetime', 'Timestamp'),
@@ -581,7 +582,10 @@ def aws_call(conn, args, qs, req_id=None):
         col = args['cols']
         if len(args['cols']) == len(args['metric']) and len(args['cols']) > 1:
             ol = args['cols'][i]
-        data = conn.get_metric_statistics(args['period'], args['start_time'], args['end_time'], me, args['namespace'], col, args['dims'], args['unit'])
+        data = conn.get_metric_statistics(
+            args['period'], args['start_time'], args['end_time'],
+            me, args['namespace'], col, args['dims'], args['unit']
+        )
 
         temp = []
         for d in data:
@@ -642,7 +646,11 @@ def aws_stats(request):
             }
             stat3['health_check'] = str(stat3['health_check']).replace('HealthCheck:', '')
 
-            return simplejson.dumps({'ec2': stat1, 'ebs': stat2, 'elb': stat3}, sort_keys=True, indent=' ' * 4)
+            return simplejson.dumps({
+                'ec2': stat1,
+                'ebs': stat2,
+                'elb': stat3,
+            }, sort_keys=True, indent=' ' * 4)
 
         else:
             conn = boto.ec2.cloudwatch.connect_to_region(
@@ -783,7 +791,8 @@ def ga_stats(request):
         qs = request.GET.get('qs')
         req_id = request.GET.get('tqx').replace('reqId:', '')
         access_token = requests.post(
-            'https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])
+            'https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (
+                GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])
         ).json()['access_token']
         stats = {}
         url_colon = urllib.quote(':')
@@ -791,10 +800,12 @@ def ga_stats(request):
 
         if qs == 'init':
             temp = requests.get(
-                'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (url_colon, GA['ID'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)
+                'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (
+                    url_colon, GA['ID'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)
             ).json()['totalsForAllResults']
             temp_prev = requests.get(
-                'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=60daysAgo&end-date=30daysAgo&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (url_colon, GA['ID'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)
+                'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=60daysAgo&end-date=30daysAgo&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (
+                    url_colon, GA['ID'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)
             ).json()['totalsForAllResults']
 
             for i, key in enumerate(temp):
@@ -836,7 +847,8 @@ def ga_stats(request):
                 i = 0
                 while True:
                     temp = requests.get(
-                        'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=%s&end-date=%s&metrics=ga%ssessions&dimensions=ga%s%s&access_token=%s' % (url_colon, GA['ID'], d1, d2, url_colon, url_colon, dm, access_token)
+                        'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=%s&end-date=%s&metrics=ga%ssessions&dimensions=ga%s%s&access_token=%s' % (
+                            url_colon, GA['ID'], d1, d2, url_colon, url_colon, dm, access_token)
                     ).json()
                     if 'rows' in temp:
                         temp = temp['rows']
@@ -856,7 +868,10 @@ def ga_stats(request):
                 for row in temp:
                     ts = datetime.strptime(row[0], strpt)
                     ts = ts if sp == '24h' else ts.date()
-                    data.append({u'Timestamp': ts, 'Sessions': float(row[1])})
+                    data.append({
+                        u'Timestamp': ts,
+                        u'Sessions': float(row[1]),
+                    })
                 data = sorted(data, key=operator.itemgetter(stats[0]))
                 data_table = gviz_api.DataTable(desp)
                 data_table.LoadData(data)
@@ -877,7 +892,8 @@ def ga_stats(request):
                 i = 0
                 while True:
                     temp = requests.get(
-                        'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%s%s&access_token=%s' % (url_colon, GA['ID'], url_colon, me, url_colon, dm, access_token)
+                        'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%s%s&access_token=%s' % (
+                            url_colon, GA['ID'], url_colon, me, url_colon, dm, access_token)
                     ).json()
                     if 'rows' in temp:
                         temp = temp['rows']
@@ -912,7 +928,8 @@ def ga_stats(request):
             i = 0
             while True:
                 temp = requests.get(
-                    'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessions&dimensions=ga%scountry&access_token=%s' % (url_colon, GA['ID'], url_colon, url_colon, access_token)
+                    'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessions&dimensions=ga%scountry&access_token=%s' % (
+                        url_colon, GA['ID'], url_colon, url_colon, access_token)
                 ).json()
                 if 'rows' in temp:
                     temp = temp['rows']
@@ -930,7 +947,10 @@ def ga_stats(request):
             }
 
             for row in temp:
-                data.append({'Country': row[0], 'Sessions': float(row[1])})
+                data.append({
+                    'Country': row[0],
+                    'Sessions': float(row[1]),
+                })
             data = sorted(data, key=operator.itemgetter(stats[0]))
             data_table = gviz_api.DataTable(desp)
             data_table.LoadData(data)

@@ -92,7 +92,8 @@ def user_contact(request):
                 phone = form.cleaned_data['contact_phone']
                 bday = form.cleaned_data['contact_bday']
                 bday = re.match('[0-9]{1,2}\/[0-9]{1,2}', bday)
-                if bday is None: raise ValueError
+                if bday is None:
+                    raise ValueError
                 bday = bday.string
                 if len(bday) < 5:
                     if len(bday[:bday.find('/')]) < 2:

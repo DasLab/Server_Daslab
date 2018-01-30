@@ -51,7 +51,8 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        if not BOT['SLACK']['IS_FLASH_SETUP']: return
+        if not BOT['SLACK']['IS_FLASH_SETUP']:
+            return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
         flag_mismatch = False
@@ -64,7 +65,8 @@ class Command(BaseCommand):
             offset_2 = int(BOT['SLACK']['REMINDER']['DAY_BEFORE_REMINDER_2'])
             day_1 = (result['weekday'] - offset_1) % 7
             today = datetime.utcnow()
-            if today.date().isoweekday() % 7 != day_1: return
+            if today.date().isoweekday() % 7 != day_1:
+                return
 
             meeting_date = today + timedelta(days=offset_1)
             year = meeting_date.date().year
@@ -374,7 +376,8 @@ class Command(BaseCommand):
             ))
 
         except Exception:
-            if flag_mismatch: return
+            if flag_mismatch:
+                return
             send_error_slack(traceback.format_exc(), 'Group Meeting Setup', ' '.join(sys.argv), 'log_cron_meeting.log')
 
             if result['this']['type'] != 'N/A':

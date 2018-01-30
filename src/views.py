@@ -127,7 +127,8 @@ def group_pages(request, path):
         json = {'pos_list': pos_list}
 
     elif path == 'contact':
-        if request.method == 'POST': return user_contact(request)
+        if request.method == 'POST':
+            return user_contact(request)
 
         member = Member.objects.filter(is_alumni=0).order_by('last_name', 'first_name')
         for i, ppl in enumerate(member):
@@ -276,7 +277,8 @@ def group_dash(request, keyword):
         }
         json = simplejson.dumps(json, sort_keys=True, indent=' ' * 4)
 
-    if isinstance(json, HttpResponse): return json
+    if isinstance(json, HttpResponse):
+        return json
     return HttpResponse(json, content_type='application/json')
 
 

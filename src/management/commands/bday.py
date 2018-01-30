@@ -18,7 +18,8 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        if not BOT['SLACK']['MSG_BDAY']: return
+        if not BOT['SLACK']['MSG_BDAY']:
+            return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 

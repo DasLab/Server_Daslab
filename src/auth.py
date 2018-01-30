@@ -35,7 +35,8 @@ class USER_GROUP(Singleton):
 
 class AutomaticAdminLoginMiddleware(object):
     def process_request(self, request):
-        if not hasattr(request, 'user') or not request.user.is_authenticated():
+        if (not hasattr(request, 'user') or
+            not request.user.is_authenticated()):
             try:
                 sunet_id = request.META['WEBAUTH_USER']
                 is_admin = USER_GROUP().find_type(sunet_id) == 'admin'
@@ -44,7 +45,10 @@ class AutomaticAdminLoginMiddleware(object):
                 # print traceback.format_exc()
 
             if is_admin:
-                user = authenticate(username=env('DJANGO_USER'), password=env('DJANGO_PASSWORD'))
+                user = authenticate(
+                    username=env('DJANGO_USER'),
+                    password=env('DJANGO_PASSWORD')
+                )
                 request.user = user
                 login(request, user)
 

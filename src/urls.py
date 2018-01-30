@@ -71,7 +71,8 @@ else:
         url(r'^robots.txt$', serve, kwargs={'path': 'robots.txt', 'document_root': MEDIA_ROOT}),
     ]
 
-    if DEBUG: urlpatterns.append(url(r'^test/?$', views.test))
+    if DEBUG:
+        urlpatterns.append(url(r'^test/?$', views.test))
 
 handler400 = views.error400
 handler403 = views.error403

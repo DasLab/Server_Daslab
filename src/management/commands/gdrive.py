@@ -136,7 +136,8 @@ class Command(BaseCommand):
                 send_error_slack(traceback.format_exc(), 'Remove Obsolete Backup Files', ' '.join(sys.argv), 'log_cron_gdrive.log')
                 flag = True
 
-        if not flag: self.stdout.write('    \033[92mSUCCESS\033[0m: \033[94m%s\033[0m obsolete backup files removed.' % len(list_all))
+        if not flag:
+            self.stdout.write('    \033[92mSUCCESS\033[0m: \033[94m%s\033[0m obsolete backup files removed.' % len(list_all))
         self.stdout.write('Time elapsed: %.1f s.\n' % (time.time() - t))
 
 

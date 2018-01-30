@@ -270,9 +270,9 @@ def ref(request):
 
 
 def get_stat(request, keyword):
-    if keyword == "pem":
+    if keyword == 'pem':
         response = HttpResponse(''.join(open('%s/config/amazon.pem' % MEDIA_ROOT).readlines()), content_type='application/x-pem-file')
-        response["Content-Disposition"] = "attachment; filename=amazon.pem"
+        response['Content-Disposition'] = 'attachment; filename=amazon.pem'
         return response
     else:
         json = simplejson.load(open('%s/cache/stat_%s.json' % (MEDIA_ROOT, keyword.strip('/')), 'r'))
@@ -334,7 +334,8 @@ def get_dash(request, keyword):
             't_duty': t_duty,
         }, sort_keys=True, indent=' ' * 4)
 
-    if isinstance(json, HttpResponse): return json
+    if isinstance(json, HttpResponse):
+        return json
     return HttpResponse(json, content_type='application/json')
 
 

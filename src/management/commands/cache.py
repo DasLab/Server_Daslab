@@ -213,7 +213,7 @@ class Command(BaseCommand):
                     ('BotoServerError' in tb or '500' in tb or 'Internal Server Error' in tb)):
                     if os.path.exists('%s/cache/aws/init.json' % MEDIA_ROOT):
                         t = datetime.fromtimestamp(os.path.getmtime('%s/cache/aws/init.json' % MEDIA_ROOT))
-                        if ((now - t).seconds >= 60 * 2.5 * 60):
+                        if (now - t).seconds >= 60 * 2.5 * 60:
                             send_notify_slack(
                                 SLACK['ADMIN_NAME'],
                                 '',
@@ -228,7 +228,7 @@ class Command(BaseCommand):
                     ('ConnectionError' in tb or 'SSLError' in tb or 'timed out' in tb)):
                     if os.path.exists('%s/cache/git/init.json' % MEDIA_ROOT):
                         t = datetime.fromtimestamp(os.path.getmtime('%s/cache/git/init.json' % MEDIA_ROOT))
-                        if ((now - t).seconds >= 60 * 2.5 * 60):
+                        if (now - t).seconds >= 60 * 2.5 * 60:
                             send_notify_slack(
                                 SLACK['ADMIN_NAME'],
                                 '',
@@ -246,7 +246,7 @@ class Command(BaseCommand):
                         ('solr_failed' in tb))):
                     if os.path.exists('%s/cache/slack/users.json' % MEDIA_ROOT):
                         t = datetime.fromtimestamp(os.path.getmtime('%s/cache/slack/users.json' % MEDIA_ROOT))
-                        if ((now - t).seconds >= 60 * 2.5 * 60):
+                        if (now - t).seconds >= 60 * 2.5 * 60:
                             send_notify_slack(
                                 SLACK['ADMIN_NAME'],
                                 '',
@@ -263,7 +263,7 @@ class Command(BaseCommand):
                         ('503' in tb and 'Service Unavailable' in tb))):
                     if os.path.exists('%s/cache/dropbox/folders.json' % MEDIA_ROOT):
                         t = datetime.fromtimestamp(os.path.getmtime('%s/cache/dropbox/folders.json' % MEDIA_ROOT))
-                        if ((now - t).seconds >= 60 * 2.5 * 60):
+                        if (now - t).seconds >= 60 * 2.5 * 60:
                             send_notify_slack(
                                 SLACK['ADMIN_NAME'],
                                 '',
@@ -284,5 +284,4 @@ class Command(BaseCommand):
 
         self.stdout.write('Finished with \033[92mSUCCESS\033[0m!')
         self.stdout.write('Time elapsed: %.1f s.' % (time.time() - t0))
-
 

@@ -16,7 +16,8 @@ class Command(BaseCommand):
     help = 'Send email to admin of weekly aggregated errors and gzip the log_cron.log file.'
 
     def handle(self, *args, **options):
-        if not BOT['SLACK']['IS_REPORT']: return
+        if not BOT['SLACK']['IS_REPORT']:
+            return
         t0 = time.time()
         self.stdout.write('%s:\t%s' % (time.ctime(), ' '.join(sys.argv)))
 

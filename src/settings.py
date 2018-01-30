@@ -135,7 +135,8 @@ MIDDLEWARE_CLASSES = [
     'src.auth.ExceptionUserInfoMiddleware',
     'src.auth.AutomaticAdminLoginMiddleware',
 ]
-if not DEBUG: MIDDLEWARE_CLASSES.insert(0, 'django.middleware.security.SecurityMiddleware')
+if not DEBUG:
+    MIDDLEWARE_CLASSES.insert(0, 'django.middleware.security.SecurityMiddleware')
 
 
 TEMPLATES = [{

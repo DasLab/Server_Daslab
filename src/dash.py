@@ -41,7 +41,10 @@ def cache_aws(request):
                 AWS['REGION'],
                 aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True
             )
-            data = sub_conn.get_metric_statistics(600, datetime.utcnow() - timedelta(hours=2), datetime.utcnow(), 'CPUCreditBalance', 'AWS/EC2', 'Average', {'InstanceId': resv.id}, 'Count')
+            data = sub_conn.get_metric_statistics(
+                600, datetime.utcnow() - timedelta(hours=2), datetime.utcnow(),
+                'CPUCreditBalance', 'AWS/EC2', 'Average', {'InstanceId': resv.id}, 'Count'
+            )
             avg = 0
             for d in data:
                 avg += d[u'Average']
@@ -82,7 +85,10 @@ def cache_aws(request):
                 AWS['REGION'],
                 aws_access_key_id=AWS['ACCESS_KEY_ID'], aws_secret_access_key=AWS['SECRET_ACCESS_KEY'], is_secure=True
             )
-            data = sub_conn.get_metric_statistics(300, datetime.utcnow() - timedelta(minutes=30), datetime.utcnow(), 'HealthyHostCount', 'AWS/ELB', 'Maximum', {'LoadBalancerName': resv.name}, 'Count')
+            data = sub_conn.get_metric_statistics(
+                300, datetime.utcnow() - timedelta(minutes=30), datetime.utcnow(),
+                'HealthyHostCount', 'AWS/ELB', 'Maximum', {'LoadBalancerName': resv.name}, 'Count'
+            )
             status = True
             for d in data:
                 if d[u'Maximum'] < 1:
@@ -109,7 +115,8 @@ def cache_aws(request):
                     ppls = result['ppls']
                     (who, _) = find_slack_id(ppls['monthly']['amazon']['main'])
                     send_notify_slack(
-                        '@' + who, '',
+                        '@' + who,
+                        '',
                         [{
                             'fallback': 'AWS WARNING',
                             'mrkdwn_in': ['text'],
@@ -244,7 +251,8 @@ def dash_aws(request):
 def cache_ga(request):
     if request['qs'] == 'init':
         access_token = requests.post(
-            'https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])
+            'https://www.googleapis.com/oauth2/v3/token?refresh_token=%s&client_id=%s&client_secret=%s&grant_type=refresh_token' % (
+                GA['REFRESH_TOKEN'], GA['CLIENT_ID'], GA['CLIENT_SECRET'])
         ).json()['access_token']
         list_proj = requests.get(
             'https://www.googleapis.com/analytics/v3/management/accountSummaries?access_token=%s' % access_token
@@ -263,7 +271,8 @@ def cache_ga(request):
 
         for j, proj in enumerate(dict_ga['projs']):
             temp = requests.get(
-                'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (url_colon, proj['id'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)
+                'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%ssessionDuration%sga%sbounceRate%sga%spageviewsPerSession%sga%spageviews%sga%ssessions%sga%susers&access_token=%s' % (
+                    url_colon, proj['id'], url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, url_comma, url_colon, access_token)
             ).json()['totalsForAllResults']
             for i, key in enumerate(temp):
                 ga_key = key[3:]
@@ -280,7 +289,8 @@ def cache_ga(request):
         i = 0
         while True:
             temp = requests.get(
-                'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%sdate&access_token=%s' % (url_colon, request['id'], url_colon, request['qs'], url_colon, request['access_token'])
+                'https://www.googleapis.com/analytics/v3/data/ga?ids=ga%s%s&start-date=30daysAgo&end-date=yesterday&metrics=ga%s%s&dimensions=ga%sdate&access_token=%s' % (
+                    url_colon, request['id'], url_colon, request['qs'], url_colon, request['access_token'])
             ).json()
             if 'rows' in temp:
                 temp = temp['rows']
@@ -454,7 +464,10 @@ def cache_git(request):
                     return None
                 fields = ['Commits']
                 for contrib in contribs:
-                    data.append({u'Timestamp': contrib.week, u'Commits': sum(contrib.days)})
+                    data.append({
+                        u'Timestamp': contrib.week,
+                        u'Commits': sum(contrib.days),
+                    })
             elif qs == 'ad':
                 i = 0
                 contribs = repo.get_stats_code_frequency()
@@ -588,7 +601,8 @@ def cache_slack(request):
             num_files = 0
             latest = 0
             for msg in history['messages']:
-                if 'file' in msg: num_files += 1
+                if 'file' in msg:
+                    num_files += 1
                 latest = max(latest, float(msg['ts']))
             latest = datetime.fromtimestamp(latest).strftime('%Y-%m-%d %H:%M:%S')
             temp.update({
@@ -637,7 +651,10 @@ def cache_slack(request):
             for i in xrange(7):
                 start_time = datetime.today() - timedelta(days=i + 1)
                 end_time = start_time + timedelta(days=1)
-                num = sh.files.list(types='all', ts_from=time.mktime(start_time.timetuple()), ts_to=time.mktime(end_time.timetuple())).body['paging']['total']
+                num = sh.files.list(
+                    types='all',
+                    ts_from=time.mktime(start_time.timetuple()), ts_to=time.mktime(end_time.timetuple())
+                ).body['paging']['total']
                 data.append({
                     u'Timestamp': end_time.replace(hour=0, minute=0, second=0, microsecond=0),
                     u'Files': num,
@@ -646,9 +663,10 @@ def cache_slack(request):
             fields = ['Messages']
             response = sh.channels.list().body['channels']
             for resp in response:
-                if resp['is_archived']: continue
+                if resp['is_archived']:
+                    continue
                 for i in xrange(7):
-                    start_time = datetime.today() - timedelta(days=i+1)
+                    start_time = datetime.today() - timedelta(days=i + 1)
                     end_time = start_time + timedelta(days=1)
                     num = len(
                         sh.channels.history(
@@ -725,7 +743,8 @@ def cache_dropbox(request):
             segments = path.split('/')
             for i in xrange(1, len(segments)):
                 folder = '/'.join(segments[:i])
-                if folder == '': folder = '/'
+                if folder == '':
+                    folder = '/'
                 folder_sizes[folder] += size
                 folder_nums[folder] += 1
 
@@ -742,7 +761,8 @@ def cache_dropbox(request):
 
 
         for folder in sorted(folder_sizes.keys()):
-            if folder == '/' or '/' in folder[1:]: continue
+            if folder == '/' or '/' in folder[1:]:
+                continue
             result = dh.metadata(folder, list=False)
             latest = datetime.strptime(result['modified'][:-6], '%a, %d %b %Y %H:%M:%S').replace(tzinfo=pytz.utc).astimezone(pytz.timezone(TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
             json.append({
@@ -872,7 +892,7 @@ def cache_schedule():
         if os.path.exists('%s/cache/schedule.json' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
             t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/schedule.json' % MEDIA_ROOT))
-            if ((now - t_sch).seconds >= 7200):
+            if (now - t_sch).seconds >= 7200:
                 raise Exception('Error with downloading schedule spreadsheet.')
             else:
                 return
@@ -907,7 +927,8 @@ def cache_schedule():
                     'note': row[5],
                 }
 
-        if not this: raise Exception('Error with parsing spreadsheet csv: no [THIS WEEK] found.')
+        if not this:
+            raise Exception('Error with parsing spreadsheet csv: no [THIS WEEK] found.')
         for row in reversed(lines):
             row = row.split(',')
             if len(row) == 10 and any(row):
@@ -967,7 +988,7 @@ def cache_duty():
         if os.path.exists('%s/cache/duty.json' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
             t_sch = datetime.fromtimestamp(os.path.getmtime('%s/cache/duty.json' % MEDIA_ROOT))
-            if ((now - t_sch).seconds >= 7200):
+            if (now - t_sch).seconds >= 7200:
                 raise Exception('Error with downloading duty spreadsheet.')
             else:
                 return
@@ -1025,7 +1046,7 @@ def cache_cal():
         if os.path.exists('%s/cache/calendar.json' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
             t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.json' % MEDIA_ROOT))
-            if ((now - t_cal).seconds >= 7200):
+            if (now - t_cal).seconds >= 7200:
                 raise Exception('Error with downloading calendar ICS file.')
             else:
                 return
@@ -1109,12 +1130,15 @@ def cache_cal():
                     until = (datetime.today() + relativedelta(years=2)).date()
                     if 'UNTIL' in rrule:
                         until = rrule['UNTIL'][0]
-                        if isinstance(until, datetime): until = until.date()
+                        if isinstance(until, datetime):
+                            until = until.date()
 
                     if all_day:
-                        if start > until: break
+                        if start > until:
+                            break
                     else:
-                        if start.date() > until: break
+                        if start.date() > until:
+                            break
 
                     data.append({
                         'title': title,
@@ -1135,7 +1159,7 @@ def cache_cal():
         if os.path.exists('%s/cache/calendar.pickle' % MEDIA_ROOT):
             now = datetime.fromtimestamp(time.time())
             t_cal = datetime.fromtimestamp(os.path.getmtime('%s/cache/calendar.pickle' % MEDIA_ROOT))
-            if ((now - t_cal).seconds >= 7200):
+            if (now - t_cal).seconds >= 7200:
                 if IS_SLACK:
                     send_notify_slack(
                         SLACK['ADMIN_NAME'],
@@ -1166,7 +1190,7 @@ def format_dash_ts(rel_path, interval):
     now = datetime.fromtimestamp(time.time())
     if os.path.exists('%s/cache/%s' % (MEDIA_ROOT, rel_path)):
         t = datetime.fromtimestamp(os.path.getmtime('%s/cache/%s' % (MEDIA_ROOT, rel_path)))
-        if ((now - t).seconds >= int(interval) * 2.5 * 60):
+        if (now - t).seconds >= int(interval) * 2.5 * 60:
             t = '<span class='label label-danger'>' + t.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
         else:
             t = '<span class='label label-primary'>' + t.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
