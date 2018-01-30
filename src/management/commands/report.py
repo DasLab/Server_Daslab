@@ -37,7 +37,7 @@ class Command(BaseCommand):
             else:
                 self.stdout.write("\033[92mSUCCESS\033[0m: \033[94mlog_cron.log\033[0m not exist, nothing to do.")
 
-            msgs = SlackMessage.objects.filter(date__lte=(datetime.utcnow() - timedelta(days=15)).date())
+            msgs = SlackMessage.objects.filter(date__lte=(datetime.utcnow() - timedelta(days=KEEP_BACKUP)).date())
             for msg in msgs:
                 msg.delete()
 
