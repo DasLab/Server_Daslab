@@ -36,7 +36,7 @@ class Command(BaseCommand):
                         [{
                             'fallback': 'BDay',
                             'mrkdwn_in': ['text'],
-                            'color': 'ff912e',
+                            'color': PATH.PALETTE['orange'],
                             'text': '*Happy Birthday*, _%s_!' % ppl.first_name,
                         }]
                     ))
@@ -48,7 +48,7 @@ class Command(BaseCommand):
                     [{
                         'fallback': 'BDay',
                         'mrkdwn_in': ['text'],
-                        'color': 'ff912e',
+                        'color': PATH.PALETTE['orange'],
                         'text': '*Happy Birthday* to _%s_! %s' % (' and '.join(names), ', '.join( ['<@' + id + '>' for id in ids] )),
                     }]
                 ))
@@ -71,7 +71,7 @@ class Command(BaseCommand):
                 [{
                     'fallback': 'SUCCESS',
                     'mrkdwn_in': ['text'],
-                    'color': 'good',
+                    'color': PATH.PALETTE['green'],
                     'text': '*SUCCESS*: Scheduled *Birthday Wishes* sent to `%s` @ _%s_\n' % (' '.join(ids), time.ctime()),
                 }]
             )

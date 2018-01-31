@@ -112,6 +112,16 @@ class SYS_PATH(Singleton):
         }
 
         self.COLOR = ('brown', 'dark-red', 'danger', 'orange', 'warning', 'green', 'success', 'light-blue', 'info', 'primary', 'dark-blue', 'violet')
+        self.PALETTE = {
+            'orange': 'ff912e',
+            'pink': 'ff69bc',
+            'violet': 'c28fdd',
+            'blue': '5496d7',
+            'cyan': '439fe0',
+            'yellow': 'ffc107',
+            'green': '5ed400',
+            'red': 'f44336',
+        }
 
 
 root = environ.Path(os.path.dirname(os.path.dirname(__file__)))

@@ -44,7 +44,7 @@ class Command(BaseCommand):
                 [{
                     'fallback': 'Reminder',
                     'mrkdwn_in': ['text'],
-                    'color': 'c28fdd',
+                    'color': PATH.PALETTE['violet'],
                     'text': msg,
                 }]
             ))
@@ -55,7 +55,7 @@ class Command(BaseCommand):
                 [{
                     'fallback': 'Reminder',
                     'mrkdwn_in': ['text'],
-                    'color': 'ff912e',
+                    'color': PATH.PALETTE['orange'],
                     'text': '*WARNING*: No one [%s?] is primarily assigned for the duty of _%s_ check of `%s`. *NO* reminder sent.' % (task_tuple['main'], interval, task_name),
                 }]
             ))
@@ -119,7 +119,7 @@ class Command(BaseCommand):
                             [{
                                 'fallback': 'ERROR',
                                 'mrkdwn_in': ['text'],
-                                'color': 'warning',
+                                'color': PATH.PALETTE['yellow'],
                                 'text': 'Mismatch in Schedule Spreadsheet date. It seems to be not up-to-date. Please fix the Spreadsheet immediately!',
                             }]
                         )
@@ -136,7 +136,7 @@ class Command(BaseCommand):
                                 [{
                                     'fallback': 'Reminder',
                                     'mrkdwn_in': ['text'],
-                                    'color': 'c28fdd',
+                                    'color': PATH.PALETTE['violet'],
                                     'text': '*LAB DUTY*: Just a reminder for sending a description of your upcoming _Eterna Open Group Meeting_ to <%s> and <@%s> for releasing news on both DasLab Website and EteRNA broadcast.' % (SLACK['ADMIN_NAME'], who_id2),
                                 }]
                             ))
@@ -155,7 +155,7 @@ class Command(BaseCommand):
                                 [{
                                     'fallback': 'Reminder',
                                     'mrkdwn_in': ['text'],
-                                    'color': 'c28fdd',
+                                    'color': PATH.PALETTE['violet'],
                                     'text': '*LAB DUTY*: Just a reminder for posting news on lab website about the upcoming _Eterna Open Group Meeing_ on *%s* by _%s_ <@%s>.' % (result['this']['date'], who, who_id),
                                 }]
                             ))
@@ -169,7 +169,7 @@ class Command(BaseCommand):
                                 [{
                                     'fallback': 'Reminder',
                                     'mrkdwn_in': ['text'],
-                                    'color': 'c28fdd',
+                                    'color': PATH.PALETTE['violet'],
                                     'text': '*LAB DUTY*: Just a reminder for posting your paper of choice for the upcoming _Journal Club_ to `#general`.',
                                 }]
                             ))
@@ -240,7 +240,7 @@ class Command(BaseCommand):
                         [{
                             'fallback': 'Reminder',
                             'mrkdwn_in': ['text', 'fields'],
-                            'color': 'ff912e',
+                            'color': PATH.PALETTE['orange'],
                             'text': '_Upcoming Birthdays_:',
                             'fields': fields,
                         }]
@@ -254,7 +254,7 @@ class Command(BaseCommand):
                         [{
                             'fallback': 'Reminder',
                             'mrkdwn_in': ['text'],
-                            'color': '3ed4e7',
+                            'color': PATH.PALETTE['cyan'],
                             'text': '*REMINDER*: Renewal of `Dropbox` membership _annually_. Please renew and check the payment status.',
                         }]
                     ))
@@ -263,7 +263,7 @@ class Command(BaseCommand):
                         [{
                             'fallback': 'Reminder',
                             'mrkdwn_in': ['text'],
-                            'color': '3ed4e7',
+                            'color': PATH.PALETTE['cyan'],
                             'text': '*REMINDER*: Renewal of `GitHub` membership _annually_. Please renew and check the payment status.',
                         }]
                     ))
@@ -275,7 +275,7 @@ class Command(BaseCommand):
                         [{
                             'fallback': 'Reminder',
                             'mrkdwn_in': ['text'],
-                            'color': '3ed4e7',
+                            'color': PATH.PALETTE['cyan'],
                             'text': '*REMINDER*: Renewal of `AWS` reserved instances [all upfront] _annually_. Please renew and check the payment status.',
                         }]
                     ))
@@ -315,7 +315,7 @@ class Command(BaseCommand):
                 [{
                     'fallback': 'SUCCESS',
                     'mrkdwn_in': ['text'],
-                    'color': 'good',
+                    'color': PATH.PALETTE['green'],
                     'text': '*SUCCESS*: Scheduled %s *Duty Reminder* finished @ _%s_\n' % (flag, time.ctime()),
                 }]
             )

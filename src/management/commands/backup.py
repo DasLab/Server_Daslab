@@ -113,7 +113,7 @@ class Command(BaseCommand):
                             [{
                                 'fallback': 'SUCCESS',
                                 'mrkdwn_in': ['text'],
-                                'color': 'good',
+                                'color': PATH.PALETTE['green'],
                                 'text': '*SUCCESS*: Scheduled weekly *Backup* finished @ _%s_\n' % time.ctime(),
                             }]
                         )

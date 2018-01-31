@@ -85,7 +85,7 @@ class Command(BaseCommand):
                     [{
                         'fallback': 'Reminder',
                         'mrkdwn_in': ['text'],
-                        'color': 'good',
+                        'color': PATH.PALETTE['green'],
                         'title': 'Group Meeting Reminder',
                         'text': msg_this,
                         'thumb_url': 'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg',
@@ -102,7 +102,7 @@ class Command(BaseCommand):
                         [{
                             'fallback': 'ERROR',
                             'mrkdwn_in': ['text'],
-                            'color': 'warning',
+                            'color': PATH.PALETTE['yellow'],
                             'text': 'Mismatch in Schedule Spreadsheet date. It seems to be not up-to-date.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.',
                         }]
                     )
@@ -138,7 +138,7 @@ class Command(BaseCommand):
                             [{
                                 'fallback': 'ERROR',
                                 'mrkdwn_in': ['text'],
-                                'color': 'warning',
+                                'color': PATH.PALETTE['yellow'],
                                 'text': 'FlashSlide was created but failed on sharing to the group.\nFlash Slide setup is *`NOT`* complete! Please investigate and fix the setup immediately.',
                             }]
                         )
@@ -168,7 +168,7 @@ class Command(BaseCommand):
                                     [{
                                         'fallback': 'Reminder',
                                         'mrkdwn_in': ['text'],
-                                        'color': 'good',
+                                        'color': PATH.PALETTE['green'],
                                         'text': msg_who,
                                     }]
                                 ))
@@ -200,7 +200,7 @@ class Command(BaseCommand):
                         [{
                             'fallback': 'REMINDER',
                             'mrkdwn_in': ['text'],
-                            'color': 'warning',
+                            'color': PATH.PALETTE['yellow'],
                             'text': '*REMINDER*: Add *%s* entry for _%s_.' % (item, reminder_date_str),
                         }]
                     ))
@@ -212,7 +212,7 @@ class Command(BaseCommand):
                     [{
                         'fallback': 'Reminder',
                         'mrkdwn_in': ['text', 'fields'],
-                        'color': 'good',
+                        'color': PATH.PALETTE['green'],
                         'title': 'Group Meeting Reminder',
                         'text': 'Hi all,\n\nThis is a reminder that group meeting will be %s*`%s`* for this week.\n' % (super_prefix, type_this),
                         'thumb_url': 'https://daslab.stanford.edu/site_media/images/group/logo_bot.jpg',
@@ -244,7 +244,7 @@ class Command(BaseCommand):
                     [{
                         'fallback': '%s' % title,
                         'mrkdwn_in': ['text'],
-                        'color': 'warning',
+                        'color': PATH.PALETTE['yellow'],
                         'title': '%s' % title,
                         'text': '*<https://docs.google.com/presentation/d/%s/edit#slide=id.p>*\nA <https://daslab.stanford.edu/group/flash_slide/|full list> of Flash Slide links is available on the DasLab Website.' % ppt_id,
                     }]
@@ -259,7 +259,7 @@ class Command(BaseCommand):
                     [{
                         'fallback': 'REMINDER',
                         'mrkdwn_in': ['text'],
-                        'color': 'warning',
+                        'color': PATH.PALETTE['yellow'],
                         'text': '*REMINDER*: Revoke permissions (_Group Website_ and _Slack Membership_) of recent finished *RotationStudent*.',
                     }]
                 ))
@@ -277,7 +277,7 @@ class Command(BaseCommand):
                     [{
                         'fallback': 'Reminder',
                         'mrkdwn_in': ['text'],
-                        'color': '439fe0',
+                        'color': PATH.PALETTE['cyan'],
                         'text': msg_next,
                     }]
                 ))
@@ -319,7 +319,7 @@ class Command(BaseCommand):
                                     [{
                                         'fallback': 'Reminder',
                                         'mrkdwn_in': ['text'],
-                                        'color': 'good',
+                                        'color': PATH.PALETTE['green'],
                                         'text': msg_who,
                                     }]
                                 ))
@@ -336,7 +336,7 @@ class Command(BaseCommand):
                     [{
                         'fallback': 'Reminder',
                         'mrkdwn_in': ['text', 'fields'],
-                        'color': '439fe0',
+                        'color': PATH.PALETTE['cyan'],
                         'text': 'For next week: \n',
                         'thumb_url': 'https: //daslab.stanford.edu/site_media/images/group/logo_bot.jpg',
                         'fields': [
@@ -370,7 +370,7 @@ class Command(BaseCommand):
                 [{
                     'fallback': 'Reminder',
                     'mrkdwn_in': ['text'],
-                    'color': 'danger',
+                    'color': PATH.PALETTE['red'],
                     'text': 'The <https://daslab.stanford.edu/group/schedule/|full schedule> is available on the DasLab Website. For questions regarding the schedule, please contact <@%s>. Thanks for your attention.\n\nSite Admin: <%s>' % (who_id, SLACK['ADMIN_NAME']),
                 }]
             ))
@@ -394,7 +394,7 @@ class Command(BaseCommand):
                     [{
                         'fallback': 'ERROR',
                         'mrkdwn_in': ['text'],
-                        'color': 'warning',
+                        'color': PATH.PALETTE['yellow'],
                         'text': 'FlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.\nFlash Slide has *`NOT`* been setup yet for this week! Please investigate and fix the setup immediately.',
                     }]
                 )
@@ -424,7 +424,7 @@ class Command(BaseCommand):
                 [{
                     'fallback': 'SUCCESS',
                     'mrkdwn_in': ['text'],
-                    'color': 'good',
+                    'color': PATH.PALETTE['green'],
                     'text': '*SUCCESS*: Scheduled weekly *Flash Slides Setup* finished @ _%s_. Please also paste the link in the Schedule Spreadsheet.\n' % time.ctime(),
                 }]
             )

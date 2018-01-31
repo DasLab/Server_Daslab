@@ -84,7 +84,7 @@ def send_error_slack(err, task='', fn='', log_file=''):
         [{
             'fallback': 'ERROR',
             'mrkdwn_in': ['text'],
-            'color': 'danger',
+            'color': PATH.PALETTE['red'],
             'text': '*`ERROR`*: %s*%s* @ _%s_\n>```%s```\n' % (task, fn, time.ctime(), err),
         }]
     )

@@ -120,7 +120,7 @@ def cache_aws(request):
                         [{
                             'fallback': 'AWS WARNING',
                             'mrkdwn_in': ['text'],
-                            'color': 'ff69bc',
+                            'color': PATH.PALETTE['pink'],
                             'text': '*`WARNING`*: AWS ELB Server `%s` has *NO* healthy host! @ _%s_\n' % (resv.name, time.ctime()),
                         }]
                     )
@@ -543,7 +543,7 @@ def cache_slack(request):
                                 [{
                                     'fallback': 'ERROR',
                                     'mrkdwn_in': ['text'],
-                                    'color': 'ff69bc',
+                                    'color': PATH.PALETTE['pink'],
                                     'text': '*`ERROR`*: *pickle_slack()* Connection/SSL Error @ _%s_\n' % time.ctime(),
                                 }]
                             )
@@ -884,7 +884,7 @@ def cache_schedule():
             [{
                 'fallback': 'ERROR',
                 'mrkdwn_in': ['text'],
-                'color': 'ff69bc',
+                'color': PATH.PALETTE['pink'],
                 'text': '*`ERROR`*: *cache_schedule()* Download Failure @ _%s_\n' % time.ctime(),
             }]
         )
@@ -980,7 +980,7 @@ def cache_duty():
             [{
                 'fallback': 'ERROR',
                 'mrkdwn_in': ['text'],
-                'color': 'ff69bc',
+                'color': PATH.PALETTE['pink'],
                 'text': '*`ERROR`*: *cache_duty()* Download Failure @ _%s_\n' % time.ctime(),
             }]
         )
@@ -1075,15 +1075,15 @@ def cache_cal():
                 end = start + relativedelta(hours=1)
 
             all_day = (not isinstance(start, datetime))
-            color = '#29be92' if all_day else '#5496d7'
+            color = '#' + PATH.PALETTE['green'] if all_day else '#' + PATH.PALETTE['blue']
             if ('group meeting' in title.lower() or
                 'das lab group' in title.lower() or
                 'eterna dev meeting' in title.lower()):
-                color = '#ff5c2b'
+                color = '#' + PATH.PALETTE['red']
             if ('BD' in title or
                 'b-day' in title or
                 'birthday' in title.lower()):
-                color = '#c28fdd'
+                color = '#' + PATH.PALETTE['violet']
             data.append({
                 'title': title,
                 'start': datetime.strftime(start, format_UTC),
@@ -1167,7 +1167,7 @@ def cache_cal():
                         [{
                             'fallback': 'ERROR',
                             'mrkdwn_in': ['text'],
-                            'color': 'danger',
+                            'color': PATH.PALETTE['red'],
                             'text': '*`ERROR`*: *cache_cal()* @ _%s_\n>```%s```\n' % (time.ctime(), err),
                         }]
                     )

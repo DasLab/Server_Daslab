@@ -220,7 +220,7 @@ class Command(BaseCommand):
                                 [{
                                     'fallback': 'ERROR',
                                     'mrkdwn_in': ['text'],
-                                    'color': 'ff69bc',
+                                    'color': PATH.PALETTE['pink'],
                                     'text': '*`ERROR`*: *pickle_aws()* Connection/SSL Error @ _%s_\n' % time.ctime(),
                                 }]
                             )
@@ -235,7 +235,7 @@ class Command(BaseCommand):
                                 [{
                                     'fallback': 'ERROR',
                                     'mrkdwn_in': ['text'],
-                                    'color': 'ff69bc',
+                                    'color': PATH.PALETTE['pink'],
                                     'text': '*`ERROR`*: *pickle_git()* Connection/SSL Error @ _%s_\n' % time.ctime(),
                                 }]
                             )
@@ -253,7 +253,7 @@ class Command(BaseCommand):
                                 [{
                                     'fallback': 'ERROR',
                                     'mrkdwn_in': ['text'],
-                                    'color': 'ff69bc',
+                                    'color': PATH.PALETTE['pink'],
                                     'text': '*`ERROR`*: *pickle_slack()* Connection/SSL Error @ _%s_\n' % time.ctime(),
                                 }]
                             )
@@ -270,7 +270,7 @@ class Command(BaseCommand):
                                 [{
                                     'fallback': 'ERROR',
                                     'mrkdwn_in': ['text'],
-                                    'color': 'ff69bc',
+                                    'color': PATH.PALETTE['pink'],
                                     'text': '*`ERROR`*: *pickle_dropbox()* Connection/SSL Error @ _%s_\n' % time.ctime(),
                                 }]
                             )
