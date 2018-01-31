@@ -23,7 +23,7 @@ class Command(BaseCommand):
         parser.add_argument('interval', nargs='+', type=str, help='Interval, choose from (week, month, quarter).')
 
 
-    def send_to(id, channel=False):
+    def send_to(self, id, channel=False):
         if DEBUG:
             return SLACK['ADMIN_NAME']
         else:

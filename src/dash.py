@@ -1026,7 +1026,7 @@ def dash_duty(request):
 def get_calendar():
     try:
         subprocess.check_call(
-            'curl --silent --request GET '%s' -o %s/cache/calendar.ics' % (GCAL['ICS'], MEDIA_ROOT),
+            'curl --silent --request GET \'%s\' -o %s/cache/calendar.ics' % (GCAL['ICS'], MEDIA_ROOT),
             shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
         )
         return True
@@ -1076,9 +1076,9 @@ def cache_cal():
 
             all_day = (not isinstance(start, datetime))
             color = '#29be92' if all_day else '#5496d7'
-            if ('group meeting' in title.lower()) or
-                ('das lab group' in title.lower()) or
-                ('eterna dev meeting' in title.lower()):
+            if ('group meeting' in title.lower() or
+                'das lab group' in title.lower() or
+                'eterna dev meeting' in title.lower()):
                 color = '#ff5c2b'
             if ('BD' in title or
                 'b-day' in title or
@@ -1191,9 +1191,9 @@ def format_dash_ts(rel_path, interval):
     if os.path.exists('%s/cache/%s' % (MEDIA_ROOT, rel_path)):
         t = datetime.fromtimestamp(os.path.getmtime('%s/cache/%s' % (MEDIA_ROOT, rel_path)))
         if (now - t).seconds >= int(interval) * 2.5 * 60:
-            t = '<span class='label label-danger'>' + t.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+            t = '<span class="label label-danger">' + t.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
         else:
-            t = '<span class='label label-primary'>' + t.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
+            t = '<span class="label label-primary">' + t.strftime('%Y-%m-%d %H:%M:%S') + '</span>'
     else:
-        t = '<span class='label label-default'>N/A</span>'
+        t = '<span class="label label-default">N/A</span>'
     return t

@@ -25,14 +25,14 @@ class Command(BaseCommand):
         }
         self.msg_handles = []
 
-    def send_to(id, channel=False):
+    def send_to(self, id, channel=False):
         if DEBUG:
             return SLACK['ADMIN_NAME']
         else:
             prefix = '#' if channel else '@'
             return '%s%s' % (prefix, id)
 
-    def slack_match_names(name):
+    def slack_match_names(self, name):
         if '/' in name or '&' in name:
             return name.replace('/', '*|*').replace('&', '*|*').replace(' ', '').split('*|*')
         elif name.strip() and name != '-':
@@ -40,7 +40,7 @@ class Command(BaseCommand):
         else:
             return []
 
-    def slack_id_error(sunet_id, name, role):
+    def slack_id_error(self, sunet_id, name, role):
         if sunet_id == 'none':
             msg = 'not found'
         elif sunet_id == 'ambiguous':

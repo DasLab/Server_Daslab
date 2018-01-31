@@ -15,7 +15,7 @@ from src.dash import *
 class Command(BaseCommand):
     help = 'Caches Dashboard information on an 3/15/30 minutes interval. Cache files are saved to cache/. Existing files will be overwritten.'
 
-    def move_temp_file(f_name):
+    def move_temp_file(self, f_name):
         subprocess.check_call(
             'mv %s_tmp %s' % (f_name, f_name),
             shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT

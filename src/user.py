@@ -185,9 +185,9 @@ def user_upload(request):
 #         if not profile.start_year: profile.start_year = '(N/A)'
 #         if not profile.finish_year: profile.finish_year = '(N/A)'
 #         if profile.alumni:
-#             profile.alumni = '<span class='label label-danger'>Almuni</span>'
+#             profile.alumni = '<span class="label label-danger">Almuni</span>'
 #         else:
-#             profile.alumni = '<span class='label label-success'>Current</span>'
+#             profile.alumni = '<span class="label label-success">Current</span>'
 #     else:
 #         profile = []
 #     return render(request, PATH.HTML_PATH['profile'], {'profile':profile})
