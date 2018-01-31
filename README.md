@@ -9,23 +9,23 @@ This is the _Source Code_ repository for **DasLab** Website **Server**. The prod
 **DasLab Server** requires the following *Python* packages as dependencies, most of which can be installed through [`pip`](https://pip.pypa.io/).
 
 ```json
-boto >= 2.38.0
-Django >= 1.9.1
+boto >= 2.48.0
+Django >= 1.11.7
 django-adminplus >= 0.5
-django-crontab >= 0.7.0
-django-environ >= 0.4.0
+django-crontab >= 0.7.1
+django-environ >= 0.4.4
 django-filemanager == 0.0.2
-django-suit >= 0.2.15
+django-suit >= 0.2.25
 django-widget-tweaks >= 1.4.1
-dropbox >= 4.0
+dropbox >= 8.6.0
 gviz-api.py == 1.8.2
-icalendar >= 3.9.1
+icalendar >= 4.0.0
 MySQL-python >= 1.2.5
-PyGithub >= 1.26.0
-pytz >= 2015.7
-requests >= 2.9.1
-simplejson >= 3.8.1
-slacker >= 0.9.0
+PyGithub >= 1.35
+pytz >= 2017.3
+requests >= 2.18.4
+simplejson >= 3.13.2
+slacker >= 0.9.60
 ```
 
 The `gviz-api.py` is available at [`google-visualization-python`](https://github.com/google/google-visualization-python/).
@@ -70,7 +70,7 @@ The server should be running at `localhost:8000` with a python session interacti
 
 ## License
 
-**Copyright &copy; 2015-2017: Siqi Tian _[[t47](https://t47.io/)]_, Das Lab, Stanford University. All Rights Reserved.**
+**Copyright &copy; 2015-2018: Siqi Tian _[[t47](https://t47.io/)]_, Das Lab, Stanford University. All Rights Reserved.**
 
 **DasLab Server** _Source Code_ is proprietary and confidential. Unauthorized copying of this repository, via any medium, is strictly prohibited.
 
