@@ -153,7 +153,7 @@ class Command(BaseCommand):
                 note = result['this']['note'].lower().replace(' ', '')
                 name = result['this']['who']
                 ids = []
-                names = slack_match_names(name)
+                names = self.slack_match_names(name)
 
                 if name:
                     for name in names:
@@ -299,7 +299,7 @@ class Command(BaseCommand):
 
                 name = result['next']['who']
                 ids = []
-                names = slack_match_names(name)
+                names = self.slack_match_names(name)
 
                 if name:
                     for name in names:
