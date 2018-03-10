@@ -213,7 +213,7 @@ class Publication(models.Model):
         help_text='<span class="glyphicon glyphicon-user"></span>&nbsp; Follow the format seen on the website: <span class="label label-inverse">Das, R.,</span>.')
     year = models.PositiveSmallIntegerField(default=now().year)
     display_date = models.DateField(
-        default=now().date(),
+        auto_now_add=True,
         verbose_name='Display Date',
         help_text='<span class="glyphicon glyphicon-random"></span>&nbsp; For display ordering within each year. Assign a virtual date as used when sorting.')
     title = models.TextField(
@@ -300,7 +300,7 @@ class Publication(models.Model):
 ############################################################################################################################################
 
 class FlashSlide(models.Model):
-    date = models.DateField(default=now())
+    date = models.DateField(auto_now_add=True)
     link = models.URLField(
         max_length=255, blank=True,
         verbose_name='URL',
@@ -312,7 +312,7 @@ class FlashSlide(models.Model):
 
 
 class JournalClub(models.Model):
-    date = models.DateField(default=now())
+    date = models.DateField(auto_now_add=True)
     presenter = models.CharField(max_length=255)
     authors = models.CharField(
         max_length=255, blank=True,
@@ -336,7 +336,7 @@ class JournalClub(models.Model):
 
 class RotationStudent(models.Model):
     date = models.DateField(
-        default=now(),
+        auto_now_add=True,
         verbose_name='Presentation Date')
     full_name = models.CharField(
         max_length=255,
@@ -362,7 +362,7 @@ class RotationStudent(models.Model):
 
 class EternaYoutube(models.Model):
     date = models.DateField(
-        default=now(),
+        auto_now_add=True,
         verbose_name='Presentation Date')
     presenter = models.CharField(max_length=255)
     title = models.CharField(
@@ -381,7 +381,7 @@ class EternaYoutube(models.Model):
 
 class Presentation(models.Model):
     date = models.DateField(
-        default=now(),
+        auto_now_add=True,
         verbose_name='Presentation Date')
     presenter = models.CharField(max_length=255)
     title = models.CharField(
@@ -430,7 +430,7 @@ class DefensePoster(models.Model):
 
 class SlackMessage(models.Model):
     date = models.DateField(
-        default=now(),
+        auto_now_add=True,
         verbose_name='Message Date')
     receiver = models.CharField(max_length=255)
     content = models.TextField(
