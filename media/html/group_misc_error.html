@@ -1,75 +1,75 @@
 {% extends "media/html/_internal.html" %}
 {% block content %}
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<div class="row">
-		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-			<div class="radio">
-				<label>
-					<input type="radio" name="view_opt" value="400">
-					<span class="cr"><span class="cr-icon glyphicon glyphicon-remove"></span></span>
-					&nbsp;&nbsp;<span class="label label-info">400</span>
-					<br/>
-					Bad Request
-				</label>
-			</div>
-		</div>
-		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-			<div class="radio">
-				<label>
-					<input type="radio" name="view_opt" value="401">
-					<span class="cr"><span class="cr-icon glyphicon glyphicon-remove"></span></span>
-					&nbsp;&nbsp;<span class="label label-orange">401</span>
-					<br/>
-					Unauthorized
-				</label>
-			</div>
-		</div>
-		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-			<div class="radio">
-				<label>
-					<input type="radio" name="view_opt" value="403">
-					<span class="cr"><span class="cr-icon glyphicon glyphicon-remove"></span></span>
-					&nbsp;&nbsp;<span class="label label-magenta">403</span>
-					<br/>
-					Forbidden
-				</label>
-			</div>
-		</div>
-		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-			<div class="radio">
-				<label>
-					<input type="radio" name="view_opt" value="404">
-					<span class="cr"><span class="cr-icon glyphicon glyphicon-remove"></span></span>
-					&nbsp;&nbsp;<span class="label label-teal">404</span>
-					<br/>
-					Not Found
-				</label>
-			</div>
-		</div>
-		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-			<div class="radio">
-				<label>
-					<input type="radio" name="view_opt" value="500" checked>
-					<span class="cr"><span class="cr-icon glyphicon glyphicon-remove"></span></span>
-					&nbsp;&nbsp;<span class="label label-danger">500</span>
-					<br/>
-					Internal Server Error
-				</label>
-			</div>
-		</div>
-		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-			<div class="radio">
-				<label>
-					<input type="radio" name="view_opt" value="503">
-					<span class="cr"><span class="cr-icon glyphicon glyphicon-remove"></span></span>
-					&nbsp;&nbsp;<span class="label label-violet">503</span>
-					<br/>
-					Service Unavailable
-				</label>
-			</div>
-		</div>
-	</div>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+        <div class="radio">
+          <label>
+            <input type="radio" name="view_opt" value="400">
+            <span class="cr"><span class="cr-icon glyphicon glyphicon-remove"></span></span>
+            &nbsp;&nbsp;<span class="label label-info">400</span>
+            <br/>
+            Bad Request
+          </label>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+        <div class="radio">
+          <label>
+            <input type="radio" name="view_opt" value="401">
+            <span class="cr"><span class="cr-icon glyphicon glyphicon-remove"></span></span>
+            &nbsp;&nbsp;<span class="label label-orange">401</span>
+            <br/>
+            Unauthorized
+          </label>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+        <div class="radio">
+          <label>
+            <input type="radio" name="view_opt" value="403">
+            <span class="cr"><span class="cr-icon glyphicon glyphicon-remove"></span></span>
+            &nbsp;&nbsp;<span class="label label-magenta">403</span>
+            <br/>
+            Forbidden
+          </label>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+        <div class="radio">
+          <label>
+            <input type="radio" name="view_opt" value="404">
+            <span class="cr"><span class="cr-icon glyphicon glyphicon-remove"></span></span>
+            &nbsp;&nbsp;<span class="label label-teal">404</span>
+            <br/>
+            Not Found
+          </label>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+        <div class="radio">
+          <label>
+            <input type="radio" name="view_opt" value="500" checked>
+            <span class="cr"><span class="cr-icon glyphicon glyphicon-remove"></span></span>
+            &nbsp;&nbsp;<span class="label label-danger">500</span>
+            <br/>
+            Internal Server Error
+          </label>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+        <div class="radio">
+          <label>
+            <input type="radio" name="view_opt" value="503">
+            <span class="cr"><span class="cr-icon glyphicon glyphicon-remove"></span></span>
+            &nbsp;&nbsp;<span class="label label-violet">503</span>
+            <br/>
+            Service Unavailable
+          </label>
+        </div>
+      </div>
+    </div>
 
-	<iframe src="/error/500/?status=false" width="800" height="600" frameborder="0" scrolling="auto" seamless="true" id="iframe" class="thumbnail center-block"></iframe>
-</div>
+    <iframe src="/error/500/?status=false" width="800" height="600" frameborder="0" scrolling="auto" seamless="true" id="iframe" class="thumbnail center-block"></iframe>
+  </div>
 {% endblock %}

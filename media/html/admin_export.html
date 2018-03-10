@@ -4,124 +4,123 @@
 {% block bodyclass %}dashboard{% endblock %}
 
 {% block content %}
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		<form enctype="multipart/form-data" action="/admin/export/" method="post" target="_blank" rel="noopener">
-			{% csrf_token %}
-			<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-				<div class="thumbnail" style="padding:10px 20px;">
-					<div class="row">
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-							<br/>
-							<h4><span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>&nbsp;&nbsp;Output Format</h4>
-							<div class="input-group">
-								<span class="input-group-addon">Type</span>
-								{{form.text_type}}
-							</div>
-							<br/>
-							<h4><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Year Range <small>(Inclusive)</small></h4>
-							<div class="row">
-								<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">{{form.year_start}}</div>
-								<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">To:</div>
-								<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><input value="Current" type="input" disabled></div>
-								<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-							</div>  
-							<ul>
-								{{form.include_preprint}}
-								<span>Include Preprint Items</span>
-								{{form.include_hidden}}
-								<span>Include Hidden Items</span>
-							</ul>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <form enctype="multipart/form-data" action="/admin/export/" method="post" target="_blank" rel="noopener">
+      {% csrf_token %}
+      <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+        <div class="thumbnail" style="padding:10px 20px;">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <br/>
+              <h4><span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>&nbsp;&nbsp;Output Format</h4>
+              <div class="input-group">
+                <span class="input-group-addon">Type</span>
+                {{form.text_type}}
+              </div>
+              <br/>
+              <h4><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Year Range <small>(Inclusive)</small></h4>
+              <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">{{form.year_start}}</div>
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">To:</div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><input value="Current" type="input" disabled></div>
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+              </div>
+              <ul>
+                {{form.include_preprint}}
+                <span>Include Preprint Items</span>
+                {{form.include_hidden}}
+                <span>Include Hidden Items</span>
+              </ul>
 
-							<div class="row">
-								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-									<h4><span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>&nbsp;&nbsp;Sorting Order</h4>
-									<div class="input-group">
-										<span class="input-group-addon">Year</span>
-										{{form.sort_order}}
-									</div>
-								</div>
-								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-									<h4><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>&nbsp;&nbsp;Numbering Order</h4>
-									<div class="input-group">
-										<span class="input-group-addon">Number</span>
-										{{form.number_order}}
-									</div>
-								</div>
-							</div>
-							<br/>
-						</div>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  <h4><span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>&nbsp;&nbsp;Sorting Order</h4>
+                  <div class="input-group">
+                    <span class="input-group-addon">Year</span>
+                    {{form.sort_order}}
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  <h4><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>&nbsp;&nbsp;Numbering Order</h4>
+                  <div class="input-group">
+                    <span class="input-group-addon">Number</span>
+                    {{form.number_order}}
+                  </div>
+                </div>
+              </div>
+              <br/>
+            </div>
 
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-							<br/>
-							<h4><span class="glyphicon glyphicon-check" aria-hidden="true"></span>&nbsp;&nbsp;Rich Format Options</h4>
-							<ul>
-								{{form.bold_author}}
-								<span>Mark Corresponding Author as <b>Bold</b></span>
-								{{form.bold_year}}
-								<span>Mark Publication Year as <b>Bold</b></span>
-								{{form.underline_title}}
-								<span>Mark Publication Title with <u>Underline</u></span>
-								{{form.italic_journal}}
-								<span>Mark Journal Name as <i>Italic</i></span>
-								{{form.bold_volume}}
-								<span>Mark Volume Number as <b>Bold</b></span>
-							</ul>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <br/>
+              <h4><span class="glyphicon glyphicon-check" aria-hidden="true"></span>&nbsp;&nbsp;Rich Format Options</h4>
+              <ul>
+                {{form.bold_author}}
+                <span>Mark Corresponding Author as <b>Bold</b></span>
+                {{form.bold_year}}
+                <span>Mark Publication Year as <b>Bold</b></span>
+                {{form.underline_title}}
+                <span>Mark Publication Title with <u>Underline</u></span>
+                {{form.italic_journal}}
+                <span>Mark Journal Name as <i>Italic</i></span>
+                {{form.bold_volume}}
+                <span>Mark Volume Number as <b>Bold</b></span>
+              </ul>
 
-							<br/>
-							<h4><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;Text Format Options</h4>
-							<ul>
-								{{form.order_number}}
-								<span>Show Item Numbering</span>
-								{{form.quote_title}}
-								<span>Mark Publication Title with "Quotes"</span>
-								{{form.double_space}}
-								<span>Double Space between Items</span>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-				<div class="col-lg-12 col-md-12 col-sm-4 col-xs-4">
-					<button type="submit" class="btn btn-primary btn-block" name="action" id="export_save" value="save"><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Export</button>
-					<br/>
-				</div>
-				<div class="col-lg-12 col-md-12 col-sm-4 col-xs-4">
-					<button type="submit" class="btn btn-warning btn-block" name="action" id="export_view" value="view"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;&nbsp;View</button>
-					<br/>
-				</div>
-				<div class="col-lg-12 col-md-12 col-sm-4 col-xs-4">
-					<a href="/admin/export/" class="btn btn-default btn-block"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Reset</a>
-					<br/>
-				</div>
-			</div>
-		</form>
-	</div>
+              <br/>
+              <h4><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;Text Format Options</h4>
+              <ul>
+                {{form.order_number}}
+                <span>Show Item Numbering</span>
+                {{form.quote_title}}
+                <span>Mark Publication Title with "Quotes"</span>
+                {{form.double_space}}
+                <span>Double Space between Items</span>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+        <div class="col-lg-12 col-md-12 col-sm-4 col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block" name="action" id="export_save" value="save"><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Export</button>
+          <br/>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-4 col-xs-4">
+          <button type="submit" class="btn btn-warning btn-block" name="action" id="export_view" value="view"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;&nbsp;View</button>
+          <br/>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-4 col-xs-4">
+          <a href="/admin/export/" class="btn btn-default btn-block"><span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Reset</a>
+          <br/>
+        </div>
+      </div>
+    </form>
+  </div>
 
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-bottom:20px;">
-		<h4><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</h4>
-		<div class="well" style="margin-bottom:0px;">
-			<p id="prv_item_1">
-				<span class="item_num">1.</span>
-				Cheng, C., Chou, F.-C., Kladwang, W., Tian, S., Cordero, P. and <span class="item_das">Das, R.</span> (<span class="item_year">2015</span>) 
-				<span class="item_quote">"</span><span class="item_title">Consistent global structures of complex RNA states through multidimensional chemical mapping.</span><span class="item_quote">"</span> 
-				<span class="item_journal">eLife</span> <span class="item_volume">4</span>: e07600 
-			</p>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-bottom:20px;">
+    <h4><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;&nbsp;Preview</h4>
+    <div class="well" style="margin-bottom:0px;">
+      <p id="prv_item_1">
+        <span class="item_num">1.</span>
+        Cheng, C., Chou, F.-C., Kladwang, W., Tian, S., Cordero, P. and <span class="item_das">Das, R.</span> (<span class="item_year">2015</span>)
+        <span class="item_quote">"</span><span class="item_title">Consistent global structures of complex RNA states through multidimensional chemical mapping.</span><span class="item_quote">"</span>
+        <span class="item_journal">eLife</span> <span class="item_volume">4</span>: e07600
+      </p>
 
-			<p id="prv_item_2">
-				<span class="item_num">2.</span>
-				Lee, J., Kladwang, W., Lee, M., Cantu, D., Azizyan, M., Kim, H., Limpaecher, A., Yoon, S., Treuille, A., <span class="item_das">Das, R.</span>, and EteRNA Participants (<span class="item_year">2014</span>) 
-				<span class="item_quote">"</span><span class="item_title">RNA design rules from a massive open laboratory.</span><span class="item_quote">"</span> 
-				<span class="item_journal">Proceedings of the National Academy of Sciences U.S.A.</span> <span class="item_volume">111</span>(6): 2122-2127  
-			</p>
+      <p id="prv_item_2">
+        <span class="item_num">2.</span>
+        Lee, J., Kladwang, W., Lee, M., Cantu, D., Azizyan, M., Kim, H., Limpaecher, A., Yoon, S., Treuille, A., <span class="item_das">Das, R.</span>, and EteRNA Participants (<span class="item_year">2014</span>)
+        <span class="item_quote">"</span><span class="item_title">RNA design rules from a massive open laboratory.</span><span class="item_quote">"</span>
+        <span class="item_journal">Proceedings of the National Academy of Sciences U.S.A.</span> <span class="item_volume">111</span>(6): 2122-2127
+      </p>
 
-			<p id="prv_item_3">
-				<span class="item_num">3.</span>
-				Kladwang, W., VanLang, C.C., Cordero P., and <span class="item_das">Das, R.</span> (<span class="item_year">2011</span>) 
-				<span class="item_quote">"</span><span class="item_title">A two-dimensional mutate-and-map strategy for non-coding RNA structure.</span><span class="item_quote">"</span> 
-				<span class="item_journal">Nature Chemistry</span> <span class="item_volume">3</span>: 954-962 
-			</p>
-		</div>
-	</div>
-		
+      <p id="prv_item_3">
+        <span class="item_num">3.</span>
+        Kladwang, W., VanLang, C.C., Cordero P., and <span class="item_das">Das, R.</span> (<span class="item_year">2011</span>)
+        <span class="item_quote">"</span><span class="item_title">A two-dimensional mutate-and-map strategy for non-coding RNA structure.</span><span class="item_quote">"</span>
+        <span class="item_journal">Nature Chemistry</span> <span class="item_volume">3</span>: 954-962
+      </p>
+    </div>
+  </div>
 {% endblock %}

@@ -1,846 +1,846 @@
 {% extends "media/html/_internal.html" %}
 {% block content %}
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<div class="fc fc-ltr fc-unthemed" id="calendar" style="padding:10px;">
-	 <div class="fc-view-container" style="">
-	  <div class="fc-view fc-month-view fc-basic-view">
-	   <table>
-	    <thead class="fc-head">
-	     <tr>
-	      <td class="fc-head-container fc-widget-header">
-	       <div class="fc-row fc-widget-header" style="border-right-width: 1px;">
-	        <table>
-	         <thead>
-	          <tr>
-	           <th class="fc-day-header fc-widget-header fc-sun" style="padding: 10px; background-color: rgb(221, 221, 221);">Sun</th>
-	           <th class="fc-day-header fc-widget-header fc-mon" style="padding: 10px; background-color: rgb(221, 221, 221);">Mon</th>
-	           <th class="fc-day-header fc-widget-header fc-tue" style="padding: 10px; background-color: rgb(221, 221, 221);">Tue</th>
-	           <th class="fc-day-header fc-widget-header fc-wed" style="padding: 10px; background-color: rgb(221, 221, 221);">Wed</th>
-	           <th class="fc-day-header fc-widget-header fc-thu" style="padding: 10px; background-color: rgb(221, 221, 221);">Thu</th>
-	           <th class="fc-day-header fc-widget-header fc-fri" style="padding: 10px; background-color: rgb(221, 221, 221);">Fri</th>
-	           <th class="fc-day-header fc-widget-header fc-sat" style="padding: 10px; background-color: rgb(221, 221, 221);">Sat</th>
-	          </tr>
-	         </thead>
-	        </table>
-	       </div>
-	      </td>
-	     </tr>
-	    </thead>
-	    <tbody class="fc-body">
-	     <tr>
-	      <td class="fc-widget-content">
-	       <div class="fc-day-grid-container">
-	        <div class="fc-day-grid">
-	         <div class="fc-row fc-week fc-widget-content">
-	          <div class="fc-bg">
-	           <table>
-	            <tbody>
-	             <tr class="panel-primary">
-	              <td class="fc-day fc-widget-content fc-sun fc-other-month fc-past" data-date="2015-05-31"></td>
-	              <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2015-06-01"></td>
-	              <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2015-06-02"></td>
-	              <td class="fc-day fc-widget-content fc-wed fc-past" data-date="2015-06-03"></td>
-	              <td class="fc-day fc-widget-content fc-thu fc-past" data-date="2015-06-04"></td>
-	              <td class="fc-day fc-widget-content fc-fri fc-past panel-heading" data-date="2015-06-05" style="border:0px;"></td>
-	              <td class="fc-day fc-widget-content fc-sat fc-past" data-date="2015-06-06"></td>
-	             </tr>
-	            </tbody>
-	           </table>
-	          </div>
-	          <div class="fc-content-skeleton">
-	           <table>
-	            <thead>
-	             <tr>
-	              <td class="fc-day-number fc-sun fc-other-month fc-past" data-date="2015-05-31">31</td>
-	              <td class="fc-day-number fc-mon fc-past" data-date="2015-06-01">1</td>
-	              <td class="fc-day-number fc-tue fc-past" data-date="2015-06-02">2</td>
-	              <td class="fc-day-number fc-wed fc-past" data-date="2015-06-03">3</td>
-	              <td class="fc-day-number fc-thu fc-past" data-date="2015-06-04">4</td>
-	              <td class="fc-day-number fc-fri fc-past" data-date="2015-06-05"><b>5</b></td>
-	              <td class="fc-day-number fc-sat fc-past" data-date="2015-06-06">6</td>
-	             </tr>
-	            </thead>
-	            <tbody>
-	             <tr class="panel-primary">
-	              <td rowspan="2"></td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-orange" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:15px 0px;">
-	                 <span class="fc-title">Monthly Reminders</span>
-	                </div>
-	               </a>
-	              </td>
-	              <td rowspan="2"></td>
-	              <td rowspan="2"></td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-default" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Group Reminder</span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-info" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  Next <span class="label label-success">JC</span>
-	                 </span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-violet" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Breakfast</span>
-	                </div>
-	               </a>
-	              </td>
-	              <td class="fc-event-container panel-heading">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start" style="border:0px; background-color:transparent;">
-	                <div class="fc-content text-center">
-	                 <h1 class="fc-title">
-	                  <span class="label label-primary">GM</span>
-	                 </h1>
-	                </div>
-	               </a>
-	              </td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-brown" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Backup Status</span>
-	                </div>
-	               </a>
-	             	</td>
-	             </tr>
-	            </tbody>
-	           </table>
-	          </div>
-	         </div>
-	         <div class="fc-row fc-week fc-widget-content">
-	          <div class="fc-bg">
-	           <table>
-	            <tbody>
-	             <tr class="panel-success">
-	              <td class="fc-day fc-widget-content fc-sun fc-past" data-date="2015-06-07"></td>
-	              <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2015-06-08"></td>
-	              <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2015-06-09"></td>
-	              <td class="fc-day fc-widget-content fc-wed fc-past" data-date="2015-06-10"></td>
-	              <td class="fc-day fc-widget-content fc-thu fc-past" data-date="2015-06-11"></td>
-	              <td class="fc-day fc-widget-content fc-fri fc-past panel-heading" data-date="2015-06-12" style="border:0px;"></td>
-	              <td class="fc-day fc-widget-content fc-sat fc-past" data-date="2015-06-13"></td>
-	             </tr>
-	            </tbody>
-	           </table>
-	          </div>
-	          <div class="fc-content-skeleton">
-	           <table>
-	            <thead>
-	             <tr>
-	              <td class="fc-day-number fc-sun fc-past" data-date="2015-06-07">7</td>
-	              <td class="fc-day-number fc-mon fc-past" data-date="2015-06-08">8</td>
-	              <td class="fc-day-number fc-tue fc-past" data-date="2015-06-09">9</td>
-	              <td class="fc-day-number fc-wed fc-past" data-date="2015-06-10">10</td>
-	              <td class="fc-day-number fc-thu fc-past" data-date="2015-06-11">11</td>
-	              <td class="fc-day-number fc-fri fc-past" data-date="2015-06-12"><b>12</b></td>
-	              <td class="fc-day-number fc-sat fc-past" data-date="2015-06-13">13</td>
-	             </tr>
-	            </thead>
-	            <tbody>
-	             <tr class="panel-success">
-	              <td rowspan="2"></td>
-	              <td rowspan="2"></td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-light-blue" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  This <span class="label label-success">JC</span>
-	                 </span>
-	                </div>
-	               </a>
-	              </td>
-	              <td rowspan="2"></td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-default" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Group Reminder</span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-info" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  Next <span class="label label-warning">ES</span>
-	                 </span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-dark-red" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  Database <span class="label label-success">JC</span>
-	                 </span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-violet" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Breakfast</span>
-	                </div>
-	               </a>
-	              </td>
-	              <td class="fc-event-container panel-heading">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end " style="border:0px; background-color:transparent;">
-	                <div class="fc-content text-center">
-	                 <h1 class="fc-title">
-	                  <span class="label label-success">JC</span>
-	                 </h1>
-	                </div>
-	               </a>
-	              </td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-brown" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Backup Status</span>
-	                </div>
-	               </a>
-	             	</td>
-	             </tr>
-	            </tbody>
-	           </table>
-	          </div>
-	         </div>
-	         <div class="fc-row fc-week fc-widget-content">
-	          <div class="fc-bg">
-	           <table>
-	            <tbody>
-	             <tr class="panel-warning">
-	              <td class="fc-day fc-widget-content fc-sun fc-past" data-date="2015-06-14"></td>
-	              <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2015-06-15"></td>
-	              <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2015-06-16"></td>
-	              <td class="fc-day fc-widget-content fc-wed fc-past" data-date="2015-06-17"></td>
-	              <td class="fc-day fc-widget-content fc-thu fc-past" data-date="2015-06-18"></td>
-	              <td class="fc-day fc-widget-content fc-fri fc-past panel-heading" data-date="2015-06-19" style="border:0px;"></td>
-	              <td class="fc-day fc-widget-content fc-sat fc-past" data-date="2015-06-20"></td>
-	             </tr>
-	            </tbody>
-	           </table>
-	          </div>
-	          <div class="fc-content-skeleton">
-	           <table>
-	            <thead>
-	             <tr>
-	              <td class="fc-day-number fc-sun fc-past" data-date="2015-06-14">14</td>
-	              <td class="fc-day-number fc-mon fc-past" data-date="2015-06-15">15</td>
-	              <td class="fc-day-number fc-tue fc-past" data-date="2015-06-16">16</td>
-	              <td class="fc-day-number fc-wed fc-past" data-date="2015-06-17">17</td>
-	              <td class="fc-day-number fc-thu fc-past" data-date="2015-06-18">18</td>
-	              <td class="fc-day-number fc-fri fc-past" data-date="2015-06-19"><b>19</b></td>
-	              <td class="fc-day-number fc-sat fc-past" data-date="2015-06-20">20</td>
-	             </tr>
-	            </thead>
-	            <tbody>
-	             <tr class="panel-warning">
-	              <td rowspan="2"></td>
-	              <td rowspan="2"></td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-light-blue" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  This <span class="label label-warning">ES</span>
-	                 </span>
-	                </div>
-	               </a>
-	              </td>
-	              <td rowspan="2"></td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-default" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Group Reminder</span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-info" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  Next <span class="label label-primary">Rotation</span>
-	                 </span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-dark-red" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  Database <span class="label label-warning">ES</span>
-	                 </span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-magenta" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Microphone</span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-violet" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Breakfast</span>
-	                </div>
-	               </a>
-	              </td>
-	              <td class="fc-event-container panel-heading">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end " style="border:0px; background-color:transparent;">
-	                <div class="fc-content text-center">
-	                 <h1 class="fc-title">
-	                  <span class="label label-warning">ES</span>
-	                 </h1>
-	                </div>
-	               </a>
-	              </td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-brown" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Backup Status</span>
-	                </div>
-	               </a>
-	             	</td>
-	             </tr>
-	            </tbody>
-	           </table>
-	          </div>
-	         </div>
-	         <div class="fc-row fc-week fc-widget-content">
-	          <div class="fc-bg">
-	           <table>
-	            <tbody>
-	             <tr class="panel-primary">
-	              <td class="fc-day fc-widget-content fc-sun fc-past" data-date="2015-06-21"></td>
-	              <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2015-06-22"></td>
-	              <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2015-06-23"></td>
-	              <td class="fc-day fc-widget-content fc-wed fc-past" data-date="2015-06-24"></td>
-	              <td class="fc-day fc-widget-content fc-thu fc-past" data-date="2015-06-25"></td>
-	              <td class="fc-day fc-widget-content fc-fri fc-past panel-heading" data-date="2015-06-26" style="border:0px;"></td>
-	              <td class="fc-day fc-widget-content fc-sat fc-past" data-date="2015-06-27"></td>
-	             </tr>
-	            </tbody>
-	           </table>
-	          </div>
-	          <div class="fc-content-skeleton">
-	           <table>
-	            <thead>
-	             <tr>
-	              <td class="fc-day-number fc-sun fc-past" data-date="2015-06-21">21</td>
-	              <td class="fc-day-number fc-mon fc-past" data-date="2015-06-22">22</td>
-	              <td class="fc-day-number fc-tue fc-past" data-date="2015-06-23">23</td>
-	              <td class="fc-day-number fc-wed fc-past" data-date="2015-06-24">24</td>
-	              <td class="fc-day-number fc-thu fc-past" data-date="2015-06-25">25</td>
-	              <td class="fc-day-number fc-fri fc-past" data-date="2015-06-26"><b>26</b></td>
-	              <td class="fc-day-number fc-sat fc-past" data-date="2015-06-27">27</td>
-	             </tr>
-	            </thead>
-	            <tbody>
-	             <tr class="panel-primary">
-	              <td rowspan="2"></td>
-	              <td rowspan="2"></td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-light-blue" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  This <span class="label label-primary">Rotation</span>
-	                 </span>
-	                </div>
-	               </a>
-	              </td>
-	              <td rowspan="2"></td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-default" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Group Reminder</span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-info" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  Next <span class="label label-danger">N / A</span>
-	                 </span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-dark-red" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  Database <span class="label label-primary">Rotation</span>
-	                 </span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-violet" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Breakfast</span>
-	                </div>
-	               </a>
-	              </td>
-	              <td class="fc-event-container panel-heading">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end " style="border:0px; background-color:transparent;">
-	                <div class="fc-content text-center">
-	                 <h1 class="fc-title">
-	                  <span class="label label-primary">GM</span>
-	                 </h1>
-	                </div>
-	               </a>
-	              </td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-brown" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Backup Status</span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-green" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  Siqi <span class="label label-default">Birthday</span>
-	                 </span>
-	                </div>
-	               </a>
-	              </td>
-	             </tr>
-	            </tbody>
-	           </table>
-	          </div>
-	         </div>
-	         <div class="fc-row fc-week fc-widget-content">
-	          <div class="fc-bg">
-	           <table>
-	            <tbody>
-	             <tr class="panel-danger">
-	              <td class="fc-day fc-widget-content fc-sun fc-past" data-date="2015-06-28"></td>
-	              <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2015-06-29"></td>
-	              <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2015-06-30"></td>
-	              <td class="fc-day fc-widget-content fc-wed fc-other-month fc-past" data-date="2015-07-01"></td>
-	              <td class="fc-day fc-widget-content fc-thu fc-other-month fc-past" data-date="2015-07-02"></td>
-	              <td class="fc-day fc-widget-content fc-fri fc-other-month fc-past panel-heading" data-date="2015-07-03" style="border:0px;"></td>
-	              <td class="fc-day fc-widget-content fc-sat fc-other-month fc-past" data-date="2015-07-04"></td>
-	             </tr>
-	            </tbody>
-	           </table>
-	          </div>
-	          <div class="fc-content-skeleton">
-	           <table>
-	            <thead>
-	             <tr>
-	              <td class="fc-day-number fc-sun fc-past" data-date="2015-06-28">28</td>
-	              <td class="fc-day-number fc-mon fc-past" data-date="2015-06-29">29</td>
-	              <td class="fc-day-number fc-tue fc-past" data-date="2015-06-30">30</td>
-	              <td class="fc-day-number fc-wed fc-other-month fc-past" data-date="2015-07-01">1</td>
-	              <td class="fc-day-number fc-thu fc-other-month fc-past" data-date="2015-07-02">2</td>
-	              <td class="fc-day-number fc-fri fc-other-month fc-past" data-date="2015-07-03">3</td>
-	              <td class="fc-day-number fc-sat fc-other-month fc-past" data-date="2015-07-04">4</td>
-	             </tr>
-	            </thead>
-	            <tbody>
-	             <tr class="panel-danger">
-	              <td rowspan="2"></td>
-	              <td rowspan="2"></td>
-	              <td rowspan="2"></td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-orange" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:15px 0px;">
-	                 <span class="fc-title">
-	                  Quarterly Reminders
-	                 </span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-green" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  Kalli <span class="label label-default">Birthday</span>
-	                 </span>
-	                </div>
-	               </a>
-	              </td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-default" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Group Reminder</span>
-	                </div>
-	               </a>
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-info" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">
-	                  Next <span class="label label-warning">ES</span>
-	                 </span>
-	                </div>
-	               </a>
-	              </td>
-	              <td class="fc-event-container panel-heading">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end " style="border:0px; background-color:transparent;">
-	                <div class="fc-content text-center">
-	                 <h1 class="fc-title">
-	                  <span class="label label-danger">N/A</span>
-	                 </h1>
-	                </div>
-	               </a>
-	              </td>
-	              <td class="fc-event-container">
-	               <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-brown" style="border:0px;">
-	                <div class="fc-content text-center panel-heading" style="padding:2px;">
-	                 <span class="fc-title">Backup Status</span>
-	                </div>
-	               </a>
-	             	</td>
-	             </tr>
-	            </tbody>
-	           </table>
-	          </div>
-	         </div>
-	        </div>
-	       </div>
-	      </td>
-	     </tr>
-	    </tbody>
-	   </table>
-	  </div>
-	 </div>
-	</div>
-	<hr/>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="fc fc-ltr fc-unthemed" id="calendar" style="padding:10px;">
+     <div class="fc-view-container" style="">
+      <div class="fc-view fc-month-view fc-basic-view">
+       <table>
+        <thead class="fc-head">
+         <tr>
+          <td class="fc-head-container fc-widget-header">
+           <div class="fc-row fc-widget-header" style="border-right-width: 1px;">
+            <table>
+             <thead>
+              <tr>
+               <th class="fc-day-header fc-widget-header fc-sun" style="padding: 10px; background-color: rgb(221, 221, 221);">Sun</th>
+               <th class="fc-day-header fc-widget-header fc-mon" style="padding: 10px; background-color: rgb(221, 221, 221);">Mon</th>
+               <th class="fc-day-header fc-widget-header fc-tue" style="padding: 10px; background-color: rgb(221, 221, 221);">Tue</th>
+               <th class="fc-day-header fc-widget-header fc-wed" style="padding: 10px; background-color: rgb(221, 221, 221);">Wed</th>
+               <th class="fc-day-header fc-widget-header fc-thu" style="padding: 10px; background-color: rgb(221, 221, 221);">Thu</th>
+               <th class="fc-day-header fc-widget-header fc-fri" style="padding: 10px; background-color: rgb(221, 221, 221);">Fri</th>
+               <th class="fc-day-header fc-widget-header fc-sat" style="padding: 10px; background-color: rgb(221, 221, 221);">Sat</th>
+              </tr>
+             </thead>
+            </table>
+           </div>
+          </td>
+         </tr>
+        </thead>
+        <tbody class="fc-body">
+         <tr>
+          <td class="fc-widget-content">
+           <div class="fc-day-grid-container">
+            <div class="fc-day-grid">
+             <div class="fc-row fc-week fc-widget-content">
+              <div class="fc-bg">
+               <table>
+                <tbody>
+                 <tr class="panel-primary">
+                  <td class="fc-day fc-widget-content fc-sun fc-other-month fc-past" data-date="2015-05-31"></td>
+                  <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2015-06-01"></td>
+                  <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2015-06-02"></td>
+                  <td class="fc-day fc-widget-content fc-wed fc-past" data-date="2015-06-03"></td>
+                  <td class="fc-day fc-widget-content fc-thu fc-past" data-date="2015-06-04"></td>
+                  <td class="fc-day fc-widget-content fc-fri fc-past panel-heading" data-date="2015-06-05" style="border:0px;"></td>
+                  <td class="fc-day fc-widget-content fc-sat fc-past" data-date="2015-06-06"></td>
+                 </tr>
+                </tbody>
+               </table>
+              </div>
+              <div class="fc-content-skeleton">
+               <table>
+                <thead>
+                 <tr>
+                  <td class="fc-day-number fc-sun fc-other-month fc-past" data-date="2015-05-31">31</td>
+                  <td class="fc-day-number fc-mon fc-past" data-date="2015-06-01">1</td>
+                  <td class="fc-day-number fc-tue fc-past" data-date="2015-06-02">2</td>
+                  <td class="fc-day-number fc-wed fc-past" data-date="2015-06-03">3</td>
+                  <td class="fc-day-number fc-thu fc-past" data-date="2015-06-04">4</td>
+                  <td class="fc-day-number fc-fri fc-past" data-date="2015-06-05"><b>5</b></td>
+                  <td class="fc-day-number fc-sat fc-past" data-date="2015-06-06">6</td>
+                 </tr>
+                </thead>
+                <tbody>
+                 <tr class="panel-primary">
+                  <td rowspan="2"></td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-orange" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:15px 0px;">
+                     <span class="fc-title">Monthly Reminders</span>
+                    </div>
+                   </a>
+                  </td>
+                  <td rowspan="2"></td>
+                  <td rowspan="2"></td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-default" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Group Reminder</span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-info" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      Next <span class="label label-success">JC</span>
+                     </span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-violet" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Breakfast</span>
+                    </div>
+                   </a>
+                  </td>
+                  <td class="fc-event-container panel-heading">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start" style="border:0px; background-color:transparent;">
+                    <div class="fc-content text-center">
+                     <h1 class="fc-title">
+                      <span class="label label-primary">GM</span>
+                     </h1>
+                    </div>
+                   </a>
+                  </td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-brown" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Backup Status</span>
+                    </div>
+                   </a>
+                   </td>
+                 </tr>
+                </tbody>
+               </table>
+              </div>
+             </div>
+             <div class="fc-row fc-week fc-widget-content">
+              <div class="fc-bg">
+               <table>
+                <tbody>
+                 <tr class="panel-success">
+                  <td class="fc-day fc-widget-content fc-sun fc-past" data-date="2015-06-07"></td>
+                  <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2015-06-08"></td>
+                  <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2015-06-09"></td>
+                  <td class="fc-day fc-widget-content fc-wed fc-past" data-date="2015-06-10"></td>
+                  <td class="fc-day fc-widget-content fc-thu fc-past" data-date="2015-06-11"></td>
+                  <td class="fc-day fc-widget-content fc-fri fc-past panel-heading" data-date="2015-06-12" style="border:0px;"></td>
+                  <td class="fc-day fc-widget-content fc-sat fc-past" data-date="2015-06-13"></td>
+                 </tr>
+                </tbody>
+               </table>
+              </div>
+              <div class="fc-content-skeleton">
+               <table>
+                <thead>
+                 <tr>
+                  <td class="fc-day-number fc-sun fc-past" data-date="2015-06-07">7</td>
+                  <td class="fc-day-number fc-mon fc-past" data-date="2015-06-08">8</td>
+                  <td class="fc-day-number fc-tue fc-past" data-date="2015-06-09">9</td>
+                  <td class="fc-day-number fc-wed fc-past" data-date="2015-06-10">10</td>
+                  <td class="fc-day-number fc-thu fc-past" data-date="2015-06-11">11</td>
+                  <td class="fc-day-number fc-fri fc-past" data-date="2015-06-12"><b>12</b></td>
+                  <td class="fc-day-number fc-sat fc-past" data-date="2015-06-13">13</td>
+                 </tr>
+                </thead>
+                <tbody>
+                 <tr class="panel-success">
+                  <td rowspan="2"></td>
+                  <td rowspan="2"></td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-light-blue" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      This <span class="label label-success">JC</span>
+                     </span>
+                    </div>
+                   </a>
+                  </td>
+                  <td rowspan="2"></td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-default" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Group Reminder</span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-info" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      Next <span class="label label-warning">ES</span>
+                     </span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-dark-red" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      Database <span class="label label-success">JC</span>
+                     </span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-violet" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Breakfast</span>
+                    </div>
+                   </a>
+                  </td>
+                  <td class="fc-event-container panel-heading">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end " style="border:0px; background-color:transparent;">
+                    <div class="fc-content text-center">
+                     <h1 class="fc-title">
+                      <span class="label label-success">JC</span>
+                     </h1>
+                    </div>
+                   </a>
+                  </td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-brown" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Backup Status</span>
+                    </div>
+                   </a>
+                   </td>
+                 </tr>
+                </tbody>
+               </table>
+              </div>
+             </div>
+             <div class="fc-row fc-week fc-widget-content">
+              <div class="fc-bg">
+               <table>
+                <tbody>
+                 <tr class="panel-warning">
+                  <td class="fc-day fc-widget-content fc-sun fc-past" data-date="2015-06-14"></td>
+                  <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2015-06-15"></td>
+                  <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2015-06-16"></td>
+                  <td class="fc-day fc-widget-content fc-wed fc-past" data-date="2015-06-17"></td>
+                  <td class="fc-day fc-widget-content fc-thu fc-past" data-date="2015-06-18"></td>
+                  <td class="fc-day fc-widget-content fc-fri fc-past panel-heading" data-date="2015-06-19" style="border:0px;"></td>
+                  <td class="fc-day fc-widget-content fc-sat fc-past" data-date="2015-06-20"></td>
+                 </tr>
+                </tbody>
+               </table>
+              </div>
+              <div class="fc-content-skeleton">
+               <table>
+                <thead>
+                 <tr>
+                  <td class="fc-day-number fc-sun fc-past" data-date="2015-06-14">14</td>
+                  <td class="fc-day-number fc-mon fc-past" data-date="2015-06-15">15</td>
+                  <td class="fc-day-number fc-tue fc-past" data-date="2015-06-16">16</td>
+                  <td class="fc-day-number fc-wed fc-past" data-date="2015-06-17">17</td>
+                  <td class="fc-day-number fc-thu fc-past" data-date="2015-06-18">18</td>
+                  <td class="fc-day-number fc-fri fc-past" data-date="2015-06-19"><b>19</b></td>
+                  <td class="fc-day-number fc-sat fc-past" data-date="2015-06-20">20</td>
+                 </tr>
+                </thead>
+                <tbody>
+                 <tr class="panel-warning">
+                  <td rowspan="2"></td>
+                  <td rowspan="2"></td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-light-blue" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      This <span class="label label-warning">ES</span>
+                     </span>
+                    </div>
+                   </a>
+                  </td>
+                  <td rowspan="2"></td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-default" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Group Reminder</span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-info" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      Next <span class="label label-primary">Rotation</span>
+                     </span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-dark-red" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      Database <span class="label label-warning">ES</span>
+                     </span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-magenta" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Microphone</span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-violet" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Breakfast</span>
+                    </div>
+                   </a>
+                  </td>
+                  <td class="fc-event-container panel-heading">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end " style="border:0px; background-color:transparent;">
+                    <div class="fc-content text-center">
+                     <h1 class="fc-title">
+                      <span class="label label-warning">ES</span>
+                     </h1>
+                    </div>
+                   </a>
+                  </td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-brown" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Backup Status</span>
+                    </div>
+                   </a>
+                   </td>
+                 </tr>
+                </tbody>
+               </table>
+              </div>
+             </div>
+             <div class="fc-row fc-week fc-widget-content">
+              <div class="fc-bg">
+               <table>
+                <tbody>
+                 <tr class="panel-primary">
+                  <td class="fc-day fc-widget-content fc-sun fc-past" data-date="2015-06-21"></td>
+                  <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2015-06-22"></td>
+                  <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2015-06-23"></td>
+                  <td class="fc-day fc-widget-content fc-wed fc-past" data-date="2015-06-24"></td>
+                  <td class="fc-day fc-widget-content fc-thu fc-past" data-date="2015-06-25"></td>
+                  <td class="fc-day fc-widget-content fc-fri fc-past panel-heading" data-date="2015-06-26" style="border:0px;"></td>
+                  <td class="fc-day fc-widget-content fc-sat fc-past" data-date="2015-06-27"></td>
+                 </tr>
+                </tbody>
+               </table>
+              </div>
+              <div class="fc-content-skeleton">
+               <table>
+                <thead>
+                 <tr>
+                  <td class="fc-day-number fc-sun fc-past" data-date="2015-06-21">21</td>
+                  <td class="fc-day-number fc-mon fc-past" data-date="2015-06-22">22</td>
+                  <td class="fc-day-number fc-tue fc-past" data-date="2015-06-23">23</td>
+                  <td class="fc-day-number fc-wed fc-past" data-date="2015-06-24">24</td>
+                  <td class="fc-day-number fc-thu fc-past" data-date="2015-06-25">25</td>
+                  <td class="fc-day-number fc-fri fc-past" data-date="2015-06-26"><b>26</b></td>
+                  <td class="fc-day-number fc-sat fc-past" data-date="2015-06-27">27</td>
+                 </tr>
+                </thead>
+                <tbody>
+                 <tr class="panel-primary">
+                  <td rowspan="2"></td>
+                  <td rowspan="2"></td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-light-blue" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      This <span class="label label-primary">Rotation</span>
+                     </span>
+                    </div>
+                   </a>
+                  </td>
+                  <td rowspan="2"></td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-default" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Group Reminder</span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-info" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      Next <span class="label label-danger">N / A</span>
+                     </span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-dark-red" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      Database <span class="label label-primary">Rotation</span>
+                     </span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-violet" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Breakfast</span>
+                    </div>
+                   </a>
+                  </td>
+                  <td class="fc-event-container panel-heading">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end " style="border:0px; background-color:transparent;">
+                    <div class="fc-content text-center">
+                     <h1 class="fc-title">
+                      <span class="label label-primary">GM</span>
+                     </h1>
+                    </div>
+                   </a>
+                  </td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-brown" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Backup Status</span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-green" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      Siqi <span class="label label-default">Birthday</span>
+                     </span>
+                    </div>
+                   </a>
+                  </td>
+                 </tr>
+                </tbody>
+               </table>
+              </div>
+             </div>
+             <div class="fc-row fc-week fc-widget-content">
+              <div class="fc-bg">
+               <table>
+                <tbody>
+                 <tr class="panel-danger">
+                  <td class="fc-day fc-widget-content fc-sun fc-past" data-date="2015-06-28"></td>
+                  <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2015-06-29"></td>
+                  <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2015-06-30"></td>
+                  <td class="fc-day fc-widget-content fc-wed fc-other-month fc-past" data-date="2015-07-01"></td>
+                  <td class="fc-day fc-widget-content fc-thu fc-other-month fc-past" data-date="2015-07-02"></td>
+                  <td class="fc-day fc-widget-content fc-fri fc-other-month fc-past panel-heading" data-date="2015-07-03" style="border:0px;"></td>
+                  <td class="fc-day fc-widget-content fc-sat fc-other-month fc-past" data-date="2015-07-04"></td>
+                 </tr>
+                </tbody>
+               </table>
+              </div>
+              <div class="fc-content-skeleton">
+               <table>
+                <thead>
+                 <tr>
+                  <td class="fc-day-number fc-sun fc-past" data-date="2015-06-28">28</td>
+                  <td class="fc-day-number fc-mon fc-past" data-date="2015-06-29">29</td>
+                  <td class="fc-day-number fc-tue fc-past" data-date="2015-06-30">30</td>
+                  <td class="fc-day-number fc-wed fc-other-month fc-past" data-date="2015-07-01">1</td>
+                  <td class="fc-day-number fc-thu fc-other-month fc-past" data-date="2015-07-02">2</td>
+                  <td class="fc-day-number fc-fri fc-other-month fc-past" data-date="2015-07-03">3</td>
+                  <td class="fc-day-number fc-sat fc-other-month fc-past" data-date="2015-07-04">4</td>
+                 </tr>
+                </thead>
+                <tbody>
+                 <tr class="panel-danger">
+                  <td rowspan="2"></td>
+                  <td rowspan="2"></td>
+                  <td rowspan="2"></td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-orange" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:15px 0px;">
+                     <span class="fc-title">
+                      Quarterly Reminders
+                     </span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-green" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      Kalli <span class="label label-default">Birthday</span>
+                     </span>
+                    </div>
+                   </a>
+                  </td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-default" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Group Reminder</span>
+                    </div>
+                   </a>
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-info" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">
+                      Next <span class="label label-warning">ES</span>
+                     </span>
+                    </div>
+                   </a>
+                  </td>
+                  <td class="fc-event-container panel-heading">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end " style="border:0px; background-color:transparent;">
+                    <div class="fc-content text-center">
+                     <h1 class="fc-title">
+                      <span class="label label-danger">N/A</span>
+                     </h1>
+                    </div>
+                   </a>
+                  </td>
+                  <td class="fc-event-container">
+                   <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end panel-brown" style="border:0px;">
+                    <div class="fc-content text-center panel-heading" style="padding:2px;">
+                     <span class="fc-title">Backup Status</span>
+                    </div>
+                   </a>
+                   </td>
+                 </tr>
+                </tbody>
+               </table>
+              </div>
+             </div>
+            </div>
+           </div>
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div>
+    <hr/>
 
-	<div class="row">
-		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-			<h4><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;Weekly Meeting Reminder</h4>
-			<div class="thumbnail" style="padding:10px;margin-bottom:0px;">
-				<div class="caption li-success">
-					<h4>Group Meeting Reminder</h4>
-					<p>Hi all,</p>
-					<p>This is a reminder that group meeting will be ​<code><b>Group Meeting</b></code>​ for this week.</p>
-					<table class="table table-condensed" style="margin-bottom:0px;">
-						<thead>
-							<tr>
-								<th style="border:none;" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Date</th>
-								<th style="border:none;" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Time &amp; Place</th>
-								<th style="border:none;" class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td style="border:none;"><i>Dec 11 2015 (Fri)</i></td>
-								<td style="border:none;"><i>9:30am @ B402</i></td>
-								<td style="border:none;" rowspan="3"><img class="pull-right" src="/site_media/images/group/logo_bot.jpg" style="max-width:50%;"/></td>
-							</tr>
-							<tr>
-								<td style="border:none;"><b>Type</b></td>
-								<td style="border:none;"><b>Presenter</b></td>
-							</tr>
-							<tr>
-								<td style="border:none;"><code><b>Group Meeting</b></code></td>
-								<td style="border:none;">
-									<i>Rob</i>​ <a>@rbierman</a>,
-									<br/>
-									<i>Rachel</i> <a>@rupark</a>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<br/>
-				<div class="caption li-warning">
-					<h4>Flash Slides: Dec 11 2015</h4>
-					<p><b style="word-wrap:break-word;"><a>https://docs.google.com/presentation/d/1Z8i9QIs7rKi09d69zyimFgsmjAtVc3oPknUFKddFjuM/edit#slide=id.p</a></b></p>
-					<p style="margin-bottom:0px;">A <a>full list</a> of Flash Slide links is available on the DasLab Website.</p>
-				</div>
-				<br/>
-				<div class="caption li-primary">
-					<p>For next week:</p>
-					<table class="table table-condensed" style="margin-bottom:0px;">
-						<thead>
-							<tr>
-								<th style="border:none;" class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Date</th>
-								<th style="border:none;" class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Time &amp; Place</th>
-								<th style="border:none;" class="col-lg-4 col-md-4 hidden-sm hidden-xs"></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td style="border:none;"><i>Dec 18 2015 (Fri)</i></td>
-								<td style="border:none;"><i>10:00am @ B402</i></td>
-								<td style="border:none;" rowspan="3"><img class="pull-right" src="/site_media/images/group/logo_bot.jpg" style="max-width:50%;"/></td>
-							</tr>
-							<tr>
-								<td style="border:none;"><b>Type</b></td>
-								<td style="border:none;"><b>Presenter</b></td>
-							</tr>
-							<tr>
-								<td style="border:none;"><code><b>Journal Club</b></code></td>
-								<td style="border:none;"><i>Johan</i>​ <a>@johana</a></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<br/>
-				<div class="caption li-danger">
-					<p style="margin-bottom:0px;">The <a>full schedule</a> is available on the DasLab Website. For questions regarding the schedule, please contact ​<a>@t47</a>​ (site admin). Thanks for your attention.</p>
-				</div>
-			</div>
-			<br/>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <h4><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;Weekly Meeting Reminder</h4>
+        <div class="thumbnail" style="padding:10px;margin-bottom:0px;">
+          <div class="caption li-success">
+            <h4>Group Meeting Reminder</h4>
+            <p>Hi all,</p>
+            <p>This is a reminder that group meeting will be ​<code><b>Group Meeting</b></code>​ for this week.</p>
+            <table class="table table-condensed" style="margin-bottom:0px;">
+              <thead>
+                <tr>
+                  <th style="border:none;" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Date</th>
+                  <th style="border:none;" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Time &amp; Place</th>
+                  <th style="border:none;" class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border:none;"><i>Dec 11 2015 (Fri)</i></td>
+                  <td style="border:none;"><i>9:30am @ B402</i></td>
+                  <td style="border:none;" rowspan="3"><img class="pull-right" src="/site_media/images/group/logo_bot.jpg" style="max-width:50%;"/></td>
+                </tr>
+                <tr>
+                  <td style="border:none;"><b>Type</b></td>
+                  <td style="border:none;"><b>Presenter</b></td>
+                </tr>
+                <tr>
+                  <td style="border:none;"><code><b>Group Meeting</b></code></td>
+                  <td style="border:none;">
+                    <i>Rob</i>​ <a>@rbierman</a>,
+                    <br/>
+                    <i>Rachel</i> <a>@rupark</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <br/>
+          <div class="caption li-warning">
+            <h4>Flash Slides: Dec 11 2015</h4>
+            <p><b style="word-wrap:break-word;"><a>https://docs.google.com/presentation/d/1Z8i9QIs7rKi09d69zyimFgsmjAtVc3oPknUFKddFjuM/edit#slide=id.p</a></b></p>
+            <p style="margin-bottom:0px;">A <a>full list</a> of Flash Slide links is available on the DasLab Website.</p>
+          </div>
+          <br/>
+          <div class="caption li-primary">
+            <p>For next week:</p>
+            <table class="table table-condensed" style="margin-bottom:0px;">
+              <thead>
+                <tr>
+                  <th style="border:none;" class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Date</th>
+                  <th style="border:none;" class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Time &amp; Place</th>
+                  <th style="border:none;" class="col-lg-4 col-md-4 hidden-sm hidden-xs"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border:none;"><i>Dec 18 2015 (Fri)</i></td>
+                  <td style="border:none;"><i>10:00am @ B402</i></td>
+                  <td style="border:none;" rowspan="3"><img class="pull-right" src="/site_media/images/group/logo_bot.jpg" style="max-width:50%;"/></td>
+                </tr>
+                <tr>
+                  <td style="border:none;"><b>Type</b></td>
+                  <td style="border:none;"><b>Presenter</b></td>
+                </tr>
+                <tr>
+                  <td style="border:none;"><code><b>Journal Club</b></code></td>
+                  <td style="border:none;"><i>Johan</i>​ <a>@johana</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <br/>
+          <div class="caption li-danger">
+            <p style="margin-bottom:0px;">The <a>full schedule</a> is available on the DasLab Website. For questions regarding the schedule, please contact ​<a>@t47</a>​ (site admin). Thanks for your attention.</p>
+          </div>
+        </div>
+        <br/>
 
-			<h4><span class="glyphicon glyphicon-king"></span>&nbsp;&nbsp;Admin Messages</h4>
-			<div class="panel">
-				<div class="list-group-item li-success">
-					<p style="margin-bottom:0px;">​<b>SUCCESS</b>​: Scheduled weekly ​<b>​Flash Slides Setup</b>​ finished @ <i>Thu Dec 10 07:00:15 2015</i>​</p>
-			  </div>
-			</div>
-			<div class="panel">
-				<div class="list-group-item li-danger">
-					<p style="margin-bottom:0px;">​<b>ERROR</b>​: FlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.
-						<br/>
-						Flash Slide has <b><code>NOT</code></b> been setup yet for this week! Please investigate and fix the setup immediately.</p>
-			  </div>
-			</div>
-			<div class="panel">
-				<div class="list-group-item li-success">
-					<p>​<b>SUCCESS</b>​: Scheduled weekly ​<b>Backup</b>​ finished @ <i>Sat Dec  5 07:00:52 2015</i>​</p>
-					<pre style="margin-bottom:0px;">File                Time                Size
-/home/ubuntu/Server_DasLab/backup/backup_apache.tgz        Dec 6, 12:50        41K
-/home/ubuntu/Server_DasLab/backup/backup_config.tgz        Dec 6, 12:50        3.0K
-/home/ubuntu/Server_DasLab/backup/backup_mysql.gz        Dec 6, 12:50        53K
-/home/ubuntu/Server_DasLab/backup/backup_static.tgz        Dec 6, 12:50        868M</pre>
-			  </div>
-			</div>
+        <h4><span class="glyphicon glyphicon-king"></span>&nbsp;&nbsp;Admin Messages</h4>
+        <div class="panel">
+          <div class="list-group-item li-success">
+            <p style="margin-bottom:0px;">​<b>SUCCESS</b>​: Scheduled weekly ​<b>​Flash Slides Setup</b>​ finished @ <i>Thu Dec 10 07:00:15 2015</i>​</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="list-group-item li-danger">
+            <p style="margin-bottom:0px;">​<b>ERROR</b>​: FlashSlide table in MySQL database, presentation in Google Drive, and posted messages in Slack are rolled back.
+              <br/>
+              Flash Slide has <b><code>NOT</code></b> been setup yet for this week! Please investigate and fix the setup immediately.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="list-group-item li-success">
+            <p>​<b>SUCCESS</b>​: Scheduled weekly ​<b>Backup</b>​ finished @ <i>Sat Dec  5 07:00:52 2015</i>​</p>
+            <pre style="margin-bottom:0px;">File                Time                Size
+  /home/ubuntu/Server_DasLab/backup/backup_apache.tgz        Dec 6, 12:50        41K
+  /home/ubuntu/Server_DasLab/backup/backup_config.tgz        Dec 6, 12:50        3.0K
+  /home/ubuntu/Server_DasLab/backup/backup_mysql.gz        Dec 6, 12:50        53K
+  /home/ubuntu/Server_DasLab/backup/backup_static.tgz        Dec 6, 12:50        868M</pre>
+          </div>
+        </div>
 
-			<div class="panel">
-				<div class="list-group-item li-success">
-					<p>​<b>SUCCESS</b>​: weekly ​<b>Backup &amp; Sync</b>​ set @ <i>Mon Dec 14 23:33:44 2015</i>​</p>
-					<pre>["00 15 * * 6", "django.core.management.call_command", ["backup"], {}, ">> /home/ubuntu/Server_DasLab/cache/log_cron_backup.log # backup_weekly"],
-["15 15 * * 6", "django.core.management.call_command", ["gdrive"], {}, ">> /home/ubuntu/Server_DasLab/cache/log_cron_gdrive.log # gdrive_weekly"],
-    "KEEP_BACKUP": 60</pre>
-			  </div>
-			</div>
-			<div class="panel">
-				<div class="list-group-item li-success">
-					<p>​<b>SUCCESS</b>​: Scheduled weekly ​<b>Backup</b>​ finished @ <i>Sat Dec  5 07:00:52 2015</i>​</p>
-					<pre style="margin-bottom:0px;">File                Time                Size
-/home/ubuntu/Server_DasLab/backup/backup_apache.tgz        Dec 6, 12:50        41K
-/home/ubuntu/Server_DasLab/backup/backup_config.tgz        Dec 6, 12:50        3.0K
-/home/ubuntu/Server_DasLab/backup/backup_mysql.gz        Dec 6, 12:50        53K
-/home/ubuntu/Server_DasLab/backup/backup_static.tgz        Dec 6, 12:50        868M</pre>
-			  </div>
-			</div>
-			<div class="panel">
-				<div class="list-group-item li-success">
-					<p>​<b>SUCCESS</b>​: Scheduled weekly ​<b>Gdrive Sync</b>​ finished @ <i>Sat Dec  6 07:15:56 2015</i>​</p>
-					<pre style="margin-bottom:0px;">File                Time                Size
-DasLab_20151205_config.tgz        2015-12-05 07:15:55        3.0 KB
-DasLab_20151205_apache.tgz        2015-12-05 07:15:54        41.5 KB
-DasLab_20151205_static.tgz        2015-12-05 07:15:53        909.4 MB
-DasLab_20151205_mysql.gz        2015-12-05 07:15:06        53.5 KB
-DasLab_20151128_config.tgz        2015-11-28 07:16:02        2.9 KB
-DasLab_20151128_apache.tgz        2015-11-28 07:16:01        41.5 KB
-DasLab_20151128_static.tgz        2015-11-28 07:15:59        909.4 MB
-DasLab_20151128_mysql.gz        2015-11-28 07:15:15        53.2 KB
-...</pre>
-			  </div>
-			</div>
-			<div class="panel">
-				<div class="list-group-item li-success">
-					<p style="margin-bottom:0px;">​<b>SUCCESS</b>​: Scheduled weekly ​<b>Duty Reminder</b>​ finished @ ​<i>Thu Dec  3 07:00:06 2015</i>​</p>
-			  </div>
-			</div>
-			<div class="panel">
-				<div class="list-group-item li-warning">
-					<p style="margin-bottom:0px;">​<b>REMINDER</b>​: Add <b>JournalClub</b>​ entry for ​<i>Dec 04 2015 (Fri)</i>​</p>
-			  </div>
-			</div>
-			<div class="panel">
-				<div class="list-group-item li-warning">
-					<p style="margin-bottom:0px;">​<b>REMINDER</b>​: Add <b>EternaYoutube</b>​ entry for ​<i>Dec 04 2015 (Fri)</i>​</p>
-			  </div>
-			</div>
-			<div class="panel">
-				<div class="list-group-item li-warning">
-					<p style="margin-bottom:0px;">​<b>REMINDER</b>​: Add <b>RotationStudent</b>​ entry for ​<i>Dec 04 2015 (Fri)</i>​</p>
-			  </div>
-			</div>
-			<div class="panel">
-				<div class="list-group-item li-danger">
-					<p>​<b>ERROR</b>​: <b>manage.py cache 30</b>​ @ <i>Thu Dec 10 14:01:01 2015</i>​</p>
-					<pre style="margin-bottom:0px;">Traceback (most recent call last):
-  File "/home/ubuntu/Server_DasLab/src/management/commands/cache.py", line 153, in handle
-    self.pickle_slack(request)
-  File "/home/ubuntu/Server_DasLab/src/management/commands/cache.py", line 35, in pickle_slack
-...</pre>
-			  </div>
-			</div>
-		</div>
+        <div class="panel">
+          <div class="list-group-item li-success">
+            <p>​<b>SUCCESS</b>​: weekly ​<b>Backup &amp; Sync</b>​ set @ <i>Mon Dec 14 23:33:44 2015</i>​</p>
+            <pre>["00 15 * * 6", "django.core.management.call_command", ["backup"], {}, ">> /home/ubuntu/Server_DasLab/cache/log_cron_backup.log # backup_weekly"],
+  ["15 15 * * 6", "django.core.management.call_command", ["gdrive"], {}, ">> /home/ubuntu/Server_DasLab/cache/log_cron_gdrive.log # gdrive_weekly"],
+      "KEEP_BACKUP": 60</pre>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="list-group-item li-success">
+            <p>​<b>SUCCESS</b>​: Scheduled weekly ​<b>Backup</b>​ finished @ <i>Sat Dec  5 07:00:52 2015</i>​</p>
+            <pre style="margin-bottom:0px;">File                Time                Size
+  /home/ubuntu/Server_DasLab/backup/backup_apache.tgz        Dec 6, 12:50        41K
+  /home/ubuntu/Server_DasLab/backup/backup_config.tgz        Dec 6, 12:50        3.0K
+  /home/ubuntu/Server_DasLab/backup/backup_mysql.gz        Dec 6, 12:50        53K
+  /home/ubuntu/Server_DasLab/backup/backup_static.tgz        Dec 6, 12:50        868M</pre>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="list-group-item li-success">
+            <p>​<b>SUCCESS</b>​: Scheduled weekly ​<b>Gdrive Sync</b>​ finished @ <i>Sat Dec  6 07:15:56 2015</i>​</p>
+            <pre style="margin-bottom:0px;">File                Time                Size
+  DasLab_20151205_config.tgz        2015-12-05 07:15:55        3.0 KB
+  DasLab_20151205_apache.tgz        2015-12-05 07:15:54        41.5 KB
+  DasLab_20151205_static.tgz        2015-12-05 07:15:53        909.4 MB
+  DasLab_20151205_mysql.gz        2015-12-05 07:15:06        53.5 KB
+  DasLab_20151128_config.tgz        2015-11-28 07:16:02        2.9 KB
+  DasLab_20151128_apache.tgz        2015-11-28 07:16:01        41.5 KB
+  DasLab_20151128_static.tgz        2015-11-28 07:15:59        909.4 MB
+  DasLab_20151128_mysql.gz        2015-11-28 07:15:15        53.2 KB
+  ...</pre>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="list-group-item li-success">
+            <p style="margin-bottom:0px;">​<b>SUCCESS</b>​: Scheduled weekly ​<b>Duty Reminder</b>​ finished @ ​<i>Thu Dec  3 07:00:06 2015</i>​</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="list-group-item li-warning">
+            <p style="margin-bottom:0px;">​<b>REMINDER</b>​: Add <b>JournalClub</b>​ entry for ​<i>Dec 04 2015 (Fri)</i>​</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="list-group-item li-warning">
+            <p style="margin-bottom:0px;">​<b>REMINDER</b>​: Add <b>EternaYoutube</b>​ entry for ​<i>Dec 04 2015 (Fri)</i>​</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="list-group-item li-warning">
+            <p style="margin-bottom:0px;">​<b>REMINDER</b>​: Add <b>RotationStudent</b>​ entry for ​<i>Dec 04 2015 (Fri)</i>​</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="list-group-item li-danger">
+            <p>​<b>ERROR</b>​: <b>manage.py cache 30</b>​ @ <i>Thu Dec 10 14:01:01 2015</i>​</p>
+            <pre style="margin-bottom:0px;">Traceback (most recent call last):
+    File "/home/ubuntu/Server_DasLab/src/management/commands/cache.py", line 153, in handle
+      self.pickle_slack(request)
+    File "/home/ubuntu/Server_DasLab/src/management/commands/cache.py", line 35, in pickle_slack
+  ...</pre>
+          </div>
+        </div>
+      </div>
 
-		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-			<h4><span class="glyphicon glyphicon-knight"></span>&nbsp;&nbsp;Individual Messages</h4>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@someone</a>
-					<span class="pull-right">on each <span class="label label-default">Birthday</span></span>
-				</div>
-				<div class="list-group-item li-green">
-					<p style="margin-bottom:0px;">​<b>Happy Birthday</b>, <i>Ann</i> and <i>Alex</i> ! <a>@kwipapat</a>, <a>@aooms</a></p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@someone</a>
-					<span class="pull-right"><i><u>Thursday</u></i> of each <span class="label label-success">JC</span></span>
-				</div>
-				<div class="list-group-item li-success">
-					<p style="margin-bottom:0px;">​Just a reminder that you are up for <code><b>Journal Club</b></code> <b>next</b> <i><u>Friday</u></i> (<b>Dec 11</b>). Please post your paper of choice to the group <code>#general</code> channel by <b>next</b> <i><u>Tuesday</u></i> (<b>Dec 08</b>).</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@someone</a>
-					<span class="pull-right"><i><u>Thursday</u></i> of each <span class="label label-warning">ES</span></span>
-				</div>
-				<div class="list-group-item li-success">
-					<p style="margin-bottom:0px;">​Just a reminder that you are up for <code><b>Eterna Special</b></code> <b>next</b> <i><u>Friday</u></i> (<b>Dec 11</b>). Please post a brief description of the topic to the group <code>#general</code> channel by <b>next</b> <i><u>Tuesday</u></i> (<b>Dec 08</b>) to allow time for releasing news on both DasLab Website and EteRNA broadcast.</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@someone</a>
-					<span class="pull-right"><i><u>Tuesday</u></i> of each <span class="label label-primary">Rotation</span></span>
-				</div>
-				<div class="list-group-item li-success">
-					<p style="margin-bottom:0px;">​Just a reminder: Please send your presentation to <a>@t47</a> (site admin) for <i>archiving</i> <b>after</b> your presentation <u><i>tomorrow</i></u>.</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@someone</a>
-					<span class="pull-right"><i><u>Tuesday</u></i> of each <span class="label label-success">JC</span></span>
-				</div>
-				<div class="list-group-item li-success">
-					<p style="margin-bottom:0px;">​Just a reminder for posting your paper of choice for the upcoming <code><b>Journal Club</b></code> to <code>#general</code>.</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@someone</a>
-					<span class="pull-right"><i><u>Tuesday</u></i> of each <span class="label label-warning">ES</span></span>
-				</div>
-				<div class="list-group-item li-success">
-					<p style="margin-bottom:0px;">​Just a reminder for sending a description of your upcoming <code><b>Eterna Special</b></code> to <a>@t47</a> and <a>@wuami</a> for releasing news on both DasLab Website and EteRNA broadcast.</p>
-			  </div>
-			</div>
-			<br/>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <h4><span class="glyphicon glyphicon-knight"></span>&nbsp;&nbsp;Individual Messages</h4>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@someone</a>
+            <span class="pull-right">on each <span class="label label-default">Birthday</span></span>
+          </div>
+          <div class="list-group-item li-green">
+            <p style="margin-bottom:0px;">​<b>Happy Birthday</b>, <i>Ann</i> and <i>Alex</i> ! <a>@kwipapat</a>, <a>@aooms</a></p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@someone</a>
+            <span class="pull-right"><i><u>Thursday</u></i> of each <span class="label label-success">JC</span></span>
+          </div>
+          <div class="list-group-item li-success">
+            <p style="margin-bottom:0px;">​Just a reminder that you are up for <code><b>Journal Club</b></code> <b>next</b> <i><u>Friday</u></i> (<b>Dec 11</b>). Please post your paper of choice to the group <code>#general</code> channel by <b>next</b> <i><u>Tuesday</u></i> (<b>Dec 08</b>).</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@someone</a>
+            <span class="pull-right"><i><u>Thursday</u></i> of each <span class="label label-warning">ES</span></span>
+          </div>
+          <div class="list-group-item li-success">
+            <p style="margin-bottom:0px;">​Just a reminder that you are up for <code><b>Eterna Special</b></code> <b>next</b> <i><u>Friday</u></i> (<b>Dec 11</b>). Please post a brief description of the topic to the group <code>#general</code> channel by <b>next</b> <i><u>Tuesday</u></i> (<b>Dec 08</b>) to allow time for releasing news on both DasLab Website and EteRNA broadcast.</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@someone</a>
+            <span class="pull-right"><i><u>Tuesday</u></i> of each <span class="label label-primary">Rotation</span></span>
+          </div>
+          <div class="list-group-item li-success">
+            <p style="margin-bottom:0px;">​Just a reminder: Please send your presentation to <a>@t47</a> (site admin) for <i>archiving</i> <b>after</b> your presentation <u><i>tomorrow</i></u>.</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@someone</a>
+            <span class="pull-right"><i><u>Tuesday</u></i> of each <span class="label label-success">JC</span></span>
+          </div>
+          <div class="list-group-item li-success">
+            <p style="margin-bottom:0px;">​Just a reminder for posting your paper of choice for the upcoming <code><b>Journal Club</b></code> to <code>#general</code>.</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@someone</a>
+            <span class="pull-right"><i><u>Tuesday</u></i> of each <span class="label label-warning">ES</span></span>
+          </div>
+          <div class="list-group-item li-success">
+            <p style="margin-bottom:0px;">​Just a reminder for sending a description of your upcoming <code><b>Eterna Special</b></code> to <a>@t47</a> and <a>@wuami</a> for releasing news on both DasLab Website and EteRNA broadcast.</p>
+          </div>
+        </div>
+        <br/>
 
-			<h4><span class="glyphicon glyphicon-magnet"></span>&nbsp;&nbsp;Lab Duty Reminders</h4>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@jyesselm</a>
-					<span class="pull-right"><i><u>Thursday</u></i> of every <span class="label label-info">Week</span></span>
-				</div>
-				<div class="list-group-item li-violet">
-					<p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>weekly</i> task of <b>Bringing Breakfast</b> to <code><b>Group Meeting</b></code>. If you are unable to do so, please inform the backup person for this task: <i>Johan</i> <a>@johana</a>.</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@wuami</a>
-					<span class="pull-right"><i><u>Thursday</u></i> of each <span class="label label-warning">ES</span></span>
-				</div>
-				<div class="list-group-item li-violet">
-					<p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>monthly</i> task of <b>Microphone Setup</b> for <code><b>Eterna Special</b></code> <u><i>tomorrow</i></u>. Please arrive <b>30 min</b> early. The instructions are <a>here</a>. If you are unable to do so, please inform the backup person for this task: <i>Joseph</i> <a>@jyesselm</a>.</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@wuami</a>
-					<span class="pull-right"><i><u>Tuesday</u></i> of each <span class="label label-warning">ES</span></span>
-				</div>
-				<div class="list-group-item li-violet">
-					<p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>monthly</i> task of <b>Broadcast Posting</b> for <code><b>Eterna Special</b></code>. If <i>Clarence</i> <a>@cyucheng</a> hasn't send out descriptions, please ask him/her!</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@t47</a>
-					<span class="pull-right"><i><u>Tuesday</u></i> of each <span class="label label-warning">ES</span></span>
-				</div>
-				<div class="list-group-item li-violet">
-					<p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for <b>News Posting</b> on the website about the upcoming <code><b>Eterna Special</b></code> on <b>Dec 08</b> by <i>Clarence</i> <a>@cyucheng</a>.</p>
-			  </div>
-			</div>
+        <h4><span class="glyphicon glyphicon-magnet"></span>&nbsp;&nbsp;Lab Duty Reminders</h4>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@jyesselm</a>
+            <span class="pull-right"><i><u>Thursday</u></i> of every <span class="label label-info">Week</span></span>
+          </div>
+          <div class="list-group-item li-violet">
+            <p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>weekly</i> task of <b>Bringing Breakfast</b> to <code><b>Group Meeting</b></code>. If you are unable to do so, please inform the backup person for this task: <i>Johan</i> <a>@johana</a>.</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@wuami</a>
+            <span class="pull-right"><i><u>Thursday</u></i> of each <span class="label label-warning">ES</span></span>
+          </div>
+          <div class="list-group-item li-violet">
+            <p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>monthly</i> task of <b>Microphone Setup</b> for <code><b>Eterna Special</b></code> <u><i>tomorrow</i></u>. Please arrive <b>30 min</b> early. The instructions are <a>here</a>. If you are unable to do so, please inform the backup person for this task: <i>Joseph</i> <a>@jyesselm</a>.</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@wuami</a>
+            <span class="pull-right"><i><u>Tuesday</u></i> of each <span class="label label-warning">ES</span></span>
+          </div>
+          <div class="list-group-item li-violet">
+            <p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>monthly</i> task of <b>Broadcast Posting</b> for <code><b>Eterna Special</b></code>. If <i>Clarence</i> <a>@cyucheng</a> hasn't send out descriptions, please ask him/her!</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@t47</a>
+            <span class="pull-right"><i><u>Tuesday</u></i> of each <span class="label label-warning">ES</span></span>
+          </div>
+          <div class="list-group-item li-violet">
+            <p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for <b>News Posting</b> on the website about the upcoming <code><b>Eterna Special</b></code> on <b>Dec 08</b> by <i>Clarence</i> <a>@cyucheng</a>.</p>
+          </div>
+        </div>
 
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@t47</a>
-					<span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-orange">Month</span></span>
-				</div>
-				<div class="list-group-item li-orange">
-					<p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>monthly</i> task of <b>Amazon Web Services</b>. If you are unable to do so, please inform the backup person for this task: <i>Joseph</i> <a>@jyesselm</a>.</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@t47</a>
-					<span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-orange">Month</span></span>
-				</div>
-				<div class="list-group-item li-orange">
-					<p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>monthly</i> task of <b>Website</b>. If you are unable to do so, please inform the backup person for this task: <i>Rhiju</i> <a>@rhiju</a>.</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@cyucheng</a>
-					<span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-orange">Month</span></span>
-				</div>
-				<div class="list-group-item li-orange">
-					<p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>monthly</i> task of <b>Meeting Scheduling</b>. If you are unable to do so, please inform the backup person for this task: <i>Siqi</i> <a>@t47</a>.</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@wuami</a>
-					<span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-orange">Month</span></span>
-				</div>
-				<div class="list-group-item li-orange">
-					<p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>monthly</i> task of <b>Birthday Celebrations</b>. If you are unable to do so, please inform the site admin <a>@t47</a> since there is <b>NO</b> backup person for this task.</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@wuami</a>
-					<span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-orange">Month</span></span>
-				</div>
-				<div class="list-group-item li-info">
-					<p>​<b>REMINDER</b>: Upcoming birthdays <i>within next 60 days</i>: </p>
-					<table class="table table-condensed" style="margin-bottom:0px;">
-						<thead>
-							<tr>
-								<th style="border:none;" class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Siqi</th>
-								<th style="border:none;" class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Kalli</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td style="border:none;"><i>06/27</i></td>
-								<td style="border:none;"><i>07/01</i></td>
-							</tr>
-						</tbody>
-					</table>					
-			  </div>
-			</div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@t47</a>
+            <span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-orange">Month</span></span>
+          </div>
+          <div class="list-group-item li-orange">
+            <p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>monthly</i> task of <b>Amazon Web Services</b>. If you are unable to do so, please inform the backup person for this task: <i>Joseph</i> <a>@jyesselm</a>.</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@t47</a>
+            <span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-orange">Month</span></span>
+          </div>
+          <div class="list-group-item li-orange">
+            <p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>monthly</i> task of <b>Website</b>. If you are unable to do so, please inform the backup person for this task: <i>Rhiju</i> <a>@rhiju</a>.</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@cyucheng</a>
+            <span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-orange">Month</span></span>
+          </div>
+          <div class="list-group-item li-orange">
+            <p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>monthly</i> task of <b>Meeting Scheduling</b>. If you are unable to do so, please inform the backup person for this task: <i>Siqi</i> <a>@t47</a>.</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@wuami</a>
+            <span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-orange">Month</span></span>
+          </div>
+          <div class="list-group-item li-orange">
+            <p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>monthly</i> task of <b>Birthday Celebrations</b>. If you are unable to do so, please inform the site admin <a>@t47</a> since there is <b>NO</b> backup person for this task.</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@wuami</a>
+            <span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-orange">Month</span></span>
+          </div>
+          <div class="list-group-item li-info">
+            <p>​<b>REMINDER</b>: Upcoming birthdays <i>within next 60 days</i>: </p>
+            <table class="table table-condensed" style="margin-bottom:0px;">
+              <thead>
+                <tr>
+                  <th style="border:none;" class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Siqi</th>
+                  <th style="border:none;" class="col-lg-4 col-md-4 col-sm-6 col-xs-6">Kalli</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border:none;"><i>06/27</i></td>
+                  <td style="border:none;"><i>07/01</i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@wuami</a>
-					<span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-dark-red">Quarter</span></span>
-				</div>
-				<div class="list-group-item li-dark-red">
-					<p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>quarterly</i> task of <b>Lab Outing/Trips</b>. If you are unable to do so, please inform the backup person for this task: <i>Kalli</i> <a>@kappel</a>.</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@jyesselm</a>
-					<span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-dark-red">Quarter</span></span>
-				</div>
-				<div class="list-group-item li-dark-red">
-					<p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>quarterly</i> task of <b>Mailing, Slack, GitHub</b>. If you are unable to do so, please inform the site admin <a>@t47</a> since there is <b>NO</b> backup person for this task.</p>
-			  </div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<a>@t47</a>
-					<span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-dark-blue">Year</span></span>
-				</div>
-				<div class="list-group-item li-dark-blue">
-					<p style="margin-bottom:0px;">​<b>REMINDER</b>: Renewal of <b>Dropbox</b> membership <i>annually</i>. Please check the payment status.</p>
-			  </div>
-			</div>
-		</div>
-	</div>
-</div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@wuami</a>
+            <span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-dark-red">Quarter</span></span>
+          </div>
+          <div class="list-group-item li-dark-red">
+            <p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>quarterly</i> task of <b>Lab Outing/Trips</b>. If you are unable to do so, please inform the backup person for this task: <i>Kalli</i> <a>@kappel</a>.</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@jyesselm</a>
+            <span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-dark-red">Quarter</span></span>
+          </div>
+          <div class="list-group-item li-dark-red">
+            <p style="margin-bottom:0px;">​<b>LAB DUTY</b>: Just a reminder for the <i>quarterly</i> task of <b>Mailing, Slack, GitHub</b>. If you are unable to do so, please inform the site admin <a>@t47</a> since there is <b>NO</b> backup person for this task.</p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a>@t47</a>
+            <span class="pull-right"><i>1<sup>st</sup> <u>Monday</u></i> of every <span class="label label-dark-blue">Year</span></span>
+          </div>
+          <div class="list-group-item li-dark-blue">
+            <p style="margin-bottom:0px;">​<b>REMINDER</b>: Renewal of <b>Dropbox</b> membership <i>annually</i>. Please check the payment status.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

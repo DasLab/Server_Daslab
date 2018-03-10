@@ -2,106 +2,105 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-  <div class="row">
-    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-      <h3><span class="glyphicon glyphicon-open"></span>&nbsp;&nbsp;Upload a Presentation to Archive</h3>
-    </div>
-    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-  </div>
-  <br/>
-  <form enctype="multipart/form-data" action="/group/archive/upload/" method="post" id="form_upload">
-    {% csrf_token %}
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="row">
       <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-        <div class="input-group">
-          <span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-console"></span>&nbsp;&nbsp;Title</span>
-          {% render_field upload_form.upload_title class+="form-control" placeholder="What was it?" %}
-        </div>
-        <p style="margin-top:5px; margin-bottom:0px;"><small>Do <span class="label label-danger">NOT</span> use "CamelCase / InterCaps / CapWords". Only capitalize the first word.</small></p>
+        <h3><span class="glyphicon glyphicon-open"></span>&nbsp;&nbsp;Upload a Presentation to Archive</h3>
       </div>
       <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
     </div>
     <br/>
-    <div class="row">
-      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-        <div class="input-group">
-          <span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Presenter</span>
-          {% render_field upload_form.upload_presenter class+="form-control" placeholder="Who was it?" %}
+    <form enctype="multipart/form-data" action="/group/archive/upload/" method="post" id="form_upload">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+          <div class="input-group">
+            <span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-console"></span>&nbsp;&nbsp;Title</span>
+            {% render_field upload_form.upload_title class+="form-control" placeholder="What was it?" %}
+          </div>
+          <p style="margin-top:5px; margin-bottom:0px;"><small>Do <span class="label label-danger">NOT</span> use "CamelCase / InterCaps / CapWords". Only capitalize the first word.</small></p>
         </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-        <div class="input-group">
-          <span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Date</span>
-          {% render_field upload_form.upload_date class+="form-control" placeholder="When was it?" %}
-          <span class="input-group-btn">
-            <button class="btn btn-warning" type="button" id="form_upload_today"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Today&nbsp;&nbsp;</button>
-          </span>
-        </div>
-      </div>
-      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-    </div>
-    <br/>
-    <div class="row">
-      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-        <div class="input-group">
-          <span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;File</span>
-          <input class="form-control" type="text" id="form_upload_disp" name="disp" placeholder="No file chosen" disabled="disabled" style="cursor:text;"/>
-          <span class="input-group-btn">
-            <button class="btn btn-info" type="button" id="form_upload_browse"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Browse&nbsp;&nbsp;</button>
-          </span>
-        </div>
-        <p style="margin-top:5px; margin-bottom:0px;"><small>Link to slides on server. <span class="label label-danger">NO</span> spaces in file name. Use file name format <i>DATE_TITLE.pptx</i>: date in <span class="label label-inverse">8-digits(yyyymmdd)</span>. <span class="label label-success">Example</span>: <i>20150619_RNAWorksBlueprint.jpg</i>.</small></p>
-        {% render_field upload_form.upload_file class+="hidden" %}
-      </div>
-      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-    </div>
-    <br/>
-    <div class="row">
-      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-        <div class="input-group">
-          <span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;Link</span>
-          {% render_field upload_form.upload_link class+="form-control" placeholder="Optional" %}
-        </div>
-        <p style="margin-top:5px; margin-bottom:0px;"><small>External link to Google Docs.</small></p>
-      </div>
-      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-    </div>
-    <br/>
-
-    <div class="row">
-      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-        <span class="pull-right">
-          <button id="form_upload_submit" type="submit" class="btn btn-primary clickable"><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Upload&nbsp;&nbsp;</button>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <button type="button" class="btn btn-default" id="form_upload_clear"><span class="glyphicon glyphicon-erase"></span>&nbsp;&nbsp;Clear&nbsp;&nbsp;</button>
-        </span>
-      </div>
-      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-    </div>
-  </form>
-
-  <div class="row" style="display:none;" id="form_upload_notice">
-	 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-  	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
       <br/>
-      <div class="alert alert-warning" role="alert">
-        <p>
-          <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;
-          <b>UPLOADING</b>: The following messages were produced:
-        </p>
-        <p id="form_upload_msg"></p>
+      <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <div class="input-group">
+            <span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Presenter</span>
+            {% render_field upload_form.upload_presenter class+="form-control" placeholder="Who was it?" %}
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <div class="input-group">
+            <span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Date</span>
+            {% render_field upload_form.upload_date class+="form-control" placeholder="When was it?" %}
+            <span class="input-group-btn">
+              <button class="btn btn-warning" type="button" id="form_upload_today"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Today&nbsp;&nbsp;</button>
+            </span>
+          </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
       </div>
-    </div>
-    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-  </div>
-  <br/>
+      <br/>
+      <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+          <div class="input-group">
+            <span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;File</span>
+            <input class="form-control" type="text" id="form_upload_disp" name="disp" placeholder="No file chosen" disabled="disabled" style="cursor:text;"/>
+            <span class="input-group-btn">
+              <button class="btn btn-info" type="button" id="form_upload_browse"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Browse&nbsp;&nbsp;</button>
+            </span>
+          </div>
+          <p style="margin-top:5px; margin-bottom:0px;"><small>Link to slides on server. <span class="label label-danger">NO</span> spaces in file name. Use file name format <i>DATE_TITLE.pptx</i>: date in <span class="label label-inverse">8-digits(yyyymmdd)</span>. <span class="label label-success">Example</span>: <i>20150619_RNAWorksBlueprint.jpg</i>.</small></p>
+          {% render_field upload_form.upload_file class+="hidden" %}
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+          <div class="input-group">
+            <span class="input-group-addon" style="color:#000;"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;Link</span>
+            {% render_field upload_form.upload_link class+="form-control" placeholder="Optional" %}
+          </div>
+          <p style="margin-top:5px; margin-bottom:0px;"><small>External link to Google Docs.</small></p>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+      </div>
+      <br/>
 
-</div>
+      <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+          <span class="pull-right">
+            <button id="form_upload_submit" type="submit" class="btn btn-primary clickable"><span class="glyphicon glyphicon-hourglass"></span>&nbsp;&nbsp;Upload&nbsp;&nbsp;</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-default" id="form_upload_clear"><span class="glyphicon glyphicon-erase"></span>&nbsp;&nbsp;Clear&nbsp;&nbsp;</button>
+          </span>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+      </div>
+    </form>
+
+    <div class="row" style="display:none;" id="form_upload_notice">
+     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+        <br/>
+        <div class="alert alert-warning" role="alert">
+          <p>
+            <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;
+            <b>UPLOADING</b>: The following messages were produced:
+          </p>
+          <p id="form_upload_msg"></p>
+        </div>
+      </div>
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+    </div>
+    <br/>
+  </div>
 {% endblock %}

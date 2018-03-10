@@ -2,262 +2,260 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<div class="row equal">
-		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-			<div class="profile-card li-default">
-				<div class="row">
-					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" id="card_user_photo"></div>
-					<div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
-						<p><b class="lead" id="card_user_name">Unknown</b><span class="pull-right"><kbd id="card_user_id">N/A</kbd></span></p>
-						<p style="line-height:25px;">
-							<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;
-							<span id="card_user_aff">Unknown</span>
-							{% if ppl.description %}
-								<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								{{ ppl.description }}
-							{% endif %}
-							{% if ppl.joint_lab %}
-								<br/>
-								<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>&nbsp;&nbsp;
-								Joint with <a href="{{ ppl.joint_link }}" target="_blank" rel="noopener noreferrer external">{{ ppl.joint_lab }} lab</a>
-							{% endif %}
-							<br/>
-							<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span id="card_user_stat">Unknown</span>
-							<span class="pull-right"><a id="card_user_cap" target="_blank" rel="noopener noreferrer external"><span class="label label-warning">CAP Profile</span></a></span>
-						</p>
-						<p style="line-height:25px; margin-top:30px;">
-							<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
-							Phone:&nbsp;&nbsp;<span id="card_user_phone">Unknown</span>
-							<br/>
-							<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
-							Email:&nbsp;&nbsp;<a target="_blank" rel="noopener noreferrer external" style="text-decoration:underline;" id="card_user_email"></a>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="row equal">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="profile-card li-default">
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" id="card_user_photo"></div>
+            <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+              <p><b class="lead" id="card_user_name">Unknown</b><span class="pull-right"><kbd id="card_user_id">N/A</kbd></span></p>
+              <p style="line-height:25px;">
+                <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;
+                <span id="card_user_aff">Unknown</span>
+                {% if ppl.description %}
+                  <br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  {{ ppl.description }}
+                {% endif %}
+                {% if ppl.joint_lab %}
+                  <br/>
+                  <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>&nbsp;&nbsp;
+                  Joint with <a href="{{ ppl.joint_link }}" target="_blank" rel="noopener noreferrer external">{{ ppl.joint_lab }} lab</a>
+                {% endif %}
+                <br/>
+                <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span id="card_user_stat">Unknown</span>
+                <span class="pull-right"><a id="card_user_cap" target="_blank" rel="noopener noreferrer external"><span class="label label-warning">CAP Profile</span></a></span>
+              </p>
+              <p style="line-height:25px; margin-top:30px;">
+                <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
+                Phone:&nbsp;&nbsp;<span id="card_user_phone">Unknown</span>
+                <br/>
+                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
+                Email:&nbsp;&nbsp;<a target="_blank" rel="noopener noreferrer external" style="text-decoration:underline;" id="card_user_email"></a>
 
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-			<div class="panel panel-default" style="margin: 10px 0px;">
-				<div class="panel-heading">
-					<h3 class="panel-title"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;Update Contact Information</h3>
-				</div>
-				<div class="panel-body">
-					<br/>
-					<form enctype="multipart/form-data" action="/group/contact/" method="post">
-						{% csrf_token %}
-			    		<div class="row">
-			                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
-			                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
-			                	<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;Phone :
-			                </div>
-			                <div class="col-lg-6 col-md-6 col-sm-7 col-xs-7">
-			                	{% render_field contact_form.contact_phone class+="form-control" type="tel" %}
-			                </div>
-			                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
-			            </div>
-			            <br/>
-			    		<div class="row">
-			                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
-			                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
-			                	<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;Email :
-			                </div>
-			                <div class="col-lg-6 col-md-6 col-sm-7 col-xs-7">
-			                	{% render_field contact_form.contact_email class+="form-control" type="email" %}
-			                </div>
-			                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
-			            </div>
-			            <br/>
-			    		<div class="row">
-			                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
-			                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
-			                	<span class="glyphicon glyphicon-gift" aria-hidden="true"></span>&nbsp;&nbsp;Birthday :
-			                </div>
-			                <div class="col-lg-6 col-md-6 col-sm-7 col-xs-7">
-			                	{% render_field contact_form.contact_bday class+="form-control" type="text" %}
-			                </div>
-			                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
-			            </div>
-			            <br/>
-		                <div class="row">
-		                	<div class="text-right">
-		                		<i><u>Note</u>: Birthday should be in format of</i> <span class="label label-orange">MM/DD</span>.
-		                		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<input id="form_change_submit" type="submit" value="&nbsp;&nbsp;Update&nbsp;&nbsp;" class="btn btn-primary clickable"/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="panel panel-default" style="margin: 10px 0px;">
+          <div class="panel-heading">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;Update Contact Information</h3>
+          </div>
+          <div class="panel-body">
+            <br/>
+            <form enctype="multipart/form-data" action="/group/contact/" method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
+                  <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;Phone :
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-7 col-xs-7">
+                  {% render_field contact_form.contact_phone class+="form-control" type="tel" %}
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
+                  <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;Email :
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-7 col-xs-7">
+                  {% render_field contact_form.contact_email class+="form-control" type="email" %}
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
+                  <span class="glyphicon glyphicon-gift" aria-hidden="true"></span>&nbsp;&nbsp;Birthday :
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-7 col-xs-7">
+                  {% render_field contact_form.contact_bday class+="form-control" type="text" %}
+                </div>
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="text-right">
+                  <i><u>Note</u>: Birthday should be in format of</i> <span class="label label-orange">MM/DD</span>.
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input id="form_change_submit" type="submit" value="&nbsp;&nbsp;Update&nbsp;&nbsp;" class="btn btn-primary clickable"/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
-	<hr/>
-	<span>
-		<button class="btn btn-warning" id="btn_toggle"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Toggle View</button>
-		&nbsp;&nbsp;<span id="label_card">Cards</span>&nbsp;&nbsp;/&nbsp;&nbsp;<span id="label_table">Table</span>
-	</span>
-	<br/><br/>
-	<div id="toggle_card">
-	    <h1><span class="label label-success">Current Members</span><span style="font-size:14px;"><i>&nbsp;&nbsp;(Everyone Else)</i></span></h1>
+    <hr/>
+    <span>
+      <button class="btn btn-warning" id="btn_toggle"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Toggle View</button>
+      &nbsp;&nbsp;<span id="label_card">Cards</span>&nbsp;&nbsp;/&nbsp;&nbsp;<span id="label_table">Table</span>
+    </span>
+    <br/><br/>
+    <div id="toggle_card">
+      <h1><span class="label label-success">Current Members</span><span style="font-size:14px;"><i>&nbsp;&nbsp;(Everyone Else)</i></span></h1>
 
-		<div class="row equal">
-	        {% for ppl in current_member %}
-		        {% if ppl.sunet_id != sunet_id %}
-				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-					<div class="profile-card li-{{ppl.label}}">
-						<div class="row">
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-								{% if ppl.photo %}
-									{% autoescape off %}{{ ppl.photo }}{% endautoescape %}
-								{% else %}
-					             	<img src="/site_media/images/icon_default_avatar.png" width="119"> 
-								{% endif %}
-								{% if ppl.type == 'admin' %}
-									<p><span class="label label-magenta"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;Administrator</span></p>
-								{% endif %}
-							</div>
-							<div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
-								<p><b class="lead">{{ ppl.name }}</b><span class="pull-right"><kbd>{{ ppl.sunet_id }}</kbd></span></p>
-								<p style="line-height:25px;">
-									<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;
-									<span>{{ ppl.title }}</span>
-									{% if ppl.description %}
-										<br/>
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										{{ ppl.description }}
-									{% endif %}
-									{% if ppl.joint_lab %}
-										<br/>
-										<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>&nbsp;&nbsp;
-										Joint with <a href="{{ ppl.joint_link }}" target="_blank" rel="noopener noreferrer external">{{ ppl.joint_lab }} lab</a>
-									{% endif %}
-									<br/>
-									<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span>{{ ppl.status }}</span>
-									<span class="pull-right"><a href="{{ ppl.more_info }}" target="_blank" rel="noopener noreferrer external"><span class="label label-warning">CAP Profile</span></a></span>
-								</p>
-								<p style="line-height:25px; margin-top:30px;">
-									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
-									Phone:&nbsp;&nbsp;{{ ppl.phone }}
-									<br/>
-									<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
-									Email:&nbsp;&nbsp;<a href="mailto:{{ ppl.email }}" target="_blank" rel="noopener noreferrer external" style="text-decoration:underline;">{{ ppl.email }}</a>
+      <div class="row equal">
+            {% for ppl in current_member %}
+              {% if ppl.sunet_id != sunet_id %}
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="profile-card li-{{ppl.label}}">
+              <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                  {% if ppl.photo %}
+                    {% autoescape off %}{{ ppl.photo }}{% endautoescape %}
+                  {% else %}
+                    <img src="/site_media/images/icon_default_avatar.png" width="119">
+                  {% endif %}
+                  {% if ppl.type == 'admin' %}
+                    <p><span class="label label-magenta"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;&nbsp;Administrator</span></p>
+                  {% endif %}
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+                  <p><b class="lead">{{ ppl.name }}</b><span class="pull-right"><kbd>{{ ppl.sunet_id }}</kbd></span></p>
+                  <p style="line-height:25px;">
+                    <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;
+                    <span>{{ ppl.title }}</span>
+                    {% if ppl.description %}
+                      <br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      {{ ppl.description }}
+                    {% endif %}
+                    {% if ppl.joint_lab %}
+                      <br/>
+                      <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>&nbsp;&nbsp;
+                      Joint with <a href="{{ ppl.joint_link }}" target="_blank" rel="noopener noreferrer external">{{ ppl.joint_lab }} lab</a>
+                    {% endif %}
+                    <br/>
+                    <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span>{{ ppl.status }}</span>
+                    <span class="pull-right"><a href="{{ ppl.more_info }}" target="_blank" rel="noopener noreferrer external"><span class="label label-warning">CAP Profile</span></a></span>
+                  </p>
+                  <p style="line-height:25px; margin-top:30px;">
+                    <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
+                    Phone:&nbsp;&nbsp;{{ ppl.phone }}
+                    <br/>
+                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
+                    Email:&nbsp;&nbsp;<a href="mailto:{{ ppl.email }}" target="_blank" rel="noopener noreferrer external" style="text-decoration:underline;">{{ ppl.email }}</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+            {% endfor %}
+        </div>
 
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				{% endif %}
-	        {% endfor %}
-	    </div>
+        <hr/>
+        <h1><span class="label label-orange">Alumni</span></h1>
 
-	    <hr/>
-	    <h1><span class="label label-orange">Alumni</span></h1>
+      <div class="row" id="toggle_timeline">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <ul class="timeline">
+            {% for ppl in past_member %}
+              <li {% if forloop.counter|divisibleby:2 %} class="timeline-inverted" {% endif %}>
+                <div class="timeline-badge timeline-{{ppl.label}}"><span class="glyphicon glyphicon-user"></span></div>
+                {% if ppl.year_start %}
+                <div class="timeline-year">{{ppl.finish_year}}</div>
+                {% endif %}
+                <div class="timeline-panel">
+                  <div class="timeline-body">
+                    <div class="row">
+                      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                        {% if ppl.photo %}
+                          {% autoescape off %}{{ ppl.photo }}{% endautoescape %}
+                        {% else %}
+                          <img src="/site_media/images/icon_default_avatar.png" width="119">
+                        {% endif %}
+                      </div>
+                      <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                        <p><b class="lead">{{ ppl.name }}</b><span class="pull-right"><kbd>{{ ppl.sunet_id }}</kbd></span></p>
+                        <p style="line-height:25px;">
+                          <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;
+                          <span>{{ ppl.title }}</span>
+                          {% if ppl.description %}
+                            <br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            {{ ppl.description }}
+                          {% endif %}
+                          {% if ppl.joint_lab %}
+                            <br/>
+                            <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>&nbsp;&nbsp;
+                            Joint with <a href="{{ ppl.joint_link }}" target="_blank" rel="noopener noreferrer external">{{ ppl.joint_lab }} lab</a>
+                          {% endif %}
+                          <br/>
+                          <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span>{{ ppl.status }}</span>
+                          {% if ppl.more_info %}
+                            <span class="pull-right"><a href="{{ ppl.more_info }}" target="_blank" rel="noopener noreferrer external"><span class="label label-warning">CAP Profile</span></a></span>
+                          {% endif %}
+                        </p>
+                        <p style="line-height:25px; margin-top:30px;">
+                          <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
+                          Phone:&nbsp;&nbsp;{{ ppl.phone }}
+                          <br/>
+                          <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
+                          Email:&nbsp;&nbsp;<a href="mailto:{{ ppl.email }}" target="_blank" rel="noopener noreferrer external" style="text-decoration:underline;">{{ ppl.email }}</a>
 
-		<div class="row" id="toggle_timeline">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			    <ul class="timeline">
-					{% for ppl in past_member %}
-			        <li {% if forloop.counter|divisibleby:2 %} class="timeline-inverted" {% endif %}>
-						<div class="timeline-badge timeline-{{ppl.label}}"><span class="glyphicon glyphicon-user"></span></div>
-						{% if ppl.year_start %}
-						<div class="timeline-year">{{ppl.finish_year}}</div>
-						{% endif %}
-						<div class="timeline-panel">
-							<div class="timeline-body">
-								<div class="row">
-									<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-										{% if ppl.photo %}
-											{% autoescape off %}{{ ppl.photo }}{% endautoescape %}
-										{% else %}
-							            	<img src="/site_media/images/icon_default_avatar.png" width="119"> 
-										{% endif %}
-									</div>
-									<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-										<p><b class="lead">{{ ppl.name }}</b><span class="pull-right"><kbd>{{ ppl.sunet_id }}</kbd></span></p>
-										<p style="line-height:25px;">
-											<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;&nbsp;
-											<span>{{ ppl.title }}</span>
-											{% if ppl.description %}
-												<br/>
-												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												{{ ppl.description }}
-											{% endif %}
-											{% if ppl.joint_lab %}
-												<br/>
-												<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>&nbsp;&nbsp;
-												Joint with <a href="{{ ppl.joint_link }}" target="_blank" rel="noopener noreferrer external">{{ ppl.joint_lab }} lab</a>
-											{% endif %}
-											<br/>
-											<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;&nbsp;<span>{{ ppl.status }}</span>
-											{% if ppl.more_info %}
-												<span class="pull-right"><a href="{{ ppl.more_info }}" target="_blank" rel="noopener noreferrer external"><span class="label label-warning">CAP Profile</span></a></span>
-											{% endif %}
-										</p>
-										<p style="line-height:25px; margin-top:30px;">
-											<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp;&nbsp;
-											Phone:&nbsp;&nbsp;{{ ppl.phone }}
-											<br/>
-											<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
-											Email:&nbsp;&nbsp;<a href="mailto:{{ ppl.email }}" target="_blank" rel="noopener noreferrer external" style="text-decoration:underline;">{{ ppl.email }}</a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+            </ul>
+        </div>
+      </div>
+    </div>
 
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-			        </li>
-					{% endfor %}
-			    </ul>
-			</div>
-		</div>
-	</div>
-
-	<div class="row" id="toggle_table">
-		<br/>
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<table class="table table-hover">
-				<thead>
-					<tr class="active">
-						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Name</th>
-						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Status</th>
-						<th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">ID</th>
-						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Phone</th>
-						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Email</th>
-						<th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Affiliation</th>
-					</tr>
-				</thead>
-				<tbody>
-				{% for ppl in current_member %}
-					<tr {% if ppl.sunet_id == sunet_id %} class="warning" {% else %}{% if forloop.counter|divisibleby:2 %} class="info" {% endif %}{% endif %}>
-						<td><b>{{ppl.name}}</b></td>
-						<td>{{ppl.status}}</td>
-						<td><kbd {% if ppl.type == 'admin' %}style="color:#ff69bc;"{% endif %}>{{ppl.sunet_id}}</kbd></td>
-						<td>{{ppl.phone}}</td>
-						<td><i><u>{{ppl.email}}</u></i></td>
-						<td>{{ppl.title}}{% if ppl.description %}, {{ ppl.description }}{% endif %}</td>
-					</tr>
-				{% endfor %}
-					<tr><td colspan="5" style="padding: 0px;"></td></tr>
-				{% for ppl in past_member %}
-					<tr class="active">
-						<td><b>{{ppl.name}}</b></td>
-						<td>{{ppl.status}}</td>
-						<td><kbd>{{ppl.sunet_id}}</kbd></td>
-						<td>{{ppl.phone}}</td>
-						<td><i><u>{{ppl.email}}</u></i></td>
-						<td>{{ppl.title}}{% if ppl.description %}, {{ ppl.description }}{% endif %}</td>
-					</tr>
-				{% endfor %}
-					<tr><td colspan="5" style="padding: 0px;"></td></tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-
-</div>
+    <div class="row" id="toggle_table">
+      <br/>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-hover">
+          <thead>
+            <tr class="active">
+              <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Name</th>
+              <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Status</th>
+              <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">ID</th>
+              <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Phone</th>
+              <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Email</th>
+              <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Affiliation</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for ppl in current_member %}
+            <tr {% if ppl.sunet_id == sunet_id %} class="warning" {% else %}{% if forloop.counter|divisibleby:2 %} class="info" {% endif %}{% endif %}>
+              <td><b>{{ppl.name}}</b></td>
+              <td>{{ppl.status}}</td>
+              <td><kbd {% if ppl.type == 'admin' %}style="color:#ff69bc;"{% endif %}>{{ppl.sunet_id}}</kbd></td>
+              <td>{{ppl.phone}}</td>
+              <td><i><u>{{ppl.email}}</u></i></td>
+              <td>{{ppl.title}}{% if ppl.description %}, {{ ppl.description }}{% endif %}</td>
+            </tr>
+          {% endfor %}
+            <tr><td colspan="5" style="padding: 0px;"></td></tr>
+          {% for ppl in past_member %}
+            <tr class="active">
+              <td><b>{{ppl.name}}</b></td>
+              <td>{{ppl.status}}</td>
+              <td><kbd>{{ppl.sunet_id}}</kbd></td>
+              <td>{{ppl.phone}}</td>
+              <td><i><u>{{ppl.email}}</u></i></td>
+              <td>{{ppl.title}}{% if ppl.description %}, {{ ppl.description }}{% endif %}</td>
+            </tr>
+          {% endfor %}
+            <tr><td colspan="5" style="padding: 0px;"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 {% endblock %}

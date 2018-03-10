@@ -4,289 +4,285 @@
 {% block bodyclass %}dashboard{% endblock %}
 
 {% block content %}
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		<form enctype="multipart/form-data" action="/admin/bot/" method="post">
-			{% csrf_token %}
-			<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-				<div class="thumbnail" style="padding:10px 20px;">
-					<h4><span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>&nbsp;&nbsp;Duty Reminders</h4>
-					<div class="row">
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-							<h4><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&nbsp;&nbsp;Monthly Tasks</h4>
-							<ul>
-								{{form.is_duty_bday}}
-								<span>Birthday Celebrations</span>
-								{{form.is_duty_aws}}
-								<span>Amazon Web Services</span>
-								{{form.is_duty_website}}
-								<span>Lab Website</span>
-								{{form.is_duty_schedule}}
-								<span>Meeting Scheduling</span>
-							</ul>
-						</div>
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-							<h4><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>&nbsp;&nbsp;Weekly Tasks</h4>
-							<ul>
-								{{form.is_duty_breakfast}}
-								<span>Breakfast</span>
-							</ul>
-							<h4><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&nbsp;&nbsp;Quarterly Tasks</h4>
-							<ul>
-								{{form.is_duty_trip}}
-								<span>Lab Outing/Trips</span>
-								{{form.is_duty_git}}
-								<span>Mailing, Slack, GitHub</span>
-							</ul>
-						</div>
-					</div>
-					<br/>
-					<div class="row">
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-							<ul>
-			                    <div class="input-group">
-				                    <span class="input-group-addon">On 1<sup>st<sup></span>
-									{{form.day_duty_month}}
-								</div>
-							</ul>
-						</div>
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-							<ul>
-			                    <div class="input-group">
-				                    <span class="input-group-addon">On 1<sup>st<sup></span>
-									{{form.day_duty_quarter}}
-								</div>
-							</ul>
-						</div>
-					</div>
-					<br/>
-				</div>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <form enctype="multipart/form-data" action="/admin/bot/" method="post">
+      {% csrf_token %}
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="thumbnail" style="padding:10px 20px;">
+          <h4><span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>&nbsp;&nbsp;Duty Reminders</h4>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <h4><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&nbsp;&nbsp;Monthly Tasks</h4>
+              <ul>
+                {{form.is_duty_bday}}
+                <span>Birthday Celebrations</span>
+                {{form.is_duty_aws}}
+                <span>Amazon Web Services</span>
+                {{form.is_duty_website}}
+                <span>Lab Website</span>
+                {{form.is_duty_schedule}}
+                <span>Meeting Scheduling</span>
+              </ul>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <h4><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>&nbsp;&nbsp;Weekly Tasks</h4>
+              <ul>
+                {{form.is_duty_breakfast}}
+                <span>Breakfast</span>
+              </ul>
+              <h4><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&nbsp;&nbsp;Quarterly Tasks</h4>
+              <ul>
+                {{form.is_duty_trip}}
+                <span>Lab Outing/Trips</span>
+                {{form.is_duty_git}}
+                <span>Mailing, Slack, GitHub</span>
+              </ul>
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <ul>
+                <div class="input-group">
+                  <span class="input-group-addon">On 1<sup>st<sup></span>
+                  {{form.day_duty_month}}
+                </div>
+              </ul>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <ul>
+                <div class="input-group">
+                  <span class="input-group-addon">On 1<sup>st<sup></span>
+                  {{form.day_duty_quarter}}
+                </div>
+              </ul>
+            </div>
+          </div>
+          <br/>
+        </div>
 
-				<div class="thumbnail" style="padding:10px 20px;">
-					<h4><div class="sprite i_21"><i class="i_slack"></i></div>&nbsp;&nbsp;Slack Integration</h4>
-					<div class="row">
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-							<h4><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp;&nbsp;Functions</h4>
-							<ul>
-								{{form.is_slack}}
-								<span>Use Slack for notifications</span>
-								{{form.is_flash_slide}}
-								<span>Setup Flash Slides automatically</span>
-							</ul>
-							<br/>
-							<p><span class="lead"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;<code><b>Group Meeting</b></code></span> is on:</p>
-							<div class="row">
-								<div class="col-md-2"></div>
-								<div class="col-md-10">
-				                	<div class="input-group">
-										<span class="input-group-addon">Every</span>
-										{{form.day_meeting}}
-									</div>
-								</div>
-							</div>
-							<br/>
-						</div>
-						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-							<h4><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>&nbsp;&nbsp;Notifications</h4>
-							<ul>
-								{{form.is_bday}}
-								<span>Birthday Wishes</span>
-								{{form.is_admin_backup}}
-								<span>Backup Statistics</span>
-								{{form.is_admin_gdrive}}
-								<span>Sync Statistics</span>
-								{{form.is_admin_version}}
-								<span>Update Versions</span>
-								{{form.is_admin_report}}
-								<span>Weekly Alert Report</span>
-								{{form.is_admin_aws_warn}}
-								<span>AWS ELB Downtime Warning</span>
-							</ul>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<h4><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Group Meeting Reminder &amp; Flash Slide Setup</h4>
-							<div class="row">
-				                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-				                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-				                	<div class="input-group">
-										{{form.day_reminder_1}}
-										<span class="input-group-addon">days</span>
-									</div>
-								</div>
-				                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-									Before <code><b>Group Meeting</b></code>; also for <u>Reminder 1s</u>.
-								</div>
-							</div>
-							<h4><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Follow-up Reminder (Next Week)</h4>
-							<div class="row">
-				                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-				                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-				                	<div class="input-group">
-									{{form.day_reminder_2}}
-										<span class="input-group-addon">days</span>
-									</div>
-								</div>
-				                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-									Before <code><b>Group Meeting</b></code>; for <u>Reminder 2s</u>.
-								</div>
-							</div>
-						</div>
-					</div>
-					<br/>
-				</div>
-				<div class="row">
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-						<div class="thumbnail" style="padding:10px 20px;">
-							<h4><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;&nbsp;<code><b>Journal Club</b></code></h4>
-							<ul>
-								{{form.is_user_jc_1}}
-								<span>Reminder<u>(1)</u> for <b>next</b> week</span>
-								{{form.is_user_jc_2}}
-								<span>Reminder<u>(2)</u> for <b>this</b> week</span>
-								{{form.is_admin_jc}}
-								<span>Admin reminder for <b>database</b></span>
-							</ul>
-						</div>
-					</div>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-						<div class="thumbnail" style="padding:10px 20px;">
-							<h4><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>&nbsp;&nbsp;<code><b>Rotation Student</b></code></h4>
-							<ul>
-								{{form.is_user_rot_1}}
-								<span>Reminder<u>(1)</u> for <b>next</b> week</span>
-								{{form.is_user_rot_2}}
-								<span>Reminder<u>(2)</u> for <b>this</b> week</span>
-								{{form.is_admin_rot}}
-								<span>Admin reminder for <b>database</b></span>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
+        <div class="thumbnail" style="padding:10px 20px;">
+          <h4><div class="sprite i_21"><i class="i_slack"></i></div>&nbsp;&nbsp;Slack Integration</h4>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <h4><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp;&nbsp;Functions</h4>
+              <ul>
+                {{form.is_slack}}
+                <span>Use Slack for notifications</span>
+                {{form.is_flash_slide}}
+                <span>Setup Flash Slides automatically</span>
+              </ul>
+              <br/>
+              <p><span class="lead"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;<code><b>Group Meeting</b></code></span> is on:</p>
+              <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                          <div class="input-group">
+                    <span class="input-group-addon">Every</span>
+                    {{form.day_meeting}}
+                  </div>
+                </div>
+              </div>
+              <br/>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <h4><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>&nbsp;&nbsp;Notifications</h4>
+              <ul>
+                {{form.is_bday}}
+                <span>Birthday Wishes</span>
+                {{form.is_admin_backup}}
+                <span>Backup Statistics</span>
+                {{form.is_admin_gdrive}}
+                <span>Sync Statistics</span>
+                {{form.is_admin_version}}
+                <span>Update Versions</span>
+                {{form.is_admin_report}}
+                <span>Weekly Alert Report</span>
+                {{form.is_admin_aws_warn}}
+                <span>AWS ELB Downtime Warning</span>
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <h4><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Group Meeting Reminder &amp; Flash Slide Setup</h4>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <div class="input-group">
+                    {{form.day_reminder_1}}
+                    <span class="input-group-addon">days</span>
+                  </div>
+                </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  Before <code><b>Group Meeting</b></code>; also for <u>Reminder 1s</u>.
+                </div>
+              </div>
+              <h4><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;&nbsp;Follow-up Reminder (Next Week)</h4>
+              <div class="row">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <div class="input-group">
+                  {{form.day_reminder_2}}
+                    <span class="input-group-addon">days</span>
+                  </div>
+                </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  Before <code><b>Group Meeting</b></code>; for <u>Reminder 2s</u>.
+                </div>
+              </div>
+            </div>
+          </div>
+          <br/>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div class="thumbnail" style="padding:10px 20px;">
+              <h4><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;&nbsp;<code><b>Journal Club</b></code></h4>
+              <ul>
+                {{form.is_user_jc_1}}
+                <span>Reminder<u>(1)</u> for <b>next</b> week</span>
+                {{form.is_user_jc_2}}
+                <span>Reminder<u>(2)</u> for <b>this</b> week</span>
+                {{form.is_admin_jc}}
+                <span>Admin reminder for <b>database</b></span>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div class="thumbnail" style="padding:10px 20px;">
+              <h4><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>&nbsp;&nbsp;<code><b>Rotation Student</b></code></h4>
+              <ul>
+                {{form.is_user_rot_1}}
+                <span>Reminder<u>(1)</u> for <b>next</b> week</span>
+                {{form.is_user_rot_2}}
+                <span>Reminder<u>(2)</u> for <b>this</b> week</span>
+                {{form.is_admin_rot}}
+                <span>Admin reminder for <b>database</b></span>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-				<div class="thumbnail" style="padding:10px 20px;">
-					<h4><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>&nbsp;&nbsp;Cache</h4>
-					<ul>
-						{{form.is_cache}}
-						<span>Cache dashboard results</span>
-	                    <div class="input-group">
-	                    	<span class="input-group-btn">
-						    	<button class="btn btn-green" type="button"><span class="glyphicon glyphicon-tint"></span></button>
-						    </span>	
-		                    <span class="input-group-addon">Every</span>
-		                    {{form.cache_3}}
-		                    <span class="input-group-addon">min</span>
-	                    </div>
-	                    <br/>
-	                    <div class="input-group">
-	                    	<span class="input-group-btn">
-						    	<button class="btn btn-warning" type="button"><span class="glyphicon glyphicon-fire"></span></button>
-						    </span>	
-		                    <span class="input-group-addon">Every</span>
-		                    {{form.cache_15}}
-		                    <span class="input-group-addon">min</span>
-	                    </div>
-	                    <br/>
-	                    <div class="input-group">
-	                    	<span class="input-group-btn">
-						    	<button class="btn btn-info" type="button"><span class="glyphicon glyphicon-leaf"></span></button>
-						    </span>	
-		                    <span class="input-group-addon">Every</span>
-		                    {{form.cache_30}}
-		                    <span class="input-group-addon">min</span>
-	                    </div>
-					</ul>
-                    <br/>
-				</div>
-				<div class="thumbnail" style="padding:10px 20px;">
-					<h4><span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;&nbsp;Misc</h4>
-					<ul>
-						{{form.is_version}}
-						<span>Update system version weekly</span>
-						{{form.is_report}}
-						<span>Report admin alerts weekly</span>
-					</ul>
-				</div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="thumbnail" style="padding:10px 20px;">
+          <h4><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>&nbsp;&nbsp;Cache</h4>
+          <ul>
+            {{form.is_cache}}
+            <span>Cache dashboard results</span>
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-green" type="button"><span class="glyphicon glyphicon-tint"></span></button>
+              </span>
+              <span class="input-group-addon">Every</span>
+              {{form.cache_3}}
+              <span class="input-group-addon">min</span>
+            </div>
+            <br/>
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-warning" type="button"><span class="glyphicon glyphicon-fire"></span></button>
+              </span>
+              <span class="input-group-addon">Every</span>
+              {{form.cache_15}}
+              <span class="input-group-addon">min</span>
+            </div>
+            <br/>
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button"><span class="glyphicon glyphicon-leaf"></span></button>
+              </span>
+              <span class="input-group-addon">Every</span>
+              {{form.cache_30}}
+              <span class="input-group-addon">min</span>
+            </div>
+          </ul>
+          <br/>
+        </div>
+        <div class="thumbnail" style="padding:10px 20px;">
+          <h4><span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;&nbsp;Misc</h4>
+          <ul>
+            {{form.is_version}}
+            <span>Update system version weekly</span>
+            {{form.is_report}}
+            <span>Report admin alerts weekly</span>
+          </ul>
+        </div>
 
-				<div class="thumbnail" style="padding:10px 20px;">
-					<h4><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>&nbsp;&nbsp;<code><b>Eterna Special</b></code></h4>
-					<ul>
-						{{form.is_duty_mic}}
-						<span>Microphone Setup</span>
-						{{form.is_duty_webnews}}
-						<span>Post news to DasLab Website</span>
-						{{form.is_duty_broadcast}}
-						<span>Post news to Eterna Website</span>
-						<br/>
-						{{form.is_user_es_1}}
-						<span>Reminder<u>(1)</u> for <b>next</b> week</span>
-						{{form.is_user_es_2}}
-						<span>Reminder<u>(2)</u> for <b>this</b> week</span>
-						{{form.is_admin_es}}
-						<span>Admin reminder for <b>database</b></span>
-					</ul>
-				</div>
-	            <div class="row">
-	            	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	            		<button type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-ok-circle"></span>&nbsp;&nbsp;Save</button>
-	            	</div>
-	            </div>
-	            <br/>
-	            <div class="row">
-	            	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	            		<button type="button" class="btn btn-default btn-block" onclick="location.href='/admin/backup/'"><span class="glyphicon glyphicon-ban-circle"></span>&nbsp;&nbsp;Reset</button>
-	            	</div>
-	            </div>
-			</div>
-
-		</form>
-	</div>
-
-
-	<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalStat" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content panel-primary">
-				<div class="modal-header panel-heading">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="stat_label">
-						<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-						&nbsp;&nbsp;Change of Settings
-					</h4>
-				</div>
-				<div class="modal-body panel-body">
-		        	<h2 class="text-center"><span class="label label-default">CURRENT SETTINGS</span></h2>
-					<br/>
-					<p id="modal_set" class="well well-sm" style="font-family:monospace;"></p>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="thumbnail" style="padding:10px 20px;">
+          <h4><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>&nbsp;&nbsp;<code><b>Eterna Special</b></code></h4>
+          <ul>
+            {{form.is_duty_mic}}
+            <span>Microphone Setup</span>
+            {{form.is_duty_webnews}}
+            <span>Post news to DasLab Website</span>
+            {{form.is_duty_broadcast}}
+            <span>Post news to Eterna Website</span>
+            <br/>
+            {{form.is_user_es_1}}
+            <span>Reminder<u>(1)</u> for <b>next</b> week</span>
+            {{form.is_user_es_2}}
+            <span>Reminder<u>(2)</u> for <b>this</b> week</span>
+            {{form.is_admin_es}}
+            <span>Admin reminder for <b>database</b></span>
+          </ul>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <button type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-ok-circle"></span>&nbsp;&nbsp;Save</button>
+          </div>
+        </div>
+        <br/>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <button type="button" class="btn btn-default btn-block" onclick="location.href='/admin/backup/'"><span class="glyphicon glyphicon-ban-circle"></span>&nbsp;&nbsp;Reset</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 
 
+  <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalStat" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content panel-primary">
+        <div class="modal-header panel-heading">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="stat_label">
+            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+            &nbsp;&nbsp;Change of Settings
+          </h4>
+        </div>
+        <div class="modal-body panel-body">
+          <h2 class="text-center"><span class="label label-default">CURRENT SETTINGS</span></h2>
+          <br/>
+          <p id="modal_set" class="well well-sm" style="font-family:monospace;"></p>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
+
 
 {% block extrajs %}
-	<script type="text/javascript">
-		head.ready("bootstrap.min.js", function() {
-			$(document).ready(function() {
-				$("#modal_set").html('{{BOT}}');
+  <script type="text/javascript">
+    head.ready("bootstrap.min.js", function() {
+      $(document).ready(function() {
+        $("#modal_set").html('{{BOT}}');
 
-				{% if flag != -1 %}
-					{% if flag == 1 %}
-						$("div.modal-body > h2 > span.label").removeClass("label-default").addClass("label-danger");
-						$("div.modal-body > h2 > span.label").html("SETTINGS NOT APPLIED");
-					{% else %}
-						$("div.modal-body > h2 > span.label").removeClass("label-default").addClass("label-success");
-						$("div.modal-body > h2 > span.label").html("NEW SETTINGS APPLIED");
-					{% endif %}
+        {% if flag != -1 %}
+          {% if flag == 1 %}
+            $("div.modal-body > h2 > span.label").removeClass("label-default").addClass("label-danger");
+            $("div.modal-body > h2 > span.label").html("SETTINGS NOT APPLIED");
+          {% else %}
+            $("div.modal-body > h2 > span.label").removeClass("label-default").addClass("label-success");
+            $("div.modal-body > h2 > span.label").html("NEW SETTINGS APPLIED");
+          {% endif %}
 
-					$("#modal").modal("show");
-				{% endif %}
-			});
-		});
-	</script>
-
+          $("#modal").modal("show");
+        {% endif %}
+      });
+    });
+  </script>
 {% endblock %}
-

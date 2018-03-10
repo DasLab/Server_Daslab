@@ -166,7 +166,7 @@
             </tr>
             <tr><td colspan="2" style="padding: 0px;"></td></tr>
           </tbody>
-        </table>        
+        </table>
 
         <table class="table table-hover">
           <tbody>
@@ -278,12 +278,11 @@
             </tr>
             <tr><td colspan="2" style="padding: 0px;"></td></tr>
           </tbody>
-        </table>        
+        </table>
 
       </div>
     </div>
   </div>
-
 {% endblock %}
 
 
@@ -310,7 +309,6 @@
         <ul class="list-group">
           {% for entry in admin_log %}
             <li class="list-group-item {% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}text-error{% endif %}">
-
               <span class="label label-{% if entry.is_addition %}success{% endif %}{% if entry.is_change %}primary{% endif %}{% if entry.is_deletion %}danger{% endif %}"><span class="glyphicon glyph{% if entry.is_addition %}icon-plus-sign{% endif %}{% if entry.is_change %}icon-edit{% endif %}{% if entry.is_deletion %}icon-trash{% endif %}"></span></span>
 
               {% spaceless %}
@@ -338,5 +336,3 @@
     </div>
   </div>
 {% endblock %}
-
-

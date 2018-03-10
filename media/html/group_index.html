@@ -1,138 +1,137 @@
 {% extends "media/html/_internal.html" %}
 
 {% block content %}
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<div class="jumbotron" id="jumbotron">
-		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<a href="/group/" id="banner_div">
-					<img src="/site_media/images/group/baking/banner.jpg" style="max-width:100%;" class="center-block"/>
-				</a>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal fade" tabindex="-1" role="dialog" id="baking-modal">
-		<div class="modal-lg modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Baking Contest 2015</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<img src="/site_media/images/group/baking/banner.jpg" class="thumbnail" style="max-width:100%;">
-						</div>
-					</div>					
-				</div>
-				<div class="modal-footer">
-					<a class="btn btn-primary" href="/site_media/images/group/baking/baking.zip" download>
-						<span class="glyphicon glyphicon-save"></span>&nbsp;&nbsp;Download Photos
-					</a>
-					<button type="button" class="btn btn-default" data-dismiss="modal">
-						<span class="glyphicon glyphicon-remove-circle"></span>&nbsp;&nbsp;Close
-					</button>
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-
-
-	<div class="row">
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" style="padding-right:0px;">
-			<div class="alert alert-success" id="tp" style="margin-bottom:10px;"></div>		
-			<div class="alert alert-default" style="margin-bottom:10px; opacity:0.5;">
-				<p><i>Last Week</i>&nbsp;&nbsp;&nbsp;&nbsp;<span id="last_type"></span></p>
-				<p>
-					<span class="label label-inverse" id="last_name"></span>
-					<span class="pull-right" style="font-style:italic; margin-bottom:0px;" id="last_date"></span>
-				</p>
-			</div>
-			<div class="alert alert-orange" style="margin-bottom:10px;">
-				<h3 id="this_type" style="margin-top:10px; margin-bottom:15px;"></h3>
-				<div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<i>This Week</i>&nbsp;&nbsp;&nbsp;&nbsp;
-						<span class="label label-inverse" id="this_name"></span>
-						<span class="lead pull-right" style="color:#fff; font-style:italic; font-weight:bold; margin-bottom:0px;" id="this_date"></span>
-					</div>
-				</div>
-			</div>
-			<div class="alert alert-info" style="margin-bottom:10px; opacity:0.5;">
-				<p><i>Next Week</i>&nbsp;&nbsp;&nbsp;&nbsp;<span id="next_type"></span></p>
-				<p>
-					<span class="label label-inverse" id="next_name"></span>
-					<span class="pull-right" style="font-style:italic; margin-bottom:0px;" id="next_date"></span>
-				</p>
-			</div>
-
-		</div>
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-			<p><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Recent</p>
-			<ul class="list-group">
-				<li class="list-group-item li-primary">
-					<b><span class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;Flash Slide</b>
-					<br/>
-					<p class="text-right" style="margin-bottom:0px;" id="recent_flash"></p>
-				</li>
-				<li class="list-group-item li-warning">
-					<b><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Journal Club</b>
-					<br/>
-					<p class="text-right" style="margin-bottom:0px;" id="recent_jc"></p>
-				</li>
-				<li class="list-group-item li-danger">
-					<b><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;Eterna Special</b>
-					<br/>
-					<p class="text-right" style="margin-bottom:0px;" id="recent_eterna"></p>
-				</li>
-				<li class="list-group-item li-green">
-					<b><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;Rotation Student</b>
-					<br/>
-					<p class="text-right" style="margin-bottom:0px;" id="recent_rotation"></p>
-				</li>
-				<li class="list-group-item li-violet">
-					<b><span class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;Presentation Archive</b>
-					<br/>
-					<p class="text-right" style="margin-bottom:0px;" id="recent_archive"></p>
-				</li>
-			</ul>
-		</div>
-		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-			<table class="table table-hover">
-				<thead>
-					<tr class="warning">
-						<th class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><div class="sprite i_14"><i class="i_slack"></i></div>&nbsp;&nbsp;Slack Status</th>
-						<th class="col-lg-6 col-md-6 col-sm-6 col-xs-6"></th>
-					</tr>
-				</thead>
-				<tbody id="table_slack_user">
-					<tr><td colspan="2" class="place_holder"></td></tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-
-	<div class="row">
-		<div style="float:left; padding-left:20px; width:600px;">
-	        <iframe id="forecast_embed" type="text/html" frameborder="0" height="245" width="100%" src="https://forecast.io/embed/#lat=37.4314&lon=-122.1689&name=Stanford University"> </iframe>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="jumbotron" id="jumbotron">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <a href="/group/" id="banner_div">
+            <img src="/site_media/images/group/baking/banner.jpg" style="max-width:100%;" class="center-block"/>
+          </a>
         </div>
-		<div style="float:right; width:387px; height:145px; padding:10px;" class="nav-list">
-			<div id="cssclock">
-				<div id="clockanalog">
-					<img src="/site_media/images/group/clock/analog_seconds.png" id="analogsecond" alt="Clock second-hand" style="transform: rotate(150deg);">
-					<img src="/site_media/images/group/clock/analog_minutes.png" id="analogminute" alt="Clock minute-hand" style="transform: rotate(129deg);">
-					<img src="/site_media/images/group/clock/analog_hours.png" id="analoghour" alt="Clock hour-hand" style="transform: rotate(311deg);">
-				</div>
-				<div id="clockdigital">
-					<img src="/site_media/images/group/clock/digital_hours.gif" id="digitalhour" alt="Clocks hours" style="transform: rotate(210deg);">
-					<img src="/site_media/images/group/clock/digital_minutes.gif" id="digitalminute" alt="Clocks minutes" style="transform: rotate(234deg);">
-					<img src="/site_media/images/group/clock/digital_seconds.gif" id="digitalsecond" alt="Clocks seconds" style="transform: rotate(210deg);">
-					<div style="opacity: 0.8;">&nbsp;</div>
-					<div style="opacity: 0.8;">&nbsp;</div>
-				</div>
-			</div>
-		</div>
+      </div>
     </div>
-</div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="baking-modal">
+      <div class="modal-lg modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Baking Contest 2015</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <img src="/site_media/images/group/baking/banner.jpg" class="thumbnail" style="max-width:100%;">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-primary" href="/site_media/images/group/baking/baking.zip" download>
+              <span class="glyphicon glyphicon-save"></span>&nbsp;&nbsp;Download Photos
+            </a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;&nbsp;Close
+            </button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" style="padding-right:0px;">
+        <div class="alert alert-success" id="tp" style="margin-bottom:10px;"></div>
+        <div class="alert alert-default" style="margin-bottom:10px; opacity:0.5;">
+          <p><i>Last Week</i>&nbsp;&nbsp;&nbsp;&nbsp;<span id="last_type"></span></p>
+          <p>
+            <span class="label label-inverse" id="last_name"></span>
+            <span class="pull-right" style="font-style:italic; margin-bottom:0px;" id="last_date"></span>
+          </p>
+        </div>
+        <div class="alert alert-orange" style="margin-bottom:10px;">
+          <h3 id="this_type" style="margin-top:10px; margin-bottom:15px;"></h3>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <i>This Week</i>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span class="label label-inverse" id="this_name"></span>
+              <span class="lead pull-right" style="color:#fff; font-style:italic; font-weight:bold; margin-bottom:0px;" id="this_date"></span>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-info" style="margin-bottom:10px; opacity:0.5;">
+          <p><i>Next Week</i>&nbsp;&nbsp;&nbsp;&nbsp;<span id="next_type"></span></p>
+          <p>
+            <span class="label label-inverse" id="next_name"></span>
+            <span class="pull-right" style="font-style:italic; margin-bottom:0px;" id="next_date"></span>
+          </p>
+        </div>
+
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+        <p><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Recent</p>
+        <ul class="list-group">
+          <li class="list-group-item li-primary">
+            <b><span class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;Flash Slide</b>
+            <br/>
+            <p class="text-right" style="margin-bottom:0px;" id="recent_flash"></p>
+          </li>
+          <li class="list-group-item li-warning">
+            <b><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Journal Club</b>
+            <br/>
+            <p class="text-right" style="margin-bottom:0px;" id="recent_jc"></p>
+          </li>
+          <li class="list-group-item li-danger">
+            <b><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;Eterna Special</b>
+            <br/>
+            <p class="text-right" style="margin-bottom:0px;" id="recent_eterna"></p>
+          </li>
+          <li class="list-group-item li-green">
+            <b><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;Rotation Student</b>
+            <br/>
+            <p class="text-right" style="margin-bottom:0px;" id="recent_rotation"></p>
+          </li>
+          <li class="list-group-item li-violet">
+            <b><span class="glyphicon glyphicon-cd"></span>&nbsp;&nbsp;Presentation Archive</b>
+            <br/>
+            <p class="text-right" style="margin-bottom:0px;" id="recent_archive"></p>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <table class="table table-hover">
+          <thead>
+            <tr class="warning">
+              <th class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><div class="sprite i_14"><i class="i_slack"></i></div>&nbsp;&nbsp;Slack Status</th>
+              <th class="col-lg-6 col-md-6 col-sm-6 col-xs-6"></th>
+            </tr>
+          </thead>
+          <tbody id="table_slack_user">
+            <tr><td colspan="2" class="place_holder"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div style="float:left; padding-left:20px; width:600px;">
+        <iframe id="forecast_embed" type="text/html" frameborder="0" height="245" width="100%" src="https://forecast.io/embed/#lat=37.4314&lon=-122.1689&name=Stanford University"> </iframe>
+      </div>
+      <div style="float:right; width:387px; height:145px; padding:10px;" class="nav-list">
+        <div id="cssclock">
+          <div id="clockanalog">
+            <img src="/site_media/images/group/clock/analog_seconds.png" id="analogsecond" alt="Clock second-hand" style="transform: rotate(150deg);">
+            <img src="/site_media/images/group/clock/analog_minutes.png" id="analogminute" alt="Clock minute-hand" style="transform: rotate(129deg);">
+            <img src="/site_media/images/group/clock/analog_hours.png" id="analoghour" alt="Clock hour-hand" style="transform: rotate(311deg);">
+          </div>
+          <div id="clockdigital">
+            <img src="/site_media/images/group/clock/digital_hours.gif" id="digitalhour" alt="Clocks hours" style="transform: rotate(210deg);">
+            <img src="/site_media/images/group/clock/digital_minutes.gif" id="digitalminute" alt="Clocks minutes" style="transform: rotate(234deg);">
+            <img src="/site_media/images/group/clock/digital_seconds.gif" id="digitalsecond" alt="Clocks seconds" style="transform: rotate(210deg);">
+            <div style="opacity: 0.8;">&nbsp;</div>
+            <div style="opacity: 0.8;">&nbsp;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

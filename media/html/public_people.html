@@ -13,9 +13,9 @@
         <tr class="current_member">
           <td height="175">
             {% if ppl.image %}
-              <img src="/site_data/ppl_img/{{ppl.image_link}}" width="119"> 
+              <img src="/site_data/ppl_img/{{ppl.image_link}}" width="119">
             {% else %}
-              <img src="/site_media/images/icon_default_avatar.png" width="119"> 
+              <img src="/site_media/images/icon_default_avatar.png" width="119">
             {% endif %}
           </td>
           <td height="175">
@@ -79,7 +79,7 @@
             {% for ppl in past_member %}
             <p class="HEAD peopleH2 past_member" style="margin-bottom:4px;">{{ppl.first_name}} {{ppl.last_name}}</p>
             <p class="peopleTEXT TEXT" style="line-height:18px; margin-bottom:20px;">
-              <span style="font-weight:500;">{{ppl.role}}</span>, 
+              <span style="font-weight:500;">{{ppl.role}}</span>,
               {% if ppl.start_year != ppl.finish_year %}
                 {{ppl.start_year}}-{{ppl.finish_year}}
               {% else %}
@@ -93,4 +93,3 @@
     </table>
   </div>
 {% endblock %}
-

@@ -1,64 +1,64 @@
 {% extends "media/html/_internal.html" %}
 {% block content %}
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<div class="row">
-		<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-			<table class="table table-hover" style="margin-bottom: 0px;">
-				<thead>
-					<tr class="active">
-						<th class="col-lg-5 col-md-5 col-sm-5 col-xs-5"></th>
-						<th class="col-lg-7 col-md-7 col-sm-7 col-xs-7"><span class="glyphicon glyphicon-fullscreen"></span>&nbsp;&nbsp;Size (Used | Available)</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;Das Lab</td>
-						<td id="id_dropbox_sp">
-			                <div class="progress" style="margin-bottom: 0px;">
-			                  <div class="progress-bar progress-bar-danger"></div>
-			                  <div class="progress-bar progress-bar-success"></div>
-			                </div>
-						</td>
-					</tr>
-					<tr><td colspan="2"></td></tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-			<h4><span class="label label-warning">Files Activity</span></h4>
-			<div id="plot_dropbox_files" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
-		</div>
-	</div>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="row">
+      <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+        <table class="table table-hover" style="margin-bottom: 0px;">
+          <thead>
+            <tr class="active">
+              <th class="col-lg-5 col-md-5 col-sm-5 col-xs-5"></th>
+              <th class="col-lg-7 col-md-7 col-sm-7 col-xs-7"><span class="glyphicon glyphicon-fullscreen"></span>&nbsp;&nbsp;Size (Used | Available)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;Das Lab</td>
+              <td id="id_dropbox_sp">
+                <div class="progress" style="margin-bottom: 0px;">
+                  <div class="progress-bar progress-bar-danger"></div>
+                  <div class="progress-bar progress-bar-success"></div>
+                </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+        <h4><span class="label label-warning">Files Activity</span></h4>
+        <div id="plot_dropbox_files" class="thumbnail place_holder" style="padding:0px 20px; height: 120px;"></div>
+      </div>
+    </div>
 
-	<div class="row">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<table class="table table-hover">
-				<thead>
-					<tr class="active">
-						<th class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Folder</th>
-						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-							<span class="pull-right">
-								<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;# of Shares&nbsp;&nbsp;
-							</span>
-						</th>
-						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-							<span class="pull-right">
-								<span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;# of Files&nbsp;&nbsp;
-							</span>
-						</th>
-						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-							<span class="pull-right">
-								<span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;Size&nbsp;&nbsp;&nbsp;&nbsp;
-							</span>
-						</th>
-						<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Last Activity</th>
-					</tr>
-				</thead>
-				<tbody id="table_dropbox_folder">
-					<tr><td colspan="5" class="place_holder"></td></tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-hover">
+          <thead>
+            <tr class="active">
+              <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Folder</th>
+              <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <span class="pull-right">
+                  <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;# of Shares&nbsp;&nbsp;
+                </span>
+              </th>
+              <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <span class="pull-right">
+                  <span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;# of Files&nbsp;&nbsp;
+                </span>
+              </th>
+              <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <span class="pull-right">
+                  <span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;Size&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+              </th>
+              <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Last Activity</th>
+            </tr>
+          </thead>
+          <tbody id="table_dropbox_folder">
+            <tr><td colspan="5" class="place_holder"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 {% endblock %}
