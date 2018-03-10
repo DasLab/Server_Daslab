@@ -1,8 +1,7 @@
 from django.db import models
 from django import forms
 from django.utils.html import format_html
-
-from datetime import datetime
+from django.utils.timezone import now
 
 from src.settings import *
 
@@ -169,7 +168,7 @@ class Member(models.Model):
         verbose_name='Is Alumni?',
         help_text='<span class="glyphicon glyphicon-check"></span>&nbsp; Check for alumni members.')
     start_year = models.PositiveSmallIntegerField(
-        default=datetime.today().year, blank=True, null=True,
+        default=now().year, blank=True, null=True,
         verbose_name='Start Year',
         help_text='<span class="glyphicon glyphicon-play"></span>&nbsp; For alumni display only.')
     finish_year = models.PositiveSmallIntegerField(
@@ -212,9 +211,9 @@ class Member(models.Model):
 class Publication(models.Model):
     authors = models.TextField(
         help_text='<span class="glyphicon glyphicon-user"></span>&nbsp; Follow the format seen on the website: <span class="label label-inverse">Das, R.,</span>.')
-    year = models.PositiveSmallIntegerField(default=datetime.today().year)
+    year = models.PositiveSmallIntegerField(default=now().year)
     display_date = models.DateField(
-        default=datetime.today().date(),
+        default=now().date(),
         verbose_name='Display Date',
         help_text='<span class="glyphicon glyphicon-random"></span>&nbsp; For display ordering within each year. Assign a virtual date as used when sorting.')
     title = models.TextField(
@@ -301,7 +300,7 @@ class Publication(models.Model):
 ############################################################################################################################################
 
 class FlashSlide(models.Model):
-    date = models.DateField(default=datetime.today())
+    date = models.DateField(default=now())
     link = models.URLField(
         max_length=255, blank=True,
         verbose_name='URL',
@@ -313,7 +312,7 @@ class FlashSlide(models.Model):
 
 
 class JournalClub(models.Model):
-    date = models.DateField(default=datetime.today())
+    date = models.DateField(default=now())
     presenter = models.CharField(max_length=255)
     authors = models.CharField(
         max_length=255, blank=True,
@@ -337,7 +336,7 @@ class JournalClub(models.Model):
 
 class RotationStudent(models.Model):
     date = models.DateField(
-        default=datetime.today(),
+        default=now(),
         verbose_name='Presentation Date')
     full_name = models.CharField(
         max_length=255,
@@ -363,7 +362,7 @@ class RotationStudent(models.Model):
 
 class EternaYoutube(models.Model):
     date = models.DateField(
-        default=datetime.today(),
+        default=now(),
         verbose_name='Presentation Date')
     presenter = models.CharField(max_length=255)
     title = models.CharField(
@@ -382,7 +381,7 @@ class EternaYoutube(models.Model):
 
 class Presentation(models.Model):
     date = models.DateField(
-        default=datetime.today(),
+        default=now(),
         verbose_name='Presentation Date')
     presenter = models.CharField(max_length=255)
     title = models.CharField(
@@ -431,7 +430,7 @@ class DefensePoster(models.Model):
 
 class SlackMessage(models.Model):
     date = models.DateField(
-        default=datetime.today(),
+        default=now(),
         verbose_name='Message Date')
     receiver = models.CharField(max_length=255)
     content = models.TextField(
