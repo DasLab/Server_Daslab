@@ -18,6 +18,8 @@ def user_sunetid(request):
     # return 't47'
     if 'WEBAUTH_USER' in request.META:
         return request.META['WEBAUTH_USER']
+    elif 'REMOTE_USER' in request.META:
+        return request.META['REMOTE_USER']
     else:
         return None
 

@@ -1,10 +1,9 @@
-# from src.settings import env
-
 from django.contrib.auth import authenticate, login
 # import os
 # import traceback
 
 from src.env import MEDIA_ROOT, env, Singleton
+# from src.settings import env
 # MEDIA_ROOT = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -38,7 +37,7 @@ class AutomaticAdminLoginMiddleware(object):
         if (not hasattr(request, 'user') or
             not request.user.is_authenticated()):
             try:
-                sunet_id = request.META['WEBAUTH_USER']
+                sunet_id = request.META.get('WEBAUTH_USER', request.META['REMOTE_USER'])
                 is_admin = USER_GROUP().find_type(sunet_id) == 'admin'
             except Exception:
                 is_admin = False
