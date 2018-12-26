@@ -14,6 +14,7 @@ sudo cp ../yuicompressor.jar config/sys/
 
 sudo cp /etc/krb5.conf config/sys/
 sudo cp /etc/krb5.keytab config/sys/
+sudo cp /etc/shibboleth/sp-*.pem config/sys/
 
 sudo chown -R ubuntu:www-data config/sys
 sudo chmod 750 $(find config/sys -type d)
