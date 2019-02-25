@@ -59,7 +59,7 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "eterna_
                     timeFormat: ' h:mmt \n'
                 });
                 $("#calendar").removeClass("place_holder");
-    
+
                 $(".fc-today").css({"background-color": "#000", "color": "#fef159", "font-weight": "bold"});
                 $("th.fc-day-header").css({"background-color": "#ddd", "padding": "10px"});
                 $("button.fc-prev-button").removeClass("fc-button fc-state-default fc-corner-left fc-corner-right").addClass("btn btn-blue").html('<span class="glyphicon glyphicon-backward"></span>&nbsp;');
@@ -164,8 +164,10 @@ if ((app.key == "meeting" && (app.page == "journal_club" || app.page == "eterna_
                     $("#id_passwd_mysql").val(data.mysql.password);
                     $("#id_login_apache").val(data.apache.user);
                     $("#id_passwd_apache").val(data.apache.password);
-                    $("#id_login_django").val(data.django.user);
-                    $("#id_passwd_django").val(data.django.password);
+                    $("#id_login_django_member").val(data.django.member.user);
+                    $("#id_passwd_django_member").val(data.django.member.password);
+                    $("#id_login_django_admin").val(data.django.admin.user);
+                    $("#id_passwd_django_admin").val(data.django.admin.password);
                 }
             });
             $("#btn_toggle").on("click", function() {
