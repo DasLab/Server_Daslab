@@ -61,7 +61,7 @@ class AutomaticLoginMiddleware(object):
                 user = authenticate(username=username, password=password)
                 login(request, user)
                 request.user = user
-                request.session = sunet_id
+                request.session['sunet_id'] = sunet_id
 
 
 class ExceptionUserInfoMiddleware(object):

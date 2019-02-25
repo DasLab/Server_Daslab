@@ -190,7 +190,8 @@ def user_upload(request):
 
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    request.session['sunet_id'] = None
+    return HttpResponseRedirect('/Shibboleth.sso/Logout')
 
 
 @user_passes_test(lambda u: u.is_superuser)
