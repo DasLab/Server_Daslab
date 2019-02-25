@@ -51,11 +51,11 @@ def pages(request, keyword):
     return render(request, PATH.HTML_PATH[keyword], json)
 
 
-# @login_required
+@login_required
 def group_index(request):
     return render(request, PATH.HTML_PATH['group_index'])
 
-# @login_required
+@login_required
 def group_pages(request, path):
     path = path.strip('/')
     for key in PATH.GROUP_PATH:
@@ -162,6 +162,7 @@ def group_pages(request, path):
 
     return render(request, PATH.HTML_PATH['group_pages'].replace('xxx', page), json)
 
+@login_required
 def group_dash(request, keyword):
     keyword = keyword.strip('/')
     if keyword == 'aws':
@@ -263,8 +264,14 @@ def group_dash(request, keyword):
                 'password': env('APACHE_PASSWORD'),
             },
             'django': {
-                'user': env('DJANGO_USER'),
-                'password': env('DJANGO_PASSWORD'),
+                'member': {
+                    'user': env('DJANGO_MEMBER_USER'),
+                    'password': env('DJANGO_MEMBER_PASSWORD'),
+                },
+                'admin': {
+                    'user': env('DJANGO_ADMIN_USER'),
+                    'password': env('DJANGO_ADMIN_PASSWORD'),
+                },
             },
             'gmail': {
                 'user': gmail['EMAIL_HOST_USER'],
