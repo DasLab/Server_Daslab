@@ -308,11 +308,11 @@ def get_dash(request, keyword):
         json = git_stats(request)
     elif keyword == 'group':
         json = simplejson.dumps({
-            'admin': GROUP.ADMIN,
-            'group': GROUP.GROUP,
-            'alumni': GROUP.ALUMNI,
-            'roton': GROUP.ROTON,
-            'other': GROUP.OTHER,
+            'admin': sorted(GROUP.ADMIN),
+            'group': sorted(GROUP.GROUP),
+            'alumni': sorted(GROUP.ALUMNI),
+            'roton': sorted(GROUP.ROTON),
+            'other': sorted(GROUP.OTHER),
         }, sort_keys=True, indent=' ' * 4)
     elif keyword == 'dash':
         t_aws = format_dash_ts('aws/init.json', BOT['CACHE']['INTERVAL_15'])
