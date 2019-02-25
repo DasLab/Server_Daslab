@@ -42,7 +42,7 @@ class USER_GROUP(Singleton):
             return 'unknown'
 
 
-class AutomaticAdminLoginMiddleware(object):
+class AutomaticLoginMiddleware(object):
     def process_request(self, request):
         if (not hasattr(request, 'user') or
             not request.user.is_authenticated()):

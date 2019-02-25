@@ -133,7 +133,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
 
     'src.auth.ExceptionUserInfoMiddleware',
-    'src.auth.AutomaticAdminLoginMiddleware',
+    'src.auth.AutomaticLoginMiddleware',
 ]
 if not DEBUG:
     MIDDLEWARE_CLASSES.insert(0, 'django.middleware.security.SecurityMiddleware')
