@@ -682,6 +682,7 @@ def cache_slack(request):
                             u'Timestamp': end_time.replace(hour=0, minute=0, second=0, microsecond=0),
                             u'Messages': num,
                         })
+                    time.sleep(2)
 
         for field in fields:
             stats.append(field)
