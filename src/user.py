@@ -20,6 +20,8 @@ def user_sunetid(request):
         return request.META['WEBAUTH_USER']
     elif 'REMOTE_USER' in request.META:
         return request.META['REMOTE_USER']
+    elif 'sunet_id' in request.session:
+        return request.session['sunet_id']
     else:
         return None
 

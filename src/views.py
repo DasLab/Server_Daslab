@@ -52,7 +52,6 @@ def pages(request, keyword):
     return render(request, PATH.HTML_PATH[keyword], json)
 
 
-@login_required
 def group_index(request):
     return render(request, PATH.HTML_PATH['group_index'])
 

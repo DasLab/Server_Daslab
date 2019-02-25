@@ -1,8 +1,7 @@
 from django.contrib.auth import authenticate, login
-# import os
-# import traceback
 
 from src.env import MEDIA_ROOT, env, Singleton
+from src.user import user_sunetid
 # from src.settings import env
 # MEDIA_ROOT = os.path.dirname(os.path.dirname(__file__))
 
@@ -36,29 +35,22 @@ class AutomaticAdminLoginMiddleware(object):
     def process_request(self, request):
         if (not hasattr(request, 'user') or
             not request.user.is_authenticated()):
-            try:
-                sunet_id = request.META.get('WEBAUTH_USER', request.META['REMOTE_USER'])
-            except Exception:
-                sunet_id = None
-                # print traceback.format_exc()
-
+            sunet_id = user_sunetid(request)
             is_admin = USER_GROUP().find_type(sunet_id) == 'admin'
             is_member = USER_GROUP().find_type(sunet_id) != 'unknown'
 
-            if is_admin:
-                user = authenticate(
-                    username=env('DJANGO_ADMIN_USER'),
-                    password=env('DJANGO_ADMIN_PASSWORD')
-                )
-                request.user = user
+            if is_admin or is_member:
+                if is_admin:
+                    username = env('DJANGO_ADMIN_USER')
+                    password = env('DJANGO_ADMIN_PASSWORD')
+                else:
+                    username = env('DJANGO_MEMBER_USER')
+                    password = env('DJANGO_MEMBER_PASSWORD')
+
+                user = authenticate(username=username, password=password)
                 login(request, user)
-            elif is_member:
-                user = authenticate(
-                    username=env('DJANGO_MEMBER_USER'),
-                    password=env('DJANGO_MEMBER_PASSWORD')
-                )
                 request.user = user
-                login(request, user)
+                request.session = sunet_id
 
 
 class ExceptionUserInfoMiddleware(object):
