@@ -38,15 +38,24 @@ class AutomaticAdminLoginMiddleware(object):
             not request.user.is_authenticated()):
             try:
                 sunet_id = request.META.get('WEBAUTH_USER', request.META['REMOTE_USER'])
-                is_admin = USER_GROUP().find_type(sunet_id) == 'admin'
             except Exception:
-                is_admin = False
+                sunet_id = None
                 # print traceback.format_exc()
+
+            is_admin = USER_GROUP().find_type(sunet_id) == 'admin'
+            is_member = USER_GROUP().find_type(sunet_id) != 'unknown'
 
             if is_admin:
                 user = authenticate(
-                    username=env('DJANGO_USER'),
-                    password=env('DJANGO_PASSWORD')
+                    username=env('DJANGO_ADMIN_USER'),
+                    password=env('DJANGO_ADMIN_PASSWORD')
+                )
+                request.user = user
+                login(request, user)
+            elif is_member:
+                user = authenticate(
+                    username=env('DJANGO_MEMBER_USER'),
+                    password=env('DJANGO_MEMBER_PASSWORD')
                 )
                 request.user = user
                 login(request, user)
