@@ -2,12 +2,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from src.auth import get_user_sunetid
 from src.console import *
 from src.dash import *
 from src.env import error400, error401, error403, error404, error500, error503
 from src.models import *
 from src.settings import *
-from src.user import user_contact, user_sunetid
+from src.user import user_contact
 
 
 def index(request):
@@ -157,7 +158,7 @@ def group_pages(request, path):
             'current_member': member,
             'past_member': almuni,
             'contact_form':  ContactForm(),
-            'sunet_id': user_sunetid(request),
+            'sunet_id': get_user_sunetid(request),
         }
 
     return render(request, PATH.HTML_PATH['group_pages'].replace('xxx', page), json)
@@ -228,7 +229,7 @@ def group_dash(request, keyword):
 
     elif keyword == 'user':
         try:
-            sunet_id = user_sunetid(request)
+            sunet_id = get_user_sunetid(request)
             user_type = GROUP.find_type(sunet_id)
             user = Member.objects.get(sunet_id=sunet_id)
             if user.phone:
@@ -294,7 +295,7 @@ def ping_test(request):
 
 
 def get_staff(request):
-    user = user_sunetid(request)
+    user = get_user_sunetid(request)
     user = 'unknown' if user is None else user
     json = {
         'user': user,

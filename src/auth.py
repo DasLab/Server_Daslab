@@ -1,9 +1,20 @@
 from django.contrib.auth import authenticate, login
 
 from src.env import MEDIA_ROOT, env, Singleton
-from src.user import user_sunetid
 # from src.settings import env
 # MEDIA_ROOT = os.path.dirname(os.path.dirname(__file__))
+
+
+def get_user_sunetid(request):
+    # return 't47'
+    if 'WEBAUTH_USER' in request.META:
+        return request.META['WEBAUTH_USER']
+    elif 'REMOTE_USER' in request.META:
+        return request.META['REMOTE_USER']
+    elif 'sunet_id' in request.session:
+        return request.session['sunet_id']
+    else:
+        return None
 
 
 class USER_GROUP(Singleton):
@@ -35,7 +46,7 @@ class AutomaticAdminLoginMiddleware(object):
     def process_request(self, request):
         if (not hasattr(request, 'user') or
             not request.user.is_authenticated()):
-            sunet_id = user_sunetid(request)
+            sunet_id = get_user_sunetid(request)
             is_admin = USER_GROUP().find_type(sunet_id) == 'admin'
             is_member = USER_GROUP().find_type(sunet_id) != 'unknown'
 

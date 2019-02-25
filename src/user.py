@@ -10,20 +10,9 @@ import traceback
 
 from filemanager import FileManager
 
+from src.auth import get_user_sunetid
 from src.models import *
 from src.env import error400, error403
-
-
-def user_sunetid(request):
-    # return 't47'
-    if 'WEBAUTH_USER' in request.META:
-        return request.META['WEBAUTH_USER']
-    elif 'REMOTE_USER' in request.META:
-        return request.META['REMOTE_USER']
-    elif 'sunet_id' in request.session:
-        return request.session['sunet_id']
-    else:
-        return None
 
 
 def user_login(request):
@@ -112,7 +101,7 @@ def user_contact(request):
         else:
             return error400(request)
 
-        member = Member.objects.get(sunet_id=user_sunetid(request))
+        member = Member.objects.get(sunet_id=get_user_sunetid(request))
         member.phone = phone
         member.email = email
         member.bday = bday
