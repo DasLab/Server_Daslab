@@ -45,7 +45,6 @@ else:
 
         url(r'^signin/?$', user.user_login),
         url(r'^signout/?$', user.user_logout),
-        url(r'^logout/?$', RedirectView.as_view(url='/index/', permanent=True)),
         url(r'^password/?$', user.user_password),
         url(r'^get_staff/?$', views.get_staff),
 
