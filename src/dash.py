@@ -359,12 +359,19 @@ def cache_git(request):
         orgs = ['DasLab', 'hitrace', 'ribokit']
         for org in orgs:
             for repo in gh.get_organization(org).get_repos():
-                i = 0
-                contribs = repo.get_stats_contributors()
-                while (contribs is None and i <= 5):
-                    time.sleep(1)
+                # AMW: this can throw -- it won't just silently
+                # return None. This pushes errors to slack.
+                try:
+                    i = 0
                     contribs = repo.get_stats_contributors()
-                    i += 1
+                    while (contribs is None and i <= 30):
+                        time.sleep(1)
+                        contribs = repo.get_stats_contributors()
+                        i += 1
+                except:
+                    print '\033[41mERROR\033[0m: Failed to get Stats Contributors for repository \033[94m%s\033[0m.' % repo.name
+                    continue
+                    
                 if contribs is None:
                     print '\033[41mERROR\033[0m: Failed to get Stats Contributors for repository \033[94m%s\033[0m.' % repo.name
                     continue
