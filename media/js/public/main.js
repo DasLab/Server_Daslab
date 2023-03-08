@@ -59,7 +59,7 @@ app.fnChangeView = function() {
   } else if (app.page == 'people') {
     var current_member = $("tr.current_member").length - 1,
         past_member = $("p.past_member").length,
-        height_adjust = current_member * 200 + past_member * 54;
+        height_adjust = current_member * 200 + past_member * 56;
     $(".DASpeople").css("height", height_adjust + 900);
 
   } else if (app.page == 'news') {
